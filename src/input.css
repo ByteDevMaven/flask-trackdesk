@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+@theme {
+    /* ─────────── Core Palette ─────────── */
+
+    /* Primary – Charcoal */
+    --color-primary-50: #f4f4f4;
+    --color-primary-100: #e0e0e0;
+    --color-primary-200: #c4c4c4;
+    --color-primary-300: #a3a3a3;
+    --color-primary-400: #6b6b6b;
+    --color-primary-500: #383838;
+    /* used for base text & sidebars */
+    --color-primary-600: #2e2e2e;
+    --color-primary-700: #262626;
+    --color-primary-800: #1f1f1f;
+    --color-primary-900: #121212;
+
+    /* Secondary – Soft Gray (borders, containers) */
+    --color-secondary-50: #fafafa;
+    --color-secondary-100: #f0f0f0;
+    --color-secondary-200: #dcdcdc;
+    --color-secondary-300: #c5c5c5;
+    --color-secondary-400: #9d9d9d;
+    --color-secondary-500: #7b7b7b;
+    --color-secondary-600: #5c5c5c;
+    --color-secondary-700: #424242;
+    --color-secondary-800: #2e2e2e;
+    --color-secondary-900: #1a1a1a;
+
+    /* Accent – Construction Yellow */
+    --color-accent-50: #fffdea;
+    --color-accent-100: #fff5b8;
+    --color-accent-200: #ffee78;
+    --color-accent-300: #fde047;
+    --color-accent-400: #facc15;
+    --color-accent-500: #eab308;
+    /* used for buttons/links */
+    --color-accent-600: #ca8a04;
+    --color-accent-700: #a16207;
+    --color-accent-800: #854d0e;
+    --color-accent-900: #713f12;
+
+    /* ─────────── Layout ─────────── */
+
+    --color-bg-base: var(--color-secondary-50);
+    /* app background */
+    --color-bg-subtle: var(--color-secondary-100);
+    /* cards/panels */
+    --color-bg-sidebar: var(--color-primary-100);
+    /* sidebar bg */
+    --color-bg-topbar: var(--color-primary-200);
+    /* topbar bg */
+
+    --color-fg-base: var(--color-primary-800);
+    /* main text */
+    --color-fg-muted: var(--color-primary-500);
+    /* secondary text */
+    --color-fg-inverted: white;
+    /* for dark bg */
+
+    /* ─────────── Buttons ─────────── */
+
+    --color-btn-primary-bg: var(--color-accent-500);
+    --color-btn-primary-hover: var(--color-accent-600);
+    --color-btn-primary-text: black;
+
+    --color-btn-secondary-bg: var(--color-primary-100);
+    --color-btn-secondary-hover: var(--color-primary-200);
+    --color-btn-secondary-text: var(--color-primary-800);
+
+    --color-btn-alert-bg: #facc15;
+    --color-btn-alert-hover: #eab308;
+    --color-btn-alert-text: #1f1f1f;
+
+    --color-btn-danger-bg: #dc2626;
+    --color-btn-danger-hover: #b91c1c;
+    --color-btn-danger-text: white;
+}
+
+@theme dark {
+    /* ─────────── Dark Mode ─────────── */
+
+    --color-primary-50: #121212;
+    --color-primary-100: #1a1a1a;
+    --color-primary-200: #2a2a2a;
+    --color-primary-300: #3a3a3a;
+    --color-primary-400: #4b4b4b;
+    --color-primary-500: #5c5c5c;
+    --color-primary-600: #7d7d7d;
+    --color-primary-700: #b0b0b0;
+    --color-primary-800: #dcdcdc;
+    --color-primary-900: #f5f5f5;
+
+    --color-secondary-50: #1a1a1a;
+    --color-secondary-100: #222222;
+    --color-secondary-200: #2e2e2e;
+    --color-secondary-300: #3c3c3c;
+    --color-secondary-400: #4d4d4d;
+    --color-secondary-500: #666666;
+    --color-secondary-600: #a0a0a0;
+    --color-secondary-700: #cccccc;
+    --color-secondary-800: #e6e6e6;
+    --color-secondary-900: #f9f9f9;
+
+    --color-accent-50: #292100;
+    --color-accent-100: #4d3c00;
+    --color-accent-200: #7a5d00;
+    --color-accent-300: #a77900;
+    --color-accent-400: #d49a00;
+    --color-accent-500: #facc15;
+    --color-accent-600: #fde047;
+    --color-accent-700: #fef08a;
+    --color-accent-800: #fef9c3;
+    --color-accent-900: #fefce8;
+
+    --color-bg-base: var(--color-secondary-50);
+    --color-bg-subtle: var(--color-secondary-100);
+    --color-bg-sidebar: var(--color-secondary-200);
+    --color-bg-topbar: var(--color-secondary-300);
+
+    --color-fg-base: var(--color-primary-800);
+    --color-fg-muted: var(--color-primary-500);
+    --color-fg-inverted: black;
+
+    --color-btn-primary-bg: var(--color-accent-500);
+    --color-btn-primary-hover: var(--color-accent-400);
+    --color-btn-primary-text: black;
+
+    --color-btn-secondary-bg: var(--color-primary-200);
+    --color-btn-secondary-hover: var(--color-primary-300);
+    --color-btn-secondary-text: var(--color-primary-800);
+
+    --color-btn-alert-bg: #fde047;
+    --color-btn-alert-hover: #facc15;
+    --color-btn-alert-text: #1f1f1f;
+
+    --color-btn-danger-bg: #ef4444;
+    --color-btn-danger-hover: #dc2626;
+    --color-btn-danger-text: white;
+}
