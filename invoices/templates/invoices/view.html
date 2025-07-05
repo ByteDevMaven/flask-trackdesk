@@ -1,0 +1,386 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Quote') if invoice.type.value == 'quote' else _('Invoice') }} {{ invoice.document_number }} - {{
+_('Business Management System') }}{% endblock %}
+
+{% block content %}
+<div class="h-full flex flex-col">
+    <!-- Header Section -->
+    <div class="flex-shrink-0 flex justify-between items-center mb-6">
+        <div>
+            <h2 class="text-2xl font-bold text-fg-base">
+                {% if invoice.type.value == 'quote' %}
+                {{ _('Quote') }} {{ invoice.document_number }}
+                {% else %}
+                {{ _('Invoice') }} {{ invoice.document_number }}
+                {% endif %}
+            </h2>
+            <p class="text-fg-muted text-sm mt-1">
+                {% if invoice.type.value == 'quote' %}
+                {{ _('Quote details and information') }}
+                {% else %}
+                {{ _('Invoice details and information') }}
+                {% endif %}
+            </p>
+        </div>
+        <div class="flex space-x-3">
+            <a href="{{ url_for('invoices.edit', company_id=session.get('selected_company_id'), id=invoice.id) }}"
+                class="bg-btn-primary-bg text-btn-primary-text px-4 py-2 rounded-lg hover:bg-btn-primary-hover transition shadow-sm flex items-center">
+                <i class="fas fa-edit mr-2"></i> {{ _('Edit') }}
+            </a>
+            {% if invoice.type.value == 'quote' %}
+            <button onclick="convertToInvoice({{ invoice.id }})"
+                class="bg-accent-500 text-black px-4 py-2 rounded-lg hover:bg-accent-600 transition shadow-sm flex items-center">
+                <i class="fas fa-file-invoice mr-2"></i> {{ _('Convert to Invoice') }}
+            </button>
+            {% endif %}
+            <a href="{{ url_for('invoices.print_invoice', company_id=session.get('selected_company_id'), id=invoice.id) }}" target="_blank"
+                class="bg-btn-secondary-bg text-btn-secondary-text px-4 py-2 rounded-lg hover:bg-btn-secondary-hover transition shadow-sm flex items-center">
+                <i class="fas fa-file-pdf mr-2"></i>
+                {% if invoice.type.value == 'quote' %}
+                {{ _('Download PDF Quote') }}
+                {% else %}
+                {{ _('Download PDF Invoice') }}
+                {% endif %}
+            </a>
+            <a href="{{ url_for('invoices.index', company_id=session.get('selected_company_id')) }}"
+                class="bg-secondary-100 text-fg-muted px-4 py-2 rounded-lg hover:bg-secondary-200 transition flex items-center">
+                <i class="fas fa-arrow-left mr-2"></i> {{ _('Back to Documents') }}
+            </a>
+        </div>
+    </div>
+
+    <!-- Content Area -->
+    <div class="flex-1 overflow-y-auto space-y-6">
+        <!-- Document Details -->
+        <div class="bg-bg-subtle rounded-xl shadow-sm p-6 border border-secondary-200">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-lg font-medium text-fg-base mb-4 flex items-center">
+                        {% if invoice.type.value == 'quote' %}
+                        <i class="fas fa-file-alt text-accent-500 mr-2"></i>
+                        {{ _('Quote Information') }}
+                        {% else %}
+                        <i class="fas fa-file-invoice text-accent-500 mr-2"></i>
+                        {{ _('Invoice Information') }}
+                        {% endif %}
+                    </h3>
+                    <dl class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <dt class="text-fg-muted font-medium">
+                                {% if invoice.type.value == 'quote' %}
+                                {{ _('Quote Number') }}:
+                                {% else %}
+                                {{ _('Invoice Number') }}:
+                                {% endif %}
+                            </dt>
+                            <dd class="font-semibold text-fg-base">{{ invoice.document_number }}</dd>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <dt class="text-fg-muted font-medium">{{ _('Document Type') }}:</dt>
+                            <dd>
+                                <span
+                                    class="px-3 py-1 text-sm rounded-full font-medium {% if invoice.type.value == 'quote' %}bg-accent-100 text-accent-800{% else %}bg-blue-100 text-blue-800{% endif %}">
+                                    {% if invoice.type.value == 'quote' %}
+                                    <i class="fas fa-file-alt mr-1"></i>{{ _('Quote') }}
+                                    {% else %}
+                                    <i class="fas fa-file-invoice mr-1"></i>{{ _('Invoice') }}
+                                    {% endif %}
+                                </span>
+                            </dd>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <dt class="text-fg-muted font-medium">{{ _('Status') }}:</dt>
+                            <dd>
+                                <span
+                                    class="px-3 py-1 text-sm rounded-full font-medium {% if invoice.status == 'paid' %}bg-green-100 text-green-800{% elif invoice.status == 'overdue' %}bg-red-100 text-red-800{% elif invoice.status == 'draft' %}bg-secondary-100 text-secondary-800{% elif invoice.status == 'sent' %}bg-blue-100 text-blue-800{% else %}bg-yellow-100 text-yellow-800{% endif %}">
+                                    {% if invoice.status == 'paid' %}
+                                    <i class="fas fa-check-circle mr-1"></i>{{ _('Paid') }}
+                                    {% elif invoice.status == 'overdue' %}
+                                    <i class="fas fa-exclamation-triangle mr-1"></i>{{ _('Overdue') }}
+                                    {% elif invoice.status == 'draft' %}
+                                    <i class="fas fa-edit mr-1"></i>{{ _('Draft') }}
+                                    {% elif invoice.status == 'sent' %}
+                                    <i class="fas fa-paper-plane mr-1"></i>{{ _('Sent') }}
+                                    {% else %}
+                                    <i class="fas fa-clock mr-1"></i>{{ _(invoice.status.title()) if invoice.status else
+                                    _('Draft') }}
+                                    {% endif %}
+                                </span>
+                            </dd>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <dt class="text-fg-muted font-medium">{{ _('Issue Date') }}:</dt>
+                            <dd class="font-medium text-fg-base">
+                                {% if invoice.issued_date %}
+                                <i class="fas fa-calendar mr-1 text-fg-muted"></i>
+                                {{ invoice.issued_date.strftime('%B %d, %Y') }}
+                                {% else %}
+                                <span class="text-fg-muted">-</span>
+                                {% endif %}
+                            </dd>
+                        </div>
+                    </dl>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-medium text-fg-base mb-4 flex items-center">
+                        <i class="fas fa-user text-accent-500 mr-2"></i>
+                        {{ _('Client Information') }}
+                    </h3>
+                    {% if invoice.client %}
+                    <div class="bg-secondary-50 rounded-lg p-4">
+                        <dl class="space-y-3">
+                            <div class="flex justify-between items-start">
+                                <dt class="text-fg-muted font-medium">{{ _('Name') }}:</dt>
+                                <dd class="font-semibold text-fg-base text-right">{{ invoice.client.name }}</dd>
+                            </div>
+                            {% if invoice.client.email %}
+                            <div class="flex justify-between items-start">
+                                <dt class="text-fg-muted font-medium">{{ _('Email') }}:</dt>
+                                <dd class="text-fg-base text-right">
+                                    <a href="mailto:{{ invoice.client.email }}"
+                                        class="text-accent-600 hover:text-accent-700">
+                                        <i class="fas fa-envelope mr-1"></i>{{ invoice.client.email }}
+                                    </a>
+                                </dd>
+                            </div>
+                            {% endif %}
+                            {% if invoice.client.phone %}
+                            <div class="flex justify-between items-start">
+                                <dt class="text-fg-muted font-medium">{{ _('Phone') }}:</dt>
+                                <dd class="text-fg-base text-right">
+                                    <a href="tel:{{ invoice.client.phone }}"
+                                        class="text-accent-600 hover:text-accent-700">
+                                        <i class="fas fa-phone mr-1"></i>{{ invoice.client.phone }}
+                                    </a>
+                                </dd>
+                            </div>
+                            {% endif %}
+                            {% if invoice.client.address %}
+                            <div class="flex justify-between items-start">
+                                <dt class="text-fg-muted font-medium">{{ _('Address') }}:</dt>
+                                <dd class="text-fg-base text-right max-w-xs">
+                                    <i class="fas fa-map-marker-alt mr-1"></i>{{ invoice.client.address }}
+                                </dd>
+                            </div>
+                            {% endif %}
+                        </dl>
+                    </div>
+                    {% else %}
+                    <div class="bg-secondary-50 rounded-lg p-4 text-center">
+                        <i class="fas fa-user-slash text-fg-muted text-2xl mb-2"></i>
+                        <p class="text-fg-muted">{{ _('No client assigned') }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Document Items -->
+        <div class="bg-bg-subtle rounded-xl shadow-sm overflow-hidden border border-secondary-200">
+            <div class="px-6 py-4 border-b border-secondary-200 bg-secondary-50">
+                <h3 class="text-lg font-medium text-fg-base flex items-center">
+                    <i class="fas fa-list text-accent-500 mr-2"></i>
+                    {% if invoice.type.value == 'quote' %}
+                    {{ _('Quote Items') }}
+                    {% else %}
+                    {{ _('Invoice Items') }}
+                    {% endif %}
+                    {% if document_items %}
+                    <span class="ml-2 px-2 py-1 text-xs bg-accent-100 text-accent-800 rounded-full">
+                        {{ document_items|length }} {{ _('items') }}
+                    </span>
+                    {% endif %}
+                </h3>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-secondary-200">
+                    <thead class="bg-secondary-100">
+                        <tr>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider">
+                                <i class="fas fa-box mr-1"></i>{{ _('Item') }}
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider">
+                                <i class="fas fa-align-left mr-1"></i>{{ _('Description') }}
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-center text-xs font-medium text-fg-muted uppercase tracking-wider">
+                                <i class="fas fa-hashtag mr-1"></i>{{ _('Qty') }}
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-right text-xs font-medium text-fg-muted uppercase tracking-wider">
+                                <i class="fas fa-dollar-sign mr-1"></i>{{ _('Unit Price') }}
+                            </th>
+                            <th scope="col"
+                                class="px-6 py-3 text-right text-xs font-medium text-fg-muted uppercase tracking-wider">
+                                <i class="fas fa-calculator mr-1"></i>{{ _('Total') }}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-bg-base divide-y divide-secondary-200">
+                        {% if document_items %}
+                        {% for item in document_items %}
+                        <tr class="hover:bg-secondary-50 transition-colors">
+                            <td class="px-6 py-4 text-sm text-fg-base">
+                                <div class="flex items-center">
+                                    {% if item.inventory_item_id %}
+                                    {% set inventory_item = item.inventory_item %}
+                                    <div
+                                        class="w-8 h-8 bg-accent-100 rounded-full flex items-center justify-center mr-3">
+                                        <i class="fas fa-box text-accent-600 text-xs"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium">{{ inventory_item.name if inventory_item else
+                                            _('Unknown Item') }}</div>
+                                        {% if inventory_item and inventory_item.description %}
+                                        <div class="text-xs text-fg-muted">{{ inventory_item.description[:50] }}{% if
+                                            inventory_item.description|length > 50 %}...{% endif %}</div>
+                                        {% endif %}
+                                    </div>
+                                    {% else %}
+                                    <div
+                                        class="w-8 h-8 bg-secondary-100 rounded-full flex items-center justify-center mr-3">
+                                        <i class="fas fa-edit text-secondary-600 text-xs"></i>
+                                    </div>
+                                    <div class="font-medium">{{ _('Custom Item') }}</div>
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 text-sm text-fg-muted">
+                                {% if item.description %}
+                                <div class="max-w-xs">{{ item.description }}</div>
+                                {% else %}
+                                <span class="text-secondary-400 italic">{{ _('No description') }}</span>
+                                {% endif %}
+                            </td>
+                            <td class="px-6 py-4 text-center">
+                                <span
+                                    class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary-100 text-fg-base">
+                                    {{ item.quantity or 0 }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 text-right text-sm font-medium text-fg-base">
+                                ${{ "%.2f"|format(item.unit_price or 0) }}
+                            </td>
+                            <td class="px-6 py-4 text-right text-sm font-bold text-fg-base">
+                                ${{ "%.2f"|format((item.quantity or 0) * (item.unit_price or 0)) }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="5" class="px-6 py-12 text-center">
+                                <div class="flex flex-col items-center">
+                                    <div
+                                        class="w-16 h-16 bg-secondary-100 rounded-full flex items-center justify-center text-secondary-400 mb-4">
+                                        <i class="fas fa-inbox text-2xl"></i>
+                                    </div>
+                                    <p class="text-fg-muted text-lg font-medium mb-2">{{ _('No items found') }}</p>
+                                    <p class="text-fg-muted text-sm">{{ _('Add items to this document to see them here')
+                                        }}</p>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Document Totals -->
+        <div class="bg-bg-subtle rounded-xl shadow-sm p-6 border border-secondary-200">
+            <div class="flex justify-between items-start">
+                <div class="flex-1">
+                    {% if invoice.notes %}
+                    <div>
+                        <h4 class="text-sm font-medium text-fg-base mb-2 flex items-center">
+                            <i class="fas fa-sticky-note text-accent-500 mr-2"></i>
+                            {{ _('Notes') }}
+                        </h4>
+                        <div class="bg-secondary-50 rounded-lg p-4">
+                            <p class="text-sm text-fg-muted whitespace-pre-wrap">{{ invoice.notes }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="ml-6 w-80">
+                    <div class="bg-gradient-to-br from-accent-50 to-accent-100 p-6 rounded-xl border border-accent-200">
+                        <h4 class="text-lg font-semibold text-fg-base mb-4 flex items-center">
+                            <i class="fas fa-calculator text-accent-600 mr-2"></i>
+                            {{ _('Summary') }}
+                        </h4>
+
+                        {% set subtotal = invoice.total_amount or 0 %}
+                        {% set tax_15 = subtotal * 0.15 %}
+                        {% set tax_18 = subtotal * 0.18 %}
+                        {% set total_with_tax = subtotal + tax_15 + tax_18 %}
+
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-fg-muted font-medium">{{ _('Subtotal') }}:</span>
+                                <span class="font-semibold text-fg-base">${{ "%.2f"|format(subtotal) }}</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-fg-muted font-medium">{{ _('Tax') }} (15%):</span>
+                                <span class="font-semibold text-fg-base">${{ "%.2f"|format(tax_15) }}</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-fg-muted font-medium">{{ _('Tax') }} (18%):</span>
+                                <span class="font-semibold text-fg-base">${{ "%.2f"|format(tax_18) }}</span>
+                            </div>
+                            <div class="border-t border-accent-300 pt-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-lg font-bold text-fg-base">{{ _('Total') }}:</span>
+                                    <span class="text-2xl font-bold text-accent-700">${{ "%.2f"|format(total_with_tax)
+                                        }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% if invoice.type.value == 'quote' %}
+                        <div class="mt-4 p-3 bg-accent-200 rounded-lg">
+                            <p class="text-xs text-accent-800 text-center font-medium">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                {{ _('This quote is valid until') }} {{ invoice.due_date.strftime('%B %d, %Y') if
+                                invoice.due_date else _('no expiration date') }}
+                            </p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function convertToInvoice(quoteId) {
+        if (confirm('{{ _("Are you sure you want to convert this quote to an invoice? This action cannot be undone.") }}')) {
+            fetch(`/quotes/${quoteId}/convert-to-invoice`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token() }}'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = data.redirect_url;
+                    } else {
+                        alert(data.message || '{{ _("An error occurred while converting the quote.") }}');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('{{ _("An error occurred while converting the quote.") }}');
+                });
+        }
+    }
+</script>
+{% endblock %}

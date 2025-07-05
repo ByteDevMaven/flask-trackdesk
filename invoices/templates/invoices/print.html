@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% if invoice.type.name == 'quote' %}{{ _('Quote') }}{% else %}{{ _('Invoice') }}{% endif %}
+        {{ invoice.document_number }} - FERRE-LAGO'S
+    </title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0.75in 0.5in;
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .page-container {
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .page-header {
+                flex-shrink: 0;
+            }
+
+            .page-content {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .page-footer {
+                flex-shrink: 0;
+                margin-top: auto;
+            }
+
+            .new-page {
+                page-break-before: always;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            line-height: 1.4;
+            color: #1f1f1f;
+            background-color: #ffffff;
+        }
+
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #eab308;
+            color: #1f1f1f;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .print-btn:hover {
+            background-color: #ca8a04;
+        }
+
+        .page-container {
+            width: 100%;
+            max-width: 8.5in;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .page-header {
+            margin-bottom: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid #2e2e2e;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .header-compact {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #2e2e2e;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            font-size: 10px;
+        }
+
+        .company-info {
+            flex: 1;
+        }
+
+        .logo {
+            width: 100px;
+            height: auto;
+            margin-bottom: 8px;
+        }
+
+        .logo-small {
+            width: 60px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .company-name {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2e2e2e;
+            margin-bottom: 5px;
+        }
+
+        .company-name-small {
+            font-size: 14px;
+            font-weight: bold;
+            color: #2e2e2e;
+        }
+
+        .company-details {
+            font-size: 10px;
+            color: #424242;
+            line-height: 1.3;
+        }
+
+        .invoice-info {
+            text-align: right;
+            min-width: 200px;
+        }
+
+        .invoice-number {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2e2e2e;
+            margin-bottom: 5px;
+        }
+
+        .invoice-number-small {
+            font-size: 12px;
+            font-weight: bold;
+            color: #2e2e2e;
+        }
+
+        .invoice-details {
+            font-size: 10px;
+            color: #424242;
+            line-height: 1.4;
+        }
+
+        .client-section {
+            margin-bottom: 20px;
+            padding: 12px;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .client-title {
+            font-size: 12px;
+            font-weight: bold;
+            color: #2e2e2e;
+            margin-bottom: 6px;
+        }
+
+        .client-details {
+            font-size: 10px;
+            color: #424242;
+            line-height: 1.3;
+        }
+
+        .page-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .items-section {
+            flex: 1;
+            margin-bottom: 15px;
+        }
+
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid #dcdcdc;
+            margin-bottom: 10px;
+        }
+
+        .items-table th {
+            background-color: #e8e8e8;
+            color: #2e2e2e;
+            font-weight: bold;
+            padding: 8px 6px;
+            text-align: left;
+            border: 1px solid #dcdcdc;
+            font-size: 10px;
+        }
+
+        .items-table td {
+            padding: 6px;
+            border: 1px solid #dcdcdc;
+            font-size: 10px;
+            color: #424242;
+            vertical-align: top;
+        }
+
+        .items-table tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .font-bold {
+            font-weight: bold;
+        }
+
+        .page-footer {
+            margin-top: auto;
+            padding-top: 15px;
+        }
+
+        .totals-section {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .totals-box {
+            min-width: 280px;
+            background-color: #f8f8f8;
+            padding: 12px;
+            border-radius: 4px;
+            border: 1px solid #dcdcdc;
+        }
+
+        .totals-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+            font-size: 10px;
+        }
+
+        .totals-row.total {
+            border-top: 2px solid #2e2e2e;
+            padding-top: 6px;
+            margin-top: 6px;
+            font-weight: bold;
+            font-size: 12px;
+            color: #2e2e2e;
+        }
+
+        .amount-words {
+            margin-bottom: 15px;
+            font-size: 11px;
+            color: #424242;
+            font-style: italic;
+        }
+
+        .footer {
+            border-top: 1px solid #dcdcdc;
+            padding-top: 15px;
+        }
+
+        .footer-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .footer-left {
+            flex: 1;
+            padding-right: 15px;
+        }
+
+        .footer-right {
+            min-width: 180px;
+        }
+
+        .signature-line {
+            border-bottom: 1px solid #2e2e2e;
+            width: 180px;
+            margin-top: 20px;
+            padding-bottom: 2px;
+        }
+
+        .footer-note {
+            font-style: italic;
+            color: #5c5c5c;
+            font-size: 9px;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .payment-info {
+            background-color: #f8f8f8;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            border: 1px solid #dcdcdc;
+        }
+
+        .payment-title {
+            font-weight: bold;
+            color: #2e2e2e;
+            margin-bottom: 4px;
+        }
+
+        .continuation-note {
+            font-size: 9px;
+            color: #666;
+            text-align: center;
+            margin: 8px 0;
+            font-style: italic;
+        }
+
+        .page-info {
+            font-size: 9px;
+            color: #666;
+            text-align: center;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <button class="print-btn no-print" onclick="window.print()">
+        <i class="fas fa-print"></i>
+        {% if invoice.type.name == 'quote' %}{{ _('Print Quote') }}{% else %}{{ _('Print Invoice') }}{% endif %}
+    </button>
+
+    {% set items_per_page = 12 %}
+    {% set total_items = document_items|length if document_items else 0 %}
+    {% set total_pages = ((total_items - 1) // items_per_page + 1) if total_items > 0 else 1 %}
+
+    <!-- First Page -->
+    <div class="page-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="header">
+                <div class="company-info">
+                    <img src="/invoices_static/img/logo.jpeg" alt="FERRE-LAGO'S Logo" class="logo">
+                    <div class="company-name">FERRE-LAGO'S</div>
+                    <div class="company-details">
+                        S de R.L de C.V<br>
+                        RTN: 08019025210139<br>
+                        Teléfono: (504)<br>
+                        Correo:<br>
+                        Dirección: Los Horcones, Villeda morales calle principal<br>
+                        2 cuadras después de la iglesia Adoniram
+                    </div>
+                </div>
+
+                <div class="invoice-info">
+                    <div class="invoice-number">
+                        {% if invoice.type.name == 'quote' %}COTIZACIÓN{% else %}FACTURA{% endif %}: {{
+                        invoice.document_number }}
+                    </div>
+                    <div class="invoice-details">
+                        PAGINA 1 DE {{ total_pages }}<br><br>
+                        FECHA DE EMISIÓN: {{ invoice.issued_date.strftime('%d/%m/%Y') if invoice.issued_date else ''
+                        }}<br>
+                        {% if invoice.type.name == 'quote' %}
+                        VÁLIDA HASTA: {{ invoice.due_date.strftime('%d/%m/%Y') if invoice.due_date else '' }}<br>
+                        {% else %}
+                        CONDICIÓN DE PAGO: {{ invoice.status.upper() if invoice.status else 'CONTADO' }}<br>
+                        {% endif %}
+                        SUCURSAL: PRINCIPAL<br>
+                        VENDEDOR: {{ current_user.name if current_user else '' }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Client Information -->
+            <div class="client-section">
+                <div class="client-title">INFORMACIÓN DEL CLIENTE</div>
+                <div class="client-details">
+                    {% if client %}
+                    <strong>CLIENTE:</strong> {{ client.name }}<br>
+                    <strong>RTN:</strong> <br>
+                    <strong>CODIGO DE CLIENTE:</strong> {{ client.id }}<br>
+                    <strong>DIRECCIÓN:</strong> {{ client.address or '' }}
+                    {% else %}
+                    <strong>CLIENTE:</strong> <br>
+                    <strong>RTN:</strong> <br>
+                    <strong>CODIGO DE CLIENTE:</strong> <br>
+                    <strong>DIRECCIÓN:</strong>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Page Content -->
+        <div class="page-content">
+            <div class="items-section">
+                {% if document_items %}
+                {% set first_page_items = document_items[:items_per_page] %}
+                <table class="items-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%;">Código</th>
+                            <th style="width: 35%;">Artículo</th>
+                            <th style="width: 10%;">Cantidad</th>
+                            <th style="width: 15%;">Precio Uni.</th>
+                            <th style="width: 15%;">Descto/reb</th>
+                            <th style="width: 15%;">Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in first_page_items %}
+                        <tr>
+                            <td class="text-center">
+                                {% if item.inventory_item_id %}
+                                {{ item.inventory_item_id }}
+                                {% else %}
+                                -
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if item.inventory_item_id %}
+                                {% set inventory_item = item.inventory_item %}
+                                {{ inventory_item.name if inventory_item else item.description }}
+                                {% else %}
+                                {{ item.description or 'Artículo personalizado' }}
+                                {% endif %}
+                            </td>
+                            <td class="text-center">{{ item.quantity or 0 }}</td>
+                            <td class="text-right">L{{ "%.2f"|format(item.unit_price or 0) }}</td>
+                            <td class="text-right">L0.00</td>
+                            <td class="text-right font-bold">L{{ "%.2f"|format((item.quantity or 0) * (item.unit_price
+                                or 0)) }}</td>
+                        </tr>
+                        {% endfor %}
+
+                        <!-- Fill remaining rows if this is the only page -->
+                        {% if total_pages == 1 %}
+                        {% for i in range(items_per_page - first_page_items|length) %}
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+
+                {% if total_pages > 1 %}
+                <div class="page-info">Continúa en la siguiente página...</div>
+                {% endif %}
+                {% else %}
+                <table class="items-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%;">Código</th>
+                            <th style="width: 35%;">Artículo</th>
+                            <th style="width: 10%;">Cantidad</th>
+                            <th style="width: 15%;">Precio Uni.</th>
+                            <th style="width: 15%;">Descto/reb</th>
+                            <th style="width: 15%;">Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="6" class="text-center" style="padding: 20px;">
+                                No hay artículos en este {{ 'cotización' if invoice.type.name == 'quote' else 'factura'
+                                }}
+                            </td>
+                        </tr>
+                        {% for i in range(items_per_page - 1) %}
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Page Footer (only on last page or single page) -->
+        {% if total_pages == 1 %}
+        <div class="page-footer">
+            <!-- Totals Section -->
+            <div class="totals-section">
+                <div class="totals-box">
+                    {% set subtotal = invoice.total_amount or 0 %}
+                    {% set vta_exenta = 0 %}
+                    {% set venta_gravada_15 = subtotal * 0.5 %}
+                    {% set venta_gravada_18 = subtotal * 0.5 %}
+                    {% set venta_exonerada = 0 %}
+                    {% set imp_15 = venta_gravada_15 * 0.15 %}
+                    {% set imp_18 = venta_gravada_18 * 0.18 %}
+                    {% set total = subtotal + imp_15 + imp_18 %}
+
+                    <div class="totals-row">
+                        <span>VTA EXENTA:</span>
+                        <span>L{{ "%.2f"|format(vta_exenta) }}</span>
+                    </div>
+                    <div class="totals-row">
+                        <span>VENTA GRAVADA 15%:</span>
+                        <span>L{{ "%.2f"|format(venta_gravada_15) }}</span>
+                    </div>
+                    <div class="totals-row">
+                        <span>VENTA GRAVADA 18%:</span>
+                        <span>L{{ "%.2f"|format(venta_gravada_18) }}</span>
+                    </div>
+                    <div class="totals-row">
+                        <span>VENTA EXONERADA:</span>
+                        <span>L{{ "%.2f"|format(venta_exonerada) }}</span>
+                    </div>
+                    <div class="totals-row">
+                        <span>IMP. S/VENTA 15%:</span>
+                        <span>L{{ "%.2f"|format(imp_15) }}</span>
+                    </div>
+                    <div class="totals-row">
+                        <span>IMP. S/VENTA 18%:</span>
+                        <span>L{{ "%.2f"|format(imp_18) }}</span>
+                    </div>
+                    <div class="totals-row total">
+                        <span>Total:</span>
+                        <span>L{{ "%.2f"|format(total) }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Amount in Words -->
+            <div class="amount-words">
+                <strong>Son:</strong> L{{ "%.2f"|format(invoice.total_amount or 0) }}
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <div class="footer-row">
+                    <div class="footer-left">
+                        {% if invoice.type.name == 'quote' %}
+                        <p><strong>Esta cotización es válida por 30 días</strong></p>
+                        <p><strong>Los precios pueden variar sin previo aviso</strong></p>
+                        {% else %}
+                        <p><strong>Recibimos de conformidad la mercaderia arriba descrita</strong></p>
+                        <p><strong>NO SE ACEPTAN DEVOLUCIONES</strong></p>
+                        {% endif %}
+
+                        <div class="signature-line">
+                            <strong>{% if invoice.type.name == 'quote' %}FIRMA AUTORIZADA{% else %}FIRMA CLIENTE{% endif
+                                %}</strong>
+                        </div>
+                    </div>
+
+                    <div class="footer-right">
+                        <div class="payment-info">
+                            <div class="payment-title">Pago con Transferencias</div>
+                            <div>
+                                <strong>Nombre:</strong> FERRE-LAGO'S<br>
+                                <strong>Número de cuenta:</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-note">
+                    "La factura es beneficio de todos, exigela"
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Additional Pages -->
+    {% if document_items and total_pages > 1 %}
+    {% for page_num in range(1, total_pages) %}
+    {% set start_index = page_num * items_per_page %}
+    {% set end_index = start_index + items_per_page %}
+    {% set page_items = document_items[start_index:end_index] %}
+    {% set is_last_page = page_num == total_pages - 1 %}
+
+    <div class="page-container new-page">
+        <!-- Compact Header for Continuation Pages -->
+        <div class="page-header">
+            <div class="header-compact">
+                <div style="display: flex; align-items: center;">
+                    <img src="/invoices_static/img/logo.jpeg" alt="FERRE-LAGO'S Logo" class="logo-small">
+                    <div>
+                        <div class="company-name-small">FERRE-LAGO'S</div>
+                        <div style="font-size: 8px; color: #666;">S de R.L de C.V</div>
+                    </div>
+                </div>
+                <div style="text-align: center;">
+                    <div class="invoice-number-small">
+                        {% if invoice.type.name == 'quote' %}COTIZACIÓN{% else %}FACTURA{% endif %}: {{
+                        invoice.document_number }}
+                    </div>
+                    <div style="font-size: 8px;">PAGINA {{ page_num + 1 }} DE {{ total_pages }}</div>
+                </div>
+                <div style="text-align: right; font-size: 8px;">
+                    {% if client %}{{ client.name }}{% endif %}
+                </div>
+            </div>
+            <div class="continuation-note">(Continuación de artículos)</div>
+        </div>
+
+        <!-- Page Content -->
+        <div class="page-content">
+            <div class="items-section">
+                <table class="items-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%;">Código</th>
+                            <th style="width: 35%;">Artículo</th>
+                            <th style="width: 10%;">Cantidad</th>
+                            <th style="width: 15%;">Precio Uni.</th>
+                            <th style="width: 15%;">Descto/reb</th>
+                            <th style="width: 15%;">Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in page_items %}
+                        <tr>
+                            <td class="text-center">
+                                {% if item.inventory_item_id %}
+                                {{ item.inventory_item_id }}
+                                {% else %}
+                                -
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if item.inventory_item_id %}
+                                {% set inventory_item = item.inventory_item %}
+                                {{ inventory_item.name if inventory_item else item.description }}
+                                {% else %}
+                                {{ item.description or 'Artículo personalizado' }}
+                                {% endif %}
+                            </td>
+                            <td class="text-center">{{ item.quantity or 0 }}</td>
+                            <td class="text-right">L{{ "%.2f"|format(item.unit_price or 0) }}</td>
+                            <td class="text-right">L0.00</td>
+                            <td class="text-right font-bold">L{{ "%.2f"|format((item.quantity or 0) * (item.unit_price
+                                or 0)) }}</td>
+                        </tr>
+                        {% endfor %}
+
+                        <!-- Fill remaining rows on last page -->
+                        {% if is_last_page %}
+                        {% for i in range(items_per_page - page_items|length) %}
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        {% endfor %}
+                        {% endif %}
+                    </tbody>
+                </table>
+
+                {% if not is_last_page %}
+                <div class="page-info">Continúa en la siguiente página...</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Footer only on last page -->
+        {% if is_last_page %}
+        <div class="page-footer">
+            <!-- Totals Section -->
+            <div class="totals-section">
+                <div class="totals-box">
+                    {% set subtotal = invoice.total_amount or 0 %}
+                    {% set vta_exenta = 0 %}
+                    {% set venta_gravada_15 = subtotal * 0.5 %}
+                    {% set venta_gravada_18 = subtotal * 0.5 %}
+                    {% set venta_exonerada = 0 %}
+                    {% set imp_15 = venta_gravada_15 * 0.15 %}
+                    {% set imp_18 = venta_gravada_18 * 0.18 %}
+                    {% set total = subtotal + imp_15 + imp_18 %}
+
+                    <div class="totals-row">
+                        <span>VTA EXENTA:</span>
+                        <span>L{{ "%.2f"|format(vta_exenta) }}</span>
+                    </div>
+                    <div class="totals-row">
+                        <span>VENTA GRAVADA 15%:</span>
+                        <span>L{{ "%.2f"|format(venta_gravada_15) }}</span>
+                    </div>
+                    <div class="totals-row">
+                        <span>VENTA GRAVADA 18%:</span>
+                        <span>L{{ "%.2f"|format(venta_gravada_18) }}</span>
+                    </div>
+                    <div class="totals-row">
+                        <span>VENTA EXONERADA:</span>
+                        <span>L{{ "%.2f"|format(venta_exonerada) }}</span>
+                    </div>
+                    <div class="totals-row">
+                        <span>IMP. S/VENTA 15%:</span>
+                        <span>L{{ "%.2f"|format(imp_15) }}</span>
+                    </div>
+                    <div class="totals-row">
+                        <span>IMP. S/VENTA 18%:</span>
+                        <span>L{{ "%.2f"|format(imp_18) }}</span>
+                    </div>
+                    <div class="totals-row total">
+                        <span>Total:</span>
+                        <span>L{{ "%.2f"|format(total) }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Amount in Words -->
+            <div class="amount-words">
+                <strong>Son:</strong> L{{ "%.2f"|format(invoice.total_amount or 0) }}
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                <div class="footer-row">
+                    <div class="footer-left">
+                        {% if invoice.type.name == 'quote' %}
+                        <p><strong>Esta cotización es válida por 30 días</strong></p>
+                        <p><strong>Los precios pueden variar sin previo aviso</strong></p>
+                        {% else %}
+                        <p><strong>Recibimos de conformidad la mercaderia arriba descrita</strong></p>
+                        <p><strong>NO SE ACEPTAN DEVOLUCIONES</strong></p>
+                        {% endif %}
+
+                        <div class="signature-line">
+                            <strong>{% if invoice.type.name == 'quote' %}FIRMA AUTORIZADA{% else %}FIRMA CLIENTE{% endif
+                                %}</strong>
+                        </div>
+                    </div>
+
+                    <div class="footer-right">
+                        <div class="payment-info">
+                            <div class="payment-title">Pago con Transferencias</div>
+                            <div>
+                                <strong>Nombre:</strong> FERRE-LAGO'S<br>
+                                <strong>Número de cuenta:</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="footer-note">
+                    "La factura es beneficio de todos, exigela"
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% endfor %}
+    {% endif %}
+</body>
+
+</html>

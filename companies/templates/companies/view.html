@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+
+{% block title %}{{ company.name }} - {{ _('Business Management System') }}{% endblock %}
+
+{% block content %}
+<div class="animate-fadeIn">
+    <div class="flex justify-between items-center mb-6">
+        <div class="flex items-center">
+            <div
+                class="w-16 h-16 bg-accent-500 rounded-full flex items-center justify-center text-btn-primary-text font-bold text-2xl mr-4">
+                {{ company.name[0].upper() if company.name else 'C' }}
+            </div>
+            <div>
+                <h2 class="text-2xl font-bold text-fg-base">{{ company.name }}</h2>
+                <p class="text-fg-muted text-sm mt-1">{{ _('Created on') }} {{ company.created_at.strftime('%B %d, %Y')
+                    if company.created_at else _('Unknown') }}</p>
+            </div>
+        </div>
+        <div class="flex space-x-3">
+            <a href="{{ url_for('companies.edit', id=company.id) }}"
+                class="bg-btn-primary-bg text-btn-primary-text px-4 py-2 rounded-lg hover:bg-btn-primary-hover transition shadow-sm flex items-center">
+                <i class="fas fa-edit mr-2"></i> {{ _('Edit') }}
+            </a>
+            <a href="{{ url_for('companies.index') }}"
+                class="bg-btn-secondary-bg text-btn-secondary-text px-4 py-2 rounded-lg hover:bg-btn-secondary-hover transition flex items-center">
+                <i class="fas fa-arrow-left mr-2"></i> {{ _('Back to Companies') }}
+            </a>
+        </div>
+    </div>
+
+    <!-- Company Statistics -->
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8">
+        <div class="bg-bg-subtle rounded-xl shadow-sm p-4 border border-secondary-200">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-fg-muted text-sm">{{ _('Users') }}</p>
+                    <h3 class="text-2xl font-bold mt-1 text-fg-base">{{ stats.users_count }}</h3>
+                </div>
+                <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600">
+                    <i class="fas fa-users text-sm"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-bg-subtle rounded-xl shadow-sm p-4 border border-secondary-200">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-fg-muted text-sm">{{ _('Clients') }}</p>
+                    <h3 class="text-2xl font-bold mt-1 text-fg-base">{{ stats.clients_count }}</h3>
+                </div>
+                <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600">
+                    <i class="fas fa-user-friends text-sm"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-bg-subtle rounded-xl shadow-sm p-4 border border-secondary-200">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-fg-muted text-sm">{{ _('Suppliers') }}</p>
+                    <h3 class="text-2xl font-bold mt-1 text-fg-base">{{ stats.suppliers_count }}</h3>
+                </div>
+                <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center text-purple-600">
+                    <i class="fas fa-truck text-sm"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-bg-subtle rounded-xl shadow-sm p-4 border border-secondary-200">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-fg-muted text-sm">{{ _('Inventory') }}</p>
+                    <h3 class="text-2xl font-bold mt-1 text-fg-base">{{ stats.inventory_count }}</h3>
+                </div>
+                <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center text-orange-600">
+                    <i class="fas fa-boxes text-sm"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-bg-subtle rounded-xl shadow-sm p-4 border border-secondary-200">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-fg-muted text-sm">{{ _('Documents') }}</p>
+                    <h3 class="text-2xl font-bold mt-1 text-fg-base">{{ stats.documents_count }}</h3>
+                </div>
+                <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center text-red-600">
+                    <i class="fas fa-file-invoice text-sm"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-bg-subtle rounded-xl shadow-sm p-4 border border-secondary-200">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-fg-muted text-sm">{{ _('Payments') }}</p>
+                    <h3 class="text-2xl font-bold mt-1 text-fg-base">{{ stats.payments_count }}</h3>
+                </div>
+                <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600">
+                    <i class="fas fa-credit-card text-sm"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-bg-subtle rounded-xl shadow-sm p-4 border border-secondary-200">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-fg-muted text-sm">{{ _('Reports') }}</p>
+                    <h3 class="text-2xl font-bold mt-1 text-fg-base">{{ stats.reports_count }}</h3>
+                </div>
+                <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600">
+                    <i class="fas fa-chart-bar text-sm"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Assigned Users -->
+        <div class="bg-bg-subtle rounded-xl shadow-sm border border-secondary-200">
+            <div class="px-6 py-4 border-b border-secondary-200">
+                <h3 class="text-lg font-medium text-fg-base">{{ _('Assigned Users') }}</h3>
+            </div>
+            <div class="p-6">
+                {% if company.users %}
+                <div class="space-y-3">
+                    {% for user in company.users %}
+                    <div
+                        class="flex items-center justify-between p-3 bg-bg-base rounded-lg border border-secondary-200">
+                        <div class="flex items-center">
+                            <div
+                                class="w-10 h-10 bg-accent-500 rounded-full flex items-center justify-center text-btn-primary-text font-bold mr-3">
+                                {{ user.name[0].upper() if user.name else 'U' }}
+                            </div>
+                            <div>
+                                <div class="font-medium text-fg-base">{{ user.name }}</div>
+                                <div class="text-sm text-fg-muted">{{ user.email }}</div>
+                            </div>
+                        </div>
+                        <div class="text-sm text-fg-muted">
+                            {{ _('Joined') }} {{ user.created_at.strftime('%Y-%m-%d') if user.created_at else '-' }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-8">
+                    <div
+                        class="w-12 h-12 bg-secondary-100 rounded-full flex items-center justify-center text-secondary-400 mb-3 mx-auto">
+                        <i class="fas fa-users text-lg"></i>
+                    </div>
+                    <p class="text-fg-muted">{{ _('No users assigned to this company') }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="bg-bg-subtle rounded-xl shadow-sm border border-secondary-200">
+            <div class="px-6 py-4 border-b border-secondary-200">
+                <h3 class="text-lg font-medium text-fg-base">{{ _('Recent Activity') }}</h3>
+            </div>
+            <div class="p-6">
+                <div class="space-y-4">
+                    {% if recent_documents %}
+                    <div>
+                        <h4 class="text-sm font-medium text-fg-base mb-2">{{ _('Recent Documents') }}</h4>
+                        {% for document in recent_documents %}
+                        <div
+                            class="flex items-center justify-between py-2 border-b border-secondary-100 last:border-b-0">
+                            <div class="flex items-center">
+                                <div
+                                    class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mr-3">
+                                    <i class="fas fa-file-invoice text-xs"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-medium text-fg-base">{{ document.document_number }}</div>
+                                    <div class="text-xs text-fg-muted">{{ document.type.value.title() if document.type
+                                        else 'Document' }}</div>
+                                </div>
+                            </div>
+                            <div class="text-xs text-fg-muted">
+                                {{ document.issued_date.strftime('%m/%d') if document.issued_date else '-' }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    {% if recent_payments %}
+                    <div>
+                        <h4 class="text-sm font-medium text-fg-base mb-2">{{ _('Recent Payments') }}</h4>
+                        {% for payment in recent_payments %}
+                        <div
+                            class="flex items-center justify-between py-2 border-b border-secondary-100 last:border-b-0">
+                            <div class="flex items-center">
+                                <div
+                                    class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 mr-3">
+                                    <i class="fas fa-credit-card text-xs"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-medium text-fg-base">${{ "%.2f"|format(payment.amount or 0)
+                                        }}</div>
+                                    <div class="text-xs text-fg-muted">{{ payment.method or 'Payment' }}</div>
+                                </div>
+                            </div>
+                            <div class="text-xs text-fg-muted">
+                                {{ payment.payment_date.strftime('%m/%d') if payment.payment_date else '-' }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    {% if not recent_documents and not recent_payments %}
+                    <div class="text-center py-8">
+                        <div
+                            class="w-12 h-12 bg-secondary-100 rounded-full flex items-center justify-center text-secondary-400 mb-3 mx-auto">
+                            <i class="fas fa-clock text-lg"></i>
+                        </div>
+                        <p class="text-fg-muted">{{ _('No recent activity') }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Danger Zone -->
+    <div class="mt-8 bg-red-50 rounded-xl shadow-sm p-6 border border-red-200">
+        <h3 class="text-lg font-medium text-red-800 mb-2">{{ _('Danger Zone') }}</h3>
+        <p class="text-red-600 text-sm mb-4">{{ _('Once you delete a company, there is no going back. Please be
+            certain.') }}</p>
+        <form action="{{ url_for('companies.delete', id=company.id) }}" method="POST" class="inline">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit"
+                class="bg-btn-danger-bg text-btn-danger-text px-4 py-2 rounded-lg hover:bg-btn-danger-hover transition shadow-sm"
+                onclick="return confirm('{{ _('Are you sure you want to delete this company? This action cannot be undone and will remove all associated data.') }}')">
+                <i class="fas fa-trash mr-2"></i> {{ _('Delete Company') }}
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Clients') }} - {{ _('Trackdesk') }}{% endblock %}
+
+{% block content %}
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+    <div>
+        <h2 class="text-2xl font-bold text-secondary-900">{{ _('Clients') }}</h2>
+        <p class="text-secondary-500 text-sm mt-1">
+            {{ _('Manage your client information and view their activity') }}
+        </p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-2">
+        <form action="{{ url_for('customers.index', company_id=company_id) }}" method="get" class="flex">
+            <input type="text" name="search" value="{{ search }}" placeholder="{{ _('Search clients...') }}"
+                class="border border-secondary-200 rounded-l-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+            <button type="submit"
+                class="bg-primary-100 text-primary-700 px-4 py-2 rounded-r-lg hover:bg-primary-200 transition">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+        {% if search %}
+        <a href="{{ url_for('customers.index', company_id=company_id) }}"
+            class="bg-secondary-100 text-secondary-700 px-4 py-2 rounded-lg hover:bg-secondary-200 transition text-center">
+            {{ _('Reset') }}
+        </a>
+        {% endif %}
+        <a href="{{ url_for('customers.create', company_id=company_id) }}"
+            class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition shadow-sm flex items-center justify-center">
+            <i class="fas fa-plus mr-2"></i> {{ _('New Client') }}
+        </a>
+    </div>
+</div>
+
+<!-- Clients Table -->
+<div class="bg-secondary-50 rounded-xl shadow-sm border border-secondary-100 overflow-hidden">
+    {% if clients %}
+    <div class="overflow-x-auto">
+        <table class="w-full">
+            <thead>
+                <tr class="bg-secondary-100 border-b border-secondary-100">
+                    <th class="text-left py-3 px-4 font-semibold text-secondary-700">
+                        <a href="{{ url_for('customers.index', company_id=company_id, sort_by='name', sort_dir='asc' if sort_by != 'name' or sort_dir == 'desc' else 'desc', search=search) }}"
+                            class="flex items-center">
+                            {{ _('Client Name') }}
+                            {% if sort_by == 'name' %}
+                            <i class="fas fa-chevron-{{ 'up' if sort_dir == 'asc' else 'down' }} ml-1 text-xs"></i>
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th class="text-left py-3 px-4 font-semibold text-secondary-700">
+                        <a href="{{ url_for('customers.index', company_id=company_id, sort_by='email', sort_dir='asc' if sort_by != 'email' or sort_dir == 'desc' else 'desc', search=search) }}"
+                            class="flex items-center">
+                            {{ _('Contact') }}
+                            {% if sort_by == 'email' %}
+                            <i class="fas fa-chevron-{{ 'up' if sort_dir == 'asc' else 'down' }} ml-1 text-xs"></i>
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th class="text-left py-3 px-4 font-semibold text-secondary-700">{{ _('Invoices') }}</th>
+                    <th class="text-left py-3 px-4 font-semibold text-secondary-700">{{ _('Outstanding') }}</th>
+                    <th class="text-left py-3 px-4 font-semibold text-secondary-700">
+                        <a href="{{ url_for('customers.index', company_id=company_id, sort_by='created_at', sort_dir='asc' if sort_by != 'created_at' or sort_dir == 'desc' else 'desc', search=search) }}"
+                            class="flex items-center">
+                            {{ _('Created') }}
+                            {% if sort_by == 'created_at' %}
+                            <i class="fas fa-chevron-{{ 'up' if sort_dir == 'asc' else 'down' }} ml-1 text-xs"></i>
+                            {% endif %}
+                        </a>
+                    </th>
+                    <th class="text-right py-3 px-4 font-semibold text-secondary-700">{{ _('Actions') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for client in clients %}
+                <tr class="border-b border-secondary-100 hover:bg-secondary-50">
+                    <td class="py-3 px-4">
+                        <a href="{{ url_for('customers.view', company_id=company_id, id=client.id) }}"
+                            class="font-medium text-primary-600 hover:text-primary-700">
+                            {{ client.name }}
+                        </a>
+                    </td>
+                    <td class="py-3 px-4">
+                        <div class="flex flex-col">
+                            {% if client.email %}
+                            <span class="text-secondary-800">
+                                <i class="fas fa-envelope text-secondary-400 mr-1"></i> {{ client.email }}
+                            </span>
+                            {% endif %}
+                            {% if client.phone %}
+                            <span class="text-secondary-800 mt-1">
+                                <i class="fas fa-phone text-secondary-400 mr-1"></i> {{ client.phone }}
+                            </span>
+                            {% endif %}
+                        </div>
+                    </td>
+                    <td class="py-3 px-4">
+                        <div class="flex items-center">
+                            <span class="bg-primary-100 text-primary-800 text-xs px-2 py-1 rounded-full">
+                                {{ client_stats[client.id]['total_invoices'] }} {{ _('invoices') }}
+                            </span>
+                            <span class="bg-orange-100 text-orange-800 text-xs px-2 py-1 rounded-full ml-2">
+                                {{ client_stats[client.id]['total_quotes'] }} {{ _('quotes') }}
+                            </span>
+                        </div>
+                    </td>
+                    <td class="py-3 px-4">
+                        <span
+                            class="{% if client_stats[client.id]['outstanding_amount'] > 0 %}text-red-600 font-medium{% else %}text-success-600{% endif %}">
+                            L.{{ client_stats[client.id]['outstanding_amount']|locale_currency }}
+                        </span>
+                    </td>
+                    <td class="py-3 px-4 text-secondary-500">
+                        {{ client.created_at|locale_date }}
+                    </td>
+                    <td class="py-3 px-4 text-right">
+                        <div class="flex items-center justify-end space-x-2">
+                            <a href="{{ url_for('customers.view', company_id=company_id, id=client.id) }}"
+                                class="text-secondary-600 hover:text-secondary-900" title="{{ _('View') }}">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            <a href="{{ url_for('customers.edit', company_id=company_id, id=client.id) }}"
+                                class="text-primary-600 hover:text-primary-900" title="{{ _('Edit') }}">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <button type="button" onclick="confirmDelete({{ client.id }}, '{{ client.name|e }}')"
+                                class="text-red-600 hover:text-red-900" title="{{ _('Delete') }}">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    {% if pagination.total_pages > 1 %}
+    <div class="flex justify-between items-center px-4 py-3 border-t border-secondary-100">
+        <div class="text-sm text-secondary-500">
+            {{ _('Showing') }} <span class="font-medium">{{ (pagination.page - 1) * pagination.per_page + 1
+                }}</span> {{ _('to') }}
+            <span class="font-medium">{{ [pagination.page * pagination.per_page, pagination.total_items]|min
+                }}</span> {{ _('of') }}
+            <span class="font-medium">{{ pagination.total_items }}</span> {{ _('results') }}
+        </div>
+        <div class="flex space-x-1">
+            {% if pagination.has_prev %}
+            <a href="{{ url_for('customers.index', company_id=company_id, page=pagination.prev_page, per_page=pagination.per_page, search=search, sort_by=sort_by, sort_dir=sort_dir) }}"
+                class="px-3 py-1 rounded-md bg-secondary-100 text-secondary-700 hover:bg-secondary-200">
+                {{ _('Previous') }}
+            </a>
+            {% endif %}
+
+            {% if pagination.has_next %}
+            <a href="{{ url_for('customers.index', company_id=company_id, page=pagination.next_page, per_page=pagination.per_page, search=search, sort_by=sort_by, sort_dir=sort_dir) }}"
+                class="px-3 py-1 rounded-md bg-secondary-100 text-secondary-700 hover:bg-secondary-200">
+                {{ _('Next') }}
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% else %}
+    <div class="p-8 text-center">
+        {% if search %}
+        <p class="text-secondary-500">{{ _('No clients found matching') }} "{{ search }}"</p>
+        <a href="{{ url_for('customers.index', company_id=company_id) }}"
+            class="text-primary-600 hover:text-primary-700 mt-2 inline-block">
+            {{ _('Clear search') }}
+        </a>
+        {% else %}
+        <div class="flex flex-col items-center">
+            <div
+                class="w-16 h-16 bg-secondary-100 rounded-full flex items-center justify-center text-secondary-400 mb-4">
+                <i class="fas fa-users text-2xl"></i>
+            </div>
+            <h3 class="text-lg font-medium text-secondary-900 mb-1">{{ _('No clients yet') }}</h3>
+            <p class="text-secondary-500 mb-4">{{ _('Get started by adding your first client') }}</p>
+            <a href="{{ url_for('customers.create', company_id=company_id) }}"
+                class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition shadow-sm flex items-center">
+                <i class="fas fa-plus mr-2"></i> {{ _('Add Client') }}
+            </a>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden">
+    <div class="bg-secondary-50 rounded-lg shadow-lg max-w-md w-full p-6">
+        <h3 class="text-lg font-bold text-secondary-900 mb-4">{{ _('Confirm Deletion') }}</h3>
+        <p class="text-secondary-700 mb-6">
+            {{ _('Are you sure you want to delete client') }} <span id="clientName" class="font-medium"></span>?
+            {{ _('This action cannot be undone.') }}
+        </p>
+        <div class="flex justify-end space-x-3">
+            <button type="button" onclick="closeDeleteModal()"
+                class="px-4 py-2 bg-secondary-100 text-secondary-700 rounded-lg hover:bg-secondary-200 transition">
+                {{ _('Cancel') }}
+            </button>
+            <form id="deleteForm" method="post" action="">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+                    {{ _('Delete') }}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('customers.static', filename='index.js') }}"></script>
+{% endblock %}

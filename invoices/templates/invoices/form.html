@@ -1,0 +1,461 @@
+{% extends "base.html" %}
+
+{% block title %}{% if invoice %}{{ _('Edit') }} {% if invoice.type.value == 'quote' %}{{ _('Quote') }}{% else %}{{
+_('Invoice') }}{% endif %}{% else %}{{ _('New Document') }}{% endif %} - {{ _('Business Management System') }}{%
+endblock %}
+
+{% block content %}
+<div class="h-full flex flex-col">
+    <!-- Header Section - Fixed -->
+    <div class="flex-shrink-0 mb-6">
+        <div class="flex justify-between items-center">
+            <div>
+                <h2 class="text-2xl font-bold text-fg-base">
+                    {% if invoice %}
+                    {{ _('Edit') }} {% if invoice.type.value == 'quote' %}{{ _('Quote') }}{% else %}{{ _('Invoice') }}{%
+                    endif %}
+                    {% else %}
+                    {{ _('New Document') }}
+                    {% endif %}
+                </h2>
+                <p class="text-fg-muted text-sm mt-1">
+                    {% if invoice %}
+                    {{ _('Update document details') }}
+                    {% else %}
+                    {{ _('Create a new invoice or quote') }}
+                    {% endif %}
+                </p>
+            </div>
+            <div>
+                <a href="{{ url_for('invoices.index', company_id=session.get('selected_company_id')) }}"
+                    class="bg-btn-secondary-bg text-btn-secondary-text px-4 py-2 rounded-lg hover:bg-btn-secondary-hover transition flex items-center">
+                    <i class="fas fa-arrow-left mr-2"></i> {{ _('Back to Documents') }}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scrollable Form Content -->
+    <div class="flex-1 overflow-y-auto">
+        <div class="bg-bg-subtle rounded-xl shadow-sm border border-secondary-200">
+            <form id="invoice-form"
+                action="{% if invoice %}{{ url_for('invoices.update', company_id=session.get('selected_company_id'), id=invoice.id) }}{% else %}{{ url_for('invoices.store', company_id=session.get('selected_company_id')) }}{% endif %}"
+                method="POST" class="p-6">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <!-- Basic Information Section -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-semibold text-fg-base mb-4 border-b border-secondary-200 pb-2">{{
+                        _('Document Information') }}</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div>
+                            <label for="document_number" class="block text-sm font-medium text-fg-base mb-2">
+                                {{ _('Document Number') }} <span class="text-btn-danger-bg">*</span>
+                            </label>
+                            <input type="text" id="document_number" name="document_number"
+                                value="{{ invoice.document_number if invoice else '' }}"
+                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base"
+                                {% if not invoice %}placeholder="{{ _('Auto-generated if left blank') }}" {% endif %}>
+                        </div>
+
+                        <div>
+                            <label for="type" class="block text-sm font-medium text-fg-base mb-2">
+                                {{ _('Document Type') }} <span class="text-btn-danger-bg">*</span>
+                            </label>
+                            <select id="type" name="type"
+                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base"
+                                required>
+                                <option value="">{{ _('Select document type') }}</option>
+                                <option value="invoice" {% if invoice and invoice.type.value=='invoice' %}selected{%
+                                    endif %}>{{ _('Invoice') }}</option>
+                                <option value="quote" {% if invoice and invoice.type.value=='quote' %}selected{% endif
+                                    %}>{{ _('Quote') }}</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="client_id" class="block text-sm font-medium text-fg-base mb-2">
+                                {{ _('Client') }} <span class="text-btn-danger-bg">*</span>
+                            </label>
+                            <select id="client_id" name="client_id"
+                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base"
+                                required>
+                                <option value="">{{ _('Select a client') }}</option>
+                                {% for client in clients %}
+                                <option value="{{ client.id }}" {% if invoice and invoice.client_id==client.id
+                                    %}selected{% endif %}>{{ client.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="status" class="block text-sm font-medium text-fg-base mb-2">
+                                {{ _('Status') }} <span class="text-btn-danger-bg">*</span>
+                            </label>
+                            <select id="status" name="status"
+                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base"
+                                required>
+                                <option value="">{{ _('Select a status') }}</option>
+                                <option value="draft" {% if invoice and invoice.status=='draft' %}selected{% endif %}>{{
+                                    _('Draft') }}</option>
+                                <option value="sent" {% if invoice and invoice.status=='sent' %}selected{% endif %}>{{
+                                    _('Sent') }}</option>
+                                <option value="paid" {% if invoice and invoice.status=='paid' %}selected{% endif %}>{{
+                                    _('Paid') }}</option>
+                                <option value="overdue" {% if invoice and invoice.status=='overdue' %}selected{% endif
+                                    %}>{{ _('Overdue') }}</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="issued_date" class="block text-sm font-medium text-fg-base mb-2">
+                                {{ _('Issue Date') }} <span class="text-btn-danger-bg">*</span>
+                            </label>
+                            <input type="date" id="issued_date" name="issued_date"
+                                value="{{ invoice.issued_date.strftime('%Y-%m-%d') if invoice and invoice.issued_date else '' }}"
+                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base"
+                                required>
+                        </div>
+
+                        <div>
+                            <label for="due_date" class="block text-sm font-medium text-fg-base mb-2">
+                                {{ _('Due Date') }} <span class="text-btn-danger-bg">*</span>
+                            </label>
+                            <input type="date" id="due_date" name="due_date"
+                                value="{{ invoice.due_date.strftime('%Y-%m-%d') if invoice and invoice.due_date else '' }}"
+                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base"
+                                required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Items Section -->
+                <div class="mb-8">
+                    <div class="flex justify-between items-center mb-4 border-b border-secondary-200 pb-2">
+                        <h3 class="text-lg font-semibold text-fg-base">{{ _('Items') }}</h3>
+                        <button type="button" id="add-item"
+                            class="bg-accent-500 hover:bg-accent-600 text-black px-3 py-1 rounded-lg text-sm font-medium flex items-center transition">
+                            <i class="fas fa-plus mr-1"></i> {{ _('Add Item') }}
+                        </button>
+                    </div>
+
+                    <!-- Items Container with proper scrolling -->
+                    <div class="border border-secondary-200 rounded-lg overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-secondary-200">
+                                <thead class="bg-secondary-100 sticky top-0">
+                                    <tr>
+                                        <th
+                                            class="px-4 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider min-w-[200px]">
+                                            {{ _('Item') }}
+                                        </th>
+                                        <th
+                                            class="px-4 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider min-w-[200px]">
+                                            {{ _('Description') }}
+                                        </th>
+                                        <th
+                                            class="px-4 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider w-24">
+                                            {{ _('Qty') }}
+                                        </th>
+                                        <th
+                                            class="px-4 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider w-32">
+                                            {{ _('Unit Price') }}
+                                        </th>
+                                        <th
+                                            class="px-4 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider w-32">
+                                            {{ _('Total') }}
+                                        </th>
+                                        <th
+                                            class="px-4 py-3 text-center text-xs font-medium text-fg-muted uppercase tracking-wider w-16">
+                                            {{ _('Action') }}
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="items-container" class="bg-bg-base divide-y divide-secondary-200">
+                                    {% if invoice and document_items %}
+                                    {% for item in document_items %}
+                                    <tr class="item-row hover:bg-secondary-50">
+                                        <td class="px-4 py-3">
+                                            <select name="items[{{ loop.index0 }}][inventory_item_id]"
+                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-select bg-bg-base text-fg-base">
+                                                <option value="">{{ _('Select an item') }}</option>
+                                                {% for inventory_item in inventory_items %}
+                                                <option value="{{ inventory_item.id }}"
+                                                    data-price="{{ inventory_item.price }}" {% if
+                                                    item.inventory_item_id==inventory_item.id %}selected{% endif %}>
+                                                    {{ inventory_item.name }}
+                                                </option>
+                                                {% endfor %}
+                                            </select>
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <input type="text" name="items[{{ loop.index0 }}][description]"
+                                                value="{{ item.description }}"
+                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <input type="number" name="items[{{ loop.index0 }}][quantity]"
+                                                value="{{ item.quantity }}" min="1"
+                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-quantity bg-bg-base text-fg-base">
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <input type="number" name="items[{{ loop.index0 }}][unit_price]"
+                                                value="{{ item.unit_price }}" min="0" step="0.01"
+                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-price bg-bg-base text-fg-base">
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <div class="item-total font-medium text-fg-base text-sm">
+                                                ${{ "%.2f"|format((item.quantity or 0) * (item.unit_price or 0)) }}
+                                            </div>
+                                        </td>
+                                        <td class="px-4 py-3 text-center">
+                                            <button type="button"
+                                                class="text-btn-danger-bg hover:text-btn-danger-hover remove-item p-1 rounded">
+                                                <i class="fas fa-trash text-sm"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    {% else %}
+                                    <tr class="item-row hover:bg-secondary-50">
+                                        <td class="px-4 py-3">
+                                            <select name="items[0][inventory_item_id]"
+                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-select bg-bg-base text-fg-base">
+                                                <option value="">{{ _('Select an item') }}</option>
+                                                {% for inventory_item in inventory_items %}
+                                                <option value="{{ inventory_item.id }}"
+                                                    data-price="{{ inventory_item.price }}">
+                                                    {{ inventory_item.name }}
+                                                </option>
+                                                {% endfor %}
+                                            </select>
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <input type="text" name="items[0][description]"
+                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <input type="number" name="items[0][quantity]" value="1" min="1"
+                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-quantity bg-bg-base text-fg-base">
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <input type="number" name="items[0][unit_price]" value="0.00" min="0"
+                                                step="0.01"
+                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-price bg-bg-base text-fg-base">
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <div class="item-total font-medium text-fg-base text-sm">$0.00</div>
+                                        </td>
+                                        <td class="px-4 py-3 text-center">
+                                            <button type="button"
+                                                class="text-btn-danger-bg hover:text-btn-danger-hover remove-item p-1 rounded">
+                                                <i class="fas fa-trash text-sm"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes and Totals Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <div>
+                        <label for="notes" class="block text-sm font-medium text-fg-base mb-2">{{ _('Notes') }}</label>
+                        <textarea id="notes" name="notes" rows="6"
+                            class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base resize-none"
+                            placeholder="{{ _('Additional notes or terms...') }}">{{ invoice.notes if invoice and invoice.notes else '' }}</textarea>
+                    </div>
+
+                    <div>
+                        <div class="bg-secondary-100 p-4 rounded-lg h-fit">
+                            <h4 class="font-semibold text-fg-base mb-3">{{ _('Summary') }}</h4>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-fg-muted">{{ _('Subtotal') }}:</span>
+                                    <span id="subtotal" class="font-medium text-fg-base">$0.00</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-fg-muted">{{ _('Tax') }} (15%):</span>
+                                    <span id="tax-15" class="font-medium text-fg-base">$0.00</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-fg-muted">{{ _('Tax') }} (18%):</span>
+                                    <span id="tax-18" class="font-medium text-fg-base">$0.00</span>
+                                </div>
+                                <div class="border-t border-secondary-200 pt-2 mt-2">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-fg-base font-semibold">{{ _('Total') }}:</span>
+                                        <span id="total" class="text-xl font-bold text-fg-base">$0.00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div
+                    class="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-3 pt-6 border-t border-secondary-200">
+                    <a href="{{ url_for('invoices.index', company_id=session.get('selected_company_id')) }}"
+                        class="px-6 py-2 border border-secondary-200 rounded-lg hover:bg-secondary-100 transition text-fg-muted text-center">
+                        {{ _('Cancel') }}
+                    </a>
+                    <button type="submit"
+                        class="bg-btn-primary-bg text-btn-primary-text px-6 py-2 rounded-lg hover:bg-btn-primary-hover transition shadow-sm">
+                        {% if invoice %}{{ _('Update Document') }}{% else %}{{ _('Save Document') }}{% endif %}
+                    </button>
+                    {% if invoice %}
+                    <a href="{{ url_for('invoices.print_invoice', company_id=session.get('selected_company_id'), id=invoice.id) }}"
+                        target="_blank"
+                        class="bg-btn-secondary-bg text-btn-secondary-text px-6 py-2 rounded-lg hover:bg-btn-secondary-hover transition shadow-sm text-center">
+                        {{ _('Download PDF') }}
+                    </a>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const itemsContainer = document.getElementById('items-container');
+        const addItemBtn = document.getElementById('add-item');
+        let itemIndex = {{ document_items| length if invoice and document_items else 1
+    }};
+
+    // Add item functionality
+    addItemBtn.addEventListener('click', function () {
+        const newRow = createItemRow(itemIndex);
+        itemsContainer.appendChild(newRow);
+        itemIndex++;
+        updateTotals();
+
+        // Focus on the first input of the new row
+        const firstInput = newRow.querySelector('select, input');
+        if (firstInput) {
+            firstInput.focus();
+        }
+    });
+
+    // Remove item functionality
+    itemsContainer.addEventListener('click', function (e) {
+        if (e.target.classList.contains('remove-item') || e.target.closest('.remove-item')) {
+            const row = e.target.closest('.item-row');
+            if (itemsContainer.children.length > 1) {
+                row.remove();
+                updateTotals();
+            } else {
+                alert('{{ _("At least one item is required") }}');
+            }
+        }
+    });
+
+    // Update totals when quantities or prices change
+    itemsContainer.addEventListener('input', function (e) {
+        if (e.target.classList.contains('item-quantity') || e.target.classList.contains('item-price')) {
+            updateRowTotal(e.target.closest('.item-row'));
+            updateTotals();
+        }
+    });
+
+    // Auto-fill price when item is selected
+    itemsContainer.addEventListener('change', function (e) {
+        if (e.target.classList.contains('item-select')) {
+            const selectedOption = e.target.options[e.target.selectedIndex];
+            const price = selectedOption.getAttribute('data-price') || 0;
+            const row = e.target.closest('.item-row');
+            const priceInput = row.querySelector('.item-price');
+            priceInput.value = parseFloat(price).toFixed(2);
+            updateRowTotal(row);
+            updateTotals();
+        }
+    });
+
+    // Update document number label based on type
+    const typeSelect = document.getElementById('type');
+    const documentNumberLabel = document.querySelector('label[for="document_number"]');
+
+    typeSelect.addEventListener('change', function () {
+        const selectedType = this.value;
+        if (selectedType === 'quote') {
+            documentNumberLabel.innerHTML = '{{ _("Quote Number") }} <span class="text-btn-danger-bg">*</span>';
+        } else if (selectedType === 'invoice') {
+            documentNumberLabel.innerHTML = '{{ _("Invoice Number") }} <span class="text-btn-danger-bg">*</span>';
+        } else {
+            documentNumberLabel.innerHTML = '{{ _("Document Number") }} <span class="text-btn-danger-bg">*</span>';
+        }
+    });
+
+    function createItemRow(index) {
+        const row = document.createElement('tr');
+        row.className = 'item-row hover:bg-secondary-50';
+        row.innerHTML = `
+            <td class="px-4 py-3">
+                <select name="items[${index}][inventory_item_id]" class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-select bg-bg-base text-fg-base">
+                    <option value="">{{ _('Select an item') }}</option>
+                    {% for inventory_item in inventory_items %}
+                    <option value="{{ inventory_item.id }}" data-price="{{ inventory_item.price }}">{{ inventory_item.name }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td class="px-4 py-3">
+                <input type="text" name="items[${index}][description]" class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+            </td>
+            <td class="px-4 py-3">
+                <input type="number" name="items[${index}][quantity]" value="1" min="1" class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-quantity bg-bg-base text-fg-base">
+            </td>
+            <td class="px-4 py-3">
+                <input type="number" name="items[${index}][unit_price]" value="0.00" min="0" step="0.01" class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-price bg-bg-base text-fg-base">
+            </td>
+            <td class="px-4 py-3">
+                <div class="item-total font-medium text-fg-base text-sm">$0.00</div>
+            </td>
+            <td class="px-4 py-3 text-center">
+                <button type="button" class="text-btn-danger-bg hover:text-btn-danger-hover remove-item p-1 rounded">
+                    <i class="fas fa-trash text-sm"></i>
+                </button>
+            </td>
+        `;
+        return row;
+    }
+
+    function updateRowTotal(row) {
+        const quantity = parseFloat(row.querySelector('.item-quantity').value) || 0;
+        const price = parseFloat(row.querySelector('.item-price').value) || 0;
+        const total = quantity * price;
+        row.querySelector('.item-total').textContent = '$' + total.toFixed(2);
+    }
+
+    function updateTotals() {
+        let subtotal = 0;
+        document.querySelectorAll('.item-row').forEach(row => {
+            const quantity = parseFloat(row.querySelector('.item-quantity').value) || 0;
+            const price = parseFloat(row.querySelector('.item-price').value) || 0;
+            subtotal += quantity * price;
+        });
+
+        const tax15 = subtotal * 0.15;
+        const tax18 = subtotal * 0.18;
+        const total = subtotal + tax15 + tax18;
+
+        document.getElementById('subtotal').textContent = '$' + subtotal.toFixed(2);
+        document.getElementById('tax-15').textContent = '$' + tax15.toFixed(2);
+        document.getElementById('tax-18').textContent = '$' + tax18.toFixed(2);
+        document.getElementById('total').textContent = '$' + total.toFixed(2);
+    }
+
+    // Initialize totals
+    document.querySelectorAll('.item-row').forEach(updateRowTotal);
+    updateTotals();
+
+    // Trigger initial label update
+    if (typeSelect.value) {
+        typeSelect.dispatchEvent(new Event('change'));
+    }
+});
+</script>
+{% endblock %}

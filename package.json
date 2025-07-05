@@ -1,0 +1,21 @@
+{
+  "scripts": {
+    "dev": "concurrently \"./.venv/bin/python ./app.py\" \"npm run build\"",
+    "build": "npx @tailwindcss/cli -i ./src/input.css -o ./static/css/style.css --watch",
+    "requirements": "./.venv/bin/pip freeze > requirements.txt",
+    "i18n:extract": "./.venv/bin/pybabel extract -F ./babel.cfg -o messages.pot .",
+    "i18n:init:es": "./.venv/bin/pybabel init -i messages.pot -d translations -l es",
+    "i18n:init:fr": "./.venv/bin/pybabel init -i messages.pot -d translations -l fr",
+    "i18n:init:pt": "./.venv/bin/pybabel init -i messages.pot -d translations -l pt",
+    "i18n:init:de": "./.venv/bin/pybabel init -i messages.pot -d translations -l de",
+    "i18n:compile": "./.venv/bin/pybabel compile -d translations",
+    "i18n:all": "npm run i18n:extract && npm run i18n:init:es && npm run i18n:init:fr && npm run i18n:init:pt && npm run i18n:init:de && npm run i18n:compile"
+  },
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.6",
+    "tailwindcss": "^4.1.6"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

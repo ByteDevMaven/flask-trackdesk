@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Companies') }} - {{ _('Business Management System') }}{% endblock %}
+
+{% block content %}
+<div class="animate-fadeIn">
+    <div class="flex justify-between items-center mb-6">
+        <div>
+            <h2 class="text-2xl font-bold text-fg-base">{{ _('Companies') }}</h2>
+            <p class="text-fg-muted text-sm mt-1">{{ _('Manage your companies and organizations') }}</p>
+        </div>
+        <div>
+            <a href="{{ url_for('companies.create') }}"
+                class="bg-btn-primary-bg text-btn-primary-text px-4 py-2 rounded-lg hover:bg-btn-primary-hover transition shadow-sm flex items-center">
+                <i class="fas fa-plus mr-2"></i> {{ _('Create Company') }}
+            </a>
+        </div>
+    </div>
+
+    <!-- Search -->
+    <div class="bg-bg-subtle rounded-xl shadow-sm p-4 border border-secondary-200 mb-6">
+        <form action="{{ url_for('companies.index') }}" method="GET" class="flex gap-4">
+            <div class="flex-1">
+                <label for="search" class="block text-sm font-medium text-fg-base mb-1">{{ _('Search Companies')
+                    }}</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-secondary-400"></i>
+                    </div>
+                    <input type="text" id="search" name="search" value="{{ search }}"
+                        placeholder="{{ _('Company name...') }}"
+                        class="block w-full pl-10 pr-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base">
+                </div>
+            </div>
+
+            <div class="flex items-end space-x-3">
+                <button type="submit"
+                    class="bg-btn-primary-bg text-btn-primary-text px-4 py-2 rounded-lg hover:bg-btn-primary-hover transition">
+                    {{ _('Search') }}
+                </button>
+                <a href="{{ url_for('companies.index') }}"
+                    class="bg-btn-secondary-bg text-btn-secondary-text px-4 py-2 rounded-lg hover:bg-btn-secondary-hover transition">
+                    {{ _('Reset') }}
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Companies Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {% if companies.items %}
+        {% for company in companies.items %}
+        <div
+            class="bg-bg-subtle rounded-xl shadow-sm p-6 border border-secondary-200 hover:shadow-md transition-shadow">
+            <div class="flex items-start justify-between mb-4">
+                <div class="flex items-center">
+                    <div
+                        class="w-12 h-12 bg-accent-500 rounded-full flex items-center justify-center text-btn-primary-text font-bold text-lg mr-3">
+                        {{ company.name[0].upper() if company.name else 'C' }}
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-semibold text-fg-base">{{ company.name }}</h3>
+                        <p class="text-sm text-fg-muted">{{ _('Created') }} {{ company.created_at.strftime('%Y-%m-%d')
+                            if company.created_at else '-' }}</p>
+                    </div>
+                </div>
+                <div class="flex space-x-2">
+                    <a href="{{ url_for('companies.view', id=company.id) }}"
+                        class="text-accent-600 hover:text-accent-700" title="{{ _('View') }}">
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    <a href="{{ url_for('companies.edit', id=company.id) }}"
+                        class="text-accent-600 hover:text-accent-700" title="{{ _('Edit') }}">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="space-y-2 mb-4">
+                <div class="flex justify-between text-sm">
+                    <span class="text-fg-muted">{{ _('Users') }}:</span>
+                    <span class="font-medium text-fg-base">{{ company.users|length }}</span>
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center pt-4 border-t border-secondary-200">
+                <a href="{{ url_for('companies.view', id=company.id) }}"
+                    class="text-accent-600 hover:text-accent-700 text-sm font-medium flex items-center">
+                    {{ _('View Details') }}
+                    <i class="fas fa-chevron-right ml-1 text-xs"></i>
+                </a>
+                <form action="{{ url_for('companies.delete', id=company.id) }}" method="POST" class="inline">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit" class="text-btn-danger-bg hover:text-btn-danger-hover text-sm"
+                        title="{{ _('Delete') }}"
+                        onclick="return confirm('{{ _('Are you sure you want to delete this company? This action cannot be undone.') }}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="col-span-full">
+            <div class="bg-bg-subtle rounded-xl shadow-sm p-12 border border-secondary-200 text-center">
+                <div
+                    class="w-16 h-16 bg-secondary-100 rounded-full flex items-center justify-center text-secondary-400 mb-4 mx-auto">
+                    <i class="fas fa-building text-xl"></i>
+                </div>
+                <h3 class="text-lg font-medium text-fg-base mb-2">{{ _('No companies found') }}</h3>
+                <p class="text-fg-muted mb-4">
+                    {% if search %}
+                    {{ _('No companies match your search criteria.') }}
+                    {% else %}
+                    {{ _('Get started by creating your first company.') }}
+                    {% endif %}
+                </p>
+                <a href="{{ url_for('companies.create') }}"
+                    class="bg-btn-primary-bg text-btn-primary-text px-4 py-2 rounded-lg hover:bg-btn-primary-hover transition shadow-sm inline-flex items-center">
+                    <i class="fas fa-plus mr-2"></i> {{ _('Create Company') }}
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Pagination -->
+    {% if companies.pages > 1 %}
+    <div class="mt-8 flex justify-center">
+        <nav class="flex items-center space-x-2">
+            {% if companies.has_prev %}
+            <a href="{{ url_for('companies.index', page=companies.prev_num, search=search) }}"
+                class="px-3 py-2 rounded-md bg-bg-subtle border border-secondary-200 text-fg-base hover:bg-secondary-100">
+                <i class="fas fa-chevron-left text-xs"></i>
+            </a>
+            {% else %}
+            <span
+                class="px-3 py-2 rounded-md bg-secondary-100 border border-secondary-200 text-secondary-400 cursor-not-allowed">
+                <i class="fas fa-chevron-left text-xs"></i>
+            </span>
+            {% endif %}
+
+            {% for page in companies.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+            {% if page %}
+            {% if page == companies.page %}
+            <span class="px-3 py-2 rounded-md bg-accent-500 text-btn-primary-text">{{ page }}</span>
+            {% else %}
+            <a href="{{ url_for('companies.index', page=page, search=search) }}"
+                class="px-3 py-2 rounded-md bg-bg-subtle border border-secondary-200 text-fg-base hover:bg-secondary-100">{{
+                page }}</a>
+            {% endif %}
+            {% else %}
+            <span class="px-3 py-2 text-secondary-400">…</span>
+            {% endif %}
+            {% endfor %}
+
+            {% if companies.has_next %}
+            <a href="{{ url_for('companies.index', page=companies.next_num, search=search) }}"
+                class="px-3 py-2 rounded-md bg-bg-subtle border border-secondary-200 text-fg-base hover:bg-secondary-100">
+                <i class="fas fa-chevron-right text-xs"></i>
+            </a>
+            {% else %}
+            <span
+                class="px-3 py-2 rounded-md bg-secondary-100 border border-secondary-200 text-secondary-400 cursor-not-allowed">
+                <i class="fas fa-chevron-right text-xs"></i>
+            </span>
+            {% endif %}
+        </nav>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

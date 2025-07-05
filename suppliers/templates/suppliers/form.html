@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% if action == 'create' %}
+{{ _('Add Supplier') }}
+{% else %}
+{{ _('Edit Supplier') }}
+{% endif %} | {{ super() }}
+{% endblock %}
+
+{% block content %}
+<div class="animate-fadeIn">
+    <div class="flex justify-between items-center mb-6">
+        <div>
+            <h1 class="text-2xl font-bold text-secondary-900">
+                {% if action == 'create' %}
+                {{ _('Add New Supplier') }}
+                {% else %}
+                {{ _('Edit Supplier') }}
+                {% endif %}
+            </h1>
+            <p class="text-secondary-500 text-sm mt-1">
+                {% if action == 'create' %}
+                {{ _('Create a new supplier record') }}
+                {% else %}
+                {{ _('Update supplier information') }}
+                {% endif %}
+            </p>
+        </div>
+
+        <div>
+            <a href="{{ url_for('suppliers.index', company_id=company_id) }}"
+                class="bg-secondary-100 text-secondary-800 px-4 py-2 rounded-lg hover:bg-secondary-200 transition shadow-sm flex items-center">
+                <i class="fas fa-arrow-left mr-2"></i> {{ _('Back to Suppliers') }}
+            </a>
+        </div>
+    </div>
+
+    <div class="bg-secondary-50 rounded-xl shadow-card p-6 border border-secondary-100">
+        <form method="POST" class="space-y-6">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="company_id" value="{{ company_id }}">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-secondary-700 mb-1">
+                            {{ _('Supplier Name') }} <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" id="name" name="name" value="{{ supplier.name if supplier else '' }}"
+                            required
+                            class="bg-secondary-50 border border-secondary-200 text-secondary-800 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                            placeholder="{{ _('Enter supplier name') }}">
+                    </div>
+
+                    <div>
+                        <label for="contact_email" class="block text-sm font-medium text-secondary-700 mb-1">
+                            {{ _('Contact Email') }}
+                        </label>
+                        <input type="email" id="contact_email" name="contact_email"
+                            value="{{ supplier.contact_email if supplier and supplier.contact_email else '' }}"
+                            class="bg-secondary-50 border border-secondary-200 text-secondary-800 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                            placeholder="{{ _('Enter contact email') }}">
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-secondary-700 mb-1">
+                            {{ _('Phone') }}
+                        </label>
+                        <input type="text" id="phone" name="phone"
+                            value="{{ supplier.phone if supplier and supplier.phone else '' }}"
+                            class="bg-secondary-50 border border-secondary-200 text-secondary-800 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                            placeholder="{{ _('Enter phone number') }}">
+                    </div>
+
+                    <div>
+                        <label for="address" class="block text-sm font-medium text-secondary-700 mb-1">
+                            {{ _('Address') }}
+                        </label>
+                        <textarea id="address" name="address" rows="3"
+                            class="bg-secondary-50 border border-secondary-200 text-secondary-800 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5"
+                            placeholder="{{ _('Enter supplier address') }}">{{ supplier.address if supplier and supplier.address else '' }}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-3 pt-4 border-t border-secondary-100">
+                <a href="{{ url_for('suppliers.index', company_id=company_id) }}"
+                    class="px-4 py-2 bg-secondary-100 text-secondary-800 rounded-lg hover:bg-secondary-200 transition">
+                    {{ _('Cancel') }}
+                </a>
+                <button type="submit"
+                    class="px-4 py-2 bg-primary-500 text-secondary-50 rounded-lg hover:bg-primary-600 transition">
+                    {% if action == 'create' %}
+                    {{ _('Create Supplier') }}
+                    {% else %}
+                    {{ _('Update Supplier') }}
+                    {% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

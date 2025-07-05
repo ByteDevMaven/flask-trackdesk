@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ supplier.name }} | {{ _('Suppliers') }} | {{ super() }}{% endblock %}
+
+{% block content %}
+<div class="animate-fadeIn">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+        <div>
+            <h1 class="text-2xl font-bold text-secondary-900">{{ supplier.name }}</h1>
+            <p class="text-secondary-500 text-sm mt-1">
+                {{ _('Supplier details and inventory items') }}
+            </p>
+        </div>
+
+        <div class="flex flex-wrap gap-3">
+            <a href="{{ url_for('suppliers.index', company_id=company_id) }}"
+                class="bg-secondary-100 text-secondary-800 px-4 py-2 rounded-lg hover:bg-secondary-200 transition shadow-sm flex items-center">
+                <i class="fas fa-arrow-left mr-2"></i> {{ _('Back to Suppliers') }}
+            </a>
+            <a href="{{ url_for('suppliers.edit', supplier_id=supplier.id, company_id=company_id) }}"
+                class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 transition shadow-sm flex items-center">
+                <i class="fas fa-edit mr-2"></i> {{ _('Edit') }}
+            </a>
+            <button type="button" id="delete-btn"
+                class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition shadow-sm flex items-center">
+                <i class="fas fa-trash mr-2"></i> {{ _('Delete') }}
+            </button>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Supplier Information -->
+        <div class="lg:col-span-1">
+            <div class="bg-secondary-50 rounded-xl shadow-card p-6 border border-secondary-100">
+                <h2 class="text-lg font-semibold text-secondary-900 mb-4">{{ _('Supplier Information') }}</h2>
+
+                <div class="space-y-4">
+                    {% if supplier.contact_email %}
+                    <div>
+                        <p class="text-sm text-secondary-500">{{ _('Email') }}</p>
+                        <a href="mailto:{{ supplier.contact_email }}"
+                            class="text-primary-500 hover:text-primary-700 hover:underline">
+                            {{ supplier.contact_email }}
+                        </a>
+                    </div>
+                    {% endif %}
+
+                    {% if supplier.phone %}
+                    <div>
+                        <p class="text-sm text-secondary-500">{{ _('Phone') }}</p>
+                        <a href="tel:{{ supplier.phone }}"
+                            class="text-primary-500 hover:text-primary-700 hover:underline">
+                            {{ supplier.phone }}
+                        </a>
+                    </div>
+                    {% endif %}
+
+                    {% if supplier.address %}
+                    <div>
+                        <p class="text-sm text-secondary-500">{{ _('Address') }}</p>
+                        <p class="text-secondary-800 whitespace-pre-line">{{ supplier.address }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Inventory Items -->
+        <div class="lg:col-span-2">
+            <div class="bg-secondary-50 rounded-xl shadow-card border border-secondary-100 overflow-hidden">
+                <div class="p-6 border-b border-secondary-100 flex justify-between items-center">
+                    <h2 class="text-lg font-semibold text-secondary-900">{{ _('Inventory Items') }}</h2>
+                    <a href="{{ url_for('inventory.create', supplier_id=supplier.id, company_id=company_id) }}"
+                        class="text-primary-500 text-sm hover:text-primary-600 flex items-center">
+                        <i class="fas fa-plus mr-1"></i> {{ _('Add Item') }}
+                    </a>
+                </div>
+
+                {% if inventory_items %}
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm text-left text-secondary-800">
+                        <thead class="text-xs text-secondary-700 uppercase bg-secondary-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">{{ _('Name') }}</th>
+                                <th scope="col" class="px-6 py-3">{{ _('Description') }}</th>
+                                <th scope="col" class="px-6 py-3">{{ _('Quantity') }}</th>
+                                <th scope="col" class="px-6 py-3">{{ _('Price') }}</th>
+                                <th scope="col" class="px-6 py-3 text-right">{{ _('Actions') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in inventory_items %}
+                            <tr class="border-b border-secondary-100 hover:bg-secondary-50">
+                                <td class="px-6 py-4 font-medium">
+                                    <a href="{{ url_for('inventory.edit', id=item.id, company_id=company_id) }}"
+                                        class="text-primary-500 hover:text-primary-700 hover:underline">
+                                        {{ item.name }}
+                                    </a>
+                                </td>
+                                <td class="px-6 py-4">{{ item.description|truncate(50) if item.description else '-' }}
+                                </td>
+                                <td class="px-6 py-4">{{ item.quantity }}</td>
+                                <td class="px-6 py-4">{{ "%.2f"|format(item.price) }}</td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex justify-end gap-2">
+                                        <a href="{{ url_for('inventory.edit', id=item.id, company_id=company_id) }}"
+                                            class="text-secondary-500 hover:text-secondary-700" title="{{ _('View') }}">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="{{ url_for('inventory.edit', id=item.id, company_id=company_id) }}"
+                                            class="text-primary-500 hover:text-primary-700 hidden" title="{{ _('Edit') }}">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="p-6 text-center">
+                    <p class="text-secondary-500 mb-4">{{ _('No inventory items found for this supplier.') }}</p>
+                    <a href="{{ url_for('inventory.create', supplier_id=supplier.id, company_id=company_id) }}"
+                        class="bg-primary-500 text-white px-4 py-2 rounded-lg hover:bg-primary-600 transition shadow-sm inline-flex items-center">
+                        <i class="fas fa-plus mr-2"></i> {{ _('Add First Item') }}
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="delete-modal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden">
+    <div class="bg-secondary-50 rounded-lg shadow-xl max-w-md w-full mx-4">
+        <div class="p-6">
+            <h3 class="text-lg font-bold text-secondary-900 mb-4">{{ _('Confirm Deletion') }}</h3>
+            <p class="text-secondary-600 mb-6">{{ _('Are you sure you want to delete') }} <span class="font-semibold">{{
+                    supplier.name }}</span>? {{ _('This action cannot be undone.') }}</p>
+            <div class="flex justify-end gap-3">
+                <button id="cancel-delete"
+                    class="px-4 py-2 bg-secondary-100 text-secondary-800 rounded-lg hover:bg-secondary-200 transition">
+                    {{ _('Cancel') }}
+                </button>
+                <form method="POST" action="{{ url_for('suppliers.delete', supplier_id=supplier.id, company_id=company_id) }}">
+                    <button type="submit"
+                        class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition">
+                        {{ _('Delete') }}
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{{ url_for('suppliers.static', filename='js/delete.js') }}"></script>
+{% endblock %}

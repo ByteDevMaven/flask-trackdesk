@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+
+{% block title %}{% if item %}{{ _('Edit Inventory Item') }}{% else %}{{ _('Add Inventory Item') }}{% endif %} - {{
+_('Business Management System') }}{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<div class="mb-6">
+    <div class="flex items-center space-x-4 mb-4">
+        <a href="{{ url_for('inventory.index', company_id=company_id) }}"
+            class="text-fg-muted hover:text-fg-base transition">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <div>
+            <h2 class="text-2xl font-bold text-fg-base">
+                {% if item %}{{ _('Edit Inventory Item') }}{% else %}{{ _('Add Inventory Item') }}{% endif %}
+            </h2>
+            <p class="text-fg-muted text-sm mt-1">
+                {% if item %}{{ _('Update the details of your inventory item') }}{% else %}{{ _('Add a new item to your
+                inventory') }}{% endif %}
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Form -->
+<div class="bg-bg-subtle rounded-xl shadow-sm border border-primary-200">
+    <form method="POST" class="p-6"
+        action="{{ url_for('inventory.update', company_id=company_id, id=item.id) if item else url_for('inventory.create', company_id=company_id) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <!-- Left Column -->
+            <div class="space-y-6">
+                <div class="bg-bg-base rounded-lg p-4 border border-primary-200">
+                    <h3 class="text-lg font-medium text-fg-base mb-4">{{ _('Basic Information') }}</h3>
+
+                    <!-- Name -->
+                    <div class="mb-4">
+                        <label for="name" class="block text-sm font-medium text-fg-base mb-2">
+                            {{ _('Item Name') }} <span class="text-btn-danger-bg">*</span>
+                        </label>
+                        <input type="text" id="name" name="name"
+                            value="{{ item.name if item else (form_data.name if form_data else '') }}" required
+                            class="w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base"
+                            placeholder="{{ _('Enter item name') }}">
+                    </div>
+
+                    <!-- Description -->
+                    <div>
+                        <label for="description" class="block text-sm font-medium text-fg-base mb-2">
+                            {{ _('Description') }}
+                        </label>
+                        <textarea id="description" name="description" rows="4"
+                            class="w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base"
+                            placeholder="{{ _('Enter item description (optional)') }}">{{ item.description if item else (form_data.description if form_data else '') }}</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="space-y-6">
+                <!-- Inventory Details -->
+                <div class="bg-bg-base rounded-lg p-4 border border-primary-200">
+                    <h3 class="text-lg font-medium text-fg-base mb-4">{{ _('Inventory Details') }}</h3>
+
+                    <!-- Quantity -->
+                    <div class="mb-4">
+                        <label for="quantity" class="block text-sm font-medium text-fg-base mb-2">
+                            {{ _('Current Quantity') }} <span class="text-btn-danger-bg">*</span>
+                        </label>
+                        <input type="number" id="quantity" name="quantity"
+                            value="{{ item.quantity if item else (form_data.quantity if form_data else '0') }}" min="0"
+                            required
+                            class="w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                    </div>
+
+                    <!-- Price -->
+                    <div class="mb-4">
+                        <label for="price" class="block text-sm font-medium text-fg-base mb-2">
+                            {{ _('Unit Price') }} <span class="text-btn-danger-bg">*</span>
+                        </label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <span class="text-fg-muted">$</span>
+                            </div>
+                            <input type="number" id="price" name="price"
+                                value="{{ item.price if item else (form_data.price if form_data else '0.00') }}"
+                                step="0.01" min="0" required
+                                class="w-full pl-8 pr-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                        </div>
+                    </div>
+
+                    <!-- Supplier -->
+                    <div>
+                        <label for="supplier_id" class="block text-sm font-medium text-fg-base mb-2">
+                            {{ _('Supplier') }}
+                        </label>
+                        <select id="supplier_id" name="supplier_id"
+                            class="w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                            <option value="">{{ _('Select a supplier (optional)') }}</option>
+                            {% for supplier in suppliers %}
+                            {% set selected_supplier = item.supplier_id if item else (selected_id if selected_id else
+                            (form_data.supplier_id if form_data else '')) %}
+                            <option value="{{ supplier.id }}" {% if selected_supplier|string==supplier.id|string
+                                %}selected{% endif %}>
+                                {{ supplier.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        {% if not suppliers %}
+                        <p class="text-xs text-fg-muted mt-1">
+                            {{ _('No suppliers available.') }}
+                            <a href="{{ url_for('suppliers.create', company_id=company_id) }}"
+                                class="text-accent-600 hover:text-accent-700">{{ _('Add a supplier') }}</a>
+                        </p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Stock Status Preview -->
+                {% if item %}
+                <div class="bg-accent-50 rounded-lg p-4 border border-accent-200">
+                    <h3 class="text-lg font-medium text-fg-base mb-4">{{ _('Current Status') }}</h3>
+
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-fg-muted">{{ _('Stock Level') }}</span>
+                            <span class="px-2 py-1 text-xs rounded-full font-medium
+                                    {% if item.quantity == 0 %}bg-btn-danger-bg text-btn-danger-text
+                                    {% elif item.quantity <= 10 %}bg-btn-alert-bg text-btn-alert-text
+                                    {% else %}bg-accent-200 text-accent-800{% endif %}">
+                                {% if item.quantity == 0 %}{{ _('Out of Stock') }}
+                                {% elif item.quantity <= 10 %}{{ _('Low Stock') }} {% else %}{{ _('In Stock') }}{% endif
+                                    %} </span>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-fg-muted">{{ _('Total Value') }}</span>
+                            <span class="font-medium text-fg-base">${{ "%.2f"|format(item.quantity * item.price)
+                                }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="mt-8 pt-6 border-t border-primary-200">
+            <div class="flex justify-end space-x-3">
+                <a href="{{ url_for('inventory.index', company_id=company_id) }}"
+                    class="px-6 py-2 border border-primary-400 rounded-lg text-btn-secondary-text bg-btn-secondary-bg hover:bg-btn-secondary-hover transition">
+                    {{ _('Cancel') }}
+                </a>
+                <button type="submit"
+                    class="px-6 py-2 bg-btn-primary-bg text-btn-primary-text rounded-lg hover:bg-btn-primary-hover transition flex items-center">
+                    <i class="fas fa-save mr-2"></i>
+                    {% if item %}{{ _('Update Item') }}{% else %}{{ _('Create Item') }}{% endif %}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Form Enhancement JavaScript -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Real-time validation
+        const quantityInput = document.getElementById('quantity');
+        const priceInput = document.getElementById('price');
+
+        function validateNumber(input, min = 0) {
+            const value = parseFloat(input.value);
+            if (isNaN(value) || value < min) {
+                input.classList.add('border-btn-danger-bg');
+                input.classList.remove('border-primary-300');
+            } else {
+                input.classList.remove('border-btn-danger-bg');
+                input.classList.add('border-primary-300');
+            }
+        }
+
+        quantityInput.addEventListener('input', () => validateNumber(quantityInput));
+        priceInput.addEventListener('input', () => validateNumber(priceInput));
+
+        // Form submission validation
+        document.querySelector('form').addEventListener('submit', function (e) {
+            let isValid = true;
+            const nameInput = document.getElementById('name');
+
+            if (!nameInput.value.trim()) {
+                nameInput.classList.add('border-btn-danger-bg');
+                isValid = false;
+            }
+
+            if (parseFloat(quantityInput.value) < 0 || isNaN(parseFloat(quantityInput.value))) {
+                quantityInput.classList.add('border-btn-danger-bg');
+                isValid = false;
+            }
+
+            if (parseFloat(priceInput.value) < 0 || isNaN(parseFloat(priceInput.value))) {
+                priceInput.classList.add('border-btn-danger-bg');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                e.preventDefault();
+                alert('{{ _("Please correct the highlighted fields") }}');
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends 'auth/base.html' %}
+
+{% block title %}{{ _('Register - Trackdesk') }}{% endblock %}
+
+{% block content %}
+<!-- Register card -->
+<div class="bg-bg-base shadow-xl rounded-xl overflow-hidden transform transition-all">
+    <!-- Card header -->
+    <div class="px-6 py-8 bg-bg-subtle sm:px-10">
+        <h2 class="text-xl font-bold text-fg-base text-center">
+            {{ _('Create your account') }}
+        </h2>
+    </div>
+    <!-- Register form -->
+    <div class="px-6 py-8 sm:px-10">
+        <form class="space-y-6" action="{{ url_for('auth.register') }}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="company_id" value="{{ company_id }}">
+
+            <div>
+                <label for="name" class="block text-sm font-medium text-fg-muted">
+                    {{ _('Name') }}
+                </label>
+                <div class="mt-1 relative rounded-md shadow-sm">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fa-solid fa-user text-fg-muted/80"></i>
+                    </div>
+                    <input id="name" name="name" type="text" autocomplete="name" required
+                        class="block w-full pl-10 pr-3 py-3 border text-fg-base border-fg-muted/90 rounded-md placeholder-fg-muted focus:outline-none focus:ring-2 focus:ring-btn-primary-bg focus:border-btn-primary-bg transition duration-150 ease-in-out sm:text-sm"
+                        placeholder="Juan Orlando">
+                </div>
+            </div>
+
+            <div>
+                <label for="email" class="block text-sm font-medium text-fg-muted">
+                    {{ _('Email address') }}
+                </label>
+                <div class="mt-1 relative rounded-md shadow-sm">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-envelope text-fg-muted/80"></i>
+                    </div>
+                    <input id="email" name="email" type="email" autocomplete="email" required
+                        class="block w-full pl-10 pr-3 py-3 border text-fg-base border-fg-muted/90 rounded-md placeholder-fg-muted focus:outline-none focus:ring-2 focus:ring-btn-primary-bg focus:border-btn-primary-bg transition duration-150 ease-in-out sm:text-sm"
+                        placeholder="you@example.com">
+                </div>
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-medium text-fg-muted">
+                    {{ _('Password') }}
+                </label>
+                <div class="mt-1 relative rounded-md shadow-sm">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-lock text-fg-muted/80"></i>
+                    </div>
+                    <input id="password" name="password" type="password" required
+                        class="block w-full pl-10 pr-3 py-3 border text-fg-base border-fg-muted/90 rounded-md placeholder-fg-muted focus:outline-none focus:ring-2 focus:ring-btn-primary-bg focus:border-btn-primary-bg transition duration-150 ease-in-out sm:text-sm"
+                        placeholder="••••••••">
+                </div>
+            </div>
+
+            <div>
+                <label for="confirm_password" class="block text-sm font-medium text-fg-muted">
+                    {{ _('Confirm Password') }}
+                </label>
+                <div class="mt-1 relative rounded-md shadow-sm">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-lock text-fg-muted/80"></i>
+                    </div>
+                    <input id="confirmpassword" name="confirmpassword" type="password" required
+                        class="block w-full pl-10 pr-3 py-3 border text-fg-base border-fg-muted/90 rounded-md placeholder-fg-muted focus:outline-none focus:ring-2 focus:ring-btn-primary-bg focus:border-btn-primary-bg transition duration-150 ease-in-out sm:text-sm"
+                        placeholder="••••••••">
+                </div>
+            </div>
+
+            <div>
+                <button type="submit"
+                    class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-btn-primary-text bg-btn-primary-bg hover:bg-btn-primary-hover focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-btn-primary-bg transition duration-150 ease-in-out transform hover:-translate-y-0.5">
+                    <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                        <i class="fas fa-user-plus text-btn-primary-text transition ease-in-out duration-150"></i>
+                    </span>
+                    {{ _('Create Account') }}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="text-center">
+    <p class="text-sm text-fg-base">
+        {{ _('Already have an account?') }}
+        <a href="{{ url_for('auth.login') }}"
+            class="font-semibold underline text-btn-primary-bg hover:text-btn-primary-hover transition">
+            {{ _('Sign in') }}
+        </a>
+    </p>
+</div>
+{% endblock %}

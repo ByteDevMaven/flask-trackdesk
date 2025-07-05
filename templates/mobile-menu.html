@@ -1,0 +1,70 @@
+<div class="md:hidden bg-secondary-800 shadow-lg w-full absolute top-16 left-0 z-20 transform -translate-x-full transition-transform duration-300"
+    id="mobile-menu">
+    <nav class="py-4 px-4">
+        <div class="space-y-1">
+            <a href="{{ url_for('dashboard.index', company_id=session.get('selected_company_id')) }}"
+                class="flex items-center px-3 py-3 {% if request.endpoint == 'dashboard' %}text-white bg-primary-600{% else %}text-secondary-300 hover:bg-secondary-700{% endif %} rounded-lg">
+                <span class="w-8 h-8 flex items-center justify-center">
+                    <i
+                        class="fas fa-tachometer-alt {% if request.endpoint == 'dashboard' %}text-primary-100{% else %}text-secondary-400{% endif %}"></i>
+                </span>ss
+                <span class="ml-3">{{ _('Dashboard') }}</span>
+            </a>
+            <a href="{{ url_for('customers.index', company_id=session.get('selected_company_id')) }}"
+                class="flex items-center px-3 py-3 {% if request.endpoint.startswith('clients') %}text-white bg-primary-600{% else %}text-secondary-300 hover:bg-secondary-700{% endif %} rounded-lg">
+                <span class="w-8 h-8 flex items-center justify-center">
+                    <i
+                        class="fas fa-users {% if request.endpoint.startswith('clients') %}text-primary-100{% else %}text-secondary-400{% endif %}"></i>
+                </span>
+                <span class="ml-3">{{ _('Clients') }}</span>
+            </a>
+            <a href="{{ url_for('suppliers.index', company_id=session.get('selected_company_id')) }}"
+                class="flex items-center px-3 py-3 {% if request.endpoint.startswith('suppliers') %}text-white bg-primary-600{% else %}text-secondary-300 hover:bg-secondary-700{% endif %} rounded-lg">
+                <span class="w-8 h-8 flex items-center justify-center">
+                    <i
+                        class="fas fa-truck {% if request.endpoint.startswith('suppliers') %}text-primary-100{% else %}text-secondary-400{% endif %}"></i>
+                </span>
+                <span class="ml-3">{{ _('Suppliers') }}</span>
+            </a>
+            <a href="{{ url_for('inventory.index', company_id=session.get('selected_company_id')) }}"
+                class="flex items-center px-3 py-3 {% if request.endpoint.startswith('inventory') %}text-white bg-primary-600{% else %}text-secondary-300 hover:bg-secondary-700{% endif %} rounded-lg">
+                <span class="w-8 h-8 flex items-center justify-center">
+                    <i
+                        class="fas fa-boxes {% if request.endpoint.startswith('inventory') %}text-primary-100{% else %}text-secondary-400{% endif %}"></i>
+                </span>
+                <span class="ml-3">{{ _('Inventory') }}</span>
+            </a>
+        </div>
+
+        <div class="mt-4 pt-4 border-t border-secondary-700">
+            <h3 class="text-xs font-semibold text-secondary-400 uppercase tracking-wider px-3 mb-3">{{ _('Documents') }}
+            </h3>
+            <div class="space-y-1">
+                <a href=""
+                    class="flex items-center px-3 py-3 {% if request.endpoint == 'documents.quotes' %}text-white bg-primary-600{% else %}text-secondary-300 hover:bg-secondary-700{% endif %} rounded-lg">
+                    <span class="w-8 h-8 flex items-center justify-center">
+                        <i
+                            class="fas fa-file-invoice-dollar {% if request.endpoint == 'documents.quotes' %}text-primary-100{% else %}text-secondary-400{% endif %}"></i>
+                    </span>
+                    <span class="ml-3">{{ _('Quotes') }}</span>
+                </a>
+                <a href=""
+                    class="flex items-center px-3 py-3 {% if request.endpoint == 'documents.invoices' %}text-white bg-primary-600{% else %}text-secondary-300 hover:bg-secondary-700{% endif %} rounded-lg">
+                    <span class="w-8 h-8 flex items-center justify-center">
+                        <i
+                            class="fas fa-file-invoice {% if request.endpoint == 'documents.invoices' %}text-primary-100{% else %}text-secondary-400{% endif %}"></i>
+                    </span>
+                    <span class="ml-3">{{ _('Invoices') }}</span>
+                </a>
+                <a href=""
+                    class="flex items-center px-3 py-3 {% if request.endpoint.startswith('payments') %}text-white bg-primary-600{% else %}text-secondary-300 hover:bg-secondary-700{% endif %} rounded-lg">
+                    <span class="w-8 h-8 flex items-center justify-center">
+                        <i
+                            class="fas fa-money-bill-wave {% if request.endpoint.startswith('payments') %}text-primary-100{% else %}text-secondary-400{% endif %}"></i>
+                    </span>
+                    <span class="ml-3">{{ _('Payments') }}</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+</div>

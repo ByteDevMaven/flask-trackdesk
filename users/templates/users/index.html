@@ -1,0 +1,365 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Users') }} - {{ _('Business Management System') }}{% endblock %}
+
+{% block content %}
+<div class="animate-fadeIn">
+    <div class="flex justify-between items-center mb-6">
+        <div>
+            <h2 class="text-2xl font-bold text-fg-base">{{ _('Users') }}</h2>
+            <p class="text-fg-muted text-sm mt-1">{{ _('Manage system users and their permissions') }}</p>
+        </div>
+        <div>
+            <a href="{{ url_for('users.create') }}"
+                class="bg-btn-primary-bg text-btn-primary-text px-4 py-2 rounded-lg hover:bg-btn-primary-hover transition shadow-sm flex items-center">
+                <i class="fas fa-plus mr-2"></i> {{ _('Add User') }}
+            </a>
+        </div>
+    </div>
+
+    <!-- Search and Filter -->
+    <div class="bg-bg-subtle rounded-xl shadow-sm p-4 border border-secondary-200 mb-6">
+        <form action="{{ url_for('users.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-5 gap-4">
+            <div>
+                <label for="search" class="block text-sm font-medium text-fg-base mb-1">{{ _('Search') }}</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-secondary-400"></i>
+                    </div>
+                    <input type="text" id="search" name="search" value="{{ search }}"
+                        placeholder="{{ _('Name or email...') }}"
+                        class="block w-full pl-10 pr-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base">
+                </div>
+            </div>
+
+            <div>
+                <label for="role" class="block text-sm font-medium text-fg-base mb-1">{{ _('Role') }}</label>
+                <select id="role" name="role"
+                    class="block w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base">
+                    <option value="">{{ _('All Roles') }}</option>
+                    {% for role in roles %}
+                    <option value="{{ role.id }}" {% if role_filter==role.id|string %}selected{% endif %}>{{ role.name
+                        }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label for="company" class="block text-sm font-medium text-fg-base mb-1">{{ _('Company') }}</label>
+                <select id="company" name="company"
+                    class="block w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base">
+                    <option value="">{{ _('All Companies') }}</option>
+                    {% for company in companies %}
+                    <option value="{{ company.id }}" {% if company_filter==company.id|string %}selected{% endif %}>{{
+                        company.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div>
+                <label for="status" class="block text-sm font-medium text-fg-base mb-1">{{ _('Status') }}</label>
+                <select id="status" name="status"
+                    class="block w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base">
+                    <option value="">{{ _('All Status') }}</option>
+                    <option value="active" {% if status_filter=='active' %}selected{% endif %}>{{ _('Active') }}
+                    </option>
+                    <option value="inactive" {% if status_filter=='inactive' %}selected{% endif %}>{{ _('Inactive') }}
+                    </option>
+                </select>
+            </div>
+
+            <div class="flex items-end space-x-3">
+                <button type="submit"
+                    class="bg-btn-primary-bg text-btn-primary-text px-4 py-2 rounded-lg hover:bg-btn-primary-hover transition">
+                    {{ _('Apply Filters') }}
+                </button>
+                <a href="{{ url_for('users.index') }}"
+                    class="bg-btn-secondary-bg text-btn-secondary-text px-4 py-2 rounded-lg hover:bg-btn-secondary-hover transition">
+                    {{ _('Reset') }}
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Users Table -->
+    <div class="bg-bg-subtle rounded-xl shadow-sm overflow-hidden border border-secondary-200">
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-secondary-200">
+                <thead class="bg-secondary-100">
+                    <tr>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
+                            {{ _('User') }}</th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
+                            {{ _('Email') }}</th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
+                            {{ _('Role') }}</th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
+                            {{ _('Status') }}</th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
+                            {{ _('Companies') }}</th>
+                        <th scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-secondary-500 uppercase tracking-wider">
+                            {{ _('Created') }}</th>
+                        <th scope="col"
+                            class="px-6 py-3 text-right text-xs font-medium text-secondary-500 uppercase tracking-wider">
+                            {{ _('Actions') }}</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-bg-base divide-y divide-secondary-200">
+                    {% if users %}
+                    {% for user in users %}
+                    <tr class="hover:bg-secondary-100 transition-colors">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 h-10 w-10">
+                                    <div
+                                        class="h-10 w-10 rounded-full {% if user.active %}bg-accent-500{% else %}bg-secondary-400{% endif %} flex items-center justify-center text-btn-primary-text font-medium">
+                                        {{ user.name[0].upper() }}
+                                    </div>
+                                </div>
+                                <div class="ml-4">
+                                    <div class="text-sm font-medium text-fg-base">{{ user.name }}</div>
+                                    {% if user.id == current_user.id %}
+                                    <div class="text-xs text-accent-600">({{ _('You') }})</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-fg-muted">
+                            {{ user.email }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            {% if user.role %}
+                            <span class="px-2 py-1 text-xs rounded-full bg-accent-100 text-accent-800">
+                                {{ user.role.name }}
+                            </span>
+                            {% else %}
+                            <span class="px-2 py-1 text-xs rounded-full bg-secondary-100 text-secondary-800">
+                                {{ _('No Role') }}
+                            </span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            {% if user.active %}
+                            <span
+                                class="px-2 py-1 text-xs rounded-full bg-green-100 text-green-800 flex items-center w-fit">
+                                <i class="fas fa-check-circle mr-1"></i>
+                                {{ _('Active') }}
+                            </span>
+                            {% else %}
+                            <span
+                                class="px-2 py-1 text-xs rounded-full bg-red-100 text-red-800 flex items-center w-fit">
+                                <i class="fas fa-times-circle mr-1"></i>
+                                {{ _('Inactive') }}
+                            </span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 text-sm text-fg-muted">
+                            {% if user.companies %}
+                            {% for company in user.companies %}
+                            <span
+                                class="inline-block bg-secondary-100 text-secondary-800 text-xs px-2 py-1 rounded mr-1 mb-1">{{
+                                company.name }}</span>
+                            {% endfor %}
+                            {% else %}
+                            <span class="text-secondary-400">{{ _('No companies') }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-fg-muted">
+                            {{ user.created_at.strftime('%Y-%m-%d') if user.created_at else '-' }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <div class="flex justify-end space-x-2">
+                                <a href="{{ url_for('users.view', id=user.id) }}"
+                                    class="text-accent-600 hover:text-accent-700" title="{{ _('View') }}">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{{ url_for('users.edit', id=user.id) }}"
+                                    class="text-accent-600 hover:text-accent-700" title="{{ _('Edit') }}">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                {% if user.id != current_user.id %}
+                                <button onclick="toggleUserStatus({{ user.id }}, {{ user.active|lower }})"
+                                    class="{% if user.active %}text-orange-600 hover:text-orange-700{% else %}text-green-600 hover:text-green-700{% endif %}"
+                                    title="{% if user.active %}{{ _('Deactivate') }}{% else %}{{ _('Activate') }}{% endif %}">
+                                    <i
+                                        class="fas {% if user.active %}fa-user-slash{% else %}fa-user-check{% endif %}"></i>
+                                </button>
+                                <button onclick="sendPasswordReset({{ user.id }})"
+                                    class="text-blue-600 hover:text-blue-700" title="{{ _('Send Password Reset') }}">
+                                    <i class="fas fa-key"></i>
+                                </button>
+                                <form action="{{ url_for('users.delete', id=user.id) }}" method="POST" class="inline">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <button type="submit" class="text-btn-danger-bg hover:text-btn-danger-hover"
+                                        title="{{ _('Delete') }}"
+                                        onclick="return confirm('{{ _('Are you sure you want to delete this user?') }}')">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="7" class="px-6 py-4 text-center text-fg-muted">
+                            <div class="flex flex-col items-center py-6">
+                                <div
+                                    class="w-16 h-16 bg-secondary-100 rounded-full flex items-center justify-center text-secondary-400 mb-3">
+                                    <i class="fas fa-users text-xl"></i>
+                                </div>
+                                <p class="text-fg-muted mb-2">{{ _('No users found') }}</p>
+                                <a href="{{ url_for('users.create') }}"
+                                    class="text-accent-600 hover:text-accent-700 text-sm font-medium">
+                                    <i class="fas fa-plus mr-1"></i> {{ _('Add your first user') }}
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Pagination -->
+    {% if pagination and pagination.pages > 1 %}
+    <div class="mt-6 flex justify-center">
+        <nav class="flex items-center space-x-2">
+            {% if pagination.has_prev %}
+            <a href="{{ url_for('users.index', page=pagination.prev_num, **request.args) }}"
+                class="px-3 py-2 rounded-md bg-bg-base border border-secondary-200 text-fg-base hover:bg-secondary-100">
+                <i class="fas fa-chevron-left text-xs"></i>
+            </a>
+            {% else %}
+            <span
+                class="px-3 py-2 rounded-md bg-secondary-100 border border-secondary-200 text-secondary-400 cursor-not-allowed">
+                <i class="fas fa-chevron-left text-xs"></i>
+            </span>
+            {% endif %}
+
+            {% for page in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+            {% if page %}
+            {% if page == pagination.page %}
+            <span class="px-3 py-2 rounded-md bg-accent-500 text-btn-primary-text">{{ page }}</span>
+            {% else %}
+            <a href="{{ url_for('users.index', page=page, **request.args) }}"
+                class="px-3 py-2 rounded-md bg-bg-base border border-secondary-200 text-fg-base hover:bg-secondary-100">{{
+                page }}</a>
+            {% endif %}
+            {% else %}
+            <span class="px-3 py-2 text-secondary-400">…</span>
+            {% endif %}
+            {% endfor %}
+
+            {% if pagination.has_next %}
+            <a href="{{ url_for('users.index', page=pagination.next_num, **request.args) }}"
+                class="px-3 py-2 rounded-md bg-bg-base border border-secondary-200 text-fg-base hover:bg-secondary-100">
+                <i class="fas fa-chevron-right text-xs"></i>
+            </a>
+            {% else %}
+            <span
+                class="px-3 py-2 rounded-md bg-secondary-100 border border-secondary-200 text-secondary-400 cursor-not-allowed">
+                <i class="fas fa-chevron-right text-xs"></i>
+            </span>
+            {% endif %}
+        </nav>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Toast Notification -->
+<div id="toast" class="fixed top-4 right-4 z-50 hidden">
+    <div class="bg-bg-subtle border border-secondary-200 rounded-lg shadow-lg p-4 max-w-sm">
+        <div class="flex items-center">
+            <div id="toast-icon" class="flex-shrink-0 mr-3"></div>
+            <div id="toast-message" class="text-sm text-fg-base"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showToast(message, type = 'success') {
+        const toast = document.getElementById('toast');
+        const icon = document.getElementById('toast-icon');
+        const messageEl = document.getElementById('toast-message');
+
+        messageEl.textContent = message;
+
+        if (type === 'success') {
+            icon.innerHTML = '<i class="fas fa-check-circle text-green-500"></i>';
+        } else {
+            icon.innerHTML = '<i class="fas fa-exclamation-circle text-red-500"></i>';
+        }
+
+        toast.classList.remove('hidden');
+
+        setTimeout(() => {
+            toast.classList.add('hidden');
+        }, 5000);
+    }
+
+    function toggleUserStatus(userId, currentStatus) {
+        const action = currentStatus ? 'deactivate' : 'activate';
+
+        if (!confirm(`Are you sure you want to ${action} this user?`)) {
+            return;
+        }
+
+        fetch(`/users/${userId}/toggle-status`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token() }}'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showToast(data.message, 'success');
+                    // Reload page to update UI
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                } else {
+                    showToast(data.message, 'error');
+                }
+            })
+            .catch(error => {
+                showToast('An error occurred while updating user status', 'error');
+            });
+    }
+
+    function sendPasswordReset(userId) {
+        if (!confirm('Send password reset email to this user?')) {
+            return;
+        }
+
+        fetch(`/users/${userId}/send-password-reset`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token() }}'
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showToast(data.message, 'success');
+                } else {
+                    showToast(data.message, 'error');
+                }
+            })
+            .catch(error => {
+                showToast('An error occurred while sending password reset email', 'error');
+            });
+    }
+</script>
+{% endblock %}

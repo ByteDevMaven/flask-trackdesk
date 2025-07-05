@@ -1,0 +1,2220 @@
+# French translations for PROJECT.
+# Copyright (C) 2025 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2025.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-06-30 12:14-0600\n"
+"PO-Revision-Date: 2025-06-30 12:14-0600\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: auth/routes.py:21 auth/routes.py:61 invoices/routes.py:107
+#: invoices/routes.py:263 invoices/routes.py:342 invoices/routes.py:401
+msgid "Invalid CSRF token. Please try again."
+msgstr ""
+
+#: auth/routes.py:31
+msgid "Your account is inactive. Please contact support."
+msgstr ""
+
+#: auth/routes.py:42
+msgid "Invalid username or password"
+msgstr ""
+
+#: auth/routes.py:49
+msgid "Logout success."
+msgstr ""
+
+#: auth/routes.py:71
+msgid "Email already exists"
+msgstr ""
+
+#: auth/routes.py:73
+msgid "Passwords must match!"
+msgstr ""
+
+#: auth/routes.py:78
+msgid "No valid company found."
+msgstr ""
+
+#: auth/routes.py:95
+msgid "Account created successfully!"
+msgstr ""
+
+#: auth/templates/auth/base.html:34
+msgid "Business management simplified"
+msgstr ""
+
+#: auth/templates/auth/base.html:48
+msgid "All rights reserved."
+msgstr ""
+
+#: auth/templates/auth/login.html:3
+msgid "Login - Trackdesk"
+msgstr ""
+
+#: auth/templates/auth/login.html:10
+msgid "Sign in to your account"
+msgstr ""
+
+#: auth/templates/auth/login.html:21 auth/templates/auth/register.html:36
+msgid "Email address"
+msgstr ""
+
+#: auth/templates/auth/login.html:35 auth/templates/auth/register.html:50
+#: users/templates/users/form.html:52
+msgid "Password"
+msgstr ""
+
+#: auth/templates/auth/login.html:52
+msgid "Remember me"
+msgstr ""
+
+#: auth/templates/auth/login.html:59
+msgid "Forgot password?"
+msgstr ""
+
+#: auth/templates/auth/login.html:73 auth/templates/auth/register.html:94
+msgid "Sign in"
+msgstr ""
+
+#: auth/templates/auth/login.html:83
+msgid "Don't have an account?"
+msgstr ""
+
+#: auth/templates/auth/login.html:86
+msgid "Create an account"
+msgstr ""
+
+#: auth/templates/auth/register.html:3
+msgid "Register - Trackdesk"
+msgstr ""
+
+#: auth/templates/auth/register.html:11
+msgid "Create your account"
+msgstr ""
+
+#: auth/templates/auth/register.html:22 inventory/routes.py:221
+#: inventory/templates/inventory/index.html:146
+#: inventory/templates/inventory/view.html:45
+#: invoices/templates/invoices/view.html:135
+#: suppliers/templates/suppliers/index.html:95
+#: suppliers/templates/suppliers/view.html:84
+msgid "Name"
+msgstr ""
+
+#: auth/templates/auth/register.html:64 users/templates/users/form.html:65
+msgid "Confirm Password"
+msgstr ""
+
+#: auth/templates/auth/register.html:82
+msgid "Create Account"
+msgstr ""
+
+#: auth/templates/auth/register.html:91
+msgid "Already have an account?"
+msgstr ""
+
+#: companies/templates/companies/form.html:3
+#: companies/templates/companies/form.html:10
+msgid "Edit Company"
+msgstr ""
+
+#: companies/templates/companies/form.html:3
+msgid "New Company"
+msgstr ""
+
+#: companies/templates/companies/form.html:3
+#: payments/templates/payments/form.html:3
+msgid ""
+"Business\n"
+"Management System"
+msgstr ""
+
+#: companies/templates/companies/form.html:10
+msgid ""
+"New\n"
+"                Company"
+msgstr ""
+
+#: companies/templates/companies/form.html:12
+msgid "Update company information"
+msgstr ""
+
+#: companies/templates/companies/form.html:13
+msgid "Create a new company"
+msgstr ""
+
+#: companies/templates/companies/form.html:18
+#: companies/templates/companies/view.html:26
+msgid "Back to Companies"
+msgstr ""
+
+#: companies/templates/companies/form.html:34
+msgid "Company Information"
+msgstr ""
+
+#: companies/templates/companies/form.html:37
+msgid "Company Name"
+msgstr ""
+
+#: companies/templates/companies/form.html:42
+msgid "Enter company name"
+msgstr ""
+
+#: companies/templates/companies/form.html:50
+msgid "User Assignments"
+msgstr ""
+
+#: companies/templates/companies/form.html:53
+msgid "Assign Users"
+msgstr ""
+
+#: companies/templates/companies/form.html:74
+msgid "No users available"
+msgstr ""
+
+#: companies/templates/companies/form.html:77
+msgid ""
+"Select users who will have access to this\n"
+"                                company"
+msgstr ""
+
+#: companies/templates/companies/form.html:87
+#: customers/templates/customers/index.html:203
+#: customers/templates/customers/view.html:378
+#: inventory/templates/inventory/form.html:154
+#: inventory/templates/inventory/view.html:174
+#: invoices/templates/invoices/form.html:304
+#: payments/templates/payments/form.html:141
+#: suppliers/templates/suppliers/form.html:92
+#: suppliers/templates/suppliers/index.html:231
+#: suppliers/templates/suppliers/view.html:145
+#: users/templates/users/form.html:115
+msgid "Cancel"
+msgstr ""
+
+#: companies/templates/companies/form.html:91
+msgid "Update Company"
+msgstr ""
+
+#: companies/templates/companies/form.html:91
+#: companies/templates/companies/index.html:15
+#: companies/templates/companies/index.html:120
+msgid "Create Company"
+msgstr ""
+
+#: companies/templates/companies/index.html:3
+#: companies/templates/companies/index.html:9 templates/sidebar.html:112
+#: users/templates/users/form.html:92 users/templates/users/index.html:104
+#: users/templates/users/view.html:138
+msgid "Companies"
+msgstr ""
+
+#: companies/templates/companies/index.html:3
+#: companies/templates/companies/view.html:3
+#: inventory/templates/inventory/form.html:4
+#: inventory/templates/inventory/index.html:3
+#: inventory/templates/inventory/view.html:3
+#: invoices/templates/invoices/form.html:4
+#: invoices/templates/invoices/index.html:3
+#: invoices/templates/invoices/view.html:4
+#: payments/templates/payments/index.html:3
+#: payments/templates/payments/view.html:3 users/templates/users/index.html:3
+#: users/templates/users/view.html:3
+msgid "Business Management System"
+msgstr ""
+
+#: companies/templates/companies/index.html:10
+msgid "Manage your companies and organizations"
+msgstr ""
+
+#: companies/templates/companies/index.html:24
+msgid "Search Companies"
+msgstr ""
+
+#: companies/templates/companies/index.html:31
+msgid "Company name..."
+msgstr ""
+
+#: companies/templates/companies/index.html:39
+#: inventory/templates/inventory/index.html:81
+#: inventory/templates/inventory/index.html:111
+#: invoices/templates/invoices/index.html:24
+#: payments/templates/payments/index.html:65
+#: suppliers/templates/suppliers/index.html:77
+#: users/templates/users/index.html:24
+msgid "Search"
+msgstr ""
+
+#: companies/templates/companies/index.html:43
+#: customers/templates/customers/index.html:25
+#: invoices/templates/invoices/index.html:70
+#: payments/templates/payments/index.html:114
+#: users/templates/users/index.html:78
+msgid "Reset"
+msgstr ""
+
+#: companies/templates/companies/index.html:63
+#: customers/templates/customers/index.html:65
+#: users/templates/users/index.html:107
+msgid "Created"
+msgstr ""
+
+#: companies/templates/companies/index.html:69
+#: customers/templates/customers/index.html:119
+#: customers/templates/customers/view.html:219
+#: customers/templates/customers/view.html:301
+#: inventory/templates/inventory/index.html:241
+#: invoices/templates/invoices/index.html:132
+#: payments/templates/payments/index.html:187
+#: suppliers/templates/suppliers/index.html:137
+#: suppliers/templates/suppliers/view.html:107
+#: users/templates/users/index.html:179
+msgid "View"
+msgstr ""
+
+#: companies/templates/companies/index.html:73
+#: companies/templates/companies/view.html:22
+#: customers/templates/customers/index.html:123
+#: customers/templates/customers/view.html:223
+#: customers/templates/customers/view.html:305
+#: inventory/templates/inventory/index.html:245
+#: inventory/templates/inventory/view.html:22
+#: invoices/templates/invoices/form.html:3
+#: invoices/templates/invoices/form.html:15
+#: invoices/templates/invoices/index.html:136
+#: invoices/templates/invoices/view.html:29
+#: payments/templates/payments/index.html:191
+#: payments/templates/payments/view.html:15
+#: suppliers/templates/suppliers/index.html:141
+#: suppliers/templates/suppliers/view.html:22
+#: suppliers/templates/suppliers/view.html:111
+#: users/templates/users/index.html:183
+msgid "Edit"
+msgstr ""
+
+#: companies/templates/companies/index.html:81
+#: companies/templates/companies/view.html:36 templates/sidebar.html:122
+#: users/templates/users/index.html:3 users/templates/users/index.html:9
+msgid "Users"
+msgstr ""
+
+#: companies/templates/companies/index.html:89
+msgid "View Details"
+msgstr ""
+
+#: companies/templates/companies/index.html:95
+#: customers/templates/customers/index.html:127
+#: customers/templates/customers/index.html:208
+#: customers/templates/customers/view.html:58
+#: customers/templates/customers/view.html:384
+#: inventory/templates/inventory/index.html:252
+#: inventory/templates/inventory/view.html:30
+#: invoices/templates/invoices/index.html:146
+#: payments/templates/payments/index.html:197
+#: suppliers/templates/suppliers/index.html:146
+#: suppliers/templates/suppliers/index.html:236
+#: suppliers/templates/suppliers/view.html:26
+#: suppliers/templates/suppliers/view.html:150
+#: users/templates/users/index.html:200
+msgid "Delete"
+msgstr ""
+
+#: companies/templates/companies/index.html:96
+msgid ""
+"Are you sure you want to delete this company? This action cannot be "
+"undone."
+msgstr ""
+
+#: companies/templates/companies/index.html:110
+msgid "No companies found"
+msgstr ""
+
+#: companies/templates/companies/index.html:113
+msgid "No companies match your search criteria."
+msgstr ""
+
+#: companies/templates/companies/index.html:115
+msgid "Get started by creating your first company."
+msgstr ""
+
+#: companies/templates/companies/view.html:15
+msgid "Created on"
+msgstr ""
+
+#: companies/templates/companies/view.html:16
+#: users/templates/users/view.html:78 users/templates/users/view.html:107
+#: users/templates/users/view.html:155
+msgid "Unknown"
+msgstr ""
+
+#: companies/templates/companies/view.html:48 customers/routes.py:123
+#: customers/templates/customers/index.html:3
+#: customers/templates/customers/index.html:8
+#: customers/templates/customers/view.html:23 templates/mobile-menu.html:19
+#: templates/sidebar.html:38
+msgid "Clients"
+msgstr ""
+
+#: companies/templates/companies/view.html:60
+#: suppliers/templates/suppliers/index.html:3
+#: suppliers/templates/suppliers/index.html:9
+#: suppliers/templates/suppliers/view.html:3 templates/mobile-menu.html:27
+#: templates/sidebar.html:48
+msgid "Suppliers"
+msgstr ""
+
+#: companies/templates/companies/view.html:72
+#: inventory/templates/inventory/index.html:3 templates/mobile-menu.html:35
+#: templates/sidebar.html:58
+msgid "Inventory"
+msgstr ""
+
+#: companies/templates/companies/view.html:84 templates/mobile-menu.html:40
+#: templates/sidebar.html:65
+msgid "Documents"
+msgstr ""
+
+#: companies/templates/companies/view.html:96
+#: payments/templates/payments/index.html:3
+#: payments/templates/payments/index.html:9 templates/mobile-menu.html:65
+#: templates/sidebar.html:95
+msgid "Payments"
+msgstr ""
+
+#: companies/templates/companies/view.html:108
+msgid "Reports"
+msgstr ""
+
+#: companies/templates/companies/view.html:122
+msgid "Assigned Users"
+msgstr ""
+
+#: companies/templates/companies/view.html:141
+msgid "Joined"
+msgstr ""
+
+#: companies/templates/companies/view.html:152
+msgid "No users assigned to this company"
+msgstr ""
+
+#: companies/templates/companies/view.html:161
+msgid "Recent Activity"
+msgstr ""
+
+#: companies/templates/companies/view.html:167
+msgid "Recent Documents"
+msgstr ""
+
+#: companies/templates/companies/view.html:192
+msgid "Recent Payments"
+msgstr ""
+
+#: companies/templates/companies/view.html:221
+msgid "No recent activity"
+msgstr ""
+
+#: companies/templates/companies/view.html:231
+msgid "Danger Zone"
+msgstr ""
+
+#: companies/templates/companies/view.html:232
+msgid ""
+"Once you delete a company, there is no going back. Please be\n"
+"            certain."
+msgstr ""
+
+#: companies/templates/companies/view.html:238
+msgid ""
+"Are you sure you want to delete this company? This action cannot be "
+"undone and will remove all associated data."
+msgstr ""
+
+#: companies/templates/companies/view.html:239
+msgid "Delete Company"
+msgstr ""
+
+#: customers/routes.py:19
+msgid "You need to be associated with a company to view clients"
+msgstr ""
+
+#: customers/routes.py:135
+msgid "You need to be associated with a company to create clients"
+msgstr ""
+
+#: customers/routes.py:145
+msgid "Create Client"
+msgstr ""
+
+#: customers/routes.py:155
+msgid "Invalid company selected"
+msgstr ""
+
+#: customers/routes.py:166 customers/routes.py:228
+msgid "Client name is required"
+msgstr ""
+
+#: customers/routes.py:171 customers/routes.py:233
+msgid "A client with this email already exists in this company"
+msgstr ""
+
+#: customers/routes.py:187
+msgid "Client created successfully"
+msgstr ""
+
+#: customers/routes.py:198 customers/routes.py:217 customers/routes.py:256
+#: customers/routes.py:284
+msgid "You do not have access to this client"
+msgstr ""
+
+#: customers/routes.py:205 customers/templates/customers/view.html:46
+msgid "Edit Client"
+msgstr ""
+
+#: customers/routes.py:245
+msgid "Client updated successfully"
+msgstr ""
+
+#: customers/routes.py:266
+msgid "Cannot delete client with associated documents"
+msgstr ""
+
+#: customers/routes.py:273
+msgid "Client deleted successfully"
+msgstr ""
+
+#: customers/routes.py:325 customers/templates/customers/view.html:3
+msgid "Client Details"
+msgstr ""
+
+#: customers/templates/customers/index.html:3
+#: customers/templates/customers/view.html:3
+msgid "Trackdesk"
+msgstr ""
+
+#: customers/templates/customers/index.html:10
+msgid "Manage your client information and view their activity"
+msgstr ""
+
+#: customers/templates/customers/index.html:15
+msgid "Search clients..."
+msgstr ""
+
+#: customers/templates/customers/index.html:30
+msgid "New Client"
+msgstr ""
+
+#: customers/templates/customers/index.html:45
+msgid "Client Name"
+msgstr ""
+
+#: customers/templates/customers/index.html:54
+msgid "Contact"
+msgstr ""
+
+#: customers/templates/customers/index.html:60
+#: customers/templates/customers/view.html:145
+#: customers/templates/customers/view.html:164
+#: invoices/templates/invoices/index.html:3
+#: invoices/templates/invoices/index.html:9 templates/mobile-menu.html:57
+#: templates/sidebar.html:85
+msgid "Invoices"
+msgstr ""
+
+#: customers/templates/customers/index.html:61
+msgid "Outstanding"
+msgstr ""
+
+#: customers/templates/customers/index.html:71
+#: customers/templates/customers/view.html:187
+#: customers/templates/customers/view.html:269
+#: inventory/templates/inventory/index.html:182
+#: invoices/templates/invoices/index.html:102
+#: payments/templates/payments/index.html:146
+#: payments/templates/payments/view.html:108
+#: suppliers/templates/suppliers/index.html:99
+#: suppliers/templates/suppliers/view.html:88
+#: users/templates/users/index.html:110 users/templates/users/view.html:191
+msgid "Actions"
+msgstr ""
+
+#: customers/templates/customers/index.html:100
+msgid "invoices"
+msgstr ""
+
+#: customers/templates/customers/index.html:103
+msgid "quotes"
+msgstr ""
+
+#: customers/templates/customers/index.html:142
+msgid "Showing"
+msgstr ""
+
+#: customers/templates/customers/index.html:143
+msgid "to"
+msgstr ""
+
+#: customers/templates/customers/index.html:145
+msgid "of"
+msgstr ""
+
+#: customers/templates/customers/index.html:146
+msgid "results"
+msgstr ""
+
+#: customers/templates/customers/index.html:152
+msgid "Previous"
+msgstr ""
+
+#: customers/templates/customers/index.html:159
+msgid "Next"
+msgstr ""
+
+#: customers/templates/customers/index.html:169
+msgid "No clients found matching"
+msgstr ""
+
+#: customers/templates/customers/index.html:172
+#: suppliers/templates/suppliers/index.html:159
+msgid "Clear search"
+msgstr ""
+
+#: customers/templates/customers/index.html:180
+msgid "No clients yet"
+msgstr ""
+
+#: customers/templates/customers/index.html:181
+msgid "Get started by adding your first client"
+msgstr ""
+
+#: customers/templates/customers/index.html:184
+msgid "Add Client"
+msgstr ""
+
+#: customers/templates/customers/index.html:195
+#: customers/templates/customers/view.html:370
+#: suppliers/templates/suppliers/index.html:224
+#: suppliers/templates/suppliers/view.html:139
+msgid "Confirm Deletion"
+msgstr ""
+
+#: customers/templates/customers/index.html:197
+#: customers/templates/customers/view.html:372
+msgid "Are you sure you want to delete client"
+msgstr ""
+
+#: customers/templates/customers/index.html:198
+#: customers/templates/customers/view.html:373
+#: suppliers/templates/suppliers/index.html:226
+#: suppliers/templates/suppliers/view.html:141
+msgid "This action cannot be undone."
+msgstr ""
+
+#: customers/templates/customers/view.html:12 dashboard/routes.py:68
+#: dashboard/templates/dashboard/index.html:3
+#: dashboard/templates/dashboard/index.html:8 templates/mobile-menu.html:11
+#: templates/sidebar.html:28
+msgid "Dashboard"
+msgstr ""
+
+#: customers/templates/customers/view.html:41
+msgid "Client ID"
+msgstr ""
+
+#: customers/templates/customers/view.html:50
+#: dashboard/templates/dashboard/index.html:15
+msgid "New Invoice"
+msgstr ""
+
+#: customers/templates/customers/view.html:54
+msgid "New Quote"
+msgstr ""
+
+#: customers/templates/customers/view.html:67
+#: invoices/templates/invoices/view.html:129
+msgid "Client Information"
+msgstr ""
+
+#: customers/templates/customers/view.html:72
+#: users/templates/users/form.html:33 users/templates/users/view.html:32
+msgid "Full Name"
+msgstr ""
+
+#: customers/templates/customers/view.html:77
+#: users/templates/users/form.html:42 users/templates/users/view.html:37
+msgid "Email Address"
+msgstr ""
+
+#: customers/templates/customers/view.html:85
+#: customers/templates/customers/view.html:98
+#: customers/templates/customers/view.html:109
+msgid "Not provided"
+msgstr ""
+
+#: customers/templates/customers/view.html:90
+msgid "Phone Number"
+msgstr ""
+
+#: customers/templates/customers/view.html:105
+#: invoices/templates/invoices/view.html:162
+#: suppliers/templates/suppliers/form.html:80
+#: suppliers/templates/suppliers/view.html:60
+msgid "Address"
+msgstr ""
+
+#: customers/templates/customers/view.html:114
+msgid "Client Since"
+msgstr ""
+
+#: customers/templates/customers/view.html:123
+msgid "Financial Summary"
+msgstr ""
+
+#: customers/templates/customers/view.html:127
+msgid "Total Invoiced"
+msgstr ""
+
+#: customers/templates/customers/view.html:135
+msgid "Outstanding Balance"
+msgstr ""
+
+#: customers/templates/customers/view.html:150
+#: customers/templates/customers/view.html:168 templates/mobile-menu.html:49
+#: templates/sidebar.html:75
+msgid "Quotes"
+msgstr ""
+
+#: customers/templates/customers/view.html:182
+#: invoices/templates/invoices/index.html:84
+msgid "Invoice #"
+msgstr ""
+
+#: customers/templates/customers/view.html:183
+#: customers/templates/customers/view.html:265
+#: payments/templates/payments/index.html:128
+msgid "Date"
+msgstr ""
+
+#: customers/templates/customers/view.html:184
+#: invoices/templates/invoices/form.html:122
+#: invoices/templates/invoices/index.html:93
+#: payments/templates/payments/view.html:81
+msgid "Due Date"
+msgstr ""
+
+#: customers/templates/customers/view.html:185
+#: customers/templates/customers/view.html:267
+#: invoices/templates/invoices/index.html:96
+#: payments/templates/payments/index.html:137
+#: payments/templates/payments/view.html:30
+msgid "Amount"
+msgstr ""
+
+#: customers/templates/customers/view.html:186
+#: customers/templates/customers/view.html:268
+#: invoices/templates/invoices/form.html:93
+#: invoices/templates/invoices/index.html:36
+#: invoices/templates/invoices/index.html:99
+#: invoices/templates/invoices/view.html:93 users/templates/users/index.html:60
+#: users/templates/users/index.html:101 users/templates/users/view.html:42
+msgid "Status"
+msgstr ""
+
+#: customers/templates/customers/view.html:227
+#: customers/templates/customers/view.html:309
+msgid "Download"
+msgstr ""
+
+#: customers/templates/customers/view.html:244
+msgid "No invoices yet"
+msgstr ""
+
+#: customers/templates/customers/view.html:245
+msgid "Create your first invoice for this client"
+msgstr ""
+
+#: customers/templates/customers/view.html:248
+#: invoices/templates/invoices/index.html:15
+msgid "Create Invoice"
+msgstr ""
+
+#: customers/templates/customers/view.html:264
+msgid "Quote #"
+msgstr ""
+
+#: customers/templates/customers/view.html:266
+msgid "Valid Until"
+msgstr ""
+
+#: customers/templates/customers/view.html:315
+#: invoices/templates/invoices/view.html:34
+msgid "Convert to Invoice"
+msgstr ""
+
+#: customers/templates/customers/view.html:333
+msgid "No quotes yet"
+msgstr ""
+
+#: customers/templates/customers/view.html:334
+msgid "Create your first quote for this client"
+msgstr ""
+
+#: customers/templates/customers/view.html:337
+msgid "Create Quote"
+msgstr ""
+
+#: customers/templates/customers/view.html:347
+#: invoices/templates/invoices/form.html:266
+#: invoices/templates/invoices/view.html:302
+#: payments/templates/payments/form.html:131
+#: payments/templates/payments/index.html:143
+#: payments/templates/payments/view.html:48
+msgid "Notes"
+msgstr ""
+
+#: customers/templates/customers/view.html:359
+msgid "Save Notes"
+msgstr ""
+
+#: dashboard/templates/dashboard/index.html:9
+msgid "Welcome back"
+msgstr ""
+
+#: dashboard/templates/dashboard/index.html:9
+msgid ""
+"Here's an\n"
+"            overview of your business."
+msgstr ""
+
+#: dashboard/templates/dashboard/index.html:25
+msgid "Total Clients"
+msgstr ""
+
+#: dashboard/templates/dashboard/index.html:36
+#: dashboard/templates/dashboard/index.html:60
+#: dashboard/templates/dashboard/index.html:84
+#: dashboard/templates/dashboard/index.html:108
+msgid "from last month"
+msgstr ""
+
+#: dashboard/templates/dashboard/index.html:40
+msgid "View all clients"
+msgstr ""
+
+#: dashboard/templates/dashboard/index.html:49
+msgid "Outstanding Invoices"
+msgstr ""
+
+#: dashboard/templates/dashboard/index.html:64
+msgid "View all invoices"
+msgstr ""
+
+#: dashboard/templates/dashboard/index.html:73
+#: suppliers/templates/suppliers/index.html:98
+#: suppliers/templates/suppliers/view.html:72
+msgid "Inventory Items"
+msgstr ""
+
+#: dashboard/templates/dashboard/index.html:88
+msgid "View inventory"
+msgstr ""
+
+#: dashboard/templates/dashboard/index.html:97
+msgid "Revenue (MTD)"
+msgstr ""
+
+#: dashboard/templates/dashboard/index.html:112
+msgid "View payments"
+msgstr ""
+
+#: dashboard/templates/dashboard/index.html:124
+msgid "Recent Invoices"
+msgstr ""
+
+#: dashboard/templates/dashboard/index.html:126
+#: dashboard/templates/dashboard/index.html:166
+msgid "View All"
+msgstr ""
+
+#: dashboard/templates/dashboard/index.html:140 invoices/routes.py:187
+#: invoices/routes.py:325 invoices/routes.py:359
+#: invoices/templates/invoices/form.html:4
+#: invoices/templates/invoices/form.html:15
+#: invoices/templates/invoices/form.html:70
+#: invoices/templates/invoices/print.html:8
+#: invoices/templates/invoices/view.html:3
+#: invoices/templates/invoices/view.html:15
+#: invoices/templates/invoices/view.html:87
+#: payments/templates/payments/form.html:35
+#: payments/templates/payments/index.html:131
+msgid "Invoice"
+msgstr ""
+
+#: dashboard/templates/dashboard/index.html:144
+#: payments/templates/payments/form.html:204
+msgid "Due"
+msgstr ""
+
+#: dashboard/templates/dashboard/index.html:156
+msgid "No recent invoices"
+msgstr ""
+
+#: dashboard/templates/dashboard/index.html:164
+msgid "Recent Quotes"
+msgstr ""
+
+#: dashboard/templates/dashboard/index.html:180 invoices/routes.py:187
+#: invoices/routes.py:325 invoices/routes.py:359
+#: invoices/templates/invoices/form.html:3
+#: invoices/templates/invoices/form.html:15
+#: invoices/templates/invoices/form.html:72
+#: invoices/templates/invoices/print.html:8
+#: invoices/templates/invoices/view.html:3
+#: invoices/templates/invoices/view.html:13
+#: invoices/templates/invoices/view.html:85
+msgid "Quote"
+msgstr ""
+
+#: dashboard/templates/dashboard/index.html:185
+msgid "Issued"
+msgstr ""
+
+#: dashboard/templates/dashboard/index.html:197
+msgid "No recent quotes"
+msgstr ""
+
+#: inventory/routes.py:103 inventory/routes.py:167
+msgid "Name is required"
+msgstr ""
+
+#: inventory/routes.py:107 inventory/routes.py:171
+msgid "Quantity cannot be negative"
+msgstr ""
+
+#: inventory/routes.py:111 inventory/routes.py:175
+msgid "Price cannot be negative"
+msgstr ""
+
+#: inventory/routes.py:126
+msgid "Inventory item created successfully"
+msgstr ""
+
+#: inventory/routes.py:131
+msgid "An error occurred while creating the inventory item"
+msgstr ""
+
+#: inventory/routes.py:186
+msgid "Inventory item updated successfully"
+msgstr ""
+
+#: inventory/routes.py:191
+msgid "An error occurred while updating the inventory item"
+msgstr ""
+
+#: inventory/routes.py:203
+msgid "Inventory item deleted successfully"
+msgstr ""
+
+#: inventory/routes.py:206
+msgid "An error occurred while deleting the inventory item"
+msgstr ""
+
+#: inventory/routes.py:221 inventory/templates/inventory/form.html:52
+#: inventory/templates/inventory/index.html:154
+#: inventory/templates/inventory/view.html:51
+#: invoices/templates/invoices/form.html:154
+#: invoices/templates/invoices/view.html:208
+#: suppliers/templates/suppliers/view.html:85
+msgid "Description"
+msgstr ""
+
+#: inventory/routes.py:221 inventory/templates/inventory/index.html:160
+#: suppliers/templates/suppliers/view.html:86
+msgid "Quantity"
+msgstr ""
+
+#: inventory/routes.py:221 inventory/templates/inventory/index.html:170
+#: suppliers/templates/suppliers/view.html:87
+msgid "Price"
+msgstr ""
+
+#: inventory/routes.py:221 inventory/templates/inventory/form.html:97
+#: inventory/templates/inventory/index.html:178
+#: inventory/templates/inventory/view.html:80
+msgid "Supplier"
+msgstr ""
+
+#: inventory/templates/inventory/form.html:3
+#: inventory/templates/inventory/form.html:16
+msgid "Edit Inventory Item"
+msgstr ""
+
+#: inventory/templates/inventory/form.html:3
+#: inventory/templates/inventory/form.html:16
+msgid "Add Inventory Item"
+msgstr ""
+
+#: inventory/templates/inventory/form.html:19
+msgid "Update the details of your inventory item"
+msgstr ""
+
+#: inventory/templates/inventory/form.html:19
+msgid ""
+"Add a new item to your\n"
+"                inventory"
+msgstr ""
+
+#: inventory/templates/inventory/form.html:36
+msgid "Basic Information"
+msgstr ""
+
+#: inventory/templates/inventory/form.html:41
+msgid "Item Name"
+msgstr ""
+
+#: inventory/templates/inventory/form.html:46
+msgid "Enter item name"
+msgstr ""
+
+#: inventory/templates/inventory/form.html:56
+msgid "Enter item description (optional)"
+msgstr ""
+
+#: inventory/templates/inventory/form.html:65
+msgid "Inventory Details"
+msgstr ""
+
+#: inventory/templates/inventory/form.html:70
+#: inventory/templates/inventory/view.html:58
+msgid "Current Quantity"
+msgstr ""
+
+#: inventory/templates/inventory/form.html:81
+#: inventory/templates/inventory/view.html:73
+#: invoices/templates/invoices/form.html:162
+#: invoices/templates/invoices/view.html:216
+msgid "Unit Price"
+msgstr ""
+
+#: inventory/templates/inventory/form.html:101
+msgid "Select a supplier (optional)"
+msgstr ""
+
+#: inventory/templates/inventory/form.html:113
+msgid "No suppliers available."
+msgstr ""
+
+#: inventory/templates/inventory/form.html:115
+msgid "Add a supplier"
+msgstr ""
+
+#: inventory/templates/inventory/form.html:124
+msgid "Current Status"
+msgstr ""
+
+#: inventory/templates/inventory/form.html:128
+#: inventory/templates/inventory/view.html:127
+msgid "Stock Level"
+msgstr ""
+
+#: inventory/templates/inventory/form.html:133
+#: inventory/templates/inventory/index.html:68
+#: inventory/templates/inventory/view.html:66
+msgid "Out of Stock"
+msgstr ""
+
+#: inventory/templates/inventory/form.html:134
+#: inventory/templates/inventory/index.html:56
+#: inventory/templates/inventory/view.html:67
+msgid "Low Stock"
+msgstr ""
+
+#: inventory/templates/inventory/form.html:134
+#: inventory/templates/inventory/view.html:67
+msgid "In Stock"
+msgstr ""
+
+#: inventory/templates/inventory/form.html:139
+#: inventory/templates/inventory/index.html:44
+#: inventory/templates/inventory/view.html:96
+msgid "Total Value"
+msgstr ""
+
+#: inventory/templates/inventory/form.html:159
+msgid "Update Item"
+msgstr ""
+
+#: inventory/templates/inventory/form.html:159
+msgid "Create Item"
+msgstr ""
+
+#: inventory/templates/inventory/form.html:209
+msgid "Please correct the highlighted fields"
+msgstr ""
+
+#: inventory/templates/inventory/index.html:9
+msgid "Inventory Management"
+msgstr ""
+
+#: inventory/templates/inventory/index.html:10
+msgid "Manage your inventory items and track stock levels"
+msgstr ""
+
+#: inventory/templates/inventory/index.html:15
+msgid "Export"
+msgstr ""
+
+#: inventory/templates/inventory/index.html:19
+#: inventory/templates/inventory/index.html:274
+#: invoices/templates/invoices/form.html:138
+#: suppliers/templates/suppliers/view.html:75
+msgid "Add Item"
+msgstr ""
+
+#: inventory/templates/inventory/index.html:32
+msgid "Total Items"
+msgstr ""
+
+#: inventory/templates/inventory/index.html:87
+msgid "Search items, description..."
+msgstr ""
+
+#: inventory/templates/inventory/index.html:96
+msgid "All Suppliers"
+msgstr ""
+
+#: inventory/templates/inventory/index.html:116
+#: suppliers/templates/suppliers/index.html:82
+msgid "Clear"
+msgstr ""
+
+#: inventory/templates/inventory/index.html:125
+msgid "Delete Selected"
+msgstr ""
+
+#: inventory/templates/inventory/index.html:204
+msgid "N/A"
+msgstr ""
+
+#: inventory/templates/inventory/index.html:217
+msgid "Decrease stock"
+msgstr ""
+
+#: inventory/templates/inventory/index.html:222
+msgid "Increase stock"
+msgstr ""
+
+#: inventory/templates/inventory/index.html:235
+msgid "No supplier"
+msgstr ""
+
+#: inventory/templates/inventory/index.html:253
+#: inventory/templates/inventory/view.html:29
+msgid "Are you sure you want to delete this item?"
+msgstr ""
+
+#: inventory/templates/inventory/index.html:269
+msgid "No inventory items found"
+msgstr ""
+
+#: inventory/templates/inventory/index.html:270
+msgid "Get started by adding your first inventory item"
+msgstr ""
+
+#: inventory/templates/inventory/index.html:358
+#: suppliers/templates/suppliers/index.html:225
+#: suppliers/templates/suppliers/view.html:140
+msgid "Are you sure you want to delete"
+msgstr ""
+
+#: inventory/templates/inventory/index.html:358
+msgid "selected items?"
+msgstr ""
+
+#: inventory/templates/inventory/index.html:372
+#: inventory/templates/inventory/index.html:377
+#: inventory/templates/inventory/index.html:414
+#: inventory/templates/inventory/index.html:419
+#: inventory/templates/inventory/view.html:223
+#: inventory/templates/inventory/view.html:228
+msgid "An error occurred"
+msgstr ""
+
+#: inventory/templates/inventory/view.html:3
+msgid "Inventory Item"
+msgstr ""
+
+#: inventory/templates/inventory/view.html:16
+msgid "Inventory Item Details"
+msgstr ""
+
+#: inventory/templates/inventory/view.html:41
+msgid "Item Information"
+msgstr ""
+
+#: inventory/templates/inventory/view.html:92
+msgid "Stock Management"
+msgstr ""
+
+#: inventory/templates/inventory/view.html:104
+msgid "Remove 1"
+msgstr ""
+
+#: inventory/templates/inventory/view.html:109
+msgid "Add 1"
+msgstr ""
+
+#: inventory/templates/inventory/view.html:116
+msgid "Custom Adjustment"
+msgstr ""
+
+#: inventory/templates/inventory/view.html:123
+msgid "Item Status"
+msgstr ""
+
+#: inventory/templates/inventory/view.html:132
+msgid "Critical"
+msgstr ""
+
+#: inventory/templates/inventory/view.html:133
+msgid "Low"
+msgstr ""
+
+#: inventory/templates/inventory/view.html:133
+msgid "Good"
+msgstr ""
+
+#: inventory/templates/inventory/view.html:137
+msgid "Value Status"
+msgstr ""
+
+#: inventory/templates/inventory/view.html:139
+msgid "High Value"
+msgstr ""
+
+#: inventory/templates/inventory/view.html:140
+msgid "Medium Value"
+msgstr ""
+
+#: inventory/templates/inventory/view.html:141
+msgid "Low Value"
+msgstr ""
+
+#: inventory/templates/inventory/view.html:154
+msgid "Adjust Stock Level"
+msgstr ""
+
+#: inventory/templates/inventory/view.html:162
+msgid ""
+"Adjustment\n"
+"                        Amount"
+msgstr ""
+
+#: inventory/templates/inventory/view.html:166
+msgid "Enter positive or negative number"
+msgstr ""
+
+#: inventory/templates/inventory/view.html:167
+msgid "Use positive numbers to add stock, negative to remove"
+msgstr ""
+
+#: inventory/templates/inventory/view.html:178
+msgid "Adjust Stock"
+msgstr ""
+
+#: invoices/routes.py:193
+#, python-format
+msgid "Error creating document: %(error)s"
+msgstr ""
+
+#: invoices/routes.py:331
+#, python-format
+msgid "Error updating document: %(error)s"
+msgstr ""
+
+#: invoices/routes.py:363
+#, python-format
+msgid "Error deleting document: %(error)s"
+msgstr ""
+
+#: invoices/routes.py:459
+msgid "Quote converted to invoice successfully"
+msgstr ""
+
+#: invoices/routes.py:464
+#, python-format
+msgid "Error converting quote: %(error)s"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:4
+#: invoices/templates/invoices/form.html:18
+msgid "New Document"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:23
+msgid "Update document details"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:25
+msgid "Create a new invoice or quote"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:32
+#: invoices/templates/invoices/view.html:48
+msgid "Back to Documents"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:49
+msgid "Document Information"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:53
+#: invoices/templates/invoices/form.html:389
+msgid "Document Number"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:58
+msgid "Auto-generated if left blank"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:63
+#: invoices/templates/invoices/view.html:80
+msgid "Document Type"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:68
+msgid "Select document type"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:78
+#: invoices/templates/invoices/index.html:87
+#: payments/templates/payments/index.html:134
+msgid "Client"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:83
+msgid "Select a client"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:98
+msgid "Select a status"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:100
+#: invoices/templates/invoices/index.html:40
+#: invoices/templates/invoices/index.html:127
+#: invoices/templates/invoices/view.html:102
+#: invoices/templates/invoices/view.html:107
+#: payments/templates/payments/view.html:70
+msgid "Draft"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:102
+#: invoices/templates/invoices/index.html:42
+#: invoices/templates/invoices/view.html:104
+msgid "Sent"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:104
+#: invoices/templates/invoices/index.html:44
+#: invoices/templates/invoices/view.html:98
+msgid "Paid"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:106
+#: invoices/templates/invoices/index.html:47
+#: invoices/templates/invoices/view.html:100
+msgid "Overdue"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:112
+#: invoices/templates/invoices/index.html:90
+#: invoices/templates/invoices/view.html:113
+msgid "Issue Date"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:135
+msgid "Items"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:150
+#: invoices/templates/invoices/view.html:204
+msgid "Item"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:158
+#: invoices/templates/invoices/view.html:212
+msgid "Qty"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:166
+#: invoices/templates/invoices/form.html:290
+#: invoices/templates/invoices/view.html:220
+#: invoices/templates/invoices/view.html:338
+#: payments/templates/payments/form.html:203
+msgid "Total"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:170
+msgid "Action"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:181
+#: invoices/templates/invoices/form.html:224
+#: invoices/templates/invoices/form.html:399
+msgid "Select an item"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:269
+msgid "Additional notes or terms..."
+msgstr ""
+
+#: invoices/templates/invoices/form.html:274
+#: invoices/templates/invoices/view.html:315
+msgid "Summary"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:277
+#: invoices/templates/invoices/view.html:325
+msgid "Subtotal"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:281
+#: invoices/templates/invoices/form.html:285
+#: invoices/templates/invoices/view.html:329
+#: invoices/templates/invoices/view.html:333
+msgid "Tax"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:308
+msgid "Update Document"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:308
+msgid "Save Document"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:314
+msgid "Print Document"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:352
+msgid "At least one item is required"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:385
+#: invoices/templates/invoices/view.html:72
+msgid "Quote Number"
+msgstr ""
+
+#: invoices/templates/invoices/form.html:387
+#: invoices/templates/invoices/view.html:74
+msgid "Invoice Number"
+msgstr ""
+
+#: invoices/templates/invoices/index.html:10
+msgid "Manage your invoices and payments"
+msgstr ""
+
+#: invoices/templates/invoices/index.html:30
+msgid "Invoice #, client..."
+msgstr ""
+
+#: invoices/templates/invoices/index.html:39
+msgid "All Statuses"
+msgstr ""
+
+#: invoices/templates/invoices/index.html:52
+#: payments/templates/payments/index.html:96
+msgid "Date From"
+msgstr ""
+
+#: invoices/templates/invoices/index.html:58
+#: payments/templates/payments/index.html:102
+msgid "Date To"
+msgstr ""
+
+#: invoices/templates/invoices/index.html:66
+#: payments/templates/payments/index.html:110
+#: users/templates/users/index.html:74
+msgid "Apply Filters"
+msgstr ""
+
+#: invoices/templates/invoices/index.html:113
+#: payments/templates/payments/form.html:195
+#: payments/templates/payments/form.html:223
+#: payments/templates/payments/form.html:227
+msgid "No Client"
+msgstr ""
+
+#: invoices/templates/invoices/index.html:140
+#: invoices/templates/invoices/print.html:362
+#: invoices/templates/invoices/view.html:43
+msgid "Print Invoice"
+msgstr ""
+
+#: invoices/templates/invoices/index.html:147
+msgid "Are you sure you want to delete this invoice?"
+msgstr ""
+
+#: invoices/templates/invoices/index.html:162
+#: payments/templates/payments/form.html:187
+msgid "No invoices found"
+msgstr ""
+
+#: invoices/templates/invoices/index.html:165
+msgid "Create your first invoice"
+msgstr ""
+
+#: invoices/templates/invoices/print.html:362
+#: invoices/templates/invoices/view.html:41
+msgid "Print Quote"
+msgstr ""
+
+#: invoices/templates/invoices/view.html:20
+msgid "Quote details and information"
+msgstr ""
+
+#: invoices/templates/invoices/view.html:22
+msgid "Invoice details and information"
+msgstr ""
+
+#: invoices/templates/invoices/view.html:62
+msgid "Quote Information"
+msgstr ""
+
+#: invoices/templates/invoices/view.html:65
+msgid "Invoice Information"
+msgstr ""
+
+#: invoices/templates/invoices/view.html:140
+#: suppliers/templates/suppliers/index.html:96
+#: suppliers/templates/suppliers/view.html:40
+#: users/templates/users/index.html:95
+msgid "Email"
+msgstr ""
+
+#: invoices/templates/invoices/view.html:151
+#: suppliers/templates/suppliers/form.html:70
+#: suppliers/templates/suppliers/index.html:97
+#: suppliers/templates/suppliers/view.html:50
+msgid "Phone"
+msgstr ""
+
+#: invoices/templates/invoices/view.html:173
+msgid "No client assigned"
+msgstr ""
+
+#: invoices/templates/invoices/view.html:186
+msgid "Quote Items"
+msgstr ""
+
+#: invoices/templates/invoices/view.html:188
+msgid "Invoice Items"
+msgstr ""
+
+#: invoices/templates/invoices/view.html:192
+#: suppliers/templates/suppliers/index.html:128
+msgid "items"
+msgstr ""
+
+#: invoices/templates/invoices/view.html:238
+msgid "Unknown Item"
+msgstr ""
+
+#: invoices/templates/invoices/view.html:249
+msgid "Custom Item"
+msgstr ""
+
+#: invoices/templates/invoices/view.html:257
+msgid "No description"
+msgstr ""
+
+#: invoices/templates/invoices/view.html:282
+msgid "No items found"
+msgstr ""
+
+#: invoices/templates/invoices/view.html:283
+msgid "Add items to this document to see them here"
+msgstr ""
+
+#: invoices/templates/invoices/view.html:349
+msgid "This quote is valid until"
+msgstr ""
+
+#: invoices/templates/invoices/view.html:350
+msgid "no expiration date"
+msgstr ""
+
+#: invoices/templates/invoices/view.html:363
+msgid ""
+"Are you sure you want to convert this quote to an invoice? This action "
+"cannot be undone."
+msgstr ""
+
+#: invoices/templates/invoices/view.html:376
+#: invoices/templates/invoices/view.html:381
+msgid "An error occurred while converting the quote."
+msgstr ""
+
+#: payments/routes.py:189
+msgid "Payment recorded successfully"
+msgstr ""
+
+#: payments/routes.py:194
+#, python-format
+msgid "Error recording payment: %(error)s"
+msgstr ""
+
+#: payments/routes.py:275
+msgid "Payment updated successfully"
+msgstr ""
+
+#: payments/routes.py:280
+#, python-format
+msgid "Error updating payment: %(error)s"
+msgstr ""
+
+#: payments/routes.py:315
+msgid "Payment deleted successfully"
+msgstr ""
+
+#: payments/routes.py:318
+#, python-format
+msgid "Error deleting payment: %(error)s"
+msgstr ""
+
+#: payments/templates/payments/form.html:3
+#: payments/templates/payments/form.html:10
+#: payments/templates/payments/view.html:112
+msgid "Edit Payment"
+msgstr ""
+
+#: payments/templates/payments/form.html:3
+#: payments/templates/payments/form.html:144
+#: payments/templates/payments/index.html:15
+msgid "Record Payment"
+msgstr ""
+
+#: payments/templates/payments/form.html:10
+msgid ""
+"Record\n"
+"                Payment"
+msgstr ""
+
+#: payments/templates/payments/form.html:12
+msgid "Update payment details"
+msgstr ""
+
+#: payments/templates/payments/form.html:13
+msgid "Record a new payment"
+msgstr ""
+
+#: payments/templates/payments/form.html:18
+#: payments/templates/payments/view.html:19
+msgid "Back to Payments"
+msgstr ""
+
+#: payments/templates/payments/form.html:38
+msgid "Search for an invoice..."
+msgstr ""
+
+#: payments/templates/payments/form.html:46
+msgid ""
+"Start typing to search for invoices by number or client\n"
+"                        name"
+msgstr ""
+
+#: payments/templates/payments/form.html:63
+msgid "Total Amount"
+msgstr ""
+
+#: payments/templates/payments/form.html:70
+msgid "Remaining Balance"
+msgstr ""
+
+#: payments/templates/payments/form.html:88
+msgid "Payment Amount"
+msgstr ""
+
+#: payments/templates/payments/form.html:102
+#: payments/templates/payments/view.html:34
+msgid "Payment Date"
+msgstr ""
+
+#: payments/templates/payments/form.html:111
+#: payments/templates/payments/index.html:77
+#: payments/templates/payments/view.html:39
+msgid "Payment Method"
+msgstr ""
+
+#: payments/templates/payments/form.html:115
+msgid "Select payment method"
+msgstr ""
+
+#: payments/templates/payments/form.html:116
+#: payments/templates/payments/index.html:82
+msgid "Cash"
+msgstr ""
+
+#: payments/templates/payments/form.html:119
+#: payments/templates/payments/index.html:84
+msgid "Check"
+msgstr ""
+
+#: payments/templates/payments/form.html:121
+#: payments/templates/payments/index.html:87
+msgid "Bank Transfer"
+msgstr ""
+
+#: payments/templates/payments/form.html:123
+#: payments/templates/payments/index.html:89
+msgid "Credit Card"
+msgstr ""
+
+#: payments/templates/payments/form.html:125
+#: payments/templates/payments/index.html:90
+msgid "Other"
+msgstr ""
+
+#: payments/templates/payments/form.html:133
+msgid "Additional notes about this payment..."
+msgstr ""
+
+#: payments/templates/payments/form.html:144
+msgid "Update Payment"
+msgstr ""
+
+#: payments/templates/payments/form.html:199
+msgid "Remaining"
+msgstr ""
+
+#: payments/templates/payments/form.html:204
+msgid "No due date"
+msgstr ""
+
+#: payments/templates/payments/index.html:10
+msgid "Track and manage payment records"
+msgstr ""
+
+#: payments/templates/payments/index.html:25
+msgid "Total Payments"
+msgstr ""
+
+#: payments/templates/payments/index.html:37
+msgid "This Month"
+msgstr ""
+
+#: payments/templates/payments/index.html:49
+msgid "Average Payment"
+msgstr ""
+
+#: payments/templates/payments/index.html:71
+msgid "Invoice #, client, notes..."
+msgstr ""
+
+#: payments/templates/payments/index.html:81
+msgid "All Methods"
+msgstr ""
+
+#: payments/templates/payments/index.html:140
+msgid "Method"
+msgstr ""
+
+#: payments/templates/payments/index.html:163
+msgid "No Invoice"
+msgstr ""
+
+#: payments/templates/payments/index.html:178
+#: payments/templates/payments/view.html:42
+msgid "Not specified"
+msgstr ""
+
+#: payments/templates/payments/index.html:198
+#: payments/templates/payments/view.html:124
+msgid "Are you sure you want to delete this payment?"
+msgstr ""
+
+#: payments/templates/payments/index.html:213
+msgid "No payments found"
+msgstr ""
+
+#: payments/templates/payments/index.html:216
+msgid "Record your first payment"
+msgstr ""
+
+#: payments/templates/payments/view.html:3
+#: payments/templates/payments/view.html:9
+msgid "Payment Details"
+msgstr ""
+
+#: payments/templates/payments/view.html:10
+msgid "Payment information and details"
+msgstr ""
+
+#: payments/templates/payments/view.html:27
+msgid "Payment Information"
+msgstr ""
+
+#: payments/templates/payments/view.html:58
+msgid "Related Invoice"
+msgstr ""
+
+#: payments/templates/payments/view.html:76
+msgid "Invoice Total"
+msgstr ""
+
+#: payments/templates/payments/view.html:90
+msgid "View Invoice"
+msgstr ""
+
+#: payments/templates/payments/view.html:100
+msgid "No invoice associated with this payment"
+msgstr ""
+
+#: payments/templates/payments/view.html:117
+msgid "Add Another Payment"
+msgstr ""
+
+#: payments/templates/payments/view.html:125
+msgid "Delete Payment"
+msgstr ""
+
+#: suppliers/routes.py:31
+msgid "You do not have access to this company"
+msgstr ""
+
+#: suppliers/routes.py:86
+msgid "Please select a company first"
+msgstr ""
+
+#: suppliers/routes.py:96 suppliers/routes.py:137
+msgid "Supplier name is required"
+msgstr ""
+
+#: suppliers/routes.py:115
+msgid "Supplier created successfully"
+msgstr ""
+
+#: suppliers/routes.py:147
+msgid "Supplier updated successfully"
+msgstr ""
+
+#: suppliers/routes.py:184
+msgid "Cannot delete supplier with associated inventory items"
+msgstr ""
+
+#: suppliers/routes.py:190
+msgid "Supplier deleted successfully"
+msgstr ""
+
+#: suppliers/templates/suppliers/form.html:5
+#: suppliers/templates/suppliers/index.html:16
+msgid "Add Supplier"
+msgstr ""
+
+#: suppliers/templates/suppliers/form.html:7
+#: suppliers/templates/suppliers/form.html:19
+msgid "Edit Supplier"
+msgstr ""
+
+#: suppliers/templates/suppliers/form.html:17
+msgid "Add New Supplier"
+msgstr ""
+
+#: suppliers/templates/suppliers/form.html:24
+msgid "Create a new supplier record"
+msgstr ""
+
+#: suppliers/templates/suppliers/form.html:26
+msgid "Update supplier information"
+msgstr ""
+
+#: suppliers/templates/suppliers/form.html:34
+#: suppliers/templates/suppliers/view.html:18
+msgid "Back to Suppliers"
+msgstr ""
+
+#: suppliers/templates/suppliers/form.html:48
+msgid "Supplier Name"
+msgstr ""
+
+#: suppliers/templates/suppliers/form.html:53
+msgid "Enter supplier name"
+msgstr ""
+
+#: suppliers/templates/suppliers/form.html:58
+msgid "Contact Email"
+msgstr ""
+
+#: suppliers/templates/suppliers/form.html:63
+msgid "Enter contact email"
+msgstr ""
+
+#: suppliers/templates/suppliers/form.html:75
+msgid "Enter phone number"
+msgstr ""
+
+#: suppliers/templates/suppliers/form.html:84
+msgid "Enter supplier address"
+msgstr ""
+
+#: suppliers/templates/suppliers/form.html:97
+msgid "Create Supplier"
+msgstr ""
+
+#: suppliers/templates/suppliers/form.html:99
+msgid "Update Supplier"
+msgstr ""
+
+#: suppliers/templates/suppliers/index.html:10
+msgid "Manage your suppliers and vendors"
+msgstr ""
+
+#: suppliers/templates/suppliers/index.html:26
+msgid "Total Suppliers"
+msgstr ""
+
+#: suppliers/templates/suppliers/index.html:38
+msgid "With Inventory Items"
+msgstr ""
+
+#: suppliers/templates/suppliers/index.html:50
+msgid "Without Inventory Items"
+msgstr ""
+
+#: suppliers/templates/suppliers/index.html:70
+msgid "Search suppliers..."
+msgstr ""
+
+#: suppliers/templates/suppliers/index.html:130
+msgid "No items"
+msgstr ""
+
+#: suppliers/templates/suppliers/index.html:157
+#, python-format
+msgid "No suppliers found matching \"%(search)s\"."
+msgstr ""
+
+#: suppliers/templates/suppliers/index.html:161
+msgid "No suppliers found."
+msgstr ""
+
+#: suppliers/templates/suppliers/index.html:163
+msgid "Add your first supplier"
+msgstr ""
+
+#: suppliers/templates/suppliers/index.html:176
+#, python-format
+msgid "Showing %(shown)s of %(total)s suppliers"
+msgstr ""
+
+#: suppliers/templates/suppliers/view.html:11
+msgid "Supplier details and inventory items"
+msgstr ""
+
+#: suppliers/templates/suppliers/view.html:35
+msgid "Supplier Information"
+msgstr ""
+
+#: suppliers/templates/suppliers/view.html:123
+msgid "No inventory items found for this supplier."
+msgstr ""
+
+#: suppliers/templates/suppliers/view.html:126
+msgid "Add First Item"
+msgstr ""
+
+#: templates/flash.html:25
+msgid "Success"
+msgstr ""
+
+#: templates/flash.html:27
+msgid "Error"
+msgstr ""
+
+#: templates/flash.html:29
+msgid "Warning"
+msgstr ""
+
+#: templates/flash.html:31
+msgid "Information"
+msgstr ""
+
+#: templates/flash.html:40
+msgid "Close"
+msgstr ""
+
+#: templates/header.html:22
+msgid "Search..."
+msgstr ""
+
+#: templates/header.html:50
+msgid "Open company menu"
+msgstr ""
+
+#: templates/header.html:97 templates/sidebar.html:102
+msgid "Settings"
+msgstr ""
+
+#: templates/header.html:104
+msgid "Sign out"
+msgstr ""
+
+#: templates/lang-switcher.html:5
+msgid "Open language menu"
+msgstr ""
+
+#: templates/sidebar.html:19
+msgid "Main"
+msgstr ""
+
+#: users/templates/users/form.html:3 users/templates/users/form.html:10
+#: users/templates/users/view.html:15 users/templates/users/view.html:196
+msgid "Edit User"
+msgstr ""
+
+#: users/templates/users/form.html:3 users/templates/users/form.html:10
+msgid "New User"
+msgstr ""
+
+#: users/templates/users/form.html:3
+msgid ""
+"Business Management\n"
+"System"
+msgstr ""
+
+#: users/templates/users/form.html:12
+msgid "Update user information and permissions"
+msgstr ""
+
+#: users/templates/users/form.html:13
+msgid "Create a new system user"
+msgstr ""
+
+#: users/templates/users/form.html:18 users/templates/users/view.html:19
+msgid "Back to Users"
+msgstr ""
+
+#: users/templates/users/form.html:37
+msgid "Enter full name"
+msgstr ""
+
+#: users/templates/users/form.html:46
+msgid "Enter email address"
+msgstr ""
+
+#: users/templates/users/form.html:54
+msgid "Leave blank to keep current password"
+msgstr ""
+
+#: users/templates/users/form.html:59
+msgid "Enter password"
+msgstr ""
+
+#: users/templates/users/form.html:71
+msgid "Confirm password"
+msgstr ""
+
+#: users/templates/users/form.html:76 users/templates/users/index.html:36
+#: users/templates/users/index.html:98 users/templates/users/view.html:61
+msgid "Role"
+msgstr ""
+
+#: users/templates/users/form.html:80
+msgid "Select a role"
+msgstr ""
+
+#: users/templates/users/form.html:107
+msgid "No companies available. Please create a company first."
+msgstr ""
+
+#: users/templates/users/form.html:119
+msgid "Update User"
+msgstr ""
+
+#: users/templates/users/form.html:119
+msgid "Create User"
+msgstr ""
+
+#: users/templates/users/form.html:134
+msgid "Passwords do not match"
+msgstr ""
+
+#: users/templates/users/form.html:150
+msgid "Please select at least one company"
+msgstr ""
+
+#: users/templates/users/index.html:10
+msgid "Manage system users and their permissions"
+msgstr ""
+
+#: users/templates/users/index.html:15
+msgid "Add User"
+msgstr ""
+
+#: users/templates/users/index.html:30
+msgid "Name or email..."
+msgstr ""
+
+#: users/templates/users/index.html:39
+msgid "All Roles"
+msgstr ""
+
+#: users/templates/users/index.html:48
+msgid "Company"
+msgstr ""
+
+#: users/templates/users/index.html:51
+msgid "All Companies"
+msgstr ""
+
+#: users/templates/users/index.html:63
+msgid "All Status"
+msgstr ""
+
+#: users/templates/users/index.html:64 users/templates/users/index.html:152
+#: users/templates/users/view.html:48
+msgid "Active"
+msgstr ""
+
+#: users/templates/users/index.html:66 users/templates/users/index.html:158
+#: users/templates/users/view.html:54
+msgid "Inactive"
+msgstr ""
+
+#: users/templates/users/index.html:92
+msgid "User"
+msgstr ""
+
+#: users/templates/users/index.html:128
+msgid "You"
+msgstr ""
+
+#: users/templates/users/index.html:143
+msgid "No Role"
+msgstr ""
+
+#: users/templates/users/index.html:170
+msgid "No companies"
+msgstr ""
+
+#: users/templates/users/index.html:189
+msgid "Deactivate"
+msgstr ""
+
+#: users/templates/users/index.html:189
+msgid "Activate"
+msgstr ""
+
+#: users/templates/users/index.html:194 users/templates/users/view.html:208
+msgid "Send Password Reset"
+msgstr ""
+
+#: users/templates/users/index.html:201
+msgid "Are you sure you want to delete this user?"
+msgstr ""
+
+#: users/templates/users/index.html:218
+msgid "No users found"
+msgstr ""
+
+#: users/templates/users/index.html:221
+msgid "Add your first user"
+msgstr ""
+
+#: users/templates/users/view.html:10
+msgid "User details and information"
+msgstr ""
+
+#: users/templates/users/view.html:28
+msgid "User Information"
+msgstr ""
+
+#: users/templates/users/view.html:69
+msgid "No Role Assigned"
+msgstr ""
+
+#: users/templates/users/view.html:76
+msgid "Account Created"
+msgstr ""
+
+#: users/templates/users/view.html:83
+msgid "Last Updated"
+msgstr ""
+
+#: users/templates/users/view.html:85
+msgid "Never"
+msgstr ""
+
+#: users/templates/users/view.html:93
+msgid "Associated Companies"
+msgstr ""
+
+#: users/templates/users/view.html:106
+msgid "Member since"
+msgstr ""
+
+#: users/templates/users/view.html:120
+msgid "No companies assigned"
+msgstr ""
+
+#: users/templates/users/view.html:123
+msgid "Assign Companies"
+msgstr ""
+
+#: users/templates/users/view.html:134
+msgid "Quick Stats"
+msgstr ""
+
+#: users/templates/users/view.html:143
+msgid "Account Age"
+msgstr ""
+
+#: users/templates/users/view.html:148
+msgid "Today"
+msgstr ""
+
+#: users/templates/users/view.html:150
+msgid "1 day"
+msgstr ""
+
+#: users/templates/users/view.html:152
+msgid "days"
+msgstr ""
+
+#: users/templates/users/view.html:161 users/templates/users/view.html:176
+msgid "Role Permissions"
+msgstr ""
+
+#: users/templates/users/view.html:203
+msgid "Deactivate User"
+msgstr ""
+
+#: users/templates/users/view.html:203
+msgid "Activate User"
+msgstr ""
+
+#: users/templates/users/view.html:212
+msgid "Are you sure you want to delete this user? This action cannot be undone."
+msgstr ""
+
+#: users/templates/users/view.html:216
+msgid "Delete User"
+msgstr ""
+
+#: users/templates/users/view.html:221
+msgid "You cannot modify your own account status"
+msgstr ""
+

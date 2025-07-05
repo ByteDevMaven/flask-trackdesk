@@ -1,0 +1,202 @@
+{% extends "base.html" %}
+
+{% block title %}{{ _('Dashboard') }} - Trackdesk{% endblock %}
+
+{% block content %}
+<div class="flex justify-between items-center mb-6">
+    <div>
+        <h2 class="text-2xl font-bold">{{ _('Dashboard') }}</h2>
+        <p class="text-fg-muted text-sm mt-1">{{ _('Welcome back') }}, {{ current_user.name }}! {{ _("Here's an
+            overview of your business.") }}</p>
+    </div>
+    <div>
+        <a href="{{ url_for('invoices.create', company_id=session.get('selected_company_id')) }}"
+            class="bg-btn-primary-bg text-btn-primary-text px-4 py-2 rounded-lg hover:bg-btn-primary-hover transition shadow-sm flex items-center">
+            <i class="fas fa-plus mr-2"></i> {{ _('New Invoice') }}
+        </a>
+    </div>
+</div>
+
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="bg-bg-subtle rounded-xl shadow-sm p-6 border border-secondary-100">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-secondary-500 text-sm">{{ _('Total Clients') }}</p>
+                <h3 class="text-3xl font-bold mt-1">{{ client_count }}</h3>
+            </div>
+            <div class="w-12 h-12 bg-accent-50 rounded-full flex items-center justify-center text-accent-600">
+                <i class="fas fa-users text-xl"></i>
+            </div>
+        </div>
+        <div class="flex items-center mt-4">
+            <span class="text-accent-600 text-sm flex items-center">
+                <i class="fas fa-arrow-up mr-1"></i> 12%
+            </span>
+            <span class="text-secondary-400 text-sm ml-2">{{ _('from last month') }}</span>
+        </div>
+        <div class="mt-4 pt-4 border-t border-secondary-100">
+            <a href="{{ url_for('customers.index', company_id=session.get('selected_company_id')) }}" class="text-primary-600 text-sm flex items-center hover:text-primary-700 transition-colors">
+                {{ _('View all clients') }}
+                <i class="fas fa-chevron-right ml-1 text-xs"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="bg-bg-subtle rounded-xl shadow-sm p-6 border border-secondary-100">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-secondary-500 text-sm">{{ _('Outstanding Invoices') }}</p>
+                <h3 class="text-3xl font-bold mt-1">{{ outstanding_invoice_count }}</h3>
+            </div>
+            <div class="w-12 h-12 bg-accent-50 rounded-full flex items-center justify-center text-accent-600">
+                <i class="fas fa-file-invoice text-xl"></i>
+            </div>
+        </div>
+        <div class="flex items-center mt-4">
+            <span class="text-accent-700 text-sm flex items-center">
+                <i class="fas fa-arrow-up mr-1"></i> 5%
+            </span>
+            <span class="text-secondary-400 text-sm ml-2">{{ _('from last month') }}</span>
+        </div>
+        <div class="mt-4 pt-4 border-t border-secondary-100">
+            <a href="{{ url_for('invoices.index', company_id=session.get('selected_company_id')) }}" class="text-primary-600 text-sm flex items-center hover:text-primary-700 transition-colors">
+                {{ _('View all invoices') }}
+                <i class="fas fa-chevron-right ml-1 text-xs"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="bg-bg-subtle rounded-xl shadow-sm p-6 border border-secondary-100">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-secondary-500 text-sm">{{ _('Inventory Items') }}</p>
+                <h3 class="text-3xl font-bold mt-1">{{ inventory_count }}</h3>
+            </div>
+            <div class="w-12 h-12 bg-accent-50 rounded-full flex items-center justify-center text-accent-600">
+                <i class="fas fa-boxes text-xl"></i>
+            </div>
+        </div>
+        <div class="flex items-center mt-4">
+            <span class="text-accent-600 text-sm flex items-center">
+                <i class="fas fa-arrow-up mr-1"></i> 8%
+            </span>
+            <span class="text-secondary-400 text-sm ml-2">{{ _('from last month') }}</span>
+        </div>
+        <div class="mt-4 pt-4 border-t border-secondary-100">
+            <a href="{{ url_for('inventory.index', company_id=session.get('selected_company_id')) }}" class="text-primary-600 text-sm flex items-center hover:text-primary-700 transition-colors">
+                {{ _('View inventory') }}
+                <i class="fas fa-chevron-right ml-1 text-xs"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="bg-bg-subtle rounded-xl shadow-sm p-6 border border-secondary-100">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-secondary-500 text-sm">{{ _('Revenue (MTD)') }}</p>
+                <h3 class="text-3xl font-bold mt-1">L.{{ revenue|locale_currency }}</h3>
+            </div>
+            <div class="w-12 h-12 bg-accent-50 rounded-full flex items-center justify-center text-accent-600">
+                <i class="fas fa-dollar-sign text-xl"></i>
+            </div>
+        </div>
+        <div class="flex items-center mt-4">
+            <span class="text-accent-600 text-sm flex items-center">
+                <i class="fas fa-arrow-up mr-1"></i> 15%
+            </span>
+            <span class="text-secondary-400 text-sm ml-2">{{ _('from last month') }}</span>
+        </div>
+        <div class="mt-4 pt-4 border-t border-secondary-100">
+            <a href="{{ url_for('payments.index', company_id=session.get('selected_company_id')) }}" class="text-primary-600 text-sm flex items-center hover:text-primary-700 transition-colors">
+                {{ _('View payments') }}
+                <i class="fas fa-chevron-right ml-1 text-xs"></i>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Activity and Tasks -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Recent Invoices -->
+    <div class="bg-secondary-50 rounded-xl shadow-sm p-6 border border-secondary-100">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-lg font-semibold text-secondary-900">{{ _('Recent Invoices') }}</h3>
+            <a href="" class="text-primary-600 text-sm hover:text-primary-700 flex items-center">
+                {{ _('View All') }}
+                <i class="fas fa-chevron-right ml-1 text-xs"></i>
+            </a>
+        </div>
+        <div class="space-y-4">
+            {% if recent_invoices %}
+            {% for invoice in recent_invoices %}
+            <div class="flex items-start p-3 rounded-lg hover:bg-secondary-100 transition-colors">
+                <div
+                    class="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center text-primary-500 mr-3 flex-shrink-0">
+                    <i class="fas fa-file-invoice"></i>
+                </div>
+                <div class="flex-1">
+                    <div class="flex justify-between">
+                        <p class="text-sm font-medium text-secondary-800">{{ _('Invoice') }} #{{
+                            invoice.document_number }}</p>
+                        <p class="text-sm font-bold text-secondary-800">L.{{ invoice.total_amount }}</p>
+                    </div>
+                    <p class="text-xs text-secondary-500 mt-1">{{ invoice.client_id }} - {{ _('Due') }}: {{
+                        invoice.due_date|locale_date }}</p>
+                    <div class="flex items-center mt-2">
+                        <span
+                            class="px-2 py-0.5 text-xs rounded-full {% if invoice.status == 'paid' %}bg-accent-50 text-accent-700{% elif invoice.status == 'overdue' %}bg-primary-100 text-primary-700{% else %}bg-secondary-100 text-secondary-800{% endif %}">
+                            {{ _(invoice.status|capitalize) }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p class="text-secondary-500 text-center py-6">{{ _('No recent invoices') }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Recent Quotes -->
+    <div class="bg-secondary-50 rounded-xl shadow-sm p-6 border border-secondary-100">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-lg font-semibold text-secondary-900">{{ _('Recent Quotes') }}</h3>
+            <a href="" class="text-primary-600 text-sm hover:text-primary-700 flex items-center">
+                {{ _('View All') }}
+                <i class="fas fa-chevron-right ml-1 text-xs"></i>
+            </a>
+        </div>
+        <div class="space-y-4">
+            {% if recent_quotes %}
+            {% for quote in recent_quotes %}
+            <div class="flex items-start p-3 rounded-lg hover:bg-secondary-100 transition-colors">
+                <div
+                    class="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center text-primary-500 mr-3 flex-shrink-0">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                </div>
+                <div class="flex-1">
+                    <div class="flex justify-between">
+                        <p class="text-sm font-medium text-secondary-800">{{ _('Quote') }} #{{ quote.document_number
+                            }}</p>
+                        <p class="text-sm font-bold text-secondary-800">L.{{ quote.total_amount|locale_currency }}
+                        </p>
+                    </div>
+                    <p class="text-xs text-secondary-500 mt-1">{{ quote.client_id }} - {{ _('Issued') }}: {{
+                        quote.issued_date|locale_date }}</p>
+                    <div class="flex items-center mt-2">
+                        <span
+                            class="px-2 py-0.5 text-xs rounded-full {% if quote.status == 'accepted' %}bg-accent-50 text-accent-700{% elif quote.status == 'rejected' %}bg-primary-100 text-primary-700{% else %}bg-secondary-100 text-secondary-800{% endif %}">
+                            {{ _(quote.status|capitalize) }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p class="text-secondary-500 text-center py-6">{{ _('No recent quotes') }}</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
