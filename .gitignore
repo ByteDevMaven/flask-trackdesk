@@ -4,6 +4,7 @@
 /.vscode
 
 /migrations
+/instance
 
 .env
-/static/templates/*.pdf
+.pdf
