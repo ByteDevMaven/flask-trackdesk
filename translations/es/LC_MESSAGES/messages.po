@@ -555,7 +555,7 @@ msgstr "facturas"
 
 #: customers/templates/customers/index.html:103
 msgid "quotes"
-msgstr "citas"
+msgstr "cotizaciones"
 
 #: customers/templates/customers/index.html:142
 msgid "Showing"
@@ -639,7 +639,7 @@ msgstr "Nueva factura"
 
 #: customers/templates/customers/view.html:54
 msgid "New Quote"
-msgstr "Nueva cita"
+msgstr "Nueva Cotizacion"
 
 #: customers/templates/customers/view.html:67
 #: invoices/templates/invoices/view.html:129
@@ -693,7 +693,7 @@ msgstr "Saldo pendiente"
 #: customers/templates/customers/view.html:168 templates/mobile-menu.html:49
 #: templates/sidebar.html:75
 msgid "Quotes"
-msgstr "Citas"
+msgstr "Cotizaciónes"
 
 #: customers/templates/customers/view.html:182
 #: invoices/templates/invoices/index.html:84
@@ -751,7 +751,7 @@ msgstr "Crear factura"
 
 #: customers/templates/customers/view.html:264
 msgid "Quote #"
-msgstr "Cita #"
+msgstr "Cotización #"
 
 #: customers/templates/customers/view.html:266
 msgid "Valid Until"
@@ -764,15 +764,15 @@ msgstr "Convertir a factura"
 
 #: customers/templates/customers/view.html:333
 msgid "No quotes yet"
-msgstr "No hay citas todavía"
+msgstr "No hay cotizaciónes todavía"
 
 #: customers/templates/customers/view.html:334
 msgid "Create your first quote for this client"
-msgstr "Crea tu primera cita para este cliente"
+msgstr "Crea tu primera cotización para este cliente"
 
 #: customers/templates/customers/view.html:337
 msgid "Create Quote"
-msgstr "Crear cita"
+msgstr "Crear cotización"
 
 #: customers/templates/customers/view.html:347
 #: invoices/templates/invoices/form.html:266
@@ -872,7 +872,7 @@ msgstr "No hay facturas recientes"
 
 #: dashboard/templates/dashboard/index.html:164
 msgid "Recent Quotes"
-msgstr "Citas recientes"
+msgstr "Cotizaciónes recientes"
 
 #: dashboard/templates/dashboard/index.html:180 invoices/routes.py:187
 #: invoices/routes.py:325 invoices/routes.py:359
@@ -884,7 +884,7 @@ msgstr "Citas recientes"
 #: invoices/templates/invoices/view.html:13
 #: invoices/templates/invoices/view.html:85
 msgid "Quote"
-msgstr "Cita"
+msgstr "Cotización"
 
 #: dashboard/templates/dashboard/index.html:185
 msgid "Issued"
@@ -892,7 +892,7 @@ msgstr "Emitido"
 
 #: dashboard/templates/dashboard/index.html:197
 msgid "No recent quotes"
-msgstr "No hay citas recientes"
+msgstr "No hay cotizaciones recientes"
 
 #: inventory/routes.py:103 inventory/routes.py:167
 msgid "Name is required"
@@ -1250,7 +1250,7 @@ msgstr "Error de eliminación del documento: %(error) s"
 
 #: invoices/routes.py:459
 msgid "Quote converted to invoice successfully"
-msgstr "Cita convertida en factura con éxito"
+msgstr "Cotización convertida en factura con éxito"
 
 #: invoices/routes.py:464
 #, python-format
@@ -1268,7 +1268,7 @@ msgstr "Actualizar detalles del documento"
 
 #: invoices/templates/invoices/form.html:25
 msgid "Create a new invoice or quote"
-msgstr "Crear una nueva factura o cita"
+msgstr "Crear una nueva factura o cotización"
 
 #: invoices/templates/invoices/form.html:32
 #: invoices/templates/invoices/view.html:48
@@ -1416,7 +1416,7 @@ msgstr "Se requiere al menos un artículo"
 #: invoices/templates/invoices/form.html:385
 #: invoices/templates/invoices/view.html:72
 msgid "Quote Number"
-msgstr "Número de cita"
+msgstr "Número de cotizacion"
 
 #: invoices/templates/invoices/form.html:387
 #: invoices/templates/invoices/view.html:74
@@ -1480,7 +1480,7 @@ msgstr "Crea tu primera factura"
 #: invoices/templates/invoices/print.html:362
 #: invoices/templates/invoices/view.html:41
 msgid "Print Quote"
-msgstr "Cita de impresión"
+msgstr "Cotización de impresión"
 
 #: invoices/templates/invoices/view.html:20
 msgid "Quote details and information"
@@ -1492,7 +1492,7 @@ msgstr "Detalles e información de la factura"
 
 #: invoices/templates/invoices/view.html:62
 msgid "Quote Information"
-msgstr "Información de cita"
+msgstr "Información de cotización"
 
 #: invoices/templates/invoices/view.html:65
 msgid "Invoice Information"
@@ -1518,7 +1518,7 @@ msgstr "No hay cliente asignado"
 
 #: invoices/templates/invoices/view.html:186
 msgid "Quote Items"
-msgstr "Citar elementos"
+msgstr "Elementos"
 
 #: invoices/templates/invoices/view.html:188
 msgid "Invoice Items"
@@ -1551,7 +1551,7 @@ msgstr "Agregue elementos a este documento para verlos aquí"
 
 #: invoices/templates/invoices/view.html:349
 msgid "This quote is valid until"
-msgstr "Esta cita es válida hasta"
+msgstr "Esta cotización es válida hasta"
 
 #: invoices/templates/invoices/view.html:350
 msgid "no expiration date"
@@ -1566,7 +1566,7 @@ msgstr ""
 #: invoices/templates/invoices/view.html:376
 #: invoices/templates/invoices/view.html:381
 msgid "An error occurred while converting the quote."
-msgstr "Se produjo un error al convertir la cita."
+msgstr "Se produjo un error al convertir la cotización."
 
 #: payments/routes.py:189
 msgid "Payment recorded successfully"

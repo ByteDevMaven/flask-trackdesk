@@ -452,12 +452,13 @@ def api_adjust_stock(company_id, id):
         item.quantity = new_quantity
         
         db.session.commit()
-        
+
         return jsonify({
+            'success': True,
             'id': item.id,
             'new_quantity': new_quantity,
             'adjustment': adjustment,
-            'message': 'Stock adjusted successfully'
+            'message': _('Stock adjusted successfully')
         })
         
     except SQLAlchemyError as e:
@@ -621,7 +622,7 @@ def download_barcode(company_id, id):
         
         # Create a new image with extra space for text
         img_width, img_height = barcode_img.size
-        new_height = img_height + 100  # Add more space for download version
+        new_height = img_height + 60 # Add more space for download version
         final_img = Image.new('RGB', (img_width, new_height), 'white')
         
         # Paste barcode
@@ -633,25 +634,25 @@ def download_barcode(company_id, id):
         try:
             font_large = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 18)
             font_medium = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 14)
-            font_small = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 12)
+            #font_small = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 12)
         except:
             font_large = ImageFont.load_default()
             font_medium = ImageFont.load_default()
-            font_small = ImageFont.load_default()
+            #font_small = ImageFont.load_default()
         
         # Add item information
         text_y = img_height + 10
         draw.text((10, text_y), item.name[:50], fill='black', font=font_large)
         
         text_y += 25
-        draw.text((10, text_y), f"Price: ${item.price:.2f}", fill='black', font=font_medium)
-        draw.text((img_width - 150, text_y), f"Qty: {item.quantity}", fill='black', font=font_medium)
+        draw.text((10, text_y), f"{_('Price')} L{item.price:,.2f}", fill='black', font=font_medium)
+        #draw.text((img_width - 150, text_y), f"Qty: {item.quantity}", fill='black', font=font_medium)
         
-        text_y += 20
-        draw.text((10, text_y), f"Code: {barcode_data}", fill='black', font=font_small)
+        #text_y += 20
+        #draw.text((10, text_y), f"Code: {barcode_data}", fill='black', font=font_small)
         
-        if item.supplier:
-            draw.text((img_width - 200, text_y), f"Supplier: {item.supplier.name[:20]}", fill='black', font=font_small)
+        #if item.supplier:
+        #    draw.text((img_width - 200, text_y), f"Supplier: {item.supplier.name[:20]}", fill='black', font=font_small)
         
         # Save to buffer
         output_buffer = BytesIO()

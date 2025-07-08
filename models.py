@@ -67,10 +67,12 @@ class Client(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     company_id = db.Column(db.Integer, db.ForeignKey('companies.id'), nullable=False)
     name = db.Column(db.String, nullable=False)
+    identifier = db.Column(db.String(50), default='', nullable=False)
     email = db.Column(db.String)
     phone = db.Column(db.String)
     address = db.Column(db.String)
     created_at = db.Column(db.DateTime, default=datetime.now())
+    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
 
 class Supplier(db.Model):
     __tablename__ = 'suppliers'
@@ -80,6 +82,8 @@ class Supplier(db.Model):
     contact_email = db.Column(db.String)
     phone = db.Column(db.String)
     address = db.Column(db.String)
+    created_at = db.Column(db.DateTime, default=datetime.now())
+    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
 
 class InventoryItem(db.Model):
     __tablename__ = 'inventory_items'
@@ -89,6 +93,8 @@ class InventoryItem(db.Model):
     description = db.Column(db.String)
     quantity = db.Column(db.Integer)
     price = db.Column(db.Float)
+    created_at = db.Column(db.DateTime, default=datetime.now())
+    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
 
     supplier_id = db.Column(db.Integer, db.ForeignKey('suppliers.id'))
     supplier = db.relationship('Supplier', backref='inventory_items')
@@ -105,6 +111,8 @@ class Document(db.Model):
     total_amount = db.Column(db.Float)
     issued_date = db.Column(db.DateTime)
     due_date = db.Column(db.DateTime)
+    created_at = db.Column(db.DateTime, default=datetime.now())
+    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
 
 class DocumentItem(db.Model):
     __tablename__ = 'document_items'
@@ -114,6 +122,8 @@ class DocumentItem(db.Model):
     description = db.Column(db.String)
     quantity = db.Column(db.Integer)
     unit_price = db.Column(db.Float)
+    created_at = db.Column(db.DateTime, default=datetime.now())
+    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
 
 class Payment(db.Model):
     __tablename__ = 'payments'
@@ -124,6 +134,8 @@ class Payment(db.Model):
     payment_date = db.Column(db.DateTime)
     method = db.Column(db.String)
     notes = db.Column(db.String)
+    created_at = db.Column(db.DateTime, default=datetime.now())
+    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
 
 class Report(db.Model):
     __tablename__ = 'reports'
@@ -134,6 +146,8 @@ class Report(db.Model):
     generated_by = db.Column(db.Integer, db.ForeignKey('users.id'))
     created_at = db.Column(db.DateTime, default=datetime.now())
     file_url = db.Column(db.String)
+    created_at = db.Column(db.DateTime, default=datetime.now())
+    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
 
 class Notification(db.Model):
     __tablename__ = 'notifications'
@@ -143,3 +157,5 @@ class Notification(db.Model):
     message = db.Column(db.Text)
     sent_at = db.Column(db.DateTime)
     status = db.Column(db.String)  # 'sent', 'failed', etc.
+    created_at = db.Column(db.DateTime, default=datetime.now())
+    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())

@@ -42,7 +42,7 @@
             </div>
             <div class="ml-4">
                 <p class="text-sm font-medium text-fg-muted">{{ _('Total Value') }}</p>
-                <p class="text-2xl font-bold text-fg-base">${{ "%.2f"|format(stats.total_value) }}</p>
+                <p class="text-2xl font-bold text-fg-base">L{{ "{:,.2f}".format(stats.total_value) }}</p>
             </div>
         </div>
     </div>
@@ -226,7 +226,7 @@
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-fg-base">
-                        ${{ "%.2f"|format(item.price) }}
+                        L{{ "{:,.2f}".format(item.price) }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-fg-muted">
                         {% if item.supplier %}
@@ -247,7 +247,7 @@
                             </a>
                             <form action="{{ url_for('inventory.delete', company_id=company_id, id=item.id) }}"
                                 method="POST" class="inline">
-                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}">
                                 <button type="submit" class="text-btn-danger-bg hover:text-btn-danger-hover"
                                     title="{{ _('Delete') }}"
                                     onclick="return confirm('{{ _('Are you sure you want to delete this item?') }}')">
@@ -319,9 +319,11 @@
 
 <!-- JavaScript for interactive features -->
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const companyId = {{ company_id }};
+    const pathParts = window.location.pathname.split('/');
+    const companyId = pathParts[1];
+    const csrf_token = document.getElementById('csrf_token').value;
 
+    document.addEventListener('DOMContentLoaded', function () {
     // Bulk selection functionality
     const selectAllCheckbox = document.getElementById('select-all');
     const itemCheckboxes = document.querySelectorAll('.item-checkbox');
@@ -356,11 +358,11 @@
         if (itemIds.length === 0) return;
 
         if (confirm(`{{ _('Are you sure you want to delete') }} ${itemIds.length} {{ _('selected items?') }}`)) {
-            fetch(`/inventory/api/${companyId}/items/bulk-delete`, {
+            fetch(`/api/${companyId}/inventory/items/bulk-delete`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token() }}'
+                    'X-CSRFToken': csrf_token
                 },
                 body: JSON.stringify({ item_ids: itemIds })
             })
@@ -385,11 +387,11 @@
             const itemId = this.dataset.itemId;
             const adjustment = parseInt(this.dataset.adjustment);
 
-            fetch(`/inventory/api/${companyId}/items/${itemId}/adjust-stock`, {
+            fetch(`/api/${companyId}/inventory/items/${itemId}/adjust-stock`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRFToken': '{{ csrf_token() }}'
+                    'X-CSRFToken': csrf_token
                 },
                 body: JSON.stringify({ adjustment: adjustment })
             })

@@ -1,9 +1,11 @@
 import uuid
+import os
+from io import BytesIO
 
-from flask import render_template, request, redirect, url_for, flash, current_app
+from flask import render_template, request, redirect, url_for, flash, current_app, make_response
 from flask_login import login_required, current_user
 from flask_wtf.csrf import validate_csrf
-from flask_babel import _
+from flask_babel import _, get_locale
 from sqlalchemy import or_
 from datetime import datetime
 from wtforms import ValidationError
@@ -368,15 +370,12 @@ def delete(company_id, id):
 @login_required
 def print_invoice(company_id, id): 
     from reportlab.pdfgen import canvas
-    from reportlab.lib.pagesizes import letter, A4
-    from reportlab.lib.units import inch
+    from reportlab.lib.pagesizes import A4
     from reportlab.pdfbase import pdfmetrics
     from reportlab.pdfbase.ttfonts import TTFont
     from PyPDF2 import PdfReader, PdfWriter
-    from io import BytesIO
-    from flask import make_response
-    import os
-    
+    from num2words import num2words
+
     document = Document.query.filter(
         Document.id == id,
         Document.company_id == company_id,
@@ -427,14 +426,24 @@ def print_invoice(company_id, id):
         overlay_canvas.setFillColorRGB(0, 0, 0)  # Black text
         
         # Document type and number
-        doc_type = "COTIZACIÓN" if document.type == DocumentType.quote else "FACTURA"
+        doc_type = "COTIZACIÓN:" if document.type == DocumentType.quote else "FACTURA:"
         overlay_canvas.setFont(font_bold, 11)
+    
+        # Draw white background behind doc_type
+        overlay_canvas.setFillColorRGB(1, 1, 1)  # White color
+        overlay_canvas.rect(10, height - 135, 120, 17, fill=1, stroke=0)  # x, y, width, height
+
+        # Draw the doc_type text on top (e.g., FACTURA / COTIZACIÓN)
+        overlay_canvas.setFillColorRGB(0, 0, 0)  # Black text
+        overlay_canvas.setFont(font_bold, 11)
+        overlay_canvas.drawString(12, height - 130, f"{doc_type}")
+
         overlay_canvas.drawString(140, height - 130, f"{document.document_number}")
         
         # Page number
         overlay_canvas.setFont(font_name, 9)
-        overlay_canvas.drawString(500, height - 105, "1")
-        overlay_canvas.drawString(520, height - 105, "1")
+        overlay_canvas.drawString(49, height - 110, "1")
+        overlay_canvas.drawString(70, height - 110, "1")
         
         # Date information - Right side
         overlay_canvas.setFont(font_name, 9)
@@ -463,7 +472,7 @@ def print_invoice(company_id, id):
             overlay_canvas.drawString(140, client_y_start, client.name[:35])  # Limit to fit field
             
             # RTN (Tax ID) - usually empty, but could be added to client model
-            overlay_canvas.drawString(140, client_y_start - 15, "")
+            overlay_canvas.drawString(140, client_y_start - 15, client.identifier)
             
             # Client code
             overlay_canvas.drawString(140, client_y_start - 30, f"CLI-{client.id:04d}")
@@ -491,7 +500,7 @@ def print_invoice(company_id, id):
         col_descuento = 410  # Descto/reb column
         col_valor = 480      # Valor column
         
-        for i, item in enumerate(document_items[:20]):  # Limit to 20 items to fit page
+        for i, item in enumerate(document_items[:25]):
             y_pos = items_start_y - (i * row_height)
             
             # Código
@@ -513,14 +522,14 @@ def print_invoice(company_id, id):
             overlay_canvas.drawRightString(col_cantidad + 10, y_pos, str(item.quantity or 0))
             
             # Precio Uni. (right aligned)
-            overlay_canvas.drawRightString(col_precio + 35, y_pos, f"L{item.unit_price or 0:.2f}")
+            overlay_canvas.drawRightString(col_precio + 35, y_pos, f"L{item.unit_price or 0:,.2f}")
             
             # Descuento (right aligned) - usually 0
             overlay_canvas.drawRightString(col_descuento + 35, y_pos, "0.00")
             
             # Valor total (right aligned)
             total_item = (item.quantity or 0) * (item.unit_price or 0)
-            overlay_canvas.drawRightString(col_valor + 65, y_pos, f"L{total_item:.2f}")
+            overlay_canvas.drawRightString(col_valor + 65, y_pos, f"L{total_item:,.2f}")
         
         # Totals section - Bottom right
         overlay_canvas.setFont(font_name, 9)
@@ -540,37 +549,38 @@ def print_invoice(company_id, id):
         total_final = subtotal + imp_15 + imp_18
         
         # VTA EXENTA
-        overlay_canvas.drawRightString(totals_x + 35, totals_start_y - 27, f"L{vta_exenta:.2f}")
+        overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 27, f"L{vta_exenta:,.2f}")
         
         # VENTA GRAVADA 15%
-        overlay_canvas.drawRightString(totals_x + 35, totals_start_y - 45, f"L{venta_gravada_15:.2f}")
+        overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 45, f"L{venta_gravada_15:,.2f}")
         
         # VENTA GRAVADA 18%
-        overlay_canvas.drawRightString(totals_x + 35, totals_start_y - 65, f"L{venta_gravada_18:.2f}")
+        overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 65, f"L{venta_gravada_18:,.2f}")
         
         # VENTA EXONERADA
-        overlay_canvas.drawRightString(totals_x + 35, totals_start_y - 82, f"L{venta_exonerada:.2f}")
+        overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 82, f"L{venta_exonerada:,.2f}")
         
         # IMP. S/VENTA 15%
-        overlay_canvas.drawRightString(totals_x + 35, totals_start_y - 100, f"L{imp_15:.2f}")
+        overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 100, f"L{imp_15:,.2f}")
         
         # IMP. S/VENTA 18%
-        overlay_canvas.drawRightString(totals_x + 35, totals_start_y - 115, f"L{imp_18:.2f}")
+        overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 117, f"L{imp_18:,.2f}")
         
         # TOTAL (bold and larger)
         overlay_canvas.setFont(font_bold, 11)
-        overlay_canvas.drawRightString(totals_x + 35, totals_start_y - 145, f"L{total_final:.2f}")
+        overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 145, f"L{total_final:,.2f}")
         
         # Amount in words - Bottom left
         overlay_canvas.setFont(font_name, 10)
         
-        # Convert number to words (simplified version)
+        # Convert number to words
         def number_to_words(amount):
-            # This is a simplified version - you might want to use a proper library
-            return f"LEMPIRAS {amount:.2f}/100"
+            lang_code = get_locale().language
+            amount = round(amount, 2)
+            return num2words(amount, lang=lang_code)
         
         words = number_to_words(total_final)
-        overlay_canvas.drawString(totals_x, totals_start_y - 165, words[:50])  # Limit length to fit
+        overlay_canvas.drawString(totals_x - 160, totals_start_y - 180, words[:70])  # Limit length to fit
         
         # Save the overlay
         overlay_canvas.save()
@@ -582,10 +592,16 @@ def print_invoice(company_id, id):
         
         # Merge template with overlay
         template_page.merge_page(overlay_page)
+
+        doc_type_name = "cotizacion" if document.type == DocumentType.quote else "factura"
+        filename = f"{doc_type_name}_{document.document_number}.pdf"
         
         # Create output PDF
         output_buffer = BytesIO()
         output_pdf = PdfWriter()
+        output_pdf.add_metadata({
+            '/Title': filename
+        })
         output_pdf.add_page(template_page)
         output_pdf.write(output_buffer)
         
@@ -595,16 +611,13 @@ def print_invoice(company_id, id):
         output_buffer.close()
         overlay_buffer.close()
         
-        doc_type_name = "cotizacion" if document.type == DocumentType.quote else "factura"
-        filename = f"{doc_type_name}_{document.document_number}.pdf"
-        
         response.headers['Content-Type'] = 'application/pdf'
         response.headers['Content-Disposition'] = f'inline; filename="{filename}"'
         
         return response
         
     except Exception as e:
-        flash(_('Error generating PDF: %(error)s', error=str(e)), 'error')
+        flash(_(f'Error generating PDF: {str(e)}'), 'error')
         return redirect(url_for('invoices.view', company_id=company_id, id=id))
 
 @invoices.route('/<int:company_id>/invoices/<int:id>/convert', methods=['POST'])
