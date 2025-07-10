@@ -91,8 +91,13 @@ def create(company_id):
     # Get clients and inventory items for the form
     clients = Client.query.filter_by(company_id=company_id).all()
     inventory_items = InventoryItem.query.filter_by(company_id=company_id).all()
-    
-    return render_template('invoices/form.html', 
+
+    selected_client_id = int(request.args.get('client_id', 0))
+    selected_type = request.args.get('type', None)
+
+    return render_template('invoices/form.html',
+                         customer_id=selected_client_id, 
+                         doc_type=selected_type,
                          invoice=None, 
                          clients=clients, 
                          inventory_items=inventory_items,

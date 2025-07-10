@@ -45,11 +45,11 @@
                 class="bg-primary-100 text-primary-700 px-4 py-2 rounded-lg hover:bg-primary-200 transition flex items-center">
                 <i class="fas fa-edit mr-2"></i> {{ _('Edit Client') }}
             </a>
-            <a href=""
+            <a href="{{ url_for('invoices.create', company_id=company_id, type='invoice', client_id=client.id) }}"
                 class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition shadow-sm flex items-center">
                 <i class="fas fa-plus mr-2"></i> {{ _('New Invoice') }}
             </a>
-            <a href=""
+            <a href="{{ url_for('invoices.create', company_id=company_id, type='quote', client_id=client.id) }}"
                 class="bg-secondary-100 text-secondary-700 px-4 py-2 rounded-lg hover:bg-secondary-200 transition flex items-center">
                 <i class="fas fa-plus mr-2"></i> {{ _('New Quote') }}
             </a>
