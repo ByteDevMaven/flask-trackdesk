@@ -23,7 +23,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-fg-muted text-sm">{{ _('Total Payments') }}</p>
-                    <h3 class="text-2xl font-bold mt-1 text-fg-base">${{ "%.2f"|format(total_payments) }}</h3>
+                    <h3 class="text-2xl font-bold mt-1 text-fg-base">L{{ "{:,.2f}".format(total_payments) }}</h3>
                 </div>
                 <div class="w-12 h-12 bg-accent-100 rounded-full flex items-center justify-center text-accent-600">
                     <i class="fas fa-dollar-sign text-xl"></i>
@@ -47,7 +47,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-fg-muted text-sm">{{ _('Average Payment') }}</p>
-                    <h3 class="text-2xl font-bold mt-1 text-fg-base">${{ "%.2f"|format(total_payments / payments|length
+                    <h3 class="text-2xl font-bold mt-1 text-fg-base">L{{ "{:,.2f}".format(total_payments / payments|length
                         if payments|length > 0 else 0) }}</h3>
                 </div>
                 <div
@@ -171,7 +171,7 @@
                             {% endif %}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-fg-base">
-                            ${{ "%.2f"|format(payment.amount or 0) }}
+                            L{{ "{:,.2f}".format(payment.amount or 0) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-fg-muted">
                             <span class="px-2 py-1 text-xs rounded-full bg-secondary-100 text-secondary-800">

@@ -158,6 +158,7 @@ def store(company_id = None):
     # Extract form data
     name = request.form.get('name', '').strip()
     email = request.form.get('email', '').strip()
+    identifier = request.form.get('identifier', '').strip()
     phone = request.form.get('phone', '').strip()
     address = request.form.get('address', '').strip()
     
@@ -176,6 +177,7 @@ def store(company_id = None):
         company_id=company_id,
         name=name,
         email=email,
+        identifier=identifier,
         phone=phone,
         address=address
     )
@@ -220,6 +222,7 @@ def update(id = 0):
     # Extract form data
     name = request.form.get('name', '').strip()
     email = request.form.get('email', '').strip()
+    identifier = request.form.get('identifier', '').strip()
     phone = request.form.get('phone', '').strip()
     address = request.form.get('address', '').strip()
     
@@ -236,6 +239,7 @@ def update(id = 0):
     # Update client
     client.name = name
     client.email = email
+    client.identifier = identifier
     client.phone = phone
     client.address = address
     

@@ -108,7 +108,6 @@ def search_invoices(company_id):
     # Search for unpaid or partially paid invoices
     query = db.session.query(Document).filter(
         Document.company_id == company_id,
-        Document.type == DocumentType.invoice,
         or_(
             Document.status == 'sent',
             Document.status == 'overdue',
@@ -187,7 +186,7 @@ def store(company_id):
         
         db.session.commit()
         flash(_('Payment recorded successfully'), 'success')
-        return redirect(url_for('payments.view', id=payment.id))
+        return redirect(url_for('payments.view', company_id=company_id, id=payment.id))
         
     except Exception as e:
         db.session.rollback()
@@ -273,12 +272,12 @@ def update(company_id, id):
         
         db.session.commit()
         flash(_('Payment updated successfully'), 'success')
-        return redirect(url_for('payments.view', id=payment.id))
+        return redirect(url_for('payments.view', company_id=company_id, id=payment.id))
         
     except Exception as e:
         db.session.rollback()
         flash(_('Error updating payment: %(error)s', error=str(e)), 'error')
-        return redirect(url_for('payments.edit', id=id))
+        return redirect(url_for('payments.edit', company_id=company_id, id=id))
 
 @payments.route('/<int:company_id>/payments/<int:id>/delete', methods=['POST'])
 @login_required
@@ -317,4 +316,4 @@ def delete(company_id, id):
         db.session.rollback()
         flash(_('Error deleting payment: %(error)s', error=str(e)), 'error')
     
-    return redirect(url_for('payments.index'))
+    return redirect(url_for('payments.index', company_id=company_id))

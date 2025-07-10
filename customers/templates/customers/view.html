@@ -74,6 +74,19 @@
                     </div>
 
                     <div class="mb-4">
+                        <p class="text-sm text-secondary-500">{{ _('Tax Identifier') }}</p>
+                        {% if client.identifier %}
+                        <p class="text-secondary-900">
+                            <a href="mailto:{{ client.identifier }}" class="text-primary-600 hover:text-primary-700">
+                                {{ client.identifier }}
+                            </a>
+                        </p>
+                        {% else %}
+                        <p class="text-secondary-400 italic">{{ _('Not provided') }}</p>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-4">
                         <p class="text-sm text-secondary-500">{{ _('Email Address') }}</p>
                         {% if client.email %}
                         <p class="text-secondary-900">

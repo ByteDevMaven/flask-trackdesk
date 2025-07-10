@@ -100,7 +100,7 @@
                                 <td class="px-6 py-4">{{ item.description|truncate(50) if item.description else '-' }}
                                 </td>
                                 <td class="px-6 py-4">{{ item.quantity }}</td>
-                                <td class="px-6 py-4">{{ "%.2f"|format(item.price) }}</td>
+                                <td class="px-6 py-4">L{{ "{:,.2f}".format(item.price) }}</td>
                                 <td class="px-6 py-4 text-right">
                                     <div class="flex justify-end gap-2">
                                         <a href="{{ url_for('inventory.edit', id=item.id, company_id=company_id) }}"

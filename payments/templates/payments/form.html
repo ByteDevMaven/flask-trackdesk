@@ -62,15 +62,15 @@ Management System') }}{% endblock %}
                                         <div>
                                             <span class="text-fg-muted">{{ _('Total Amount') }}:</span>
                                             <span class="font-medium" id="selected_invoice_total">
-                                                {% if selected_invoice %} ${{
-                                                "%.2f"|format(selected_invoice.total_amount or 0) }}{% endif %}
+                                                {% if selected_invoice %} L{{
+                                                "{:,.2f}".format(selected_invoice.total_amount or 0) }}{% endif %}
                                             </span>
                                         </div>
                                         <div>
                                             <span class="text-fg-muted">{{ _('Remaining Balance') }}:</span>
                                             <span class="font-medium text-accent-600" id="selected_invoice_balance">
-                                                {% if selected_invoice %} ${{
-                                                "%.2f"|format(selected_invoice.total_amount or 0) }}{% endif %}
+                                                {% if selected_invoice %} L{{
+                                                "{:,.2f}".format(selected_invoice.total_amount or 0) }}{% endif %}
                                             </span>
                                         </div>
                                     </div>
@@ -89,7 +89,7 @@ Management System') }}{% endblock %}
                         <span class="text-btn-danger-bg">*</span></label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <span class="text-fg-muted">$</span>
+                            <span class="text-fg-muted">L</span>
                         </div>
                         <input type="number" id="amount" name="amount" step="0.01" min="0"
                             value="{{ payment.amount if payment else '' }}" required
@@ -195,12 +195,12 @@ Management System') }}{% endblock %}
                             <div class="text-sm text-fg-muted">${invoice.client_name || '{{ _("No Client") }}'}</div>
                         </div>
                         <div class="text-right">
-                            <div class="text-sm font-medium text-fg-base">$${invoice.remaining_balance.toFixed(2)}</div>
+                            <div class="text-sm font-medium text-fg-base">L${invoice.remaining_balance.toFixed(2)}</div>
                             <div class="text-xs text-fg-muted">{{ _("Remaining") }}</div>
                         </div>
                     </div>
                     <div class="text-xs text-fg-muted mt-1">
-                        {{ _("Total") }}: $${invoice.total_amount.toFixed(2)} | 
+                        {{ _("Total") }}: L${invoice.total_amount.toFixed(2)} | 
                         {{ _("Due") }}: ${invoice.due_date || '{{ _("No due date") }}'}
                     </div>
                 </div>
@@ -225,8 +225,8 @@ Management System') }}{% endblock %}
             // Update selected invoice display
             document.getElementById('selected_invoice_number').textContent = invoice.document_number;
             document.getElementById('selected_invoice_client').textContent = invoice.client_name || '{{ _("No Client") }}';
-            document.getElementById('selected_invoice_total').textContent = `$${invoice.total_amount.toFixed(2)}`;
-            document.getElementById('selected_invoice_balance').textContent = `$${invoice.remaining_balance.toFixed(2)}`;
+            document.getElementById('selected_invoice_total').textContent = `L${invoice.total_amount.toFixed(2)}`;
+            document.getElementById('selected_invoice_balance').textContent = `L${invoice.remaining_balance.toFixed(2)}`;
 
             // Suggest payment amount as remaining balance
             if (!amountInput.value) {

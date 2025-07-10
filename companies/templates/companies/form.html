@@ -30,7 +30,7 @@ Management System') }}{% endblock %}
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <!-- Company Information -->
                 <div class="space-y-6">
-                    <div>
+                    <div class="space-y-4">
                         <h3 class="text-lg font-medium text-fg-base mb-4">{{ _('Company Information') }}</h3>
 
                         <div>
@@ -40,6 +40,46 @@ Management System') }}{% endblock %}
                                 required
                                 class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base"
                                 placeholder="{{ _('Enter company name') }}">
+                        </div>
+                        <div>
+                            <label for="currency" class="block text-sm font-medium text-fg-base mb-1">{{ _('Company Currency')
+                                }} <span class="text-btn-danger-bg">*</span></label>
+                            <input type="text" id="currency" name="currency" value="{{ company.currency if company else '' }}"
+                                required
+                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base"
+                                placeholder="{{ _('$, USD, EUR, ....') }}">
+                        </div>
+                        <div>
+                            <label for="address" class="block text-sm font-medium text-fg-base mb-1">{{ _('Company Address')
+                                }} <span class="text-btn-danger-bg">*</span></label>
+                            <input type="text" id="address" name="address" value="{{ company.address if company else '' }}"
+                                required
+                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base"
+                                placeholder="Kremlin, Moscow, Russia, 103073">
+                        </div>
+                        <div>
+                            <label for="phone" class="block text-sm font-medium text-fg-base mb-1">{{ _('Company Phone')
+                                }} <span class="text-btn-danger-bg">*</span></label>
+                            <input type="tel" id="phone" name="phone" value="{{ company.phone if company else '' }}"
+                                required
+                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base"
+                                placeholder="000-000-0000">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-fg-base mb-1">{{ _('Company Email')
+                                }} <span class="text-btn-danger-bg">*</span></label>
+                            <input type="email" id="email" name="email" value="{{ company.email if company else '' }}"
+                                required
+                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base"
+                                placeholder="example@email.com">
+                        </div>
+                        <div>
+                            <label for="identifier" class="block text-sm font-medium text-fg-base mb-1">{{ _('Company Tax Identifier')
+                                }} <span class="text-btn-danger-bg">*</span></label>
+                            <input type="identifier" id="identifier" name="identifier" value="{{ company.identifier if company else '' }}"
+                                required
+                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base"
+                                placeholder="0000000000">
                         </div>
                     </div>
                 </div>

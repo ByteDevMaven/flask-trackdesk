@@ -35,6 +35,11 @@ def create():
 def store():
     try:
         name = request.form.get('name', '').strip()
+        currency = request.form.get('currency', 'USD')
+        address = request.form.get('address', '').strip()
+        phone = request.form.get('phone', '').strip()
+        email = request.form.get('email', '').strip()
+        identifier = request.form.get('identifier', '').strip()
         user_ids = request.form.getlist('user_ids')
         
         if not name:
@@ -49,6 +54,11 @@ def store():
         
         company = Company(
             name=name,
+            currency=currency,
+            address=address,
+            phone=phone,
+            email=email,
+            identifier=identifier,
             created_at=datetime.now()
         )
         
@@ -108,6 +118,11 @@ def update(id):
     
     try:
         name = request.form.get('name', '').strip()
+        currency = request.form.get('currency', 'USD')
+        address = request.form.get('address', '').strip()
+        phone = request.form.get('phone', '').strip()
+        email = request.form.get('email', '').strip()
+        identifier = request.form.get('identifier', '').strip()
         user_ids = request.form.getlist('user_ids')
         
         if not name:
@@ -121,6 +136,12 @@ def update(id):
             return redirect(url_for('companies.edit', id=id))
         
         company.name = name
+        company.currency = currency
+        company.address = address
+        company.phone = phone
+        company.email = email
+        company.identifier = identifier
+        company.updated_at = datetime.now()
         
         # Update user associations
         company.users.clear()
