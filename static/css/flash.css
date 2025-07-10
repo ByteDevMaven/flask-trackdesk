@@ -42,7 +42,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    animation: shrink 5s linear forwards;
+    animation: shrink 8s linear forwards;
 }
 
 @keyframes shrink {

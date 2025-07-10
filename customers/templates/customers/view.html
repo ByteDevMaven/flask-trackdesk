@@ -3,397 +3,380 @@
 {% block title %}{{ client.name }} - {{ _('Client Details') }} - {{ _('Trackdesk') }}{% endblock %}
 
 {% block content %}
-<div class="animate-fadeIn">
-    <!-- Breadcrumb -->
-    <nav class="mb-4 text-sm">
-        <ol class="flex items-center space-x-1">
-            <li>
-                <a href="{{ url_for('dashboard.index', company_id=client.company_id) }}" class="text-secondary-500 hover:text-secondary-700">
-                    {{ _('Dashboard') }}
-                </a>
-            </li>
-            <li class="flex items-center">
-                <svg class="w-4 h-4 text-secondary-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd"
-                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                        clip-rule="evenodd"></path>
-                </svg>
-                <a href="{{ url_for('customers.index', company_id=client.company_id) }}"
-                    class="text-secondary-500 hover:text-secondary-700 ml-1">
-                    {{ _('Clients') }}
-                </a>
-            </li>
-            <li class="flex items-center">
-                <svg class="w-4 h-4 text-secondary-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd"
-                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                        clip-rule="evenodd"></path>
-                </svg>
-                <span class="ml-1 text-secondary-700 font-medium">{{ client.name }}</span>
-            </li>
-        </ol>
-    </nav>
+<!-- Breadcrumb -->
+<nav class="mb-4 text-sm">
+    <ol class="flex items-center space-x-1">
+        <li>
+            <a href="{{ url_for('dashboard.index', company_id=client.company_id) }}"
+                class="text-fg-muted hover:text-fg-base">
+                {{ _('Dashboard') }}
+            </a>
+        </li>
+        <li class="flex items-center">
+            <svg class="w-4 h-4 text-fg-muted" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                    clip-rule="evenodd"></path>
+            </svg>
+            <a href="{{ url_for('customers.index', company_id=client.company_id) }}"
+                class="text-fg-muted hover:text-fg-base ml-1">
+                {{ _('Clients') }}
+            </a>
+        </li>
+        <li class="flex items-center">
+            <svg class="w-4 h-4 text-fg-muted" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd"
+                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                    clip-rule="evenodd"></path>
+            </svg>
+            <span class="ml-1 text-fg-base font-medium">{{ client.name }}</span>
+        </li>
+    </ol>
+</nav>
 
-    <!-- Header with actions -->
-    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-        <div>
-            <h2 class="text-2xl font-bold text-secondary-900">{{ client.name }}</h2>
-            <p class="text-secondary-500 text-sm mt-1">{{ _('Client ID') }}: #{{ client.id }}</p>
+<!-- Header with actions -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+    <div>
+        <h2 class="text-2xl font-bold text-fg-base">{{ client.name }}</h2>
+        <p class="text-fg-muted text-sm mt-1">{{ _('Client ID') }}: #{{ client.id }}</p>
+    </div>
+    <div class="flex flex-wrap gap-2">
+        <a href="{{ url_for('customers.edit', company_id=company_id, id=client.id) }}"
+            class="bg-btn-secondary-bg text-btn-secondary-text px-4 py-2 rounded-lg hover:bg-btn-secondary-hover transition flex items-center">
+            <i class="fas fa-edit mr-2"></i> {{ _('Edit Client') }}
+        </a>
+        <a href="{{ url_for('invoices.create', company_id=company_id, type='invoice', client_id=client.id) }}"
+            class="bg-btn-primary-bg text-btn-primary-text px-4 py-2 rounded-lg hover:bg-btn-primary-hover transition shadow-sm flex items-center">
+            <i class="fas fa-plus mr-2"></i> {{ _('New Invoice') }}
+        </a>
+        <a href="{{ url_for('invoices.create', company_id=company_id, type='quote', client_id=client.id) }}"
+            class="bg-btn-primary-bg text-btn-primary-text px-4 py-2 rounded-lg hover:bg-btn-primary-hover transition flex items-center">
+            <i class="fas fa-plus mr-2"></i> {{ _('New Quote') }}
+        </a>
+        <button type="button" onclick="confirmDelete({{ client.id }}, '{{ client.name|e }}')"
+            class="bg-btn-danger-bg text-btn-danger-text px-4 py-2 rounded-lg hover:bg-btn-danger-hover transition flex items-center">
+            <i class="fas fa-trash-alt mr-2"></i> {{ _('Delete') }}
+        </button>
+    </div>
+</div>
+
+<!-- Client Information and Stats -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+    <!-- Client Information -->
+    <div class="rounded-xl shadow-sm p-6 border border-bg-subtle lg:col-span-2">
+        <h3 class="text-lg font-semibold text-fg-base mb-4">{{ _('Client Information') }}</h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                <div class="mb-4">
+                    <p class="text-sm text-fg-muted">{{ _('Full Name') }}</p>
+                    <p class="text-fg-base font-medium">{{ client.name }}</p>
+                </div>
+
+                <div class="mb-4">
+                    <p class="text-sm text-fg-muted">{{ _('Tax Identifier') }}</p>
+                    {% if client.identifier %}
+                    <p class="text-fg-base">
+                        {{ client.identifier }}
+                    </p>
+                    {% else %}
+                    <p class="text-fg-muted italic">{{ _('Not provided') }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="mb-4">
+                    <p class="text-sm text-fg-muted">{{ _('Email Address') }}</p>
+                    {% if client.email %}
+                    <p class="text-fg-base">
+                        <a href="mailto:{{ client.email }}" class="text-primary-600 hover:text-primary-700">
+                            {{ client.email }}
+                        </a>
+                    </p>
+                    {% else %}
+                    <p class="text-fg-muted italic">{{ _('Not provided') }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <p class="text-sm text-fg-muted">{{ _('Phone Number') }}</p>
+                    {% if client.phone %}
+                    <p class="text-fg-base">
+                        <a href="tel:{{ client.phone }}" class="text-primary-600 hover:text-primary-700">
+                            {{ client.phone }}
+                        </a>
+                    </p>
+                    {% else %}
+                    <p class="text-fg-muted italic">{{ _('Not provided') }}</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div>
+                <div class="mb-4">
+                    <p class="text-sm text-fg-muted">{{ _('Address') }}</p>
+                    {% if client.address %}
+                    <p class="text-fg-base whitespace-pre-line">{{ client.address }}</p>
+                    {% else %}
+                    <p class="text-fg-muted italic">{{ _('Not provided') }}</p>
+                    {% endif %}
+                </div>
+
+                <div>
+                    <p class="text-sm text-fg-muted">{{ _('Client Since') }}</p>
+                    <p class="text-fg-base">{{ client.created_at|locale_date }}</p>
+                </div>
+            </div>
         </div>
-        <div class="flex flex-wrap gap-2">
-            <a href="{{ url_for('customers.edit', company_id=company_id, id=client.id) }}"
-                class="bg-primary-100 text-primary-700 px-4 py-2 rounded-lg hover:bg-primary-200 transition flex items-center">
-                <i class="fas fa-edit mr-2"></i> {{ _('Edit Client') }}
-            </a>
-            <a href="{{ url_for('invoices.create', company_id=company_id, type='invoice', client_id=client.id) }}"
-                class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition shadow-sm flex items-center">
-                <i class="fas fa-plus mr-2"></i> {{ _('New Invoice') }}
-            </a>
-            <a href="{{ url_for('invoices.create', company_id=company_id, type='quote', client_id=client.id) }}"
-                class="bg-secondary-100 text-secondary-700 px-4 py-2 rounded-lg hover:bg-secondary-200 transition flex items-center">
-                <i class="fas fa-plus mr-2"></i> {{ _('New Quote') }}
-            </a>
-            <button type="button" onclick="confirmDelete({{ client.id }}, '{{ client.name|e }}')"
-                class="bg-red-100 text-red-700 px-4 py-2 rounded-lg hover:bg-red-200 transition flex items-center">
-                <i class="fas fa-trash-alt mr-2"></i> {{ _('Delete') }}
+    </div>
+
+    <!-- Client Stats -->
+    <div class="bg-bg-subtle rounded-xl shadow-sm p-6 border border-secondary-100">
+        <h3 class="text-lg font-semibold text-fg-base mb-4">{{ _('Financial Summary') }}</h3>
+
+        <div class="space-y-4">
+            <div class="p-4 rounded-lg">
+                <p class="text-sm text-fg-muted">{{ _('Total Invoiced') }}</p>
+                <p class="text-2xl font-bold text-fg-base">L{{ total_invoiced|locale_currency }}</p>
+            </div>
+
+            <div class="p-4 {% if outstanding_amount > 0 %}bg-red-50{% else %}bg-green-50{% endif %} rounded-lg">
+                <p class="text-sm {% if outstanding_amount > 0 %}text-red-500{% else %}text-green-500{% endif %}">
+                    {{ _('Outstanding Balance') }}
+                </p>
+                <p
+                    class="text-2xl font-bold {% if outstanding_amount > 0 %}text-red-700{% else %}text-green-700{% endif %}">
+                    L{{ outstanding_amount|locale_currency }}
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 mt-4">
+                <div class="p-4 bg-primary-50 rounded-lg text-center">
+                    <p class="text-sm text-primary-500">{{ _('Invoices') }}</p>
+                    <p class="text-xl font-bold text-primary-700">{{ invoices|length }}</p>
+                </div>
+
+                <div class="p-4 bg-accent-50 rounded-lg text-center">
+                    <p class="text-sm text-accent-500">{{ _('Quotes') }}</p>
+                    <p class="text-xl font-bold text-accent-700">{{ quotes|length }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Tabs for Invoices and Quotes -->
+<div class="mb-6">
+    <div class="border-b border-secondary-200">
+        <nav class="-mb-px flex space-x-8">
+            <button id="tab-invoices" onclick="showTab('invoices')"
+                class="tab-button text-fg-base border-fg-base whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                {{ _('Invoices') }}
             </button>
-        </div>
+            <button id="tab-quotes" onclick="showTab('quotes')"
+                class="tab-button border-transparent text-fg-muted hover:text-fg-base hover:border-fg-muted whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                {{ _('Quotes') }}
+            </button>
+        </nav>
     </div>
+</div>
 
-    <!-- Client Information and Stats -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-        <!-- Client Information -->
-        <div class="bg-secondary-50 rounded-xl shadow-sm p-6 border border-secondary-100 lg:col-span-2">
-            <h3 class="text-lg font-semibold text-secondary-900 mb-4">{{ _('Client Information') }}</h3>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <div class="mb-4">
-                        <p class="text-sm text-secondary-500">{{ _('Full Name') }}</p>
-                        <p class="text-secondary-900 font-medium">{{ client.name }}</p>
-                    </div>
-
-                    <div class="mb-4">
-                        <p class="text-sm text-secondary-500">{{ _('Tax Identifier') }}</p>
-                        {% if client.identifier %}
-                        <p class="text-secondary-900">
-                            <a href="mailto:{{ client.identifier }}" class="text-primary-600 hover:text-primary-700">
-                                {{ client.identifier }}
+<!-- Invoices Tab Content -->
+<div id="content-invoices" class="tab-content">
+    <div class="rounded-xl shadow-sm border border-secondary-100 overflow-hidden">
+        {% if invoices %}
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr class="border-b border-secondary-100">
+                        <th class="text-left py-3 px-4 font-semibold text-fg-base">{{ _('Invoice #') }}</th>
+                        <th class="text-left py-3 px-4 font-semibold text-fg-base">{{ _('Date') }}</th>
+                        <th class="text-left py-3 px-4 font-semibold text-fg-base">{{ _('Due Date') }}</th>
+                        <th class="text-left py-3 px-4 font-semibold text-fg-base">{{ _('Amount') }}</th>
+                        <th class="text-left py-3 px-4 font-semibold text-fg-base">{{ _('Status') }}</th>
+                        <th class="text-right py-3 px-4 font-semibold text-fg-base">{{ _('Actions') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for invoice in invoices %}
+                    <tr class="border-b border-secondary-100 hover:bg-secondary-50">
+                        <td class="py-3 px-4">
+                            <a href="{{ url_for('invoices.view', company_id=session.get('selected_company_id'), id=invoice.id) }}" class="font-medium text-primary-600 hover:text-primary-700">
+                                {{ invoice.document_number }}
                             </a>
-                        </p>
-                        {% else %}
-                        <p class="text-secondary-400 italic">{{ _('Not provided') }}</p>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-4">
-                        <p class="text-sm text-secondary-500">{{ _('Email Address') }}</p>
-                        {% if client.email %}
-                        <p class="text-secondary-900">
-                            <a href="mailto:{{ client.email }}" class="text-primary-600 hover:text-primary-700">
-                                {{ client.email }}
-                            </a>
-                        </p>
-                        {% else %}
-                        <p class="text-secondary-400 italic">{{ _('Not provided') }}</p>
-                        {% endif %}
-                    </div>
-
-                    <div>
-                        <p class="text-sm text-secondary-500">{{ _('Phone Number') }}</p>
-                        {% if client.phone %}
-                        <p class="text-secondary-900">
-                            <a href="tel:{{ client.phone }}" class="text-primary-600 hover:text-primary-700">
-                                {{ client.phone }}
-                            </a>
-                        </p>
-                        {% else %}
-                        <p class="text-secondary-400 italic">{{ _('Not provided') }}</p>
-                        {% endif %}
-                    </div>
-                </div>
-
-                <div>
-                    <div class="mb-4">
-                        <p class="text-sm text-secondary-500">{{ _('Address') }}</p>
-                        {% if client.address %}
-                        <p class="text-secondary-900 whitespace-pre-line">{{ client.address }}</p>
-                        {% else %}
-                        <p class="text-secondary-400 italic">{{ _('Not provided') }}</p>
-                        {% endif %}
-                    </div>
-
-                    <div>
-                        <p class="text-sm text-secondary-500">{{ _('Client Since') }}</p>
-                        <p class="text-secondary-900">{{ client.created_at|locale_date }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Client Stats -->
-        <div class="bg-secondary-50 rounded-xl shadow-sm p-6 border border-secondary-100">
-            <h3 class="text-lg font-semibold text-secondary-900 mb-4">{{ _('Financial Summary') }}</h3>
-
-            <div class="space-y-4">
-                <div class="p-4 bg-secondary-50 rounded-lg">
-                    <p class="text-sm text-secondary-500">{{ _('Total Invoiced') }}</p>
-                    <p class="text-2xl font-bold text-secondary-900">L.{{ total_invoiced|locale_currency }}</p>
-                </div>
-
-                <div
-                    class="p-4 {% if outstanding_amount > 0 %}bg-red-50{% else %}bg-success-50{% endif %} rounded-lg">
-                    <p
-                        class="text-sm {% if outstanding_amount > 0 %}text-red-500{% else %}text-success-500{% endif %}">
-                        {{ _('Outstanding Balance') }}
-                    </p>
-                    <p
-                        class="text-2xl font-bold {% if outstanding_amount > 0 %}text-red-700{% else %}text-success-700{% endif %}">
-                        L.{{ outstanding_amount|locale_currency }}
-                    </p>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4 mt-4">
-                    <div class="p-4 bg-primary-50 rounded-lg text-center">
-                        <p class="text-sm text-primary-500">{{ _('Invoices') }}</p>
-                        <p class="text-xl font-bold text-primary-700">{{ invoices|length }}</p>
-                    </div>
-
-                    <div class="p-4 bg-warning-50 rounded-lg text-center">
-                        <p class="text-sm text-warning-500">{{ _('Quotes') }}</p>
-                        <p class="text-xl font-bold text-warning-700">{{ quotes|length }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Tabs for Invoices and Quotes -->
-    <div class="mb-6">
-        <div class="border-b border-secondary-200">
-            <nav class="-mb-px flex space-x-8">
-                <button id="tab-invoices" onclick="showTab('invoices')"
-                    class="tab-button border-primary-500 text-primary-600 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                    {{ _('Invoices') }}
-                </button>
-                <button id="tab-quotes" onclick="showTab('quotes')"
-                    class="tab-button border-transparent text-secondary-500 hover:text-secondary-700 hover:border-secondary-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
-                    {{ _('Quotes') }}
-                </button>
-            </nav>
-        </div>
-    </div>
-
-    <!-- Invoices Tab Content -->
-    <div id="content-invoices" class="tab-content">
-        <div class="bg-secondary-50 rounded-xl shadow-sm border border-secondary-100 overflow-hidden">
-            {% if invoices %}
-            <div class="overflow-x-auto">
-                <table class="w-full">
-                    <thead>
-                        <tr class="bg-secondary-50 border-b border-secondary-100">
-                            <th class="text-left py-3 px-4 font-semibold text-secondary-700">{{ _('Invoice #') }}</th>
-                            <th class="text-left py-3 px-4 font-semibold text-secondary-700">{{ _('Date') }}</th>
-                            <th class="text-left py-3 px-4 font-semibold text-secondary-700">{{ _('Due Date') }}</th>
-                            <th class="text-left py-3 px-4 font-semibold text-secondary-700">{{ _('Amount') }}</th>
-                            <th class="text-left py-3 px-4 font-semibold text-secondary-700">{{ _('Status') }}</th>
-                            <th class="text-right py-3 px-4 font-semibold text-secondary-700">{{ _('Actions') }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for invoice in invoices %}
-                        <tr class="border-b border-secondary-100 hover:bg-secondary-50">
-                            <td class="py-3 px-4">
-                                <a href=""
-                                    class="font-medium text-primary-600 hover:text-primary-700">
-                                    {{ invoice.document_number }}
-                                </a>
-                            </td>
-                            <td class="py-3 px-4 text-secondary-700">
-                                {{ invoice.issued_date|locale_date }}
-                            </td>
-                            <td class="py-3 px-4 text-secondary-700">
-                                {{ invoice.due_date|locale_date }}
-                            </td>
-                            <td class="py-3 px-4 font-medium text-secondary-900">
-                                L.{{ invoice.total_amount|locale_currency }}
-                            </td>
-                            <td class="py-3 px-4">
-                                <span class="px-2 py-1 text-xs rounded-full 
-                                    {% if invoice.status == 'paid' %}bg-success-100 text-success-800
+                        </td>
+                        <td class="py-3 px-4 text-fg-base">
+                            {{ invoice.issued_date|locale_date }}
+                        </td>
+                        <td class="py-3 px-4 text-fg-base">
+                            {{ invoice.due_date|locale_date }}
+                        </td>
+                        <td class="py-3 px-4 font-medium text-fg-base">
+                            L{{ invoice.total_amount|locale_currency }}
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-1 text-xs rounded-full 
+                                    {% if invoice.status == 'paid' %}bg-green-100 text-green-800
                                     {% elif invoice.status == 'overdue' %}bg-red-100 text-red-800
-                                    {% else %}bg-warning-100 text-warning-800{% endif %}">
-                                    {{ _(invoice.status|capitalize) }}
-                                </span>
-                            </td>
-                            <td class="py-3 px-4 text-right">
-                                <div class="flex items-center justify-end space-x-3">
-                                    <a href=""
-                                        class="text-secondary-600 hover:text-secondary-900" title="{{ _('View') }}">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    <a href=""
-                                        class="text-primary-600 hover:text-primary-900" title="{{ _('Edit') }}">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <a href=""
-                                        class="text-secondary-600 hover:text-secondary-900" title="{{ _('Download') }}">
-                                        <i class="fas fa-download"></i>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            {% else %}
-            <div class="p-8 text-center">
-                <div class="flex flex-col items-center">
-                    <div
-                        class="w-16 h-16 bg-secondary-100 rounded-full flex items-center justify-center text-secondary-400 mb-4">
-                        <i class="fas fa-file-invoice text-2xl"></i>
-                    </div>
-                    <h3 class="text-lg font-medium text-secondary-900 mb-1">{{ _('No invoices yet') }}</h3>
-                    <p class="text-secondary-500 mb-4">{{ _('Create your first invoice for this client') }}</p>
-                    <a href=""
-                        class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition shadow-sm flex items-center">
-                        <i class="fas fa-plus mr-2"></i> {{ _('Create Invoice') }}
-                    </a>
-                </div>
-            </div>
-            {% endif %}
-        </div>
-    </div>
-
-    <!-- Quotes Tab Content -->
-    <div id="content-quotes" class="tab-content hidden">
-        <div class="bg-secondary-50 rounded-xl shadow-sm border border-secondary-100 overflow-hidden">
-            {% if quotes %}
-            <div class="overflow-x-auto">
-                <table class="w-full">
-                    <thead>
-                        <tr class="bg-secondary-50 border-b border-secondary-100">
-                            <th class="text-left py-3 px-4 font-semibold text-secondary-700">{{ _('Quote #') }}</th>
-                            <th class="text-left py-3 px-4 font-semibold text-secondary-700">{{ _('Date') }}</th>
-                            <th class="text-left py-3 px-4 font-semibold text-secondary-700">{{ _('Valid Until') }}</th>
-                            <th class="text-left py-3 px-4 font-semibold text-secondary-700">{{ _('Amount') }}</th>
-                            <th class="text-left py-3 px-4 font-semibold text-secondary-700">{{ _('Status') }}</th>
-                            <th class="text-right py-3 px-4 font-semibold text-secondary-700">{{ _('Actions') }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for quote in quotes %}
-                        <tr class="border-b border-secondary-100 hover:bg-secondary-50">
-                            <td class="py-3 px-4">
-                                <a href=""
-                                    class="font-medium text-primary-600 hover:text-primary-700">
-                                    {{ quote.document_number }}
+                                    {% else %}bg-accent-100 text-accent-800{% endif %}">
+                                {{ _(invoice.status|capitalize) }}
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-right">
+                            <div class="flex items-center justify-end space-x-3">
+                                <a href="{{ url_for('invoices.view', company_id=session.get('selected_company_id'), id=invoice.id) }}" class="text-accent-600 hover:text-accent-700" title="{{ _('View') }}">
+                                    <i class="fas fa-eye"></i>
                                 </a>
-                            </td>
-                            <td class="py-3 px-4 text-secondary-700">
-                                {{ quote.issued_date|locale_date }}
-                            </td>
-                            <td class="py-3 px-4 text-secondary-700">
-                                {{ quote.due_date|locale_date }}
-                            </td>
-                            <td class="py-3 px-4 font-medium text-secondary-900">
-                                L.{{ quote.total_amount|locale_currency }}
-                            </td>
-                            <td class="py-3 px-4">
-                                <span class="px-2 py-1 text-xs rounded-full 
+                                <a href="{{ url_for('invoices.edit', company_id=session.get('selected_company_id'), id=invoice.id) }}" class="text-accent-500 hover:text-accent-700" title="{{ _('Edit') }}">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{{ url_for('invoices.print_invoice', company_id=session.get('selected_company_id'), id=invoice.id) }}" class="text-accent-600 hover:text-accent-700"
+                                    target="_blank" rel="noopener noreferrer"
+                                    title="{{ _('Download') }}">
+                                    <i class="fas fa-download"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="p-8 text-center">
+            <div class="flex flex-col items-center">
+                <div
+                    class="w-16 h-16 bg-secondary-100 rounded-full flex items-center justify-center text-fg-muted mb-4">
+                    <i class="fas fa-file-invoice text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-medium text-fg-base mb-1">{{ _('No invoices yet') }}</h3>
+                <p class="text-fg-muted mb-4">{{ _('Create your first invoice for this client') }}</p>
+                <a href="{{ url_for('invoices.create', company_id=session.get('selected_company_id'), type='invoice') }}"
+                    class="bg-btn-primary-bg text-btn-primary-text px-4 py-2 rounded-lg hover:bg-btn-primary-hover transition shadow-sm flex items-center">
+                    <i class="fas fa-plus mr-2"></i> {{ _('Create Invoice') }}
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Quotes Tab Content -->
+<div id="content-quotes" class="tab-content hidden">
+    <div class="rounded-xl shadow-sm border border-secondary-100 overflow-hidden">
+        {% if quotes %}
+        <div class="overflow-x-auto">
+            <table class="w-full">
+                <thead>
+                    <tr class="border-b border-secondary-100">
+                        <th class="text-left py-3 px-4 font-semibold text-fg-base">{{ _('Quote #') }}</th>
+                        <th class="text-left py-3 px-4 font-semibold text-fg-base">{{ _('Date') }}</th>
+                        <th class="text-left py-3 px-4 font-semibold text-fg-base">{{ _('Valid Until') }}</th>
+                        <th class="text-left py-3 px-4 font-semibold text-fg-base">{{ _('Amount') }}</th>
+                        <th class="text-left py-3 px-4 font-semibold text-fg-base">{{ _('Status') }}</th>
+                        <th class="text-right py-3 px-4 font-semibold text-fg-base">{{ _('Actions') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for quote in quotes %}
+                    <tr class="border-b border-secondary-100 hover:bg-secondary-50">
+                        <td class="py-3 px-4">
+                            <a href="{{ url_for('invoices.view', company_id=session.get('selected_company_id'), id=quote.id) }}" class="font-medium text-primary-600 hover:text-primary-700">
+                                {{ quote.document_number }}
+                            </a>
+                        </td>
+                        <td class="py-3 px-4 text-fg-base">
+                            {{ quote.issued_date|locale_date }}
+                        </td>
+                        <td class="py-3 px-4 text-fg-base">
+                            {{ quote.due_date|locale_date }}
+                        </td>
+                        <td class="py-3 px-4 font-medium text-fg-base">
+                            L.{{ quote.total_amount|locale_currency }}
+                        </td>
+                        <td class="py-3 px-4">
+                            <span class="px-2 py-1 text-xs rounded-full 
                                     {% if quote.status == 'accepted' %}bg-success-100 text-success-800
                                     {% elif quote.status == 'rejected' %}bg-red-100 text-red-800
                                     {% else %}bg-secondary-100 text-secondary-800{% endif %}">
-                                    {{ _(quote.status|capitalize) }}
-                                </span>
-                            </td>
-                            <td class="py-3 px-4 text-right">
-                                <div class="flex items-center justify-end space-x-3">
-                                    <a href=""
-                                        class="text-secondary-600 hover:text-secondary-900" title="{{ _('View') }}">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    <a href=""
-                                        class="text-primary-600 hover:text-primary-900" title="{{ _('Edit') }}">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <a href=""
-                                        class="text-secondary-600 hover:text-secondary-900" title="{{ _('Download') }}">
-                                        <i class="fas fa-download"></i>
-                                    </a>
-                                    {% if quote.status != 'accepted' %}
-                                    <a href=""
-                                        class="text-success-600 hover:text-success-900"
-                                        title="{{ _('Convert to Invoice') }}">
-                                        <i class="fas fa-file-invoice"></i>
-                                    </a>
-                                    {% endif %}
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-            {% else %}
-            <div class="p-8 text-center">
-                <div class="flex flex-col items-center">
-                    <div
-                        class="w-16 h-16 bg-secondary-100 rounded-full flex items-center justify-center text-secondary-400 mb-4">
-                        <i class="fas fa-file-invoice-dollar text-2xl"></i>
-                    </div>
-                    <h3 class="text-lg font-medium text-secondary-900 mb-1">{{ _('No quotes yet') }}</h3>
-                    <p class="text-secondary-500 mb-4">{{ _('Create your first quote for this client') }}</p>
-                    <a href=""
-                        class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition shadow-sm flex items-center">
-                        <i class="fas fa-plus mr-2"></i> {{ _('Create Quote') }}
-                    </a>
-                </div>
-            </div>
-            {% endif %}
+                                {{ _(quote.status|capitalize) }}
+                            </span>
+                        </td>
+                        <td class="py-3 px-4 text-right">
+                            <div class="flex items-center justify-end space-x-3">
+                                <a href="{{ url_for('invoices.view', company_id=session.get('selected_company_id'), id=quote.id) }}" class="text-accent-600 hover:text-accent-700" title="{{ _('View') }}">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{{ url_for('invoices.edit', company_id=session.get('selected_company_id'), id=quote.id) }}" class="text-accent-500 hover:text-accent-700" title="{{ _('Edit') }}">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{{ url_for('invoices.print_invoice', company_id=session.get('selected_company_id'), id=quote.id) }}" class="text-accent-600 hover:text-accent-700"
+                                    target="_blank" rel="noopener noreferrer"
+                                    title="{{ _('Download') }}">
+                                    <i class="fas fa-download"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
+        {% else %}
+        <div class="p-8 text-center">
+            <div class="flex flex-col items-center">
+                <div
+                    class="w-16 h-16 bg-secondary-100 rounded-full flex items-center justify-center text-fg-muted mb-4">
+                    <i class="fas fa-file-invoice-dollar text-2xl"></i>
+                </div>
+                <h3 class="text-lg font-medium text-fg-base mb-1">{{ _('No quotes yet') }}</h3>
+                <p class="text-fg-muted mb-4">{{ _('Create your first quote for this client') }}</p>
+                <a href="{{ url_for('invoices.create', company_id=session.get('selected_company_id'), type='quote') }}"
+                    class="bg-btn-primary-bg text-btn-primary-text px-4 py-2 rounded-lg hover:bg-btn-primary-hover transition shadow-sm flex items-center">
+                    <i class="fas fa-plus mr-2"></i> {{ _('Create Quote') }}
+                </a>
+            </div>
+        </div>
+        {% endif %}
     </div>
+</div>
 
-    <!-- Notes Section -->
-    <div class="mt-8 hidden">
-        <h3 class="text-lg font-semibold text-secondary-900 mb-4">{{ _('Notes') }}</h3>
-        <div class="bg-secondary-50 rounded-xl shadow-sm p-6 border border-secondary-100">
-            <form action="" method="post">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                <input type="hidden" name="company_id" value="{{ client.company_id }}">
+<!-- Notes Section -->
+<div class="mt-8 hidden">
+    <h3 class="text-lg font-semibold text-fg-base mb-4">{{ _('Notes') }}</h3>
+    <div class="rounded-xl shadow-sm p-6 border border-secondary-100">
+        <form action="" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="company_id" value="{{ client.company_id }}">
 
-                <textarea name="notes" rows="4"
-                    class="w-full border border-secondary-300 rounded-lg p-3 focus:ring-2 focus:ring-primary-500 focus:border-primary-500">{{ client.notes|default('') }}</textarea>
+            <textarea name="notes" rows="4"
+                class="w-full border border-secondary-300 rounded-lg p-3 focus:ring-2 focus:ring-primary-500 focus:border-primary-500">{{ client.notes|default('') }}</textarea>
 
-                <div class="mt-3 flex justify-end">
-                    <button type="submit"
-                        class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition shadow-sm">
-                        {{ _('Save Notes') }}
-                    </button>
-                </div>
-            </form>
-        </div>
+            <div class="mt-3 flex justify-end">
+                <button type="submit"
+                    class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition shadow-sm">
+                    {{ _('Save Notes') }}
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 
 <!-- Delete Confirmation Modal -->
 <div id="deleteModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden">
-    <div class="bg-secondary-50 rounded-lg shadow-lg max-w-md w-full p-6">
-        <h3 class="text-lg font-bold text-secondary-900 mb-4">{{ _('Confirm Deletion') }}</h3>
-        <p class="text-secondary-700 mb-6">
+    <div class="rounded-lg shadow-lg max-w-md w-full p-6">
+        <h3 class="text-lg font-bold text-fg-base mb-4">{{ _('Confirm Deletion') }}</h3>
+        <p class="text-fg-base mb-6">
             {{ _('Are you sure you want to delete client') }} <span id="clientName" class="font-medium"></span>?
             {{ _('This action cannot be undone.') }}
         </p>
         <div class="flex justify-end space-x-3">
             <button type="button" onclick="closeDeleteModal()"
-                class="px-4 py-2 bg-secondary-100 text-secondary-700 rounded-lg hover:bg-secondary-200 transition">
+                class="px-4 py-2 bg-secondary-100 text-fg-base rounded-lg hover:bg-secondary-200 transition">
                 {{ _('Cancel') }}
             </button>
             <form id="deleteForm" method="post" action="">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                <button type="submit"
-                    class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+                <button type="submit" class="px-4 py-2 bg-btn-danger-bg text-btn-danger-text rounded-lg hover:bg-btn-danger-hover transition">
                     {{ _('Delete') }}
                 </button>
             </form>
@@ -413,12 +396,12 @@
 
         // Update tab button styles
         document.querySelectorAll('.tab-button').forEach(button => {
-            button.classList.remove('border-primary-500', 'text-primary-600');
-            button.classList.add('border-transparent', 'text-secondary-500');
+            button.classList.remove('border-fg-base', 'text-fg-base');
+            button.classList.add('border-transparent', 'text-fg-muted');
         });
 
-        document.getElementById('tab-' + tabName).classList.remove('border-transparent', 'text-secondary-500');
-        document.getElementById('tab-' + tabName).classList.add('border-primary-500', 'text-primary-600');
+        document.getElementById('tab-' + tabName).classList.remove('border-transparent', 'text-fg-muted');
+        document.getElementById('tab-' + tabName).classList.add('border-fg-base', 'text-fg-base');
     }
 
     function confirmDelete(id, name) {

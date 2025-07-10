@@ -126,7 +126,7 @@ def index(company_id = None):
         company_id=company_id
     )
 
-@customers.route('/<int:company_id>/create', methods=['GET'])
+@customers.route('/<int:company_id>/clients/create', methods=['GET'])
 @login_required
 def create(company_id = None):
     """Display client creation form"""
@@ -146,7 +146,7 @@ def create(company_id = None):
         company_id=company_id
     )
 
-@customers.route('/<int:company_id>/store', methods=['POST'])
+@customers.route('/<int:company_id>/clients/store', methods=['POST'])
 @login_required
 def store(company_id = None):
     """Store a new client"""
@@ -189,7 +189,7 @@ def store(company_id = None):
     flash(_('Client created successfully'), 'success')
     return redirect(url_for('customers.index', company_id=company_id))
 
-@customers.route('/<int:company_id>/<int:id>/edit', methods=['GET'])
+@customers.route('/<int:company_id>/clients/<int:id>/edit', methods=['GET'])
 @login_required
 def edit(company_id = None, id = 0):
     """Display client edit form"""
@@ -208,7 +208,7 @@ def edit(company_id = None, id = 0):
         company_id=client.company_id
     )
 
-@customers.route('/<int:id>/update', methods=['POST'])
+@customers.route('/<int:id>/clients/update', methods=['POST'])
 @login_required
 def update(id = 0):
     """Update an existing client"""
@@ -249,7 +249,7 @@ def update(id = 0):
     flash(_('Client updated successfully'), 'success')
     return redirect(url_for('customers.index', company_id=client.company_id))
 
-@customers.route('/<int:company_id>/<int:id>/delete', methods=['POST'])
+@customers.route('/<int:company_id>/clients/<int:id>/delete', methods=['POST'])
 @login_required
 def delete(company_id = None, id = 0):
     """Delete a client"""
@@ -277,7 +277,7 @@ def delete(company_id = None, id = 0):
     flash(_('Client deleted successfully'), 'success')
     return redirect(url_for('customers.index', company_id=company_id))
 
-@customers.route('/<int:company_id>/<int:id>/view', methods=['GET'])
+@customers.route('/<int:company_id>/clients/<int:id>/view', methods=['GET'])
 @login_required
 def view(company_id = None, id = 0):
     """View client details"""
