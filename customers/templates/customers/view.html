@@ -136,7 +136,7 @@
         <div class="space-y-4">
             <div class="p-4 rounded-lg">
                 <p class="text-sm text-fg-muted">{{ _('Total Invoiced') }}</p>
-                <p class="text-2xl font-bold text-fg-base">L{{ total_invoiced|locale_currency }}</p>
+                <p class="text-2xl font-bold text-fg-base">{{ session.get('currency') }}{{ total_invoiced|locale_currency }}</p>
             </div>
 
             <div class="p-4 {% if outstanding_amount > 0 %}bg-red-50{% else %}bg-green-50{% endif %} rounded-lg">
@@ -145,7 +145,7 @@
                 </p>
                 <p
                     class="text-2xl font-bold {% if outstanding_amount > 0 %}text-red-700{% else %}text-green-700{% endif %}">
-                    L{{ outstanding_amount|locale_currency }}
+                    {{ session.get('currency') }}{{ outstanding_amount|locale_currency }}
                 </p>
             </div>
 
@@ -211,7 +211,7 @@
                             {{ invoice.due_date|locale_date }}
                         </td>
                         <td class="py-3 px-4 font-medium text-fg-base">
-                            L{{ invoice.total_amount|locale_currency }}
+                            {{ session.get('currency') }}{{ invoice.total_amount|locale_currency }}
                         </td>
                         <td class="py-3 px-4">
                             <span class="px-2 py-1 text-xs rounded-full 
@@ -291,7 +291,7 @@
                             {{ quote.due_date|locale_date }}
                         </td>
                         <td class="py-3 px-4 font-medium text-fg-base">
-                            L.{{ quote.total_amount|locale_currency }}
+                            {{ session.get('currency') }}{{ quote.total_amount|locale_currency }}
                         </td>
                         <td class="py-3 px-4">
                             <span class="px-2 py-1 text-xs rounded-full 

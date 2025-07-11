@@ -95,7 +95,7 @@
         <div class="flex items-center justify-between">
             <div>
                 <p class="text-secondary-500 text-sm">{{ _('Revenue (MTD)') }}</p>
-                <h3 class="text-3xl font-bold mt-1">L.{{ revenue|locale_currency }}</h3>
+                <h3 class="text-3xl font-bold mt-1">{{ session.get('currency') }}{{ revenue|locale_currency }}</h3>
             </div>
             <div class="w-12 h-12 bg-accent-50 rounded-full flex items-center justify-center text-accent-600">
                 <i class="fas fa-dollar-sign text-xl"></i>
@@ -139,7 +139,7 @@
                     <div class="flex justify-between">
                         <p class="text-sm font-medium text-secondary-800">{{ _('Invoice') }} #{{
                             invoice.document_number }}</p>
-                        <p class="text-sm font-bold text-secondary-800">L.{{ invoice.total_amount }}</p>
+                        <p class="text-sm font-bold text-secondary-800">{{ session.get('currency') }}{{ invoice.total_amount|locale_currency }}</p>
                     </div>
                     <p class="text-xs text-secondary-500 mt-1">{{ invoice.client_id }} - {{ _('Due') }}: {{
                         invoice.due_date|locale_date }}</p>
@@ -179,7 +179,7 @@
                     <div class="flex justify-between">
                         <p class="text-sm font-medium text-secondary-800">{{ _('Quote') }} #{{ quote.document_number
                             }}</p>
-                        <p class="text-sm font-bold text-secondary-800">L.{{ quote.total_amount|locale_currency }}
+                        <p class="text-sm font-bold text-secondary-800">{{ session.get('currency') }}{{ quote.total_amount|locale_currency }}
                         </p>
                     </div>
                     <p class="text-xs text-secondary-500 mt-1">{{ quote.client_id }} - {{ _('Issued') }}: {{

@@ -23,7 +23,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-fg-muted text-sm">{{ _('Total Payments') }}</p>
-                    <h3 class="text-2xl font-bold mt-1 text-fg-base">L{{ "{:,.2f}".format(total_payments) }}</h3>
+                    <h3 class="text-2xl font-bold mt-1 text-fg-base">{{ session.get('currency') }}{{ "{:,.2f}".format(total_payments) }}</h3>
                 </div>
                 <div class="w-12 h-12 bg-accent-100 rounded-full flex items-center justify-center text-accent-600">
                     <i class="fas fa-dollar-sign text-xl"></i>
@@ -47,7 +47,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-fg-muted text-sm">{{ _('Average Payment') }}</p>
-                    <h3 class="text-2xl font-bold mt-1 text-fg-base">L{{ "{:,.2f}".format(total_payments / payments|length
+                    <h3 class="text-2xl font-bold mt-1 text-fg-base">{{ session.get('currency') }}{{ "{:,.2f}".format(total_payments / payments|length
                         if payments|length > 0 else 0) }}</h3>
                 </div>
                 <div
@@ -74,21 +74,27 @@
             </div>
 
             <div>
-                <label for="method" class="block text-sm font-medium text-fg-base mb-1">{{ _('Payment Method')
-                    }}</label>
+                <label for="method" class="block text-sm font-medium text-fg-base mb-1">{{ _('Payment Method') }}</label>
                 <select id="method" name="method"
                     class="block w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
-                    <option value="">{{ _('All Methods') }}</option>
-                    <option value="cash" {% if request.args.get('method')=='cash' %}selected{% endif %}>{{ _('Cash') }}
+                    <option 
+                        value="">{{ _('All Methods') }}
                     </option>
-                    <option value="check" {% if request.args.get('method')=='check' %}selected{% endif %}>{{ _('Check')
-                        }}</option>
-                    <option value="bank_transfer" {% if request.args.get('method')=='bank_transfer' %}selected{% endif
-                        %}>{{ _('Bank Transfer') }}</option>
-                    <option value="credit_card" {% if request.args.get('method')=='credit_card' %}selected{% endif %}>{{
-                        _('Credit Card') }}</option>
-                    <option value="other" {% if request.args.get('method')=='other' %}selected{% endif %}>{{ _('Other')
-                        }}</option>
+                    <option 
+                        value="cash" {% if request.args.get('method')=='cash' %}selected{% endif %}>{{ _('Cash') }}
+                    </option>
+                    <option 
+                        value="check" {% if request.args.get('method')=='check' %}selected{% endif %}>{{ _('Check') }}
+                    </option>
+                    <option 
+                        value="bank_transfer" {% if request.args.get('method')=='bank_transfer' %}selected{% endif %}>{{ _('Bank Transfer') }}
+                    </option>
+                    <option 
+                        value="credit_card" {% if request.args.get('method')=='credit_card' %}selected{% endif %}>{{ _('Credit Card') }}
+                    </option>
+                    <option 
+                        value="other" {% if request.args.get('method')=='other' %}selected{% endif %}>{{ _('Other') }}
+                    </option>
                 </select>
             </div>
 
@@ -171,7 +177,7 @@
                             {% endif %}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-fg-base">
-                            L{{ "{:,.2f}".format(payment.amount or 0) }}
+                            {{ session.get('currency') }}{{ "{:,.2f}".format(payment.amount or 0) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-fg-muted">
                             <span class="px-2 py-1 text-xs rounded-full bg-secondary-100 text-secondary-800">

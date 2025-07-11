@@ -42,7 +42,7 @@
             </div>
             <div class="ml-4">
                 <p class="text-sm font-medium text-fg-muted">{{ _('Total Value') }}</p>
-                <p class="text-2xl font-bold text-fg-base">L{{ "{:,.2f}".format(stats.total_value) }}</p>
+                <p class="text-2xl font-bold text-fg-base">{{ session.get('currency') }}{{ "{:,.2f}".format(stats.total_value) }}</p>
             </div>
         </div>
     </div>
@@ -83,7 +83,7 @@
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <i class="fas fa-search text-fg-muted"></i>
                     </div>
-                    <input type="text" id="search" name="search" value="{{ search }}"
+                    <input type="search" id="search" name="search" value="{{ search }}"
                         placeholder="{{ _('Search items, description...') }}"
                         class="block w-full pl-10 pr-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
                 </div>
@@ -95,8 +95,7 @@
                     class="w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
                     <option value="">{{ _('All Suppliers') }}</option>
                     {% for supplier in suppliers %}
-                    <option value="{{ supplier.id }}" {% if supplier_id|string==supplier.id|string %}selected{% endif
-                        %}>
+                    <option value="{{ supplier.id }}" {% if supplier_id|string==supplier.id|string %}selected{% endif %}>
                         {{ supplier.name }}
                     </option>
                     {% endfor %}
@@ -141,7 +140,7 @@
                     </th>
                     <th scope="col"
                         class="px-6 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider">
-                        <a href="{{ url_for('inventory.index', company_id=company_id, sort='name', order='desc' if sort_by == 'name' and sort_order == 'asc' else 'asc', **request.args) }}"
+                        <a href="{{ url_for('inventory.index', company_id=company_id, sort='name', order='desc' if sort_by == 'name' and sort_order == 'asc' else 'asc', **filtered_args) }}"
                             class="flex items-center hover:text-fg-base">
                             {{ _('Name') }}
                             {% if sort_by == 'name' %}
@@ -155,7 +154,7 @@
                     </th>
                     <th scope="col"
                         class="px-6 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider">
-                        <a href="{{ url_for('inventory.index', company_id=company_id, sort='quantity', order='desc' if sort_by == 'quantity' and sort_order == 'asc' else 'asc', **request.args) }}"
+                        <a href="{{ url_for('inventory.index', company_id=company_id, sort='quantity', order='desc' if sort_by == 'quantity' and sort_order == 'asc' else 'asc', **filtered_args) }}"
                             class="flex items-center hover:text-fg-base">
                             {{ _('Quantity') }}
                             {% if sort_by == 'quantity' %}
@@ -165,7 +164,7 @@
                     </th>
                     <th scope="col"
                         class="px-6 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider">
-                        <a href="{{ url_for('inventory.index', company_id=company_id, sort='price', order='desc' if sort_by == 'price' and sort_order == 'asc' else 'asc', **request.args) }}"
+                        <a href="{{ url_for('inventory.index', company_id=company_id, sort='price', order='desc' if sort_by == 'price' and sort_order == 'asc' else 'asc', **filtered_args) }}"
                             class="flex items-center hover:text-fg-base">
                             {{ _('Price') }}
                             {% if sort_by == 'price' %}
@@ -226,7 +225,7 @@
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-fg-base">
-                        L{{ "{:,.2f}".format(item.price) }}
+                        {{ session.get('currency') }}{{ "{:,.2f}".format(item.price) }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-fg-muted">
                         {% if item.supplier %}
@@ -287,7 +286,7 @@
 <div class="mt-6 flex justify-center">
     <nav class="flex items-center space-x-2">
         {% if pagination.has_prev %}
-        <a href="{{ url_for('inventory.index', company_id=company_id, page=pagination.prev_num, **request.args) }}"
+        <a href="{{ url_for('inventory.index', company_id=company_id, page=pagination.prev_num, **filtered_args) }}"
             class="px-3 py-2 rounded-md bg-bg-subtle border border-primary-300 text-fg-base hover:bg-bg-base">
             <i class="fas fa-chevron-left text-xs"></i>
         </a>
@@ -298,7 +297,7 @@
         {% if page == pagination.page %}
         <span class="px-3 py-2 rounded-md bg-btn-primary-bg text-btn-primary-text">{{ page }}</span>
         {% else %}
-        <a href="{{ url_for('inventory.index', company_id=company_id, page=page, **request.args) }}"
+        <a href="{{ url_for('inventory.index', company_id=company_id, page=page, **filtered_args) }}"
             class="px-3 py-2 rounded-md bg-bg-subtle border border-primary-300 text-fg-base hover:bg-bg-base">{{
             page }}</a>
         {% endif %}
@@ -308,7 +307,7 @@
         {% endfor %}
 
         {% if pagination.has_next %}
-        <a href="{{ url_for('inventory.index', company_id=company_id, page=pagination.next_num, **request.args) }}"
+        <a href="{{ url_for('inventory.index', company_id=company_id, page=pagination.next_num, **filtered_args) }}"
             class="px-3 py-2 rounded-md bg-bg-subtle border border-primary-300 text-fg-base hover:bg-bg-base">
             <i class="fas fa-chevron-right text-xs"></i>
         </a>

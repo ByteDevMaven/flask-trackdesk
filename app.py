@@ -57,6 +57,15 @@ def createApp():
             if user_company:
                 session['selected_company_id'] = user_company.company_id
 
+                # Use a list comprehension to find the matching company
+                matched_company = next(
+                    (company for company in current_user.companies if company.id == user_company.company_id), 
+                    None
+                )
+
+                if matched_company:
+                    session['currency'] = matched_company.currency
+
     @app.route('/set-company/<int:id>')
     def set_company(id):
         if not current_user.is_authenticated:
@@ -66,6 +75,7 @@ def createApp():
         for company in current_user.companies:
             if company.id == id:
                 session['selected_company_id'] = id
+                session['currency'] = company.currency
                 break  # Stop if found
 
         # return redirect(request.referrer or url_for('dashboard.index', company_id=session.get('selected_company_id')))

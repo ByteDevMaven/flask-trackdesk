@@ -2,7 +2,7 @@ import uuid
 import os
 from io import BytesIO
 
-from flask import render_template, request, redirect, url_for, flash, current_app, make_response
+from flask import render_template, request, redirect, session, url_for, flash, current_app, make_response
 from flask_login import login_required, current_user
 from flask_wtf.csrf import validate_csrf
 from flask_babel import _, get_locale
@@ -431,7 +431,7 @@ def print_invoice(company_id, id):
         overlay_canvas.setFillColorRGB(0, 0, 0)  # Black text
         
         # Document type and number
-        doc_type = "COTIZACIÓN:" if document.type == DocumentType.quote else "FACTURA:"
+        doc_type = f"{_('COTIZACIÓN')}:" if document.type == DocumentType.quote else f"{_('FACTURA')}:"
         overlay_canvas.setFont(font_bold, 11)
     
         # Draw white background behind doc_type
@@ -460,11 +460,11 @@ def print_invoice(company_id, id):
             if document.type == DocumentType.quote:
                 overlay_canvas.drawString(480, height - 172, document.due_date.strftime('%d/%m/%Y'))
             else:
-                payment_condition = document.status.upper() if document.status else 'CONTADO'
+                payment_condition = document.status.upper() if document.status else f"{_('CONTADO')}"
                 overlay_canvas.drawString(480, height - 172, payment_condition)
         
         # Branch and seller
-        overlay_canvas.drawString(480, height - 187, "PRINCIPAL")
+        overlay_canvas.drawString(480, height - 187, f"{_('PRINCIPAL')}")
         seller_name = current_user.name if current_user and current_user.name else "ADMIN"
         overlay_canvas.drawString(480, height - 202, seller_name[:20])  # Limit length
         
@@ -487,7 +487,7 @@ def print_invoice(company_id, id):
                 overlay_canvas.drawString(140, client_y_start - 45, client.address[:40])  # Limit to fit
         else:
             # Empty client fields
-            overlay_canvas.drawString(100, client_y_start, "CLIENTE GENERAL")
+            overlay_canvas.drawString(100, client_y_start, f"{_('CLIENTE GENERAL')}")
             overlay_canvas.drawString(100, client_y_start - 20, "")
             overlay_canvas.drawString(100, client_y_start - 40, "CLI-0000")
             overlay_canvas.drawString(100, client_y_start - 60, "")
@@ -519,7 +519,7 @@ def print_invoice(company_id, id):
             elif item.description:
                 articulo = item.description
             else:
-                articulo = "Artículo personalizado"
+                articulo = f"{_('Artículo personalizado')}"
             
             overlay_canvas.drawString(col_articulo, y_pos, articulo[:25])  # Truncate to fit
             
@@ -527,14 +527,14 @@ def print_invoice(company_id, id):
             overlay_canvas.drawRightString(col_cantidad + 10, y_pos, str(item.quantity or 0))
             
             # Precio Uni. (right aligned)
-            overlay_canvas.drawRightString(col_precio + 35, y_pos, f"L{item.unit_price or 0:,.2f}")
+            overlay_canvas.drawRightString(col_precio + 35, y_pos, f"{session['currency']}{item.unit_price or 0:,.2f}")
             
             # Descuento (right aligned) - usually 0
             overlay_canvas.drawRightString(col_descuento + 35, y_pos, "0.00")
             
             # Valor total (right aligned)
             total_item = (item.quantity or 0) * (item.unit_price or 0)
-            overlay_canvas.drawRightString(col_valor + 65, y_pos, f"L{total_item:,.2f}")
+            overlay_canvas.drawRightString(col_valor + 65, y_pos, f"{session['currency']}{total_item:,.2f}")
         
         # Totals section - Bottom right
         overlay_canvas.setFont(font_name, 9)
@@ -554,26 +554,26 @@ def print_invoice(company_id, id):
         total_final = subtotal + imp_15 + imp_18
         
         # VTA EXENTA
-        overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 27, f"L{vta_exenta:,.2f}")
+        overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 27, f"{session['currency']}{vta_exenta:,.2f}")
         
         # VENTA GRAVADA 15%
-        overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 45, f"L{venta_gravada_15:,.2f}")
+        overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 45, f"{session['currency']}{venta_gravada_15:,.2f}")
         
         # VENTA GRAVADA 18%
-        overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 65, f"L{venta_gravada_18:,.2f}")
+        overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 65, f"{session['currency']}{venta_gravada_18:,.2f}")
         
         # VENTA EXONERADA
-        overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 82, f"L{venta_exonerada:,.2f}")
+        overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 82, f"{session['currency']}{venta_exonerada:,.2f}")
         
         # IMP. S/VENTA 15%
-        overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 100, f"L{imp_15:,.2f}")
+        overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 100, f"{session['currency']}{imp_15:,.2f}")
         
         # IMP. S/VENTA 18%
-        overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 117, f"L{imp_18:,.2f}")
+        overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 117, f"{session['currency']}{imp_18:,.2f}")
         
         # TOTAL (bold and larger)
         overlay_canvas.setFont(font_bold, 11)
-        overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 145, f"L{total_final:,.2f}")
+        overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 145, f"{session['currency']}{total_final:,.2f}")
         
         # Amount in words - Bottom left
         overlay_canvas.setFont(font_name, 10)
@@ -598,7 +598,7 @@ def print_invoice(company_id, id):
         # Merge template with overlay
         template_page.merge_page(overlay_page)
 
-        doc_type_name = "cotizacion" if document.type == DocumentType.quote else "factura"
+        doc_type_name = "quo" if document.type == DocumentType.quote else "inv"
         filename = f"{doc_type_name}_{document.document_number}.pdf"
         
         # Create output PDF

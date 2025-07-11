@@ -32,8 +32,9 @@ Management System') }}{% endblock %}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                 <!-- Invoice Selection -->
                 <div class="md:col-span-2">
-                    <label for="invoice_search" class="block text-sm font-medium text-fg-base mb-1">{{ _('Invoice')
-                        }}</label>
+                    <label for="invoice_search" class="block text-sm font-medium text-fg-base mb-1">
+                        {{ _('Invoice') }}
+                    </label>
                     <div class="relative">
                         <input type="text" id="invoice_search" placeholder="{{ _('Search for an invoice...') }}"
                             class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base"
@@ -55,22 +56,25 @@ Management System') }}{% endblock %}
                                         {% if selected_invoice %}{{ selected_invoice.document_number }}{% endif %}
                                     </h4>
                                     <p class="text-sm text-fg-muted" id="selected_invoice_client">
-                                        {% if selected_invoice and selected_invoice.client %}{{
-                                        selected_invoice.client.name }}{% endif %}
+                                        {% if selected_invoice and selected_invoice.client %}
+                                        {{ selected_invoice.client.name }}
+                                        {% endif %}
                                     </p>
                                     <div class="grid grid-cols-2 gap-4 mt-2 text-sm">
                                         <div>
                                             <span class="text-fg-muted">{{ _('Total Amount') }}:</span>
                                             <span class="font-medium" id="selected_invoice_total">
-                                                {% if selected_invoice %} L{{
-                                                "{:,.2f}".format(selected_invoice.total_amount or 0) }}{% endif %}
+                                                {% if selected_invoice %} 
+                                                {{ session.get('currency') }}{{ "{:,.2f}".format(selected_invoice.total_amount or 0) }}
+                                                {% endif %}
                                             </span>
                                         </div>
                                         <div>
                                             <span class="text-fg-muted">{{ _('Remaining Balance') }}:</span>
                                             <span class="font-medium text-accent-600" id="selected_invoice_balance">
-                                                {% if selected_invoice %} L{{
-                                                "{:,.2f}".format(selected_invoice.total_amount or 0) }}{% endif %}
+                                                {% if selected_invoice %} 
+                                                {{ session.get('currency') }}{{ "{:,.2f}".format(selected_invoice.total_amount or 0) }}
+                                                {% endif %}
                                             </span>
                                         </div>
                                     </div>
@@ -89,7 +93,7 @@ Management System') }}{% endblock %}
                         <span class="text-btn-danger-bg">*</span></label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <span class="text-fg-muted">L</span>
+                            <span class="text-fg-muted">{{ session.get('currency') }}</span>
                         </div>
                         <input type="number" id="amount" name="amount" step="0.01" min="0"
                             value="{{ payment.amount if payment else '' }}" required

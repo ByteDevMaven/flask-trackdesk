@@ -3,7 +3,7 @@ from io import StringIO, BytesIO
 from datetime import datetime
 
 import barcode
-from flask import render_template, request, redirect, url_for, flash, current_app, jsonify
+from flask import render_template, request, redirect, session, url_for, flash, current_app, jsonify
 from flask_login import login_required
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import or_, and_, desc, asc, func
@@ -51,14 +51,14 @@ def index(company_id):
     else:
         query = query.order_by(InventoryItem.name)
     
-    # Get paginated results
+    # Pagination
     pagination = query.paginate(page=page, per_page=per_page, error_out=False)
     inventory_items = pagination.items
     
-    # Get filter options
+    # Filter options
     suppliers = Supplier.query.filter_by(company_id=company_id).order_by(Supplier.name).all()
     
-    # Calculate statistics
+    # Stats
     total_items = InventoryItem.query.filter_by(company_id=company_id).count()
     low_stock_items = InventoryItem.query.filter(
         and_(InventoryItem.company_id == company_id, InventoryItem.quantity <= 10)
@@ -66,7 +66,8 @@ def index(company_id):
     out_of_stock_items = InventoryItem.query.filter(
         and_(InventoryItem.company_id == company_id, InventoryItem.quantity == 0)
     ).count()
-    total_value = db.session.query(func.sum(InventoryItem.quantity * InventoryItem.price)).filter_by(company_id=company_id).scalar() or 0
+    total_value = db.session.query(func.sum(InventoryItem.quantity * InventoryItem.price))\
+        .filter_by(company_id=company_id).scalar() or 0
     
     stats = {
         'total_items': total_items,
@@ -74,7 +75,13 @@ def index(company_id):
         'out_of_stock_items': out_of_stock_items,
         'total_value': total_value
     }
-    
+
+    # Remove conflicting query parameters (sort/order)
+    from werkzeug.datastructures import MultiDict
+    filtered_args = MultiDict(request.args)
+    filtered_args.pop('sort', None)
+    filtered_args.pop('order', None)
+
     return render_template('inventory/index.html', 
                           company_id=company_id,
                           inventory_items=inventory_items, 
@@ -84,7 +91,8 @@ def index(company_id):
                           search=search,
                           supplier_id=supplier_id,
                           sort_by=sort_by,
-                          sort_order=sort_order)
+                          sort_order=sort_order,
+                          filtered_args=filtered_args)
 
 @inventory.route('/<int:company_id>/inventory/create_item', methods=['GET', 'POST'])
 @login_required
@@ -566,7 +574,7 @@ def view_barcode(company_id, id):
         
         # Add price and code
         text_y += 25
-        draw.text((10, text_y), f"${item.price:.2f}", fill='black', font=font_small)
+        draw.text((10, text_y), f"{session['currency']}{item.price:.2f}", fill='black', font=font_small)
         draw.text((img_width - 100, text_y), f"Code: {barcode_data}", fill='black', font=font_small)
         
         # Save to buffer
@@ -645,7 +653,7 @@ def download_barcode(company_id, id):
         draw.text((10, text_y), item.name[:50], fill='black', font=font_large)
         
         text_y += 25
-        draw.text((10, text_y), f"{_('Price')} L{item.price:,.2f}", fill='black', font=font_medium)
+        draw.text((10, text_y), f"{_('Price')} {session['currency']}{item.price:,.2f}", fill='black', font=font_medium)
         #draw.text((img_width - 150, text_y), f"Qty: {item.quantity}", fill='black', font=font_medium)
         
         #text_y += 20

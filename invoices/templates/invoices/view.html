@@ -264,10 +264,10 @@ _('Business Management System') }}{% endblock %}
                                 </span>
                             </td>
                             <td class="px-6 py-4 text-right text-sm font-medium text-fg-base">
-                                L{{ "{:,.2f}".format(item.unit_price or 0) }}
+                                {{ session.get('currency') }}{{ "{:,.2f}".format(item.unit_price or 0) }}
                             </td>
                             <td class="px-6 py-4 text-right text-sm font-bold text-fg-base">
-                                L{{ "{:,.2f}".format((item.quantity or 0) * (item.unit_price or 0)) }}
+                                {{ session.get('currency') }}{{ "{:,.2f}".format((item.quantity or 0) * (item.unit_price or 0)) }}
                             </td>
                         </tr>
                         {% endfor %}
@@ -323,21 +323,20 @@ _('Business Management System') }}{% endblock %}
                         <div class="space-y-3">
                             <div class="flex justify-between items-center">
                                 <span class="text-fg-muted font-medium">{{ _('Subtotal') }}:</span>
-                                <span class="font-semibold text-fg-base">L{{ "{:,.2f}".format(subtotal) }}</span>
+                                <span class="font-semibold text-fg-base">{{ session.get('currency') }}{{ "{:,.2f}".format(subtotal) }}</span>
                             </div>
                             <div class="flex justify-between items-center">
                                 <span class="text-fg-muted font-medium">{{ _('Tax') }} (15%):</span>
-                                <span class="font-semibold text-fg-base">L{{ "{:,.2f}".format(tax_15) }}</span>
+                                <span class="font-semibold text-fg-base">{{ session.get('currency') }}{{ "{:,.2f}".format(tax_15) }}</span>
                             </div>
                             <div class="flex justify-between items-center">
                                 <span class="text-fg-muted font-medium">{{ _('Tax') }} (18%):</span>
-                                <span class="font-semibold text-fg-base">L{{ "{:,.2f}".format(tax_18) }}</span>
+                                <span class="font-semibold text-fg-base">{{ session.get('currency') }}{{ "{:,.2f}".format(tax_18) }}</span>
                             </div>
                             <div class="border-t border-accent-300 pt-3">
                                 <div class="flex justify-between items-center">
                                     <span class="text-lg font-bold text-fg-base">{{ _('Total') }}:</span>
-                                    <span class="text-2xl font-bold text-accent-700">L{{ "{:,.2f}".format(total_with_tax)
-                                        }}</span>
+                                    <span class="text-2xl font-bold text-accent-700">{{ session.get('currency') }}{{ "{:,.2f}".format(total_with_tax) }}</span>
                                 </div>
                             </div>
                         </div>

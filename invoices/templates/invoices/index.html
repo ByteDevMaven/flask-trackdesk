@@ -119,7 +119,7 @@
                             {{ invoice.due_date.strftime('%Y-%m-%d') if invoice.due_date else '-' }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-fg-base">
-                            L{{ "{:,.2f}".format(invoice.total_amount or 0) }}
+                            {{ session.get('currency') }}{{ "{:,.2f}".format(invoice.total_amount or 0) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span
