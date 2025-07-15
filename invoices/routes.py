@@ -10,7 +10,7 @@ from sqlalchemy import or_
 from datetime import datetime
 from wtforms import ValidationError
 
-from models import db, Document, DocumentItem, Client, InventoryItem, DocumentType
+from models import db, Document, DocumentItem, Client, InventoryItem, DocumentType, Payment
 
 from . import invoices
 
@@ -63,7 +63,7 @@ def index(company_id):
             pass
     
     # Order by creation date (newest first)
-    query = query.order_by(Document.issued_date.desc())
+    query = query.order_by(Document.id.desc())
     
     # Paginate
     pagination = query.paginate(
@@ -84,6 +84,23 @@ def index(company_id):
     return render_template('invoices/index.html', 
                          invoices=documents, 
                          pagination=pagination)
+
+
+@invoices.route('/invoices/item-row', methods=['POST'])
+@login_required
+def item_row():
+    index = int(request.form.get('index', 0))
+    csrf_token = request.form.get("csrf_token") 
+
+    try:
+        validate_csrf(csrf_token)
+    except ValidationError:
+        flash(_("Invalid CSRF token. Please try again."), "error")
+        return redirect(url_for("auth.login")) 
+    
+    inventory_items = InventoryItem.query.all()  # or your method
+    return render_template('invoices/item_row.html', index=index, inventory_items=inventory_items)
+
 
 @invoices.route('/<int:company_id>/invoices/create')
 @login_required
@@ -117,26 +134,33 @@ def store(company_id):
     try:
         # Get document type from form
         doc_type_str = request.form.get('type', 'invoice')
-        doc_type = DocumentType.invoice if doc_type_str == 'invoice' else DocumentType.quote
-        
-        # Generate document number if not provided
+        doc_type = DocumentType[doc_type_str]  # safer for enum use
+
+        # Generate document_number if not provided
         document_number = request.form.get('document_number')
         if not document_number:
-            # Generate a unique document number based on type
-            prefix = "INV" if doc_type == DocumentType.invoice else "QUO"
-            last_document = Document.query.filter(
+            type_id = 1 if doc_type == DocumentType.invoice else 0
+            company_id_str = str(company_id)
+
+            # Prefix pattern
+            prefix = f"D-{company_id_str}-{type_id}-"
+
+            # Find the last document with that pattern
+            last_doc = Document.query.filter(
                 Document.company_id == company_id,
-                Document.type == doc_type
+                Document.type == doc_type,
+                Document.document_number.like(f"{prefix}%")
             ).order_by(Document.id.desc()).first()
-            
-            if last_document and last_document.document_number:
+
+            if last_doc:
                 try:
-                    last_num = int(last_document.document_number.split('-')[-1])
-                    document_number = f"{prefix}-{last_num + 1:06d}"
-                except:
-                    document_number = f"{prefix}-{uuid.uuid4().hex[:8].upper()}"
+                    last_seq = int(last_doc.document_number.split('-')[-1])
+                except ValueError:
+                    last_seq = 0
             else:
-                document_number = f"{prefix}-000001"
+                last_seq = 0
+
+            document_number = f"{prefix}{last_seq + 1:06d}"
         
         # Create the document
         document = Document(
@@ -149,7 +173,7 @@ def store(company_id):
             issued_date=datetime.strptime(request.form.get('issued_date'), '%Y-%m-%d') if request.form.get('issued_date') else datetime.now(),
             due_date=datetime.strptime(request.form.get('due_date'), '%Y-%m-%d') if request.form.get('due_date') else None
         )
-        
+
         db.session.add(document)
         db.session.flush()  # Get the document ID
         
@@ -174,20 +198,44 @@ def store(company_id):
             if item_data.get('inventory_item_id') or item_data.get('description'):
                 quantity = float(item_data.get('quantity', 0)) if item_data.get('quantity') else 0
                 unit_price = float(item_data.get('unit_price', 0)) if item_data.get('unit_price') else 0
-                
+                discount = float(item_data.get('discount', 0)) if item_data.get('discount') else 0
+                savings = (unit_price * discount / 100 if discount else 0)
+
+                inventory_item_id = item_data.get('inventory_item_id')
+                if inventory_item_id:
+                    inventory_item = InventoryItem.query.get(int(inventory_item_id))
+                    if inventory_item:
+                        # Decrease inventory quantity
+                        inventory_item.quantity = (inventory_item.quantity or 0) - int(quantity)
+                        if inventory_item.quantity < 0:
+                            inventory_item.quantity = 0
+
                 document_item = DocumentItem(
                     document_id=document.id,
-                    inventory_item_id=int(item_data.get('inventory_item_id')) if item_data.get('inventory_item_id') else None,
+                    inventory_item_id=int(inventory_item_id) if inventory_item_id else None,
                     description=item_data.get('description', ''),
                     quantity=int(quantity),
-                    unit_price=unit_price
+                    unit_price=unit_price,
+                    discount=discount
                 )
-                
+
                 db.session.add(document_item)
-                total_amount += quantity * unit_price
-        
+                total_amount += quantity * unit_price - (quantity * savings)
+
         # Update document total
         document.total_amount = total_amount
+
+        if document.status == 'paid':
+            payment = Payment(
+            company_id=company_id,
+            document_id=document.id,
+            amount=total_amount,
+            payment_date=datetime.now(),
+            method='Other',
+            notes=request.form.get('notes', '')
+            )
+            
+            db.session.add(payment)
         
         db.session.commit()
         
@@ -312,17 +360,20 @@ def update(company_id, id):
             if item_data.get('inventory_item_id') or item_data.get('description'):
                 quantity = float(item_data.get('quantity', 0)) if item_data.get('quantity') else 0
                 unit_price = float(item_data.get('unit_price', 0)) if item_data.get('unit_price') else 0
+                discount = float(item_data.get('discount', 0)) if item_data.get('discount') else 0
+                savings = (unit_price * discount / 100 if discount else 0)
                 
                 document_item = DocumentItem(
                     document_id=document.id,
                     inventory_item_id=int(item_data.get('inventory_item_id')) if item_data.get('inventory_item_id') else None,
                     description=item_data.get('description', ''),
                     quantity=int(quantity),
-                    unit_price=unit_price
+                    unit_price=unit_price,
+                    discount=discount
                 )
                 
                 db.session.add(document_item)
-                total_amount += quantity * unit_price
+                total_amount += quantity * unit_price - (quantity * savings)
         
         # Update document total
         document.total_amount = total_amount
@@ -501,8 +552,8 @@ def print_invoice(company_id, id):
         col_codigo = 30      # Código column
         col_articulo = 110   # Artículo column  
         col_cantidad = 280   # Cantidad column
-        col_precio = 340     # Precio Uni. column
-        col_descuento = 410  # Descto/reb column
+        col_precio = 350     # Precio Uni. column
+        col_descuento = 430  # Descto/reb column
         col_valor = 480      # Valor column
         
         for i, item in enumerate(document_items[:25]):
@@ -529,11 +580,12 @@ def print_invoice(company_id, id):
             # Precio Uni. (right aligned)
             overlay_canvas.drawRightString(col_precio + 35, y_pos, f"{session['currency']}{item.unit_price or 0:,.2f}")
             
-            # Descuento (right aligned) - usually 0
-            overlay_canvas.drawRightString(col_descuento + 35, y_pos, "0.00")
+            # Descuento
+            discount = (item.unit_price * item.discount / 100 if item.discount else 0)
+            overlay_canvas.drawRightString(col_descuento + 35, y_pos, f"{session['currency']}{discount:,.2f}")
             
             # Valor total (right aligned)
-            total_item = (item.quantity or 0) * (item.unit_price or 0)
+            total_item = (item.quantity or 0) * (item.unit_price or 0) - discount * (item.quantity or 0)
             overlay_canvas.drawRightString(col_valor + 65, y_pos, f"{session['currency']}{total_item:,.2f}")
         
         # Totals section - Bottom right
@@ -547,10 +599,10 @@ def print_invoice(company_id, id):
         # For Honduras tax system
         vta_exenta = subtotal
         venta_gravada_15 = subtotal * 0.6  # 60% at 15%
-        venta_gravada_18 = subtotal * 0.4  # 40% at 18%
+        venta_gravada_18 = 0 #subtotal * 0.4  # 40% at 18%
         venta_exonerada = 0
         imp_15 = venta_gravada_15 * 0.15
-        imp_18 = venta_gravada_18 * 0.18
+        imp_18 = 0 #venta_gravada_18 * 0.18
         total_final = subtotal + imp_15 + imp_18
         
         # VTA EXENTA

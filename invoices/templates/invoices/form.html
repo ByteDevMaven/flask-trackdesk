@@ -41,6 +41,7 @@ endblock %}
             <form id="invoice-form"
                 action="{% if invoice %}{{ url_for('invoices.update', company_id=session.get('selected_company_id'), id=invoice.id) }}{% else %}{{ url_for('invoices.store', company_id=session.get('selected_company_id')) }}{% endif %}"
                 method="POST" class="p-6">
+                <input type="hidden" id="currencySymbol" value="{{ session.get('currency') }}">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
                 <!-- Basic Information Section -->
@@ -161,6 +162,10 @@ endblock %}
                                             {{ _('Unit Price') }}
                                         </th>
                                         <th
+                                            class="px-4 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider w-18">
+                                            {{ _('Discount') }}
+                                        </th>
+                                        <th
                                             class="px-4 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider w-32">
                                             {{ _('Total') }}
                                         </th>
@@ -180,8 +185,10 @@ endblock %}
                                                 <option value="">{{ _('Select an item') }}</option>
                                                 {% for inventory_item in inventory_items %}
                                                 <option value="{{ inventory_item.id }}"
-                                                    data-price="{{ inventory_item.price }}" {% if
-                                                    item.inventory_item_id==inventory_item.id %}selected{% endif %}>
+                                                    data-price="{{ inventory_item.price }}"
+                                                    data-description="{{ inventory_item.description|e }}"
+                                                    data-stock="{{ inventory_item.quantity }}"
+                                                    {% if item.inventory_item_id==inventory_item.id %}selected{% endif %}>
                                                     {{ inventory_item.name }}
                                                 </option>
                                                 {% endfor %}
@@ -190,7 +197,7 @@ endblock %}
                                         <td class="px-4 py-3">
                                             <input type="text" name="items[{{ loop.index0 }}][description]"
                                                 value="{{ item.description }}"
-                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                                                class="item-description w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
                                         </td>
                                         <td class="px-4 py-3">
                                             <input type="number" name="items[{{ loop.index0 }}][quantity]"
@@ -200,6 +207,11 @@ endblock %}
                                         <td class="px-4 py-3">
                                             <input type="number" name="items[{{ loop.index0 }}][unit_price]"
                                                 value="{{ item.unit_price }}" min="0" step="0.01"
+                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-price bg-bg-base text-fg-base">
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <input type="number" name="items[{{ loop.index0 }}][discount]"
+                                                value="{{ item.discount }}" min="0" step="0.01"
                                                 class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-price bg-bg-base text-fg-base">
                                         </td>
                                         <td class="px-4 py-3">
@@ -223,7 +235,9 @@ endblock %}
                                                 <option value="">{{ _('Select an item') }}</option>
                                                 {% for inventory_item in inventory_items %}
                                                 <option value="{{ inventory_item.id }}"
-                                                    data-price="{{ inventory_item.price }}">
+                                                    data-description="{{ inventory_item.description|e }}"
+                                                    data-price="{{ inventory_item.price }}"
+                                                    data-stock="{{ inventory_item.quantity }}">
                                                     {{ inventory_item.name }}
                                                 </option>
                                                 {% endfor %}
@@ -231,7 +245,7 @@ endblock %}
                                         </td>
                                         <td class="px-4 py-3">
                                             <input type="text" name="items[0][description]"
-                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                                                class="item-description w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
                                         </td>
                                         <td class="px-4 py-3">
                                             <input type="number" name="items[0][quantity]" value="1" min="1"
@@ -239,6 +253,11 @@ endblock %}
                                         </td>
                                         <td class="px-4 py-3">
                                             <input type="number" name="items[0][unit_price]" value="0.00" min="0"
+                                                step="0.01"
+                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-price bg-bg-base text-fg-base">
+                                        </td>
+                                        <td class="px-4 py-3">
+                                            <input type="number" name="items[0][discount]" value="0.00" min="0"
                                                 step="0.01"
                                                 class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-price bg-bg-base text-fg-base">
                                         </td>
@@ -320,140 +339,104 @@ endblock %}
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const itemsContainer = document.getElementById('items-container');
-        const addItemBtn = document.getElementById('add-item');
-        let itemIndex = {{ document_items| length if invoice and document_items else 1}};
+    document.addEventListener('DOMContentLoaded', () => {
+    const itemsContainer = document.getElementById('items-container');
+    const addItemBtn = document.getElementById('add-item');
+    let itemIndex = itemsContainer.children.length;
+    const currency = document.getElementById('currencySymbol').value;
+    csrftoken = document.querySelector('input[name="csrf_token"]').value;
 
-    // Add item functionality
-    addItemBtn.addEventListener('click', function () {
-        const newRow = createItemRow(itemIndex);
-        itemsContainer.appendChild(newRow);
-        itemIndex++;
-        updateTotals();
+    addItemBtn.addEventListener('click', async () => {
+        const formData = new FormData();
+        formData.append('index', itemIndex);
+        formData.append('csrf_token', csrftoken);
 
-        // Focus on the first input of the new row
-        const firstInput = newRow.querySelector('select, input');
-        if (firstInput) {
-            firstInput.focus();
-        }
-    });
+        const res = await fetch('/invoices/item-row', {
+            method: 'POST',
+            body: formData,
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        });
 
-    // Remove item functionality
-    itemsContainer.addEventListener('click', function (e) {
-        if (e.target.classList.contains('remove-item') || e.target.closest('.remove-item')) {
-            const row = e.target.closest('.item-row');
-            if (itemsContainer.children.length > 1) {
-                row.remove();
-                updateTotals();
-            } else {
-                alert('{{ _("At least one item is required") }}');
-            }
-        }
-    });
+        const html = await res.text();
+        const temp = document.createElement('tbody');
+        temp.innerHTML = html;
+        const row = temp.querySelector('tr');
 
-    // Update totals when quantities or prices change
-    itemsContainer.addEventListener('input', function (e) {
-        if (e.target.classList.contains('item-quantity') || e.target.classList.contains('item-price')) {
-            updateRowTotal(e.target.closest('.item-row'));
-            updateTotals();
-        }
-    });
-
-    // Auto-fill price when item is selected
-    itemsContainer.addEventListener('change', function (e) {
-        if (e.target.classList.contains('item-select')) {
-            const selectedOption = e.target.options[e.target.selectedIndex];
-            const price = selectedOption.getAttribute('data-price') || 0;
-            const row = e.target.closest('.item-row');
-            const priceInput = row.querySelector('.item-price');
-            priceInput.value = parseFloat(price).toFixed(2);
+        if (row) {
+            itemsContainer.appendChild(row);
+            itemIndex++;
+            row.querySelector('.item-select')?.focus();
             updateRowTotal(row);
             updateTotals();
         }
     });
 
-    // Update document number label based on type
-    const typeSelect = document.getElementById('type');
-    const documentNumberLabel = document.querySelector('label[for="document_number"]');
-
-    typeSelect.addEventListener('change', function () {
-        const selectedType = this.value;
-        if (selectedType === 'quote') {
-            documentNumberLabel.innerHTML = '{{ _("Quote Number") }} <span class="text-btn-danger-bg">*</span>';
-        } else if (selectedType === 'invoice') {
-            documentNumberLabel.innerHTML = '{{ _("Invoice Number") }} <span class="text-btn-danger-bg">*</span>';
-        } else {
-            documentNumberLabel.innerHTML = '{{ _("Document Number") }} <span class="text-btn-danger-bg">*</span>';
+    itemsContainer.addEventListener('click', (e) => {
+        if (e.target.closest('.remove-item')) {
+            const row = e.target.closest('.item-row');
+            if (itemsContainer.children.length > 1) {
+                row.remove();
+                updateTotals();
+            } else {
+                alert("At least one item is required");
+            }
         }
     });
 
-    function createItemRow(index) {
-        const row = document.createElement('tr');
-        row.className = 'item-row hover:bg-secondary-50';
-        row.innerHTML = `
-            <td class="px-4 py-3">
-                <select name="items[${index}][inventory_item_id]" class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-select bg-bg-base text-fg-base">
-                    <option value="">{{ _('Select an item') }}</option>
-                    {% for inventory_item in inventory_items %}
-                    <option value="{{ inventory_item.id }}" data-price="{{ inventory_item.price }}">{{ inventory_item.name }}</option>
-                    {% endfor %}
-                </select>
-            </td>
-            <td class="px-4 py-3">
-                <input type="text" name="items[${index}][description]" class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
-            </td>
-            <td class="px-4 py-3">
-                <input type="number" name="items[${index}][quantity]" value="1" min="1" class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-quantity bg-bg-base text-fg-base">
-            </td>
-            <td class="px-4 py-3">
-                <input type="number" name="items[${index}][unit_price]" value="0.00" min="0" step="0.01" class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-price bg-bg-base text-fg-base">
-            </td>
-            <td class="px-4 py-3">
-                <div class="item-total font-medium text-fg-base text-sm">{{ session.get('currency') }}0.00</div>
-            </td>
-            <td class="px-4 py-3 text-center">
-                <button type="button" class="text-btn-danger-bg hover:text-btn-danger-hover remove-item p-1 rounded">
-                    <i class="fas fa-trash text-sm"></i>
-                </button>
-            </td>
-        `;
-        return row;
-    }
+    itemsContainer.addEventListener('input', (e) => {
+        if (e.target.matches('.item-quantity, .item-price')) {
+            updateRowTotal(e.target.closest('.item-row'));
+            updateTotals();
+        }
+    });
+
+    itemsContainer.addEventListener('change', (e) => {
+        if (e.target.classList.contains('item-select')) {
+            const selected = e.target.selectedOptions[0];
+            const row = e.target.closest('.item-row');
+
+            // Auto-fill price
+            const price = selected?.dataset?.price || '0.00';
+            row.querySelector('.item-price').value = parseFloat(price).toFixed(2);
+
+            // Auto-fill description
+            const desc = selected?.dataset?.description || '';
+            row.querySelector('.item-description').value = desc;
+
+            const stock = selected?.dataset?.stock || '0';
+            row.querySelector('.item-quantity').setAttribute('max', stock);
+
+            updateRowTotal(row);
+            updateTotals();
+        }
+    });
 
     function updateRowTotal(row) {
-        const quantity = parseFloat(row.querySelector('.item-quantity').value) || 0;
-        const price = parseFloat(row.querySelector('.item-price').value) || 0;
-        const total = quantity * price;
-        row.querySelector('.item-total').textContent = '{{ session.get('currency') }}' + total.toFixed(2);
+        const q = parseFloat(row.querySelector('.item-quantity')?.value || 0);
+        const p = parseFloat(row.querySelector('.item-price')?.value || 0);
+        row.querySelector('.item-total').textContent = currency + (q * p).toFixed(2);
     }
 
     function updateTotals() {
         let subtotal = 0;
         document.querySelectorAll('.item-row').forEach(row => {
-            const quantity = parseFloat(row.querySelector('.item-quantity').value) || 0;
-            const price = parseFloat(row.querySelector('.item-price').value) || 0;
-            subtotal += quantity * price;
+            const q = parseFloat(row.querySelector('.item-quantity')?.value || 0);
+            const p = parseFloat(row.querySelector('.item-price')?.value || 0);
+            subtotal += q * p;
         });
 
         const tax15 = subtotal * 0.15;
         const tax18 = subtotal * 0.18;
         const total = subtotal + tax15 + tax18;
 
-        document.getElementById('subtotal').textContent = '{{ session.get('currency') }}' + subtotal.toFixed(2);
-        document.getElementById('tax-15').textContent = '{{ session.get('currency') }}' + tax15.toFixed(2);
-        document.getElementById('tax-18').textContent = '{{ session.get('currency') }}' + tax18.toFixed(2);
-        document.getElementById('total').textContent = '{{ session.get('currency') }}' + total.toFixed(2);
+        document.getElementById('subtotal').textContent = currency + subtotal.toFixed(2);
+        document.getElementById('tax-15').textContent = currency + tax15.toFixed(2);
+        document.getElementById('tax-18').textContent = currency + tax18.toFixed(2);
+        document.getElementById('total').textContent = currency + total.toFixed(2);
     }
 
-    // Initialize totals
     document.querySelectorAll('.item-row').forEach(updateRowTotal);
     updateTotals();
-
-    // Trigger initial label update
-    if (typeSelect.value) {
-        typeSelect.dispatchEvent(new Event('change'));
-    }
 });
 </script>
 {% endblock %}

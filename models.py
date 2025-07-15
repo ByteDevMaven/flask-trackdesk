@@ -93,6 +93,7 @@ class InventoryItem(db.Model):
     description = db.Column(db.String)
     quantity = db.Column(db.Integer)
     price = db.Column(db.Float)
+    discount = db.Column(db.Float, default=0.0)
     created_at = db.Column(db.DateTime, default=datetime.now())
     updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
 
@@ -122,6 +123,7 @@ class DocumentItem(db.Model):
     description = db.Column(db.String)
     quantity = db.Column(db.Integer)
     unit_price = db.Column(db.Float)
+    discount = db.Column(db.Float, default=0.0)
     created_at = db.Column(db.DateTime, default=datetime.now())
     updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
 

@@ -551,6 +551,9 @@
   .w-16 {
     width: calc(var(--spacing) * 16);
   }
+  .w-18 {
+    width: calc(var(--spacing) * 18);
+  }
   .w-24 {
     width: calc(var(--spacing) * 24);
   }
@@ -671,6 +674,9 @@
   }
   .gap-4 {
     gap: calc(var(--spacing) * 4);
+  }
+  .gap-5 {
+    gap: calc(var(--spacing) * 5);
   }
   .gap-6 {
     gap: calc(var(--spacing) * 6);
@@ -1190,9 +1196,6 @@
   }
   .pl-3 {
     padding-left: calc(var(--spacing) * 3);
-  }
-  .pl-5 {
-    padding-left: calc(var(--spacing) * 5);
   }
   .pl-8 {
     padding-left: calc(var(--spacing) * 8);
@@ -1948,6 +1951,11 @@
   .md\:col-span-4 {
     @media (width >= 48rem) {
       grid-column: span 4 / span 4;
+    }
+  }
+  .md\:col-span-5 {
+    @media (width >= 48rem) {
+      grid-column: span 5 / span 5;
     }
   }
   .md\:block {

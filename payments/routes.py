@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, flash, jsonify
+from flask import current_app, render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required
 from flask_babel import _
 from sqlalchemy import or_, desc
@@ -56,7 +56,7 @@ def index(company_id):
     # Paginate
     pagination = query.paginate(
         page=page, 
-        per_page=20,
+        per_page=current_app.config.get('ITEMS_PER_PAGE', 20),
         error_out=False
     )
     

@@ -4,6 +4,7 @@ from datetime import timedelta
 class Config:
     # General Configuration
     SECRET_KEY = os.getenv("SECRET_KEY", "aa13c1a2d52217687bcb0832883bdd348f015a5a716e8bd8013d61b656f4f4d7")
+    ITEMS_PER_PAGE = 10
 
     # SQLAlchemy Database Configuration
     SQLALCHEMY_DATABASE_URI = 'sqlite:///trackdesk.db'

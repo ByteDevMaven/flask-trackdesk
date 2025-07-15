@@ -232,10 +232,12 @@
 
     <!-- Pagination -->
     {% if pagination and pagination.pages > 1 %}
+    {% set ns = namespace(args=request.args.to_dict()) %}
+    {% set _ = ns.args.pop('page', None) %}
     <div class="mt-6 flex justify-center">
         <nav class="flex items-center space-x-2">
             {% if pagination.has_prev %}
-            <a href="{{ url_for('payments.index', company_id=session.get('selected_company_id'), page=pagination.prev_num, **request.args) }}"
+            <a href="{{ url_for('payments.index', company_id=session.get('selected_company_id'), page=pagination.prev_num, **ns.args) }}"
                 class="px-3 py-2 rounded-md bg-bg-base border border-secondary-200 text-fg-base hover:bg-secondary-100">
                 <i class="fas fa-chevron-left text-xs"></i>
             </a>
@@ -251,7 +253,7 @@
             {% if page == pagination.page %}
             <span class="px-3 py-2 rounded-md bg-accent-500 text-btn-primary-text">{{ page }}</span>
             {% else %}
-            <a href="{{ url_for('payments.index', company_id=session.get('selected_company_id'), page=page, **request.args) }}"
+            <a href="{{ url_for('payments.index', company_id=session.get('selected_company_id'), page=page, **ns.args) }}"
                 class="px-3 py-2 rounded-md bg-bg-base border border-secondary-200 text-fg-base hover:bg-secondary-100">{{
                 page }}</a>
             {% endif %}
@@ -261,7 +263,7 @@
             {% endfor %}
 
             {% if pagination.has_next %}
-            <a href="{{ url_for('payments.index', company_id=session.get('selected_company_id'), page=pagination.next_num, **request.args) }}"
+            <a href="{{ url_for('payments.index', company_id=session.get('selected_company_id'), page=pagination.next_num, **ns.args) }}"
                 class="px-3 py-2 rounded-md bg-bg-base border border-secondary-200 text-fg-base hover:bg-secondary-100">
                 <i class="fas fa-chevron-right text-xs"></i>
             </a>
