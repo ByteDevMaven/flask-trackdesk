@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, session
 from flask_login import login_required
 from sqlalchemy import func
 from datetime import datetime
@@ -8,10 +8,14 @@ from models import Client, Document, DocumentType, InventoryItem, Payment, db
 
 from . import dashboard
 
+@dashboard.route('/')
 @dashboard.route('/<int:company_id>/')
 @dashboard.route('/<int:company_id>/dashboard')
 @login_required
 def index(company_id = None):
+    if company_id == None:
+        company_id = session.get('selected_company_id')
+
     today = datetime.now()
     first_day_of_month = datetime(today.year, today.month, 1)
 
@@ -64,8 +68,7 @@ def index(company_id = None):
         inventory_count=inventory_count,
         revenue=revenue,
         recent_invoices=recent_invoices,
-        recent_quotes=recent_quotes,
-        page_title=_('Dashboard')
+        recent_quotes=recent_quotes
     )
 
 # Custom template filters

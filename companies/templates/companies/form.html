@@ -1,137 +1,131 @@
 {% extends "base.html" %}
 
-{% block title %}{% if company %}{{ _('Edit Company') }}{% else %}{{ _('New Company') }}{% endif %} - {{ _('Business
-Management System') }}{% endblock %}
+{% block title %}{% if company %}{{ _('Edit Company') }}{% else %}{{ _('New Company') }}{% endif %} - {{ _('Business Management System') }}{% endblock %}
 
 {% block content %}
-<div class="animate-fadeIn">
-    <div class="flex justify-between items-center mb-6">
-        <div>
-            <h2 class="text-2xl font-bold text-fg-base">{% if company %}{{ _('Edit Company') }}{% else %}{{ _('New
-                Company') }}{% endif %}</h2>
-            <p class="text-fg-muted text-sm mt-1">{% if company %}{{ _('Update company information') }}{% else %}{{
-                _('Create a new company') }}{% endif %}</p>
-        </div>
-        <div>
-            <a href="{{ url_for('companies.index') }}"
-                class="bg-btn-secondary-bg text-btn-secondary-text px-4 py-2 rounded-lg hover:bg-btn-secondary-hover transition flex items-center">
-                <i class="fas fa-arrow-left mr-2"></i> {{ _('Back to Companies') }}
-            </a>
-        </div>
+<div class="flex justify-between items-center mb-6">
+    <div>
+        <h2 class="text-2xl font-bold text-fg-base">{% if company %}{{ _('Edit Company') }}{% else %}{{ _('New Company') }}{% endif %}</h2>
+        <p class="text-fg-muted text-sm mt-1">{% if company %}{{ _('Update company information') }}{% else %}{{
+            _('Create a new company') }}{% endif %}</p>
     </div>
+    <div>
+        <a href="{{ url_for('companies.index') }}"
+            class="bg-btn-secondary-bg text-btn-secondary-text px-4 py-2 rounded-lg hover:bg-btn-secondary-hover transition flex items-center">
+            <i class="fas fa-arrow-left mr-2"></i> {{ _('Back to Companies') }}
+        </a>
+    </div>
+</div>
 
-    <!-- Company Form -->
-    <div class="bg-bg-subtle rounded-xl shadow-sm p-6 border border-secondary-200">
-        <form
-            action="{% if company %}{{ url_for('companies.update', id=company.id) }}{% else %}{{ url_for('companies.store') }}{% endif %}"
-            method="POST">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<!-- Company Form -->
+<div class="bg-bg-subtle rounded-xl shadow-sm p-6 border border-secondary-200">
+    <form
+        action="{% if company %}{{ url_for('companies.update', id=company.id) }}{% else %}{{ url_for('companies.store') }}{% endif %}"
+        method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <!-- Company Information -->
-                <div class="space-y-6">
-                    <div class="space-y-4">
-                        <h3 class="text-lg font-medium text-fg-base mb-4">{{ _('Company Information') }}</h3>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Company Information -->
+            <div class="space-y-6">
+                <div class="space-y-4">
+                    <h3 class="text-lg font-medium text-fg-base mb-4">{{ _('Company Information') }}</h3>
 
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-fg-base mb-1">{{ _('Company Name')
-                                }} <span class="text-btn-danger-bg">*</span></label>
-                            <input type="text" id="name" name="name" value="{{ company.name if company else '' }}"
-                                required
-                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base"
-                                placeholder="{{ _('Enter company name') }}">
-                        </div>
-                        <div>
-                            <label for="currency" class="block text-sm font-medium text-fg-base mb-1">{{ _('Company Currency')
-                                }} <span class="text-btn-danger-bg">*</span></label>
-                            <input type="text" id="currency" name="currency" value="{{ company.currency if company else '' }}"
-                                required
-                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base"
-                                placeholder="{{ _('$, USD, EUR, ....') }}">
-                        </div>
-                        <div>
-                            <label for="address" class="block text-sm font-medium text-fg-base mb-1">{{ _('Company Address')
-                                }} <span class="text-btn-danger-bg">*</span></label>
-                            <input type="text" id="address" name="address" value="{{ company.address if company else '' }}"
-                                required
-                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base"
-                                placeholder="Kremlin, Moscow, Russia, 103073">
-                        </div>
-                        <div>
-                            <label for="phone" class="block text-sm font-medium text-fg-base mb-1">{{ _('Company Phone')
-                                }} <span class="text-btn-danger-bg">*</span></label>
-                            <input type="tel" id="phone" name="phone" value="{{ company.phone if company else '' }}"
-                                required
-                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base"
-                                placeholder="000-000-0000">
-                        </div>
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-fg-base mb-1">{{ _('Company Email')
-                                }} <span class="text-btn-danger-bg">*</span></label>
-                            <input type="email" id="email" name="email" value="{{ company.email if company else '' }}"
-                                required
-                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base"
-                                placeholder="example@email.com">
-                        </div>
-                        <div>
-                            <label for="identifier" class="block text-sm font-medium text-fg-base mb-1">{{ _('Company Tax Identifier')
-                                }} <span class="text-btn-danger-bg">*</span></label>
-                            <input type="identifier" id="identifier" name="identifier" value="{{ company.identifier if company else '' }}"
-                                required
-                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base"
-                                placeholder="0000000000">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- User Assignments -->
-                <div class="space-y-6">
                     <div>
-                        <h3 class="text-lg font-medium text-fg-base mb-4">{{ _('User Assignments') }}</h3>
-
-                        <div>
-                            <label class="block text-sm font-medium text-fg-base mb-2">{{ _('Assign Users') }}</label>
-                            <div class="max-h-64 overflow-y-auto border border-secondary-200 rounded-lg p-3 bg-bg-base">
-                                {% if users %}
-                                {% for user in users %}
-                                <div class="flex items-center mb-2">
-                                    <input type="checkbox" id="user_{{ user.id }}" name="user_ids" value="{{ user.id }}"
-                                        {% if company and user in company.users %}checked{% endif %}
-                                        class="h-4 w-4 text-accent-500 focus:ring-accent-500 border-secondary-300 rounded">
-                                    <label for="user_{{ user.id }}" class="ml-2 text-sm text-fg-base flex items-center">
-                                        <div
-                                            class="w-6 h-6 bg-accent-500 rounded-full flex items-center justify-center text-btn-primary-text text-xs font-bold mr-2">
-                                            {{ user.name[0].upper() if user.name else 'U' }}
-                                        </div>
-                                        <div>
-                                            <div class="font-medium">{{ user.name }}</div>
-                                            <div class="text-xs text-fg-muted">{{ user.email }}</div>
-                                        </div>
-                                    </label>
-                                </div>
-                                {% endfor %}
-                                {% else %}
-                                <p class="text-fg-muted text-sm">{{ _('No users available') }}</p>
-                                {% endif %}
-                            </div>
-                            <p class="text-xs text-fg-muted mt-1">{{ _('Select users who will have access to this
-                                company') }}</p>
-                        </div>
+                        <label for="name" class="block text-sm font-medium text-fg-base mb-1">{{ _('Company Name')
+                            }} <span class="text-btn-danger-bg">*</span></label>
+                        <input type="text" id="name" name="name" value="{{ company.name if company else '' }}" required
+                            class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base"
+                            placeholder="{{ _('Enter company name') }}">
+                    </div>
+                    <div>
+                        <label for="currency" class="block text-sm font-medium text-fg-base mb-1">{{ _('Company Currency')
+                            }} <span class="text-btn-danger-bg">*</span></label>
+                        <input type="text" id="currency" name="currency"
+                            value="{{ company.currency if company else '' }}" required
+                            class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base"
+                            placeholder="{{ _('$, USD, EUR, ....') }}">
+                    </div>
+                    <div>
+                        <label for="address" class="block text-sm font-medium text-fg-base mb-1">{{ _('Company Address')
+                            }} <span class="text-btn-danger-bg">*</span></label>
+                        <input type="text" id="address" name="address" value="{{ company.address if company else '' }}"
+                            required
+                            class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base"
+                            placeholder="Kremlin, Moscow, Russia, 103073">
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-fg-base mb-1">{{ _('Company Phone')
+                            }} <span class="text-btn-danger-bg">*</span></label>
+                        <input type="tel" id="phone" name="phone" value="{{ company.phone if company else '' }}"
+                            required
+                            class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base"
+                            placeholder="000-000-0000">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-fg-base mb-1">{{ _('Company Email')
+                            }} <span class="text-btn-danger-bg">*</span></label>
+                        <input type="email" id="email" name="email" value="{{ company.email if company else '' }}"
+                            required
+                            class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base"
+                            placeholder="example@email.com">
+                    </div>
+                    <div>
+                        <label for="identifier" class="block text-sm font-medium text-fg-base mb-1">{{ _('Company Tax Identifier')}} 
+                            <span class="text-btn-danger-bg">*</span></label>
+                        <input type="identifier" id="identifier" name="identifier"
+                            value="{{ company.identifier if company else '' }}" required
+                            class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base"
+                            placeholder="0000000000">
                     </div>
                 </div>
             </div>
 
-            <div class="flex justify-end space-x-3 mt-8 pt-6 border-t border-secondary-200">
-                <a href="{{ url_for('companies.index') }}"
-                    class="px-4 py-2 border border-secondary-200 rounded-lg hover:bg-secondary-100 transition text-fg-base">
-                    {{ _('Cancel') }}
-                </a>
-                <button type="submit"
-                    class="bg-btn-primary-bg text-btn-primary-text px-4 py-2 rounded-lg hover:bg-btn-primary-hover transition shadow-sm">
-                    {% if company %}{{ _('Update Company') }}{% else %}{{ _('Create Company') }}{% endif %}
-                </button>
+            <!-- User Assignments -->
+            <div class="space-y-6">
+                <div>
+                    <h3 class="text-lg font-medium text-fg-base mb-4">{{ _('User Assignments') }}</h3>
+
+                    <div>
+                        <label class="block text-sm font-medium text-fg-base mb-2">{{ _('Assign Users') }}</label>
+                        <div class="max-h-64 overflow-y-auto border border-secondary-200 rounded-lg p-3 bg-bg-base">
+                            {% if users %}
+                            {% for user in users %}
+                            <div class="flex items-center mb-2">
+                                <input type="checkbox" id="user_{{ user.id }}" name="user_ids" value="{{ user.id }}" {%
+                                    if company and user in company.users %}checked{% endif %}
+                                    class="h-4 w-4 text-accent-500 focus:ring-accent-500 border-secondary-300 rounded">
+                                <label for="user_{{ user.id }}" class="ml-2 text-sm text-fg-base flex items-center">
+                                    <div
+                                        class="w-6 h-6 bg-accent-500 rounded-full flex items-center justify-center text-btn-primary-text text-xs font-bold mr-2">
+                                        {{ user.name[0].upper() if user.name else 'U' }}
+                                    </div>
+                                    <div>
+                                        <div class="font-medium">{{ user.name }}</div>
+                                        <div class="text-xs text-fg-muted">{{ user.email }}</div>
+                                    </div>
+                                </label>
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            <p class="text-fg-muted text-sm">{{ _('No users available') }}</p>
+                            {% endif %}
+                        </div>
+                        <p class="text-xs text-fg-muted mt-1">{{ _('Select users who will have access to this company') }}</p>
+                    </div>
+                </div>
             </div>
-        </form>
-    </div>
+        </div>
+
+        <div class="flex justify-end space-x-3 mt-8 pt-6 border-t border-secondary-200">
+            <a href="{{ url_for('companies.index') }}"
+                class="px-4 py-2 border border-secondary-200 rounded-lg hover:bg-secondary-100 transition text-fg-base">
+                {{ _('Cancel') }}
+            </a>
+            <button type="submit"
+                class="bg-btn-primary-bg text-btn-primary-text px-4 py-2 rounded-lg hover:bg-btn-primary-hover transition shadow-sm">
+                {% if company %}{{ _('Update Company') }}{% else %}{{ _('Create Company') }}{% endif %}
+            </button>
+        </div>
+    </form>
 </div>
 {% endblock %}

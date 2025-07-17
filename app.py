@@ -102,6 +102,7 @@ def createApp():
         from customers import customers
         from suppliers import suppliers
         from inventory import inventory
+        from orders import orders
         from invoices import invoices
         from payments import payments
         from users import users
@@ -112,6 +113,7 @@ def createApp():
         app.register_blueprint(customers)
         app.register_blueprint(suppliers)
         app.register_blueprint(inventory)
+        app.register_blueprint(orders)
         app.register_blueprint(invoices)
         app.register_blueprint(payments)
         app.register_blueprint(users)

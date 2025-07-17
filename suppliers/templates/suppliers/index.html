@@ -153,7 +153,7 @@
                 <tr class="border-b border-bg-subtle">
                     <td colspan="5" class="px-6 py-4 text-center text-fg-muted">
                         {% if search %}
-                        {{ _('No suppliers found matching "%(search)s".', search=search) }}
+                        {{ _('No suppliers found matching ') }}{{ search }}
                         <a href="{{ url_for('suppliers.index', company_id=selected_company_id) }}"
                             class="text-primary-700 hover:underline">{{ _('Clear search') }}</a>
                         {% else %}
@@ -172,7 +172,7 @@
     {% if suppliers.pages > 1 %}
     <div class="px-6 py-4 flex items-center justify-between border-t border-bg-subtle">
         <div class="text-sm text-fg-muted">
-            {{ _('Showing %(shown)s of %(total)s suppliers', shown=suppliers.items|length, total=stats.total) }}
+            {{ _('Showing ') }} {{ suppliers.items|length }} {{ _(' of ') }} {{ stats.total }} {{ _(' suppliers.') }}
         </div>
         <div class="flex gap-2">
             {% if suppliers.has_prev %}

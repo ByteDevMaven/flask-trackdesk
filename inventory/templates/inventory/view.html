@@ -202,7 +202,7 @@
             <div class="mt-4 pt-4 border-t border-primary-200">
                 <p class="text-xs text-fg-muted">
                     {{ _('Barcode format: Code128') }}<br>
-                    {{ _('Item code: %(code)s', code=company_id ~ ("%06d"|format(item.id))) }}
+                    {{ _('Item code: ') }}{{ company_id }}{{ "%06d"|format(item.id) }}
                 </p>
             </div>
         </div>
@@ -222,8 +222,7 @@
 
             <form id="stock-adjust-form">
                 <div class="mb-4">
-                    <label for="adjustment" class="block text-sm font-medium text-fg-base mb-2">{{ _('Adjustment
-                        Amount') }}</label>
+                    <label for="adjustment" class="block text-sm font-medium text-fg-base mb-2">{{ _('Adjustment Amount') }}</label>
                     <input type="number" id="adjustment" name="adjustment"
                         class="w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base"
                         placeholder="{{ _('Enter positive or negative number') }}">
@@ -262,9 +261,8 @@
                     class="mx-auto max-w-full h-auto bg-bg-base p-4 rounded-lg border border-primary-200">
                 <div class="mt-4 space-y-2">
                     <p class="font-medium text-fg-base">{{ item.name }}</p>
-                    <p class="text-sm text-fg-muted">{{ _('Code: %(code)s', code=company_id ~ ("%06d"|format(item.id)))
-                        }}</p>
-                    <p class="text-sm text-fg-muted">{{ _('Price: $%(price)s', price="%.2f"|format(item.price)) }}</p>
+                    <p class="text-sm text-fg-muted">{{ _('Code: ') }}{{ company_id }}{{ "%06d"|format(item.id) }}</p>
+                    <p class="text-sm text-fg-muted">{{ _('Price: ') }}{{ ":,.2f".format(item.price) }}</p>
                 </div>
             </div>
 

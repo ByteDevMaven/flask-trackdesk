@@ -19,7 +19,7 @@ from . import inventory
 @login_required
 def index(company_id):
     page = request.args.get('page', 1, type=int)
-    per_page = current_app.config.get('ITEMS_PER_PAGE', 15)
+    per_page = int(current_app.config.get('ITEMS_PER_PAGE', 15))
     
     query = InventoryItem.query.filter_by(company_id=company_id)
     

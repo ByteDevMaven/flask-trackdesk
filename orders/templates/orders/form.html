@@ -1,0 +1,327 @@
+{% extends "base.html" %}
+
+{% block title %}{% if order %}{{ _('Edit Purchase Order') }}{% else %}{{ _('Create Purchase Order') }}{% endif %} - {{ _('Business Management System') }}{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<div class="mb-6">
+    <div class="flex items-center space-x-4 mb-4">
+        <a href="{{ url_for('orders.index', company_id=company_id) }}"
+            class="text-fg-muted hover:text-fg-base transition">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <div>
+            <h2 class="text-2xl font-bold text-fg-base">
+                {% if order %}{{ _('Edit Purchase Order') }}{% else %}{{ _('Create Purchase Order') }}{% endif %}
+            </h2>
+            <p class="text-fg-muted text-sm mt-1">
+                {% if order %}{{ _('Update purchase order details') }}{% else %}{{ _('Create a new purchase order') }}{% endif %}
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- Form -->
+<div class="bg-bg-subtle rounded-xl shadow-sm border border-primary-200">
+    <form method="POST" class="p-6" id="purchase-order-form"
+        action="{{ url_for('orders.update', company_id=company_id, id=order.id) if order else url_for('orders.create', company_id=company_id) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <!-- Supplier Selection -->
+        <div class="mb-8">
+            <div class="bg-bg-base rounded-lg p-4 border border-primary-200">
+                <h3 class="text-lg font-medium text-fg-base mb-4">{{ _('Order Information') }}</h3>
+                
+                {% if order %}
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-fg-base mb-2">{{ _('Order Number') }}</label>
+                    <p class="text-lg font-mono text-fg-base">{{ order.order_number }}</p>
+                </div>
+                {% endif %}
+
+                <div>
+                    <label for="supplier_id" class="block text-sm font-medium text-fg-base mb-2">
+                        {{ _('Supplier') }} <span class="text-btn-danger-bg">*</span>
+                    </label>
+                    <select id="supplier_id" name="supplier_id" required
+                        class="w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                        <option value="">{{ _('Select a supplier') }}</option>
+                        {% for supplier in suppliers %}
+                        {% set selected_supplier = order.supplier_id if order else (form_data.supplier_id if form_data else '') %}
+                        <option value="{{ supplier.id }}" {% if selected_supplier|string==supplier.id|string %}selected{% endif %}>
+                            {{ supplier.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    {% if not suppliers %}
+                    <p class="text-xs text-fg-muted mt-1">
+                        {{ _('No suppliers available.') }}
+                        <a href="{{ url_for('suppliers.create', company_id=company_id) }}"
+                            class="text-accent-600 hover:text-accent-700">{{ _('Add a supplier') }}</a>
+                    </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Items Section -->
+        <div class="mb-8">
+            <div class="bg-bg-base rounded-lg p-4 border border-primary-200">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-medium text-fg-base">{{ _('Order Items') }}</h3>
+                    <button type="button" id="add-item-btn"
+                        class="bg-accent-500 text-accent-900 px-3 py-2 rounded-lg hover:bg-accent-600 transition text-sm">
+                        <i class="fas fa-plus mr-1"></i>{{ _('Add Item') }}
+                    </button>
+                </div>
+
+                <div id="items-container">
+                    {% if order and order.items %}
+                    {% for item in order.items %}
+                    <div class="item-row grid grid-cols-1 md:grid-cols-6 gap-4 mb-4 p-4 bg-bg-subtle rounded-lg border border-primary-200">
+                        <div>
+                            <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Item') }}</label>
+                            <select name="item_{{ loop.index0 }}_id" class="item-select w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base" required>
+                                <option value="">{{ _('Select item') }}</option>
+                                {% for inv_item in inventory_items %}
+                                <option value="{{ inv_item.id }}" data-price="{{ inv_item.price }}" data-code="{{ inv_item.code }}" {% if inv_item.id == item.inventory_item_id %}selected{% endif %}>
+                                    {{ inv_item.name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Code') }}</label>
+                            <input type="text" name="code" value="{{ item.code }}" required
+                                class="code-input w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Quantity') }}</label>
+                            <input type="number" name="item_{{ loop.index0 }}_quantity" value="{{ item.quantity }}" min="1" required
+                                class="quantity-input w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Unit Price') }}</label>
+                            <input type="number" name="item_{{ loop.index0 }}_price" value="{{ item.price }}" step="0.01" min="0" required
+                                class="price-input w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Total') }}</label>
+                            <input type="text" class="total-display w-full px-3 py-2 border border-primary-300 rounded-lg bg-primary-50 text-fg-base" readonly value="{{ session.get('currency') }}{{ '{:,.2f}'.format(item.total) }}">
+                        </div>
+                        <div class="flex items-end">
+                            <button type="button" class="remove-item-btn w-full bg-btn-danger-bg text-btn-danger-text px-3 py-2 rounded-lg hover:bg-btn-danger-hover transition text-sm">
+                                <i class="fas fa-trash mr-1"></i>{{ _('Remove') }}
+                            </button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="item-row grid grid-cols-1 md:grid-cols-5 gap-4 mb-4 p-4 bg-bg-subtle rounded-lg border border-primary-200">
+                        <div>
+                            <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Item') }}</label>
+                            <select name="item_0_id" class="item-select w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base" required>
+                                <option value="">{{ _('Select item') }}</option>
+                                {% for item in inventory_items %}
+                                <option value="{{ item.id }}" data-price="{{ item.price }}" data-code="{{ item.code }}">{{ item.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Code') }}</label>
+                            <input type="text" name="item_0_code" required
+                                class="code-input w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Quantity') }}</label>
+                            <input type="number" name="item_0_quantity" value="1" min="1" required
+                                class="quantity-input w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Unit Price') }}</label>
+                            <input type="number" name="item_0_price" value="0.00" step="0.01" min="0" required
+                                class="price-input w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Total') }}</label>
+                            <input type="text" class="total-display w-full px-3 py-2 border border-primary-300 rounded-lg bg-primary-50 text-fg-base" readonly value="{{ session.get('currency') }}0.00">
+                        </div>
+                        <div class="flex items-end">
+                            <button type="button" class="remove-item-btn w-full bg-btn-danger-bg text-btn-danger-text px-3 py-2 rounded-lg hover:bg-btn-danger-hover transition text-sm">
+                                <i class="fas fa-trash mr-1"></i>{{ _('Remove') }}
+                            </button>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Order Total -->
+                <div class="mt-6 pt-4 border-t border-primary-200">
+                    <div class="flex justify-end">
+                        <div class="bg-accent-50 rounded-lg p-4 border border-accent-200">
+                            <div class="text-right">
+                                <p class="text-sm text-fg-muted">{{ _('Order Total') }}</p>
+                                <p class="text-2xl font-bold text-fg-base" id="order-total">{{ session.get('currency') }}0.00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="pt-6 border-t border-primary-200">
+            <div class="flex justify-end space-x-3">
+                <a href="{{ url_for('orders.index', company_id=company_id) }}"
+                    class="px-6 py-2 border border-primary-400 rounded-lg text-btn-secondary-text bg-btn-secondary-bg hover:bg-btn-secondary-hover transition">
+                    {{ _('Cancel') }}
+                </a>
+                <button type="submit"
+                    class="px-6 py-2 bg-btn-primary-bg text-btn-primary-text rounded-lg hover:bg-btn-primary-hover transition flex items-center">
+                    <i class="fas fa-save mr-2"></i>
+                    {% if order %}{{ _('Update Order') }}{% else %}{{ _('Create Order') }}{% endif %}
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let itemIndex = {{ order.items|length if order and order.items else 1 }};
+        const currency = '{{ session.get("currency") }}';
+
+        // Add item functionality
+        document.getElementById('add-item-btn').addEventListener('click', function () {
+            const container = document.getElementById('items-container');
+            const newRow = createItemRow(itemIndex);
+            container.appendChild(newRow);
+            itemIndex++;
+            updateOrderTotal();
+        });
+
+        // Remove item functionality
+        document.addEventListener('click', function (e) {
+            if (e.target.closest('.remove-item-btn')) {
+                const row = e.target.closest('.item-row');
+                if (document.querySelectorAll('.item-row').length > 1) {
+                    row.remove();
+                    updateOrderTotal();
+                } else {
+                    alert('{{ _("At least one item is required") }}');
+                }
+            }
+        });
+
+        // Update totals when inputs change
+        document.addEventListener('input', function (e) {
+            if (e.target.classList.contains('quantity-input') || e.target.classList.contains('price-input')) {
+                updateRowTotal(e.target.closest('.item-row'));
+                updateOrderTotal();
+            }
+        });
+
+        // Auto-fill price when item is selected
+        document.addEventListener('change', function (e) {
+            if (e.target.classList.contains('item-select')) {
+                const selectedOption = e.target.options[e.target.selectedIndex];
+                const price = selectedOption.dataset.price || '0.00';
+                const code = selectedOption.dataset.code || '';
+                const row = e.target.closest('.item-row');
+                const priceInput = row.querySelector('.price-input');
+                priceInput.value = price;
+                const codeInput = row.querySelector('.code-input');
+                codeInput.value = code;
+                updateRowTotal(row);
+                updateOrderTotal();
+            }
+        });
+
+        function createItemRow(index) {
+            const div = document.createElement('div');
+            div.className = 'item-row grid grid-cols-1 md:grid-cols-5 gap-4 mb-4 p-4 bg-bg-subtle rounded-lg border border-primary-200';
+            div.innerHTML = `
+                <div>
+                    <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Item') }}</label>
+                    <select name="item_${index}_id" class="item-select w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base" required>
+                        <option value="">{{ _('Select item') }}</option>
+                        {% for item in inventory_items %}
+                        <option value="{{ item.id }}" data-price="{{ item.price }}">{{ item.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Quantity') }}</label>
+                    <input type="number" name="item_${index}_quantity" value="1" min="1" required
+                        class="quantity-input w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Unit Price') }}</label>
+                    <input type="number" name="item_${index}_price" value="0.00" step="0.01" min="0" required
+                        class="price-input w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Total') }}</label>
+                    <input type="text" class="total-display w-full px-3 py-2 border border-primary-300 rounded-lg bg-primary-50 text-fg-base" readonly value="${currency}0.00">
+                </div>
+                <div class="flex items-end">
+                    <button type="button" class="remove-item-btn w-full bg-btn-danger-bg text-btn-danger-text px-3 py-2 rounded-lg hover:bg-btn-danger-hover transition text-sm">
+                        <i class="fas fa-trash mr-1"></i>{{ _('Remove') }}
+                    </button>
+                </div>
+            `;
+            return div;
+        }
+
+        function updateRowTotal(row) {
+            const quantity = parseFloat(row.querySelector('.quantity-input').value) || 0;
+            const price = parseFloat(row.querySelector('.price-input').value) || 0;
+            const total = quantity * price;
+            row.querySelector('.total-display').value = currency + total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function updateOrderTotal() {
+            let total = 0;
+            document.querySelectorAll('.item-row').forEach(row => {
+                const quantity = parseFloat(row.querySelector('.quantity-input').value) || 0;
+                const price = parseFloat(row.querySelector('.price-input').value) || 0;
+                total += quantity * price;
+            });
+            document.getElementById('order-total').textContent = currency + total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        // Initial calculation
+        document.querySelectorAll('.item-row').forEach(updateRowTotal);
+        updateOrderTotal();
+
+        // Form validation
+        document.getElementById('purchase-order-form').addEventListener('submit', function (e) {
+            const supplierSelect = document.getElementById('supplier_id');
+            if (!supplierSelect.value) {
+                e.preventDefault();
+                alert('{{ _("Please select a supplier") }}');
+                supplierSelect.focus();
+                return;
+            }
+
+            const itemRows = document.querySelectorAll('.item-row');
+            let hasValidItem = false;
+
+            itemRows.forEach(row => {
+                const itemSelect = row.querySelector('.item-select');
+                const quantity = row.querySelector('.quantity-input');
+                const price = row.querySelector('.price-input');
+
+                if (itemSelect.value && quantity.value && price.value) {
+                    hasValidItem = true;
+                }
+            });
+
+            if (!hasValidItem) {
+                e.preventDefault();
+                alert('{{ _("Please add at least one valid item") }}');
+            }
+        });
+    });
+</script>
+{% endblock %}

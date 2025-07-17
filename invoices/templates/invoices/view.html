@@ -317,7 +317,7 @@ _('Business Management System') }}{% endblock %}
 
                         {% set subtotal = invoice.total_amount or 0 %}
                         {% set tax_15 = subtotal * 0.15 %}
-                        {% set tax_18 = subtotal * 0.18 %}
+                        {% set tax_18 = 0 %}
                         {% set total_with_tax = subtotal + tax_15 + tax_18 %}
 
                         <div class="space-y-3">
@@ -329,7 +329,7 @@ _('Business Management System') }}{% endblock %}
                                 <span class="text-fg-muted font-medium">{{ _('Tax') }} (15%):</span>
                                 <span class="font-semibold text-fg-base">{{ session.get('currency') }}{{ "{:,.2f}".format(tax_15) }}</span>
                             </div>
-                            <div class="flex justify-between items-center">
+                            <div class="hidden justify-between items-center">
                                 <span class="text-fg-muted font-medium">{{ _('Tax') }} (18%):</span>
                                 <span class="font-semibold text-fg-base">{{ session.get('currency') }}{{ "{:,.2f}".format(tax_18) }}</span>
                             </div>

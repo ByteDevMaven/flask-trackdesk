@@ -6,8 +6,7 @@
 <div class="flex justify-between items-center mb-6">
     <div>
         <h2 class="text-2xl font-bold">{{ _('Dashboard') }}</h2>
-        <p class="text-fg-muted text-sm mt-1">{{ _('Welcome back') }}, {{ current_user.name }}! {{ _("Here's an
-            overview of your business.") }}</p>
+        <p class="text-fg-muted text-sm mt-1">{{ _('Welcome back') }}, {{ current_user.name }}! {{ _("Here's an overview of your business.") }}</p>
     </div>
     <div>
         <a href="{{ url_for('invoices.create', company_id=session.get('selected_company_id')) }}"

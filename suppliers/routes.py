@@ -1,6 +1,6 @@
 import math
 
-from flask import render_template, request, redirect, url_for, flash, jsonify, session
+from flask import current_app, render_template, request, redirect, url_for, flash, jsonify, session
 from flask_login import login_required, current_user
 from flask_babel import _
 
@@ -38,7 +38,7 @@ def index(company_id = None):
     
     # Pagination parameters
     page = request.args.get('page', 1, type=int)
-    per_page = request.args.get('per_page', 10, type=int)
+    per_page = int(current_app.config.get('ITEMS_PER_PAGE', 15))
     search = request.args.get('search', '')
     
     # Base query with company filter

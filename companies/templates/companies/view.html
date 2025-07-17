@@ -229,8 +229,7 @@
     <!-- Danger Zone -->
     <div class="mt-8 bg-red-50 rounded-xl shadow-sm p-6 border border-red-200">
         <h3 class="text-lg font-medium text-red-800 mb-2">{{ _('Danger Zone') }}</h3>
-        <p class="text-red-600 text-sm mb-4">{{ _('Once you delete a company, there is no going back. Please be
-            certain.') }}</p>
+        <p class="text-red-600 text-sm mb-4">{{ _('Once you delete a company, there is no going back. Please be certain.') }}</p>
         <form action="{{ url_for('companies.delete', id=company.id) }}" method="POST" class="inline">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <button type="submit"

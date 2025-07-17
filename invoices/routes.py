@@ -68,7 +68,7 @@ def index(company_id):
     # Paginate
     pagination = query.paginate(
         page=page, 
-        per_page=current_app.config.get('ITEMS_PER_PAGE', 20),
+        per_page=int(current_app.config.get('ITEMS_PER_PAGE', 20)),
         error_out=False
     )
     
