@@ -92,7 +92,7 @@
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Code') }}</label>
-                            <input type="text" name="code" value="{{ item.code }}" required
+                            <input type="text" name="item_{{ loop.index0 }}_code" value="{{ item.code }}" required
                                 class="code-input w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
                         </div>
                         <div>
@@ -123,7 +123,7 @@
                             <select name="item_0_id" class="item-select w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base" required>
                                 <option value="">{{ _('Select item') }}</option>
                                 {% for item in inventory_items %}
-                                <option value="{{ item.id }}" data-price="{{ item.price }}" data-code="{{ item.code }}">{{ item.name }}</option>
+                                <option value="{{ item.id }}" data-price="{{ item.price }}">{{ item.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -249,6 +249,11 @@
                         <option value="{{ item.id }}" data-price="{{ item.price }}">{{ item.name }}</option>
                         {% endfor %}
                     </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Code') }}</label>
+                    <input type="text" name="item_${index}_code" required
+                        class="code-input w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Quantity') }}</label>

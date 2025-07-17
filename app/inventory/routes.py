@@ -123,12 +123,12 @@ def create(company_id):
                 return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, selected_id=selected_id, item=None, form_data=request.form)
             
             item = InventoryItem(
-                company_id=company_id,
-                name=name,
-                description=description if description else None,
-                quantity=quantity,
-                price=price,
-                supplier_id=int(supplier_id) if supplier_id and supplier_id.isdigit() else None
+                company_id=company_id, # type: ignore
+                name=name, # type: ignore
+                description=description if description else None, # type: ignore
+                quantity=quantity, # type: ignore
+                price=price, # type: ignore
+                supplier_id=int(supplier_id) if supplier_id and supplier_id.isdigit() else None # type: ignore
             )
             
             db.session.add(item)
@@ -336,12 +336,12 @@ def api_create_item(company_id):
             return jsonify({'error': 'Price cannot be negative'}), 400
         
         item = InventoryItem(
-            company_id=company_id,
-            name=data['name'],
-            description=data.get('description'),
-            quantity=quantity,
-            price=price,
-            supplier_id=data.get('supplier_id')
+            company_id=company_id, # type: ignore
+            name=data['name'],  # type: ignore
+            description=data.get('description'), # type: ignore
+            quantity=quantity, # type: ignore
+            price=price, # type: ignore
+            supplier_id=data.get('supplier_id') # type: ignore
         )
         
         db.session.add(item)

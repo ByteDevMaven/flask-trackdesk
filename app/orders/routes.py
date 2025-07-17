@@ -115,10 +115,10 @@ def create(company_id):
             
             # Create purchase order
             purchase_order = PurchaseOrder(
-                company_id=company_id,
-                order_number=order_number,
-                supplier_id=int(supplier_id),
-                total_amount=0.0
+                company_id=company_id, # type: ignore
+                order_number=order_number, # type: ignore
+                supplier_id=int(supplier_id), # type: ignore
+                total_amount=0.0 # type: ignore
             )
             
             db.session.add(purchase_order)
@@ -130,8 +130,10 @@ def create(company_id):
             
             for key in request.form.keys():
                 if key.startswith('item_') and key.endswith('_id'):
+                    current_app.logger.debug(f"Processing key: {key}")
                     index = key.split('_')[1]
                     item_id = request.form.get(f'item_{index}_id')
+                    code = request.form.get(f'item_{index}_code')
                     quantity = request.form.get(f'item_{index}_quantity')
                     price = request.form.get(f'item_{index}_price')
                     
@@ -146,17 +148,19 @@ def create(company_id):
                                     item_total = quantity * price
                                     
                                     po_item = PurchaseOrderItem(
-                                        purchase_order_id=purchase_order.id,
-                                        inventory_item_id=int(item_id),
-                                        name=inventory_item.name,
-                                        quantity=quantity,
-                                        price=price,
-                                        total=item_total
+                                        purchase_order_id=purchase_order.id, # type: ignore
+                                        inventory_item_id=int(item_id), # type: ignore
+                                        name=inventory_item.name, # type: ignore
+                                        item_code=code, # type: ignore
+                                        quantity=quantity, # type: ignore
+                                        price=price, # type: ignore
+                                        total=item_total # type: ignore
                                     )
                                     
                                     db.session.add(po_item)
                                     total_amount += item_total
                                     item_count += 1
+                                    current_app.logger.debug(f"item counter: {item_count}")
                         except (ValueError, TypeError):
                             continue
             
@@ -247,6 +251,7 @@ def update(company_id, id):
             if key.startswith('item_') and key.endswith('_id'):
                 index = key.split('_')[1]
                 item_id = request.form.get(f'item_{index}_id')
+                code = request.form.get(f'item_{index}_code')
                 quantity = request.form.get(f'item_{index}_quantity')
                 price = request.form.get(f'item_{index}_price')
                 
@@ -261,12 +266,13 @@ def update(company_id, id):
                                 item_total = quantity * price
                                 
                                 po_item = PurchaseOrderItem(
-                                    purchase_order_id=purchase_order.id,
-                                    inventory_item_id=int(item_id),
-                                    name=inventory_item.name,
-                                    quantity=quantity,
-                                    price=price,
-                                    total=item_total
+                                    purchase_order_id=purchase_order.id, # type: ignore
+                                    inventory_item_id=int(item_id), # type: ignore
+                                    name=inventory_item.name, # type: ignore
+                                    item_code=code, # type: ignore
+                                    quantity=quantity, # type: ignore
+                                    price=price, # type: ignore
+                                    total=item_total # type: ignore
                                 )
                                 
                                 db.session.add(po_item)
