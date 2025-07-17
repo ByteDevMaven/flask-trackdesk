@@ -1,7 +1,7 @@
 {
   "scripts": {
     "dev": "concurrently \"./.venv/bin/python ./app.py\" \"npm run build\"",
-    "build": "npx @tailwindcss/cli -i ./src/input.css -o ./static/css/style.css --watch",
+    "build": "npx @tailwindcss/cli -i ./src/input.css -o ./app/static/css/style.css --watch",
     "requirements": "./.venv/bin/pip freeze > requirements.txt",
     "i18n:extract": "./.venv/bin/pybabel extract -F ./babel.cfg -o messages.pot .",
     "i18n:init:es": "./.venv/bin/pybabel init -i messages.pot -d translations -l es",
