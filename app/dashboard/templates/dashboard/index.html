@@ -18,6 +18,7 @@
 
 <!-- Stats Cards -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <!-- Total Clients Card -->
     <div class="bg-bg-subtle rounded-xl shadow-sm p-6 border border-secondary-100">
         <div class="flex items-center justify-between">
             <div>
@@ -29,9 +30,19 @@
             </div>
         </div>
         <div class="flex items-center mt-4">
-            <span class="text-accent-600 text-sm flex items-center">
-                <i class="fas fa-arrow-up mr-1"></i> 12%
+            {% if client_growth > 0 %}
+            <span class="text-green-600 text-sm flex items-center">
+                <i class="fas fa-arrow-up mr-1"></i> {{ client_growth }}%
             </span>
+            {% elif client_growth < 0 %}
+            <span class="text-red-600 text-sm flex items-center">
+                <i class="fas fa-arrow-down mr-1"></i> {{ client_growth|abs }}%
+            </span>
+            {% else %}
+            <span class="text-gray-500 text-sm flex items-center">
+                <i class="fas fa-minus mr-1"></i> 0%
+            </span>
+            {% endif %}
             <span class="text-secondary-400 text-sm ml-2">{{ _('from last month') }}</span>
         </div>
         <div class="mt-4 pt-4 border-t border-secondary-100">
@@ -42,6 +53,7 @@
         </div>
     </div>
 
+    <!-- Outstanding Invoices Card -->
     <div class="bg-bg-subtle rounded-xl shadow-sm p-6 border border-secondary-100">
         <div class="flex items-center justify-between">
             <div>
@@ -53,9 +65,19 @@
             </div>
         </div>
         <div class="flex items-center mt-4">
-            <span class="text-accent-700 text-sm flex items-center">
-                <i class="fas fa-arrow-up mr-1"></i> 5%
+            {% if outstanding_growth > 0 %}
+            <span class="text-red-600 text-sm flex items-center">
+                <i class="fas fa-arrow-up mr-1"></i> {{ outstanding_growth }}%
             </span>
+            {% elif outstanding_growth < 0 %}
+            <span class="text-green-600 text-sm flex items-center">
+                <i class="fas fa-arrow-down mr-1"></i> {{ outstanding_growth|abs }}%
+            </span>
+            {% else %}
+            <span class="text-gray-500 text-sm flex items-center">
+                <i class="fas fa-minus mr-1"></i> 0%
+            </span>
+            {% endif %}
             <span class="text-secondary-400 text-sm ml-2">{{ _('from last month') }}</span>
         </div>
         <div class="mt-4 pt-4 border-t border-secondary-100">
@@ -66,6 +88,7 @@
         </div>
     </div>
 
+    <!-- Inventory Items Card -->
     <div class="bg-bg-subtle rounded-xl shadow-sm p-6 border border-secondary-100">
         <div class="flex items-center justify-between">
             <div>
@@ -77,9 +100,19 @@
             </div>
         </div>
         <div class="flex items-center mt-4">
-            <span class="text-accent-600 text-sm flex items-center">
-                <i class="fas fa-arrow-up mr-1"></i> 8%
+            {% if inventory_growth > 0 %}
+            <span class="text-green-600 text-sm flex items-center">
+                <i class="fas fa-arrow-up mr-1"></i> {{ inventory_growth }}%
             </span>
+            {% elif inventory_growth < 0 %}
+            <span class="text-red-600 text-sm flex items-center">
+                <i class="fas fa-arrow-down mr-1"></i> {{ inventory_growth|abs }}%
+            </span>
+            {% else %}
+            <span class="text-gray-500 text-sm flex items-center">
+                <i class="fas fa-minus mr-1"></i> 0%
+            </span>
+            {% endif %}
             <span class="text-secondary-400 text-sm ml-2">{{ _('from last month') }}</span>
         </div>
         <div class="mt-4 pt-4 border-t border-secondary-100">
@@ -90,20 +123,31 @@
         </div>
     </div>
 
+    <!-- Revenue Card -->
     <div class="bg-bg-subtle rounded-xl shadow-sm p-6 border border-secondary-100">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-secondary-500 text-sm">{{ _('Revenue (MTD)') }}</p>
-                <h3 class="text-3xl font-bold mt-1">{{ session.get('currency') }}{{ revenue|locale_currency }}</h3>
+                <p class="text-secondary-500 text-sm">{{ _('Revenue') }}</p>
+                <h3 class="text-3xl font-bold mt-1">{{ session.get('currency') }}{{ "{:,.2f}".format(revenue) }}</h3>
             </div>
             <div class="w-12 h-12 bg-accent-50 rounded-full flex items-center justify-center text-accent-600">
                 <i class="fas fa-dollar-sign text-xl"></i>
             </div>
         </div>
         <div class="flex items-center mt-4">
-            <span class="text-accent-600 text-sm flex items-center">
-                <i class="fas fa-arrow-up mr-1"></i> 15%
+            {% if revenue_growth > 0 %}
+            <span class="text-green-600 text-sm flex items-center">
+                <i class="fas fa-arrow-up mr-1"></i> {{ revenue_growth }}%
             </span>
+            {% elif revenue_growth < 0 %}
+            <span class="text-red-600 text-sm flex items-center">
+                <i class="fas fa-arrow-down mr-1"></i> {{ revenue_growth|abs }}%
+            </span>
+            {% else %}
+            <span class="text-gray-500 text-sm flex items-center">
+                <i class="fas fa-minus mr-1"></i> 0%
+            </span>
+            {% endif %}
             <span class="text-secondary-400 text-sm ml-2">{{ _('from last month') }}</span>
         </div>
         <div class="mt-4 pt-4 border-t border-secondary-100">
@@ -138,14 +182,14 @@
                     <div class="flex justify-between">
                         <p class="text-sm font-medium text-secondary-800">{{ _('Invoice') }} #{{
                             invoice.document_number }}</p>
-                        <p class="text-sm font-bold text-secondary-800">{{ session.get('currency') }}{{ invoice.total_amount|locale_currency }}</p>
+                        <p class="text-sm font-bold text-secondary-800">{{ session.get('currency') }}{{ "{:,.2f}".format(invoice.total_amount) }}</p>
                     </div>
                     <p class="text-xs text-secondary-500 mt-1">{{ invoice.client_id }} - {{ _('Due') }}: {{
                         invoice.due_date|locale_date }}</p>
                     <div class="flex items-center mt-2">
                         <span
                             class="px-2 py-0.5 text-xs rounded-full {% if invoice.status == 'paid' %}bg-accent-50 text-accent-700{% elif invoice.status == 'overdue' %}bg-primary-100 text-primary-700{% else %}bg-secondary-100 text-secondary-800{% endif %}">
-                            {{ _(invoice.status|capitalize) }}
+                            {{ _(invoice.status.value.title()) }}
                         </span>
                     </div>
                 </div>
@@ -178,7 +222,7 @@
                     <div class="flex justify-between">
                         <p class="text-sm font-medium text-secondary-800">{{ _('Quote') }} #{{ quote.document_number
                             }}</p>
-                        <p class="text-sm font-bold text-secondary-800">{{ session.get('currency') }}{{ quote.total_amount|locale_currency }}
+                        <p class="text-sm font-bold text-secondary-800">{{ session.get('currency') }}{{ "{:,.2f}".format(quote.total_amount) }}
                         </p>
                     </div>
                     <p class="text-xs text-secondary-500 mt-1">{{ quote.client_id }} - {{ _('Issued') }}: {{
@@ -186,7 +230,7 @@
                     <div class="flex items-center mt-2">
                         <span
                             class="px-2 py-0.5 text-xs rounded-full {% if quote.status == 'accepted' %}bg-accent-50 text-accent-700{% elif quote.status == 'rejected' %}bg-primary-100 text-primary-700{% else %}bg-secondary-100 text-secondary-800{% endif %}">
-                            {{ _(quote.status|capitalize) }}
+                            {{ _(quote.status.value.title()) }}
                         </span>
                     </div>
                 </div>

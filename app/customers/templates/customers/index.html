@@ -107,7 +107,7 @@
                     <td class="py-3 px-4">
                         <span
                             class="{% if client_stats[client.id]['outstanding_amount'] > 0 %}text-red-600 font-medium{% else %}text-success-600{% endif %}">
-                            {{ session.get('currency') }}{{ client_stats[client.id]['outstanding_amount']|locale_currency }}
+                            {{ session.get('currency') }}{{ "{:,.2f}".format(client_stats[client.id]['outstanding_amount']) }}
                         </span>
                     </td>
                     <td class="py-3 px-4 text-fg-base">

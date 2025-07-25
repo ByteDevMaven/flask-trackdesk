@@ -156,6 +156,9 @@ def create(company_id):
                                         price=price, # type: ignore
                                         total=item_total # type: ignore
                                     )
+
+                                    inventory_item.quantity += quantity
+                                    db.session.add(inventory_item)
                                     
                                     db.session.add(po_item)
                                     total_amount += item_total

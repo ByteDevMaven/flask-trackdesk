@@ -54,7 +54,7 @@ def index(company_id):
     query = query.order_by(desc(Payment.payment_date))
     
     # Paginate
-    pagination = query.paginate(
+    pagination = query.paginate( # type: ignore
         page=page, 
         per_page=int(current_app.config.get('ITEMS_PER_PAGE', 20)),
         error_out=False
@@ -111,7 +111,7 @@ def search_invoices(company_id):
         or_(
             Document.status == 'sent',
             Document.status == 'overdue',
-            Document.status == 'partial'
+            Document.status == 'pending'
         )
     ).join(Client, Document.client_id == Client.id, isouter=True)
     
@@ -158,12 +158,12 @@ def store(company_id):
     try:
         # Create the payment
         payment = Payment(
-            company_id=company_id,
-            document_id=int(request.form.get('document_id')) if request.form.get('document_id') else None,
-            amount=float(request.form.get('amount', 0)),
-            payment_date=datetime.strptime(request.form.get('payment_date'), '%Y-%m-%d') if request.form.get('payment_date') else datetime.now(),
-            method=request.form.get('method', ''),
-            notes=request.form.get('notes', '')
+            company_id=company_id, # type: ignore
+            document_id=int(request.form.get('document_id')) if request.form.get('document_id') else None, # type: ignore
+            amount=float(request.form.get('amount', 0)), # type: ignore
+            payment_date=datetime.strptime(request.form.get('payment_date'), '%Y-%m-%d') if request.form.get('payment_date') else datetime.now(), # type: ignore
+            method=request.form.get('method', ''), # type: ignore
+            notes=request.form.get('notes', '') # type: ignore
         )
         
         db.session.add(payment)
@@ -182,7 +182,7 @@ def store(company_id):
                 if total_paid >= (invoice.total_amount or 0):
                     invoice.status = 'paid'
                 elif total_paid > 0:
-                    invoice.status = 'partial'
+                    invoice.status = 'pending'
         
         db.session.commit()
         flash(_('Payment recorded successfully'), 'success')
@@ -241,9 +241,9 @@ def update(company_id, id):
         old_document_id = payment.document_id
         
         # Update payment fields
-        payment.document_id = int(request.form.get('document_id')) if request.form.get('document_id') else None
+        payment.document_id = int(request.form.get('document_id')) if request.form.get('document_id') else None # type: ignore
         payment.amount = float(request.form.get('amount', 0))
-        payment.payment_date = datetime.strptime(request.form.get('payment_date'), '%Y-%m-%d') if request.form.get('payment_date') else payment.payment_date
+        payment.payment_date = datetime.strptime(request.form.get('payment_date'), '%Y-%m-%d') if request.form.get('payment_date') else payment.payment_date # type: ignore
         payment.method = request.form.get('method', payment.method)
         payment.notes = request.form.get('notes', payment.notes)
         

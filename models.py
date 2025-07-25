@@ -4,6 +4,7 @@ import enum
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from flask_migrate import Migrate
+from flask_babel import _
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -26,11 +27,27 @@ class DocumentType(enum.Enum):
     quote = 'quote'
     invoice = 'invoice'
 
+class InvoiceType(enum.Enum):
+    draft = _('draft')
+    issued = _('issued')
+    cancelled = _('cancelled')
+    paid = _('paid')
+    overdue = _('overdue')
+    pending = _('pending')
+
+class PaymentMethod(enum.Enum):
+    cash = _('cash')
+    bank_transfer = _('bank transfer')
+    credit_card = _('credit card')
+    cheque = _('cheque')
+    other = _('other')
+
 class Company(db.Model):
     __tablename__ = 'companies'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     currency = db.Column(db.String, default='$')
+    tax_rate = db.Column(db.Float, default=0.0)  # Tax rate in percentage
     address = db.Column(db.String)
     phone = db.Column(db.String)
     email = db.Column(db.String)
@@ -136,12 +153,14 @@ class Document(db.Model):
     type = db.Column(db.Enum(DocumentType), nullable=False)
     client_id = db.Column(db.Integer, db.ForeignKey('clients.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    status = db.Column(db.String)
+    status = db.Column(db.Enum(InvoiceType), nullable=False, default=InvoiceType.draft)
     total_amount = db.Column(db.Float)
     issued_date = db.Column(db.DateTime)
     due_date = db.Column(db.DateTime)
     created_at = db.Column(db.DateTime, default=datetime.now())
     updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
+
+    payments = db.relationship('Payment', backref='document', cascade='all, delete-orphan', lazy='dynamic')
 
 class DocumentItem(db.Model):
     __tablename__ = 'document_items'
@@ -162,7 +181,7 @@ class Payment(db.Model):
     document_id = db.Column(db.Integer, db.ForeignKey('documents.id'))
     amount = db.Column(db.Float)
     payment_date = db.Column(db.DateTime)
-    method = db.Column(db.String)
+    method = db.Column(db.Enum(PaymentMethod), nullable=False, default=PaymentMethod.cash)
     notes = db.Column(db.String)
     created_at = db.Column(db.DateTime, default=datetime.now())
     updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())

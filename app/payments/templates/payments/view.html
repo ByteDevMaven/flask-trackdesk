@@ -38,7 +38,7 @@
                 <dt class="text-fg-muted">{{ _('Payment Method') }}:</dt>
                 <dd>
                     <span class="px-2 py-1 text-xs rounded-full bg-secondary-100 text-secondary-800">
-                        {{ _(payment.method.replace('_', ' ').title()) if payment.method else _('Not specified') }}
+                        {{ _(payment.method.value.title()) if payment.method else _('Not specified') }}
                     </span>
                 </dd>
             </div>
@@ -66,7 +66,7 @@
                 </div>
                 <span
                     class="px-2 py-1 text-xs rounded-full {% if payment.document.status == 'paid' %}bg-green-100 text-green-800{% elif payment.document.status == 'partial' %}bg-yellow-100 text-yellow-800{% elif payment.document.status == 'overdue' %}bg-red-100 text-red-800{% else %}bg-secondary-100 text-secondary-800{% endif %}">
-                    {{ _(payment.document.status.title()) if payment.document.status else _('Draft') }}
+                    {{ _(payment.document.status.value.title()) if payment.document.status else _('Draft') }}
                 </span>
             </div>
 

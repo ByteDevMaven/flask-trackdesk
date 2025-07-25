@@ -36,6 +36,7 @@ def store():
     try:
         name = request.form.get('name', '').strip()
         currency = request.form.get('currency', 'USD')
+        tax_rate = request.form.get('tax_rate', 0.0)
         address = request.form.get('address', '').strip()
         phone = request.form.get('phone', '').strip()
         email = request.form.get('email', '').strip()
@@ -53,19 +54,20 @@ def store():
             return redirect(url_for('companies.create'))
         
         company = Company(
-            name=name,
-            currency=currency,
-            address=address,
-            phone=phone,
-            email=email,
-            identifier=identifier,
-            created_at=datetime.now()
+            name=name, # type: ignore
+            currency=currency, # type: ignore
+            tax_rate=float(tax_rate), # type: ignore
+            address=address, # type: ignore
+            phone=phone, # type: ignore
+            email=email, # type: ignore
+            identifier=identifier, # type: ignore
+            created_at=datetime.now() # type: ignore
         )
         
         # Add selected users to the company
         if user_ids:
             users = User.query.filter(User.id.in_(user_ids)).all()
-            company.users.extend(users)
+            company.users.extend(users) # type: ignore
         
         db.session.add(company)
         db.session.commit()
@@ -119,6 +121,7 @@ def update(id):
     try:
         name = request.form.get('name', '').strip()
         currency = request.form.get('currency', 'USD')
+        tax_rate = request.form.get('tax_rate', 0.0)
         address = request.form.get('address', '').strip()
         phone = request.form.get('phone', '').strip()
         email = request.form.get('email', '').strip()
@@ -137,6 +140,7 @@ def update(id):
         
         company.name = name
         company.currency = currency
+        company.tax_rate = float(tax_rate)
         company.address = address
         company.phone = phone
         company.email = email

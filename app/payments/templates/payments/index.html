@@ -37,7 +37,7 @@
                     <p class="text-fg-muted text-sm">{{ _('This Month') }}</p>
                     <h3 class="text-2xl font-bold mt-1 text-fg-base">{{ payments|length }}</h3>
                 </div>
-                <div class="w-12 h-12 bg-primary-100 rounded-full flex items-center justify-center text-primary-600">
+                <div class="w-12 h-12 bg-accent-100 rounded-full flex items-center justify-center text-accent-600">
                     <i class="fas fa-calendar text-xl"></i>
                 </div>
             </div>
@@ -51,7 +51,7 @@
                         if payments|length > 0 else 0) }}</h3>
                 </div>
                 <div
-                    class="w-12 h-12 bg-secondary-100 rounded-full flex items-center justify-center text-secondary-600">
+                    class="w-12 h-12 bg-accent-100 rounded-full flex items-center justify-center text-accent-600">
                     <i class="fas fa-chart-line text-xl"></i>
                 </div>
             </div>
@@ -84,7 +84,7 @@
                         value="cash" {% if request.args.get('method')=='cash' %}selected{% endif %}>{{ _('Cash') }}
                     </option>
                     <option 
-                        value="check" {% if request.args.get('method')=='check' %}selected{% endif %}>{{ _('Check') }}
+                        value="cheque" {% if request.args.get('method')=='cheque' %}selected{% endif %}>{{ _('Cheque') }}
                     </option>
                     <option 
                         value="bank_transfer" {% if request.args.get('method')=='bank_transfer' %}selected{% endif %}>{{ _('Bank Transfer') }}
@@ -181,7 +181,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-fg-muted">
                             <span class="px-2 py-1 text-xs rounded-full bg-secondary-100 text-secondary-800">
-                                {{ _(payment.method.replace('_', ' ').title()) if payment.method else _('Not specified')
+                                {{ _(payment.method.value.title()) if payment.method else _('Not specified')
                                 }}
                             </span>
                         </td>

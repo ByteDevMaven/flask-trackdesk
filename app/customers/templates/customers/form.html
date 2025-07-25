@@ -1,18 +1,17 @@
 {% extends "base.html" %}
 
-{% block title %}{% if client %}Edit{% else %}New{% endif %} Client - Business Management System{% endblock %}
+{% block title %}{% if client %}{{ _("Edit") }}{% else %}{{ _('New') }}{% endif %} {{ _('Client - Business Management System') }}{% endblock %}
 
 {% block content %}
 <div class="flex justify-between items-center mb-6">
     <div>
-        <h2 class="text-2xl font-bold text-secondary-900">{% if client %}Edit{% else %}New{% endif %} Client</h2>
-        <p class="text-fg-muted text-sm mt-1">{% if client %}Update client information{% else %}Add a new
-            client to your system{% endif %}</p>
+        <h2 class="text-2xl font-bold text-secondary-900">{% if client %}{{ _('Edit') }}{% else %}{{ _('New') }}{% endif %} {{ _('Client') }}</h2>
+        <p class="text-fg-muted text-sm mt-1">{% if client %}{{ _('Update client information') }}{% else %}{{ _('Add a new client to your system') }}{% endif %}</p>
     </div>
     <div>
         <a href="{{ url_for('customers.index', company_id=company_id) }}"
             class="bg-btn-secondary-bg text-btn-secondary-text px-4 py-2 rounded-lg hover:bg-btn-secondary-hover transition flex items-center">
-            <i class="fas fa-arrow-left mr-2"></i> Back to Clients
+            <i class="fas fa-arrow-left mr-2"></i> {{ _('Back to Clients') }}
         </a>
     </div>
 </div>
@@ -26,7 +25,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div>
-                <label for="name" class="block text-sm font-medium text-fg-base mb-1">Client Name <span
+                <label for="name" class="block text-sm font-medium text-fg-base mb-1">{{ _('Client Name') }} <span
                         class="text-danger-500">*</span></label>
                 <input type="text" id="name" name="name" value="{{ client.name if client else '' }}"
                     class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-primary-500 focus:border-primary-500"
@@ -37,7 +36,7 @@
             </div>
 
             <div>
-                <label for="email" class="block text-sm font-medium text-fg-base mb-1">Email Address</label>
+                <label for="email" class="block text-sm font-medium text-fg-base mb-1">{{ _('Email Address') }}</label>
                 <input type="email" id="email" name="email" value="{{ client.email if client else '' }}"
                     class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-primary-500 focus:border-primary-500">
                 {% if errors and errors.email %}
@@ -46,13 +45,13 @@
             </div>
 
             <div>
-                <label for="identifier" class="block text-sm font-medium text-fg-base mb-1">Tax Identifier</label>
+                <label for="identifier" class="block text-sm font-medium text-fg-base mb-1">{{ _('Tax Identifier') }}</label>
                 <input type="text" id="identifier" name="identifier" value="{{ client.identifier if client else '' }}"
                     class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-primary-500 focus:border-primary-500">
             </div>
 
             <div>
-                <label for="phone" class="block text-sm font-medium text-fg-base mb-1">Phone Number</label>
+                <label for="phone" class="block text-sm font-medium text-fg-base mb-1">{{ _('Phone Number') }}</label>
                 <input type="tel" id="phone" name="phone" value="{{ client.phone if client else '' }}"
                     class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-primary-500 focus:border-primary-500">
                 {% if errors and errors.phone %}
@@ -61,7 +60,7 @@
             </div>
 
             <div class="md:col-span-2">
-                <label for="address" class="block text-sm font-medium text-fg-base mb-1">Address</label>
+                <label for="address" class="block text-sm font-medium text-fg-base mb-1">{{ _('Address') }}</label>
                 <textarea id="address" name="address" rows="3"
                     class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-primary-500 focus:border-primary-500">{{ client.address if client else '' }}</textarea>
                 {% if errors and errors.address %}
@@ -72,10 +71,10 @@
 
         <div class="flex justify-end space-x-3">
             <a href="{{ url_for('customers.index', company_id=company_id) }}"
-                class="px-4 py-2 border bg-btn-secondary-bg text-btn-secondary-text hover:bg-btn-secondary-hover rounded-lg transition">Cancel</a>
+                class="px-4 py-2 border bg-btn-secondary-bg text-btn-secondary-text hover:bg-btn-secondary-hover rounded-lg transition">{{ _('Cancel') }}</a>
             <button type="submit"
                 class="bg-btn-primary-bg text-btn-primary-text px-4 py-2 rounded-lg hover:bg-btn-primary-hover transition shadow-sm">
-                {% if client %}Update{% else %}Save{% endif %} Client
+                {% if client %}{{ _('Update') }}{% else %}{{ _('Save') }}{% endif %} {{ _('Client') }}
             </button>
         </div>
     </form>

@@ -123,7 +123,7 @@
 
                 <div>
                     <p class="text-sm text-fg-muted">{{ _('Client Since') }}</p>
-                    <p class="text-fg-base">{{ client.created_at|locale_date }}</p>
+                    <p class="text-fg-base">{{ client.created_at }}</p>
                 </div>
             </div>
         </div>
@@ -136,7 +136,7 @@
         <div class="space-y-4">
             <div class="p-4 rounded-lg">
                 <p class="text-sm text-fg-muted">{{ _('Total Invoiced') }}</p>
-                <p class="text-2xl font-bold text-fg-base">{{ session.get('currency') }}{{ total_invoiced|locale_currency }}</p>
+                <p class="text-2xl font-bold text-fg-base">{{ session.get('currency') }}{{ total_invoiced }}</p>
             </div>
 
             <div class="p-4 {% if outstanding_amount > 0 %}bg-red-50{% else %}bg-green-50{% endif %} rounded-lg">
@@ -145,7 +145,7 @@
                 </p>
                 <p
                     class="text-2xl font-bold {% if outstanding_amount > 0 %}text-red-700{% else %}text-green-700{% endif %}">
-                    {{ session.get('currency') }}{{ outstanding_amount|locale_currency }}
+                    {{ session.get('currency') }}{{ outstanding_amount }}
                 </p>
             </div>
 
@@ -205,20 +205,20 @@
                             </a>
                         </td>
                         <td class="py-3 px-4 text-fg-base">
-                            {{ invoice.issued_date|locale_date }}
+                            {{ invoice.issued_date }}
                         </td>
                         <td class="py-3 px-4 text-fg-base">
-                            {{ invoice.due_date|locale_date }}
+                            {{ invoice.due_date }}
                         </td>
                         <td class="py-3 px-4 font-medium text-fg-base">
-                            {{ session.get('currency') }}{{ invoice.total_amount|locale_currency }}
+                            {{ session.get('currency') }}{{ invoice.total_amount }}
                         </td>
                         <td class="py-3 px-4">
                             <span class="px-2 py-1 text-xs rounded-full 
                                     {% if invoice.status == 'paid' %}bg-green-100 text-green-800
                                     {% elif invoice.status == 'overdue' %}bg-red-100 text-red-800
                                     {% else %}bg-accent-100 text-accent-800{% endif %}">
-                                {{ _(invoice.status|capitalize) }}
+                                {{ _(invoice.status.value|capitalize) }}
                             </span>
                         </td>
                         <td class="py-3 px-4 text-right">
@@ -285,13 +285,13 @@
                             </a>
                         </td>
                         <td class="py-3 px-4 text-fg-base">
-                            {{ quote.issued_date|locale_date }}
+                            {{ quote.issued_date }}
                         </td>
                         <td class="py-3 px-4 text-fg-base">
-                            {{ quote.due_date|locale_date }}
+                            {{ quote.due_date }}
                         </td>
                         <td class="py-3 px-4 font-medium text-fg-base">
-                            {{ session.get('currency') }}{{ quote.total_amount|locale_currency }}
+                            {{ session.get('currency') }}{{ quote.total_amount }}
                         </td>
                         <td class="py-3 px-4">
                             <span class="px-2 py-1 text-xs rounded-full 

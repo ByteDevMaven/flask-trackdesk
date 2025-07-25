@@ -10,7 +10,7 @@ from sqlalchemy import or_
 from datetime import datetime
 from wtforms import ValidationError
 
-from models import db, Document, DocumentItem, Client, InventoryItem, DocumentType, Payment
+from models import db, Document, DocumentItem, Client, InventoryItem, DocumentType, Payment, PaymentMethod
 
 from . import invoices
 
@@ -66,7 +66,7 @@ def index(company_id):
     query = query.order_by(Document.id.desc())
     
     # Paginate
-    pagination = query.paginate(
+    pagination = query.paginate( # type: ignore
         page=page, 
         per_page=int(current_app.config.get('ITEMS_PER_PAGE', 20)),
         error_out=False
@@ -164,14 +164,14 @@ def store(company_id):
         
         # Create the document
         document = Document(
-            company_id=company_id,
-            document_number=document_number,
-            type=doc_type,
-            client_id=int(request.form.get('client_id')) if request.form.get('client_id') else None,
-            user_id=current_user.id,
-            status=request.form.get('status', 'draft'),
-            issued_date=datetime.strptime(request.form.get('issued_date'), '%Y-%m-%d') if request.form.get('issued_date') else datetime.now(),
-            due_date=datetime.strptime(request.form.get('due_date'), '%Y-%m-%d') if request.form.get('due_date') else None
+            company_id=company_id, # type: ignore
+            document_number=document_number, # type: ignore
+            type=doc_type, # type: ignore
+            client_id=int(request.form.get('client_id')) if request.form.get('client_id') else None, # type: ignore
+            user_id=current_user.id, # type: ignore
+            status=request.form.get('status', 'draft'), # type: ignore
+            issued_date=datetime.strptime(request.form.get('issued_date'), '%Y-%m-%d') if request.form.get('issued_date') else datetime.now(), # type: ignore
+            due_date=datetime.strptime(request.form.get('due_date'), '%Y-%m-%d') if request.form.get('due_date') else None # type: ignore
         )
 
         db.session.add(document)
@@ -196,10 +196,9 @@ def store(company_id):
         # Create document items
         for item_data in items_data.values():
             if item_data.get('inventory_item_id') or item_data.get('description'):
-                quantity = float(item_data.get('quantity', 0)) if item_data.get('quantity') else 0
+                quantity = int(item_data.get('quantity', 0)) if item_data.get('quantity') else 0
                 unit_price = float(item_data.get('unit_price', 0)) if item_data.get('unit_price') else 0
                 discount = float(item_data.get('discount', 0)) if item_data.get('discount') else 0
-                savings = (unit_price * discount / 100 if discount else 0)
 
                 inventory_item_id = item_data.get('inventory_item_id')
                 if inventory_item_id:
@@ -211,28 +210,33 @@ def store(company_id):
                             inventory_item.quantity = 0
 
                 document_item = DocumentItem(
-                    document_id=document.id,
-                    inventory_item_id=int(inventory_item_id) if inventory_item_id else None,
-                    description=item_data.get('description', ''),
-                    quantity=int(quantity),
-                    unit_price=unit_price,
-                    discount=discount
+                    document_id=document.id, # type: ignore
+                    inventory_item_id=int(inventory_item_id) if inventory_item_id else None, # type: ignore
+                    description=item_data.get('description', ''), # type: ignore
+                    quantity=quantity, # type: ignore
+                    unit_price=unit_price, # type: ignore
+                    discount=discount # type: ignore
                 )
 
                 db.session.add(document_item)
-                total_amount += quantity * unit_price - (quantity * savings)
+                item_total = quantity * unit_price
+                item_discount = item_total * (discount / 100)
+                total_amount += item_total - item_discount
 
-        # Update document total
-        document.total_amount = total_amount
+        tax_rate = session.get('tax_rate', 0)  # Get tax rate from session
+        multiplier = 1 + tax_rate / 100
+        # current_app.logger.info(f"Multiplier: {multiplier}")
+        final_total = round(total_amount * multiplier, 2)
+        document.total_amount = final_total
 
         if document.status == 'paid':
             payment = Payment(
-            company_id=company_id,
-            document_id=document.id,
-            amount=total_amount,
-            payment_date=datetime.now(),
-            method='Other',
-            notes=request.form.get('notes', '')
+            company_id=company_id, # type: ignore
+            document_id=document.id, # type: ignore
+            amount=document.total_amount, # type: ignore
+            payment_date=datetime.now(), # type: ignore
+            method=PaymentMethod.cash, # type: ignore
+            notes=request.form.get('notes', '') # type: ignore
             )
             
             db.session.add(payment)
@@ -332,10 +336,10 @@ def update(company_id, id):
         # Update document fields
         document.document_number = request.form.get('document_number', document.document_number)
         document.type = new_doc_type
-        document.client_id = int(request.form.get('client_id')) if request.form.get('client_id') else None
+        document.client_id = int(request.form.get('client_id')) if request.form.get('client_id') else None # type: ignore
         document.status = request.form.get('status', document.status)
-        document.issued_date = datetime.strptime(request.form.get('issued_date'), '%Y-%m-%d') if request.form.get('issued_date') else document.issued_date
-        document.due_date = datetime.strptime(request.form.get('due_date'), '%Y-%m-%d') if request.form.get('due_date') else document.due_date
+        document.issued_date = datetime.strptime(request.form.get('issued_date'), '%Y-%m-%d') if request.form.get('issued_date') else document.issued_date # type: ignore
+        document.due_date = datetime.strptime(request.form.get('due_date'), '%Y-%m-%d') if request.form.get('due_date') else document.due_date # type: ignore
         
         # Delete existing items
         DocumentItem.query.filter_by(document_id=document.id).delete()
@@ -358,25 +362,28 @@ def update(company_id, id):
         # Create new document items
         for item_data in items_data.values():
             if item_data.get('inventory_item_id') or item_data.get('description'):
-                quantity = float(item_data.get('quantity', 0)) if item_data.get('quantity') else 0
+                quantity = int(item_data.get('quantity', 0)) if item_data.get('quantity') else 0
                 unit_price = float(item_data.get('unit_price', 0)) if item_data.get('unit_price') else 0
                 discount = float(item_data.get('discount', 0)) if item_data.get('discount') else 0
-                savings = (unit_price * discount / 100 if discount else 0)
                 
                 document_item = DocumentItem(
-                    document_id=document.id,
-                    inventory_item_id=int(item_data.get('inventory_item_id')) if item_data.get('inventory_item_id') else None,
-                    description=item_data.get('description', ''),
-                    quantity=int(quantity),
-                    unit_price=unit_price,
-                    discount=discount
+                    document_id=document.id, # type: ignore
+                    inventory_item_id=int(item_data.get('inventory_item_id')) if item_data.get('inventory_item_id') else None, # type: ignore
+                    description=item_data.get('description', ''), # type: ignore
+                    quantity=quantity, # type: ignore
+                    unit_price=unit_price, # type: ignore
+                    discount=discount # type: ignore
                 )
                 
                 db.session.add(document_item)
-                total_amount += quantity * unit_price - (quantity * savings)
+                item_total = quantity * unit_price
+                item_discount = item_total * (discount / 100)
+                total_amount += item_total - item_discount
         
-        # Update document total
-        document.total_amount = total_amount
+        tax_rate = session.get('tax_rate', 0)
+        multiplier = 1 + tax_rate / 100
+        final_total = round(total_amount * multiplier, 2)
+        document.total_amount = final_total
         
         db.session.commit()
         
@@ -453,7 +460,7 @@ def print_invoice(company_id, id):
     
     try:
         # Load the PDF template
-        template_path = os.path.join(current_app.static_folder, 'templates', 'Factura Ferre-lagos.pdf')
+        template_path = os.path.join(current_app.static_folder, 'templates', 'Factura Ferre-lagos.pdf') # type: ignore
         
         if not os.path.exists(template_path):
             flash(_('PDF template not found. Please contact administrator.'), 'error')
@@ -470,8 +477,8 @@ def print_invoice(company_id, id):
         
         # Register fonts if available
         try:
-            pdfmetrics.registerFont(TTFont('Arial', os.path.join(current_app.static_folder, 'fonts', 'arial.ttf')))
-            pdfmetrics.registerFont(TTFont('Arial-Bold', os.path.join(current_app.static_folder, 'fonts', 'arial-bold.ttf')))
+            pdfmetrics.registerFont(TTFont('Arial', os.path.join(current_app.static_folder, 'fonts', 'arial.ttf'))) # type: ignore
+            pdfmetrics.registerFont(TTFont('Arial-Bold', os.path.join(current_app.static_folder, 'fonts', 'arial-bold.ttf'))) # type: ignore
             font_name = 'Arial'
             font_bold = 'Arial-Bold'
         except:
@@ -511,11 +518,11 @@ def print_invoice(company_id, id):
             if document.type == DocumentType.quote:
                 overlay_canvas.drawString(480, height - 172, document.due_date.strftime('%d/%m/%Y'))
             else:
-                payment_condition = document.status.upper() if document.status else f"{_('CONTADO')}"
+                payment_condition = _(PaymentMethod(document.payments.first().method).value) if document.payments and document.payments.first() else _('N/A')
                 overlay_canvas.drawString(480, height - 172, payment_condition)
         
         # Branch and seller
-        overlay_canvas.drawString(480, height - 187, f"{_('PRINCIPAL')}")
+        overlay_canvas.drawString(480, height - 187, f"{document.company_id:04d}")  # Company ID as branch
         seller_name = current_user.name if current_user and current_user.name else "ADMIN"
         overlay_canvas.drawString(480, height - 202, seller_name[:20])  # Limit length
         
@@ -632,7 +639,7 @@ def print_invoice(company_id, id):
         
         # Convert number to words
         def number_to_words(amount):
-            lang_code = get_locale().language
+            lang_code = get_locale().language # type: ignore
             amount = round(amount, 2)
             return num2words(amount, lang=lang_code)
         
@@ -713,15 +720,15 @@ def convert_to_invoice(company_id, id):
         
         # Create new invoice based on quote
         invoice = Document(
-            company_id=company_id,
-            document_number=invoice_number,
-            type=DocumentType.invoice,
-            client_id=quote.client_id,
-            user_id=current_user.id,
-            status='draft',
-            issued_date=datetime.now(),
-            due_date=quote.due_date,
-            total_amount=quote.total_amount
+            company_id=company_id, # type: ignore
+            document_number=invoice_number, # type: ignore
+            type=DocumentType.invoice, # type: ignore
+            client_id=quote.client_id, # type: ignore
+            user_id=current_user.id, # type: ignore
+            status='draft', # type: ignore
+            issued_date=datetime.now(), # type: ignore
+            due_date=quote.due_date, # type: ignore
+            total_amount=quote.total_amount # type: ignore
         )
         
         db.session.add(invoice)
@@ -731,11 +738,11 @@ def convert_to_invoice(company_id, id):
         quote_items = DocumentItem.query.filter_by(document_id=quote.id).all()
         for item in quote_items:
             invoice_item = DocumentItem(
-                document_id=invoice.id,
-                inventory_item_id=item.inventory_item_id,
-                description=item.description,
-                quantity=item.quantity,
-                unit_price=item.unit_price
+                document_id=invoice.id, # type: ignore
+                inventory_item_id=item.inventory_item_id, # type: ignore
+                description=item.description, # type: ignore
+                quantity=item.quantity, # type: ignore
+                unit_price=item.unit_price # type: ignore
             )
             db.session.add(invoice_item)
         

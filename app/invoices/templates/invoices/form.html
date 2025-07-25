@@ -98,12 +98,14 @@ endblock %}
                                 <option value="">{{ _('Select a status') }}</option>
                                 <option value="draft" {% if invoice and invoice.status=='draft' %}selected{% endif %}>{{
                                     _('Draft') }}</option>
-                                <option value="sent" {% if invoice and invoice.status=='sent' %}selected{% endif %}>{{
-                                    _('Sent') }}</option>
+                                <option value="cancelled" {% if invoice and invoice.status=='cancelled' %}selected{% endif %}>{{
+                                    _('Cancelled') }}</option>
                                 <option value="paid" {% if invoice and invoice.status=='paid' %}selected{% endif %}>{{
                                     _('Paid') }}</option>
                                 <option value="overdue" {% if invoice and invoice.status=='overdue' %}selected{% endif
                                     %}>{{ _('Overdue') }}</option>
+                                <option value="pending" {% if invoice and invoice.status=='pending' %}selected{% endif
+                                    %}>{{ _('Pending') }}</option>
                             </select>
                         </div>
 

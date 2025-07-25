@@ -91,6 +91,8 @@ def register_request_hooks(app: Flask):
                 )
                 if matched_company:
                     session['currency'] = matched_company.currency
+                    session['tax_rate'] = matched_company.tax_rate
+                    app.logger.info(f"Tax rate: {session.get('tax_rate', 0)}%")
 
 def register_routes(app: Flask):
     @app.route('/set-company/<int:id>')
@@ -101,6 +103,8 @@ def register_routes(app: Flask):
             if company.id == id:
                 session['selected_company_id'] = id
                 session['currency'] = company.currency
+                session['tax_rate'] = company.tax_rate
+                app.logger.info(f"Tax rate: {session.get('tax_rate', 0)}%")
                 break
         return redirect(url_for('dashboard.index', company_id=session.get('selected_company_id')))
 
