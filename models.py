@@ -121,6 +121,7 @@ class PurchaseOrder(db.Model):
     __tablename__ = 'purchase_orders'
     id = db.Column(db.Integer, primary_key=True)
     order_number = db.Column(db.String, nullable=False, unique=True)
+    order_document = db.Column(db.String, default='document-000000', nullable=False)
     company_id = db.Column(db.Integer, db.ForeignKey('companies.id'), nullable=False)
     supplier_id = db.Column(db.Integer, db.ForeignKey('suppliers.id'), nullable=False)
 

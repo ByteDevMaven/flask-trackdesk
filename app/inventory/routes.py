@@ -76,12 +76,6 @@ def index(company_id):
         'total_value': total_value
     }
 
-    # Remove conflicting query parameters (sort/order)
-    from werkzeug.datastructures import MultiDict
-    filtered_args = MultiDict(request.args)
-    filtered_args.pop('sort', None)
-    filtered_args.pop('order', None)
-
     return render_template('inventory/index.html', 
                           company_id=company_id,
                           inventory_items=inventory_items, 
@@ -91,8 +85,7 @@ def index(company_id):
                           search=search,
                           supplier_id=supplier_id,
                           sort_by=sort_by,
-                          sort_order=sort_order,
-                          filtered_args=filtered_args)
+                          sort_order=sort_order)
 
 @inventory.route('/<int:company_id>/inventory/create_item', methods=['GET', 'POST'])
 @login_required

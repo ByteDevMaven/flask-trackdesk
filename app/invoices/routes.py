@@ -97,8 +97,12 @@ def item_row():
     except ValidationError:
         flash(_("Invalid CSRF token. Please try again."), "error")
         return redirect(url_for("auth.login")) 
+
+    inventory_items = InventoryItem.query.filter(
+        InventoryItem.company_id == session.get('selected_company_id'),
+        InventoryItem.quantity > 0
+    ).all()
     
-    inventory_items = InventoryItem.query.all()  # or your method
     return render_template('invoices/item_row.html', index=index, inventory_items=inventory_items)
 
 
@@ -107,7 +111,10 @@ def item_row():
 def create(company_id):
     # Get clients and inventory items for the form
     clients = Client.query.filter_by(company_id=company_id).all()
-    inventory_items = InventoryItem.query.filter_by(company_id=company_id).all()
+    inventory_items = InventoryItem.query.filter(
+        InventoryItem.company_id == company_id,
+        InventoryItem.quantity > 0
+    ).all()
 
     selected_client_id = int(request.args.get('client_id', 0))
     selected_type = request.args.get('type', None)

@@ -136,7 +136,7 @@
         <div class="space-y-4">
             <div class="p-4 rounded-lg">
                 <p class="text-sm text-fg-muted">{{ _('Total Invoiced') }}</p>
-                <p class="text-2xl font-bold text-fg-base">{{ session.get('currency') }}{{ total_invoiced }}</p>
+                <p class="text-2xl font-bold text-fg-base">{{ session.get('currency') }}{{ "{:,.2f}".format(total_invoiced) }}</p>
             </div>
 
             <div class="p-4 {% if outstanding_amount > 0 %}bg-red-50{% else %}bg-green-50{% endif %} rounded-lg">
@@ -145,7 +145,7 @@
                 </p>
                 <p
                     class="text-2xl font-bold {% if outstanding_amount > 0 %}text-red-700{% else %}text-green-700{% endif %}">
-                    {{ session.get('currency') }}{{ outstanding_amount }}
+                    {{ session.get('currency') }}{{ "{:,.2f}".format(outstanding_amount) }}
                 </p>
             </div>
 
@@ -200,7 +200,7 @@
                     {% for invoice in invoices %}
                     <tr class="border-b border-secondary-100 hover:bg-secondary-50">
                         <td class="py-3 px-4">
-                            <a href="{{ url_for('invoices.view', company_id=session.get('selected_company_id'), id=invoice.id) }}" class="font-medium text-primary-600 hover:text-primary-700">
+                            <a href="{{ url_for('invoices.view', company_id=session.get('selected_company_id'), id=invoice.id) }}" class="font-medium text-accent-600 hover:text-accent-700">
                                 {{ invoice.document_number }}
                             </a>
                         </td>
@@ -211,12 +211,12 @@
                             {{ invoice.due_date }}
                         </td>
                         <td class="py-3 px-4 font-medium text-fg-base">
-                            {{ session.get('currency') }}{{ invoice.total_amount }}
+                            {{ session.get('currency') }}{{ "{:,.2f}".format(invoice.total_amount) }}
                         </td>
                         <td class="py-3 px-4">
                             <span class="px-2 py-1 text-xs rounded-full 
-                                    {% if invoice.status == 'paid' %}bg-green-100 text-green-800
-                                    {% elif invoice.status == 'overdue' %}bg-red-100 text-red-800
+                                    {% if invoice.status.value == 'paid' %}bg-green-100 text-green-800
+                                    {% elif invoice.status.value == 'overdue' %}bg-red-100 text-red-800
                                     {% else %}bg-accent-100 text-accent-800{% endif %}">
                                 {{ _(invoice.status.value|capitalize) }}
                             </span>

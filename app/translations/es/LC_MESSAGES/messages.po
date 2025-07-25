@@ -239,7 +239,7 @@ msgstr "$, USD, EUR, ...."
 
 #: app/companies/templates/companies/form.html:49
 msgid "Company Tax Rate"
-msgstr "Nombre de Empresa"
+msgstr "Porcentaje de Impuesto"
 
 #: app/companies/templates/companies/form.html:57
 msgid "Company Address"
@@ -1795,7 +1795,7 @@ msgstr "No hay cliente asignado"
 
 #: app/invoices/templates/invoices/view.html:193
 msgid "Payment History"
-msgstr "Pagos"
+msgstr "Historial de Pagos"
 
 #: app/invoices/templates/invoices/view.html:197
 msgid "payments"
@@ -1863,7 +1863,7 @@ msgstr "Restante"
 
 #: app/invoices/templates/invoices/view.html:310
 msgid "Fully Paid"
-msgstr "Nombre completo"
+msgstr "Pago Completo"
 
 #: app/invoices/templates/invoices/view.html:324
 msgid "No payments recorded"
@@ -1871,7 +1871,7 @@ msgstr "No se encontraron pagos"
 
 #: app/invoices/templates/invoices/view.html:325
 msgid "Add payments to track what has been received for this invoice"
-msgstr ""
+msgstr "Agrega pagos para monitorear la deuda de este documento"
 
 #: app/invoices/templates/invoices/view.html:329
 msgid "Add First Payment"
@@ -2300,7 +2300,7 @@ msgstr "Editar pago"
 #: app/payments/templates/payments/form.html:151
 #: app/payments/templates/payments/index.html:15
 msgid "Record Payment"
-msgstr "Pago récord"
+msgstr "Registrar Pago"
 
 #: app/payments/templates/payments/form.html:9
 msgid "Update payment details"
