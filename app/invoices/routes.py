@@ -146,17 +146,18 @@ def store(company_id):
         # Generate document_number if not provided
         document_number = request.form.get('document_number')
         if not document_number:
-            type_id = 1 if doc_type == DocumentType.invoice else 0
             company_id_str = str(company_id)
 
-            # Prefix pattern
-            prefix = f"D-{company_id_str}-{type_id}-"
+            # Single-letter type prefix
+            type_letter = 'I' if doc_type == DocumentType.invoice else 'Q'
 
-            # Find the last document with that pattern
+            # Prefix pattern
+            prefix = f"{type_letter}-{company_id_str}-"
+
+            # Find the last document for this company (any type)
             last_doc = Document.query.filter(
                 Document.company_id == company_id,
-                Document.type == doc_type,
-                Document.document_number.like(f"{prefix}%")
+                Document.document_number.like(f"%-{company_id_str}-%")
             ).order_by(Document.id.desc()).first()
 
             if last_doc:
@@ -168,7 +169,7 @@ def store(company_id):
                 last_seq = 0
 
             document_number = f"{prefix}{last_seq + 1:06d}"
-        
+
         # Create the document
         document = Document(
             company_id=company_id, # type: ignore
@@ -336,25 +337,48 @@ def update(company_id, id):
     ).first_or_404()
     
     try:
-        # Update document type if changed
+        # Get the new document type from form
         doc_type_str = request.form.get('type', 'invoice')
         new_doc_type = DocumentType.invoice if doc_type_str == 'invoice' else DocumentType.quote
-        
-        # Update document fields
-        document.document_number = request.form.get('document_number', document.document_number)
+
+        # Check if the type changed or document_number is missing
+        if new_doc_type != document.type or not request.form.get('document_number'):
+            company_id_str = str(company_id)
+            type_letter = 'I' if new_doc_type == DocumentType.invoice else 'Q'
+
+            # Find last doc for this company (any type)
+            last_doc = Document.query.filter(
+                Document.company_id == company_id,
+                Document.document_number.like(f"%-{company_id_str}-%")
+            ).order_by(Document.id.desc()).first()
+
+            if last_doc:
+                try:
+                    last_seq = int(last_doc.document_number.split('-')[-1])
+                except ValueError:
+                    last_seq = 0
+            else:
+                last_seq = 0
+
+            document.document_number = f"{type_letter}-{company_id_str}-{last_seq:06d}"
+        else:
+            # Keep manually provided or existing number
+            document.document_number = request.form.get('document_number', document.document_number)
+
+        # Update core document fields
         document.type = new_doc_type
         document.client_id = int(request.form.get('client_id')) if request.form.get('client_id') else None # type: ignore
         document.status = request.form.get('status', document.status)
         document.issued_date = datetime.strptime(request.form.get('issued_date'), '%Y-%m-%d') if request.form.get('issued_date') else document.issued_date # type: ignore
         document.due_date = datetime.strptime(request.form.get('due_date'), '%Y-%m-%d') if request.form.get('due_date') else document.due_date # type: ignore
-        
+
         # Delete existing items
         DocumentItem.query.filter_by(document_id=document.id).delete()
-        
+
         # Process new items
         total_amount = 0
         items_data = {}
-        
+
         # Parse form data for items
         for key, value in request.form.items():
             if key.startswith('items[') and '][' in key:
@@ -365,14 +389,14 @@ def update(company_id, id):
                 if index not in items_data:
                     items_data[index] = {}
                 items_data[index][field] = value
-        
+
         # Create new document items
         for item_data in items_data.values():
             if item_data.get('inventory_item_id') or item_data.get('description'):
                 quantity = int(item_data.get('quantity', 0)) if item_data.get('quantity') else 0
                 unit_price = float(item_data.get('unit_price', 0)) if item_data.get('unit_price') else 0
                 discount = float(item_data.get('discount', 0)) if item_data.get('discount') else 0
-                
+
                 document_item = DocumentItem(
                     document_id=document.id, # type: ignore
                     inventory_item_id=int(item_data.get('inventory_item_id')) if item_data.get('inventory_item_id') else None, # type: ignore
@@ -381,23 +405,23 @@ def update(company_id, id):
                     unit_price=unit_price, # type: ignore
                     discount=discount # type: ignore
                 )
-                
+
                 db.session.add(document_item)
                 item_total = quantity * unit_price
                 item_discount = item_total * (discount / 100)
                 total_amount += item_total - item_discount
-        
+
         tax_rate = session.get('tax_rate', 0)
         multiplier = 1 + tax_rate / 100
         final_total = round(total_amount * multiplier, 2)
         document.total_amount = final_total
-        
+
         db.session.commit()
-        
+
         doc_type_name = _('Invoice') if new_doc_type == DocumentType.invoice else _('Quote')
         flash(_(f'{doc_type_name} updated successfully'), 'success')
         return redirect(url_for('invoices.view', company_id=company_id, id=document.id))
-        
+
     except Exception as e:
         db.session.rollback()
         flash(_('Error updating document: %(error)s', error=str(e)), 'error')
@@ -608,17 +632,20 @@ def print_invoice(company_id, id):
         totals_x = 480  # Right aligned with valor column
         
         # Calculate totals
-        subtotal = document.total_amount or 0
-        
+        total_amount = document.total_amount or 0
+
+        # Extract subtotal (before tax)
+        subtotal = round(total_amount / 1.15, 2)
+
         # For Honduras tax system
         vta_exenta = subtotal
         venta_gravada_15 = subtotal * 0.6  # 60% at 15%
-        venta_gravada_18 = 0 #subtotal * 0.4  # 40% at 18%
+        venta_gravada_18 = 0
         venta_exonerada = 0
-        imp_15 = venta_gravada_15 * 0.15
-        imp_18 = 0 #venta_gravada_18 * 0.18
-        total_final = subtotal + imp_15 + imp_18
-        
+        imp_15 = round(subtotal * 0.15, 2)
+        imp_18 = 0
+        total_final = round(total_amount, 2)
+
         # VTA EXENTA
         overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 27, f"{session['currency']}{vta_exenta:,.2f}")
         

@@ -428,7 +428,7 @@ endblock %}
         });
 
         const tax15 = subtotal * 0.15;
-        const tax18 = subtotal * 0.18;
+        const tax18 = subtotal * 0;
         const total = subtotal + tax15 + tax18;
 
         document.getElementById('subtotal').textContent = currency + subtotal.toFixed(2);
