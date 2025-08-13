@@ -36,7 +36,7 @@ _('Business Management System') }}{% endblock %}
             </a>
             {% if invoice.type.value == 'quote' %}
             <button onclick="convertToInvoice({{ invoice.id }})"
-                class="hidden bg-accent-500 text-black px-4 py-2 rounded-lg hover:bg-accent-600 transition shadow-sm flex items-center">
+                class="hidden bg-accent-500 text-black px-4 py-2 rounded-lg hover:bg-accent-600 transition shadow-sm items-center">
                 <i class="fas fa-file-invoice mr-2"></i> {{ _('Convert to Invoice') }}
             </button>
             {% endif %}
