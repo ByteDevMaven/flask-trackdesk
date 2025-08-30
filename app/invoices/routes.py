@@ -347,21 +347,46 @@ def update(company_id, id):
             company_id_str = str(company_id)
             type_letter = 'I' if new_doc_type == DocumentType.invoice else 'Q'
 
-            # Find last doc for this company (any type)
-            last_doc = Document.query.filter(
-                Document.company_id == company_id,
-                Document.document_number.like(f"%-{company_id_str}-%")
-            ).order_by(Document.id.desc()).first()
-
-            if last_doc:
+            # Keep the same sequence if the old document_number exists
+            if document.document_number:
                 try:
-                    last_seq = int(last_doc.document_number.split('-')[-1])
+                    seq_num = int(document.document_number.split('-')[-1])
                 except ValueError:
-                    last_seq = 0
+                    seq_num = None
             else:
-                last_seq = 0
+                seq_num = None
 
-            document.document_number = f"{type_letter}-{company_id_str}-{last_seq:06d}"
+            if seq_num is not None:
+                # Keep sequence, just change type letter
+                new_number = f"{type_letter}-{company_id_str}-{seq_num:06d}"
+
+                # Check if another document already has this number
+                exists = Document.query.filter(
+                    Document.company_id == company_id,
+                    Document.type == new_doc_type,
+                    Document.document_number == new_number,
+                    Document.id != document.id
+                ).first()
+                if exists:
+                    raise ValueError(_("Document number already exists for this type"))
+                
+                document.document_number = new_number
+            else:
+                # No valid existing sequence → generate new
+                last_doc = Document.query.filter(
+                    Document.company_id == company_id,
+                    Document.type == new_doc_type
+                ).order_by(Document.id.desc()).first()
+
+                if last_doc:
+                    try:
+                        last_seq = int(last_doc.document_number.split('-')[-1])
+                    except ValueError:
+                        last_seq = 0
+                else:
+                    last_seq = 0
+
+                document.document_number = f"{type_letter}-{company_id_str}-{last_seq + 1:06d}"
         else:
             # Keep manually provided or existing number
             document.document_number = request.form.get('document_number', document.document_number)
@@ -420,7 +445,7 @@ def update(company_id, id):
         db.session.commit()
 
         doc_type_name = _('Invoice') if new_doc_type == DocumentType.invoice else _('Quote')
-        flash(_(f'{doc_type_name} updated successfully'), 'success')
+        flash(doc_type_name + ' ' + _('updated successfully'), 'success')
         return redirect(url_for('invoices.view', company_id=company_id, id=document.id))
 
     except Exception as e:
