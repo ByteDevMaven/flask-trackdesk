@@ -6,9 +6,10 @@ class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "aa13c1a2d52217687bcb0832883bdd348f015a5a716e8bd8013d61b656f4f4d7")
     ITEMS_PER_PAGE = os.getenv("ITEMS_PER_PAGE", 10)
     ALLOW_REGISTRATION = os.getenv("ALLOW_REGISTRATION", False)
+    DEBUG = os.getenv("DEBUG", False)
 
     # SQLAlchemy Database Configuration
-    SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI")
+    SQLALCHEMY_DATABASE_URI = os.getenv("SQLALCHEMY_DATABASE_URI", "sqlite:///trackdesk.db")
     SQLALCHEMY_TRACK_MODIFICATIONS = os.getenv("SQLALCHEMY_TRACK_MODIFICATIONS", False)
 
     # Session configuration

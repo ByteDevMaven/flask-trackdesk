@@ -51,7 +51,7 @@ def logout():
 
 @auth.route('/register', methods=["GET", "POST"])
 @auth.route('/register/<int:companyID>', methods=["GET", "POST"])
-@limiter.limit()
+@limiter.limit("2 per minute", override_defaults=False)
 def register(companyID=None):
     if request.method == "POST" and current_app.config.get("ALLOW_REGISTRATION", False):
         csrf_token = request.form.get("csrf_token")
