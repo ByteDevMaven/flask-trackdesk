@@ -545,6 +545,10 @@ def print_invoice(company_id, id):
             overlay_canvas.setFillColorRGB(0, 0, 0)
 
             # --- Header ---
+            # email = "info.ferrelagos@gmail.com"
+            # overlay_canvas.setFont(font_name, 9)
+            # overlay_canvas.drawString(250, height - 76, email)
+
             doc_type = f"{_('COTIZACIÓN')}:" if document.type == DocumentType.quote else f"{_('FACTURA')}:"
             overlay_canvas.setFont(font_bold, 11)
             overlay_canvas.setFillColorRGB(1, 1, 1)
