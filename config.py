@@ -24,4 +24,6 @@ class Config:
     BABEL_TRANSLATION_DIRECTORIES = os.getenv("BABEL_TRANSLATION_DIRECTORIES", 'translations')
     
     # Supported languages
-    LANGUAGES = os.getenv("LANGUAGES").split(',')
+    LANGUAGES = dict(
+        item.split(":") for item in os.getenv("LANGUAGES", "").split(",") if item
+    )
