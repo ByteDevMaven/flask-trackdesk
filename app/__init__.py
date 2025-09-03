@@ -27,7 +27,7 @@ babel = Babel()
 def get_locale():
     if 'language' in session:
         return session['language']
-    return request.accept_languages.best_match(Config.LANGUAGES.keys())
+    return request.accept_languages.best_match(Config.LANGUAGES.keys()) or "en"
 
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
