@@ -6,6 +6,7 @@ from flask_wtf.csrf import CSRFProtect
 bcrypt = Bcrypt()
 limiter = Limiter(
     get_remote_address,
-    storage_options={}
+    default_limits=["200 per day", "50 per hour"],
+    storage_uri="memory://",
 )
 csrf = CSRFProtect()

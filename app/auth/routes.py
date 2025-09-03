@@ -1,4 +1,4 @@
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, current_app
 from flask_login import login_user, logout_user, current_user
 from flask_wtf.csrf import validate_csrf
 from flask_babel import _
@@ -51,8 +51,9 @@ def logout():
 
 @auth.route('/register', methods=["GET", "POST"])
 @auth.route('/register/<int:companyID>', methods=["GET", "POST"])
+@limiter.limit()
 def register(companyID=None):
-    if request.method == "POST":
+    if request.method == "POST" and current_app.config.get("ALLOW_REGISTRATION", False):
         csrf_token = request.form.get("csrf_token")
 
         try:
