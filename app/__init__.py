@@ -32,6 +32,7 @@ def get_locale():
 def create_app():
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object(Config)
+    Config.init_app(app)
 
     # Register extensions
     register_extensions(app)
