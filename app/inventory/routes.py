@@ -12,11 +12,13 @@ from barcode.writer import ImageWriter
 from PIL import Image, ImageDraw, ImageFont
 
 from models import db, InventoryItem, Supplier
+from extensions import limiter
 
 from . import inventory
 
 @inventory.route('/<int:company_id>/inventory')
 @login_required
+@limiter.exempt
 def index(company_id):
     page = request.args.get('page', 1, type=int)
     per_page = int(current_app.config.get('ITEMS_PER_PAGE', 15))
@@ -89,6 +91,7 @@ def index(company_id):
 
 @inventory.route('/<int:company_id>/inventory/create_item', methods=['GET', 'POST'])
 @login_required
+@limiter.exempt
 def create(company_id):
     # Get suppliers for dropdown
     suppliers = Supplier.query.filter_by(company_id=company_id).order_by(Supplier.name).all()
@@ -140,12 +143,14 @@ def create(company_id):
 
 @inventory.route('/<int:company_id>/inventory/<int:id>')
 @login_required
+@limiter.exempt
 def view(company_id, id):
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
     return render_template('inventory/view.html', company_id=company_id, item=item)
 
 @inventory.route('/<int:company_id>/inventory/<int:id>/edit_item', methods=['GET'])
 @login_required
+@limiter.exempt
 def edit(company_id, id):
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
     suppliers = Supplier.query.filter_by(company_id=company_id).order_by(Supplier.name).all()
@@ -155,6 +160,7 @@ def edit(company_id, id):
 
 @inventory.route('/<int:company_id>/inventory/<int:id>/update_item', methods=['POST'])
 @login_required
+@limiter.exempt
 def update(company_id, id):
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
     suppliers = Supplier.query.filter_by(company_id=company_id).order_by(Supplier.name).all()
@@ -214,6 +220,7 @@ def delete(company_id, id):
 
 @inventory.route('/<int:company_id>/inventory/export')
 @login_required
+@limiter.exempt
 def export(company_id):
     items = InventoryItem.query.filter_by(company_id=company_id).all()
     
@@ -247,6 +254,7 @@ def export(company_id):
 # API Routes
 @inventory.route('/api/<int:company_id>/inventory/items', methods=['GET'])
 @login_required
+@limiter.exempt
 def api_get_items(company_id):
     """Get all inventory items with optional filtering"""
     page = request.args.get('page', 1, type=int)
@@ -292,6 +300,7 @@ def api_get_items(company_id):
 
 @inventory.route('/api/<int:company_id>/inventory/items/<int:id>', methods=['GET'])
 @login_required
+@limiter.exempt
 def api_get_item(company_id, id):
     """Get a specific inventory item"""
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
@@ -308,6 +317,7 @@ def api_get_item(company_id, id):
 
 @inventory.route('/api/<int:company_id>/inventory/items', methods=['POST'])
 @login_required
+@limiter.exempt
 def api_create_item(company_id):
     """Create a new inventory item"""
     data = request.get_json()
@@ -356,6 +366,7 @@ def api_create_item(company_id):
 
 @inventory.route('/api/<int:company_id>/inventory/items/<int:id>', methods=['PUT'])
 @login_required
+@limiter.exempt
 def api_update_item(company_id, id):
     """Update an inventory item"""
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
@@ -398,6 +409,7 @@ def api_update_item(company_id, id):
 
 @inventory.route('/api/<int:company_id>/inventory/items/<int:id>', methods=['DELETE'])
 @login_required
+@limiter.exempt
 def api_delete_item(company_id, id):
     """Delete an inventory item"""
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
@@ -414,6 +426,7 @@ def api_delete_item(company_id, id):
 
 @inventory.route('/api/<int:company_id>/inventory/items/bulk-delete', methods=['POST'])
 @login_required
+@limiter.exempt
 def api_bulk_delete(company_id):
     """Bulk delete inventory items"""
     data = request.get_json()
@@ -441,6 +454,7 @@ def api_bulk_delete(company_id):
 
 @inventory.route('/api/<int:company_id>/inventory/items/<int:id>/adjust-stock', methods=['POST'])
 @login_required
+@limiter.exempt
 def api_adjust_stock(company_id, id):
     """Adjust stock quantity for an item"""
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
@@ -469,6 +483,7 @@ def api_adjust_stock(company_id, id):
 
 @inventory.route('/api/<int:company_id>/inventory/search', methods=['GET'])
 @login_required
+@limiter.exempt
 def api_search(company_id):
     """Search inventory items"""
     query = request.args.get('q', '').strip()
@@ -500,6 +515,7 @@ def api_search(company_id):
 
 @inventory.route('/api/<int:company_id>/inventory/stats', methods=['GET'])
 @login_required
+@limiter.exempt
 def api_stats(company_id):
     """Get inventory statistics"""
     total_items = InventoryItem.query.filter_by(company_id=company_id).count()
@@ -521,6 +537,7 @@ def api_stats(company_id):
 
 @inventory.route('/<int:company_id>/inventory/<int:id>/barcode')
 @login_required
+@limiter.exempt
 def view_barcode(company_id, id):
     """Generate and return barcode image for an inventory item"""
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
@@ -601,6 +618,7 @@ def view_barcode(company_id, id):
 
 @inventory.route('/<int:company_id>/inventory/<int:id>/barcode/download')
 @login_required
+@limiter.exempt
 def download_barcode(company_id, id):
     """Download barcode as PNG file"""
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
