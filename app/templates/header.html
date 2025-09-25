@@ -2,7 +2,7 @@
 <header class="bg-bg-topbar shadow-sm sticky top-0 z-10">
     <div class="flex items-center justify-between p-4">
         <div class="flex items-center">
-            <button class="md:hidden text-secondary-600 mr-3 hover:bg-secondary-100 p-2 rounded-lg transition-colors"
+            <button title="Menu" type="button" class="md:hidden text-secondary-600 mr-3 hover:bg-secondary-100 p-2 rounded-lg transition-colors"
                 id="menu-toggle">
                 <i class="fas fa-bars text-xl"></i>
             </button>
@@ -24,14 +24,14 @@
         </div>
 
         <div class="flex items-center space-x-3">
-            <button
-                class="text-secondary-400 hover:text-secondary-600 p-2 rounded-full hover:bg-secondary-50 transition-colors md:hidden">
+            <button title="Search" type="button"
+                class="text-secondary-400 hover:text-secondary-600 p-2 rounded-full hover:bg-secondary-50 transition-colors hidden">
                 <i class="fas fa-search"></i>
             </button>
 
             <!-- Notifications -->
             <div class="relative hidden">
-                <button
+                <button type="button"
                     class="text-secondary-400 hover:text-secondary-600 p-2 rounded-full hover:bg-secondary-50 transition-colors"
                     id="notifications-btn">
                     <i class="fas fa-bell"></i>

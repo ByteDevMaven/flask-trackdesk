@@ -1189,7 +1189,7 @@ msgstr "Cantidad actual"
 #: app/orders/templates/orders/form.html:264
 #: app/orders/templates/orders/view.html:116
 msgid "Unit Price"
-msgstr "Precio Unit"
+msgstr "Precio Unidad"
 
 #: app/inventory/templates/inventory/form.html:100
 msgid "Select a supplier (optional)"
@@ -2123,11 +2123,11 @@ msgstr "Administrar órdenes de compra y entregas de proveedores de seguimiento"
 
 #: app/orders/templates/orders/index.html:17
 msgid "Export CSV"
-msgstr "CSV de exportación"
+msgstr "Exportar CSV"
 
 #: app/orders/templates/orders/index.html:22
 msgid "New Purchase Order"
-msgstr "Nuevo orden de compra"
+msgstr "Nueva Orden de Compra"
 
 #: app/orders/templates/orders/index.html:34
 msgid "Total Orders"
@@ -2153,7 +2153,7 @@ msgstr "Nuevos pedidos"
 
 #: app/orders/templates/orders/index.html:76
 msgid "Avg Order Value"
-msgstr "Valor de pedido AVG"
+msgstr "Valor Promedio"
 
 #: app/orders/templates/orders/index.html:78
 msgid "Per order"
@@ -2622,7 +2622,7 @@ msgstr "Buscar..."
 
 #: app/templates/header.html:50
 msgid "Open company menu"
-msgstr "Menú de la empresa abierta"
+msgstr "Abrir Menu"
 
 #: app/templates/header.html:97 app/templates/sidebar.html:102
 msgid "Settings"
@@ -2630,7 +2630,7 @@ msgstr "Ajustes"
 
 #: app/templates/header.html:104
 msgid "Sign out"
-msgstr "desconectar"
+msgstr "Cerrar Sesión"
 
 #: app/templates/lang-switcher.html:5
 msgid "Open language menu"
@@ -2736,7 +2736,7 @@ msgstr "Todos los roles"
 
 #: app/users/templates/users/index.html:48
 msgid "Company"
-msgstr "Compañía"
+msgstr "Empresa"
 
 #: app/users/templates/users/index.html:51
 msgid "All Companies"

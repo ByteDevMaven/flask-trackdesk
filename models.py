@@ -28,6 +28,7 @@ class DocumentType(enum.Enum):
     invoice = 'invoice'
 
 class InvoiceType(enum.Enum):
+    sent = _('sent')
     draft = _('draft')
     issued = _('issued')
     cancelled = _('cancelled')
