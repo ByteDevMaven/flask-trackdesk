@@ -1,6 +1,4 @@
-import copy
-import uuid
-import os
+import os, math, copy, uuid
 from io import BytesIO
 
 from flask import render_template, request, redirect, session, url_for, flash, current_app, make_response
@@ -10,6 +8,12 @@ from flask_babel import _, get_locale
 from sqlalchemy import or_
 from datetime import datetime
 from wtforms import ValidationError
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from PyPDF2 import PdfReader, PdfWriter
+from num2words import num2words
 
 from models import db, Document, DocumentItem, Client, InventoryItem, DocumentType, Payment, PaymentMethod
 
@@ -486,199 +490,6 @@ def delete(company_id, id):
     
     return redirect(url_for('invoices.index', company_id=company_id))
 
-@invoices.route('/<int:company_id>/invoices/<int:id>/print')
-@login_required
-def print_invoice(company_id, id):
-    from reportlab.pdfgen import canvas
-    from reportlab.lib.pagesizes import A4
-    from reportlab.pdfbase import pdfmetrics
-    from reportlab.pdfbase.ttfonts import TTFont
-    from PyPDF2 import PdfReader, PdfWriter
-    from num2words import num2words
-    import math
-
-    document = Document.query.filter(
-        Document.id == id,
-        Document.company_id == company_id,
-        or_(Document.type == DocumentType.invoice, Document.type == DocumentType.quote)
-    ).first_or_404()
-    
-    # Client info
-    client = Client.query.get(document.client_id) if document.client_id else None
-    
-    # Document items
-    document_items = DocumentItem.query.filter_by(document_id=document.id).all()
-    for item in document_items:
-        if item.inventory_item_id:
-            item.inventory_item = InventoryItem.query.get(item.inventory_item_id)
-        else:
-            item.inventory_item = None
-
-    try:
-        # Template
-        template_path = os.path.join(current_app.static_folder, 'templates', 'Factura Ferre-lagos.pdf') # type: ignore
-        if not os.path.exists(template_path):
-            flash(_('PDF template not found. Please contact administrator.'), 'error')
-            return redirect(url_for('invoices.view', company_id=company_id, id=id))
-        
-        template_pdf = PdfReader(template_path)
-
-        # Fonts
-        try:
-            pdfmetrics.registerFont(TTFont('Arial', os.path.join(current_app.static_folder, 'fonts', 'arial.ttf')))  # type: ignore
-            pdfmetrics.registerFont(TTFont('Arial-Bold', os.path.join(current_app.static_folder, 'fonts', 'arial-bold.ttf')))  # type: ignore
-            font_name = 'Arial'
-            font_bold = 'Arial-Bold'
-        except:
-            font_name = 'Helvetica'
-            font_bold = 'Helvetica-Bold'
-
-        # Page setup
-        width, height = A4
-        items_per_page = 25
-        total_pages = math.ceil(len(document_items) / items_per_page) or 1
-
-        output_pdf = PdfWriter()
-
-        # Totals calculation
-        total_amount = document.total_amount or 0
-        subtotal = round(total_amount / 1.15, 2)
-        vta_exenta = subtotal
-        venta_gravada_15 = subtotal * 0.6
-        venta_gravada_18 = 0
-        venta_exonerada = 0
-        imp_15 = round(subtotal * 0.15, 2)
-        imp_18 = 0
-        total_final = round(total_amount, 2)
-
-        # Convert number to words
-        def number_to_words(amount):
-            lang_code = get_locale().language  # type: ignore
-            amount = round(amount, 2)
-            return num2words(amount, lang=lang_code)
-
-        # Loop per page
-        for page_num in range(total_pages):
-            page_items = document_items[page_num * items_per_page : (page_num + 1) * items_per_page]
-
-            # Copy template page
-            template_page = copy.deepcopy(template_pdf.pages[0])
-
-            # Create overlay
-            overlay_buffer = BytesIO()
-            overlay_canvas = canvas.Canvas(overlay_buffer, pagesize=A4)
-            overlay_canvas.setFillColorRGB(0, 0, 0)
-
-            # --- Header ---
-            doc_type = f"{_('COTIZACIÓN')}:" if document.type == DocumentType.quote else f"{_('FACTURA')}:"
-            overlay_canvas.setFont(font_bold, 11)
-            overlay_canvas.setFillColorRGB(1, 1, 1)
-            overlay_canvas.rect(10, height - 135, 120, 17, fill=1, stroke=0)
-            overlay_canvas.setFillColorRGB(0, 0, 0)
-            overlay_canvas.drawString(12, height - 130, doc_type)
-            overlay_canvas.drawString(140, height - 130, f"{document.document_number}")
-
-            # Page numbers
-            overlay_canvas.setFont(font_name, 9)
-            overlay_canvas.drawString(49, height - 110, str(page_num + 1))
-            overlay_canvas.drawString(70, height - 110, str(total_pages))
-
-            # Dates / seller / branch
-            if document.issued_date:
-                overlay_canvas.drawString(480, height - 156, document.issued_date.strftime('%d/%m/%Y'))
-            if document.due_date:
-                if document.type == DocumentType.quote:
-                    overlay_canvas.drawString(480, height - 172, document.due_date.strftime('%d/%m/%Y'))
-                else:
-                    payment_condition = _(PaymentMethod(document.payments.first().method).value) if document.payments and document.payments.first() else _('N/A')
-                    overlay_canvas.drawString(480, height - 172, payment_condition)
-            overlay_canvas.drawString(480, height - 187, f"{document.company_id:04d}")
-            seller_name = current_user.name if current_user and current_user.name else "ADMIN"
-            overlay_canvas.drawString(480, height - 202, seller_name[:20])
-
-            # Client info
-            overlay_canvas.setFont(font_name, 10)
-            client_y_start = height - 155
-            if client:
-                overlay_canvas.drawString(140, client_y_start, client.name[:55])
-                overlay_canvas.drawString(140, client_y_start - 15, client.identifier or "")
-                overlay_canvas.drawString(140, client_y_start - 30, f"CLI-{client.id:04d}")
-                if client.address:
-                    overlay_canvas.drawString(140, client_y_start - 45, client.address[:40])
-            else:
-                overlay_canvas.drawString(100, client_y_start, f"{_('CLIENTE GENERAL')}")
-                overlay_canvas.drawString(100, client_y_start - 20, "")
-                overlay_canvas.drawString(100, client_y_start - 40, "CLI-0000")
-                overlay_canvas.drawString(100, client_y_start - 60, "")
-
-            # Items table
-            overlay_canvas.setFont(font_name, 8)
-            items_start_y = height - 260
-            row_height = 15
-            col_codigo = 30
-            col_articulo = 110
-            col_cantidad = 280
-            col_precio = 350
-            col_descuento = 430
-            col_valor = 480
-
-            for i, item in enumerate(page_items):
-                y_pos = items_start_y - (i * row_height)
-                codigo = str(item.inventory_item_id) if item.inventory_item_id else f"ART-{item.id}"
-                overlay_canvas.drawString(col_codigo, y_pos, codigo[:8])
-                articulo = item.inventory_item.name if item.inventory_item_id and item.inventory_item else (item.description or f"{_('Artículo personalizado')}")
-                overlay_canvas.drawString(col_articulo, y_pos, articulo[:25])
-                overlay_canvas.drawRightString(col_cantidad + 10, y_pos, str(item.quantity or 0))
-                overlay_canvas.drawRightString(col_precio + 35, y_pos, f"{session['currency']}{item.unit_price or 0:,.2f}")
-                discount = (item.unit_price * item.discount / 100 if item.discount else 0)
-                overlay_canvas.drawRightString(col_descuento + 35, y_pos, f"{session['currency']}{discount:,.2f}")
-                total_item = (item.quantity or 0) * (item.unit_price or 0) - discount * (item.quantity or 0)
-                overlay_canvas.drawRightString(col_valor + 65, y_pos, f"{session['currency']}{total_item:,.2f}")
-
-            # Totals on last page only
-            if page_num == total_pages - 1:
-                overlay_canvas.setFont(font_name, 9)
-                totals_start_y = height - 650
-                totals_x = 480
-                overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 27, f"{session['currency']}{vta_exenta:,.2f}")
-                overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 45, f"{session['currency']}{venta_gravada_15:,.2f}")
-                overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 65, f"{session['currency']}{venta_gravada_18:,.2f}")
-                overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 82, f"{session['currency']}{venta_exonerada:,.2f}")
-                overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 100, f"{session['currency']}{imp_15:,.2f}")
-                overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 117, f"{session['currency']}{imp_18:,.2f}")
-                overlay_canvas.setFont(font_bold, 11)
-                overlay_canvas.drawRightString(totals_x + 50, totals_start_y - 145, f"{session['currency']}{total_final:,.2f}")
-                overlay_canvas.setFont(font_name, 10)
-                words = number_to_words(total_final)
-                overlay_canvas.drawString(totals_x - 160, totals_start_y - 180, words[:70])
-
-            # Merge overlay
-            overlay_canvas.save()
-            overlay_buffer.seek(0)
-            overlay_pdf = PdfReader(overlay_buffer)
-            overlay_page = overlay_pdf.pages[0]
-            template_page.merge_page(overlay_page)
-            output_pdf.add_page(template_page)
-            overlay_buffer.close()
-
-        # Final output
-        doc_type_name = "quo" if document.type == DocumentType.quote else "inv"
-        filename = f"{doc_type_name}_{document.document_number}.pdf"
-        output_buffer = BytesIO()
-        output_pdf.add_metadata({'/Title': filename})
-        output_pdf.write(output_buffer)
-        output_buffer.seek(0)
-
-        response = make_response(output_buffer.getvalue())
-        response.headers['Content-Type'] = 'application/pdf'
-        response.headers['Content-Disposition'] = f'inline; filename="{filename}"'
-        output_buffer.close()
-        return response
-
-    except Exception as e:
-        flash(_(f'Error generating PDF: {str(e)}'), 'error')
-        return redirect(url_for('invoices.view', company_id=company_id, id=id))
-
 @invoices.route('/<int:company_id>/invoices/<int:id>/convert', methods=['POST'])
 @login_required
 def convert_to_invoice(company_id, id):
@@ -752,3 +563,233 @@ def convert_to_invoice(company_id, id):
         db.session.rollback()
         flash(_('Error converting quote: %(error)s', error=str(e)), 'error')
         return redirect(url_for('invoices.view', company_id=company_id, id=id))
+
+@invoices.route('/<int:company_id>/invoices/<int:id>/print')
+@login_required
+def print_invoice(company_id, id):
+    """
+    Generate and return an invoice/quote PDF.
+    Includes multi-page support, client data, item rows, totals,
+    and localized number-to-words conversion.
+    """
+
+    # -------------------------
+    # Fetch document & related data
+    # -------------------------
+    document = Document.query.filter(
+        Document.id == id,
+        Document.company_id == company_id,
+        or_(Document.type == DocumentType.invoice, Document.type == DocumentType.quote)
+    ).first_or_404()
+
+    client = Client.query.get(document.client_id) if document.client_id else None
+
+    document_items = DocumentItem.query.filter_by(document_id=document.id).all()
+    for item in document_items:
+        item.inventory_item = (
+            InventoryItem.query.get(item.inventory_item_id)
+            if item.inventory_item_id else None
+        )
+
+    try:
+        # -------------------------
+        # Template setup
+        # -------------------------
+        template_path = os.path.join(current_app.static_folder, "templates", "Factura Ferre-lagos.pdf") # type: ignore
+        if not os.path.exists(template_path):
+            flash(_("PDF template not found. Please contact administrator."), "error")
+            return redirect(url_for("invoices.view", company_id=company_id, id=id))
+
+        template_pdf = PdfReader(template_path)
+
+        # Fonts
+        try:
+            font_dir = os.path.join(current_app.static_folder, "fonts") # type: ignore
+            pdfmetrics.registerFont(TTFont("Arial", os.path.join(font_dir, "arial.ttf")))
+            pdfmetrics.registerFont(TTFont("Arial-Bold", os.path.join(font_dir, "arial-bold.ttf")))
+            font_name, font_bold = "Arial", "Arial-Bold"
+        except Exception:
+            font_name, font_bold = "Helvetica", "Helvetica-Bold"
+
+        # -------------------------
+        # Pagination
+        # -------------------------
+        width, height = A4
+        items_per_page = 25
+        total_pages = math.ceil(len(document_items) / items_per_page) or 1
+
+        output_pdf = PdfWriter()
+
+        # -------------------------
+        # Totals calculation
+        # -------------------------
+
+        tax_param = request.args.get("tax", "1")  # default = include tax
+        include_tax = tax_param != "0"
+        tax_rate = session.get("tax_rate", 15) / 100
+
+        total_amount = document.total_amount or 0
+        subtotal = round(total_amount / (1 + tax_rate), 2)
+        vta_exenta = subtotal
+        venta_gravada_15 = subtotal * 0.6
+        venta_gravada_18 = 0
+        venta_exonerada = 0
+        imp_15 = round(subtotal * tax_rate, 2) if include_tax else 0
+        imp_18 = 0
+        total_final = round(total_amount, 2) if include_tax else subtotal
+
+        # Number to words
+        def number_to_words(amount):
+            lang_code = get_locale().language # type: ignore
+            return num2words(round(amount, 2), lang=lang_code)
+
+        # -------------------------
+        # Loop per page
+        # -------------------------
+        for page_num in range(total_pages):
+            page_items = document_items[page_num * items_per_page : (page_num + 1) * items_per_page]
+            template_page = copy.deepcopy(template_pdf.pages[0])
+
+            overlay_buffer = BytesIO()
+            c = canvas.Canvas(overlay_buffer, pagesize=A4)
+            c.setFillColorRGB(0, 0, 0)
+
+            # 🔹 HEADER
+            draw_header(c, document, page_num, total_pages, width, height, font_name, font_bold)
+
+            # 🔹 CLIENT INFO
+            draw_client_info(c, client, document, height, font_name)
+
+            # 🔹 ITEMS
+            draw_items(c, page_items, height, font_name)
+
+            # 🔹 TOTALS (last page only)
+            if page_num == total_pages - 1:
+                draw_totals(c, subtotal, vta_exenta, venta_gravada_15, venta_gravada_18,
+                            venta_exonerada, imp_15, imp_18, total_final, number_to_words, height,
+                            font_name, font_bold)
+
+            c.save()
+            overlay_buffer.seek(0)
+
+            overlay_pdf = PdfReader(overlay_buffer)
+            template_page.merge_page(overlay_pdf.pages[0])
+            output_pdf.add_page(template_page)
+            overlay_buffer.close()
+
+        # -------------------------
+        # Output response
+        # -------------------------
+        doc_type_name = "quo" if document.type == DocumentType.quote else "inv"
+        filename = f"{doc_type_name}_{document.document_number}.pdf"
+        output_buffer = BytesIO()
+        output_pdf.add_metadata({"/Title": filename})
+        output_pdf.write(output_buffer)
+        output_buffer.seek(0)
+
+        response = make_response(output_buffer.getvalue())
+        response.headers["Content-Type"] = "application/pdf"
+        response.headers["Content-Disposition"] = f'inline; filename="{filename}"'
+        output_buffer.close()
+        return response
+
+    except Exception as e:
+        flash(_(f"Error generating PDF: {str(e)}"), "error")
+        return redirect(url_for("invoices.view", company_id=company_id, id=id))
+
+
+# -------------------------------------------------
+# 🔹 HELPER DRAWING FUNCTIONS
+# -------------------------------------------------
+def draw_header(c, document, page_num, total_pages, width, height, font_name, font_bold):
+    """Draw document header info."""
+    doc_type = _("COTIZACIÓN") + ":" if document.type == DocumentType.quote else _("FACTURA") + ":"
+    c.setFont(font_bold, 11)
+    c.setFillColorRGB(1, 1, 1)
+    c.rect(10, height - 135, 120, 17, fill=1, stroke=0)
+    c.setFillColorRGB(0, 0, 0)
+    c.drawString(12, height - 130, doc_type)
+    c.drawString(140, height - 130, f"{document.document_number}")
+
+    c.setFont(font_name, 9)
+    c.drawString(49, height - 110, str(page_num + 1))
+    c.drawString(70, height - 110, str(total_pages))
+
+    if document.issued_date:
+        c.drawString(480, height - 156, document.issued_date.strftime("%d/%m/%Y"))
+
+    if document.due_date:
+        if document.type == DocumentType.quote:
+            c.drawString(480, height - 172, document.due_date.strftime("%d/%m/%Y"))
+        else:
+            payment_condition = (
+                _(PaymentMethod(document.payments.first().method).value)
+                if document.payments and document.payments.first()
+                else _("N/A")
+            )
+            c.drawString(480, height - 172, payment_condition)
+
+    c.drawString(480, height - 187, f"{document.company_id:04d}")
+    seller_name = current_user.name if current_user and current_user.name else "ADMIN"
+    c.drawString(480, height - 202, seller_name[:20])
+
+
+def draw_client_info(c, client, document, height, font_name):
+    """Draw client information."""
+    c.setFont(font_name, 10)
+    y = height - 155
+    if client:
+        c.drawString(140, y, client.name[:55])
+        c.drawString(140, y - 15, client.identifier or "")
+        c.drawString(140, y - 30, f"CLI-{client.id:04d}")
+        if client.address:
+            c.drawString(140, y - 45, client.address[:40])
+    else:
+        c.drawString(100, y, _("CLIENTE GENERAL"))
+        c.drawString(100, y - 20, "")
+        c.drawString(100, y - 40, "CLI-0000")
+        c.drawString(100, y - 60, "")
+
+
+def draw_items(c, page_items, height, font_name):
+    """Draw invoice/quote items."""
+    c.setFont(font_name, 8)
+    y_start = height - 260
+    row_height = 15
+    col_codigo, col_articulo, col_cantidad, col_precio, col_descuento, col_valor = 30, 110, 280, 350, 430, 480
+
+    for i, item in enumerate(page_items):
+        y = y_start - (i * row_height)
+        codigo = str(item.inventory_item_id) if item.inventory_item_id else f"ART-{item.id}"
+        articulo = (
+            item.inventory_item.name if item.inventory_item else (item.description or _("Artículo personalizado"))
+        )
+        discount = (item.unit_price * item.discount / 100 if item.discount else 0)
+        total_item = (item.quantity or 0) * (item.unit_price or 0) - discount * (item.quantity or 0)
+
+        c.drawString(col_codigo, y, codigo[:8])
+        c.drawString(col_articulo, y, articulo[:25])
+        c.drawRightString(col_cantidad + 10, y, str(item.quantity or 0))
+        c.drawRightString(col_precio + 35, y, f"{session['currency']}{item.unit_price or 0:,.2f}")
+        c.drawRightString(col_descuento + 35, y, f"{session['currency']}{discount:,.2f}")
+        c.drawRightString(col_valor + 65, y, f"{session['currency']}{total_item:,.2f}")
+
+
+def draw_totals(c, subtotal, vta_exenta, gravada15, gravada18, exonerada,
+                imp15, imp18, total_final, number_to_words, height, font_name, font_bold):
+    """Draw totals (only on last page)."""
+    c.setFont(font_name, 9)
+    totals_start_y, x = height - 650, 480
+    c.drawRightString(x + 50, totals_start_y - 27, f"{session['currency']}{vta_exenta:,.2f}")
+    c.drawRightString(x + 50, totals_start_y - 45, f"{session['currency']}{gravada15:,.2f}")
+    c.drawRightString(x + 50, totals_start_y - 65, f"{session['currency']}{gravada18:,.2f}")
+    c.drawRightString(x + 50, totals_start_y - 82, f"{session['currency']}{exonerada:,.2f}")
+    c.drawRightString(x + 50, totals_start_y - 100, f"{session['currency']}{imp15:,.2f}")
+    c.drawRightString(x + 50, totals_start_y - 117, f"{session['currency']}{imp18:,.2f}")
+
+    c.setFont(font_bold, 11)
+    c.drawRightString(x + 50, totals_start_y - 145, f"{session['currency']}{total_final:,.2f}")
+
+    c.setFont(font_name, 10)
+    words = number_to_words(total_final)
+    c.drawString(x - 160, totals_start_y - 180, words[:70])

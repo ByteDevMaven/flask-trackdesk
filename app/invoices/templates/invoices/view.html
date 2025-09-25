@@ -49,6 +49,11 @@ _('Business Management System') }}{% endblock %}
                 {{ _('Download PDF Invoice') }}
                 {% endif %}
             </a>
+            <a href="{{ url_for('invoices.print_invoice', company_id=session.get('selected_company_id'), id=invoice.id, tax=0) }}" target="_blank"
+                class="bg-btn-secondary-bg text-btn-secondary-text px-4 py-2 rounded-lg hover:bg-btn-secondary-hover transition shadow-sm flex items-center">
+                <i class="fas fa-file-pdf mr-2"></i>
+                {{ _('PDF No tax') }}
+            </a>
             <a href="{{ url_for('invoices.index', company_id=session.get('selected_company_id')) }}"
                 class="bg-secondary-100 text-fg-muted px-4 py-2 rounded-lg hover:bg-secondary-200 transition flex items-center">
                 <i class="fas fa-arrow-left mr-2"></i> {{ _('Back to Documents') }}
@@ -603,25 +608,5 @@ _('Business Management System') }}{% endblock %}
     </div>
 </div>
 
-<script>
-    function showAddPaymentModal() {
-        document.getElementById('addPaymentModal').classList.remove('hidden');
-    }
-
-    function hideAddPaymentModal() {
-        document.getElementById('addPaymentModal').classList.add('hidden');
-    }
-
-    function editPayment(paymentId) {
-        // You can implement edit payment functionality here
-        alert('{{ _("Edit payment functionality can be implemented here") }}');
-    }
-
-    // Close modal when clicking outside
-    document.getElementById('addPaymentModal').addEventListener('click', function(e) {
-        if (e.target === this) {
-            hideAddPaymentModal();
-        }
-    });
-</script>
+<script src="{{ url_for('invoices.static', filename='js/view.js') }}"></script>
 {% endblock %}
