@@ -32,6 +32,7 @@ class InvoiceType(enum.Enum):
     draft = _('draft')
     issued = _('issued')
     cancelled = _('cancelled')
+    partial = _('partial')
     paid = _('paid')
     overdue = _('overdue')
     pending = _('pending')
