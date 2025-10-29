@@ -36,6 +36,7 @@ class InvoiceType(enum.Enum):
     paid = _('paid')
     overdue = _('overdue')
     pending = _('pending')
+    credit = _('credit')
 
 class PaymentMethod(enum.Enum):
     cash = _('cash')

@@ -108,6 +108,8 @@ endblock %}
                                     %}>{{ _('Overdue') }}</option>
                                 <option value="pending" {% if invoice and invoice.status=='pending' %}selected{% endif
                                     %}>{{ _('Pending') }}</option>
+                                <option value="credit" {% if invoice and invoice.status=='credit' %}selected{% endif
+                                    %}>{{ _('Credit') }}</option>
                             </select>
                         </div>
 
