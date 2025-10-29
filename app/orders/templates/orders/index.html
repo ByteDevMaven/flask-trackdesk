@@ -334,7 +334,7 @@
 <!-- Pagination -->
 {% if pagination and pagination.pages > 1 %}
 {% set ns = namespace(args=request.args.to_dict()) %}
-{% set _ = ns.args.pop('page', None) %}
+{% set __ = ns.args.pop('page', None) %}
 <div class="mt-8 flex items-center justify-between">
     <div class="flex-1 flex justify-between sm:hidden">
         {% if pagination.has_prev %}
