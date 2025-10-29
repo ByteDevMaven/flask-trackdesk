@@ -15,12 +15,15 @@ from reportlab.pdfbase.ttfonts import TTFont
 from PyPDF2 import PdfReader, PdfWriter
 from num2words import num2words
 
+from extensions import limiter
+
 from models import db, Document, DocumentItem, Client, InventoryItem, DocumentType, Payment, PaymentMethod
 
 from . import invoices
 
 @invoices.route('/<int:company_id>/invoices')
 @login_required
+@limiter.exempt
 def index(company_id):
     page = request.args.get('page', 1, type=int)
     search = request.args.get('search', '')
@@ -93,6 +96,7 @@ def index(company_id):
 
 @invoices.route('/invoices/item-row', methods=['POST'])
 @login_required
+@limiter.exempt
 def item_row():
     index = int(request.form.get('index', 0))
     csrf_token = request.form.get("csrf_token") 
@@ -113,6 +117,7 @@ def item_row():
 
 @invoices.route('/<int:company_id>/invoices/create')
 @login_required
+@limiter.exempt
 def create(company_id):
     # Get clients and inventory items for the form
     clients = Client.query.filter_by(company_id=company_id).all()
@@ -134,6 +139,7 @@ def create(company_id):
 
 @invoices.route('/<int:company_id>/invoices/store', methods=['POST'])
 @login_required
+@limiter.exempt
 def store(company_id):
     csrf_token = request.form.get("csrf_token") 
 
@@ -267,6 +273,7 @@ def store(company_id):
 
 @invoices.route('/<int:company_id>/invoices/<int:id>')
 @login_required
+@limiter.exempt
 def view(company_id, id):
     document = Document.query.filter(
         Document.id == id,
@@ -294,6 +301,7 @@ def view(company_id, id):
 
 @invoices.route('/<int:company_id>/invoices/<int:id>/edit')
 @login_required
+@limiter.exempt
 def edit(company_id, id):
     document = Document.query.filter(
         Document.id == id,
@@ -326,6 +334,7 @@ def edit(company_id, id):
 
 @invoices.route('/<int:company_id>/invoices/<int:id>/update', methods=['POST'])
 @login_required
+@limiter.exempt
 def update(company_id, id):
     csrf_token = request.form.get("csrf_token") 
 
@@ -492,6 +501,7 @@ def delete(company_id, id):
 
 @invoices.route('/<int:company_id>/invoices/<int:id>/convert', methods=['POST'])
 @login_required
+@limiter.exempt
 def convert_to_invoice(company_id, id):
     csrf_token = request.form.get("csrf_token") 
 
@@ -566,6 +576,7 @@ def convert_to_invoice(company_id, id):
 
 @invoices.route('/<int:company_id>/invoices/<int:id>/print')
 @login_required
+@limiter.exempt
 def print_invoice(company_id, id):
     """
     Generate and return an invoice/quote PDF.
