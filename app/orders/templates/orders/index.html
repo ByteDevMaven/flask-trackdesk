@@ -169,7 +169,7 @@
                             class="rounded border-primary-400 text-accent-600 focus:ring-accent-500 focus:ring-2">
                     </th>
                     <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        <a href="{{ url_for('orders.index', company_id=company_id, sort='order_number', order='desc' if sort_by == 'order_number' and sort_order == 'asc' else 'asc', **ns.args) }}"
+                        <a href="{{ url_for('orders.index', company_id=company_id, sort='order_number', order='desc' if sort_by == 'order_number' and sort_order == 'asc' else 'asc', filtered_args=filtered_args) }}"
                             class="group inline-flex items-center hover:text-gray-900">
                             {{ _('Order Number') }}
                             <span class="ml-2 flex-none rounded text-gray-400 group-hover:text-gray-500">
@@ -185,7 +185,7 @@
                         {{ _('Supplier') }}
                     </th>
                     <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        <a href="{{ url_for('orders.index', company_id=company_id, sort='total_amount', order='desc' if sort_by == 'total_amount' and sort_order == 'asc' else 'asc', **ns.args) }}"
+                        <a href="{{ url_for('orders.index', company_id=company_id, sort='total_amount', order='desc' if sort_by == 'total_amount' and sort_order == 'asc' else 'asc', filtered_args=filtered_args) }}"
                             class="group inline-flex items-center hover:text-gray-900">
                             {{ _('Total Amount') }}
                             <span class="ml-2 flex-none rounded text-gray-400 group-hover:text-gray-500">
@@ -201,7 +201,7 @@
                         {{ _('Items') }}
                     </th>
                     <th scope="col" class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                        <a href="{{ url_for('orders.index', company_id=company_id, sort='created_at', order='desc' if sort_by == 'created_at' and sort_order == 'asc' else 'asc', **ns.args) }}"
+                        <a href="{{ url_for('orders.index', company_id=company_id, sort='created_at', order='desc' if sort_by == 'created_at' and sort_order == 'asc' else 'asc', filtered_args=filtered_args) }}"
                             class="group inline-flex items-center hover:text-gray-900">
                             {{ _('Date Created') }}
                             <span class="ml-2 flex-none rounded text-gray-400 group-hover:text-gray-500">
