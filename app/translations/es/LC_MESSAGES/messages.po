@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-10-29 10:45-0600\n"
+"POT-Creation-Date: 2025-10-30 14:24-0600\n"
 "PO-Revision-Date: 2025-07-17 02:05-0600\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -295,7 +295,7 @@ msgstr "Seleccione usuarios que tendrán acceso a esta empresa"
 #: app/inventory/templates/inventory/form.html:153
 #: app/inventory/templates/inventory/view.html:236
 #: app/inventory/templates/inventory/view.html:272
-#: app/invoices/templates/invoices/form.html:328
+#: app/invoices/templates/invoices/form.html:322
 #: app/invoices/templates/invoices/view.html:599
 #: app/orders/templates/orders/form.html:177
 #: app/payments/templates/payments/form.html:148
@@ -383,7 +383,7 @@ msgstr "Vista"
 #: app/inventory/templates/inventory/index.html:247
 #: app/inventory/templates/inventory/view.html:22
 #: app/invoices/templates/invoices/form.html:3
-#: app/invoices/templates/invoices/form.html:15
+#: app/invoices/templates/invoices/form.html:14
 #: app/invoices/templates/invoices/index.html:150
 #: app/invoices/templates/invoices/view.html:35
 #: app/payments/templates/payments/index.html:197
@@ -639,7 +639,7 @@ msgstr "Sistema de gestión empresarial"
 
 #: app/customers/templates/customers/form.html:8
 #: app/customers/templates/customers/form.html:77
-#: app/invoices/templates/invoices/form.html:81
+#: app/invoices/templates/invoices/form.html:76
 #: app/invoices/templates/invoices/index.html:101
 #: app/payments/templates/payments/index.html:140
 msgid "Client"
@@ -882,7 +882,7 @@ msgid "Date"
 msgstr "Fecha"
 
 #: app/customers/templates/customers/view.html:193
-#: app/invoices/templates/invoices/form.html:128
+#: app/invoices/templates/invoices/form.html:124
 #: app/invoices/templates/invoices/index.html:107
 #: app/payments/templates/payments/view.html:80
 msgid "Due Date"
@@ -900,7 +900,7 @@ msgstr "Cantidad"
 
 #: app/customers/templates/customers/view.html:195
 #: app/customers/templates/customers/view.html:275
-#: app/invoices/templates/invoices/form.html:95
+#: app/invoices/templates/invoices/form.html:91
 #: app/invoices/templates/invoices/index.html:46
 #: app/invoices/templates/invoices/index.html:113
 #: app/invoices/templates/invoices/view.html:104
@@ -950,7 +950,7 @@ msgid "Create Quote"
 msgstr "Crear Cotizacion"
 
 #: app/customers/templates/customers/view.html:345
-#: app/invoices/templates/invoices/form.html:290
+#: app/invoices/templates/invoices/form.html:280
 #: app/invoices/templates/invoices/view.html:231
 #: app/invoices/templates/invoices/view.html:472
 #: app/invoices/templates/invoices/view.html:590
@@ -1025,8 +1025,8 @@ msgstr "Ver todo"
 #: app/dashboard/templates/dashboard/index.html:183 app/invoices/routes.py:265
 #: app/invoices/routes.py:460 app/invoices/routes.py:494
 #: app/invoices/templates/invoices/form.html:4
-#: app/invoices/templates/invoices/form.html:15
-#: app/invoices/templates/invoices/form.html:73
+#: app/invoices/templates/invoices/form.html:14
+#: app/invoices/templates/invoices/form.html:68
 #: app/invoices/templates/invoices/view.html:3
 #: app/invoices/templates/invoices/view.html:15
 #: app/invoices/templates/invoices/view.html:98
@@ -1051,8 +1051,8 @@ msgstr "Cotizaciones Recientes"
 #: app/dashboard/templates/dashboard/index.html:223 app/invoices/routes.py:265
 #: app/invoices/routes.py:460 app/invoices/routes.py:494
 #: app/invoices/templates/invoices/form.html:3
-#: app/invoices/templates/invoices/form.html:15
-#: app/invoices/templates/invoices/form.html:75
+#: app/invoices/templates/invoices/form.html:14
+#: app/invoices/templates/invoices/form.html:70
 #: app/invoices/templates/invoices/view.html:3
 #: app/invoices/templates/invoices/view.html:13
 #: app/invoices/templates/invoices/view.html:96
@@ -1106,7 +1106,7 @@ msgstr "Se produjo un error al eliminar el elemento de inventario"
 #: app/inventory/routes.py:232 app/inventory/templates/inventory/form.html:51
 #: app/inventory/templates/inventory/index.html:156
 #: app/inventory/templates/inventory/view.html:52
-#: app/invoices/templates/invoices/form.html:160
+#: app/invoices/templates/invoices/form.html:156
 #: app/invoices/templates/invoices/view.html:371
 #: app/suppliers/templates/suppliers/view.html:83
 msgid "Description"
@@ -1191,7 +1191,7 @@ msgstr "Cantidad actual"
 
 #: app/inventory/templates/inventory/form.html:80
 #: app/inventory/templates/inventory/view.html:74
-#: app/invoices/templates/invoices/form.html:168
+#: app/invoices/templates/invoices/form.html:164
 #: app/invoices/templates/invoices/view.html:379
 #: app/orders/templates/orders/form.html:104
 #: app/orders/templates/orders/form.html:141
@@ -1273,7 +1273,7 @@ msgstr "Exportar"
 
 #: app/inventory/templates/inventory/index.html:19
 #: app/inventory/templates/inventory/index.html:276
-#: app/invoices/templates/invoices/form.html:144
+#: app/invoices/templates/invoices/form.html:140
 #: app/orders/templates/orders/form.html:74
 #: app/suppliers/templates/suppliers/view.html:73
 msgid "Add Item"
@@ -1542,53 +1542,53 @@ msgid "Artículo personalizado"
 msgstr "Artículo personalizado"
 
 #: app/invoices/templates/invoices/form.html:4
-#: app/invoices/templates/invoices/form.html:18
+#: app/invoices/templates/invoices/form.html:17
 msgid "New Document"
 msgstr "Nuevo documento"
 
-#: app/invoices/templates/invoices/form.html:23
+#: app/invoices/templates/invoices/form.html:22
 msgid "Update document details"
 msgstr "Actualizar detalles del documento"
 
-#: app/invoices/templates/invoices/form.html:25
+#: app/invoices/templates/invoices/form.html:24
 msgid "Create a new invoice or quote"
 msgstr "Crear una nueva factura o Cotizacion"
 
-#: app/invoices/templates/invoices/form.html:32
+#: app/invoices/templates/invoices/form.html:31
 #: app/invoices/templates/invoices/view.html:59
 msgid "Back to Documents"
 msgstr "Volver a los documentos"
 
-#: app/invoices/templates/invoices/form.html:50
+#: app/invoices/templates/invoices/form.html:47
 msgid "Document Information"
 msgstr "Información de documento"
 
-#: app/invoices/templates/invoices/form.html:55
+#: app/invoices/templates/invoices/form.html:51
 msgid "Document Number"
 msgstr "Número de documento"
 
-#: app/invoices/templates/invoices/form.html:60
+#: app/invoices/templates/invoices/form.html:56
 msgid "Auto-generated if left blank"
 msgstr "Generado automático si se deja en blanco"
 
-#: app/invoices/templates/invoices/form.html:66
+#: app/invoices/templates/invoices/form.html:61
 #: app/invoices/templates/invoices/view.html:91
 msgid "Document Type"
 msgstr "Tipo de documento"
 
-#: app/invoices/templates/invoices/form.html:71
+#: app/invoices/templates/invoices/form.html:66
 msgid "Select document type"
 msgstr "Seleccionar tipo de documento"
 
-#: app/invoices/templates/invoices/form.html:85
+#: app/invoices/templates/invoices/form.html:81
 msgid "Select a client"
 msgstr "Seleccione un cliente"
 
-#: app/invoices/templates/invoices/form.html:100
+#: app/invoices/templates/invoices/form.html:96
 msgid "Select a status"
 msgstr "Seleccione un estado"
 
-#: app/invoices/templates/invoices/form.html:102
+#: app/invoices/templates/invoices/form.html:98
 #: app/invoices/templates/invoices/index.html:50
 #: app/invoices/templates/invoices/index.html:141
 #: app/invoices/templates/invoices/view.html:113
@@ -1597,44 +1597,46 @@ msgstr "Seleccione un estado"
 msgid "Draft"
 msgstr "Borrador"
 
-#: app/invoices/templates/invoices/form.html:104
-msgid "Cancelled"
-msgstr "Cancelado"
+#: app/invoices/templates/invoices/form.html:100
+#: app/invoices/templates/invoices/index.html:52
+#: app/invoices/templates/invoices/view.html:115
+msgid "Sent"
+msgstr "Enviado"
 
-#: app/invoices/templates/invoices/form.html:106
+#: app/invoices/templates/invoices/form.html:102
 #: app/invoices/templates/invoices/index.html:54
 #: app/invoices/templates/invoices/view.html:109
 msgid "Paid"
 msgstr "Pagado"
 
-#: app/invoices/templates/invoices/form.html:108
+#: app/invoices/templates/invoices/form.html:104
 #: app/invoices/templates/invoices/index.html:57
 #: app/invoices/templates/invoices/view.html:111
 msgid "Overdue"
 msgstr "Atrasado"
 
-#: app/invoices/templates/invoices/form.html:110
+#: app/invoices/templates/invoices/form.html:106
 #: app/invoices/templates/invoices/index.html:58
 msgid "Pending"
 msgstr "Pendiente"
 
-#: app/invoices/templates/invoices/form.html:112
+#: app/invoices/templates/invoices/form.html:108
 #: app/invoices/templates/invoices/index.html:60
 msgid "Credit"
 msgstr "Al Credito"
 
-#: app/invoices/templates/invoices/form.html:118
+#: app/invoices/templates/invoices/form.html:114
 #: app/invoices/templates/invoices/index.html:104
 #: app/invoices/templates/invoices/view.html:124
 msgid "Issue Date"
 msgstr "Fecha de asunto"
 
-#: app/invoices/templates/invoices/form.html:141
+#: app/invoices/templates/invoices/form.html:137
 #: app/orders/templates/orders/index.html:201
 msgid "Items"
 msgstr "Elementos"
 
-#: app/invoices/templates/invoices/form.html:156
+#: app/invoices/templates/invoices/form.html:152
 #: app/invoices/templates/invoices/view.html:367
 #: app/orders/templates/orders/form.html:83
 #: app/orders/templates/orders/form.html:122
@@ -1642,18 +1644,18 @@ msgstr "Elementos"
 msgid "Item"
 msgstr "Artículo"
 
-#: app/invoices/templates/invoices/form.html:164
+#: app/invoices/templates/invoices/form.html:160
 #: app/invoices/templates/invoices/view.html:375
 msgid "Qty"
 msgstr "Cantidad"
 
-#: app/invoices/templates/invoices/form.html:172
+#: app/invoices/templates/invoices/form.html:168
 #: app/invoices/templates/invoices/view.html:383
 msgid "Discount"
 msgstr "Descuento"
 
-#: app/invoices/templates/invoices/form.html:176
-#: app/invoices/templates/invoices/form.html:314
+#: app/invoices/templates/invoices/form.html:172
+#: app/invoices/templates/invoices/form.html:307
 #: app/invoices/templates/invoices/view.html:387
 #: app/invoices/templates/invoices/view.html:509
 #: app/orders/templates/orders/form.html:109
@@ -1664,48 +1666,74 @@ msgstr "Descuento"
 msgid "Total"
 msgstr "Total"
 
-#: app/invoices/templates/invoices/form.html:180
+#: app/invoices/templates/invoices/form.html:176
 msgid "Action"
 msgstr "Acción"
 
 #: app/invoices/templates/invoices/form.html:191
-#: app/invoices/templates/invoices/form.html:241
-#: app/invoices/templates/invoices/item_row.html:5
-msgid "Select an item"
-msgstr "Seleccione un artículo"
+#: app/invoices/templates/invoices/form.html:236
+msgid "Select a product"
+msgstr "Seleccione un producto"
 
-#: app/invoices/templates/invoices/form.html:293
+#: app/invoices/templates/invoices/form.html:283
 msgid "Additional notes or terms..."
 msgstr "Notas o términos adicionales ..."
 
-#: app/invoices/templates/invoices/form.html:298
+#: app/invoices/templates/invoices/form.html:288
 #: app/invoices/templates/invoices/view.html:485
 msgid "Summary"
 msgstr "Resumen"
 
-#: app/invoices/templates/invoices/form.html:301
+#: app/invoices/templates/invoices/form.html:291
 #: app/invoices/templates/invoices/view.html:496
 msgid "Subtotal"
 msgstr "Subtotal"
 
-#: app/invoices/templates/invoices/form.html:305
-#: app/invoices/templates/invoices/form.html:309
+#: app/invoices/templates/invoices/form.html:296
+#: app/invoices/templates/invoices/form.html:301
 #: app/invoices/templates/invoices/view.html:500
 #: app/invoices/templates/invoices/view.html:504
 msgid "Tax"
 msgstr "Impuesto"
 
-#: app/invoices/templates/invoices/form.html:332
+#: app/invoices/templates/invoices/form.html:326
 msgid "Update Document"
 msgstr "Actualizar Documento"
 
-#: app/invoices/templates/invoices/form.html:332
+#: app/invoices/templates/invoices/form.html:326
 msgid "Save Document"
 msgstr "Guardar documento"
 
-#: app/invoices/templates/invoices/form.html:338
+#: app/invoices/templates/invoices/form.html:332
 msgid "Download PDF"
 msgstr "Descargar PDF"
+
+#: app/invoices/templates/invoices/form.html:345
+msgid "Select Product"
+msgstr "Seleccione un Producto"
+
+#: app/invoices/templates/invoices/form.html:346
+msgid "Search and select a product to add"
+msgstr "Busca y selecciona un producto"
+
+#: app/invoices/templates/invoices/form.html:356
+msgid "Search by name, code, or description..."
+msgstr "Nombre, codigo, descripción ..."
+
+#: app/invoices/templates/invoices/form.html:373
+#: app/orders/templates/orders/form.html:94
+#: app/orders/templates/orders/form.html:131
+#: app/orders/templates/orders/form.html:254
+msgid "Code"
+msgstr "Código"
+
+#: app/invoices/templates/invoices/form.html:380
+msgid "in stock"
+msgstr "En Stock"
+
+#: app/invoices/templates/invoices/form.html:392
+msgid "No products found"
+msgstr "No se encontraron productos"
 
 #: app/invoices/templates/invoices/index.html:10
 msgid "Manage your invoices and payments"
@@ -1726,11 +1754,6 @@ msgstr "Todo"
 #: app/invoices/templates/invoices/index.html:49
 msgid "All Statuses"
 msgstr "Todos los estados"
-
-#: app/invoices/templates/invoices/index.html:52
-#: app/invoices/templates/invoices/view.html:115
-msgid "Sent"
-msgstr "Enviado"
 
 #: app/invoices/templates/invoices/index.html:66
 #: app/payments/templates/payments/index.html:102
@@ -1772,6 +1795,10 @@ msgstr "No se encuentran facturas"
 #: app/invoices/templates/invoices/index.html:179
 msgid "Create your first invoice"
 msgstr "Crea tu primera factura"
+
+#: app/invoices/templates/invoices/item_row.html:5
+msgid "Select an item"
+msgstr "Seleccione un artículo"
 
 #: app/invoices/templates/invoices/view.html:20
 msgid "Quote details and information"
@@ -2093,12 +2120,6 @@ msgstr "Ordenar artículos"
 #: app/orders/templates/orders/form.html:247
 msgid "Select item"
 msgstr "Seleccionar elemento"
-
-#: app/orders/templates/orders/form.html:94
-#: app/orders/templates/orders/form.html:131
-#: app/orders/templates/orders/form.html:254
-msgid "Code"
-msgstr "Código"
 
 #: app/orders/templates/orders/form.html:114
 #: app/orders/templates/orders/form.html:151
@@ -2911,4 +2932,7 @@ msgstr "No puede modificar el estado de su cuenta de su cuenta"
 
 #~ msgid "Edit payment functionality can be implemented here"
 #~ msgstr ""
+
+#~ msgid "Cancelled"
+#~ msgstr "Cancelado"
 

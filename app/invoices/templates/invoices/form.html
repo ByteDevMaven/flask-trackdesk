@@ -6,7 +6,6 @@ endblock %}
 
 {% block content %}
 <div class="h-full flex flex-col">
-    <!-- Header Section - Fixed -->
     <div class="flex-shrink-0 mb-6">
         <div class="flex justify-between items-center">
             <div>
@@ -35,7 +34,6 @@ endblock %}
         </div>
     </div>
 
-    <!-- Scrollable Form Content -->
     <div class="flex-1 overflow-y-auto">
         <div class="bg-bg-subtle rounded-xl shadow-sm border border-secondary-200">
             <form id="invoice-form"
@@ -44,12 +42,10 @@ endblock %}
                 <input type="hidden" id="currencySymbol" value="{{ session.get('currency') }}">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-                <!-- Basic Information Section -->
                 <div class="mb-8">
                     <h3 class="text-lg font-semibold text-fg-base mb-4 border-b border-secondary-200 pb-2">{{
                         _('Document Information') }}</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {% if invoice %}
                         <div>
                             <label for="document_number" class="block text-sm font-medium text-fg-base mb-2">
                                 {{ _('Document Number') }} <span class="text-btn-danger-bg">*</span>
@@ -57,9 +53,8 @@ endblock %}
                             <input type="text" id="document_number" name="document_number"
                                 value="{{ invoice.document_number if invoice else '' }}"
                                 class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base"
-                                {% if not invoice %}placeholder="{{ _('Auto-generated if left blank') }}" {% endif %} readonly>
+                                {% if not invoice %}placeholder="{{ _('Auto-generated if left blank') }}" {% endif %}>
                         </div>
-                        {% endif %}
 
                         <div>
                             <label for="type" class="block text-sm font-medium text-fg-base mb-2">
@@ -69,23 +64,24 @@ endblock %}
                                 class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base"
                                 required>
                                 <option value="">{{ _('Select document type') }}</option>
-                                <option value="invoice" {% if invoice and invoice.type.value=='invoice' or doc_type=='invoice' %}selected{%
+                                <option value="invoice" {% if invoice and invoice.type.value=='invoice' %}selected{%
                                     endif %}>{{ _('Invoice') }}</option>
-                                <option value="quote" {% if invoice and invoice.type.value=='quote' or doc_type=='quote' %}selected{% endif
+                                <option value="quote" {% if invoice and invoice.type.value=='quote' %}selected{% endif
                                     %}>{{ _('Quote') }}</option>
                             </select>
                         </div>
 
                         <div>
                             <label for="client_id" class="block text-sm font-medium text-fg-base mb-2">
-                                {{ _('Client') }} <span class="text-btn-danger-bg hidden">*</span>
+                                {{ _('Client') }} <span class="text-btn-danger-bg">*</span>
                             </label>
                             <select id="client_id" name="client_id"
-                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base"
+                                required>
                                 <option value="">{{ _('Select a client') }}</option>
                                 {% for client in clients %}
-                                <option value="{{ client.id }}" {% if invoice and invoice.client_id==client.id or
-                                    client.id==customer_id %}selected{% endif %}>{{ client.name }}</option>
+                                <option value="{{ client.id }}" {% if invoice and invoice.client_id==client.id
+                                    %}selected{% endif %}>{{ client.name }}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -100,16 +96,16 @@ endblock %}
                                 <option value="">{{ _('Select a status') }}</option>
                                 <option value="draft" {% if invoice and invoice.status=='draft' %}selected{% endif %}>{{
                                     _('Draft') }}</option>
-                                <option value="cancelled" {% if invoice and invoice.status=='cancelled' %}selected{% endif %}>{{
-                                    _('Cancelled') }}</option>
+                                <option value="sent" {% if invoice and invoice.status=='sent' %}selected{% endif %}>{{
+                                    _('Sent') }}</option>
                                 <option value="paid" {% if invoice and invoice.status=='paid' %}selected{% endif %}>{{
                                     _('Paid') }}</option>
                                 <option value="overdue" {% if invoice and invoice.status=='overdue' %}selected{% endif
                                     %}>{{ _('Overdue') }}</option>
                                 <option value="pending" {% if invoice and invoice.status=='pending' %}selected{% endif
                                     %}>{{ _('Pending') }}</option>
-                                <option value="credit" {% if invoice and invoice.status=='credit' %}selected{% endif
-                                    %}>{{ _('Credit') }}</option>
+                                <option value="credit" {% if invoice and invoice.status=='credit' %}selected{% endif %}>
+                                    {{ _('Credit') }}</option>
                             </select>
                         </div>
 
@@ -145,7 +141,7 @@ endblock %}
                         </button>
                     </div>
 
-                    <!-- Items Container with proper scrolling -->
+                    <!-- Replaced select dropdown with button to open product picker modal -->
                     <div class="border border-secondary-200 rounded-lg overflow-hidden">
                         <div class="overflow-x-auto">
                             <table class="min-w-full divide-y divide-secondary-200">
@@ -184,21 +180,17 @@ endblock %}
                                 <tbody id="items-container" class="bg-bg-base divide-y divide-secondary-200">
                                     {% if invoice and document_items %}
                                     {% for item in document_items %}
-                                    <tr class="item-row hover:bg-secondary-50">
+                                    <tr class="item-row hover:bg-secondary-50"
+                                        data-item-id="{{ item.inventory_item_id or '' }}">
                                         <td class="px-4 py-3">
-                                            <select name="items[{{ loop.index0 }}][inventory_item_id]"
-                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-select bg-bg-base text-fg-base">
-                                                <option value="">{{ _('Select an item') }}</option>
-                                                {% for inventory_item in inventory_items %}
-                                                <option value="{{ inventory_item.id }}"
-                                                    data-price="{{ inventory_item.price }}"
-                                                    data-description="{{ inventory_item.description|e }}"
-                                                    data-stock="{{ inventory_item.quantity }}"
-                                                    {% if item.inventory_item_id==inventory_item.id %}selected{% endif %}>
-                                                    {{ inventory_item.name }}
-                                                </option>
-                                                {% endfor %}
-                                            </select>
+                                            <input type="hidden" name="items[{{ loop.index0 }}][inventory_item_id]"
+                                                value="{{ item.inventory_item_id or '' }}" class="item-id-input">
+                                            <button type="button"
+                                                class="select-product-btn w-full px-3 py-2 text-left text-sm border border-secondary-200 rounded-lg hover:bg-secondary-50 focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base flex items-center justify-between">
+                                                <span class="product-name">{{ item.inventory_item.name if
+                                                    item.inventory_item else _('Select a product') }}</span>
+                                                <i class="fas fa-search text-fg-muted text-xs"></i>
+                                            </button>
                                         </td>
                                         <td class="px-4 py-3">
                                             <input type="text" name="items[{{ loop.index0 }}][description]"
@@ -217,12 +209,13 @@ endblock %}
                                         </td>
                                         <td class="px-4 py-3">
                                             <input type="number" name="items[{{ loop.index0 }}][discount]"
-                                                value="{{ item.discount }}" min="0" step="0.01"
-                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-price bg-bg-base text-fg-base">
+                                                value="{{ item.discount or 0 }}" min="0" step="0.01"
+                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-discount bg-bg-base text-fg-base">
                                         </td>
                                         <td class="px-4 py-3">
                                             <div class="item-total font-medium text-fg-base text-sm">
-                                                {{ session.get('currency') }}{{ "{:,.2f}".format((item.quantity or 0) * (item.unit_price or 0)) }}
+                                                {{ session.get('currency') }}{{ "{:,.2f}".format((item.quantity or 0) *
+                                                (item.unit_price or 0)) }}
                                             </div>
                                         </td>
                                         <td class="px-4 py-3 text-center">
@@ -234,20 +227,16 @@ endblock %}
                                     </tr>
                                     {% endfor %}
                                     {% else %}
-                                    <tr class="item-row hover:bg-secondary-50">
+                                    <tr class="item-row hover:bg-secondary-50" data-item-id="">
                                         <td class="px-4 py-3">
-                                            <select name="items[0][inventory_item_id]"
-                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-select bg-bg-base text-fg-base">
-                                                <option value="">{{ _('Select an item') }}</option>
-                                                {% for inventory_item in inventory_items %}
-                                                <option value="{{ inventory_item.id }}"
-                                                    data-description="{{ inventory_item.description|e }}"
-                                                    data-price="{{ inventory_item.price }}"
-                                                    data-stock="{{ inventory_item.quantity }}">
-                                                    {{ inventory_item.name }}
-                                                </option>
-                                                {% endfor %}
-                                            </select>
+                                            <input type="hidden" name="items[0][inventory_item_id]" value=""
+                                                class="item-id-input">
+                                            <button type="button"
+                                                class="select-product-btn w-full px-3 py-2 text-left text-sm border border-secondary-200 rounded-lg hover:bg-secondary-50 focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base flex items-center justify-between">
+                                                <span class="product-name text-fg-muted">{{ _('Select a product')
+                                                    }}</span>
+                                                <i class="fas fa-search text-fg-muted text-xs"></i>
+                                            </button>
                                         </td>
                                         <td class="px-4 py-3">
                                             <input type="text" name="items[0][description]"
@@ -265,10 +254,11 @@ endblock %}
                                         <td class="px-4 py-3">
                                             <input type="number" name="items[0][discount]" value="0.00" min="0"
                                                 step="0.01"
-                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-price bg-bg-base text-fg-base">
+                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-discount bg-bg-base text-fg-base">
                                         </td>
                                         <td class="px-4 py-3">
-                                            <div class="item-total font-medium text-fg-base text-sm">{{ session.get('currency') }}0.00</div>
+                                            <div class="item-total font-medium text-fg-base text-sm">{{
+                                                session.get('currency') }}0.00</div>
                                         </td>
                                         <td class="px-4 py-3 text-center">
                                             <button type="button"
@@ -299,20 +289,24 @@ endblock %}
                             <div class="space-y-2">
                                 <div class="flex justify-between items-center">
                                     <span class="text-fg-muted">{{ _('Subtotal') }}:</span>
-                                    <span id="subtotal" class="font-medium text-fg-base">{{ session.get('currency') }}0.00</span>
+                                    <span id="subtotal" class="font-medium text-fg-base">{{ session.get('currency')
+                                        }}0.00</span>
                                 </div>
                                 <div class="flex justify-between items-center">
                                     <span class="text-fg-muted">{{ _('Tax') }} (15%):</span>
-                                    <span id="tax-15" class="font-medium text-fg-base">{{ session.get('currency') }}0.00</span>
+                                    <span id="tax-15" class="font-medium text-fg-base">{{ session.get('currency')
+                                        }}0.00</span>
                                 </div>
-                                <div class="justify-between items-center hidden">
+                                <div class="hidden justify-between items-center">
                                     <span class="text-fg-muted">{{ _('Tax') }} (18%):</span>
-                                    <span id="tax-18" class="font-medium text-fg-base">{{ session.get('currency') }}0.00</span>
+                                    <span id="tax-18" class="font-medium text-fg-base">{{ session.get('currency')
+                                        }}0.00</span>
                                 </div>
                                 <div class="border-t border-secondary-200 pt-2 mt-2">
                                     <div class="flex justify-between items-center">
                                         <span class="text-fg-base font-semibold">{{ _('Total') }}:</span>
-                                        <span id="total" class="text-xl font-bold text-fg-base">{{ session.get('currency') }}0.00</span>
+                                        <span id="total" class="text-xl font-bold text-fg-base">{{
+                                            session.get('currency') }}0.00</span>
                                     </div>
                                 </div>
                             </div>
@@ -340,6 +334,63 @@ endblock %}
                     {% endif %}
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+<div id="product-picker-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-bg-base rounded-xl shadow-2xl max-w-4xl w-full max-h-[80vh] flex flex-col">
+        <div class="flex items-center justify-between p-6 border-b border-secondary-200">
+            <div>
+                <h3 class="text-xl font-bold text-fg-base">{{ _('Select Product') }}</h3>
+                <p class="text-sm text-fg-muted mt-1">{{ _('Search and select a product to add') }}</p>
+            </div>
+            <button type="button" id="close-modal"
+                class="text-fg-muted hover:text-fg-base p-2 rounded-lg hover:bg-secondary-100 transition">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+
+        <div class="p-6 border-b border-secondary-200">
+            <div class="relative">
+                <input type="text" id="product-search" placeholder="{{ _('Search by name, code, or description...') }}"
+                    class="w-full px-4 py-3 pl-12 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-fg-muted"></i>
+            </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-6">
+            <div id="products-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {% for inventory_item in inventory_items %}
+                <div class="product-card border border-secondary-200 rounded-lg p-4 hover:border-accent-500 hover:bg-secondary-50 cursor-pointer transition"
+                    data-id="{{ inventory_item.id }}" data-name="{{ inventory_item.name }}"
+                    data-description="{{ inventory_item.description|e }}" data-price="{{ inventory_item.price }}"
+                    data-stock="{{ inventory_item.quantity }}"
+                    data-search="{{ (inventory_item.name + ' ' + (inventory_item.description or '') + ' ' + inventory_item.id|string)|lower }}">
+                    <div class="flex items-start justify-between mb-2">
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-fg-base">{{ inventory_item.name }}</h4>
+                            <p class="text-xs text-fg-muted mt-1">{{ _('Code') }}: {{ inventory_item.id }}</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-lg font-bold text-accent-500">{{ session.get('currency') }}{{
+                                "{:,.2f}".format(inventory_item.price) }}</div>
+                            <div
+                                class="text-xs {% if inventory_item.quantity > 10 %}text-green-600{% elif inventory_item.quantity > 0 %}text-yellow-600{% else %}text-red-600{% endif %}">
+                                <i class="fas fa-box mr-1"></i>{{ inventory_item.quantity }} {{ _('in stock') }}
+                            </div>
+                        </div>
+                    </div>
+                    {% if inventory_item.description %}
+                    <p class="text-sm text-fg-muted line-clamp-2">{{ inventory_item.description }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            <div id="no-results" class="hidden text-center py-12">
+                <i class="fas fa-search text-4xl text-fg-muted mb-4"></i>
+                <p class="text-fg-muted">{{ _('No products found') }}</p>
+            </div>
         </div>
     </div>
 </div>
