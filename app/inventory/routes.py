@@ -460,7 +460,7 @@ def api_adjust_stock(company_id, id):
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
     
     data = request.get_json()
-    adjustment = data.get('adjustment', 0) if data else 0
+    adjustment = int(data.get('adjustment', 0)) if data else 0
     
     try:
         new_quantity = max(0, item.quantity + adjustment)

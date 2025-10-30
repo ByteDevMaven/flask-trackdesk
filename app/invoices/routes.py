@@ -224,7 +224,7 @@ def store(company_id):
                     inventory_item = InventoryItem.query.get(int(inventory_item_id))
                     if inventory_item and doc_type == DocumentType.invoice:
                         # Decrease inventory quantity
-                        inventory_item.quantity = (inventory_item.quantity or 0) - int(quantity)
+                        inventory_item.quantity = int(inventory_item.quantity or 0) - int(quantity)
                         if inventory_item.quantity < 0:
                             inventory_item.quantity = 0
 
