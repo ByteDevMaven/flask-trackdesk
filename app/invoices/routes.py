@@ -336,31 +336,28 @@ def edit(company_id, id):
 @login_required
 @limiter.exempt
 def update(company_id, id):
-    csrf_token = request.form.get("csrf_token") 
+    csrf_token = request.form.get("csrf_token")
 
     try:
         validate_csrf(csrf_token)
     except ValidationError:
         flash(_("Invalid CSRF token. Please try again."), "error")
-        return redirect(url_for("auth.login")) 
-    
+        return redirect(url_for("auth.login"))
+
     document = Document.query.filter(
         Document.id == id,
         Document.company_id == company_id,
         or_(Document.type == DocumentType.invoice, Document.type == DocumentType.quote)
     ).first_or_404()
-    
+
     try:
-        # Get the new document type from form
         doc_type_str = request.form.get('type', 'invoice')
         new_doc_type = DocumentType.invoice if doc_type_str == 'invoice' else DocumentType.quote
 
-        # Check if the type changed or document_number is missing
         if new_doc_type != document.type or not request.form.get('document_number'):
             company_id_str = str(company_id)
             type_letter = 'I' if new_doc_type == DocumentType.invoice else 'Q'
 
-            # Keep the same sequence if the old document_number exists
             if document.document_number:
                 try:
                     seq_num = int(document.document_number.split('-')[-1])
@@ -370,10 +367,8 @@ def update(company_id, id):
                 seq_num = None
 
             if seq_num is not None:
-                # Keep sequence, just change type letter
                 new_number = f"{type_letter}-{company_id_str}-{seq_num:06d}"
 
-                # Check if another document already has this number
                 exists = Document.query.filter(
                     Document.company_id == company_id,
                     Document.type == new_doc_type,
@@ -382,10 +377,9 @@ def update(company_id, id):
                 ).first()
                 if exists:
                     raise ValueError(_("Document number already exists for this type"))
-                
+
                 document.document_number = new_number
             else:
-                # No valid existing sequence → generate new
                 last_doc = Document.query.filter(
                     Document.company_id == company_id,
                     Document.type == new_doc_type
@@ -401,51 +395,64 @@ def update(company_id, id):
 
                 document.document_number = f"{type_letter}-{company_id_str}-{last_seq + 1:06d}"
         else:
-            # Keep manually provided or existing number
             document.document_number = request.form.get('document_number', document.document_number)
 
-        # Update core document fields
         document.type = new_doc_type
-        document.client_id = int(request.form.get('client_id')) if request.form.get('client_id') else None # type: ignore
+        document.client_id = int(request.form.get('client_id')) if request.form.get('client_id') else None
         document.status = request.form.get('status', document.status)
-        document.issued_date = datetime.strptime(request.form.get('issued_date'), '%Y-%m-%d') if request.form.get('issued_date') else document.issued_date # type: ignore
-        document.due_date = datetime.strptime(request.form.get('due_date'), '%Y-%m-%d') if request.form.get('due_date') else document.due_date # type: ignore
+        document.issued_date = datetime.strptime(request.form.get('issued_date'), '%Y-%m-%d') if request.form.get('issued_date') else document.issued_date
+        document.due_date = datetime.strptime(request.form.get('due_date'), '%Y-%m-%d') if request.form.get('due_date') else document.due_date
 
-        # Delete existing items
+        # --- RESTORE STOCK FROM OLD ITEMS ---
+        old_items = DocumentItem.query.filter_by(document_id=document.id).all()
+        for old in old_items:
+            if old.inventory_item_id:
+                inv = InventoryItem.query.get(old.inventory_item_id)
+                if inv:
+                    inv.quantity += old.quantity
+
+        # Delete old document items
         DocumentItem.query.filter_by(document_id=document.id).delete()
 
-        # Process new items
         total_amount = 0
         items_data = {}
 
-        # Parse form data for items
         for key, value in request.form.items():
             if key.startswith('items[') and '][' in key:
                 parts = key.split('][')
                 index = parts[0].split('[')[1]
                 field = parts[1].rstrip(']')
-                
+
                 if index not in items_data:
                     items_data[index] = {}
                 items_data[index][field] = value
 
-        # Create new document items
         for item_data in items_data.values():
             if item_data.get('inventory_item_id') or item_data.get('description'):
                 quantity = int(item_data.get('quantity', 0)) if item_data.get('quantity') else 0
                 unit_price = float(item_data.get('unit_price', 0)) if item_data.get('unit_price') else 0
                 discount = float(item_data.get('discount', 0)) if item_data.get('discount') else 0
+                inventory_item_id = int(item_data.get('inventory_item_id')) if item_data.get('inventory_item_id') else None
 
                 document_item = DocumentItem(
-                    document_id=document.id, # type: ignore
-                    inventory_item_id=int(item_data.get('inventory_item_id')) if item_data.get('inventory_item_id') else None, # type: ignore
-                    description=item_data.get('description', ''), # type: ignore
-                    quantity=quantity, # type: ignore
-                    unit_price=unit_price, # type: ignore
-                    discount=discount # type: ignore
+                    document_id=document.id,
+                    inventory_item_id=inventory_item_id,
+                    description=item_data.get('description', ''),
+                    quantity=quantity,
+                    unit_price=unit_price,
+                    discount=discount
                 )
 
                 db.session.add(document_item)
+
+                # Reduce inventory stock (new value)
+                if inventory_item_id:
+                    inv = InventoryItem.query.get(inventory_item_id)
+                    if inv:
+                        if inv.quantity < quantity:
+                            raise ValueError(_("Not enough stock for: ") + inv.name)
+                        inv.quantity -= quantity
+
                 item_total = quantity * unit_price
                 item_discount = item_total * (discount / 100)
                 total_amount += item_total - item_discount

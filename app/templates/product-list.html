@@ -1,0 +1,56 @@
+<div id="product-picker-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-bg-base rounded-xl shadow-2xl max-w-4xl w-full max-h-[80vh] flex flex-col">
+        <div class="flex items-center justify-between p-6 border-b border-secondary-200">
+            <div>
+                <h3 class="text-xl font-bold text-fg-base">{{ _('Select Product') }}</h3>
+                <p class="text-sm text-fg-muted mt-1">{{ _('Search and select a product to add') }}</p>
+            </div>
+            <button title="close" type="button" id="close-modal"
+                class="text-fg-muted hover:text-fg-base p-2 rounded-lg hover:bg-secondary-100 transition">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+
+        <div class="p-6 border-b border-secondary-200">
+            <div class="relative">
+                <input type="text" id="product-search" placeholder="{{ _('Search by name, code, or description...') }}"
+                    class="w-full px-4 py-3 pl-12 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-fg-muted"></i>
+            </div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto p-6">
+            <div id="products-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {% for inventory_item in inventory_items %}
+                <div class="product-card border border-secondary-200 rounded-lg p-4 hover:border-accent-500 hover:bg-secondary-50 cursor-pointer transition"
+                    data-id="{{ inventory_item.id }}" data-name="{{ inventory_item.name }}"
+                    data-description="{{ inventory_item.description|e }}" data-price="{{ inventory_item.price }}"
+                    data-stock="{{ inventory_item.quantity }}"
+                    data-search="{{ (inventory_item.name + ' ' + (inventory_item.description or '') + ' ' + inventory_item.id|string)|lower }}">
+                    <div class="flex items-start justify-between mb-2">
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-fg-base">{{ inventory_item.name }}</h4>
+                            <p class="text-xs text-fg-muted mt-1">{{ _('Code') }}: {{ inventory_item.id }}</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-lg font-bold text-accent-500">{{ session.get('currency') }}{{
+                                "{:,.2f}".format(inventory_item.price) }}</div>
+                            <div
+                                class="text-xs {% if inventory_item.quantity > 10 %}text-green-600{% elif inventory_item.quantity > 0 %}text-yellow-600{% else %}text-red-600{% endif %}">
+                                <i class="fas fa-box mr-1"></i>{{ inventory_item.quantity }} {{ _('in stock') }}
+                            </div>
+                        </div>
+                    </div>
+                    {% if inventory_item.description %}
+                    <p class="text-sm text-fg-muted line-clamp-2">{{ inventory_item.description }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+            <div id="no-results" class="hidden text-center py-12">
+                <i class="fas fa-search text-4xl text-fg-muted mb-4"></i>
+                <p class="text-fg-muted">{{ _('No products found') }}</p>
+            </div>
+        </div>
+    </div>
+</div>

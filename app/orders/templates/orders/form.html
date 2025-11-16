@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
-{% block title %}{% if order %}{{ _('Edit Purchase Order') }}{% else %}{{ _('Create Purchase Order') }}{% endif %} - {{ _('Business Management System') }}{% endblock %}
+{% block title %}{% if order %}{{ _('Edit Purchase Order') }}{% else %}{{ _('Create Purchase Order') }}{% endif %} - {{
+_('Business Management System') }}{% endblock %}
 
 {% block content %}
 <!-- Header -->
@@ -15,7 +16,8 @@
                 {% if order %}{{ _('Edit Purchase Order') }}{% else %}{{ _('Create Purchase Order') }}{% endif %}
             </h2>
             <p class="text-fg-muted text-sm mt-1">
-                {% if order %}{{ _('Update purchase order details') }}{% else %}{{ _('Create a new purchase order') }}{% endif %}
+                {% if order %}{{ _('Update purchase order details') }}{% else %}{{ _('Create a new purchase order') }}{%
+                endif %}
             </p>
         </div>
     </div>
@@ -25,13 +27,14 @@
 <div class="bg-bg-subtle rounded-xl shadow-sm border border-primary-200">
     <form method="POST" class="p-6" id="purchase-order-form"
         action="{{ url_for('orders.update', company_id=company_id, id=order.id) if order else url_for('orders.create', company_id=company_id) }}">
+        <input type="hidden" id="currencySymbol" value="{{ session.get('currency') }}">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
         <!-- Supplier Selection -->
         <div class="mb-8">
             <div class="bg-bg-base rounded-lg p-4 border border-primary-200">
                 <h3 class="text-lg font-medium text-fg-base mb-4">{{ _('Order Information') }}</h3>
-                
+
                 {% if order %}
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-fg-base mb-2">{{ _('Order Number') }}</label>
@@ -47,8 +50,10 @@
                         class="w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
                         <option value="">{{ _('Select a supplier') }}</option>
                         {% for supplier in suppliers %}
-                        {% set selected_supplier = order.supplier_id if order else (form_data.supplier_id if form_data else '') %}
-                        <option value="{{ supplier.id }}" {% if selected_supplier|string==supplier.id|string %}selected{% endif %}>
+                        {% set selected_supplier = order.supplier_id if order else (form_data.supplier_id if form_data
+                        else '') %}
+                        <option value="{{ supplier.id }}" {% if selected_supplier|string==supplier.id|string
+                            %}selected{% endif %}>
                             {{ supplier.name }}
                         </option>
                         {% endfor %}
@@ -75,84 +80,119 @@
                     </button>
                 </div>
 
-                <div id="items-container">
-                    {% if order and order.items %}
-                    {% for item in order.items %}
-                    <div class="item-row grid grid-cols-1 md:grid-cols-6 gap-4 mb-4 p-4 bg-bg-subtle rounded-lg border border-primary-200">
-                        <div>
-                            <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Item') }}</label>
-                            <select name="item_{{ loop.index0 }}_id" class="item-select w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base" required>
-                                <option value="">{{ _('Select item') }}</option>
-                                {% for inv_item in inventory_items %}
-                                <option value="{{ inv_item.id }}" data-price="{{ inv_item.price }}" data-code="{{ inv_item.code }}" {% if inv_item.id == item.inventory_item_id %}selected{% endif %}>
-                                    {{ inv_item.name }}
-                                </option>
+                <!-- Replaced select dropdowns with product picker modal interface -->
+                <div class="border border-primary-200 rounded-lg overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-primary-200">
+                            <thead class="bg-primary-50 sticky top-0">
+                                <tr>
+                                    <th
+                                        class="px-4 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider min-w-[200px]">
+                                        {{ _('Item') }}
+                                    </th>
+                                    <th
+                                        class="px-4 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider w-24">
+                                        {{ _('Code') }}
+                                    </th>
+                                    <th
+                                        class="px-4 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider w-24">
+                                        {{ _('Qty') }}
+                                    </th>
+                                    <th
+                                        class="px-4 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider w-32">
+                                        {{ _('Unit Price') }}
+                                    </th>
+                                    <th
+                                        class="px-4 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider w-32">
+                                        {{ _('Total') }}
+                                    </th>
+                                    <th
+                                        class="px-4 py-3 text-center text-xs font-medium text-fg-muted uppercase tracking-wider w-16">
+                                        {{ _('Action') }}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="items-container" class="bg-bg-base divide-y divide-primary-200">
+                                {% if order and order.items %}
+                                {% for item in order.items %}
+                                <tr class="item-row hover:bg-primary-50"
+                                    data-item-id="{{ item.inventory_item_id or '' }}">
+                                    <td class="px-4 py-3">
+                                        <input type="hidden" name="items[{{ loop.index0 }}][inventory_item_id]"
+                                            value="{{ item.inventory_item_id or '' }}" class="item-id-input">
+                                        <button type="button"
+                                            class="select-product-btn w-full px-3 py-2 text-left text-sm border border-primary-300 rounded-lg hover:bg-primary-50 focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base flex items-center justify-between">
+                                            <span class="product-name">{{ item.inventory_item.name if
+                                                item.inventory_item else _('Select a product') }}</span>
+                                            <i class="fas fa-search text-fg-muted text-xs"></i>
+                                        </button>
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        <input type="text" name="items[{{ loop.index0 }}][code]" value="{{ item.code }}"
+                                            class="code-input w-full px-2 py-1 text-sm border border-primary-300 rounded focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        <input type="number" name="items[{{ loop.index0 }}][quantity]"
+                                            value="{{ item.quantity }}" min="1"
+                                            class="w-full px-2 py-1 text-sm border border-primary-300 rounded focus:ring-accent-500 focus:border-accent-500 item-quantity bg-bg-base text-fg-base">
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        <input type="number" name="items[{{ loop.index0 }}][price]"
+                                            value="{{ item.price }}" min="0" step="0.01"
+                                            class="w-full px-2 py-1 text-sm border border-primary-300 rounded focus:ring-accent-500 focus:border-accent-500 item-price bg-bg-base text-fg-base">
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        <div class="item-total font-medium text-fg-base text-sm">
+                                            {{ session.get('currency') }}{{ "{:,.2f}".format((item.quantity or 0) *
+                                            (item.price or 0)) }}
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 text-center">
+                                        <button type="button"
+                                            class="text-btn-danger-bg hover:text-btn-danger-hover remove-item p-1 rounded">
+                                            <i class="fas fa-trash text-sm"></i>
+                                        </button>
+                                    </td>
+                                </tr>
                                 {% endfor %}
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Code') }}</label>
-                            <input type="text" name="item_{{ loop.index0 }}_code" value="{{ item.code }}" required
-                                class="code-input w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Quantity') }}</label>
-                            <input type="number" name="item_{{ loop.index0 }}_quantity" value="{{ item.quantity }}" min="1" required
-                                class="quantity-input w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Unit Price') }}</label>
-                            <input type="number" name="item_{{ loop.index0 }}_price" value="{{ item.price }}" step="0.01" min="0" required
-                                class="price-input w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Total') }}</label>
-                            <input type="text" class="total-display w-full px-3 py-2 border border-primary-300 rounded-lg bg-primary-50 text-fg-base" readonly value="{{ session.get('currency') }}{{ '{:,.2f}'.format(item.total) }}">
-                        </div>
-                        <div class="flex items-end">
-                            <button type="button" class="remove-item-btn w-full bg-btn-danger-bg text-btn-danger-text px-3 py-2 rounded-lg hover:bg-btn-danger-hover transition text-sm">
-                                <i class="fas fa-trash mr-1"></i>{{ _('Remove') }}
-                            </button>
-                        </div>
+                                {% else %}
+                                <tr class="item-row hover:bg-primary-50" data-item-id="">
+                                    <td class="px-4 py-3">
+                                        <input type="hidden" name="items[0][inventory_item_id]" value=""
+                                            class="item-id-input">
+                                        <button type="button"
+                                            class="select-product-btn w-full px-3 py-2 text-left text-sm border border-primary-300 rounded-lg hover:bg-primary-50 focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base flex items-center justify-between">
+                                            <span class="product-name text-fg-muted">{{ _('Select a product') }}</span>
+                                            <i class="fas fa-search text-fg-muted text-xs"></i>
+                                        </button>
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        <input type="text" name="items[0][code]"
+                                            class="code-input w-full px-2 py-1 text-sm border border-primary-300 rounded focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        <input type="number" name="items[0][quantity]" value="1" min="1"
+                                            class="w-full px-2 py-1 text-sm border border-primary-300 rounded focus:ring-accent-500 focus:border-accent-500 item-quantity bg-bg-base text-fg-base">
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        <input type="number" name="items[0][price]" value="0.00" min="0" step="0.01"
+                                            class="w-full px-2 py-1 text-sm border border-primary-300 rounded focus:ring-accent-500 focus:border-accent-500 item-price bg-bg-base text-fg-base">
+                                    </td>
+                                    <td class="px-4 py-3">
+                                        <div class="item-total font-medium text-fg-base text-sm">{{
+                                            session.get('currency') }}0.00</div>
+                                    </td>
+                                    <td class="px-4 py-3 text-center">
+                                        <button type="button"
+                                            class="text-btn-danger-bg hover:text-btn-danger-hover remove-item p-1 rounded">
+                                            <i class="fas fa-trash text-sm"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
                     </div>
-                    {% endfor %}
-                    {% else %}
-                    <div class="item-row grid grid-cols-1 md:grid-cols-5 gap-4 mb-4 p-4 bg-bg-subtle rounded-lg border border-primary-200">
-                        <div>
-                            <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Item') }}</label>
-                            <select name="item_0_id" class="item-select w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base" required>
-                                <option value="">{{ _('Select item') }}</option>
-                                {% for item in inventory_items %}
-                                <option value="{{ item.id }}" data-price="{{ item.price }}">{{ item.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Code') }}</label>
-                            <input type="text" name="item_0_code" required
-                                class="code-input w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Quantity') }}</label>
-                            <input type="number" name="item_0_quantity" value="1" min="1" required
-                                class="quantity-input w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Unit Price') }}</label>
-                            <input type="number" name="item_0_price" value="0.00" step="0.01" min="0" required
-                                class="price-input w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Total') }}</label>
-                            <input type="text" class="total-display w-full px-3 py-2 border border-primary-300 rounded-lg bg-primary-50 text-fg-base" readonly value="{{ session.get('currency') }}0.00">
-                        </div>
-                        <div class="flex items-end">
-                            <button type="button" class="remove-item-btn w-full bg-btn-danger-bg text-btn-danger-text px-3 py-2 rounded-lg hover:bg-btn-danger-hover transition text-sm">
-                                <i class="fas fa-trash mr-1"></i>{{ _('Remove') }}
-                            </button>
-                        </div>
-                    </div>
-                    {% endif %}
                 </div>
 
                 <!-- Order Total -->
@@ -161,7 +201,8 @@
                         <div class="bg-accent-50 rounded-lg p-4 border border-accent-200">
                             <div class="text-right">
                                 <p class="text-sm text-fg-muted">{{ _('Order Total') }}</p>
-                                <p class="text-2xl font-bold text-fg-base" id="order-total">{{ session.get('currency') }}0.00</p>
+                                <p class="text-2xl font-bold text-fg-base" id="order-total">{{ session.get('currency')
+                                    }}0.00</p>
                             </div>
                         </div>
                     </div>
@@ -186,147 +227,8 @@
     </form>
 </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        let itemIndex = {{ order.items|length if order and order.items else 1 }};
-        const currency = '{{ session.get("currency") }}';
+{% include 'product-list.html' %}
 
-        // Add item functionality
-        document.getElementById('add-item-btn').addEventListener('click', function () {
-            const container = document.getElementById('items-container');
-            const newRow = createItemRow(itemIndex);
-            container.appendChild(newRow);
-            itemIndex++;
-            updateOrderTotal();
-        });
+<script src="{{ url_for('orders.static', filename='js/form.js') }}"></script>
 
-        // Remove item functionality
-        document.addEventListener('click', function (e) {
-            if (e.target.closest('.remove-item-btn')) {
-                const row = e.target.closest('.item-row');
-                if (document.querySelectorAll('.item-row').length > 1) {
-                    row.remove();
-                    updateOrderTotal();
-                } else {
-                    alert('{{ _("At least one item is required") }}');
-                }
-            }
-        });
-
-        // Update totals when inputs change
-        document.addEventListener('input', function (e) {
-            if (e.target.classList.contains('quantity-input') || e.target.classList.contains('price-input')) {
-                updateRowTotal(e.target.closest('.item-row'));
-                updateOrderTotal();
-            }
-        });
-
-        // Auto-fill price when item is selected
-        document.addEventListener('change', function (e) {
-            if (e.target.classList.contains('item-select')) {
-                const selectedOption = e.target.options[e.target.selectedIndex];
-                const price = selectedOption.dataset.price || '0.00';
-                const code = selectedOption.dataset.code || '';
-                const row = e.target.closest('.item-row');
-                const priceInput = row.querySelector('.price-input');
-                priceInput.value = price;
-                const codeInput = row.querySelector('.code-input');
-                codeInput.value = code;
-                updateRowTotal(row);
-                updateOrderTotal();
-            }
-        });
-
-        function createItemRow(index) {
-            const div = document.createElement('div');
-            div.className = 'item-row grid grid-cols-1 md:grid-cols-5 gap-4 mb-4 p-4 bg-bg-subtle rounded-lg border border-primary-200';
-            div.innerHTML = `
-                <div>
-                    <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Item') }}</label>
-                    <select name="item_${index}_id" class="item-select w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base" required>
-                        <option value="">{{ _('Select item') }}</option>
-                        {% for item in inventory_items %}
-                        <option value="{{ item.id }}" data-price="{{ item.price }}">{{ item.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Code') }}</label>
-                    <input type="text" name="item_${index}_code" required
-                        class="code-input w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Quantity') }}</label>
-                    <input type="number" name="item_${index}_quantity" value="1" min="1" required
-                        class="quantity-input w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Unit Price') }}</label>
-                    <input type="number" name="item_${index}_price" value="0.00" step="0.01" min="0" required
-                        class="price-input w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-fg-base mb-1">{{ _('Total') }}</label>
-                    <input type="text" class="total-display w-full px-3 py-2 border border-primary-300 rounded-lg bg-primary-50 text-fg-base" readonly value="${currency}0.00">
-                </div>
-                <div class="flex items-end">
-                    <button type="button" class="remove-item-btn w-full bg-btn-danger-bg text-btn-danger-text px-3 py-2 rounded-lg hover:bg-btn-danger-hover transition text-sm">
-                        <i class="fas fa-trash mr-1"></i>{{ _('Remove') }}
-                    </button>
-                </div>
-            `;
-            return div;
-        }
-
-        function updateRowTotal(row) {
-            const quantity = parseFloat(row.querySelector('.quantity-input').value) || 0;
-            const price = parseFloat(row.querySelector('.price-input').value) || 0;
-            const total = quantity * price;
-            row.querySelector('.total-display').value = currency + total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        }
-
-        function updateOrderTotal() {
-            let total = 0;
-            document.querySelectorAll('.item-row').forEach(row => {
-                const quantity = parseFloat(row.querySelector('.quantity-input').value) || 0;
-                const price = parseFloat(row.querySelector('.price-input').value) || 0;
-                total += quantity * price;
-            });
-            document.getElementById('order-total').textContent = currency + total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        }
-
-        // Initial calculation
-        document.querySelectorAll('.item-row').forEach(updateRowTotal);
-        updateOrderTotal();
-
-        // Form validation
-        document.getElementById('purchase-order-form').addEventListener('submit', function (e) {
-            const supplierSelect = document.getElementById('supplier_id');
-            if (!supplierSelect.value) {
-                e.preventDefault();
-                alert('{{ _("Please select a supplier") }}');
-                supplierSelect.focus();
-                return;
-            }
-
-            const itemRows = document.querySelectorAll('.item-row');
-            let hasValidItem = false;
-
-            itemRows.forEach(row => {
-                const itemSelect = row.querySelector('.item-select');
-                const quantity = row.querySelector('.quantity-input');
-                const price = row.querySelector('.price-input');
-
-                if (itemSelect.value && quantity.value && price.value) {
-                    hasValidItem = true;
-                }
-            });
-
-            if (!hasValidItem) {
-                e.preventDefault();
-                alert('{{ _("Please add at least one valid item") }}');
-            }
-        });
-    });
-</script>
 {% endblock %}

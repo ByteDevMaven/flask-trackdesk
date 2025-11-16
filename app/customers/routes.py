@@ -4,7 +4,7 @@ from flask_babel import _, get_locale
 from sqlalchemy import or_
 import math
 
-from models import Client, Document, DocumentType, db
+from models import Client, Payment, Document, DocumentType, db
 
 from . import customers
 
@@ -72,7 +72,28 @@ def index(company_id = None):
     # Get client statistics
     client_stats = {}
     for client in clients:
-        # Count documents for each client - filter by company_id
+        # Get all invoices for this client
+        invoices = Document.query.filter(
+            Document.client_id == client.id,
+            Document.company_id == company_id,
+            Document.type == DocumentType.invoice
+        ).all()
+
+        outstanding = 0
+
+        for inv in invoices:
+            total_paid = db.session.query(
+                db.func.sum(Payment.amount)
+            ).filter(
+                Payment.document_id == inv.id,
+                Payment.company_id == company_id
+            ).scalar() or 0
+
+            remaining = (inv.total_amount or 0) - total_paid
+
+            if remaining > 0:
+                outstanding += remaining
+
         client_stats[client.id] = {
             'total_invoices': Document.query.filter_by(
                 client_id=client.id,
@@ -84,14 +105,7 @@ def index(company_id = None):
                 company_id=company_id,
                 type=DocumentType.quote
             ).count(),
-            'outstanding_amount': db.session.query(
-                db.func.sum(Document.total_amount)
-            ).filter(
-                Document.client_id == client.id,
-                Document.company_id == company_id,
-                Document.type == DocumentType.invoice,
-                Document.status != 'paid'
-            ).scalar() or 0
+            'outstanding_amount': outstanding
         }
     
     # Prepare pagination links
@@ -288,7 +302,6 @@ def view(company_id = None, id = 0):
         flash(_('You do not have access to this client'), 'error')
         return redirect(url_for('customers.index'))
     
-    # Get client documents - filter by company_id
     invoices = Document.query.filter_by(
         client_id=id,
         company_id=client.company_id,
@@ -301,7 +314,6 @@ def view(company_id = None, id = 0):
         type=DocumentType.quote
     ).order_by(Document.issued_date.desc()).all()
     
-    # Calculate statistics
     total_invoiced = db.session.query(
         db.func.sum(Document.total_amount)
     ).filter(
@@ -309,15 +321,21 @@ def view(company_id = None, id = 0):
         Document.company_id == client.company_id,
         Document.type == DocumentType.invoice
     ).scalar() or 0
-    
-    outstanding_amount = db.session.query(
-        db.func.sum(Document.total_amount)
-    ).filter(
-        Document.client_id == id,
-        Document.company_id == client.company_id,
-        Document.type == DocumentType.invoice,
-        Document.status != 'paid'
-    ).scalar() or 0
+
+    outstanding_amount = 0
+
+    for inv in invoices:
+        total_paid = db.session.query(
+            db.func.sum(Payment.amount)
+        ).filter(
+            Payment.document_id == inv.id,
+            Payment.company_id == client.company_id
+        ).scalar() or 0
+
+        remaining = (inv.total_amount or 0) - total_paid
+
+        if remaining > 0:
+            outstanding_amount += remaining
     
     return render_template(
         'customers/view.html',
