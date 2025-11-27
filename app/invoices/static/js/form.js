@@ -12,6 +12,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const currency = document.getElementById("currencySymbol").value
   const csrftoken = document.querySelector('input[name="csrf_token"]').value
 
+  function reindexItems() {
+    document.querySelectorAll(".item-row").forEach((row, i) => {
+      row.querySelector(".item-id-input")?.setAttribute("name", `items[${i}][inventory_item_id]`)
+      row.querySelector(".item-description")?.setAttribute("name", `items[${i}][description]`)
+      row.querySelector(".item-quantity")?.setAttribute("name", `items[${i}][quantity]`)
+      row.querySelector(".item-price")?.setAttribute("name", `items[${i}][unit_price]`)
+      row.querySelector(".item-discount")?.setAttribute("name", `items[${i}][discount]`)
+    })
+
+    itemIndex = document.querySelectorAll(".item-row").length
+  }
+
   addItemBtn.addEventListener("click", async () => {
     const formData = new FormData()
     formData.append("index", itemIndex)
@@ -147,9 +159,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const row = e.target.closest(".item-row")
       if (itemsContainer.children.length > 1) {
         row.remove()
+        reindexItems()
         updateTotals()
-      } else {
-        alert("At least one item is required")
       }
     }
   })

@@ -215,7 +215,16 @@ def store(company_id):
         # Create document items
         for item_data in items_data.values():
             if item_data.get('inventory_item_id') or item_data.get('description'):
-                quantity = int(item_data.get('quantity', 0)) if item_data.get('quantity') else 0
+                raw_q = item_data.get('quantity')
+
+                try:
+                    quantity = int(float(raw_q))
+                except (TypeError, ValueError):
+                    quantity = 0
+
+                if quantity <= 0:
+                    quantity = 1
+
                 unit_price = float(item_data.get('unit_price', 0)) if item_data.get('unit_price') else 0
                 discount = float(item_data.get('discount', 0)) if item_data.get('discount') else 0
 
