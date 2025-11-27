@@ -142,6 +142,11 @@ document.addEventListener("DOMContentLoaded", () => {
       // Update price
       currentRow.querySelector(".item-price").value = Number.parseFloat(productPrice).toFixed(2)
 
+      const qtyInput = currentRow.querySelector(".item-quantity")
+      if (!qtyInput.value || Number(qtyInput.value) <= 0) {
+        qtyInput.value = 1
+      }
+
       // Update quantity max
       currentRow.querySelector(".item-quantity").setAttribute("max", productStock)
 
