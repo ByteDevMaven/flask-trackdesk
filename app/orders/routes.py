@@ -98,7 +98,6 @@ def create(company_id):
         try:
             supplier_id = request.form.get('supplier_id')
             
-            # Validation
             if not supplier_id or not supplier_id.isdigit():
                 flash(_('Supplier is required'), 'error')
                 return render_template('orders/form.html', 
@@ -108,64 +107,69 @@ def create(company_id):
                                      purchase_order=None, 
                                      form_data=request.form)
             
-            # Generate order number
             last_order = PurchaseOrder.query.filter_by(company_id=company_id)\
                 .order_by(desc(PurchaseOrder.id)).first()
             order_number = f"PO-{company_id}-{(last_order.id + 1) if last_order else 1:06d}"
             
-            # Create purchase order
             purchase_order = PurchaseOrder(
-                company_id=company_id, # type: ignore
-                order_number=order_number, # type: ignore
-                supplier_id=int(supplier_id), # type: ignore
-                total_amount=0.0 # type: ignore
+                company_id=company_id,
+                order_number=order_number,
+                supplier_id=int(supplier_id),
+                total_amount=0.0
             )
             
             db.session.add(purchase_order)
-            db.session.flush()  # Get the ID
-            
-            # Process items
+            db.session.flush()
+
             total_amount = 0.0
             item_count = 0
-            
-            for key in request.form.keys():
-                if key.startswith('item_') and key.endswith('_id'):
-                    current_app.logger.debug(f"Processing key: {key}")
-                    index = key.split('_')[1]
-                    item_id = request.form.get(f'item_{index}_id')
-                    code = request.form.get(f'item_{index}_code')
-                    quantity = request.form.get(f'item_{index}_quantity')
-                    price = request.form.get(f'item_{index}_price')
-                    
-                    if item_id and quantity and price:
-                        try:
-                            quantity = int(quantity)
-                            price = float(price)
-                            
-                            if quantity > 0 and price >= 0:
-                                inventory_item = InventoryItem.query.get(int(item_id))
-                                if inventory_item and inventory_item.company_id == company_id:
-                                    item_total = quantity * price
-                                    
-                                    po_item = PurchaseOrderItem(
-                                        purchase_order_id=purchase_order.id, # type: ignore
-                                        inventory_item_id=int(item_id), # type: ignore
-                                        name=inventory_item.name, # type: ignore
-                                        item_code=code, # type: ignore
-                                        quantity=quantity, # type: ignore
-                                        price=price, # type: ignore
-                                        total=item_total # type: ignore
-                                    )
 
-                                    inventory_item.quantity += quantity
-                                    db.session.add(inventory_item)
-                                    
-                                    db.session.add(po_item)
-                                    total_amount += item_total
-                                    item_count += 1
-                                    current_app.logger.debug(f"item counter: {item_count}")
-                        except (ValueError, TypeError):
-                            continue
+            indices = set()
+            for key in request.form.keys():
+                if key.startswith('items[') and key.endswith('][inventory_item_id]'):
+                    idx = key.split('[')[1].split(']')[0]
+                    indices.add(idx)
+
+            for index in indices:
+                item_id = request.form.get(f'items[{index}][inventory_item_id]')
+                code = request.form.get(f'items[{index}][code]')
+                quantity = request.form.get(f'items[{index}][quantity]')
+                price = request.form.get(f'items[{index}][price]')
+
+                if item_id and quantity and price:
+                    try:
+                        quantity = int(quantity)
+                        price = float(price)
+
+                        if quantity > 0 and price >= 0:
+                            inventory_item = InventoryItem.query.get(int(item_id))
+                            if inventory_item and inventory_item.company_id == company_id:
+
+                                item_total = quantity * price
+
+                                po_item = PurchaseOrderItem(
+                                    purchase_order_id=purchase_order.id,
+                                    inventory_item_id=int(item_id),
+                                    name=inventory_item.name,
+                                    item_code=code,
+                                    quantity=quantity,
+                                    price=price,
+                                    total=item_total
+                                )
+
+                                # Update stock
+                                inventory_item.quantity += quantity
+                                db.session.add(inventory_item)
+
+                                # Save PO item
+                                db.session.add(po_item)
+
+                                total_amount += item_total
+                                item_count += 1
+                                current_app.logger.debug(f"item counter: {item_count}")
+
+                    except (ValueError, TypeError):
+                        continue
             
             if item_count == 0:
                 flash(_('At least one item is required'), 'error')
