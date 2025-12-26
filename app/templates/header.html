@@ -1,109 +1,88 @@
-<!-- Top Navigation -->
-<header class="bg-bg-topbar shadow-sm sticky top-0 z-10">
-    <div class="flex items-center justify-between p-4">
-        <div class="flex items-center">
-            <button title="Menu" type="button" class="md:hidden text-secondary-600 mr-3 hover:bg-secondary-100 p-2 rounded-lg transition-colors"
-                id="menu-toggle">
-                <i class="fas fa-bars text-xl"></i>
+<header class="bg-bg-topbar sticky top-0 z-10">
+    <div class="h-17 px-4 flex items-center justify-between">
+
+        <!-- Left -->
+        <div class="flex items-center gap-3">
+            <button type="button" id="sidebar-toggle" title="Menu" class="w-8 h-8 flex items-center justify-center rounded-md
+                   text-fg-muted hover:text-accent-500 hover:bg-primary-500/40 transition">
+                <i class="fas fa-bars"></i>
             </button>
-            <div class="md:hidden flex items-center">
-                <div
-                    class="w-8 h-8 bg-gradient-to-r from-accent-400 to-accent-600 rounded-lg flex items-center justify-center text-white mr-2">
-                    <i class="fas fa-chart-line text-sm"></i>
-                </div>
-                <span class="font-bold text-secondary-800 text-lg">Trackdesk</span>
-            </div>
         </div>
 
-        <div class="relative hidden">
-            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <i class="fas fa-search text-secondary-400"></i>
-            </div>
-            <input type="text" placeholder="{{ _('Search...') }}"
-                class="bg-secondary-50 rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500/50 w-64 text-sm">
-        </div>
+        <!-- Right -->
+        <div class="flex items-center gap-2">
 
-        <div class="flex items-center space-x-3">
-            <button title="Search" type="button"
-                class="text-secondary-400 hover:text-secondary-600 p-2 rounded-full hover:bg-secondary-50 transition-colors hidden">
-                <i class="fas fa-search"></i>
-            </button>
-
-            <!-- Notifications -->
-            <div class="relative hidden">
-                <button type="button"
-                    class="text-secondary-400 hover:text-secondary-600 p-2 rounded-full hover:bg-secondary-50 transition-colors"
-                    id="notifications-btn">
-                    <i class="fas fa-bell"></i>
-                    <span
-                        class="absolute -top-1 -right-1 bg-accent-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">3</span>
+            <!-- Language -->
+            <div class="relative">
+                <button type="button" id="language-menu-button" class="flex items-center gap-2 px-3 py-2 rounded-md
+                           text-sm text-fg-base hover:bg-primary-500/40 transition">
+                    <i class="fas fa-globe text-accent-500"></i>
+                    <span class="hidden md:inline">
+                        {{ AVAILABLE_LANGUAGES[CURRENT_LANGUAGE] }}
+                    </span>
+                    <i class="fas fa-chevron-down text-xs"></i>
                 </button>
+
+                <div id="language-menu" class="hidden absolute right-0 mt-2 w-44 rounded-md bg-secondary-50
+                           shadow-lg border border-secondary-700/40 z-50">
+                    {% for code, name in AVAILABLE_LANGUAGES.items() %}
+                    <a href="{{ url_for('set_language', language=code) }}" class="block px-4 py-2 text-sm hover:bg-secondary-100
+                              {% if CURRENT_LANGUAGE == code %}font-semibold{% endif %}">
+                        {{ name }}
+                    </a>
+                    {% endfor %}
+                </div>
             </div>
 
-            <div class="relative inline-flex">
-                {% include 'lang-switcher.html' %}
-
-                <!-- Company Selector -->
-                <div class="relative ml-3 mr-3">
-                    <button id="company-menu-button"
-                        class="flex items-center space-x-2 bg-secondary-50 hover:bg-secondary-100 rounded-full py-3 pl-1 pr-3 transition-colors">
-                        <span class="sr-only">{{ _('Open company menu') }}</span>
-                        <span class="flex items-center">
-                            <i class="fas fa-globe mr-1 text-accent-500"></i>
-                            <span class="hidden md:inline">
-                            {% for company in current_user.companies %}
-                                {% if company.id|string==session.get('selected_company_id')|string %}
-                                {{ company.name }}
-                                {% endif %}</span>
-                            {% endfor %}
-                            <i class="fas fa-chevron-down text-xs ml-1"></i>
-                        </span>
-                    </button>
-
-                    <!-- Company Dropdown Menu -->
-                    <div id="company-menu"
-                        class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-secondary-50 ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+            <!-- Company -->
+            <div class="relative">
+                <button type="button" id="company-menu-button" class="flex items-center gap-2 px-3 py-2 rounded-md
+                           text-sm text-fg-base hover:bg-primary-500/40 transition">
+                    <i class="fas fa-building text-accent-500"></i>
+                    <span class="hidden md:inline">
                         {% for company in current_user.companies %}
-                        <a href="{{ url_for('set_company', id=company.id) }}"
-                            class="block px-4 py-2 text-sm text-secondary-700 hover:bg-secondary-100 {% if company.id == session.get('selected_company_id') %}font-bold bg-secondary-50{% endif %}">
-                            {{ company.name }}
-                        </a>
+                        {% if company.id|string == session.get('selected_company_id')|string %}
+                        {{ company.name }}
+                        {% endif %}
                         {% endfor %}
-                    </div>
-                </div>
-
-                <button
-                    class="flex items-center space-x-2 bg-secondary-50 hover:bg-secondary-100 rounded-full py-1 pl-1 pr-3 transition-colors"
-                    id="user-menu-btn">
-                    <div
-                        class="w-8 h-8 bg-gradient-to-r from-accent-300 to-accent-500 rounded-full flex items-center justify-center text-white">
-                        <span class="text-sm font-medium">{{ current_user.name[0].upper() }}</span>
-                    </div>
-                    <span class="text-sm font-medium text-secondary-700 hidden sm:inline">{{ current_user.name }}</span>
-                    <i class="fas fa-chevron-down text-xs text-secondary-400 hidden sm:inline"></i>
+                    </span>
+                    <i class="fas fa-chevron-down text-xs"></i>
                 </button>
 
-                <!-- User dropdown (hidden by default) -->
-                <div class="absolute right-0 top-12 mt-2 w-56 bg-secondary-100 rounded-xl shadow-lg border border-secondary-100 z-20 hidden"
-                    id="user-dropdown">
-                    <div class="p-4 border-b border-secondary-100">
-                        <p class="font-medium text-secondary-800">{{ current_user.name }}</p>
-                        <p class="text-xs text-secondary-500">{{ current_user.email }}</p>
+                <div id="company-menu" class="hidden absolute right-0 mt-2 w-56 rounded-md bg-secondary-50
+                           shadow-lg border border-secondary-700/40 z-50">
+                    {% for company in current_user.companies %}
+                    <a href="{{ url_for('set_company', id=company.id) }}" class="block px-4 py-2 text-sm hover:bg-secondary-100
+                              {% if company.id == session.get('selected_company_id') %}font-semibold{% endif %}">
+                        {{ company.name }}
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- User -->
+            <div class="relative">
+                <button type="button" id="user-menu-btn" class="flex items-center gap-2 px-2 py-1 rounded-md
+                           hover:bg-primary-500/40 transition">
+                    <div class="w-8 h-8 rounded-full bg-gradient-to-br
+                               from-accent-400 to-accent-600 text-white
+                               flex items-center justify-center text-sm font-semibold">
+                        {{ current_user.name[0].upper() }}
                     </div>
-                    <div class="py-2 hidden">
-                        <a href="#"
-                            class="flex items-center px-4 py-2 text-sm text-secondary-700 hover:bg-secondary-50">
-                            <i class="fas fa-cog mr-3 text-secondary-400 w-5"></i>
-                            <span>{{ _('Settings') }}</span>
-                        </a>
+                    <i class="fas fa-chevron-down text-xs text-fg-muted hidden sm:inline"></i>
+                </button>
+
+                <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-56 rounded-md bg-secondary-50
+                           shadow-lg border border-secondary-700/40 z-50">
+                    <div class="px-4 py-3 border-b border-secondary-700/40">
+                        <p class="text-sm font-medium text-fg-base">{{ current_user.name }}</p>
+                        <p class="text-xs text-fg-muted">{{ current_user.email }}</p>
                     </div>
-                    <div class="py-2 border-t border-secondary-100">
-                        <a href="{{ url_for('auth.logout') }}"
-                            class="flex items-center px-4 py-2 text-sm text-accent-500 hover:bg-secondary-50">
-                            <i class="fas fa-sign-out-alt mr-3 w-5"></i>
-                            <span>{{ _('Sign out') }}</span>
-                        </a>
-                    </div>
+                    <a href="{{ url_for('auth.logout') }}"
+                        class="block px-4 py-2 text-sm text-accent-500 hover:bg-secondary-100">
+                        <i class="fas fa-sign-out-alt mr-2"></i>
+                        {{ _('Sign out') }}
+                    </a>
                 </div>
             </div>
         </div>

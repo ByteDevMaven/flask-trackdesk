@@ -1,155 +1,113 @@
-<aside id="sidebar"
-    class="bg-bg-sidebar shadow-lg h-screen sticky top-0 z-20 transition-all duration-300 ease-in-out w-64 hidden md:block overflow-hidden">
-    <div class="flex flex-col h-full">
-        <!-- Sidebar Header -->
-        <div class="p-5 flex items-center justify-between">
-            <div class="flex items-center">
-                <div
-                    class="w-10 h-10 bg-gradient-to-br from-accent-400 to-accent-600 rounded-xl flex items-center justify-center text-fg-muted shadow-md flex-shrink-0">
-                    <i class="fas fa-briefcase"></i>
-                </div>
-                <h1 class="text-xl font-bold text-fg-base ml-3 whitespace-nowrap">Trackdesk</h1>
-            </div>
-        </div>
+<aside id="sidebar" data-collapsed="false" class="bg-bg-sidebar h-screen hidden md:flex flex-col
+           border-r border-secondary-700/40
+           sticky top-0 z-20
+           transition-[width] duration-200 ease-out
+           w-64 data-[collapsed=true]:w-16">
 
-        <!-- Sidebar Navigation -->
-        <nav
-            class="px-3 flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-secondary-700 scrollbar-track-transparent">
-            <div class="mb-6">
-                <h3 class="text-xs font-semibold text-fg-muted uppercase tracking-wider px-3 mb-3">{{ _('Main') }}</h3>
-                <div class="space-y-1">
-                    <!-- Dashboard Link -->
-                    <a href="{{ url_for('dashboard.index', company_id=session.get('selected_company_id')) }}"
-                        class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg relative overflow-hidden {% if request.endpoint.startswith('dashboard') %}text-accent-600 bg-primary-500{% else %}text-fg-base hover:text-accent-700 hover:bg-primary-500{% endif %}">
-                        <div
-                            class="flex items-center justify-center w-9 h-9 {% if request.endpoint.startswith('dashboard') %}text-accent-600{% else %}text-fg-base group-hover:text-accent-600{% endif %} flex-shrink-0">
-                            <i class="fas fa-tachometer-alt"></i>
-                        </div>
-                        <span class="ml-3 whitespace-nowrap">{{ _('Dashboard') }}</span>
-                    </a>
-
-                    <!-- Clients Link -->
-                    <a href="{{ url_for('customers.index', company_id=session.get('selected_company_id')) }}"
-                        class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg relative overflow-hidden {% if request.endpoint.startswith('customers') %}text-accent-600 bg-primary-500{% else %}text-fg-base hover:text-accent-700 hover:bg-primary-500{% endif %}">
-                        <div
-                            class="flex items-center justify-center w-9 h-9 {% if request.endpoint.startswith('customers') %}text-accent-600{% else %}text-fg-base group-hover:text-accent-600{% endif %} flex-shrink-0">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <span class="ml-3 whitespace-nowrap">{{ _('Clients') }}</span>
-                    </a>
-
-                    <!-- Suppliers Link -->
-                    <a href="{{ url_for('suppliers.index', company_id=session.get('selected_company_id')) }}"
-                        class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg relative overflow-hidden {% if request.endpoint.startswith('suppliers') %}text-accent-600 bg-primary-500{% else %}text-fg-base hover:text-accent-700 hover:bg-primary-500{% endif %}">
-                        <div
-                            class="flex items-center justify-center w-9 h-9 {% if request.endpoint.startswith('suppliers') %}text-accent-600{% else %}text-fg-base group-hover:text-accent-600{% endif %} flex-shrink-0">
-                            <i class="fas fa-truck"></i>
-                        </div>
-                        <span class="ml-3 whitespace-nowrap">{{ _('Suppliers') }}</span>
-                    </a>
-
-                    <!-- Inventory Link -->
-                    <a href="{{ url_for('inventory.index', company_id=session.get('selected_company_id')) }}"
-                        class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg relative overflow-hidden {% if request.endpoint.startswith('inventory') %}text-accent-600 bg-primary-500{% else %}text-fg-base hover:text-accent-700 hover:bg-primary-500{% endif %}">
-                        <div
-                            class="flex items-center justify-center w-9 h-9 {% if request.endpoint.startswith('inventory') %}text-accent-600{% else %}text-fg-base group-hover:text-accent-600{% endif %} flex-shrink-0">
-                            <i class="fas fa-boxes"></i>
-                        </div>
-                        <span class="ml-3 whitespace-nowrap">{{ _('Inventory') }}</span>
-                    </a>
-                </div>
+    <!-- ===== HEADER ===== -->
+    <div class="h-16 flex items-center justify-center px-4">
+        <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-accent-500 to-accent-600
+                       flex items-center justify-center text-white shadow-sm">
+                <i class="fas fa-briefcase text-sm"></i>
             </div>
 
-            <!-- Documents Section -->
-            <div class="mb-6">
-                <h3 class="text-xs font-semibold text-fg-muted uppercase tracking-wider px-3 mb-3">{{ _('Documents') }}
-                </h3>
-                <div class="space-y-1">
-                    <!-- Orders Link -->
-                    <a href="{{ url_for('orders.index', company_id=session.get('selected_company_id')) }}"
-                        class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg relative overflow-hidden {% if request.endpoint.startswith('orders') %}text-accent-600 bg-primary-500{% else %}text-fg-base hover:text-accent-700 hover:bg-primary-500{% endif %}">
-                        <div
-                            class="flex items-center justify-center w-9 h-9 {% if request.endpoint.startswith('orders') %}text-accent-600{% else %}text-fg-base group-hover:text-accent-600{% endif %} flex-shrink-0">
-                            <i class="fas fa-file-invoice-dollar"></i>
-                        </div>
-                        <span class="ml-3 whitespace-nowrap">{{ _('Orders') }}</span>
-                    </a>
-
-                    <!-- Invoices Link -->
-                    <a href="{{ url_for('invoices.index', company_id=session.get('selected_company_id')) }}"
-                        class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg relative overflow-hidden {% if request.endpoint.startswith('invoices') %}text-accent-600 bg-primary-500{% else %}text-fg-base hover:text-accent-700 hover:bg-primary-500{% endif %}">
-                        <div
-                            class="flex items-center justify-center w-9 h-9 {% if request.endpoint.startswith('invoices') %}text-accent-600{% else %}text-fg-base group-hover:text-accent-600{% endif %} flex-shrink-0">
-                            <i class="fas fa-file-invoice"></i>
-                        </div>
-                        <span class="ml-3 whitespace-nowrap">{{ _('Invoices') }}</span>
-                    </a>
-
-                    <!-- Payments Link -->
-                    <a href="{{ url_for('payments.index', company_id=session.get('selected_company_id')) }}"
-                        class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg relative overflow-hidden {% if request.endpoint.startswith('payments') %}text-accent-600 bg-primary-500{% else %}text-fg-base hover:text-accent-700 hover:bg-primary-500{% endif %}">
-                        <div
-                            class="flex items-center justify-center w-9 h-9 {% if request.endpoint.startswith('payments') %}text-accent-600{% else %}text-fg-base group-hover:text-accent-600{% endif %} flex-shrink-0">
-                            <i class="fas fa-money-bill-wave"></i>
-                        </div>
-                        <span class="ml-3 whitespace-nowrap">{{ _('Payments') }}</span>
-                    </a>
-                </div>
-            </div>
-
-            <!-- Settings Section -->
-            <div class="mb-6">
-                <h3 class="text-xs font-semibold text-fg-muted uppercase tracking-wider px-3 mb-3">{{ _('Settings') }}
-                </h3>
-
-                <div class="space-y-1">
-                    <a href="{{ url_for('companies.index') }}"
-                        class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg relative overflow-hidden {% if request.endpoint.startswith('companies') %}text-accent-600 bg-primary-500{% else %}text-fg-base hover:text-accent-700 hover:bg-primary-500{% endif %}">
-                        <div
-                            class="flex items-center justify-center w-9 h-9 {% if request.endpoint.startswith('companies') %}text-accent-600{% else %}text-fg-base group-hover:text-accent-600{% endif %} flex-shrink-0">
-                            <i class="fa-solid fa-building"></i>
-                        </div>
-                        <span class="ml-3 whitespace-nowrap">{{ _('Companies') }}</span>
-                    </a>
-
-                    <!-- Users Link -->
-                    <a href="{{ url_for('users.index') }}"
-                        class="group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg relative overflow-hidden {% if request.endpoint.startswith('users') %}text-accent-600 bg-primary-500{% else %}text-fg-base hover:text-accent-700 hover:bg-primary-500{% endif %}">
-                        <div
-                            class="flex items-center justify-center w-9 h-9 {% if request.endpoint.startswith('users') %}text-accent-600{% else %}text-fg-base group-hover:text-accent-600{% endif %} flex-shrink-0">
-                            <i class="fas fa-user-cog"></i>
-                        </div>
-                        <span class="ml-3 whitespace-nowrap">{{ _('Users') }}</span>
-                    </a>
-                </div>
-            </div>
-        </nav>
-
-        <!-- Sidebar Footer -->
-        <div class="p-4 mt-auto border-t border-secondary-700/50">
-            <div
-                class="group flex items-center p-2 rounded-lg bg-secondary-700/30 hover:bg-secondary-700/50 transition-colors cursor-pointer relative">
-                <!-- Avatar -->
-                <div class="w-10 h-10 relative flex-shrink-0">
-                    <div
-                        class="w-full h-full bg-gradient-to-br from-accent-500 to-accent-300 rounded-full flex items-center justify-center text-fg-base shadow-sm">
-                        <span class="text-sm font-medium">{{ current_user.name[0].upper() }}</span>
-                    </div>
-                    <span
-                        class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-secondary-800 rounded-full"></span>
-                </div>
-
-                <!-- User Info -->
-                <div class="ml-3">
-                    <p class="text-sm font-medium text-fg-base whitespace-nowrap">{{ current_user.name }}</p>
-                    <p class="text-xs text-fg-base whitespace-nowrap">{{ current_user.role_id }}</p>
-                </div>
-
-                <!-- Logout Button -->
-                <a href="{{ url_for('auth.logout') }}" class="ml-auto text-accent-400 hover:text-accent-500 p-1">
-                    <i class="fas fa-sign-out-alt"></i>
-                </a>
-            </div>
+            <span data-sidebar-label class="text-lg font-semibold tracking-tight text-fg-base
+                       data-[collapsed=true]:hidden">
+                Trackdesk
+            </span>
         </div>
     </div>
+
+    <!-- ===== NAV ===== -->
+    <nav class="flex-1 py-4 space-y-6 overflow-y-auto">
+
+        {% macro nav_link(label, endpoint, icon, url) %}
+        {% set active = request.endpoint.startswith(endpoint) %}
+        <a href="{{ url }}" class="group relative flex items-center h-11 mx-2 rounded-md transition
+                  data-[collapsed=true]:justify-center
+                  {% if active %}
+                      bg-primary-500/40 text-accent-600
+                  {% else %}
+                      text-fg-base hover:bg-primary-500/30 hover:text-accent-600
+                  {% endif %}">
+
+            <!-- Icon -->
+            <i class="fas {{ icon }} text-sm w-10 text-center"></i>
+
+            <!-- Label -->
+            <span data-sidebar-label class="ml-2 text-sm font-medium data-[collapsed=true]:hidden">
+                {{ label }}
+            </span>
+
+            <!-- Tooltip (collapsed only) -->
+            <span class="pointer-events-none absolute left-full ml-2 px-2 py-1 rounded-md
+                       text-xs bg-secondary-800 text-fg-base shadow-md
+                       opacity-0 translate-x-1
+                       group-hover:opacity-100 group-hover:translate-x-0
+                       transition
+                       data-[collapsed=false]:hidden">
+                {{ label }}
+            </span>
+
+            <!-- Active dot (collapsed only) -->
+            {% if active %}
+            <span class="absolute right-1 w-1.5 h-1.5 rounded-full bg-accent-500
+                       data-[collapsed=false]:hidden">
+            </span>
+            {% endif %}
+        </a>
+        {% endmacro %}
+
+        <!-- ===== MAIN ===== -->
+        <div>
+            <p data-sidebar-label class="px-4 mb-2 text-xs font-semibold uppercase tracking-wide text-fg-muted
+                       data-[collapsed=true]:hidden">
+                {{ _('Main') }}
+            </p>
+
+            {{ nav_link(_('Dashboard'), 'dashboard', 'fa-tachometer-alt',
+            url_for('dashboard.index', company_id=session.get('selected_company_id'))) }}
+
+            {{ nav_link(_('Clients'), 'customers', 'fa-users',
+            url_for('customers.index', company_id=session.get('selected_company_id'))) }}
+
+            {{ nav_link(_('Suppliers'), 'suppliers', 'fa-truck',
+            url_for('suppliers.index', company_id=session.get('selected_company_id'))) }}
+
+            {{ nav_link(_('Inventory'), 'inventory', 'fa-boxes',
+            url_for('inventory.index', company_id=session.get('selected_company_id'))) }}
+        </div>
+
+        <!-- ===== DOCUMENTS ===== -->
+        <div>
+            <p data-sidebar-label class="px-4 mb-2 text-xs font-semibold uppercase tracking-wide text-fg-muted
+                       data-[collapsed=true]:hidden">
+                {{ _('Documents') }}
+            </p>
+
+            {{ nav_link(_('Orders'), 'orders', 'fa-file-invoice-dollar',
+            url_for('orders.index', company_id=session.get('selected_company_id'))) }}
+
+            {{ nav_link(_('Invoices'), 'invoices', 'fa-file-invoice',
+            url_for('invoices.index', company_id=session.get('selected_company_id'))) }}
+
+            {{ nav_link(_('Payments'), 'payments', 'fa-money-bill-wave',
+            url_for('payments.index', company_id=session.get('selected_company_id'))) }}
+        </div>
+
+        <!-- ===== SETTINGS ===== -->
+        <div>
+            <p data-sidebar-label class="px-4 mb-2 text-xs font-semibold uppercase tracking-wide text-fg-muted
+                       data-[collapsed=true]:hidden">
+                {{ _('Settings') }}
+            </p>
+
+            {{ nav_link(_('Companies'), 'companies', 'fa-building',
+            url_for('companies.index')) }}
+
+            {{ nav_link(_('Users'), 'users', 'fa-user-cog',
+            url_for('users.index')) }}
+        </div>
+    </nav>
 </aside>
