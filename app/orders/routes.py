@@ -106,11 +106,12 @@ def create(company_id):
                                      inventory_items=inventory_items,
                                      purchase_order=None, 
                                      form_data=request.form)
-            
-            last_order = PurchaseOrder.query.filter_by(company_id=company_id)\
-                .order_by(desc(PurchaseOrder.id)).first()
-            order_number = f"PO-{company_id}-{(last_order.id + 1) if last_order else 1:06d}"
-            
+            # Generate next sequential order number for this company
+            last_id = db.session.query(func.max(PurchaseOrder.id))\
+                .filter_by(company_id=company_id).scalar() or 0
+            next_seq = int(last_id) + 1
+            order_number = f"PO-{company_id}-{next_seq:06d}"
+
             purchase_order = PurchaseOrder(
                 company_id=company_id,
                 order_number=order_number,
@@ -123,12 +124,20 @@ def create(company_id):
 
             total_amount = 0.0
             item_count = 0
-
-            indices = set()
+            # Collect item indices and process them in order
+            indices = []
             for key in request.form.keys():
+                # expecting names like items[0][inventory_item_id]
                 if key.startswith('items[') and key.endswith('][inventory_item_id]'):
-                    idx = key.split('[')[1].split(']')[0]
-                    indices.add(idx)
+                    try:
+                        idx = key.split('[', 1)[1].split(']', 1)[0]
+                        if idx not in indices:
+                            indices.append(idx)
+                    except Exception:
+                        continue
+
+            # sort indices to make processing deterministic
+            indices.sort(key=lambda x: int(x) if x.isdigit() else x)
 
             for index in indices:
                 item_id = request.form.get(f'items[{index}][inventory_item_id]')
@@ -147,22 +156,22 @@ def create(company_id):
 
                                 item_total = quantity * price
 
+                                # Ensure quantity is not None
+                                current_qty = inventory_item.quantity if inventory_item.quantity is not None else 0
+                                inventory_item.quantity = current_qty + quantity
+                                db.session.add(inventory_item)
+
                                 po_item = PurchaseOrderItem(
-                                    purchase_order_id=purchase_order.id,
                                     inventory_item_id=int(item_id),
                                     name=inventory_item.name,
-                                    item_code=code,
+                                    item_code=code or '',
                                     quantity=quantity,
                                     price=price,
                                     total=item_total
                                 )
 
-                                # Update stock
-                                inventory_item.quantity += quantity
-                                db.session.add(inventory_item)
-
-                                # Save PO item
-                                db.session.add(po_item)
+                                # attach via relationship to ensure FK is set
+                                purchase_order.items.append(po_item)
 
                                 total_amount += item_total
                                 item_count += 1
@@ -228,91 +237,124 @@ def edit(company_id, id):
 @orders.route('/<int:company_id>/purchase-orders/<int:id>/update', methods=['POST'])
 @login_required
 def update(company_id, id):
-    purchase_order = PurchaseOrder.query.filter_by(id=id, company_id=company_id).first_or_404()
+    purchase_order = PurchaseOrder.query.filter_by(
+        id=id, company_id=company_id
+    ).first_or_404()
+
     suppliers = Supplier.query.filter_by(company_id=company_id).order_by(Supplier.name).all()
     inventory_items = InventoryItem.query.filter_by(company_id=company_id).order_by(InventoryItem.name).all()
-    
+
     try:
         supplier_id = request.form.get('supplier_id')
-        
-        # Validation
+
         if not supplier_id or not supplier_id.isdigit():
             flash(_('Supplier is required'), 'error')
-            return render_template('orders/form.html', 
-                                 company_id=company_id, 
-                                 suppliers=suppliers,
-                                 inventory_items=inventory_items,
-                                 purchase_order=purchase_order, 
-                                 form_data=request.form)
-        
+            return render_template(
+                'orders/form.html',
+                company_id=company_id,
+                suppliers=suppliers,
+                inventory_items=inventory_items,
+                purchase_order=purchase_order,
+                form_data=request.form
+            )
+
         purchase_order.supplier_id = int(supplier_id)
-        
-        # Delete existing items
-        PurchaseOrderItem.query.filter_by(purchase_order_id=purchase_order.id).delete()
-        
-        # Process new items
+
+        for old_item in purchase_order.items:
+            inventory_item = InventoryItem.query.get(old_item.inventory_item_id)
+            if inventory_item and inventory_item.quantity is not None:
+                inventory_item.quantity -= old_item.quantity
+                if inventory_item.quantity < 0:
+                    inventory_item.quantity = 0
+
+        # Clear existing items via relationship
+        purchase_order.items.clear()
+        db.session.flush()
+
         total_amount = 0.0
         item_count = 0
-        
+
+        indices = []
         for key in request.form.keys():
-            if key.startswith('item_') and key.endswith('_id'):
-                index = key.split('_')[1]
-                item_id = request.form.get(f'item_{index}_id')
-                code = request.form.get(f'item_{index}_code')
-                quantity = request.form.get(f'item_{index}_quantity')
-                price = request.form.get(f'item_{index}_price')
-                
-                if item_id and quantity and price:
-                    try:
-                        quantity = int(quantity)
-                        price = float(price)
-                        
-                        if quantity > 0 and price >= 0:
-                            inventory_item = InventoryItem.query.get(int(item_id))
-                            if inventory_item and inventory_item.company_id == company_id:
-                                item_total = quantity * price
-                                
-                                po_item = PurchaseOrderItem(
-                                    purchase_order_id=purchase_order.id, # type: ignore
-                                    inventory_item_id=int(item_id), # type: ignore
-                                    name=inventory_item.name, # type: ignore
-                                    item_code=code, # type: ignore
-                                    quantity=quantity, # type: ignore
-                                    price=price, # type: ignore
-                                    total=item_total # type: ignore
-                                )
-                                
-                                db.session.add(po_item)
-                                total_amount += item_total
-                                item_count += 1
-                    except (ValueError, TypeError):
-                        continue
-        
+            if key.startswith('items[') and key.endswith('][inventory_item_id]'):
+                idx = key.split('[', 1)[1].split(']', 1)[0]
+                if idx not in indices:
+                    indices.append(idx)
+
+        indices.sort(key=lambda x: int(x) if x.isdigit() else x)
+
+        for index in indices:
+            item_id = request.form.get(f'items[{index}][inventory_item_id]')
+            code = request.form.get(f'items[{index}][code]')
+            quantity = request.form.get(f'items[{index}][quantity]')
+            price = request.form.get(f'items[{index}][price]')
+
+            if not item_id or not quantity or not price:
+                continue
+
+            try:
+                quantity = int(quantity)
+                price = float(price)
+
+                if quantity <= 0 or price < 0:
+                    continue
+
+                inventory_item = InventoryItem.query.get(int(item_id))
+                if not inventory_item or inventory_item.company_id != company_id:
+                    continue
+
+                item_total = quantity * price
+
+                current_qty = inventory_item.quantity or 0
+                inventory_item.quantity = current_qty + quantity
+
+                po_item = PurchaseOrderItem(
+                    inventory_item_id=inventory_item.id,
+                    name=inventory_item.name,
+                    item_code=code or '',
+                    quantity=quantity,
+                    price=price,
+                    total=item_total
+                )
+
+                purchase_order.items.append(po_item)
+
+                total_amount += item_total
+                item_count += 1
+
+            except (ValueError, TypeError):
+                continue
+
         if item_count == 0:
             flash(_('At least one item is required'), 'error')
-            return render_template('orders/form.html', 
-                                 company_id=company_id, 
-                                 suppliers=suppliers,
-                                 inventory_items=inventory_items,
-                                 purchase_order=purchase_order, 
-                                 form_data=request.form)
-        
+            db.session.rollback()
+            return render_template(
+                'orders/form.html',
+                company_id=company_id,
+                suppliers=suppliers,
+                inventory_items=inventory_items,
+                purchase_order=purchase_order,
+                form_data=request.form
+            )
+
         purchase_order.total_amount = total_amount
         db.session.commit()
-        
+
         flash(_('Purchase order updated successfully'), 'success')
         return redirect(url_for('orders.view', company_id=company_id, id=purchase_order.id))
-        
+
     except SQLAlchemyError as e:
         db.session.rollback()
+        current_app.logger.error(f"Update PO error: {e}")
         flash(_('An error occurred while updating the purchase order'), 'error')
-        current_app.logger.error(f"Database error: {str(e)}")
-        return render_template('orders/form.html', 
-                             company_id=company_id, 
-                             suppliers=suppliers,
-                             inventory_items=inventory_items,
-                             purchase_order=purchase_order, 
-                             form_data=request.form)
+        return render_template(
+            'orders/form.html',
+            company_id=company_id,
+            suppliers=suppliers,
+            inventory_items=inventory_items,
+            purchase_order=purchase_order,
+            form_data=request.form
+        )
 
 @orders.route('/<int:company_id>/purchase-orders/<int:id>/delete', methods=['POST'])
 @login_required
