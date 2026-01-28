@@ -70,7 +70,7 @@ def generate_invoice_pdf(document, request):
     subtotal = round(total_amount / (1 + tax_rate), 2)
 
     vta_exenta = subtotal
-    venta_gravada_15 = subtotal * 0.6
+    venta_gravada_15 = subtotal #* 0.6
     venta_gravada_18 = 0
     venta_exonerada = 0
     imp_15 = round(subtotal * tax_rate, 2) if include_tax else 0
