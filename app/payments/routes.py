@@ -5,11 +5,13 @@ from sqlalchemy import or_, desc
 from datetime import datetime
 
 from models import db, Payment, Document, DocumentType, Client
+from extensions import limiter
 
 from . import payments
 
 @payments.route('/<int:company_id>/payments')
 @login_required
+@limiter.exempt
 def index(company_id):
     page = request.args.get('page', 1, type=int)
     search = request.args.get('search', '')
@@ -81,6 +83,7 @@ def index(company_id):
 
 @payments.route('/<int:company_id>/payments/create')
 @login_required
+@limiter.exempt
 def create(company_id):
     # Pre-select invoice if provided
     invoice_id = request.args.get('invoice_id', type=int)
@@ -102,6 +105,7 @@ def create(company_id):
 
 @payments.route('/<int:company_id>/payments/search-invoices')
 @login_required
+@limiter.exempt
 def search_invoices(company_id):
     search = request.args.get('q', '')
     
@@ -154,6 +158,7 @@ def search_invoices(company_id):
 
 @payments.route('/<int:company_id>/payments/store', methods=['POST'])
 @login_required
+@limiter.exempt
 def store(company_id):
     try:
         # Create the payment
@@ -195,6 +200,7 @@ def store(company_id):
 
 @payments.route('/<int:company_id>/payments/<int:id>')
 @login_required
+@limiter.exempt
 def view(company_id, id):
     payment = Payment.query.filter(
         Payment.id == id,
@@ -211,6 +217,7 @@ def view(company_id, id):
 
 @payments.route('/<int:company_id>/payments/<int:id>/edit')
 @login_required
+@limiter.exempt
 def edit(company_id, id):
     payment = Payment.query.filter(
         Payment.id == id,
@@ -230,6 +237,7 @@ def edit(company_id, id):
 
 @payments.route('/<int:company_id>/payments/<int:id>/update', methods=['POST'])
 @login_required
+@limiter.exempt
 def update(company_id, id):   
     payment = Payment.query.filter(
         Payment.id == id,
