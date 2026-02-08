@@ -347,3 +347,42 @@ def view(company_id = None, id = 0):
         page_title=_('Client Details'),
         company_id=company_id
     )
+
+@customers.route('/<int:company_id>/clients/search')
+@login_required
+def search(company_id):
+    """
+    Search clients and return JSON for async requests
+    """
+    # Verify company access - simple check if user belongs to company
+    if not any(c.id == company_id for c in current_user.companies):
+        return {'error': _('Unauthorized')}, 403
+
+    query_term = request.args.get('q', '').strip()
+    
+    if not query_term:
+        return {'results': []}
+
+    search_term = f"%{query_term}%"
+    
+    clients = Client.query.filter(
+        Client.company_id == company_id,
+        or_(
+            Client.name.ilike(search_term),
+            Client.email.ilike(search_term),
+            Client.identifier.ilike(search_term),
+            Client.phone.ilike(search_term)
+        )
+    ).limit(20).all()
+
+    results = []
+    for client in clients:
+        results.append({
+            'id': client.id,
+            'name': client.name,
+            'email': client.email or '',
+            'identifier': client.identifier or '',
+            'phone': client.phone or ''
+        })
+
+    return {'results': results}
