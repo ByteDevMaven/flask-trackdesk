@@ -40,7 +40,7 @@ def get_invoice_list(company_id, filters):
                 Document.issued_date >= datetime.strptime(date_from, "%Y-%m-%d")
             )
         except ValueError:
-            pass
+            current_app.logger.warning(f"Invalid date_from format: {date_from}")
 
     if date_to:
         try:
@@ -48,7 +48,7 @@ def get_invoice_list(company_id, filters):
                 Document.issued_date <= datetime.strptime(date_to, "%Y-%m-%d")
             )
         except ValueError:
-            pass
+            current_app.logger.warning(f"Invalid date_to format: {date_to}")
 
     query = query.order_by(Document.id.desc())
 
