@@ -19,7 +19,8 @@
 
     <!-- Search and Filter -->
     <div class="bg-bg-subtle rounded-xl shadow-sm p-4 border border-secondary-200 mb-6">
-        <form action="{{ url_for('invoices.index', company_id=session.get('selected_company_id')) }}" method="GET" class="grid grid-cols-1 md:grid-cols-5 gap-4">
+        <form action="{{ url_for('invoices.index', company_id=session.get('selected_company_id')) }}" method="GET"
+            class="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div>
                 <label for="search" class="block text-sm font-medium text-fg-base mb-1">{{ _('Search') }}</label>
                 <div class="relative">
@@ -37,8 +38,10 @@
                 <select id="type" name="type"
                     class="block w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
                     <option value="">{{ _('All') }}</option>
-                    <option value="quote" {% if request.args.get('type')=='quote' %}selected{% endif %}>{{ _('Quotes') }}</option>
-                    <option value="invoice" {% if request.args.get('type')=='invoice' %}selected{% endif %}>{{ _('Invoices') }}</option>
+                    <option value="quote" {% if request.args.get('type')=='quote' %}selected{% endif %}>{{ _('Quotes')
+                        }}</option>
+                    <option value="invoice" {% if request.args.get('type')=='invoice' %}selected{% endif %}>{{
+                        _('Invoices') }}</option>
                 </select>
             </div>
 
@@ -55,9 +58,11 @@
                     </option>
                     <option value="overdue" {% if request.args.get('status')=='overdue' %}selected{% endif %}>{{
                         _('Overdue') }}</option>
-                    <option value="pending" {% if request.args.get('status')=='pending' %}selected{% endif %}>{{ _('Pending')
+                    <option value="pending" {% if request.args.get('status')=='pending' %}selected{% endif %}>{{
+                        _('Pending')
                         }}</option>
-                    <option value="credit" {% if request.args.get('status')=='credit' %}selected{% endif %}>{{ _('Credit')
+                    <option value="credit" {% if request.args.get('status')=='credit' %}selected{% endif %}>{{
+                        _('Credit')
                         }}</option>
                 </select>
             </div>
@@ -133,7 +138,7 @@
                             {{ invoice.due_date.strftime('%Y-%m-%d') if invoice.due_date else '-' }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-fg-base">
-                            {{ session.get('currency') }}{{ "{:,.2f}".format(invoice.total_amount or 0) }}
+                            {{ session.get('currency') }}{{ "{:,.2f}".format(invoice.get_balance()) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span
@@ -150,11 +155,14 @@
                                 class="text-accent-600 hover:text-accent-700 mr-3" title="{{ _('Edit') }}">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <a href="{{ url_for('invoices.print_invoice', company_id=session.get('selected_company_id'), id=invoice.id) }}" target="_blank"
-                                class="text-accent-600 hover:text-accent-700 mr-3" title="{{ _('Print PDF') }}">
+                            <a href="{{ url_for('invoices.print_invoice', company_id=session.get('selected_company_id'), id=invoice.id) }}"
+                                target="_blank" class="text-accent-600 hover:text-accent-700 mr-3"
+                                title="{{ _('Print PDF') }}">
                                 <i class="fas fa-file-pdf"></i>
                             </a>
-                            <form action="{{ url_for('invoices.delete', company_id=session.get('selected_company_id'), id=invoice.id) }}" method="POST" class="inline">
+                            <form
+                                action="{{ url_for('invoices.delete', company_id=session.get('selected_company_id'), id=invoice.id) }}"
+                                method="POST" class="inline">
                                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                 <button type="submit" class="text-btn-danger-bg hover:text-btn-danger-hover"
                                     title="{{ _('Delete') }}"

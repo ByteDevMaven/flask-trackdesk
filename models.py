@@ -166,6 +166,10 @@ class Document(db.Model):
 
     payments = db.relationship('Payment', backref='document', cascade='all, delete-orphan', lazy='dynamic')
 
+    def get_balance(self):
+        paid = sum((p.amount or 0) for p in self.payments)
+        return (self.total_amount or 0) - paid
+
 class DocumentItem(db.Model):
     __tablename__ = 'document_items'
     id = db.Column(db.Integer, primary_key=True)

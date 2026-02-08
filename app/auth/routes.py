@@ -27,7 +27,7 @@ def login():
 
         user = User.query.filter_by(email=email).first()
 
-        if not user.active:
+        if user and not user.active:
             flash(_("Your account is inactive. Please contact support."), 'warning')
             return redirect(url_for('auth.login')) 
 
