@@ -8,7 +8,7 @@ from wtforms import ValidationError
 
 from extensions import limiter
 
-from models import db, Document, DocumentItem, Client, InventoryItem, DocumentType
+from models import db, Document, DocumentItem, Client, InventoryItem, DocumentType, Payment, PaymentMethod
 
 from .services import get_invoice_list, create_invoice_or_quote, update_invoice_or_quote, generate_invoice_pdf
 from . import invoices
@@ -48,7 +48,7 @@ def item_row():
         InventoryItem.quantity > 0
     ).all()
     
-    return render_template('invoices/item_row.html', index=index, inventory_items=inventory_items)
+    return render_template('invoices/item_row.html', index=index, inventory_items=inventory_items, item=None)
 
 
 @invoices.route('/<int:company_id>/invoices/create')
@@ -133,7 +133,64 @@ def view(company_id, id):
     
     return render_template('invoices/view.html', 
                          invoice=document, 
-                         document_items=document_items)
+                         document_items=document_items,
+                         now=datetime.now())
+
+
+@invoices.route('/<int:company_id>/invoices/<int:id>/add-payment', methods=['POST'])
+@login_required
+@limiter.exempt
+def add_payment(company_id, id):
+    csrf_token = request.form.get("csrf_token")
+
+    try:
+        validate_csrf(csrf_token)
+    except ValidationError:
+        flash(_("Invalid CSRF token. Please try again."), "error")
+        return redirect(url_for("auth.login"))
+
+    document = Document.query.filter(
+        Document.id == id,
+        Document.company_id == company_id
+    ).first_or_404()
+
+    try:
+        amount = float(request.form.get('amount', 0))
+        payment_date_str = request.form.get('payment_date')
+        payment_method = request.form.get('payment_method', 'cash')
+        reference = request.form.get('reference', '')
+
+        if amount <= 0:
+            flash(_('Payment amount must be greater than 0'), 'error')
+            return redirect(url_for('invoices.view', company_id=company_id, id=id))
+
+        # Parse payment date
+        payment_date = datetime.strptime(payment_date_str, '%Y-%m-%d') if payment_date_str else datetime.now()
+
+        # Create payment record
+        payment = Payment(
+            company_id=company_id,
+            document_id=id,
+            amount=amount,
+            payment_date=payment_date,
+            method=PaymentMethod[payment_method],
+            notes=reference
+        )
+
+        db.session.add(payment)
+        db.session.commit()
+
+        flash(_('Payment recorded successfully'), 'success')
+        return redirect(url_for('invoices.view', company_id=company_id, id=id))
+
+    except ValueError as e:
+        db.session.rollback()
+        flash(_('Invalid payment data: %(error)s', error=str(e)), 'error')
+        return redirect(url_for('invoices.view', company_id=company_id, id=id))
+    except Exception as e:
+        db.session.rollback()
+        flash(_('Error recording payment: %(error)s', error=str(e)), 'error')
+        return redirect(url_for('invoices.view', company_id=company_id, id=id))
 
 
 @invoices.route('/<int:company_id>/invoices/<int:id>/edit')

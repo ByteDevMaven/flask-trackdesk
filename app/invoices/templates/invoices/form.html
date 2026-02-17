@@ -5,11 +5,11 @@ _('Invoice') }}{% endif %}{% else %}{{ _('New Document') }}{% endif %} - {{ _('B
 endblock %}
 
 {% block content %}
-<div class="h-full flex flex-col">
+<div class="h-full flex flex-col animate-fadeIn">
     <div class="flex-shrink-0 mb-6">
-        <div class="flex justify-between items-center">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
-                <h2 class="text-2xl font-bold text-fg-base">
+                <h2 class="text-3xl font-extrabold text-slate-100 tracking-tight">
                     {% if invoice %}
                     {{ _('Edit') }} {% if invoice.type.value == 'quote' %}{{ _('Quote') }}{% else %}{{ _('Invoice') }}{%
                     endif %}
@@ -17,7 +17,7 @@ endblock %}
                     {{ _('New Document') }}
                     {% endif %}
                 </h2>
-                <p class="text-fg-muted text-sm mt-1">
+                <p class="text-slate-400 text-sm mt-1">
                     {% if invoice %}
                     {{ _('Update document details') }}
                     {% else %}
@@ -27,7 +27,7 @@ endblock %}
             </div>
             <div>
                 <a href="{{ url_for('invoices.index', company_id=session.get('selected_company_id')) }}"
-                    class="bg-btn-secondary-bg text-btn-secondary-text px-4 py-2 rounded-lg hover:bg-btn-secondary-hover transition flex items-center">
+                    class="inline-flex items-center px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-sm font-medium text-slate-200 hover:bg-slate-600 transition shadow-sm hover:text-white">
                     <i class="fas fa-arrow-left mr-2"></i> {{ _('Back to Documents') }}
                 </a>
             </div>
@@ -35,36 +35,41 @@ endblock %}
     </div>
 
     <div class="flex-1 overflow-y-auto">
-        <div class="bg-bg-subtle rounded-xl shadow-sm border border-secondary-200">
-            <form id="invoice-form"
-                action="{% if invoice %}{{ url_for('invoices.update', company_id=session.get('selected_company_id'), id=invoice.id) }}{% else %}{{ url_for('invoices.store', company_id=session.get('selected_company_id')) }}{% endif %}"
-                method="POST" class="p-6">
-                <input type="hidden" id="currencySymbol" value="{{ session.get('currency') }}">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                <input type="hidden" id="company_id" value="{{ session.get('selected_company_id') }}">
+        <form id="invoice-form"
+            action="{% if invoice %}{{ url_for('invoices.update', company_id=session.get('selected_company_id'), id=invoice.id) }}{% else %}{{ url_for('invoices.store', company_id=session.get('selected_company_id')) }}{% endif %}"
+            method="POST">
+            <input type="hidden" id="currencySymbol" value="{{ session.get('currency') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" id="company_id" value="{{ session.get('selected_company_id') }}">
 
-                <div class="mb-8">
-                    <h3 class="text-lg font-semibold text-fg-base mb-4 border-b border-secondary-200 pb-2">{{
-                        _('Document Information') }}</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="bg-slate-800 rounded-xl shadow-lg shadow-black/20 border border-slate-700 overflow-hidden">
+                <!-- Document Header -->
+                <div class="p-6 md:p-8 border-b border-slate-700 bg-slate-900/50">
+                    <h3 class="text-lg font-bold text-slate-100 mb-6 flex items-center">
+                        <span class="w-1 h-6 bg-indigo-500 rounded-full mr-3"></span>
+                        {{ _('Document Details') }}
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <div>
-                            <label for="document_number" class="block text-sm font-medium text-fg-base mb-2">
-                                {{ _('Document Number') }} <span class="text-btn-danger-bg">*</span>
+                            <label for="document_number"
+                                class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
+                                {{ _('Document Number') }} <span class="text-rose-500">*</span>
                             </label>
                             <input type="text" id="document_number" name="document_number"
                                 value="{{ invoice.document_number if invoice else '' }}"
-                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base"
-                                {% if not invoice %}placeholder="{{ _('Auto-generated if left blank') }}" {% endif %}>
+                                class="block w-full px-3 py-2 border border-slate-600 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-slate-700 text-white placeholder-slate-400"
+                                {% if not invoice %}placeholder="{{ _('Auto-generated') }}" {% endif %}>
                         </div>
 
                         <div>
-                            <label for="type" class="block text-sm font-medium text-fg-base mb-2">
-                                {{ _('Document Type') }} <span class="text-btn-danger-bg">*</span>
+                            <label for="type"
+                                class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
+                                {{ _('Document Type') }} <span class="text-rose-500">*</span>
                             </label>
                             <select id="type" name="type"
-                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base"
+                                class="block w-full px-3 py-2 border border-slate-600 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-slate-700 text-white"
                                 required>
-                                <option value="">{{ _('Select document type') }}</option>
+                                <option value="">{{ _('Select type') }}</option>
                                 <option value="invoice" {% if invoice and invoice.type.value=='invoice' %}selected{%
                                     endif %}>{{ _('Invoice') }}</option>
                                 <option value="quote" {% if invoice and invoice.type.value=='quote' %}selected{% endif
@@ -73,30 +78,14 @@ endblock %}
                         </div>
 
                         <div>
-                            <label for="client_id" class="block text-sm font-medium text-fg-base mb-2">
-                                {{ _('Client') }} <span class="text-btn-danger-bg">*</span>
-                            </label>
-                            <input type="hidden" id="client_id" name="client_id"
-                                value="{{ invoice.client_id if invoice else '' }}" required>
-
-                            <button type="button" id="client-search-trigger"
-                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg hover:bg-secondary-50 focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base flex items-center justify-between text-left">
-                                <span id="selected-client-name"
-                                    class="{{ 'text-fg-base' if invoice and invoice.client else 'text-fg-muted' }}">
-                                    {{ invoice.client.name if invoice and invoice.client else _('Select a client') }}
-                                </span>
-                                <i class="fas fa-search text-fg-muted"></i>
-                            </button>
-                        </div>
-
-                        <div>
-                            <label for="status" class="block text-sm font-medium text-fg-base mb-2">
-                                {{ _('Status') }} <span class="text-btn-danger-bg">*</span>
+                            <label for="status"
+                                class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
+                                {{ _('Status') }} <span class="text-rose-500">*</span>
                             </label>
                             <select id="status" name="status"
-                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base"
+                                class="block w-full px-3 py-2 border border-slate-600 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-slate-700 text-white"
                                 required>
-                                <option value="">{{ _('Select a status') }}</option>
+                                <option value="">{{ _('Select status') }}</option>
                                 <option value="draft" {% if invoice and invoice.status=='draft' %}selected{% endif %}>{{
                                     _('Draft') }}</option>
                                 <option value="sent" {% if invoice and invoice.status=='sent' %}selected{% endif %}>{{
@@ -112,161 +101,183 @@ endblock %}
                             </select>
                         </div>
 
-                        <div>
-                            <label for="issued_date" class="block text-sm font-medium text-fg-base mb-2">
-                                {{ _('Issue Date') }} <span class="text-btn-danger-bg">*</span>
-                            </label>
-                            <input type="date" id="issued_date" name="issued_date"
-                                value="{{ invoice.issued_date.strftime('%Y-%m-%d') if invoice and invoice.issued_date else '' }}"
-                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base"
-                                required>
-                        </div>
+                        <div class="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label for="client_id"
+                                    class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
+                                    {{ _('Client') }} <span class="text-rose-500">*</span>
+                                </label>
+                                <input type="hidden" id="client_id" name="client_id"
+                                    value="{{ invoice.client_id if invoice else '' }}" required>
 
-                        <div>
-                            <label for="due_date" class="block text-sm font-medium text-fg-base mb-2">
-                                {{ _('Due Date') }} <span class="text-btn-danger-bg">*</span>
-                            </label>
-                            <input type="date" id="due_date" name="due_date"
-                                value="{{ invoice.due_date.strftime('%Y-%m-%d') if invoice and invoice.due_date else '' }}"
-                                class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base"
-                                required>
+                                <button type="button" id="client-search-trigger"
+                                    class="w-full px-3 py-2 border border-slate-600 rounded-lg shadow-sm bg-slate-700 text-left cursor-pointer hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors flex justify-between items-center group">
+                                    <span id="selected-client-name"
+                                        class="{{ 'text-white font-medium' if invoice and invoice.client else 'text-slate-400' }}">
+                                        {{ invoice.client.name if invoice and invoice.client else _('Select a
+                                        client...') }}
+                                    </span>
+                                    <i
+                                        class="fas fa-search text-slate-500 group-hover:text-indigo-400 transition-colors"></i>
+                                </button>
+                            </div>
+
+                            <div>
+                                <label for="issued_date"
+                                    class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
+                                    {{ _('Issue Date') }} <span class="text-rose-500">*</span>
+                                </label>
+                                <input type="date" id="issued_date" name="issued_date"
+                                    value="{{ invoice.issued_date.strftime('%Y-%m-%d') if invoice and invoice.issued_date else '' }}"
+                                    class="block w-full px-3 py-2 border border-slate-600 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-slate-700 text-white [color-scheme:dark]"
+                                    required>
+                            </div>
+
+                            <div>
+                                <label for="due_date"
+                                    class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
+                                    {{ _('Due Date') }} <span class="text-rose-500">*</span>
+                                </label>
+                                <input type="date" id="due_date" name="due_date"
+                                    value="{{ invoice.due_date.strftime('%Y-%m-%d') if invoice and invoice.due_date else '' }}"
+                                    class="block w-full px-3 py-2 border border-slate-600 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-slate-700 text-white [color-scheme:dark]"
+                                    required>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Items Section -->
-                <div class="mb-8">
-                    <div class="flex justify-between items-center mb-4 border-b border-secondary-200 pb-2">
-                        <h3 class="text-lg font-semibold text-fg-base">{{ _('Items') }}</h3>
+                <div class="p-6 md:p-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-lg font-bold text-slate-100 flex items-center">
+                            <span class="w-1 h-6 bg-indigo-500 rounded-full mr-3"></span>
+                            {{ _('Line Items') }}
+                        </h3>
                         <button type="button" id="add-item"
-                            class="bg-accent-500 hover:bg-accent-600 text-black px-3 py-1 rounded-lg text-sm font-medium flex items-center transition">
-                            <i class="fas fa-plus mr-1"></i> {{ _('Add Item') }}
+                            class="inline-flex items-center px-3 py-1.5 bg-indigo-500/10 text-indigo-400 text-sm font-medium rounded-md hover:bg-indigo-500/20 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 border border-indigo-500/20">
+                            <i class="fas fa-plus mr-1.5"></i> {{ _('Add Item') }}
                         </button>
                     </div>
 
-                    <!-- Replaced select dropdown with button to open product picker modal -->
-                    <div class="border border-secondary-200 rounded-lg overflow-hidden">
+                    <div class="border border-slate-700 rounded-lg overflow-hidden mb-8 shadow-sm">
                         <div class="overflow-x-auto">
-                            <table class="min-w-full divide-y divide-secondary-200">
-                                <thead class="bg-secondary-100 sticky top-0">
+                            <table class="min-w-full divide-y divide-slate-700">
+                                <thead class="bg-slate-900/50 text-slate-400">
                                     <tr>
                                         <th
-                                            class="px-4 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider min-w-[200px]">
-                                            {{ _('Item') }}
-                                        </th>
+                                            class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider min-w-[200px]">
+                                            {{ _('Item') }}</th>
                                         <th
-                                            class="px-4 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider min-w-[200px]">
-                                            {{ _('Description') }}
-                                        </th>
+                                            class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider min-w-[200px]">
+                                            {{ _('Description') }}</th>
                                         <th
-                                            class="px-4 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider w-24">
-                                            {{ _('Qty') }}
-                                        </th>
+                                            class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider w-24">
+                                            {{ _('Qty') }}</th>
                                         <th
-                                            class="px-4 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider w-32">
-                                            {{ _('Unit Price') }}
-                                        </th>
+                                            class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider w-32">
+                                            {{ _('Price') }}</th>
                                         <th
-                                            class="px-4 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider w-18">
-                                            {{ _('Discount') }}
-                                        </th>
+                                            class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider w-24">
+                                            {{ _('Disc.') }}</th>
                                         <th
-                                            class="px-4 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider w-32">
-                                            {{ _('Total') }}
-                                        </th>
+                                            class="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider w-32">
+                                            {{ _('Total') }}</th>
                                         <th
-                                            class="px-4 py-3 text-center text-xs font-medium text-fg-muted uppercase tracking-wider w-16">
-                                            {{ _('Action') }}
+                                            class="px-4 py-3 text-center text-xs font-semibold uppercase tracking-wider w-12">
+                                            <i class="fas fa-times"></i>
                                         </th>
                                     </tr>
                                 </thead>
-                                <tbody id="items-container" class="bg-bg-base divide-y divide-secondary-200">
+                                <tbody id="items-container" class="bg-slate-800 divide-y divide-slate-700">
                                     {% if invoice and document_items %}
                                     {% for item in document_items %}
-                                    <tr class="item-row hover:bg-secondary-50"
+                                    <tr class="item-row group hover:bg-slate-700/50 transition-colors"
                                         data-item-id="{{ item.inventory_item_id or '' }}">
-                                        <td class="px-4 py-3">
+                                        <td class="px-4 py-3 align-top">
                                             <input type="hidden" name="items[{{ loop.index0 }}][inventory_item_id]"
                                                 value="{{ item.inventory_item_id or '' }}" class="item-id-input">
                                             <button type="button"
-                                                class="select-product-btn w-full px-3 py-2 text-left text-sm border border-secondary-200 rounded-lg hover:bg-secondary-50 focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base flex items-center justify-between">
-                                                <span class="product-name">{{ item.inventory_item.name if
-                                                    item.inventory_item else _('Select a product') }}</span>
-                                                <i class="fas fa-search text-fg-muted text-xs"></i>
+                                                class="select-product-btn w-full px-3 py-2 text-left text-sm border border-slate-600 rounded-lg hover:bg-slate-600 focus:ring-indigo-500 focus:border-indigo-500 bg-slate-700 text-white flex items-center justify-between shadow-sm transition-all">
+                                                <span class="product-name truncate">{{ item.inventory_item.name if
+                                                    item.inventory_item else _('Select product') }}</span>
+                                                <i class="fas fa-chevron-down text-slate-400 text-xs ml-2"></i>
                                             </button>
                                         </td>
-                                        <td class="px-4 py-3">
+                                        <td class="px-4 py-3 align-top">
                                             <input type="text" name="items[{{ loop.index0 }}][description]"
                                                 value="{{ item.description }}"
-                                                class="item-description w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                                                class="item-description block w-full px-3 py-2 border border-slate-600 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-slate-700 text-white placeholder-slate-400"
+                                                placeholder="{{ _('Description') }}">
                                         </td>
-                                        <td class="px-4 py-3">
+                                        <td class="px-4 py-3 align-top">
                                             <input type="number" name="items[{{ loop.index0 }}][quantity]"
                                                 value="{{ item.quantity }}" min="1"
-                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-quantity bg-bg-base text-fg-base">
+                                                class="block w-full px-3 py-2 border border-slate-600 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm item-quantity bg-slate-700 text-white">
                                         </td>
-                                        <td class="px-4 py-3">
+                                        <td class="px-4 py-3 align-top">
                                             <input type="number" name="items[{{ loop.index0 }}][unit_price]"
                                                 value="{{ item.unit_price }}" min="0" step="0.01"
-                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-price bg-bg-base text-fg-base">
+                                                class="block w-full px-3 py-2 border border-slate-600 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm item-price bg-slate-700 text-white">
                                         </td>
-                                        <td class="px-4 py-3">
+                                        <td class="px-4 py-3 align-top">
                                             <input type="number" name="items[{{ loop.index0 }}][discount]"
                                                 value="{{ item.discount or 0 }}" min="0" step="0.01"
-                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-discount bg-bg-base text-fg-base">
+                                                class="block w-full px-3 py-2 border border-slate-600 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm item-discount bg-slate-700 text-white">
                                         </td>
-                                        <td class="px-4 py-3">
-                                            <div class="item-total font-medium text-fg-base text-sm">
+                                        <td class="px-4 py-3 align-top">
+                                            <div class="item-total font-bold text-slate-200 text-sm py-2">
                                                 {{ session.get('currency') }}{{ "{:,.2f}".format((item.quantity or 0) *
                                                 (item.unit_price or 0)) }}
                                             </div>
                                         </td>
-                                        <td class="px-4 py-3 text-center">
+                                        <td class="px-4 py-3 align-top text-center">
                                             <button type="button"
-                                                class="text-btn-danger-bg hover:text-btn-danger-hover remove-item p-1 rounded">
-                                                <i class="fas fa-trash text-sm"></i>
+                                                class="text-slate-500 hover:text-rose-400 remove-item p-2 rounded-full hover:bg-rose-500/10 transition-colors">
+                                                <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </td>
                                     </tr>
                                     {% endfor %}
                                     {% else %}
-                                    <tr class="item-row hover:bg-secondary-50" data-item-id="">
-                                        <td class="px-4 py-3">
+                                    <tr class="item-row group hover:bg-slate-700/50 transition-colors" data-item-id="">
+                                        <td class="px-4 py-3 align-top">
                                             <input type="hidden" name="items[0][inventory_item_id]" value=""
                                                 class="item-id-input">
                                             <button type="button"
-                                                class="select-product-btn w-full px-3 py-2 text-left text-sm border border-secondary-200 rounded-lg hover:bg-secondary-50 focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base flex items-center justify-between">
-                                                <span class="product-name text-fg-muted">{{ _('Select a product')
+                                                class="select-product-btn w-full px-3 py-2 text-left text-sm border border-slate-600 rounded-lg hover:bg-slate-600 focus:ring-indigo-500 focus:border-indigo-500 bg-slate-700 text-white flex items-center justify-between shadow-sm transition-all">
+                                                <span class="product-name text-slate-400 italic">{{ _('Select product')
                                                     }}</span>
-                                                <i class="fas fa-search text-fg-muted text-xs"></i>
+                                                <i class="fas fa-chevron-down text-slate-400 text-xs ml-2"></i>
                                             </button>
                                         </td>
-                                        <td class="px-4 py-3">
+                                        <td class="px-4 py-3 align-top">
                                             <input type="text" name="items[0][description]"
-                                                class="item-description w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                                                class="item-description block w-full px-3 py-2 border border-slate-600 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm bg-slate-700 text-white placeholder-slate-400"
+                                                placeholder="{{ _('Description') }}">
                                         </td>
-                                        <td class="px-4 py-3">
+                                        <td class="px-4 py-3 align-top">
                                             <input type="number" name="items[0][quantity]" value="1" min="1"
-                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-quantity bg-bg-base text-fg-base">
+                                                class="block w-full px-3 py-2 border border-slate-600 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm item-quantity bg-slate-700 text-white">
                                         </td>
-                                        <td class="px-4 py-3">
+                                        <td class="px-4 py-3 align-top">
                                             <input type="number" name="items[0][unit_price]" value="0.00" min="0"
                                                 step="0.01"
-                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-price bg-bg-base text-fg-base">
+                                                class="block w-full px-3 py-2 border border-slate-600 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm item-price bg-slate-700 text-white">
                                         </td>
-                                        <td class="px-4 py-3">
+                                        <td class="px-4 py-3 align-top">
                                             <input type="number" name="items[0][discount]" value="0.00" min="0"
                                                 step="0.01"
-                                                class="w-full px-2 py-1 text-sm border border-secondary-200 rounded focus:ring-accent-500 focus:border-accent-500 item-discount bg-bg-base text-fg-base">
+                                                class="block w-full px-3 py-2 border border-slate-600 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm item-discount bg-slate-700 text-white">
                                         </td>
-                                        <td class="px-4 py-3">
-                                            <div class="item-total font-medium text-fg-base text-sm">{{
+                                        <td class="px-4 py-3 align-top">
+                                            <div class="item-total font-bold text-slate-200 text-sm py-2">{{
                                                 session.get('currency') }}0.00</div>
                                         </td>
-                                        <td class="px-4 py-3 text-center">
+                                        <td class="px-4 py-3 align-top text-center">
                                             <button type="button"
-                                                class="text-btn-danger-bg hover:text-btn-danger-hover remove-item p-1 rounded">
-                                                <i class="fas fa-trash text-sm"></i>
+                                                class="text-slate-500 hover:text-rose-400 remove-item p-2 rounded-full hover:bg-rose-500/10 transition-colors">
+                                                <i class="fas fa-trash-alt"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -275,42 +286,36 @@ endblock %}
                             </table>
                         </div>
                     </div>
-                </div>
 
-                <!-- Notes and Totals Section -->
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                    <div>
-                        <label for="notes" class="block text-sm font-medium text-fg-base mb-2">{{ _('Notes') }}</label>
-                        <textarea id="notes" name="notes" rows="6"
-                            class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base resize-none"
-                            placeholder="{{ _('Additional notes or terms...') }}">{{ invoice.notes if invoice and invoice.notes else '' }}</textarea>
-                    </div>
+                    <!-- Notes and Totals Section -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div>
+                            <label for="notes" class="block text-sm font-semibold text-slate-400 mb-2">{{ _('Notes &
+                                Terms') }}</label>
+                            <textarea id="notes" name="notes" rows="4"
+                                class="block w-full px-3 py-2 border border-slate-600 rounded-lg shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm resize-none bg-slate-700 text-white placeholder-slate-400"
+                                placeholder="{{ _('Enter any additional notes or terms for the client...') }}">{{ invoice.notes if invoice and invoice.notes else '' }}</textarea>
+                        </div>
 
-                    <div>
-                        <div class="bg-secondary-100 p-4 rounded-lg h-fit">
-                            <h4 class="font-semibold text-fg-base mb-3">{{ _('Summary') }}</h4>
-                            <div class="space-y-2">
-                                <div class="flex justify-between items-center">
-                                    <span class="text-fg-muted">{{ _('Subtotal') }}:</span>
-                                    <span id="subtotal" class="font-medium text-fg-base">{{ session.get('currency')
+                        <div class="bg-slate-900/50 rounded-xl p-6 border border-slate-700">
+                            <h4
+                                class="text-sm font-bold text-slate-100 uppercase tracking-wider mb-4 border-b border-slate-700 pb-2">
+                                {{ _('Summary') }}</h4>
+                            <div class="space-y-3 text-sm">
+                                <div class="flex justify-between items-center text-slate-400">
+                                    <span>{{ _('Subtotal') }}</span>
+                                    <span id="subtotal" class="font-medium text-slate-200">{{ session.get('currency')
                                         }}0.00</span>
                                 </div>
-                                <div class="flex justify-between items-center">
-                                    <span class="text-fg-muted">{{ _('Tax') }} (15%):</span>
-                                    <span id="tax-15" class="font-medium text-fg-base">{{ session.get('currency')
+                                <div class="flex justify-between items-center text-slate-400">
+                                    <span>{{ _('Tax') }} (15%)</span>
+                                    <span id="tax-15" class="font-medium text-slate-200">{{ session.get('currency')
                                         }}0.00</span>
                                 </div>
-                                <div class="hidden justify-between items-center">
-                                    <span class="text-fg-muted">{{ _('Tax') }} (18%):</span>
-                                    <span id="tax-18" class="font-medium text-fg-base">{{ session.get('currency')
-                                        }}0.00</span>
-                                </div>
-                                <div class="border-t border-secondary-200 pt-2 mt-2">
-                                    <div class="flex justify-between items-center">
-                                        <span class="text-fg-base font-semibold">{{ _('Total') }}:</span>
-                                        <span id="total" class="text-xl font-bold text-fg-base">{{
-                                            session.get('currency') }}0.00</span>
-                                    </div>
+                                <div class="flex justify-between items-center pt-3 mt-3 border-t border-slate-700">
+                                    <span class="text-base font-bold text-slate-100">{{ _('Total') }}</span>
+                                    <span id="total" class="text-2xl font-bold text-indigo-400">{{
+                                        session.get('currency') }}0.00</span>
                                 </div>
                             </div>
                         </div>
@@ -319,25 +324,27 @@ endblock %}
 
                 <!-- Action Buttons -->
                 <div
-                    class="flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-3 pt-6 border-t border-secondary-200">
+                    class="bg-slate-800 px-6 py-4 border-t border-slate-700 flex flex-col sm:flex-row justify-end space-y-3 sm:space-y-0 sm:space-x-3">
                     <a href="{{ url_for('invoices.index', company_id=session.get('selected_company_id')) }}"
-                        class="px-6 py-2 border border-secondary-200 rounded-lg hover:bg-secondary-100 transition text-fg-muted text-center">
+                        class="inline-flex justify-center items-center px-4 py-2 border border-slate-600 shadow-sm text-sm font-medium rounded-lg text-slate-200 bg-slate-700 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
                         {{ _('Cancel') }}
                     </a>
-                    <button type="submit"
-                        class="bg-btn-primary-bg text-btn-primary-text px-6 py-2 rounded-lg hover:bg-btn-primary-hover transition shadow-sm">
-                        {% if invoice %}{{ _('Update Document') }}{% else %}{{ _('Save Document') }}{% endif %}
-                    </button>
+
                     {% if invoice %}
                     <a href="{{ url_for('invoices.print_invoice', company_id=session.get('selected_company_id'), id=invoice.id) }}"
                         target="_blank"
-                        class="bg-btn-secondary-bg text-btn-secondary-text px-6 py-2 rounded-lg hover:bg-btn-secondary-hover transition shadow-sm text-center">
-                        {{ _('Download PDF') }}
+                        class="inline-flex justify-center items-center px-4 py-2 border border-slate-600 shadow-sm text-sm font-medium rounded-lg text-slate-200 bg-slate-700 hover:bg-slate-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors">
+                        <i class="fas fa-file-pdf mr-2 text-slate-400"></i> {{ _('Preview PDF') }}
                     </a>
                     {% endif %}
+
+                    <button type="submit"
+                        class="inline-flex justify-center items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors shadow-indigo-500/20">
+                        {% if invoice %}{{ _('Update Document') }}{% else %}{{ _('Save Document') }}{% endif %}
+                    </button>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 </div>
 

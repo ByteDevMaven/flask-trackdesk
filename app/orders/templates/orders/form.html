@@ -5,17 +5,17 @@ _('Business Management System') }}{% endblock %}
 
 {% block content %}
 <!-- Header -->
-<div class="mb-6">
-    <div class="flex items-center space-x-4 mb-4">
+<div class="mb-8">
+    <div class="flex items-center space-x-4 mb-2">
         <a href="{{ url_for('orders.index', company_id=company_id) }}"
-            class="text-fg-muted hover:text-fg-base transition">
+            class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-800 text-slate-400 hover:text-white transition-all border border-slate-700 hover:bg-slate-700">
             <i class="fas fa-arrow-left"></i>
         </a>
         <div>
-            <h2 class="text-2xl font-bold text-fg-base">
+            <h2 class="text-3xl font-extrabold text-white tracking-tight">
                 {% if order %}{{ _('Edit Purchase Order') }}{% else %}{{ _('Create Purchase Order') }}{% endif %}
             </h2>
-            <p class="text-fg-muted text-sm mt-1">
+            <p class="text-slate-400 text-sm mt-1 font-medium">
                 {% if order %}{{ _('Update purchase order details') }}{% else %}{{ _('Create a new purchase order') }}{%
                 endif %}
             </p>
@@ -24,167 +24,191 @@ _('Business Management System') }}{% endblock %}
 </div>
 
 <!-- Form -->
-<div class="bg-bg-subtle rounded-xl shadow-sm border border-primary-200">
-    <form method="POST" class="p-6" id="purchase-order-form"
+<div class="bg-slate-800 rounded-2xl shadow-xl border border-slate-700/50 shadow-black/30 overflow-hidden">
+    <form method="POST" class="p-8" id="purchase-order-form"
         action="{{ url_for('orders.update', company_id=company_id, id=order.id) if order else url_for('orders.create', company_id=company_id) }}">
         <input type="hidden" id="currencySymbol" value="{{ session.get('currency') }}">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-        <!-- Supplier Selection -->
-        <div class="mb-8">
-            <div class="bg-bg-base rounded-lg p-4 border border-primary-200">
-                <h3 class="text-lg font-medium text-fg-base mb-4">{{ _('Order Information') }}</h3>
+        <!-- Order Information -->
+        <div class="mb-10">
+            <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                <h3 class="text-lg font-bold text-white mb-6 flex items-center">
+                    <i class="fas fa-info-circle mr-3 text-indigo-400"></i>
+                    {{ _('Order Information') }}
+                </h3>
 
-                {% if order %}
-                <div class="mb-4">
-                    <label class="block text-sm font-medium text-fg-base mb-2">{{ _('Order Number') }}</label>
-                    <p class="text-lg font-mono text-fg-base">{{ order.order_number }}</p>
-                </div>
-                {% endif %}
-
-                <div>
-                    <label for="supplier_id" class="block text-sm font-medium text-fg-base mb-2">
-                        {{ _('Supplier') }} <span class="text-btn-danger-bg">*</span>
-                    </label>
-                    <select id="supplier_id" name="supplier_id" required
-                        class="w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
-                        <option value="">{{ _('Select a supplier') }}</option>
-                        {% for supplier in suppliers %}
-                        {% set selected_supplier = order.supplier_id if order else (form_data.supplier_id if form_data
-                        else '') %}
-                        <option value="{{ supplier.id }}" {% if selected_supplier|string==supplier.id|string
-                            %}selected{% endif %}>
-                            {{ supplier.name }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                    {% if not suppliers %}
-                    <p class="text-xs text-fg-muted mt-1">
-                        {{ _('No suppliers available.') }}
-                        <a href="{{ url_for('suppliers.create', company_id=company_id) }}"
-                            class="text-accent-600 hover:text-accent-700">{{ _('Add a supplier') }}</a>
-                    </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {% if order %}
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">{{ _('Order
+                            Number') }}</label>
+                        <p
+                            class="text-xl font-mono font-bold text-white bg-slate-900 px-4 py-2 rounded-xl border border-slate-700 inline-block">
+                            {{ order.order_number }}</p>
+                    </div>
                     {% endif %}
+
+                    <div>
+                        <label for="supplier_id" class="block text-sm font-bold text-slate-300 mb-2">
+                            {{ _('Supplier') }} <span class="text-rose-500">*</span>
+                        </label>
+                        <select id="supplier_id" name="supplier_id" required
+                            class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition-all sm:text-sm">
+                            <option value="" class="bg-slate-900">{{ _('Select a supplier') }}</option>
+                            {% for supplier in suppliers %}
+                            {% set selected_supplier = order.supplier_id if order else (form_data.supplier_id if
+                            form_data
+                            else '') %}
+                            <option value="{{ supplier.id }}" class="bg-slate-900" {% if
+                                selected_supplier|string==supplier.id|string %}selected{% endif %}>
+                                {{ supplier.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                        {% if not suppliers %}
+                        <p class="text-xs text-slate-500 mt-2 font-medium">
+                            {{ _('No suppliers available.') }}
+                            <a href="{{ url_for('suppliers.create', company_id=company_id) }}"
+                                class="text-indigo-400 hover:text-indigo-300 font-bold underline decoration-indigo-400/30 underline-offset-4 ml-1 transition-colors">{{
+                                _('Add a supplier') }}</a>
+                        </p>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Items Section -->
-        <div class="mb-8">
-            <div class="bg-bg-base rounded-lg p-4 border border-primary-200">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-lg font-medium text-fg-base">{{ _('Order Items') }}</h3>
+        <div class="mb-10">
+            <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-lg font-bold text-white flex items-center">
+                        <i class="fas fa-cubes mr-3 text-indigo-400"></i>
+                        {{ _('Order Items') }}
+                    </h3>
                     <button type="button" id="add-item-btn"
-                        class="bg-accent-500 text-accent-900 px-3 py-2 rounded-lg hover:bg-accent-600 transition text-sm">
-                        <i class="fas fa-plus mr-1"></i>{{ _('Add Item') }}
+                        class="bg-indigo-600 text-white px-4 py-2 rounded-xl hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-500/20 font-bold flex items-center text-xs">
+                        <i class="fas fa-plus mr-2"></i>{{ _('Add Item') }}
                     </button>
                 </div>
 
-                <!-- Replaced select dropdowns with product picker modal interface -->
-                <div class="border border-primary-200 rounded-lg overflow-hidden">
+                <div class="border border-slate-700 rounded-xl overflow-hidden bg-slate-900/30">
                     <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-primary-200">
-                            <thead class="bg-primary-50 sticky top-0">
+                        <table class="min-w-full divide-y divide-slate-700">
+                            <thead class="bg-slate-900/60 sticky top-0">
                                 <tr>
                                     <th
-                                        class="px-4 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider min-w-[200px]">
+                                        class="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-widest min-w-[250px]">
                                         {{ _('Item') }}
                                     </th>
                                     <th
-                                        class="px-4 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider w-24">
+                                        class="px-4 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-widest w-32">
                                         {{ _('Code') }}
                                     </th>
                                     <th
-                                        class="px-4 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider w-24">
+                                        class="px-4 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-widest w-24">
                                         {{ _('Qty') }}
                                     </th>
                                     <th
-                                        class="px-4 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider w-32">
+                                        class="px-4 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-widest w-32">
                                         {{ _('Unit Price') }}
                                     </th>
                                     <th
-                                        class="px-4 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider w-32">
+                                        class="px-4 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-widest w-32">
                                         {{ _('Total') }}
                                     </th>
                                     <th
-                                        class="px-4 py-3 text-center text-xs font-medium text-fg-muted uppercase tracking-wider w-16">
+                                        class="px-4 py-4 text-center text-xs font-bold text-slate-500 uppercase tracking-widest w-16">
                                         {{ _('Action') }}
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody id="items-container" class="bg-bg-base divide-y divide-primary-200">
+                            <tbody id="items-container" class="divide-y divide-slate-700/50">
                                 {% if order and order.items %}
                                 {% for item in order.items %}
-                                <tr class="item-row hover:bg-primary-50"
+                                <tr class="item-row hover:bg-slate-700/20 transition-colors"
                                     data-item-id="{{ item.inventory_item_id or '' }}">
-                                    <td class="px-4 py-3">
+                                    <td class="px-6 py-4">
                                         <input type="hidden" name="items[{{ loop.index0 }}][inventory_item_id]"
                                             value="{{ item.inventory_item_id or '' }}" class="item-id-input">
                                         <button type="button"
-                                            class="select-product-btn w-full px-3 py-2 text-left text-sm border border-primary-300 rounded-lg hover:bg-primary-50 focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base flex items-center justify-between">
-                                            <span class="product-name">{{ item.inventory_item.name if
+                                            class="select-product-btn w-full px-4 py-2.5 text-left text-sm border border-slate-700 rounded-xl hover:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 bg-slate-900 text-white flex items-center justify-between transition-all">
+                                            <span class="product-name font-medium">{{ item.inventory_item.name if
                                                 item.inventory_item else _('Select a product') }}</span>
-                                            <i class="fas fa-search text-fg-muted text-xs"></i>
+                                            <i class="fas fa-search text-slate-500 text-xs"></i>
                                         </button>
                                     </td>
-                                    <td class="px-4 py-3">
-                                        <input type="text" name="items[{{ loop.index0 }}][code]" value="{{ item.item_code }}"
-                                            class="code-input w-full px-2 py-1 text-sm border border-primary-300 rounded focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                                    <td class="px-4 py-4 text-sm font-mono text-slate-400 font-bold">
+                                        <input type="text" name="items[{{ loop.index0 }}][code]"
+                                            value="{{ item.item_code }}"
+                                            class="code-input w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition-all sm:text-xs">
                                     </td>
-                                    <td class="px-4 py-3">
+                                    <td class="px-4 py-4">
                                         <input type="number" name="items[{{ loop.index0 }}][quantity]"
                                             value="{{ item.quantity }}" min="1"
-                                            class="w-full px-2 py-1 text-sm border border-primary-300 rounded focus:ring-accent-500 focus:border-accent-500 item-quantity bg-bg-base text-fg-base">
+                                            class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition-all sm:text-xs item-quantity font-bold">
                                     </td>
-                                    <td class="px-4 py-3">
-                                        <input type="number" name="items[{{ loop.index0 }}][price]"
-                                            value="{{ item.price }}" min="0" step="0.01"
-                                            class="w-full px-2 py-1 text-sm border border-primary-300 rounded focus:ring-accent-500 focus:border-accent-500 item-price bg-bg-base text-fg-base">
+                                    <td class="px-4 py-4">
+                                        <div class="relative">
+                                            <span
+                                                class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none text-slate-500 text-xs font-bold">{{
+                                                session.get('currency') }}</span>
+                                            <input type="number" name="items[{{ loop.index0 }}][price]"
+                                                value="{{ item.price }}" min="0" step="0.01"
+                                                class="w-full pl-6 pr-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition-all sm:text-xs item-price font-bold">
+                                        </div>
                                     </td>
-                                    <td class="px-4 py-3">
-                                        <div class="item-total font-medium text-fg-base text-sm">
+                                    <td class="px-4 py-4">
+                                        <div class="item-total font-extrabold text-white text-sm">
                                             {{ session.get('currency') }}{{ "{:,.2f}".format((item.quantity or 0) *
                                             (item.price or 0)) }}
                                         </div>
                                     </td>
-                                    <td class="px-4 py-3 text-center">
+                                    <td class="px-4 py-4 text-center">
                                         <button type="button"
-                                            class="text-btn-danger-bg hover:text-btn-danger-hover remove-item p-1 rounded">
+                                            class="text-slate-500 hover:text-rose-500 remove-item p-2 rounded-lg hover:bg-rose-500/10 transition-all">
                                             <i class="fas fa-trash text-sm"></i>
                                         </button>
                                     </td>
                                 </tr>
                                 {% endfor %}
                                 {% else %}
-                                <tr class="item-row hover:bg-primary-50" data-item-id="">
-                                    <td class="px-4 py-3">
+                                <tr class="item-row hover:bg-slate-700/20 transition-colors" data-item-id="">
+                                    <td class="px-6 py-4">
                                         <input type="hidden" name="items[0][inventory_item_id]" value=""
                                             class="item-id-input">
                                         <button type="button"
-                                            class="select-product-btn w-full px-3 py-2 text-left text-sm border border-primary-300 rounded-lg hover:bg-primary-50 focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base flex items-center justify-between">
-                                            <span class="product-name text-fg-muted">{{ _('Select a product') }}</span>
-                                            <i class="fas fa-search text-fg-muted text-xs"></i>
+                                            class="select-product-btn w-full px-4 py-2.5 text-left text-sm border border-slate-700 rounded-xl hover:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 bg-slate-900 text-white flex items-center justify-between transition-all">
+                                            <span class="product-name font-medium text-slate-500">{{ _('Select a
+                                                product') }}</span>
+                                            <i class="fas fa-search text-slate-500 text-xs"></i>
                                         </button>
                                     </td>
-                                    <td class="px-4 py-3">
+                                    <td class="px-4 py-4">
                                         <input type="text" name="items[0][code]"
-                                            class="code-input w-full px-2 py-1 text-sm border border-primary-300 rounded focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                                            class="code-input w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition-all sm:text-xs">
                                     </td>
-                                    <td class="px-4 py-3">
+                                    <td class="px-4 py-4">
                                         <input type="number" name="items[0][quantity]" value="1" min="1"
-                                            class="w-full px-2 py-1 text-sm border border-primary-300 rounded focus:ring-accent-500 focus:border-accent-500 item-quantity bg-bg-base text-fg-base">
+                                            class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition-all sm:text-xs item-quantity font-bold">
                                     </td>
-                                    <td class="px-4 py-3">
-                                        <input type="number" name="items[0][price]" value="0.00" min="0" step="0.01"
-                                            class="w-full px-2 py-1 text-sm border border-primary-300 rounded focus:ring-accent-500 focus:border-accent-500 item-price bg-bg-base text-fg-base">
+                                    <td class="px-4 py-4">
+                                        <div class="relative">
+                                            <span
+                                                class="absolute inset-y-0 left-0 pl-2 flex items-center pointer-events-none text-slate-500 text-xs font-bold">{{
+                                                session.get('currency') }}</span>
+                                            <input type="number" name="items[0][price]" value="0.00" min="0" step="0.01"
+                                                class="w-full pl-6 pr-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition-all sm:text-xs item-price font-bold">
+                                        </div>
                                     </td>
-                                    <td class="px-4 py-3">
-                                        <div class="item-total font-medium text-fg-base text-sm">{{
+                                    <td class="px-4 py-4">
+                                        <div class="item-total font-extrabold text-white text-sm">{{
                                             session.get('currency') }}0.00</div>
                                     </td>
-                                    <td class="px-4 py-3 text-center">
+                                    <td class="px-4 py-4 text-center">
                                         <button type="button"
-                                            class="text-btn-danger-bg hover:text-btn-danger-hover remove-item p-1 rounded">
+                                            class="text-slate-500 hover:text-rose-500 remove-item p-2 rounded-lg hover:bg-rose-500/10 transition-all">
                                             <i class="fas fa-trash text-sm"></i>
                                         </button>
                                     </td>
@@ -196,14 +220,13 @@ _('Business Management System') }}{% endblock %}
                 </div>
 
                 <!-- Order Total -->
-                <div class="mt-6 pt-4 border-t border-primary-200">
-                    <div class="flex justify-end">
-                        <div class="bg-accent-50 rounded-lg p-4 border border-accent-200">
-                            <div class="text-right">
-                                <p class="text-sm text-fg-muted">{{ _('Order Total') }}</p>
-                                <p class="text-2xl font-bold text-fg-base" id="order-total">{{ session.get('currency')
-                                    }}0.00</p>
-                            </div>
+                <div class="mt-8 flex justify-end">
+                    <div class="bg-indigo-600/10 rounded-2xl p-6 border border-indigo-500/20 min-w-[250px]">
+                        <div class="text-right">
+                            <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">{{ _('Order
+                                Total') }}</p>
+                            <p class="text-3xl font-extrabold text-white" id="order-total">{{ session.get('currency')
+                                }}0.00</p>
                         </div>
                     </div>
                 </div>
@@ -211,14 +234,14 @@ _('Business Management System') }}{% endblock %}
         </div>
 
         <!-- Form Actions -->
-        <div class="pt-6 border-t border-primary-200">
-            <div class="flex justify-end space-x-3">
+        <div class="mt-12 pt-8 border-t border-slate-700/50">
+            <div class="flex justify-end space-x-4">
                 <a href="{{ url_for('orders.index', company_id=company_id) }}"
-                    class="px-6 py-2 border border-primary-400 rounded-lg text-btn-secondary-text bg-btn-secondary-bg hover:bg-btn-secondary-hover transition">
+                    class="px-8 py-3 border border-slate-600 rounded-xl text-slate-300 font-bold hover:bg-slate-700 hover:text-white transition-all">
                     {{ _('Cancel') }}
                 </a>
                 <button type="submit"
-                    class="px-6 py-2 bg-btn-primary-bg text-btn-primary-text rounded-lg hover:bg-btn-primary-hover transition flex items-center">
+                    class="px-8 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-500/20 font-bold flex items-center">
                     <i class="fas fa-save mr-2"></i>
                     {% if order %}{{ _('Update Order') }}{% else %}{{ _('Create Order') }}{% endif %}
                 </button>

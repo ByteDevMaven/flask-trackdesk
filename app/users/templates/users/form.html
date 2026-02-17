@@ -1,125 +1,184 @@
 {% extends "base.html" %}
 
-{% block title %}{% if user %}{{ _('Edit User') }}{% else %}{{ _('New User') }}{% endif %} - {{ _('Business Management System') }}{% endblock %}
+{% block title %}{% if user %}{{ _('Edit User') }}{% else %}{{ _('New User') }}{% endif %} - {{ _('Business Management
+System') }}{% endblock %}
 
 {% block content %}
-<div class="animate-fadeIn">
-    <div class="flex justify-between items-center mb-6">
-        <div>
-            <h2 class="text-2xl font-bold text-fg-base">{% if user %}{{ _('Edit User') }}{% else %}{{ _('New User') }}{%
-                endif %}</h2>
-            <p class="text-fg-muted text-sm mt-1">{% if user %}{{ _('Update user information and permissions') }}{% else
-                %}{{ _('Create a new system user') }}{% endif %}</p>
-        </div>
-        <div>
+<!-- Header -->
+<div class="mb-8">
+    <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-4">
             <a href="{{ url_for('users.index') }}"
-                class="bg-btn-secondary-bg text-btn-secondary-text px-4 py-2 rounded-lg hover:bg-btn-secondary-hover transition flex items-center">
-                <i class="fas fa-arrow-left mr-2"></i> {{ _('Back to Users') }}
+                class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-800 text-slate-400 hover:text-white transition-all border border-slate-700 hover:bg-slate-700 shadow-md">
+                <i class="fas fa-arrow-left"></i>
             </a>
+            <div>
+                <h2 class="text-3xl font-extrabold text-white tracking-tight">
+                    {% if user %}{{ _('Edit User') }}{% else %}{{ _('New User') }}{% endif %}
+                </h2>
+                <p class="text-slate-400 text-sm mt-1 font-medium">
+                    {% if user %}{{ _('Update user information and system permissions') }}{% else %}{{ _('Create a new
+                    system user account') }}{% endif %}
+                </p>
+            </div>
         </div>
     </div>
+</div>
 
-    <!-- User Form -->
-    <div class="bg-bg-subtle rounded-xl shadow-sm p-6 border border-secondary-200">
-        <form
-            action="{% if user %}{{ url_for('users.update', id=user.id) }}{% else %}{{ url_for('users.store') }}{% endif %}"
-            method="POST">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<!-- User Form -->
+<div class="bg-slate-800 rounded-2xl shadow-xl border border-slate-700/50 shadow-black/30 overflow-hidden">
+    <form class="p-8"
+        action="{% if user %}{{ url_for('users.update', id=user.id) }}{% else %}{{ url_for('users.store') }}{% endif %}"
+        method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <!-- Name -->
-                <div>
-                    <label for="name" class="block text-sm font-medium text-fg-base mb-1">{{ _('Full Name') }} <span
-                            class="text-btn-danger-bg">*</span></label>
-                    <input type="text" id="name" name="name" value="{{ user.name if user else '' }}" required
-                        class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base"
-                        placeholder="{{ _('Enter full name') }}">
-                </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <!-- Basic Information -->
+            <div class="space-y-8">
+                <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                    <h3 class="text-lg font-bold text-white mb-8 flex items-center">
+                        <i class="fas fa-user-circle mr-3 text-indigo-400"></i>
+                        {{ _('Basic Information') }}
+                    </h3>
 
-                <!-- Email -->
-                <div>
-                    <label for="email" class="block text-sm font-medium text-fg-base mb-1">{{ _('Email Address') }}
-                        <span class="text-btn-danger-bg">*</span></label>
-                    <input type="email" id="email" name="email" value="{{ user.email if user else '' }}" required
-                        class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base"
-                        placeholder="{{ _('Enter email address') }}">
-                </div>
+                    <div class="space-y-6">
+                        <div>
+                            <label for="name" class="block text-sm font-bold text-slate-300 mb-2">{{ _('Full Name') }}
+                                <span class="text-rose-500">*</span></label>
+                            <input type="text" id="name" name="name" value="{{ user.name if user else '' }}" required
+                                class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500
+                                       focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition-all sm:text-sm"
+                                placeholder="{{ _('Enter full name') }}">
+                        </div>
 
-                <!-- Password -->
-                <div>
-                    <label for="password" class="block text-sm font-medium text-fg-base mb-1">
-                        {{ _('Password') }}
-                        {% if not user %}<span class="text-btn-danger-bg">*</span>{% endif %}
-                        {% if user %}<span class="text-fg-muted text-xs">({{ _('Leave blank to keep current password')
-                            }})</span>{% endif %}
-                    </label>
-                    <input type="password" id="password" name="password" {% if not user %}required{% endif %}
-                        class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base"
-                        placeholder="{{ _('Enter password') }}" minlength="6">
-                </div>
+                        <div>
+                            <label for="email" class="block text-sm font-bold text-slate-300 mb-2">{{ _('Email Address')
+                                }} <span class="text-rose-500">*</span></label>
+                            <input type="email" id="email" name="email" value="{{ user.email if user else '' }}"
+                                required
+                                class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500
+                                       focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition-all sm:text-sm"
+                                placeholder="{{ _('Enter email address') }}">
+                        </div>
 
-                <!-- Confirm Password -->
-                <div>
-                    <label for="confirm_password" class="block text-sm font-medium text-fg-base mb-1">
-                        {{ _('Confirm Password') }}
-                        {% if not user %}<span class="text-btn-danger-bg">*</span>{% endif %}
-                    </label>
-                    <input type="password" id="confirm_password" name="confirm_password" {% if not user %}required{%
-                        endif %}
-                        class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base"
-                        placeholder="{{ _('Confirm password') }}" minlength="6">
-                </div>
-
-                <!-- Role -->
-                <div>
-                    <label for="role_id" class="block text-sm font-medium text-fg-base mb-1">{{ _('Role') }} <span
-                            class="text-btn-danger-bg">*</span></label>
-                    <select id="role_id" name="role_id" required
-                        class="w-full px-3 py-2 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base">
-                        <option value="">{{ _('Select a role') }}</option>
-                        {% for role in roles %}
-                        <option value="{{ role.id }}" {% if user and user.role_id==role.id %}selected{% endif %}>
-                            {{ role.name }}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
-
-            <!-- Companies -->
-            <div class="mb-6">
-                <label class="block text-sm font-medium text-fg-base mb-3">{{ _('Companies') }} <span
-                        class="text-btn-danger-bg">*</span></label>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                    {% for company in companies %}
-                    <div class="flex items-center">
-                        <input type="checkbox" id="company_{{ company.id }}" name="company_ids" value="{{ company.id }}"
-                            {% if user and company in user.companies %}checked{% endif %}
-                            class="h-4 w-4 text-accent-600 focus:ring-accent-500 border-secondary-300 rounded">
-                        <label for="company_{{ company.id }}" class="ml-2 block text-sm text-fg-base">
-                            {{ company.name }}
-                        </label>
+                        <div>
+                            <label for="role_id" class="block text-sm font-bold text-slate-300 mb-2">{{ _('Access Role')
+                                }} <span class="text-rose-500">*</span></label>
+                            <select id="role_id" name="role_id" required
+                                class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition-all sm:text-sm">
+                                <option value="" class="bg-slate-900">{{ _('Select a role') }}</option>
+                                {% for role in roles %}
+                                <option value="{{ role.id }}" class="bg-slate-900" {% if user and user.role_id==role.id
+                                    %}selected{% endif %}>
+                                    {{ role.name }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
                     </div>
-                    {% endfor %}
                 </div>
-                {% if not companies %}
-                <p class="text-fg-muted text-sm">{{ _('No companies available. Please create a company first.') }}</p>
-                {% endif %}
+
+                <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                    <h3 class="text-lg font-bold text-white mb-8 flex items-center">
+                        <i class="fas fa-lock mr-3 text-indigo-400"></i>
+                        {{ _('Security') }}
+                    </h3>
+
+                    <div class="space-y-6">
+                        <div>
+                            <label for="password" class="block text-sm font-bold text-slate-300 mb-2">
+                                {{ _('Password') }}
+                                {% if not user %}<span class="text-rose-500">*</span>{% endif %}
+                            </label>
+                            <input type="password" id="password" name="password" {% if not user %}required{% endif %}
+                                class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500
+                                       focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition-all sm:text-sm"
+                                placeholder="{{ _('Enter password') if not user else _('Leave blank to keep current') }}"
+                                minlength="6">
+                        </div>
+
+                        <div>
+                            <label for="confirm_password" class="block text-sm font-bold text-slate-300 mb-2">
+                                {{ _('Confirm Password') }}
+                                {% if not user %}<span class="text-rose-500">*</span>{% endif %}
+                            </label>
+                            <input type="password" id="confirm_password" name="confirm_password" {% if not user
+                                %}required{% endif %}
+                                class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500
+                                       focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition-all sm:text-sm"
+                                placeholder="{{ _('Confirm password') }}" minlength="6">
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <!-- Form Actions -->
-            <div class="flex justify-end space-x-3">
-                <a href="{{ url_for('users.index') }}"
-                    class="px-4 py-2 border border-secondary-200 rounded-lg hover:bg-secondary-100 transition text-fg-base">
-                    {{ _('Cancel') }}
-                </a>
-                <button type="submit"
-                    class="bg-btn-primary-bg text-btn-primary-text px-4 py-2 rounded-lg hover:bg-btn-primary-hover transition shadow-sm">
-                    {% if user %}{{ _('Update User') }}{% else %}{{ _('Create User') }}{% endif %}
-                </button>
+            <!-- Company Assignments -->
+            <div class="space-y-8">
+                <div class="bg-indigo-600/5 rounded-2xl p-6 border border-indigo-500/10 h-full">
+                    <h3 class="text-lg font-bold text-white mb-8 flex items-center">
+                        <i class="fas fa-building mr-3 text-indigo-400"></i>
+                        {{ _('Company Access') }}
+                    </h3>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">{{
+                            _('Available Companies') }}</label>
+                        <div
+                            class="max-h-[600px] overflow-y-auto border border-slate-700/50 rounded-2xl bg-slate-900/40 p-4 custom-scrollbar divide-y divide-slate-700/30">
+                            {% if companies %}
+                            {% for company in companies %}
+                            <div class="flex items-center p-3 hover:bg-slate-700/20 rounded-xl transition-all group">
+                                <div class="flex items-center flex-1">
+                                    <input type="checkbox" id="company_{{ company.id }}" name="company_ids"
+                                        value="{{ company.id }}" {% if user and company in user.companies %}checked{%
+                                        endif %}
+                                        class="w-5 h-5 bg-slate-900 border-slate-700 rounded text-indigo-500 focus:ring-indigo-500/20 transition-all cursor-pointer">
+                                    <label for="company_{{ company.id }}"
+                                        class="ml-4 flex items-center cursor-pointer flex-1">
+                                        <div
+                                            class="w-10 h-10 bg-slate-800 border border-slate-700 rounded-xl flex items-center justify-center text-white text-xs font-bold mr-4 group-hover:bg-indigo-600 group-hover:border-indigo-500 transition-all shadow-sm">
+                                            {{ company.name[0].upper() if company.name else 'C' }}
+                                        </div>
+                                        <div>
+                                            <div
+                                                class="text-sm font-bold text-slate-200 group-hover:text-white transition-colors">
+                                                {{ company.name }}</div>
+                                            <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                                                {{ _('Organization') }}</div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            <div class="py-12 text-center">
+                                <p class="text-slate-500 text-sm font-bold italic">{{ _('No companies found. Create one
+                                    first.') }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <p class="text-xs text-slate-500 mt-4 font-medium flex items-center">
+                            <i class="fas fa-info-circle mr-2 text-indigo-400/50"></i>
+                            {{ _('A user must be assigned to at least one company to access the system.') }}
+                        </p>
+                    </div>
+                </div>
             </div>
-        </form>
-    </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="flex justify-end space-x-4 mt-12 pt-8 border-t border-slate-700/50">
+            <a href="{{ url_for('users.index') }}"
+                class="px-8 py-3 border border-slate-600 rounded-xl text-slate-300 font-bold hover:bg-slate-700 hover:text-white transition-all">
+                {{ _('Cancel') }}
+            </a>
+            <button type="submit"
+                class="px-8 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-500/20 font-bold flex items-center">
+                <i class="fas fa-save mr-2"></i>
+                {% if user %}{{ _('Update User') }}{% else %}{{ _('Create User') }}{% endif %}
+            </button>
+        </div>
+    </form>
 </div>
 
 <script>
@@ -146,7 +205,7 @@
             const checkedCompanies = document.querySelectorAll('input[name="company_ids"]:checked');
             if (checkedCompanies.length === 0) {
                 e.preventDefault();
-                alert('{{ _("Please select at least one company") }}');
+                alert('{{ _("Please select at least one company access") }}');
             }
         });
     });

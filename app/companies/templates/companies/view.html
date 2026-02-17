@@ -3,42 +3,46 @@
 {% block title %}{{ company.name }} - {{ _('Business Management System') }}{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-bg-base">
+<div class="animate-fadeIn">
     <!-- Header Section -->
-    <div class="bg-bg-subtle border-b border-secondary-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center py-6">
-                <div class="flex items-center mb-4 lg:mb-0">
-                    <div class="w-16 h-16 bg-accent-500 rounded-full flex items-center justify-center text-btn-primary-text font-bold text-2xl mr-4">
+    <div class="bg-slate-800 rounded-2xl shadow-xl border border-slate-700/50 mb-8 shadow-black/30 overflow-hidden">
+        <div class="p-8">
+            <div class="flex flex-col lg:flex-row lg:justify-between lg:items-center">
+                <div class="flex items-center mb-6 lg:mb-0">
+                    <div
+                        class="w-20 h-20 bg-slate-900 border-2 border-slate-700 rounded-2xl flex items-center justify-center text-white font-extrabold text-3xl mr-6 shadow-2xl shadow-indigo-500/10">
                         {{ company.name[0].upper() if company.name else 'C' }}
                     </div>
                     <div>
-                        <h1 class="text-3xl font-bold text-fg-base">{{ company.name }}</h1>
-                        <div class="flex items-center space-x-4 mt-2 text-sm text-fg-muted">
-                            <span class="flex items-center">
-                                <i class="fas fa-calendar mr-1"></i>
-                                {{ _('Created') }} {{ company.created_at.strftime('%B %d, %Y') if company.created_at else _('Unknown') }}
+                        <h1 class="text-4xl font-extrabold text-white tracking-tight">{{ company.name }}</h1>
+                        <div class="flex flex-wrap items-center gap-6 mt-3">
+                            <span class="flex items-center text-xs font-bold text-slate-500 uppercase tracking-widest">
+                                <i class="fas fa-calendar mr-2 text-indigo-400"></i>
+                                {{ _('Created') }} <span class="text-slate-300 ml-1">{{ company.created_at.strftime('%B
+                                    %d, %Y') if company.created_at else _('Unknown') }}</span>
                             </span>
-                            <span class="flex items-center">
-                                <i class="fas fa-dollar-sign mr-1"></i>
-                                {{ company.currency or '$' }}
+                            <span class="flex items-center text-xs font-bold text-slate-500 uppercase tracking-widest">
+                                <i class="fas fa-coins mr-2 text-indigo-400"></i>
+                                {{ _('Currency') }}: <span class="text-slate-300 ml-1">{{ company.currency or '$'
+                                    }}</span>
                             </span>
-                            <span class="flex items-center">
-                                <i class="fas fa-percentage mr-1"></i>
-                                {{ "%.1f"|format(company.tax_rate or 0) }}% {{ _('tax') }}
+                            <span class="flex items-center text-xs font-bold text-slate-500 uppercase tracking-widest">
+                                <i class="fas fa-percent mr-2 text-indigo-400"></i>
+                                {{ _('Tax Rate') }}: <span class="text-slate-300 ml-1">{{ "%.1f"|format(company.tax_rate
+                                    or 0) }}%</span>
                             </span>
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="flex space-x-3">
                     <a href="{{ url_for('companies.edit', id=company.id) }}"
-                        class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg text-btn-primary-text bg-btn-primary-bg hover:bg-btn-primary-hover transition-colors shadow-sm">
-                        <i class="fas fa-edit mr-2"></i> {{ _('Edit Company') }}
+                        class="bg-indigo-600 text-white px-6 py-3 rounded-xl hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-500/20 font-bold flex items-center text-sm">
+                        <i class="fas fa-edit mr-2 text-xs"></i> {{ _('Edit Company') }}
                     </a>
                     <a href="{{ url_for('companies.index') }}"
-                        class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg text-btn-secondary-text bg-btn-secondary-bg hover:bg-btn-secondary-hover transition-colors">
-                        <i class="fas fa-arrow-left mr-2"></i> {{ _('Back to Companies') }}
+                        class="bg-slate-700 text-slate-300 px-6 py-3 rounded-xl hover:bg-slate-600 transition-all font-bold text-sm border border-slate-600">
+                        <i class="fas fa-arrow-left mr-2 text-xs"></i> {{ _('Back') }}
                     </a>
                 </div>
             </div>
@@ -46,221 +50,181 @@
     </div>
 
     <!-- Main Content -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="space-y-8">
         <!-- Company Information -->
-        <div class="bg-bg-subtle rounded-xl shadow-sm border border-secondary-200 mb-8">
-            <div class="px-6 py-4 border-b border-secondary-200">
-                <h2 class="text-lg font-semibold text-fg-base">{{ _('Company Information') }}</h2>
+        <div class="bg-slate-800 rounded-2xl shadow-lg border border-slate-700/50 shadow-black/20 overflow-hidden">
+            <div class="px-8 py-5 border-b border-slate-700/50 bg-slate-900/20 flex justify-between items-center">
+                <h2 class="text-lg font-bold text-white flex items-center">
+                    <i class="fas fa-id-card mr-3 text-indigo-400"></i>
+                    {{ _('Legal & Contact Details') }}
+                </h2>
+                <span
+                    class="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest bg-slate-900 px-3 py-1 rounded-lg border border-slate-700">
+                    ID: {{ company.identifier or 'N/A' }}
+                </span>
             </div>
-            <div class="p-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                     <div>
-                        <dt class="text-sm font-medium text-fg-muted">{{ _('Tax Identifier') }}</dt>
-                        <dd class="mt-1 text-sm text-fg-base font-semibold">{{ company.identifier or '-' }}</dd>
-                    </div>
-                    <div>
-                        <dt class="text-sm font-medium text-fg-muted">{{ _('Email Address') }}</dt>
-                        <dd class="mt-1 text-sm text-fg-base">
+                        <dt class="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest mb-2">{{ _('Email
+                            Address') }}</dt>
+                        <dd class="text-sm font-bold text-slate-200">
                             {% if company.email %}
-                            <a href="mailto:{{ company.email }}" class="text-accent-600 hover:text-accent-700">
-                                {{ company.email }}
+                            <a href="mailto:{{ company.email }}"
+                                class="text-indigo-400 hover:text-indigo-300 transition-colors flex items-center">
+                                <i class="fas fa-envelope mr-2 text-xs opacity-50"></i>{{ company.email }}
                             </a>
                             {% else %}
-                            -
+                            <span class="text-slate-600 italic">-</span>
                             {% endif %}
                         </dd>
                     </div>
                     <div>
-                        <dt class="text-sm font-medium text-fg-muted">{{ _('Phone Number') }}</dt>
-                        <dd class="mt-1 text-sm text-fg-base">
+                        <dt class="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest mb-2">{{ _('Phone
+                            Number') }}</dt>
+                        <dd class="text-sm font-bold text-slate-200">
                             {% if company.phone %}
-                            <a href="tel:{{ company.phone }}" class="text-accent-600 hover:text-accent-700">
-                                {{ company.phone }}
+                            <a href="tel:{{ company.phone }}"
+                                class="text-indigo-400 hover:text-indigo-300 transition-colors flex items-center">
+                                <i class="fas fa-phone mr-2 text-xs opacity-50"></i>{{ company.phone }}
                             </a>
                             {% else %}
-                            -
+                            <span class="text-slate-600 italic">-</span>
                             {% endif %}
                         </dd>
                     </div>
-                    {% if company.address %}
-                    <div class="md:col-span-2 lg:col-span-3">
-                        <dt class="text-sm font-medium text-fg-muted">{{ _('Business Address') }}</dt>
-                        <dd class="mt-1 text-sm text-fg-base">{{ company.address }}</dd>
+                    <div class="md:col-span-2 lg:col-span-1">
+                        <dt class="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest mb-2">{{
+                            _('Physical Address') }}</dt>
+                        <dd class="text-sm font-bold text-slate-200 leading-relaxed flex items-start">
+                            <i class="fas fa-map-marker-alt mr-2 text-xs opacity-50 mt-1"></i>
+                            <span>{{ company.address or _('No address recorded') }}</span>
+                        </dd>
                     </div>
-                    {% endif %}
                 </div>
             </div>
         </div>
 
         <!-- Statistics Grid -->
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
-            <div class="bg-bg-subtle rounded-xl shadow-sm border border-secondary-200 p-4">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-fg-muted">{{ _('Users') }}</p>
-                        <p class="text-2xl font-bold text-fg-base mt-1">{{ stats.users_count }}</p>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+            {% for label, count, icon, color in [
+            (_('Users'), stats.users_count, 'fa-users', 'indigo'),
+            (_('Clients'), stats.clients_count, 'fa-user-friends', 'emerald'),
+            (_('Suppliers'), stats.suppliers_count, 'fa-truck', 'purple'),
+            (_('Inventory'), stats.inventory_count, 'fa-boxes', 'amber'),
+            (_('Documents'), stats.documents_count, 'fa-file-invoice', 'rose'),
+            (_('Payments'), stats.payments_count, 'fa-credit-card', 'sky')
+            ] %}
+            <div
+                class="bg-slate-800 rounded-2xl p-5 border border-slate-700/50 shadow-lg shadow-black/20 group hover:border-{{ color }}-500/30 transition-all">
+                <div class="flex items-center justify-between mb-4">
+                    <div
+                        class="w-10 h-10 bg-{{ color }}-500/10 rounded-xl flex items-center justify-center border border-{{ color }}-500/20 text-{{ color }}-400 group-hover:scale-110 transition-transform">
+                        <i class="fas {{ icon }} text-sm"></i>
                     </div>
-                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                        <i class="fas fa-users text-blue-600"></i>
-                    </div>
+                    <span class="text-2xl font-black text-white">{{ count }}</span>
                 </div>
+                <p class="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest">{{ label }}</p>
             </div>
-
-            <div class="bg-bg-subtle rounded-xl shadow-sm border border-secondary-200 p-4">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-fg-muted">{{ _('Clients') }}</p>
-                        <p class="text-2xl font-bold text-fg-base mt-1">{{ stats.clients_count }}</p>
-                    </div>
-                    <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-                        <i class="fas fa-user-friends text-green-600"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-bg-subtle rounded-xl shadow-sm border border-secondary-200 p-4">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-fg-muted">{{ _('Suppliers') }}</p>
-                        <p class="text-2xl font-bold text-fg-base mt-1">{{ stats.suppliers_count }}</p>
-                    </div>
-                    <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
-                        <i class="fas fa-truck text-purple-600"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-bg-subtle rounded-xl shadow-sm border border-secondary-200 p-4">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-fg-muted">{{ _('Inventory') }}</p>
-                        <p class="text-2xl font-bold text-fg-base mt-1">{{ stats.inventory_count }}</p>
-                    </div>
-                    <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
-                        <i class="fas fa-boxes text-orange-600"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-bg-subtle rounded-xl shadow-sm border border-secondary-200 p-4">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-fg-muted">{{ _('Documents') }}</p>
-                        <p class="text-2xl font-bold text-fg-base mt-1">{{ stats.documents_count }}</p>
-                    </div>
-                    <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
-                        <i class="fas fa-file-invoice text-red-600"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-bg-subtle rounded-xl shadow-sm border border-secondary-200 p-4">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm font-medium text-fg-muted">{{ _('Payments') }}</p>
-                        <p class="text-2xl font-bold text-fg-base mt-1">{{ stats.payments_count }}</p>
-                    </div>
-                    <div class="w-10 h-10 bg-yellow-100 rounded-full flex items-center justify-center">
-                        <i class="fas fa-credit-card text-yellow-600"></i>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <!-- Assigned Users -->
-            <div class="bg-bg-subtle rounded-xl shadow-sm border border-secondary-200">
-                <div class="px-6 py-4 border-b border-secondary-200">
-                    <h3 class="text-lg font-semibold text-fg-base flex items-center">
-                        <i class="fas fa-users text-accent-500 mr-2"></i>
-                        {{ _('Assigned Users') }}
-                        {% if company.users %}
-                        <span class="ml-2 px-2 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">
-                            {{ company.users|length }}
-                        </span>
-                        {% endif %}
+            <div
+                class="bg-slate-800 rounded-2xl shadow-lg border border-slate-700/50 shadow-black/20 overflow-hidden flex flex-col">
+                <div class="px-8 py-5 border-b border-slate-700/50 bg-slate-900/20 flex justify-between items-center">
+                    <h3 class="text-lg font-bold text-white flex items-center">
+                        <i class="fas fa-users-cog mr-3 text-indigo-400"></i>
+                        {{ _('Authorized Access') }}
                     </h3>
-                </div>
-                <div class="p-6">
                     {% if company.users %}
-                    <div class="space-y-3">
+                    <span
+                        class="px-3 py-1 text-[10px] font-extrabold bg-indigo-500/10 text-indigo-400 rounded-full border border-indigo-500/20">
+                        {{ company.users|length }} {{ _('Users') }}
+                    </span>
+                    {% endif %}
+                </div>
+                <div class="p-6 flex-1">
+                    {% if company.users %}
+                    <div class="grid grid-cols-1 gap-4">
                         {% for user in company.users %}
-                        <div class="flex items-center justify-between p-3 bg-bg-base rounded-lg border border-secondary-200">
+                        <div
+                            class="flex items-center justify-between p-4 bg-slate-900/40 rounded-xl border border-slate-700/30 hover:bg-slate-900/60 transition-colors group">
                             <div class="flex items-center">
-                                <div class="w-10 h-10 bg-accent-500 rounded-full flex items-center justify-center text-btn-primary-text font-bold mr-3">
+                                <div
+                                    class="w-10 h-10 bg-slate-800 border border-slate-700 rounded-xl flex items-center justify-center text-white font-bold text-sm mr-4 shadow-lg group-hover:bg-indigo-600 transition-colors">
                                     {{ user.name[0].upper() if user.name else 'U' }}
                                 </div>
                                 <div>
-                                    <div class="text-sm font-medium text-fg-base">{{ user.name }}</div>
-                                    <div class="text-xs text-fg-muted">{{ user.email }}</div>
+                                    <div class="text-sm font-bold text-slate-200">{{ user.name }}</div>
+                                    <div class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{{
+                                        user.email }}</div>
                                 </div>
                             </div>
-                            <div class="flex items-center space-x-2">
+                            <div class="flex items-center">
                                 {% if user.active %}
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                    {{ _('Active') }}
-                                </span>
+                                <span
+                                    class="w-2 h-2 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/50 animate-pulse"></span>
                                 {% else %}
-                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
-                                    {{ _('Inactive') }}
-                                </span>
+                                <span class="w-2 h-2 rounded-full bg-rose-500"></span>
                                 {% endif %}
-                                <span class="text-xs text-fg-muted">
-                                    {{ user.created_at.strftime('%b %Y') if user.created_at else '-' }}
-                                </span>
                             </div>
                         </div>
                         {% endfor %}
                     </div>
                     {% else %}
-                    <div class="text-center py-8">
-                        <div class="w-12 h-12 bg-secondary-100 rounded-full flex items-center justify-center text-secondary-400 mb-3 mx-auto">
-                            <i class="fas fa-users text-lg"></i>
+                    <div class="text-center py-12 bg-slate-900/30 rounded-2xl border border-dashed border-slate-700">
+                        <div
+                            class="w-16 h-16 bg-slate-800 rounded-full flex items-center justify-center text-slate-600 mb-4 mx-auto border border-slate-700">
+                            <i class="fas fa-users text-xl"></i>
                         </div>
-                        <p class="text-fg-muted mb-4">{{ _('No users assigned to this company') }}</p>
+                        <p class="text-slate-500 font-bold uppercase tracking-widest text-xs mb-4">{{ _('No assigned
+                            users') }}</p>
                         <a href="{{ url_for('companies.edit', id=company.id) }}"
-                            class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg text-accent-600 bg-accent-50 hover:bg-accent-100 transition-colors">
-                            <i class="fas fa-plus mr-2"></i>{{ _('Assign Users') }}
-                        </a>
+                            class="text-indigo-400 hover:text-indigo-300 font-bold text-sm underline decoration-indigo-400/30 underline-offset-4">{{
+                            _('Manage Access') }}</a>
                     </div>
                     {% endif %}
                 </div>
             </div>
 
-            <!-- Recent Activity -->
-            <div class="bg-bg-subtle rounded-xl shadow-sm border border-secondary-200">
-                <div class="px-6 py-4 border-b border-secondary-200">
-                    <h3 class="text-lg font-semibold text-fg-base flex items-center">
-                        <i class="fas fa-clock text-accent-500 mr-2"></i>
-                        {{ _('Recent Activity') }}
+            <!-- Global Activity -->
+            <div
+                class="bg-slate-800 rounded-2xl shadow-lg border border-slate-700/50 shadow-black/20 overflow-hidden flex flex-col">
+                <div class="px-8 py-5 border-b border-slate-700/50 bg-slate-900/20">
+                    <h3 class="text-lg font-bold text-white flex items-center">
+                        <i class="fas fa-stream mr-3 text-indigo-400"></i>
+                        {{ _('Operational Activity') }}
                     </h3>
                 </div>
-                <div class="p-6">
-                    <div class="space-y-6">
+                <div class="p-6 flex-1">
+                    <div class="space-y-8">
                         {% if recent_documents %}
                         <div>
-                            <h4 class="text-sm font-medium text-fg-base mb-3 flex items-center">
-                                <i class="fas fa-file-invoice text-blue-600 mr-2"></i>
+                            <h4
+                                class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 flex items-center">
+                                <i class="fas fa-file-invoice mr-2 text-rose-500/50"></i>
                                 {{ _('Recent Documents') }}
                             </h4>
-                            <div class="space-y-2">
+                            <div class="space-y-3">
                                 {% for document in recent_documents %}
-                                <div class="flex items-center justify-between py-2 border-b border-secondary-100 last:border-b-0">
+                                <div
+                                    class="flex items-center justify-between p-3 rounded-xl bg-slate-900/30 border border-slate-700/20 hover:border-slate-700/50 transition-all">
                                     <div class="flex items-center">
-                                        <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
-                                            <i class="fas fa-file text-blue-600 text-xs"></i>
+                                        <div
+                                            class="w-8 h-8 rounded-lg bg-rose-500/10 flex items-center justify-center text-rose-400 border border-rose-500/20 mr-3">
+                                            <i class="fas fa-file-alt text-[10px]"></i>
                                         </div>
                                         <div>
-                                            <div class="text-sm font-medium text-fg-base">{{ document.document_number }}</div>
-                                            <div class="text-xs text-fg-muted">
+                                            <div class="text-xs font-bold text-slate-300">{{ document.document_number }}
+                                            </div>
+                                            <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">
                                                 {{ document.type.value.title() if document.type else 'Document' }}
-                                                {% if document.status %}
-                                                • {{ document.status.value.title() }}
-                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text-xs text-fg-muted">
+                                    <div class="text-[10px] font-bold text-slate-500">
                                         {{ document.issued_date.strftime('%b %d') if document.issued_date else '-' }}
                                     </div>
                                 </div>
@@ -271,23 +235,29 @@
 
                         {% if recent_payments %}
                         <div>
-                            <h4 class="text-sm font-medium text-fg-base mb-3 flex items-center">
-                                <i class="fas fa-credit-card text-green-600 mr-2"></i>
+                            <h4
+                                class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-4 flex items-center">
+                                <i class="fas fa-credit-card mr-2 text-emerald-500/50"></i>
                                 {{ _('Recent Payments') }}
                             </h4>
-                            <div class="space-y-2">
+                            <div class="space-y-3">
                                 {% for payment in recent_payments %}
-                                <div class="flex items-center justify-between py-2 border-b border-secondary-100 last:border-b-0">
+                                <div
+                                    class="flex items-center justify-between p-3 rounded-xl bg-slate-900/30 border border-slate-700/20 hover:border-slate-700/50 transition-all">
                                     <div class="flex items-center">
-                                        <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center mr-3">
-                                            <i class="fas fa-dollar-sign text-green-600 text-xs"></i>
+                                        <div
+                                            class="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400 border border-emerald-500/20 mr-3">
+                                            <i class="fas fa-check text-[10px]"></i>
                                         </div>
                                         <div>
-                                            <div class="text-sm font-medium text-fg-base">{{ company.currency or '$' }}{{ "%.2f"|format(payment.amount or 0) }}</div>
-                                            <div class="text-xs text-fg-muted">{{ payment.method.value.title() if payment.method else 'Payment' }}</div>
+                                            <div class="text-xs font-bold text-white">{{ company.currency or '$' }}{{
+                                                "%.2f"|format(payment.amount or 0) }}</div>
+                                            <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">
+                                                {{ payment.method.value.title() if payment.method else 'Payment' }}
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="text-xs text-fg-muted">
+                                    <div class="text-[10px] font-bold text-slate-500">
                                         {{ payment.payment_date.strftime('%b %d') if payment.payment_date else '-' }}
                                     </div>
                                 </div>
@@ -297,11 +267,10 @@
                         {% endif %}
 
                         {% if not recent_documents and not recent_payments %}
-                        <div class="text-center py-8">
-                            <div class="w-12 h-12 bg-secondary-100 rounded-full flex items-center justify-center text-secondary-400 mb-3 mx-auto">
-                                <i class="fas fa-clock text-lg"></i>
-                            </div>
-                            <p class="text-fg-muted">{{ _('No recent activity') }}</p>
+                        <div class="text-center py-12 flex flex-col items-center">
+                            <i class="fas fa-history text-3xl text-slate-700 mb-4"></i>
+                            <p class="text-slate-500 font-bold uppercase tracking-widest text-xs">{{ _('No recent
+                                activity recorded') }}</p>
                         </div>
                         {% endif %}
                     </div>
@@ -310,30 +279,26 @@
         </div>
 
         <!-- Danger Zone -->
-        <div class="mt-8 bg-red-50 rounded-xl shadow-sm border border-red-200">
-            <div class="px-6 py-4 border-b border-red-200">
-                <h3 class="text-lg font-semibold text-red-800 flex items-center">
-                    <i class="fas fa-exclamation-triangle mr-2"></i>
-                    {{ _('Danger Zone') }}
-                </h3>
-            </div>
-            <div class="p-6">
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                    <div class="mb-4 sm:mb-0">
-                        <h4 class="text-sm font-medium text-red-800">{{ _('Delete Company') }}</h4>
-                        <p class="text-sm text-red-600 mt-1">
-                            {{ _('Once you delete a company, there is no going back. Please be certain.') }}
-                        </p>
-                    </div>
-                    <form action="{{ url_for('companies.delete', id=company.id) }}" method="POST" class="inline">
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-                        <button type="submit"
-                            class="inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg text-white bg-red-600 hover:bg-red-700 transition-colors shadow-sm"
-                            onclick="return confirm('{{ _('Are you sure you want to delete this company? This action cannot be undone and will remove all associated data including clients, suppliers, inventory, documents, payments, and reports.') }}')">
-                            <i class="fas fa-trash mr-2"></i> {{ _('Delete Company') }}
-                        </button>
-                    </form>
+        <div class="bg-rose-500/5 rounded-2xl border border-rose-500/20 p-8 shadow-lg shadow-rose-500/5">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+                <div>
+                    <h3 class="text-lg font-bold text-white flex items-center uppercase tracking-wider">
+                        <i class="fas fa-exclamation-triangle mr-3 text-rose-500"></i>
+                        {{ _('Critical Operations') }}
+                    </h3>
+                    <p class="text-sm font-medium text-slate-400 mt-2 max-w-2xl">
+                        {{ _('Deleting this company will permanently remove all associated users, clients, suppliers,
+                        inventory, documents, and financial data. There is no undo for this action.') }}
+                    </p>
                 </div>
+                <form action="{{ url_for('companies.delete', id=company.id) }}" method="POST" class="inline">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <button type="submit"
+                        class="bg-rose-600 text-white px-8 py-3 rounded-xl hover:bg-rose-500 transition-all shadow-lg shadow-rose-500/20 font-bold text-sm whitespace-nowrap"
+                        onclick="return confirm('{{ _('Are you sure you want to delete this company? This action cannot be undone and will remove all associated data including clients, suppliers, inventory, documents, payments, and reports.') }}')">
+                        <i class="fas fa-trash-alt mr-2"></i> {{ _('Delete Entire Organization') }}
+                    </button>
+                </form>
             </div>
         </div>
     </div>

@@ -1,58 +1,97 @@
-<div id="client-modal" class="fixed inset-0 z-50 hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <!-- Background overlay -->
-        <div class="fixed inset-0 bg-black/75 transition-opacity" aria-hidden="true" id="client-modal-backdrop">
-        </div>
+<div id="client-modal" class="fixed inset-0 z-[100] hidden" aria-labelledby="modal-title" role="dialog"
+    aria-modal="true">
+    <!-- Background overlay -->
+    <div class="fixed inset-0 bg-slate-950/90 backdrop-blur-md transition-opacity" aria-hidden="true"
+        id="client-modal-backdrop"></div>
 
-        <!-- Modal panel -->
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-        <div
-            class="inline-block align-bottom bg-bg-base rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg w-full relative z-10">
-            <div class="bg-bg-base px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                <div class="sm:flex sm:items-start">
-                    <div class="w-full">
-                        <h3 class="text-lg leading-6 font-medium text-fg-base mb-4" id="modal-title">
-                            {{ _('Select Client') }}
-                        </h3>
-
-                        <!-- Search Input -->
-                        <div class="mb-4">
-                            <div class="relative rounded-md shadow-sm">
-                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <i class="fas fa-search text-fg-muted"></i>
+    <div class="fixed inset-0 z-[110] overflow-y-auto">
+        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-start sm:p-0 sm:mt-20">
+            <!-- Modal panel -->
+            <div
+                class="relative transform overflow-hidden rounded-3xl bg-slate-800 text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-xl border border-slate-700/50 shadow-black/80 animate-scaleUp">
+                <div class="bg-slate-800 px-8 py-8">
+                    <div class="sm:flex sm:items-start">
+                        <div class="w-full">
+                            <div class="flex items-center justify-between mb-8">
+                                <div class="flex items-center gap-4">
+                                    <div
+                                        class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-indigo-600/10 border border-indigo-500/20 shadow-lg shadow-indigo-500/5 text-indigo-400">
+                                        <i class="fas fa-user-search text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-black text-white uppercase tracking-widest"
+                                            id="modal-title">
+                                            {{ _('Client Directory') }}
+                                        </h3>
+                                        <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-1">
+                                            {{ _('Select or link a counterparty') }}
+                                        </p>
+                                    </div>
                                 </div>
-                                <input type="text" id="client-search-input"
-                                    class="focus:ring-accent-500 focus:border-accent-500 block w-full pl-10 sm:text-sm border-secondary-200 rounded-md py-2 bg-bg-base text-fg-base"
-                                    placeholder="{{ _('Search by name, email or phone...') }}" autocomplete="off">
+                                <button type="button" id="client-modal-close-icon"
+                                    class="text-slate-500 hover:text-white w-10 h-10 flex items-center justify-center rounded-xl bg-slate-700/50 hover:bg-slate-600 transition-all border border-slate-700/50">
+                                    <i class="fas fa-times"></i>
+                                </button>
                             </div>
-                        </div>
 
-                        <!-- Results List -->
-                        <div class="mt-2 max-h-60 overflow-y-auto border border-secondary-200 rounded-md"
-                            id="client-results-container">
-                            <div class="p-4 text-center text-fg-muted text-sm" id="client-empty-state">
-                                {{ _('Type to search for clients') }}
+                            <!-- Search Input -->
+                            <div class="mb-6">
+                                <label for="client-search-input" class="sr-only">{{ _('Search clients') }}</label>
+                                <div class="relative group">
+                                    <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                                        <i
+                                            class="fas fa-search text-slate-500 group-focus-within:text-indigo-400 transition-colors"></i>
+                                    </div>
+                                    <input type="text" id="client-search-input"
+                                        class="block w-full rounded-2xl border border-slate-700 py-4 pl-12 text-white font-bold placeholder-slate-600 focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 bg-slate-900 transition-all"
+                                        placeholder="{{ _('Search by name, email or mobile...') }}" autocomplete="off">
+                                </div>
                             </div>
-                            <ul class="divide-y divide-secondary-200 hidden" id="client-results-list">
-                                <!-- Results will be populated here -->
-                            </ul>
-                        </div>
 
-                        <!-- Create New Client Link -->
-                        <div class="mt-4 text-right">
-                            <a href="{{ url_for('customers.create', company_id=session.get('selected_company_id')) }}"
-                                target="_blank" class="text-sm text-accent-600 hover:text-accent-700 font-medium">
-                                <i class="fas fa-plus mr-1"></i> {{ _('Create New Client') }}
-                            </a>
+                            <!-- Results List -->
+                            <div class="mt-2 min-h-[250px] max-h-[350px] overflow-y-auto border border-slate-700 rounded-2xl bg-slate-900/50 custom-scrollbar"
+                                id="client-results-container">
+                                <div class="flex flex-col items-center justify-center h-full p-12 text-center"
+                                    id="client-empty-state">
+                                    <div
+                                        class="w-16 h-16 bg-slate-800 rounded-2xl flex items-center justify-center text-slate-700 mb-4 border border-slate-700 shadow-xl">
+                                        <i class="fas fa-users text-2xl"></i>
+                                    </div>
+                                    <span class="font-black text-white text-xs uppercase tracking-widest block mb-2">{{
+                                        _('Ready for query') }}</span>
+                                    <span class="text-xs text-slate-500 font-medium px-8 leading-relaxed">{{ _('Enter
+                                        keywords above to scan your client database') }}</span>
+                                </div>
+                                <ul class="divide-y divide-slate-700 hidden bg-slate-800" id="client-results-list">
+                                    <!-- Results will be populated here via JS -->
+                                </ul>
+                            </div>
+
+                            <!-- Create New Client Link -->
+                            <div
+                                class="mt-8 flex flex-col sm:flex-row justify-between items-center bg-slate-900/40 p-5 rounded-2xl border border-slate-700/50 gap-4">
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-info-circle text-indigo-500/50"></i>
+                                    <span
+                                        class="text-[10px] font-black text-slate-500 uppercase tracking-widest leading-none">{{
+                                        _('Entity not found?') }}</span>
+                                </div>
+                                <a href="{{ url_for('customers.create', company_id=session.get('selected_company_id')) }}"
+                                    target="_blank"
+                                    class="inline-flex items-center text-sm font-black text-indigo-400 hover:text-white transition-all bg-indigo-500/10 px-6 py-2.5 rounded-xl border border-indigo-500/20 hover:bg-indigo-600 uppercase tracking-widest leading-none">
+                                    <i class="fas fa-plus mr-2 text-[10px]"></i> {{ _('Create Account') }}
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="bg-secondary-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <button type="button" id="client-modal-close"
-                    class="mt-3 w-full inline-flex justify-center rounded-md border border-secondary-200 shadow-sm px-4 py-2 bg-bg-base text-base font-medium text-fg-base hover:bg-accent-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
-                    {{ _('Cancel') }}
-                </button>
+                <!-- Hidden cancel button for accessibility/fallback -->
+                <div class="bg-slate-800 px-8 py-4 sm:flex sm:flex-row-reverse border-t border-slate-700 hidden">
+                    <button type="button" id="client-modal-close"
+                        class="px-6 py-2 bg-slate-700 text-slate-300 rounded-xl hover:bg-slate-600 transition-all font-bold text-sm">
+                        {{ _('Close Search') }}
+                    </button>
+                </div>
             </div>
         </div>
     </div>

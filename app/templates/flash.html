@@ -1,26 +1,42 @@
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
-<div class="flash-container fixed bottom-5 right-5 flex flex-col gap-3">
+<div class="flash-container fixed bottom-8 right-8 flex flex-col gap-4 z-[9999] pointer-events-none">
     {% for category, message in messages %}
-    <div class="flash-message relative rounded-lg overflow-hidden" role="alert">
-        <div
-            class="flex items-center p-4 {% if category == 'success' %}bg-green-500 text-white{% elif category == 'error' %}bg-red-500 text-white{% elif category == 'warning' %}bg-orange-500 text-orange-900{% else %}bg-primary-500 text-white{% endif %}">
-            <!-- Icon based on message type -->
-            <div class="flex-shrink-0 mr-3">
+    <div
+        class="flash-message relative rounded-2xl overflow-hidden shadow-2xl shadow-black/80 border min-w-[320px] max-w-md animate-slideInRight pointer-events-auto
+        {% if category == 'success' %}bg-slate-800 border-emerald-500/30{% elif category == 'error' %}bg-slate-800 border-rose-500/30{% elif category == 'warning' %}bg-slate-800 border-amber-500/30{% else %}bg-slate-800 border-indigo-500/30{% endif %}">
+
+        <div class="flex items-center p-5">
+            <!-- Icon -->
+            <div class="flex-shrink-0 mr-4">
                 {% if category == 'success' %}
-                <i class="fas fa-check-circle text-xl"></i>
+                <div
+                    class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 text-emerald-400">
+                    <i class="fas fa-check"></i>
+                </div>
                 {% elif category == 'error' %}
-                <i class="fas fa-exclamation-circle text-xl"></i>
+                <div
+                    class="w-10 h-10 rounded-xl bg-rose-500/10 flex items-center justify-center border border-rose-500/20 text-rose-400">
+                    <i class="fas fa-exclamation-circle"></i>
+                </div>
                 {% elif category == 'warning' %}
-                <i class="fas fa-exclamation-triangle text-xl"></i>
+                <div
+                    class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center border border-amber-500/20 text-amber-400">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
                 {% else %}
-                <i class="fas fa-info-circle text-xl"></i>
+                <div
+                    class="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 text-indigo-400">
+                    <i class="fas fa-info-circle"></i>
+                </div>
                 {% endif %}
             </div>
 
-            <!-- Message content -->
-            <div class="flex-1 mr-2">
-                <p class="font-medium">
+            <!-- Content -->
+            <div class="flex-1">
+                <p
+                    class="text-xs font-bold uppercase tracking-widest mb-1
+                    {% if category == 'success' %}text-emerald-500{% elif category == 'error' %}text-rose-500{% elif category == 'warning' %}text-amber-500{% else %}text-indigo-400{% endif %}">
                     {% if category == 'success' %}
                     {{ _('Success') }}
                     {% elif category == 'error' %}
@@ -31,20 +47,22 @@
                     {{ _('Information') }}
                     {% endif %}
                 </p>
-                <p class="text-sm opacity-90">{{ message }}</p>
+                <p class="text-sm font-bold text-slate-200">{{ message }}</p>
             </div>
 
-            <!-- Close button -->
+            <!-- Close -->
             <button type="button"
-                class="flash-close flex-shrink-0 ml-auto -mx-1.5 -my-1.5 rounded-lg p-1.5 inline-flex items-center justify-center h-8 w-8 {% if category == 'success' %}hover:bg-green-600{% elif category == 'error' %}hover:bg-red-600{% elif category == 'warning' %}hover:bg-orange-600{% else %}hover:bg-primary-600{% endif %} focus:ring-2 focus:ring-white">
-                <span class="sr-only">{{ _('Close') }}</span>
-                <i class="fas fa-times"></i>
+                class="flash-close w-8 h-8 flex items-center justify-center rounded-lg text-slate-500 hover:text-white hover:bg-slate-700/50 transition-all ml-4">
+                <i class="fas fa-times text-xs"></i>
             </button>
         </div>
 
         <!-- Progress bar -->
-        <div
-            class="flash-progress {% if category == 'success' %}bg-green-300{% elif category == 'error' %}bg-red-300{% elif category == 'warning' %}bg-orange-300{% else %}bg-primary-300{% endif %}">
+        <div class="h-1 bg-slate-700/30 overflow-hidden">
+            <div class="flash-progress h-full transition-all duration-100 ease-linear
+                {% if category == 'success' %}bg-emerald-500{% elif category == 'error' %}bg-rose-500{% elif category == 'warning' %}bg-amber-500{% else %}bg-indigo-500{% endif %}"
+                style="width: 100%">
+            </div>
         </div>
     </div>
     {% endfor %}

@@ -4,98 +4,107 @@
 
 {% block content %}
 <!-- Header -->
-<div class="flex justify-between items-center mb-6">
+<div class="flex justify-between items-center mb-8">
     <div>
-        <h2 class="text-2xl font-bold text-fg-base">{{ _('Inventory Management') }}</h2>
-        <p class="text-fg-muted text-sm mt-1">{{ _('Manage your inventory items and track stock levels') }}</p>
+        <h2 class="text-3xl font-extrabold text-white tracking-tight">{{ _('Inventory Management') }}</h2>
+        <p class="text-slate-400 text-sm mt-2 font-medium">{{ _('Manage your inventory items and track stock levels') }}
+        </p>
     </div>
     <div class="flex space-x-3">
         <a href="{{ url_for('inventory.export', company_id=company_id) }}"
-            class="bg-accent-100 text-accent-800 px-4 py-2 rounded-lg hover:bg-accent-200 transition shadow-sm flex items-center">
-            <i class="fas fa-download mr-2"></i> {{ _('Export') }}
+            class="bg-slate-800 text-slate-200 px-4 py-2.5 rounded-xl hover:bg-slate-700 transition-all shadow-lg shadow-black/20 border border-slate-700 font-bold flex items-center text-sm">
+            <i class="fas fa-download mr-2 text-indigo-400"></i> {{ _('Export') }}
         </a>
         <a href="{{ url_for('inventory.create', company_id=company_id) }}"
-            class="bg-btn-primary-bg text-btn-primary-text px-4 py-2 rounded-lg hover:bg-btn-primary-hover transition shadow-sm flex items-center">
+            class="bg-indigo-600 text-white px-4 py-2.5 rounded-xl hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-500/20 font-bold flex items-center text-sm">
             <i class="fas fa-plus mr-2"></i> {{ _('Add Item') }}
         </a>
     </div>
 </div>
 
 <!-- Statistics Cards -->
-<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-    <div class="bg-bg-subtle rounded-xl shadow-sm p-6 border border-primary-200">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="bg-slate-800 rounded-xl shadow-lg p-6 border border-slate-700 shadow-black/20 group">
         <div class="flex items-center">
-            <div class="p-3 rounded-full bg-accent-100 text-accent-700">
+            <div
+                class="p-3 rounded-xl bg-indigo-500/10 text-indigo-400 ring-1 ring-indigo-500/20 group-hover:bg-indigo-600 group-hover:text-white transition-all">
                 <i class="fas fa-boxes text-xl"></i>
             </div>
             <div class="ml-4">
-                <p class="text-sm font-medium text-fg-muted">{{ _('Total Items') }}</p>
-                <p class="text-2xl font-bold text-fg-base">{{ stats.total_items }}</p>
+                <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">{{ _('Total Items') }}</p>
+                <p class="text-2xl font-extrabold text-white mt-0.5">{{ stats.total_items }}</p>
             </div>
         </div>
     </div>
 
-    <div class="bg-bg-subtle rounded-xl shadow-sm p-6 border border-primary-200">
+    <div class="bg-slate-800 rounded-xl shadow-lg p-6 border border-slate-700 shadow-black/20 group">
         <div class="flex items-center">
-            <div class="p-3 rounded-full bg-accent-200 text-accent-800">
+            <div
+                class="p-3 rounded-xl bg-emerald-500/10 text-emerald-400 ring-1 ring-emerald-500/20 group-hover:bg-emerald-600 group-hover:text-white transition-all">
                 <i class="fas fa-dollar-sign text-xl"></i>
             </div>
             <div class="ml-4">
-                <p class="text-sm font-medium text-fg-muted">{{ _('Total Value') }}</p>
-                <p class="text-2xl font-bold text-fg-base">{{ session.get('currency') }}{{ "{:,.2f}".format(stats.total_value) }}</p>
+                <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">{{ _('Total Value') }}</p>
+                <p class="text-2xl font-extrabold text-white mt-0.5">{{ session.get('currency') }}{{
+                    "{:,.2f}".format(stats.total_value) }}</p>
             </div>
         </div>
     </div>
 
-    <div class="bg-bg-subtle rounded-xl shadow-sm p-6 border border-primary-200">
+    <div class="bg-slate-800 rounded-xl shadow-lg p-6 border border-slate-700 shadow-black/20 group">
         <div class="flex items-center">
-            <div class="p-3 rounded-full bg-btn-alert-bg text-btn-alert-text">
+            <div
+                class="p-3 rounded-xl bg-amber-500/10 text-amber-500 ring-1 ring-amber-500/20 group-hover:bg-amber-500 group-hover:text-white transition-all">
                 <i class="fas fa-exclamation-triangle text-xl"></i>
             </div>
             <div class="ml-4">
-                <p class="text-sm font-medium text-fg-muted">{{ _('Low Stock') }}</p>
-                <p class="text-2xl font-bold text-fg-base">{{ stats.low_stock_items }}</p>
+                <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">{{ _('Low Stock') }}</p>
+                <p class="text-2xl font-extrabold text-white mt-0.5">{{ stats.low_stock_items }}</p>
             </div>
         </div>
     </div>
 
-    <div class="bg-bg-subtle rounded-xl shadow-sm p-6 border border-primary-200">
+    <div class="bg-slate-800 rounded-xl shadow-lg p-6 border border-slate-700 shadow-black/20 group">
         <div class="flex items-center">
-            <div class="p-3 rounded-full bg-btn-danger-bg text-btn-danger-text">
+            <div
+                class="p-3 rounded-xl bg-rose-500/10 text-rose-400 ring-1 ring-rose-500/20 group-hover:bg-rose-600 group-hover:text-white transition-all">
                 <i class="fas fa-times-circle text-xl"></i>
             </div>
             <div class="ml-4">
-                <p class="text-sm font-medium text-fg-muted">{{ _('Out of Stock') }}</p>
-                <p class="text-2xl font-bold text-fg-base">{{ stats.out_of_stock_items }}</p>
+                <p class="text-xs font-bold text-slate-500 uppercase tracking-widest">{{ _('Out of Stock') }}</p>
+                <p class="text-2xl font-extrabold text-white mt-0.5">{{ stats.out_of_stock_items }}</p>
             </div>
         </div>
     </div>
 </div>
 
 <!-- Search and Filter -->
-<div class="bg-bg-subtle rounded-xl shadow-sm p-6 border border-primary-200 mb-6">
-    <form action="{{ url_for('inventory.index', company_id=company_id) }}" method="GET" class="space-y-4">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-slate-800 rounded-2xl shadow-lg p-6 border border-slate-700/50 mb-8 shadow-black/20">
+    <form action="{{ url_for('inventory.index', company_id=company_id) }}" method="GET" class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <!-- Search -->
             <div class="md:col-span-2">
                 <label for="search" class="sr-only">{{ _('Search') }}</label>
-                <div class="relative">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-search text-fg-muted"></i>
+                <div class="relative group">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <i
+                            class="fas fa-search text-slate-500 group-focus-within:text-indigo-400 transition-colors"></i>
                     </div>
                     <input type="search" id="search" name="search" value="{{ search }}"
                         placeholder="{{ _('Search items, description...') }}"
-                        class="block w-full pl-10 pr-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                        class="block w-full pl-11 pr-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500
+                               focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition-all sm:text-sm">
                 </div>
             </div>
 
             <!-- Supplier Filter -->
             <div>
                 <select name="supplier_id"
-                    class="w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
-                    <option value="">{{ _('All Suppliers') }}</option>
+                    class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition-all sm:text-sm">
+                    <option value="" class="bg-slate-900">{{ _('All Suppliers') }}</option>
                     {% for supplier in suppliers %}
-                    <option value="{{ supplier.id }}" {% if supplier_id|string==supplier.id|string %}selected{% endif %}>
+                    <option value="{{ supplier.id }}" class="bg-slate-900" {% if supplier_id|string==supplier.id|string
+                        %}selected{% endif %}>
                         {{ supplier.name }}
                     </option>
                     {% endfor %}
@@ -104,23 +113,23 @@
         </div>
 
         <div class="flex justify-between items-center">
-            <div class="flex space-x-2">
+            <div class="flex space-x-3">
                 <button type="submit"
-                    class="bg-btn-primary-bg text-btn-primary-text px-4 py-2 rounded-lg hover:bg-btn-primary-hover transition">
+                    class="bg-indigo-600 text-white px-6 py-2.5 rounded-xl hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-500/20 font-bold flex items-center text-sm">
                     <i class="fas fa-search mr-2"></i>{{ _('Search') }}
                 </button>
                 {% if search or supplier_id %}
                 <a href="{{ url_for('inventory.index', company_id=company_id) }}"
-                    class="bg-btn-secondary-bg text-btn-secondary-text px-4 py-2 rounded-lg hover:bg-btn-secondary-hover transition">
+                    class="bg-slate-700 text-slate-200 px-6 py-2.5 rounded-xl hover:bg-slate-600 transition-all font-bold flex items-center text-sm border border-slate-600">
                     <i class="fas fa-times mr-2"></i>{{ _('Clear') }}
                 </a>
                 {% endif %}
             </div>
 
             <!-- Bulk Actions -->
-            <div class="flex space-x-2" id="bulk-actions" style="display: none;">
+            <div class="flex space-x-3" id="bulk-actions" style="display: none;">
                 <button type="button" id="bulk-delete-btn"
-                    class="bg-btn-danger-bg text-btn-danger-text px-4 py-2 rounded-lg hover:bg-btn-danger-hover transition">
+                    class="bg-rose-600 text-white px-6 py-2.5 rounded-xl hover:bg-rose-500 transition-all shadow-lg shadow-rose-500/20 font-bold flex items-center text-sm">
                     <i class="fas fa-trash mr-2"></i>{{ _('Delete Selected') }}
                 </button>
             </div>
@@ -132,128 +141,131 @@
 {% set ns = namespace(args=request.args.to_dict()) %}
 {% set __ = ns.args.pop('sort', None) %}
 {% set __ = ns.args.pop('order', None) %}
-<div class="bg-bg-subtle rounded-xl shadow-sm overflow-hidden border border-primary-200">
+<div class="bg-slate-800 rounded-2xl shadow-lg overflow-hidden border border-slate-700 shadow-black/20">
     <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-primary-200">
-            <thead class="bg-bg-topbar">
+        <table class="min-w-full divide-y divide-slate-700">
+            <thead class="bg-slate-900/50">
                 <tr>
-                    <th scope="col" class="px-6 py-3 text-left">
+                    <th scope="col" class="px-6 py-4 text-left">
                         <input type="checkbox" id="select-all"
-                            class="rounded border-primary-400 text-accent-600 focus:ring-accent-500">
+                            class="rounded border-slate-700 bg-slate-900 text-indigo-500 focus:ring-indigo-500/20">
                     </th>
                     <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider">
+                        class="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-widest">
                         <a href="{{ url_for('inventory.index', company_id=company_id, sort='name', order='desc' if sort_by == 'name' and sort_order == 'asc' else 'asc', **ns.args) }}"
-                            class="flex items-center hover:text-fg-base">
+                            class="flex items-center hover:text-indigo-400 transition-colors">
                             {{ _('Name') }}
                             {% if sort_by == 'name' %}
-                            <i class="fas fa-sort-{{ 'up' if sort_order == 'asc' else 'down' }} ml-1"></i>
+                            <i class="fas fa-sort-{{ 'up' if sort_order == 'asc' else 'down' }} ml-1.5 opacity-70"></i>
                             {% endif %}
                         </a>
                     </th>
                     <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider">
+                        class="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-widest">
                         {{ _('Description') }}
                     </th>
                     <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider">
+                        class="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-widest">
                         <a href="{{ url_for('inventory.index', company_id=company_id, sort='quantity', order='desc' if sort_by == 'quantity' and sort_order == 'asc' else 'asc', **ns.args) }}"
-                            class="flex items-center hover:text-fg-base">
+                            class="flex items-center hover:text-indigo-400 transition-colors">
                             {{ _('Quantity') }}
                             {% if sort_by == 'quantity' %}
-                            <i class="fas fa-sort-{{ 'up' if sort_order == 'asc' else 'down' }} ml-1"></i>
+                            <i class="fas fa-sort-{{ 'up' if sort_order == 'asc' else 'down' }} ml-1.5 opacity-70"></i>
                             {% endif %}
                         </a>
                     </th>
                     <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider">
+                        class="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-widest">
                         <a href="{{ url_for('inventory.index', company_id=company_id, sort='price', order='desc' if sort_by == 'price' and sort_order == 'asc' else 'asc', **ns.args) }}"
-                            class="flex items-center hover:text-fg-base">
+                            class="flex items-center hover:text-indigo-400 transition-colors">
                             {{ _('Price') }}
                             {% if sort_by == 'price' %}
-                            <i class="fas fa-sort-{{ 'up' if sort_order == 'asc' else 'down' }} ml-1"></i>
+                            <i class="fas fa-sort-{{ 'up' if sort_order == 'asc' else 'down' }} ml-1.5 opacity-70"></i>
                             {% endif %}
                         </a>
                     </th>
                     <th scope="col"
-                        class="px-6 py-3 text-left text-xs font-medium text-fg-muted uppercase tracking-wider">
+                        class="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-widest">
                         {{ _('Supplier') }}
                     </th>
                     <th scope="col"
-                        class="px-6 py-3 text-right text-xs font-medium text-fg-muted uppercase tracking-wider">
+                        class="px-6 py-4 text-right text-xs font-bold text-slate-500 uppercase tracking-widest">
                         {{ _('Actions') }}
                     </th>
                 </tr>
             </thead>
-            <tbody class="bg-bg-subtle divide-y divide-primary-200">
+            <tbody class="divide-y divide-slate-700/50">
                 {% if inventory_items %}
                 {% for item in inventory_items %}
-                <tr class="hover:bg-bg-base transition-colors">
+                <tr class="hover:bg-slate-700/30 transition-colors group">
                     <td class="px-6 py-4 whitespace-nowrap">
                         <input type="checkbox"
-                            class="item-checkbox rounded border-primary-400 text-accent-600 focus:ring-accent-500"
+                            class="item-checkbox rounded border-slate-700 bg-slate-900 text-indigo-500 focus:ring-indigo-500/20"
                             value="{{ item.id }}">
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="font-medium text-fg-base">
+                        <div class="font-bold text-slate-200">
                             <a href="{{ url_for('inventory.view', company_id=company_id, id=item.id) }}"
-                                class="hover:text-accent-600">
+                                class="hover:text-indigo-400 transition-colors">
                                 {{ item.name }}
                             </a>
                         </div>
                     </td>
-                    <td class="px-6 py-4 text-sm text-fg-muted">
+                    <td class="px-6 py-4 text-sm text-slate-500 font-medium">
                         {{ item.description or _('N/A') }}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="flex items-center space-x-2">
-                            <span class="px-2 py-1 text-xs rounded-full font-medium
-                                    {% if item.quantity == 0 %}bg-btn-danger-bg text-btn-danger-text
-                                    {% elif item.quantity <= 10 %}bg-btn-alert-bg text-btn-alert-text
-                                    {% else %}bg-accent-200 text-accent-800{% endif %}">
+                        <div class="flex items-center space-x-3">
+                            <span class="px-3 py-1 text-xs rounded-full font-bold border
+                                    {% if item.quantity == 0 %}bg-rose-500/10 text-rose-400 border-rose-500/20
+                                    {% elif item.quantity <= 10 %}bg-amber-500/10 text-amber-500 border-amber-500/20
+                                    {% else %}bg-indigo-500/10 text-indigo-400 border-indigo-500/20{% endif %}">
                                 {{ item.quantity }}
                             </span>
-                            <div class="flex space-x-1">
+                            <div class="flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                 <button type="button"
-                                    class="stock-adjust-btn text-btn-danger-bg hover:text-btn-danger-hover text-xs"
+                                    class="stock-adjust-btn w-7 h-7 flex items-center justify-center rounded-lg bg-slate-700 text-slate-400 hover:bg-rose-500 hover:text-white transition-all text-[10px]"
                                     data-item-id="{{ item.id }}" data-adjustment="-1" title="{{ _('Decrease stock') }}">
                                     <i class="fas fa-minus"></i>
                                 </button>
                                 <button type="button"
-                                    class="stock-adjust-btn text-accent-600 hover:text-accent-700 text-xs"
+                                    class="stock-adjust-btn w-7 h-7 flex items-center justify-center rounded-lg bg-slate-700 text-slate-400 hover:bg-emerald-500 hover:text-white transition-all text-[10px]"
                                     data-item-id="{{ item.id }}" data-adjustment="1" title="{{ _('Increase stock') }}">
                                     <i class="fas fa-plus"></i>
                                 </button>
                             </div>
                         </div>
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-fg-base">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-slate-200">
                         {{ session.get('currency') }}{{ "{:,.2f}".format(item.price) }}
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-fg-muted">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500 font-medium">
                         {% if item.supplier %}
-                        <span class="text-fg-base">{{ item.supplier.name }}</span>
+                        <span class="text-slate-300">{{ item.supplier.name }}</span>
                         {% else %}
-                        <span class="text-fg-muted">{{ _('No supplier') }}</span>
+                        <span class="text-slate-500 italic">{{ _('No supplier') }}</span>
                         {% endif %}
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <div class="flex justify-end space-x-2">
                             <a href="{{ url_for('inventory.view', company_id=company_id, id=item.id) }}"
-                                class="text-accent-600 hover:text-accent-700" title="{{ _('View') }}">
-                                <i class="fas fa-eye"></i>
+                                class="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-700/50 text-slate-400 hover:bg-indigo-600 hover:text-white transition-all"
+                                title="{{ _('View') }}">
+                                <i class="fas fa-eye text-xs"></i>
                             </a>
                             <a href="{{ url_for('inventory.edit', company_id=company_id, id=item.id) }}"
-                                class="text-accent-600 hover:text-accent-700" title="{{ _('Edit') }}">
-                                <i class="fas fa-edit"></i>
+                                class="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-700/50 text-slate-400 hover:bg-amber-500 hover:text-white transition-all"
+                                title="{{ _('Edit') }}">
+                                <i class="fas fa-edit text-xs"></i>
                             </a>
                             <form action="{{ url_for('inventory.delete', company_id=company_id, id=item.id) }}"
                                 method="POST" class="inline">
                                 <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token() }}">
-                                <button type="submit" class="text-btn-danger-bg hover:text-btn-danger-hover"
+                                <button type="submit"
+                                    class="w-8 h-8 flex items-center justify-center rounded-lg bg-slate-700/50 text-slate-400 hover:bg-rose-600 hover:text-white transition-all"
                                     title="{{ _('Delete') }}"
                                     onclick="return confirm('{{ _('Are you sure you want to delete this item?') }}')">
-                                    <i class="fas fa-trash"></i>
+                                    <i class="fas fa-trash text-xs"></i>
                                 </button>
                             </form>
                         </div>
@@ -262,18 +274,19 @@
                 {% endfor %}
                 {% else %}
                 <tr>
-                    <td colspan="7" class="px-6 py-12 text-center text-fg-muted">
+                    <td colspan="7" class="px-6 py-20 text-center text-slate-500">
                         <div class="flex flex-col items-center">
                             <div
-                                class="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center text-fg-muted mb-4">
-                                <i class="fas fa-boxes text-2xl"></i>
+                                class="w-20 h-20 bg-slate-900/50 rounded-full flex items-center justify-center text-slate-700 mb-6 border border-slate-700/50">
+                                <i class="fas fa-boxes text-3xl"></i>
                             </div>
-                            <p class="text-lg font-medium text-fg-base mb-2">{{ _('No inventory items found') }}</p>
-                            <p class="text-fg-muted mb-4">{{ _('Get started by adding your first inventory item') }}
+                            <p class="text-xl font-bold text-white mb-2">{{ _('No inventory items found') }}</p>
+                            <p class="text-slate-500 mb-8 max-w-sm">{{ _('Get started by adding your first inventory
+                                item to track your stocks and prices.') }}
                             </p>
                             <a href="{{ url_for('inventory.create', company_id=company_id) }}"
-                                class="bg-btn-primary-bg text-btn-primary-text px-4 py-2 rounded-lg hover:bg-btn-primary-hover transition">
-                                <i class="fas fa-plus mr-2"></i>{{ _('Add Item') }}
+                                class="bg-indigo-600 text-white px-8 py-3 rounded-xl hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-500/20 font-bold flex items-center">
+                                <i class="fas fa-plus mr-2"></i>{{ _('Add First Item') }}
                             </a>
                         </div>
                     </td>
@@ -287,11 +300,11 @@
 <!-- Pagination -->
 {% if pagination and pagination.pages > 1 %}
 {% set __ = ns.args.pop('page', None) %}
-<div class="mt-6 flex justify-center">
+<div class="mt-8 flex justify-center">
     <nav class="flex items-center space-x-2">
         {% if pagination.has_prev %}
         <a href="{{ url_for('inventory.index', company_id=company_id, page=pagination.prev_num, **ns.args) }}"
-            class="px-3 py-2 rounded-md bg-bg-subtle border border-primary-300 text-fg-base hover:bg-bg-base">
+            class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-800 border border-slate-700 text-slate-400 hover:bg-slate-700 hover:text-white transition-all">
             <i class="fas fa-chevron-left text-xs"></i>
         </a>
         {% endif %}
@@ -299,20 +312,22 @@
         {% for page in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
         {% if page %}
         {% if page == pagination.page %}
-        <span class="px-3 py-2 rounded-md bg-btn-primary-bg text-btn-primary-text">{{ page }}</span>
+        <span
+            class="w-10 h-10 flex items-center justify-center rounded-xl bg-indigo-600 text-white font-bold shadow-lg shadow-indigo-500/20">{{
+            page }}</span>
         {% else %}
         <a href="{{ url_for('inventory.index', company_id=company_id, page=page, **ns.args) }}"
-            class="px-3 py-2 rounded-md bg-bg-subtle border border-primary-300 text-fg-base hover:bg-bg-base">{{
+            class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-800 border border-slate-700 text-slate-400 hover:bg-slate-700 hover:text-white transition-all font-bold">{{
             page }}</a>
         {% endif %}
         {% else %}
-        <span class="px-3 py-2 text-fg-muted">…</span>
+        <span class="w-10 h-10 flex items-center justify-center text-slate-600">…</span>
         {% endif %}
         {% endfor %}
 
         {% if pagination.has_next %}
         <a href="{{ url_for('inventory.index', company_id=company_id, page=pagination.next_num, **ns.args) }}"
-            class="px-3 py-2 rounded-md bg-bg-subtle border border-primary-300 text-fg-base hover:bg-bg-base">
+            class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-800 border border-slate-700 text-slate-400 hover:bg-slate-700 hover:text-white transition-all">
             <i class="fas fa-chevron-right text-xs"></i>
         </a>
         {% endif %}
@@ -327,104 +342,104 @@
     const csrf_token = document.getElementById('csrf_token').value;
 
     document.addEventListener('DOMContentLoaded', function () {
-    // Bulk selection functionality
-    const selectAllCheckbox = document.getElementById('select-all');
-    const itemCheckboxes = document.querySelectorAll('.item-checkbox');
-    const bulkActions = document.getElementById('bulk-actions');
-    const bulkDeleteBtn = document.getElementById('bulk-delete-btn');
+        // Bulk selection functionality
+        const selectAllCheckbox = document.getElementById('select-all');
+        const itemCheckboxes = document.querySelectorAll('.item-checkbox');
+        const bulkActions = document.getElementById('bulk-actions');
+        const bulkDeleteBtn = document.getElementById('bulk-delete-btn');
 
-    function updateBulkActions() {
-        const checkedItems = document.querySelectorAll('.item-checkbox:checked');
-        if (checkedItems.length > 0) {
-            bulkActions.style.display = 'flex';
-        } else {
-            bulkActions.style.display = 'none';
+        function updateBulkActions() {
+            const checkedItems = document.querySelectorAll('.item-checkbox:checked');
+            if (checkedItems.length > 0) {
+                bulkActions.style.display = 'flex';
+            } else {
+                bulkActions.style.display = 'none';
+            }
         }
-    }
 
-    selectAllCheckbox.addEventListener('change', function () {
+        selectAllCheckbox.addEventListener('change', function () {
+            itemCheckboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+            updateBulkActions();
+        });
+
         itemCheckboxes.forEach(checkbox => {
-            checkbox.checked = this.checked;
+            checkbox.addEventListener('change', updateBulkActions);
         });
-        updateBulkActions();
-    });
 
-    itemCheckboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', updateBulkActions);
-    });
+        // Bulk delete functionality
+        bulkDeleteBtn.addEventListener('click', function () {
+            const checkedItems = document.querySelectorAll('.item-checkbox:checked');
+            const itemIds = Array.from(checkedItems).map(cb => cb.value);
 
-    // Bulk delete functionality
-    bulkDeleteBtn.addEventListener('click', function () {
-        const checkedItems = document.querySelectorAll('.item-checkbox:checked');
-        const itemIds = Array.from(checkedItems).map(cb => cb.value);
+            if (itemIds.length === 0) return;
 
-        if (itemIds.length === 0) return;
-
-        if (confirm(`{{ _('Are you sure you want to delete') }} ${itemIds.length} {{ _('selected items?') }}`)) {
-            fetch(`/api/${companyId}/inventory/items/bulk-delete`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrf_token
-                },
-                body: JSON.stringify({ item_ids: itemIds })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.message) {
-                        location.reload();
-                    } else {
-                        alert(data.error || '{{ _("An error occurred") }}');
-                    }
+            if (confirm(`{{ _('Are you sure you want to delete') }} ${itemIds.length} {{ _('selected items?') }}`)) {
+                fetch(`/api/${companyId}/inventory/items/bulk-delete`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrf_token
+                    },
+                    body: JSON.stringify({ item_ids: itemIds })
                 })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('{{ _("An error occurred") }}');
-                });
-        }
-    });
-
-    // Stock adjustment functionality
-    document.querySelectorAll('.stock-adjust-btn').forEach(button => {
-        button.addEventListener('click', function () {
-            const itemId = this.dataset.itemId;
-            const adjustment = parseInt(this.dataset.adjustment);
-
-            fetch(`/api/${companyId}/inventory/items/${itemId}/adjust-stock`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': csrf_token
-                },
-                body: JSON.stringify({ adjustment: adjustment })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.new_quantity !== undefined) {
-                        // Update the quantity display
-                        const row = this.closest('tr');
-                        const quantitySpan = row.querySelector('td:nth-child(4) span');
-                        quantitySpan.textContent = data.new_quantity;
-
-                        // Update the color class based on new quantity
-                        quantitySpan.className = 'px-2 py-1 text-xs rounded-full font-medium ';
-                        if (data.new_quantity === 0) {
-                            quantitySpan.className += 'bg-btn-danger-bg text-btn-danger-text';
-                        } else if (data.new_quantity <= 10) {
-                            quantitySpan.className += 'bg-btn-alert-bg text-btn-alert-text';
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.message) {
+                            location.reload();
                         } else {
-                            quantitySpan.className += 'bg-accent-200 text-accent-800';
+                            alert(data.error || '{{ _("An error occurred") }}');
                         }
-                    } else {
-                        alert(data.error || '{{ _("An error occurred") }}');
-                    }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('{{ _("An error occurred") }}');
+                    });
+            }
+        });
+
+        // Stock adjustment functionality
+        document.querySelectorAll('.stock-adjust-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const itemId = this.dataset.itemId;
+                const adjustment = parseInt(this.dataset.adjustment);
+
+                fetch(`/api/${companyId}/inventory/items/${itemId}/adjust-stock`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrf_token
+                    },
+                    body: JSON.stringify({ adjustment: adjustment })
                 })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert('{{ _("An error occurred") }}');
-                });
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.new_quantity !== undefined) {
+                            // Update the quantity display
+                            const row = this.closest('tr');
+                            const quantitySpan = row.querySelector('td:nth-child(4) span');
+                            quantitySpan.textContent = data.new_quantity;
+
+                            // Update the color class based on new quantity
+                            quantitySpan.className = 'px-3 py-1 text-xs rounded-full font-bold border ';
+                            if (data.new_quantity === 0) {
+                                quantitySpan.className += 'bg-rose-500/10 text-rose-400 border-rose-500/20';
+                            } else if (data.new_quantity <= 10) {
+                                quantitySpan.className += 'bg-amber-500/10 text-amber-500 border-amber-500/20';
+                            } else {
+                                quantitySpan.className += 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20';
+                            }
+                        } else {
+                            alert(data.error || '{{ _("An error occurred") }}');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('{{ _("An error occurred") }}');
+                    });
+            });
         });
     });
-});
 </script>
 {% endblock %}

@@ -10,6 +10,9 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='img/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='img/favicon-16x16.png') }}">
     <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/flash.css') }}">
@@ -18,7 +21,8 @@
     <script src="{{ url_for('static', filename='js/flash.js') }}" defer></script>
 </head>
 
-<body class="bg-bg-base text-fg-base min-h-screen flex">
+<body
+    class="bg-slate-900 text-slate-200 font-sans antialiased min-h-screen flex selection:bg-indigo-500/30 selection:text-indigo-200">
     <!-- Sidebar -->
     {% include 'sidebar.html' %}
 

@@ -1,60 +1,87 @@
-<header class="bg-bg-topbar sticky top-0 z-10">
-    <div class="h-17 px-4 flex items-center justify-between">
+<header class="bg-slate-900/80 backdrop-blur-md sticky top-0 z-10 border-b border-slate-800/50">
+    <div class="h-16 px-6 flex items-center justify-between">
 
         <!-- Left -->
-        <div class="flex items-center gap-3">
-            <button type="button" id="sidebar-toggle" title="Menu" class="w-8 h-8 flex items-center justify-center rounded-md
-                   text-fg-muted hover:text-accent-500 hover:bg-primary-500/40 transition">
-                <i class="fas fa-bars"></i>
+        <div class="flex items-center gap-4">
+            <button type="button" id="sidebar-toggle" title="Menu"
+                class="w-10 h-10 flex items-center justify-center rounded-xl
+                   text-slate-400 hover:text-white hover:bg-slate-800 transition-all border border-transparent hover:border-slate-700">
+                <i class="fas fa-bars text-lg"></i>
             </button>
+
+            <!-- Breadcrumb (Optional placeholder) -->
+            <div class="hidden md:flex items-center text-sm">
+                <span class="font-bold text-white tracking-tight">{{ _('Dashboard') }}</span>
+            </div>
         </div>
 
         <!-- Right -->
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 md:gap-4">
 
-            <!-- Language -->
+            <!-- Company Selector -->
             <div class="relative">
-                <button type="button" id="language-menu-button" class="flex items-center gap-2 px-3 py-2 rounded-md
-                           text-sm text-fg-base hover:bg-primary-500/40 transition">
-                    <i class="fas fa-globe text-accent-500"></i>
-                    <span class="hidden md:inline">
-                        {{ AVAILABLE_LANGUAGES[CURRENT_LANGUAGE] }}
-                    </span>
-                    <i class="fas fa-chevron-down text-xs"></i>
-                </button>
-
-                <div id="language-menu" class="hidden absolute right-0 mt-2 w-44 rounded-md bg-secondary-50
-                           shadow-lg border border-secondary-700/40 z-50">
-                    {% for code, name in AVAILABLE_LANGUAGES.items() %}
-                    <a href="{{ url_for('set_language', language=code) }}" class="block px-4 py-2 text-sm hover:bg-secondary-100
-                              {% if CURRENT_LANGUAGE == code %}font-semibold{% endif %}">
-                        {{ name }}
-                    </a>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <!-- Company -->
-            <div class="relative">
-                <button type="button" id="company-menu-button" class="flex items-center gap-2 px-3 py-2 rounded-md
-                           text-sm text-fg-base hover:bg-primary-500/40 transition">
-                    <i class="fas fa-building text-accent-500"></i>
-                    <span class="hidden md:inline">
+                <button type="button" id="company-menu-button"
+                    class="group flex items-center gap-2.5 px-4 py-2 rounded-xl
+                           bg-slate-800 border border-slate-700 text-sm font-bold text-slate-200 
+                           hover:bg-slate-700 hover:border-indigo-500/50 hover:text-indigo-400 hover:shadow-lg hover:shadow-black/20 transition-all duration-200">
+                    <div
+                        class="w-5 h-5 rounded-lg bg-indigo-500/10 text-indigo-400 flex items-center justify-center border border-indigo-500/20">
+                        <i class="fas fa-building text-[10px]"></i>
+                    </div>
+                    <span class="hidden md:inline truncate max-w-[150px]">
                         {% for company in current_user.companies %}
                         {% if company.id|string == session.get('selected_company_id')|string %}
                         {{ company.name }}
                         {% endif %}
                         {% endfor %}
                     </span>
-                    <i class="fas fa-chevron-down text-xs"></i>
+                    <i
+                        class="fas fa-chevron-down text-[10px] text-slate-500 group-hover:text-indigo-400 transition-colors"></i>
                 </button>
 
-                <div id="company-menu" class="hidden absolute right-0 mt-2 w-56 rounded-md bg-secondary-50
-                           shadow-lg border border-secondary-700/40 z-50">
-                    {% for company in current_user.companies %}
-                    <a href="{{ url_for('set_company', id=company.id) }}" class="block px-4 py-2 text-sm hover:bg-secondary-100
-                              {% if company.id == session.get('selected_company_id') %}font-semibold{% endif %}">
-                        {{ company.name }}
+                <div id="company-menu"
+                    class="hidden absolute right-0 mt-3 w-64 rounded-2xl bg-slate-800
+                           shadow-2xl shadow-black border border-slate-700 ring-1 ring-white/5 z-50 overflow-hidden animate-fadeInShort">
+                    <div
+                        class="px-5 py-3 bg-slate-900/50 border-b border-slate-700 text-[10px] font-extrabold text-slate-500 uppercase tracking-widest">
+                        {{ _('Switch Company') }}
+                    </div>
+                    <div class="p-1.5 space-y-0.5">
+                        {% for company in current_user.companies %}
+                        <a href="{{ url_for('set_company', id=company.id) }}"
+                            class="flex items-center px-4 py-3 rounded-xl text-sm hover:bg-slate-700 transition-all group
+                                  {% if company.id|string == session.get('selected_company_id')|string %}bg-indigo-500/10 text-indigo-400 font-bold{% else %}text-slate-300{% endif %}">
+                            <div
+                                class="w-2.5 h-2.5 rounded-full mr-3 border-2 {% if company.id|string == session.get('selected_company_id')|string %}bg-indigo-500 border-indigo-500/30{% else %}bg-slate-600 border-slate-600/30 group-hover:bg-slate-500{% endif %}">
+                            </div>
+                            {{ company.name }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="h-8 w-px bg-slate-800 mx-1"></div>
+
+            <!-- Language -->
+            <div class="relative">
+                <button type="button" id="language-menu-button"
+                    class="w-10 h-10 flex items-center justify-center rounded-xl
+                           text-slate-400 hover:bg-slate-800 hover:text-indigo-400 transition-all border border-transparent hover:border-slate-700"
+                    title="{{ _('Switch Language') }}">
+                    <span class="text-xs font-extrabold">{{ CURRENT_LANGUAGE|upper }}</span>
+                </button>
+
+                <div id="language-menu"
+                    class="hidden absolute right-0 mt-3 w-48 rounded-2xl bg-slate-800
+                           shadow-2xl shadow-black border border-slate-700 ring-1 ring-white/5 z-50 overflow-hidden p-1.5 animate-fadeInShort">
+                    {% for code, name in AVAILABLE_LANGUAGES.items() %}
+                    <a href="{{ url_for('set_language', language=code) }}"
+                        class="flex items-center px-4 py-2.5 rounded-xl text-sm hover:bg-slate-700 transition-all
+                              {% if CURRENT_LANGUAGE == code %}text-indigo-400 bg-indigo-500/10 font-bold{% else %}text-slate-300{% endif %}">
+                        <span class="w-8 text-[10px] font-extrabold text-slate-500 uppercase tracking-widest">{{ code
+                            }}</span>
+                        {{ name }}
                     </a>
                     {% endfor %}
                 </div>
@@ -62,27 +89,39 @@
 
             <!-- User -->
             <div class="relative">
-                <button type="button" id="user-menu-btn" class="flex items-center gap-2 px-2 py-1 rounded-md
-                           hover:bg-primary-500/40 transition">
-                    <div class="w-8 h-8 rounded-full bg-gradient-to-br
-                               from-accent-400 to-accent-600 text-white
-                               flex items-center justify-center text-sm font-semibold">
+                <button type="button" id="user-menu-btn"
+                    class="flex items-center gap-3 p-1 rounded-2xl
+                           hover:bg-slate-800 transition-all bg-slate-900 border border-slate-800 hover:border-slate-700 group shadow-sm">
+                    <div
+                        class="w-8 h-8 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 
+                               text-white flex items-center justify-center text-sm font-extrabold shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform">
                         {{ current_user.name[0].upper() }}
                     </div>
-                    <i class="fas fa-chevron-down text-xs text-fg-muted hidden sm:inline"></i>
                 </button>
 
-                <div id="user-dropdown" class="hidden absolute right-0 mt-2 w-56 rounded-md bg-secondary-50
-                           shadow-lg border border-secondary-700/40 z-50">
-                    <div class="px-4 py-3 border-b border-secondary-700/40">
-                        <p class="text-sm font-medium text-fg-base">{{ current_user.name }}</p>
-                        <p class="text-xs text-fg-muted">{{ current_user.email }}</p>
+                <div id="user-dropdown"
+                    class="hidden absolute right-0 mt-3 w-64 rounded-2xl bg-slate-800
+                           shadow-2xl shadow-black border border-slate-700 ring-1 ring-white/5 z-50 overflow-hidden animate-fadeInShort">
+                    <div class="px-6 py-5 border-b border-slate-700 bg-slate-900/50">
+                        <p class="text-sm font-bold text-white tracking-tight">{{ current_user.name }}</p>
+                        <p class="text-[10px] font-bold text-slate-500 mt-1 uppercase tracking-widest truncate">{{
+                            current_user.email }}</p>
                     </div>
-                    <a href="{{ url_for('auth.logout') }}"
-                        class="block px-4 py-2 text-sm text-accent-500 hover:bg-secondary-100">
-                        <i class="fas fa-sign-out-alt mr-2"></i>
-                        {{ _('Sign out') }}
-                    </a>
+                    <div class="p-1.5 space-y-0.5">
+                        <a href="#"
+                            class="flex items-center px-4 py-3 text-sm text-slate-300 hover:bg-slate-700 hover:text-white rounded-xl transition-all group">
+                            <i
+                                class="fas fa-user-circle w-5 mr-3 text-slate-500 group-hover:text-indigo-400 transition-colors"></i>
+                            <span class="font-medium">{{ _('My Profile') }}</span>
+                        </a>
+                        <div class="my-1.5 border-t border-slate-700/50 mx-2"></div>
+                        <a href="{{ url_for('auth.logout') }}"
+                            class="flex items-center px-4 py-3 text-sm text-rose-400 hover:bg-rose-500/10 rounded-xl transition-all group">
+                            <i
+                                class="fas fa-sign-out-alt w-5 mr-3 text-rose-500/50 group-hover:text-rose-400 transition-colors"></i>
+                            <span class="font-bold">{{ _('Sign out') }}</span>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

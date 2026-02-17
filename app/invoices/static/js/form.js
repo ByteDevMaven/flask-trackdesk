@@ -41,19 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const row = temp.querySelector("tr")
 
     if (row) {
-      // Replace select with button
-      const selectTd = row.querySelector("td:first-child")
-      const selectElement = selectTd.querySelector("select")
-      const itemId = selectElement ? selectElement.value : ""
-
-      selectTd.innerHTML = `
-                <input type="hidden" name="items[${itemIndex}][inventory_item_id]" value="${itemId}" class="item-id-input">
-                <button type="button" class="select-product-btn w-full px-3 py-2 text-left text-sm border border-secondary-200 rounded-lg hover:bg-secondary-50 focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base flex items-center justify-between">
-                    <span class="product-name text-fg-muted">${selectElement && selectElement.selectedOptions[0] ? selectElement.selectedOptions[0].text : "Select a product"}</span>
-                    <i class="fas fa-search text-fg-muted text-xs"></i>
-                </button>
-            `
-
       itemsContainer.appendChild(row)
       itemIndex++
       updateRowTotal(row)
@@ -200,13 +187,15 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     const tax15 = subtotal * 0.15
-    const tax18 = subtotal * 0
-    const total = subtotal + tax15 + tax18
+    const total = subtotal + tax15
 
-    document.getElementById("subtotal").textContent = currency + subtotal.toFixed(2)
-    document.getElementById("tax-15").textContent = currency + tax15.toFixed(2)
-    document.getElementById("tax-18").textContent = currency + tax18.toFixed(2)
-    document.getElementById("total").textContent = currency + total.toFixed(2)
+    const subtotalEl = document.getElementById("subtotal")
+    const tax15El = document.getElementById("tax-15")
+    const totalEl = document.getElementById("total")
+
+    if (subtotalEl) subtotalEl.textContent = currency + subtotal.toFixed(2)
+    if (tax15El) tax15El.textContent = currency + tax15.toFixed(2)
+    if (totalEl) totalEl.textContent = currency + total.toFixed(2)
   }
 
   // Initialize

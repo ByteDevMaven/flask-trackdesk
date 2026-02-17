@@ -1,55 +1,79 @@
-<div id="product-picker-modal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4">
-    <div class="bg-bg-base rounded-xl shadow-2xl max-w-4xl w-full max-h-[80vh] flex flex-col">
-        <div class="flex items-center justify-between p-6 border-b border-secondary-200">
+<div id="product-picker-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4">
+    <div class="fixed inset-0 bg-slate-950/90 backdrop-blur-md transition-opacity" id="modal-overlay"></div>
+
+    <div
+        class="bg-slate-800 rounded-3xl shadow-2xl max-w-4xl w-full max-h-[85vh] flex flex-col border border-slate-700/50 relative z-[110] animate-scaleUp overflow-hidden shadow-black/80">
+        <!-- Header -->
+        <div class="flex items-center justify-between px-8 py-6 border-b border-slate-700/50 bg-slate-900/20">
             <div>
-                <h3 class="text-xl font-bold text-fg-base">{{ _('Select Product') }}</h3>
-                <p class="text-sm text-fg-muted mt-1">{{ _('Search and select a product to add') }}</p>
+                <h3 class="text-xl font-black text-white tracking-tight uppercase tracking-widest">{{ _('Select Catalog
+                    Item') }}</h3>
+                <p class="text-xs text-slate-500 font-bold mt-1 uppercase tracking-widest">{{ _('Provisioning system
+                    search') }}</p>
             </div>
             <button title="close" type="button" id="close-modal"
-                class="text-fg-muted hover:text-fg-base p-2 rounded-lg hover:bg-secondary-100 transition">
-                <i class="fas fa-times text-xl"></i>
+                class="text-slate-500 hover:text-white w-10 h-10 flex items-center justify-center rounded-xl bg-slate-700/50 hover:bg-slate-600 transition-all border border-slate-700/50">
+                <i class="fas fa-times"></i>
             </button>
         </div>
 
-        <div class="p-6 border-b border-secondary-200">
-            <div class="relative">
-                <input type="text" id="product-search" placeholder="{{ _('Search by name, code, or description...') }}"
-                    class="w-full px-4 py-3 pl-12 border border-secondary-200 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
-                <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-fg-muted"></i>
+        <!-- Search Bar -->
+        <div class="p-8 border-b border-slate-700/50 bg-slate-900/10">
+            <div class="relative group">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <i class="fas fa-search text-slate-500 group-focus-within:text-indigo-500 transition-colors"></i>
+                </div>
+                <input type="text" id="product-search"
+                    placeholder="{{ _('Search items by name, SKU, or description...') }}"
+                    class="w-full px-5 py-4 pl-12 border border-slate-700 rounded-2xl focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 bg-slate-900 text-white font-bold placeholder-slate-600 transition-all">
             </div>
         </div>
 
-        <div class="flex-1 overflow-y-auto p-6">
+        <!-- Scrollable List -->
+        <div class="flex-1 overflow-y-auto p-8 bg-slate-800/50 custom-scrollbar">
             <div id="products-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {% for inventory_item in inventory_items %}
-                <div class="product-card border border-secondary-200 rounded-lg p-4 hover:border-accent-500 hover:bg-secondary-50 cursor-pointer transition"
+                <div class="product-card border border-slate-700 rounded-2xl p-5 hover:border-indigo-500/50 hover:bg-slate-900/80 cursor-pointer transition-all hover:scale-[1.02] shadow-lg shadow-black/20 group"
                     data-id="{{ inventory_item.id }}" data-name="{{ inventory_item.name }}"
                     data-description="{{ inventory_item.description|e }}" data-price="{{ inventory_item.price }}"
                     data-stock="{{ inventory_item.quantity }}"
                     data-search="{{ (inventory_item.name + ' ' + (inventory_item.description or '') + ' ' + inventory_item.id|string)|lower }}">
-                    <div class="flex items-start justify-between mb-2">
+                    <div class="flex items-start justify-between mb-4">
                         <div class="flex-1">
-                            <h4 class="font-semibold text-fg-base">{{ inventory_item.name }}</h4>
-                            <p class="text-xs text-fg-muted mt-1">{{ _('Code') }}: {{ inventory_item.id }}</p>
+                            <h4 class="font-black text-slate-100 group-hover:text-indigo-300 transition-colors">{{
+                                inventory_item.name }}</h4>
+                            <p class="text-[10px] font-black text-slate-500 uppercase tracking-widest mt-1">{{ _('Ref')
+                                }}: #{{ inventory_item.id }}</p>
                         </div>
                         <div class="text-right">
-                            <div class="text-lg font-bold text-accent-500">{{ session.get('currency') }}{{
-                                "{:,.2f}".format(inventory_item.price) }}</div>
+                            <div class="text-lg font-black text-white">
+                                <span class="text-indigo-500 mr-1 opacity-50">{{ session.get('currency') }}</span>{{
+                                "{:,.2f}".format(inventory_item.price) }}
+                            </div>
                             <div
-                                class="text-xs {% if inventory_item.quantity > 10 %}text-green-600{% elif inventory_item.quantity > 0 %}text-yellow-600{% else %}text-red-600{% endif %}">
-                                <i class="fas fa-box mr-1"></i>{{ inventory_item.quantity }} {{ _('in stock') }}
+                                class="text-[10px] font-black uppercase tracking-widest mt-1 px-2 py-0.5 rounded-full border border-opacity-20
+                                {% if inventory_item.quantity > 10 %}bg-emerald-500/10 text-emerald-400 border-emerald-500{% elif inventory_item.quantity > 0 %}bg-amber-500/10 text-amber-400 border-amber-500{% else %}bg-rose-500/10 text-rose-400 border-rose-500{% endif %}">
+                                <i class="fas fa-box mr-1 opacity-50"></i>{{ inventory_item.quantity }} {{ _('in stock')
+                                }}
                             </div>
                         </div>
                     </div>
                     {% if inventory_item.description %}
-                    <p class="text-sm text-fg-muted line-clamp-2">{{ inventory_item.description }}</p>
+                    <p
+                        class="text-xs text-slate-500 font-medium line-clamp-2 leading-relaxed bg-slate-950/30 p-2 rounded-lg border border-slate-700/30 group-hover:bg-slate-950/50 transition-all">
+                        {{ inventory_item.description }}
+                    </p>
                     {% endif %}
                 </div>
                 {% endfor %}
             </div>
-            <div id="no-results" class="hidden text-center py-12">
-                <i class="fas fa-search text-4xl text-fg-muted mb-4"></i>
-                <p class="text-fg-muted">{{ _('No products found') }}</p>
+            <div id="no-results" class="hidden text-center py-20">
+                <div
+                    class="w-16 h-16 bg-slate-900 border border-slate-700 rounded-2xl flex items-center justify-center text-slate-600 mx-auto mb-4">
+                    <i class="fas fa-search text-2xl"></i>
+                </div>
+                <p class="text-slate-500 font-bold uppercase tracking-widest text-xs">{{ _('No matching assets found')
+                    }}</p>
             </div>
         </div>
     </div>

@@ -3,89 +3,94 @@
 {% block title %}{{ _('Login - Trackdesk') }}{% endblock %}
 
 {% block content %}
-<div class="bg-bg-base shadow-xl rounded-xl overflow-hidden transform transition-all">
-    <!-- Card header -->
-    <div class="px-6 py-8 bg-btn-primary-bg text-btn-primary-text sm:px-10">
-        <h2 class="text-xl font-bold text-fg-inverted text-center">
-            {{ _('Sign in to your account') }}
-        </h2>
-    </div>
+<div class="bg-slate-800 py-10 px-6 shadow-2xl shadow-black/40 rounded-2xl sm:px-10 border border-slate-700/50">
+    <form class="space-y-6" action="{{ url_for('auth.login') }}" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-    <!-- Login form -->
-    <div class="px-6 py-8 sm:px-10">
-        <form class="space-y-6" action="{{ url_for('auth.login') }}" method="POST">
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <!-- Email -->
+        <div>
+            <label for="email" class="block text-sm font-semibold text-slate-300">
+                {{ _('Email address') }}
+            </label>
+            <div class="mt-2 relative rounded-lg group">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i
+                        class="fas fa-envelope text-slate-500 text-sm group-focus-within:text-indigo-400 transition-colors"></i>
+                </div>
+                <input id="email" name="email" type="email" autocomplete="email" required
+                    class="block w-full pl-10 pr-3 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500
+                           focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition-all sm:text-sm" placeholder="you@example.com">
+            </div>
+        </div>
 
-            <div>
-                <label for="email" class="block text-sm font-medium text-fg-base">
-                    {{ _('Email address') }}
+        <!-- Password -->
+        <div>
+            <label for="password" class="block text-sm font-semibold text-slate-300">
+                {{ _('Password') }}
+            </label>
+            <div class="mt-2 relative rounded-lg group">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i
+                        class="fas fa-lock text-slate-500 text-sm group-focus-within:text-indigo-400 transition-colors"></i>
+                </div>
+                <input id="password" name="password" type="password" autocomplete="current-password" required
+                    class="block w-full pl-10 pr-3 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500
+                           focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition-all sm:text-sm" placeholder="••••••••">
+            </div>
+        </div>
+
+        <!-- Remember & Forgot -->
+        <div class="flex items-center justify-between">
+            <div class="flex items-center">
+                <input id="remember" name="remember" type="checkbox"
+                    class="h-4 w-4 text-indigo-600 focus:ring-indigo-500/20 border-slate-700 bg-slate-900 rounded cursor-pointer transition">
+                <label for="remember"
+                    class="ml-2 block text-sm text-slate-400 select-none cursor-pointer hover:text-slate-300 transition">
+                    {{ _('Remember me') }}
                 </label>
-                <div class="mt-1 relative rounded-md shadow-sm">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-envelope text-fg-muted"></i>
-                    </div>
-                    <input id="email" name="email" type="email" autocomplete="email" required class="block w-full pl-10 pr-3 py-3 border border-secondary-300 text-fg-base bg-bg-base placeholder-fg-muted
-                        rounded-md focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500 
-                        transition duration-150 ease-in-out sm:text-sm" placeholder="you@example.com">
-                </div>
             </div>
 
-            <div>
-                <label for="password" class="block text-sm font-medium text-fg-base">
-                    {{ _('Password') }}
-                </label>
-                <div class="mt-1 relative rounded-md shadow-sm">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-lock text-fg-muted"></i>
-                    </div>
-                    <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full pl-10 pr-3 py-3 border border-secondary-300 text-fg-base bg-bg-base placeholder-fg-muted
-                        rounded-md focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500 
-                        transition duration-150 ease-in-out sm:text-sm" placeholder="••••••••">
-                </div>
+            <div class="text-sm">
+                <a href="{{ url_for('auth.forgot_password') }}"
+                    class="font-medium text-indigo-400 hover:text-indigo-300 transition-colors">
+                    {{ _('Forgot password?') }}
+                </a>
             </div>
+        </div>
 
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <input id="remember" name="remember" type="checkbox"
-                        class="h-4 w-4 text-accent-600 focus:ring-accent-500 border-secondary-300 rounded transition duration-150 ease-in-out">
-                    <label for="remember" class="ml-2 block text-sm text-fg-base">
-                        {{ _('Remember me') }}
-                    </label>
-                </div>
+        <!-- Submit -->
+        <div class="pt-2">
+            <button type="submit"
+                class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-lg shadow-indigo-500/20 text-sm font-bold text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-800 focus:ring-indigo-500 transition-all duration-200 transform hover:-translate-y-0.5">
+                {{ _('Sign in') }}
+            </button>
+        </div>
+    </form>
 
-                <div class="text-sm">
-                    <a href="{{ url_for('auth.forgot_password') }}"
-                        class="font-medium text-accent-600 hover:text-accent-500 transition duration-150 ease-in-out">
-                        {{ _('Forgot password?') }}
-                    </a>
-                </div>
+    <!-- Divider -->
+    <div class="mt-10">
+        <div class="relative">
+            <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-slate-700"></div>
             </div>
-
-            <div>
-                <button type="submit" class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm 
-                    font-medium rounded-md text-btn-primary-text bg-btn-primary-bg hover:bg-btn-primary-hover 
-                    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent-500 
-                    transition duration-150 ease-in-out transform hover:-translate-y-0.5">
-                    <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-                        <i
-                            class="fas fa-sign-in-alt text-btn-primary-text group-hover:text-fg-muted transition ease-in-out duration-150"></i>
-                    </span>
-                    {{ _('Sign in') }}
-                </button>
+            <div class="relative flex justify-center text-sm">
+                <span class="px-3 bg-slate-800 text-slate-500 font-medium">
+                    {{ _('Or') }}
+                </span>
             </div>
-        </form>
+        </div>
+
+        <div class="mt-8 text-center">
+            {% if config.ALLOW_REGISTRATION %}
+            <p class="text-sm text-slate-400">
+                {{ _('Don\'t have an account?') }}
+                <a href="{{ url_for('auth.register') }}"
+                    class="font-bold text-indigo-400 hover:text-indigo-300 transition-colors ml-1">
+                    {{ _('Create an account') }}
+                </a>
+            </p>
+            {% endif %}
+        </div>
     </div>
 </div>
-
-{% if config.ALLOW_REGISTRATION %}
-<div class="text-center mt-4">
-    <p class="text-sm text-fg-muted">
-        {{ _('Don\'t have an account?') }}
-        <a href="{{ url_for('auth.register') }}"
-            class="font-medium text-accent-600 hover:text-accent-500 ml-1 transition duration-150 ease-in-out">
-            {{ _('Create an account') }}
-        </a>
-    </p>
-</div>
-{% endif %}
 {% endblock %}

@@ -5,13 +5,13 @@
 {% block content %}
 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
     <div>
-        <h1 class="text-2xl font-bold text-secondary-900">{{ _('Suppliers') }}</h1>
-        <p class="text-fg-muted text-sm mt-1">{{ _('Manage your suppliers and vendors') }}</p>
+        <h1 class="text-2xl font-bold text-slate-100">{{ _('Suppliers') }}</h1>
+        <p class="text-slate-400 text-sm mt-1">{{ _('Manage your suppliers and vendors') }}</p>
     </div>
 
     <div class="flex flex-col sm:flex-row gap-3">
         <a href="{{ url_for('suppliers.create', company_id=selected_company_id) }}"
-            class="bg-btn-primary-bg text-btn-primary-text px-4 py-2 rounded-lg hover:bg-btn-primary-hover transition shadow-sm flex items-center justify-center">
+            class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition shadow-lg shadow-indigo-500/20 flex items-center justify-center font-medium">
             <i class="fas fa-plus mr-2"></i> {{ _('Add Supplier') }}
         </a>
     </div>
@@ -19,37 +19,43 @@
 
 <!-- Stats Cards -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-    <div class="bg-bg-subtle rounded-xl shadow-card p-6 border border-bg-subtle card-hover">
+    <div
+        class="bg-slate-800 rounded-xl shadow-lg p-6 border border-slate-700 hover:border-slate-600 transition-colors shadow-black/20">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-fg-muted text-sm">{{ _('Total Suppliers') }}</p>
-                <h3 class="text-3xl font-bold mt-1">{{ stats.total }}</h3>
+                <p class="text-slate-400 text-sm font-medium">{{ _('Total Suppliers') }}</p>
+                <h3 class="text-3xl font-bold mt-1 text-slate-100">{{ stats.total }}</h3>
             </div>
-            <div class="w-12 h-12 bg-accent-50 rounded-full flex items-center justify-center text-accent-700">
+            <div
+                class="w-12 h-12 bg-indigo-500/10 rounded-full flex items-center justify-center text-indigo-400 border border-indigo-500/20">
                 <i class="fas fa-building text-xl"></i>
             </div>
         </div>
     </div>
 
-    <div class="bg-bg-subtle rounded-xl shadow-card p-6 border border-bg-subtle card-hover">
+    <div
+        class="bg-slate-800 rounded-xl shadow-lg p-6 border border-slate-700 hover:border-slate-600 transition-colors shadow-black/20">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-fg-muted text-sm">{{ _('With Inventory Items') }}</p>
-                <h3 class="text-3xl font-bold mt-1">{{ stats.with_items }}</h3>
+                <p class="text-slate-400 text-sm font-medium">{{ _('With Inventory Items') }}</p>
+                <h3 class="text-3xl font-bold mt-1 text-slate-100">{{ stats.with_items }}</h3>
             </div>
-            <div class="w-12 h-12 bg-green-50 rounded-full flex items-center justify-center text-green-500">
+            <div
+                class="w-12 h-12 bg-emerald-500/10 rounded-full flex items-center justify-center text-emerald-400 border border-emerald-500/20">
                 <i class="fas fa-box text-xl"></i>
             </div>
         </div>
     </div>
 
-    <div class="bg-bg-subtle rounded-xl shadow-card p-6 border border-bg-subtle card-hover">
+    <div
+        class="bg-slate-800 rounded-xl shadow-lg p-6 border border-slate-700 hover:border-slate-600 transition-colors shadow-black/20">
         <div class="flex items-center justify-between">
             <div>
-                <p class="text-fg-muted text-sm">{{ _('Without Inventory Items') }}</p>
-                <h3 class="text-3xl font-bold mt-1">{{ stats.without_items }}</h3>
+                <p class="text-slate-400 text-sm font-medium">{{ _('Without Inventory Items') }}</p>
+                <h3 class="text-3xl font-bold mt-1 text-slate-100">{{ stats.without_items }}</h3>
             </div>
-            <div class="w-12 h-12 bg-yellow-50 rounded-full flex items-center justify-center text-yellow-500">
+            <div
+                class="w-12 h-12 bg-amber-500/10 rounded-full flex items-center justify-center text-amber-400 border border-amber-500/20">
                 <i class="fas fa-box-open text-xl"></i>
             </div>
         </div>
@@ -57,28 +63,28 @@
 </div>
 
 <!-- Search and Filter -->
-<div class="rounded-xl shadow-card p-6 border border-bg-subtle mb-6">
+<div class="rounded-xl shadow-lg p-6 border border-slate-700 mb-6 bg-slate-800 shadow-black/20">
     <form method="GET" action="{{ url_for('suppliers.index', company_id=selected_company_id) }}"
         class="flex flex-col sm:flex-row gap-4">
         <div class="flex-1">
             <div class="relative">
                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                    <i class="fas fa-search text-secondary-400"></i>
+                    <i class="fas fa-search text-slate-500"></i>
                 </div>
                 <input type="search" name="search" value="{{ search }}"
-                    class=" border border-secondary-200 text-secondary-800 text-sm rounded-lg focus:ring-primary-700 focus:border-primary-700 block w-full pl-10 p-2.5"
+                    class="bg-slate-900 border border-slate-600 text-slate-200 text-sm rounded-lg focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-10 p-2.5 placeholder-slate-500"
                     placeholder="{{ _('Search suppliers...') }}">
             </div>
         </div>
 
         <div class="flex gap-2">
             <button type="submit"
-                class="bg-btn-primary-bg text-btn-primary-text px-4 py-2 rounded-lg hover:bg-btn-primary-hover transition shadow-sm">
+                class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition shadow-lg shadow-indigo-500/20 font-medium">
                 {{ _('Search') }}
             </button>
             {% if search %}
             <a href="{{ url_for('suppliers.index', company_id=selected_company_id) }}"
-                class="bg-btn-secondary-bg text-btn-secondary-text px-4 py-2 rounded-lg hover:bg-btn-secondary-hover transition shadow-sm">
+                class="bg-slate-700 text-slate-300 border border-slate-600 px-4 py-2 rounded-lg hover:bg-slate-600 hover:text-white transition shadow-sm font-medium">
                 {{ _('Clear') }}
             </a>
             {% endif %}
@@ -87,61 +93,66 @@
 </div>
 
 <!-- Suppliers Table -->
-<div class=" rounded-xl shadow-card border border-bg-subtle overflow-hidden">
+<div class="rounded-xl shadow-lg border border-slate-700 overflow-hidden bg-slate-800 shadow-black/20">
     <div class="overflow-x-auto">
-        <table class="w-full text-sm text-left text-secondary-800">
-            <thead class="text-xs text-fg-base uppercase">
+        <table class="w-full text-sm text-left text-slate-300">
+            <thead class="text-xs text-slate-400 uppercase bg-slate-900/50 border-b border-slate-700">
                 <tr>
-                    <th scope="col" class="px-6 py-3">{{ _('Name') }}</th>
-                    <th scope="col" class="px-6 py-3">{{ _('Email') }}</th>
-                    <th scope="col" class="px-6 py-3">{{ _('Phone') }}</th>
-                    <th scope="col" class="px-6 py-3">{{ _('Inventory Items') }}</th>
-                    <th scope="col" class="px-6 py-3 text-right">{{ _('Actions') }}</th>
+                    <th scope="col" class="px-6 py-3 font-semibold tracking-wider">{{ _('Name') }}</th>
+                    <th scope="col" class="px-6 py-3 font-semibold tracking-wider">{{ _('Email') }}</th>
+                    <th scope="col" class="px-6 py-3 font-semibold tracking-wider">{{ _('Phone') }}</th>
+                    <th scope="col" class="px-6 py-3 font-semibold tracking-wider">{{ _('Inventory Items') }}</th>
+                    <th scope="col" class="px-6 py-3 text-right font-semibold tracking-wider">{{ _('Actions') }}</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="divide-y divide-slate-700">
                 {% if suppliers.items %}
                 {% for supplier in suppliers.items %}
-                <tr class="border-b border-bg-subtle hover:">
+                <tr class="hover:bg-slate-700/50 transition-colors">
                     <td class="px-6 py-4 font-medium">
                         <a href="{{ url_for('suppliers.view', supplier_id=supplier.id, company_id=selected_company_id) }}"
-                            class="text-primary-700 hover:text-fg-base hover:underline">
+                            class="text-slate-200 hover:text-indigo-400 transition-colors">
                             {{ supplier.name }}
                         </a>
                     </td>
                     <td class="px-6 py-4">
                         {% if supplier.contact_email %}
                         <a href="mailto:{{ supplier.contact_email }}"
-                            class="text-primary-700 hover:text-fg-base hover:underline">
-                            {{ supplier.contact_email }}
+                            class="text-indigo-400 hover:text-indigo-300 flex items-center transition-colors">
+                            <i class="fas fa-envelope mr-2 text-slate-500 text-xs"></i> {{ supplier.contact_email }}
                         </a>
                         {% else %}
-                        -
+                        <span class="text-slate-500">-</span>
                         {% endif %}
                     </td>
-                    <td class="px-6 py-4">{{ supplier.phone or '-' }}</td>
+                    <td class="px-6 py-4 text-slate-400">{{ supplier.phone or '-' }}</td>
                     <td class="px-6 py-4">
                         {% set item_count = supplier.inventory_items|length if supplier.inventory_items is defined
                         else 0 %}
                         {% if item_count > 0 %}
-                        <span class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs">{{ item_count }} {{
+                        <span
+                            class="px-2.5 py-1 bg-emerald-500/10 text-emerald-400 rounded-full text-xs border border-emerald-500/20 font-medium">{{
+                            item_count }} {{
                             _('items') }}</span>
                         {% else %}
-                        <span class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs">{{ _('No items')
+                        <span
+                            class="px-2.5 py-1 bg-amber-500/10 text-amber-500 rounded-full text-xs border border-amber-500/20 font-medium">{{
+                            _('No items')
                             }}</span>
                         {% endif %}
                     </td>
                     <td class="px-6 py-4 text-right">
-                        <div class="flex justify-end gap-2">
+                        <div class="flex justify-end gap-3">
                             <a href="{{ url_for('suppliers.view', supplier_id=supplier.id, company_id=selected_company_id) }}"
-                                class="text-accent-600 hover:text-accent-700" title="{{ _('View') }}">
+                                class="text-indigo-400 hover:text-indigo-300 transition-colors" title="{{ _('View') }}">
                                 <i class="fas fa-eye"></i>
                             </a>
                             <a href="{{ url_for('suppliers.edit', supplier_id=supplier.id, company_id=selected_company_id) }}"
-                                class="text-primary-700 hover:text-fg-base" title="{{ _('Edit') }}">
+                                class="text-indigo-400 hover:text-indigo-300 transition-colors" title="{{ _('Edit') }}">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <button type="button" class="text-btn-danger-bg hover:text-btn-danger-hover delete-supplier"
+                            <button type="button"
+                                class="text-rose-500 hover:text-rose-400 transition-colors delete-supplier"
                                 data-id="{{ supplier.id }}" data-name="{{ supplier.name }}" title="{{ _('Delete') }}">
                                 <i class="fas fa-trash"></i>
                             </button>
@@ -150,17 +161,26 @@
                 </tr>
                 {% endfor %}
                 {% else %}
-                <tr class="border-b border-bg-subtle">
-                    <td colspan="5" class="px-6 py-4 text-center text-fg-muted">
-                        {% if search %}
-                        {{ _('No suppliers found matching ') }}{{ search }}
-                        <a href="{{ url_for('suppliers.index', company_id=selected_company_id) }}"
-                            class="text-primary-700 hover:underline">{{ _('Clear search') }}</a>
-                        {% else %}
-                        {{ _('No suppliers found.') }}
-                        <a href="{{ url_for('suppliers.create', company_id=selected_company_id) }}"
-                            class="text-primary-700 hover:underline">{{ _('Add your first supplier') }}</a>
-                        {% endif %}
+                <tr class="border-b border-slate-700">
+                    <td colspan="5" class="px-6 py-12 text-center text-slate-400">
+                        <div class="flex flex-col items-center justify-center">
+                            <div
+                                class="w-16 h-16 bg-slate-700 rounded-full flex items-center justify-center text-slate-500 mb-4">
+                                <i class="fas fa-search text-2xl"></i>
+                            </div>
+                            {% if search %}
+                            <p class="text-lg mb-2">{{ _('No suppliers found matching ') }} "<span
+                                    class="text-slate-200">{{ search }}</span>"</p>
+                            <a href="{{ url_for('suppliers.index', company_id=selected_company_id) }}"
+                                class="text-indigo-400 hover:text-indigo-300 font-medium">{{ _('Clear search') }}</a>
+                            {% else %}
+                            <p class="text-lg mb-2">{{ _('No suppliers found.') }}</p>
+                            <a href="{{ url_for('suppliers.create', company_id=selected_company_id) }}"
+                                class="text-indigo-400 hover:text-indigo-300 font-medium flex items-center">
+                                <i class="fas fa-plus mr-1"></i> {{ _('Add your first supplier') }}
+                            </a>
+                            {% endif %}
+                        </div>
                     </td>
                 </tr>
                 {% endif %}
@@ -170,43 +190,44 @@
 
     <!-- Pagination -->
     {% if suppliers.pages > 1 %}
-    <div class="px-6 py-4 flex items-center justify-between border-t border-bg-subtle">
-        <div class="text-sm text-fg-muted">
-            {{ _('Showing ') }} {{ suppliers.items|length }} {{ _(' of ') }} {{ stats.total }} {{ _(' suppliers.') }}
+    <div class="px-6 py-4 flex items-center justify-between border-t border-slate-700 bg-slate-900/30">
+        <div class="text-sm text-slate-400">
+            {{ _('Showing ') }} <span class="font-medium text-slate-200">{{ suppliers.items|length }}</span> {{ _(' of
+            ') }} <span class="font-medium text-slate-200">{{ stats.total }}</span> {{ _(' suppliers.') }}
         </div>
         <div class="flex gap-2">
             {% if suppliers.has_prev %}
             <a href="{{ url_for('suppliers.index', page=suppliers.prev_num, per_page=per_page, search=search, company_id=selected_company_id) }}"
-                class="px-3 py-1 bg-bg-subtle text-secondary-800 rounded hover:bg-secondary-200">
+                class="px-3 py-1 bg-slate-700 text-slate-300 rounded hover:bg-slate-600 hover:text-white border border-slate-600 transition-colors">
                 <i class="fas fa-chevron-left"></i>
             </a>
             {% else %}
-            <span class="px-3 py-1  text-secondary-400 rounded cursor-not-allowed">
+            <span class="px-3 py-1 bg-slate-800 text-slate-600 rounded cursor-not-allowed border border-slate-700">
                 <i class="fas fa-chevron-left"></i>
             </span>
             {% endif %}
 
             {% for page_num in range(1, suppliers.pages + 1) %}
             {% if page_num == suppliers.page %}
-            <span class="px-3 py-1 bg-primary-700 text-secondary-50 rounded">{{ page_num }}</span>
+            <span class="px-3 py-1 bg-indigo-600 text-white rounded border border-indigo-500">{{ page_num }}</span>
             {% elif page_num == 1 or page_num == suppliers.pages or (page_num >= suppliers.page - 1 and page_num <=
                 suppliers.page + 1) %} <a
                 href="{{ url_for('suppliers.index', page=page_num, per_page=per_page, search=search, company_id=selected_company_id) }}"
-                class="px-3 py-1 bg-bg-subtle text-secondary-800 rounded hover:bg-secondary-200">
+                class="px-3 py-1 bg-slate-700 text-slate-300 rounded hover:bg-slate-600 hover:text-white border border-slate-600 transition-colors">
                 {{ page_num }}
                 </a>
                 {% elif page_num == 2 or page_num == suppliers.pages - 1 %}
-                <span class="px-3 py-1">...</span>
+                <span class="px-3 py-1 text-slate-500">...</span>
                 {% endif %}
                 {% endfor %}
 
                 {% if suppliers.has_next %}
                 <a href="{{ url_for('suppliers.index', page=suppliers.next_num, per_page=per_page, search=search, company_id=selected_company_id) }}"
-                    class="px-3 py-1 bg-bg-subtle text-secondary-800 rounded hover:bg-secondary-200">
+                    class="px-3 py-1 bg-slate-700 text-slate-300 rounded hover:bg-slate-600 hover:text-white border border-slate-600 transition-colors">
                     <i class="fas fa-chevron-right"></i>
                 </a>
                 {% else %}
-                <span class="px-3 py-1  text-secondary-400 rounded cursor-not-allowed">
+                <span class="px-3 py-1 bg-slate-800 text-slate-600 rounded cursor-not-allowed border border-slate-700">
                     <i class="fas fa-chevron-right"></i>
                 </span>
                 {% endif %}
@@ -216,21 +237,26 @@
 </div>
 
 <!-- Delete Confirmation Modal -->
-<div id="delete-modal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden">
-    <div class=" rounded-lg shadow-xl max-w-md w-full mx-4">
-        <div class="p-6">
-            <h3 class="text-lg font-bold text-secondary-900 mb-4">{{ _('Confirm Deletion') }}</h3>
-            <p class="text-secondary-600 mb-6">{{ _('Are you sure you want to delete') }} <span
-                    id="delete-supplier-name" class="font-semibold"></span>? {{ _('This action cannot be undone.') }}
+<div id="delete-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+    <div class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm transition-opacity" id="modal-backdrop"></div>
+    <div class="bg-slate-800 rounded-xl shadow-2xl max-w-md w-full mx-4 border border-slate-700 relative z-10">
+        <div class="p-6 text-center">
+            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-rose-500/20 mb-4">
+                <i class="fas fa-exclamation-triangle text-rose-500 text-xl"></i>
+            </div>
+            <h3 class="text-lg font-bold text-slate-100 mb-2">{{ _('Confirm Deletion') }}</h3>
+            <p class="text-slate-400 mb-6 text-sm">{{ _('Are you sure you want to delete') }} <span
+                    id="delete-supplier-name" class="font-semibold text-slate-200"></span>?
+                <br>{{ _('This action cannot be undone.') }}
             </p>
-            <div class="flex justify-end gap-3">
+            <div class="flex justify-center gap-3">
                 <button id="cancel-delete"
-                    class="px-4 py-2 bg-bg-subtle text-secondary-800 rounded-lg hover:bg-secondary-200 transition">
+                    class="px-4 py-2 bg-slate-700 text-slate-300 rounded-lg hover:bg-slate-600 transition border border-slate-600 w-full">
                     {{ _('Cancel') }}
                 </button>
-                <form id="delete-form" method="POST" action="">
+                <form id="delete-form" method="POST" action="" class="w-full">
                     <button type="submit"
-                        class="px-4 py-2 bg-btn-danger-bg text-btn-danger-text rounded-lg hover:bg-btn-danger-hover transition">
+                        class="px-4 py-2 bg-rose-600 text-white rounded-lg hover:bg-rose-700 transition shadow-lg shadow-rose-500/20 w-full font-medium">
                         {{ _('Delete') }}
                     </button>
                 </form>
@@ -240,4 +266,13 @@
 </div>
 
 <script src="{{ url_for('suppliers.static', filename='js/delete_general.js') }}"></script>
+<script>
+    // Simple script to handle modal backdrop click if delete_general.js doesn't cover it
+    document.getElementById('modal-backdrop').addEventListener('click', function () {
+        document.getElementById('delete-modal').classList.add('hidden');
+    });
+    document.getElementById('cancel-delete').addEventListener('click', function () {
+        document.getElementById('delete-modal').classList.add('hidden');
+    });
+</script>
 {% endblock %}

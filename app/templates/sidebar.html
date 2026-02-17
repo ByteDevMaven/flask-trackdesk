@@ -1,88 +1,85 @@
-<aside id="sidebar" data-collapsed="false" class="bg-bg-sidebar h-screen hidden md:flex flex-col
-           border-r border-secondary-700/40
+<aside id="sidebar" data-collapsed="false" class="bg-slate-900 h-screen hidden md:flex flex-col
+           border-r border-slate-800
            sticky top-0 z-20
-           transition-[width] duration-200 ease-out
-           w-64 data-[collapsed=true]:w-16">
+           transition-[width] duration-300 ease-in-out
+           w-64 data-[collapsed=true]:w-20 font-sans shadow-xl">
 
     <!-- ===== HEADER ===== -->
-    <div class="h-16 flex items-center justify-center px-4">
-        <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-accent-500 to-accent-600
-                       flex items-center justify-center text-white shadow-sm">
-                <i class="fas fa-briefcase text-sm"></i>
+    <div class="h-16 flex items-center justify-center px-4 border-b border-slate-700/50">
+        <div class="flex items-center gap-3 overflow-hidden">
+            <div class="w-8 h-8 rounded-lg bg-indigo-500 flex-shrink-0
+                       flex items-center justify-center text-white shadow-lg shadow-indigo-500/30">
+                <i class="fas fa-layer-group text-sm"></i>
             </div>
 
-            <span data-sidebar-label class="text-lg font-semibold tracking-tight text-fg-base
-                       data-[collapsed=true]:hidden">
+            <span data-sidebar-label class="text-lg font-bold tracking-tight text-white whitespace-nowrap
+                       data-[collapsed=true]:hidden opacity-100 transition-opacity duration-200">
                 Trackdesk
             </span>
         </div>
     </div>
 
     <!-- ===== NAV ===== -->
-    <nav class="flex-1 py-4 space-y-6 overflow-y-auto">
+    <nav
+        class="flex-1 py-6 space-y-1 px-3 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-700 scrollbar-track-transparent">
 
         {% macro nav_link(label, endpoint, icon, url) %}
         {% set active = request.endpoint.startswith(endpoint) %}
-        <a href="{{ url }}" class="group relative flex items-center h-11 mx-2 rounded-md transition
-                  data-[collapsed=true]:justify-center
+        {% set is_doc = endpoint in ['orders', 'invoices', 'payments'] and request.endpoint.startswith(endpoint) %}
+
+        <a href="{{ url }}" class="group relative flex items-center h-10 px-3 rounded-lg transition-all duration-200
+                  data-[collapsed=true]:justify-center mb-1
                   {% if active %}
-                      bg-primary-500/40 text-accent-600
+                      bg-indigo-600/20 text-indigo-300 shadow-md shadow-indigo-900/20 font-medium border border-indigo-500/30
                   {% else %}
-                      text-fg-base hover:bg-primary-500/30 hover:text-accent-600
+                      text-slate-400 hover:bg-slate-800 hover:text-slate-200
                   {% endif %}">
 
             <!-- Icon -->
-            <i class="fas {{ icon }} text-sm w-10 text-center"></i>
+            <i class="fas {{ icon }} text-[1.1rem] w-6 text-center transition-colors
+                     {% if active %}text-indigo-400{% else %}text-slate-500 group-hover:text-slate-300{% endif %}"></i>
 
             <!-- Label -->
-            <span data-sidebar-label class="ml-2 text-sm font-medium data-[collapsed=true]:hidden">
+            <span data-sidebar-label class="ml-3 text-sm data-[collapsed=true]:hidden whitespace-nowrap">
                 {{ label }}
             </span>
 
             <!-- Tooltip (collapsed only) -->
-            <span class="pointer-events-none absolute left-full ml-2 px-2 py-1 rounded-md
-                       text-xs bg-secondary-800 text-fg-base shadow-md
-                       opacity-0 translate-x-1
+            <div class="absolute left-full ml-4 z-50 px-2 py-1.5 rounded-md
+                       text-xs font-medium bg-slate-800 text-white shadow-xl border border-slate-700
+                       opacity-0 -translate-x-2 pointer-events-none
                        group-hover:opacity-100 group-hover:translate-x-0
-                       transition
-                       data-[collapsed=false]:hidden">
+                       transition-all duration-200
+                       data-[collapsed=false]:hidden whitespace-nowrap">
                 {{ label }}
-            </span>
-
-            <!-- Active dot (collapsed only) -->
-            {% if active %}
-            <span class="absolute right-1 w-1.5 h-1.5 rounded-full bg-accent-500
-                       data-[collapsed=false]:hidden">
-            </span>
-            {% endif %}
+            </div>
         </a>
         {% endmacro %}
 
         <!-- ===== MAIN ===== -->
-        <div>
-            <p data-sidebar-label class="px-4 mb-2 text-xs font-semibold uppercase tracking-wide text-fg-muted
-                       data-[collapsed=true]:hidden">
+        <div class="mb-6">
+            <p data-sidebar-label class="px-4 mb-2 text-xs font-semibold uppercase tracking-wider text-slate-500
+                       data-[collapsed=true]:hidden transition-opacity">
                 {{ _('Main') }}
             </p>
 
-            {{ nav_link(_('Dashboard'), 'dashboard', 'fa-tachometer-alt',
+            {{ nav_link(_('Dashboard'), 'dashboard', 'fa-chart-pie',
             url_for('dashboard.index', company_id=session.get('selected_company_id'))) }}
 
             {{ nav_link(_('Clients'), 'customers', 'fa-users',
             url_for('customers.index', company_id=session.get('selected_company_id'))) }}
 
-            {{ nav_link(_('Suppliers'), 'suppliers', 'fa-truck',
+            {{ nav_link(_('Suppliers'), 'suppliers', 'fa-truck-fast',
             url_for('suppliers.index', company_id=session.get('selected_company_id'))) }}
 
-            {{ nav_link(_('Inventory'), 'inventory', 'fa-boxes',
+            {{ nav_link(_('Inventory'), 'inventory', 'fa-boxes-stacked',
             url_for('inventory.index', company_id=session.get('selected_company_id'))) }}
         </div>
 
         <!-- ===== DOCUMENTS ===== -->
-        <div>
-            <p data-sidebar-label class="px-4 mb-2 text-xs font-semibold uppercase tracking-wide text-fg-muted
-                       data-[collapsed=true]:hidden">
+        <div class="mb-6">
+            <p data-sidebar-label class="px-4 mb-2 text-xs font-semibold uppercase tracking-wider text-slate-500
+                       data-[collapsed=true]:hidden transition-opacity">
                 {{ _('Documents') }}
             </p>
 
@@ -92,22 +89,37 @@
             {{ nav_link(_('Invoices'), 'invoices', 'fa-file-invoice',
             url_for('invoices.index', company_id=session.get('selected_company_id'))) }}
 
-            {{ nav_link(_('Payments'), 'payments', 'fa-money-bill-wave',
+            {{ nav_link(_('Payments'), 'payments', 'fa-money-bill-transfer',
             url_for('payments.index', company_id=session.get('selected_company_id'))) }}
         </div>
 
         <!-- ===== SETTINGS ===== -->
-        <div>
-            <p data-sidebar-label class="px-4 mb-2 text-xs font-semibold uppercase tracking-wide text-fg-muted
-                       data-[collapsed=true]:hidden">
-                {{ _('Settings') }}
+        <div class="mb-6">
+            <p data-sidebar-label class="px-4 mb-2 text-xs font-semibold uppercase tracking-wider text-slate-500
+                       data-[collapsed=true]:hidden transition-opacity">
+                {{ _('Manage') }}
             </p>
 
             {{ nav_link(_('Companies'), 'companies', 'fa-building',
             url_for('companies.index')) }}
 
-            {{ nav_link(_('Users'), 'users', 'fa-user-cog',
+            {{ nav_link(_('Users'), 'users', 'fa-user-gear',
             url_for('users.index')) }}
         </div>
     </nav>
+
+    <!-- User Profile (Bottom) -->
+    <div class="p-4 border-t border-slate-700/50 mt-auto">
+        <div class="flex items-center gap-3 group cursor-pointer"
+            onclick="window.location.href = '{{ url_for('auth.logout') }}';">
+            <div
+                class="w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 group-hover:text-white transition-colors group-hover:bg-slate-700">
+                <i class="fas fa-sign-out-alt text-sm"></i>
+            </div>
+            <div data-sidebar-label class="data-[collapsed=true]:hidden">
+                <p class="text-sm font-medium text-slate-400 group-hover:text-white transition-colors">{{ _('Sign out')
+                    }}</p>
+            </div>
+        </div>
+    </div>
 </aside>

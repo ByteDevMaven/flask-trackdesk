@@ -4,24 +4,76 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar optimized for dark theme */
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    width: 8px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f5f9;
-    border-radius: 10px;
+    background: #0f172a;
+    /* Slate-900 */
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background: #1e293b;
+    /* Slate-800 */
+    border: 2px solid #0f172a;
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
+    background: #334155;
+    /* Slate-700 */
+}
+
+/* Firefox scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #1e293b #0f172a;
+}
+
+/* Custom Utility Classes */
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(15, 23, 42, 0.4);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(51, 65, 85, 0.5);
+    border: 2px solid transparent;
+}
+
+/* Animations */
+@keyframes fadeInShort {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fadeInShort {
+    animation: fadeInShort 0.2s ease-out forwards;
+}
+
+@keyframes scaleUp {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.animate-scaleUp {
+    animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 /* Sidebar width for collapsed state */

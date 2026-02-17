@@ -5,98 +5,108 @@ _('Business Management System') }}{% endblock %}
 
 {% block content %}
 <!-- Header -->
-<div class="mb-6">
-    <div class="flex items-center space-x-4 mb-4">
+<div class="mb-8">
+    <div class="flex items-center space-x-4 mb-2">
         <a href="{{ url_for('inventory.index', company_id=company_id) }}"
-            class="text-fg-muted hover:text-fg-base transition">
+            class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-800 text-slate-400 hover:text-white transition-all border border-slate-700 hover:bg-slate-700">
             <i class="fas fa-arrow-left"></i>
         </a>
         <div>
-            <h2 class="text-2xl font-bold text-fg-base">
+            <h2 class="text-3xl font-extrabold text-white tracking-tight">
                 {% if item %}{{ _('Edit Inventory Item') }}{% else %}{{ _('Add Inventory Item') }}{% endif %}
             </h2>
-            <p class="text-fg-muted text-sm mt-1">
-                {% if item %}{{ _('Update the details of your inventory item') }}{% else %}{{ _('Add a new item to your inventory') }}{% endif %}
+            <p class="text-slate-400 text-sm mt-1 font-medium">
+                {% if item %}{{ _('Update the details of your inventory item') }}{% else %}{{ _('Add a new item to your
+                inventory') }}{% endif %}
             </p>
         </div>
     </div>
 </div>
 
 <!-- Form -->
-<div class="bg-bg-subtle rounded-xl shadow-sm border border-primary-200">
-    <form method="POST" class="p-6"
+<div class="bg-slate-800 rounded-2xl shadow-xl border border-slate-700/50 shadow-black/30 overflow-hidden">
+    <form method="POST" class="p-8"
         action="{{ url_for('inventory.update', company_id=company_id, id=item.id) if item else url_for('inventory.create', company_id=company_id) }}">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
             <!-- Left Column -->
-            <div class="space-y-6">
-                <div class="bg-bg-base rounded-lg p-4 border border-primary-200">
-                    <h3 class="text-lg font-medium text-fg-base mb-4">{{ _('Basic Information') }}</h3>
+            <div class="space-y-8">
+                <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                    <h3 class="text-lg font-bold text-white mb-6 flex items-center">
+                        <i class="fas fa-info-circle mr-2 text-indigo-400"></i>
+                        {{ _('Basic Information') }}
+                    </h3>
 
                     <!-- Name -->
-                    <div class="mb-4">
-                        <label for="name" class="block text-sm font-medium text-fg-base mb-2">
-                            {{ _('Item Name') }} <span class="text-btn-danger-bg">*</span>
+                    <div class="mb-6">
+                        <label for="name" class="block text-sm font-bold text-slate-300 mb-2">
+                            {{ _('Item Name') }} <span class="text-rose-500">*</span>
                         </label>
                         <input type="text" id="name" name="name"
                             value="{{ item.name if item else (form_data.name if form_data else '') }}" required
-                            class="w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base"
-                            placeholder="{{ _('Enter item name') }}">
+                            class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500
+                                   focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition-all sm:text-sm" placeholder="{{ _('Enter item name') }}">
                     </div>
 
                     <!-- Description -->
                     <div>
-                        <label for="description" class="block text-sm font-medium text-fg-base mb-2">
+                        <label for="description" class="block text-sm font-bold text-slate-300 mb-2">
                             {{ _('Description') }}
                         </label>
-                        <textarea id="description" name="description" rows="4"
-                            class="w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base"
+                        <textarea id="description" name="description" rows="5"
+                            class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500
+                                   focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition-all sm:text-sm"
                             placeholder="{{ _('Enter item description (optional)') }}">{{ item.description if item else (form_data.description if form_data else '') }}</textarea>
                     </div>
                 </div>
             </div>
 
             <!-- Right Column -->
-            <div class="space-y-6">
+            <div class="space-y-8">
                 <!-- Inventory Details -->
-                <div class="bg-bg-base rounded-lg p-4 border border-primary-200">
-                    <h3 class="text-lg font-medium text-fg-base mb-4">{{ _('Inventory Details') }}</h3>
+                <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                    <h3 class="text-lg font-bold text-white mb-6 flex items-center">
+                        <i class="fas fa-cubes mr-2 text-indigo-400"></i>
+                        {{ _('Inventory Details') }}
+                    </h3>
 
                     <!-- Quantity -->
-                    <div class="mb-4">
-                        <label for="quantity" class="block text-sm font-medium text-fg-base mb-2">
-                            {{ _('Current Quantity') }} <span class="text-btn-danger-bg">*</span>
+                    <div class="mb-6">
+                        <label for="quantity" class="block text-sm font-bold text-slate-300 mb-2">
+                            {{ _('Current Quantity') }} <span class="text-rose-500">*</span>
                         </label>
                         <input type="number" id="quantity" name="quantity"
                             value="{{ item.quantity if item else (form_data.quantity if form_data else '0') }}" min="0"
                             required
-                            class="w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                            class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500
+                                   focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition-all sm:text-sm">
                     </div>
 
                     <!-- Price -->
-                    <div class="mb-4">
-                        <label for="price" class="block text-sm font-medium text-fg-base mb-2">
-                            {{ _('Unit Price') }} <span class="text-btn-danger-bg">*</span>
+                    <div class="mb-6">
+                        <label for="price" class="block text-sm font-bold text-slate-300 mb-2">
+                            {{ _('Unit Price') }} <span class="text-rose-500">*</span>
                         </label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <span class="text-fg-muted">{{ session.get('currency') }}</span>
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <span class="text-slate-500 font-bold">{{ session.get('currency') }}</span>
                             </div>
                             <input type="number" id="price" name="price"
                                 value="{{ item.price if item else (form_data.price if form_data else '0.00') }}"
                                 step="0.01" min="0" required
-                                class="w-full pl-8 pr-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                                class="w-full pl-10 pr-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500
+                                       focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition-all sm:text-sm">
                         </div>
                     </div>
 
                     <!-- Supplier -->
                     <div>
-                        <label for="supplier_id" class="block text-sm font-medium text-fg-base mb-2">
+                        <label for="supplier_id" class="block text-sm font-bold text-slate-300 mb-2">
                             {{ _('Supplier') }}
                         </label>
                         <select id="supplier_id" name="supplier_id"
-                            class="w-full px-3 py-2 border border-primary-300 rounded-lg focus:ring-accent-500 focus:border-accent-500 bg-bg-base text-fg-base">
+                            class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition-all sm:text-sm">
                             <option value="">{{ _('Select a supplier (optional)') }}</option>
                             {% for supplier in suppliers %}
                             {% set selected_supplier = item.supplier_id if item else (selected_id if selected_id else
@@ -108,10 +118,11 @@ _('Business Management System') }}{% endblock %}
                             {% endfor %}
                         </select>
                         {% if not suppliers %}
-                        <p class="text-xs text-fg-muted mt-1">
+                        <p class="text-xs text-slate-500 mt-2 font-medium">
                             {{ _('No suppliers available.') }}
                             <a href="{{ url_for('suppliers.create', company_id=company_id) }}"
-                                class="text-accent-600 hover:text-accent-700">{{ _('Add a supplier') }}</a>
+                                class="text-indigo-400 hover:text-indigo-300 font-bold underline decoration-indigo-400/30 underline-offset-4 ml-1 transition-colors">{{
+                                _('Add a supplier') }}</a>
                         </p>
                         {% endif %}
                     </div>
@@ -119,24 +130,32 @@ _('Business Management System') }}{% endblock %}
 
                 <!-- Stock Status Preview -->
                 {% if item %}
-                <div class="bg-accent-50 rounded-lg p-4 border border-accent-200">
-                    <h3 class="text-lg font-medium text-fg-base mb-4">{{ _('Current Status') }}</h3>
+                <div class="bg-indigo-500/10 rounded-2xl p-6 border border-indigo-500/20">
+                    <h3 class="text-lg font-bold text-white mb-6 flex items-center">
+                        <i class="fas fa-chart-line mr-2 text-indigo-400"></i>
+                        {{ _('Current Status') }}
+                    </h3>
 
-                    <div class="space-y-3">
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-fg-muted">{{ _('Stock Level') }}</span>
-                            <span class="px-2 py-1 text-xs rounded-full font-medium
-                                    {% if item.quantity == 0 %}bg-btn-danger-bg text-btn-danger-text
-                                    {% elif item.quantity <= 10 %}bg-btn-alert-bg text-btn-alert-text
-                                    {% else %}bg-accent-200 text-accent-800{% endif %}">
+                    <div class="space-y-4">
+                        <div
+                            class="flex justify-between items-center bg-slate-900/40 p-3 rounded-xl border border-slate-700/30">
+                            <span class="text-sm text-slate-400 font-bold uppercase tracking-wider">{{ _('Stock Level')
+                                }}</span>
+                            <span class="px-3 py-1 text-xs rounded-full font-bold border
+                                    {% if item.quantity == 0 %}bg-rose-500/10 text-rose-400 border-rose-500/20
+                                    {% elif item.quantity <= 10 %}bg-amber-500/10 text-amber-500 border-amber-500/20
+                                    {% else %}bg-emerald-500/10 text-emerald-400 border-emerald-500/20{% endif %}">
                                 {% if item.quantity == 0 %}{{ _('Out of Stock') }}
                                 {% elif item.quantity <= 10 %}{{ _('Low Stock') }} {% else %}{{ _('In Stock') }}{% endif
                                     %} </span>
                         </div>
 
-                        <div class="flex justify-between items-center">
-                            <span class="text-sm text-fg-muted">{{ _('Total Value') }}</span>
-                            <span class="font-medium text-fg-base">{{ session.get('currency') }}{{ "{:,.2f}".format(item.quantity * item.price)
+                        <div
+                            class="flex justify-between items-center bg-slate-900/40 p-3 rounded-xl border border-slate-700/30">
+                            <span class="text-sm text-slate-400 font-bold uppercase tracking-wider">{{ _('Total Value')
+                                }}</span>
+                            <span class="font-bold text-white text-lg">{{ session.get('currency') }}{{
+                                "{:,.2f}".format(item.quantity * item.price)
                                 }}</span>
                         </div>
                     </div>
@@ -146,14 +165,14 @@ _('Business Management System') }}{% endblock %}
         </div>
 
         <!-- Form Actions -->
-        <div class="mt-8 pt-6 border-t border-primary-200">
-            <div class="flex justify-end space-x-3">
+        <div class="mt-12 pt-8 border-t border-slate-700/50">
+            <div class="flex justify-end space-x-4">
                 <a href="{{ url_for('inventory.index', company_id=company_id) }}"
-                    class="px-6 py-2 border border-primary-400 rounded-lg text-btn-secondary-text bg-btn-secondary-bg hover:bg-btn-secondary-hover transition">
+                    class="px-8 py-3 border border-slate-600 rounded-xl text-slate-300 font-bold hover:bg-slate-700 hover:text-white transition-all">
                     {{ _('Cancel') }}
                 </a>
                 <button type="submit"
-                    class="px-6 py-2 bg-btn-primary-bg text-btn-primary-text rounded-lg hover:bg-btn-primary-hover transition flex items-center">
+                    class="px-8 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-500/20 font-bold flex items-center">
                     <i class="fas fa-save mr-2"></i>
                     {% if item %}{{ _('Update Item') }}{% else %}{{ _('Create Item') }}{% endif %}
                 </button>
@@ -172,11 +191,11 @@ _('Business Management System') }}{% endblock %}
         function validateNumber(input, min = 0) {
             const value = parseFloat(input.value);
             if (isNaN(value) || value < min) {
-                input.classList.add('border-btn-danger-bg');
-                input.classList.remove('border-primary-300');
+                input.classList.add('border-rose-500');
+                input.classList.remove('border-slate-700');
             } else {
-                input.classList.remove('border-btn-danger-bg');
-                input.classList.add('border-primary-300');
+                input.classList.remove('border-rose-500');
+                input.classList.add('border-slate-700');
             }
         }
 
@@ -189,17 +208,17 @@ _('Business Management System') }}{% endblock %}
             const nameInput = document.getElementById('name');
 
             if (!nameInput.value.trim()) {
-                nameInput.classList.add('border-btn-danger-bg');
+                nameInput.classList.add('border-rose-500');
                 isValid = false;
             }
 
             if (parseFloat(quantityInput.value) < 0 || isNaN(parseFloat(quantityInput.value))) {
-                quantityInput.classList.add('border-btn-danger-bg');
+                quantityInput.classList.add('border-rose-500');
                 isValid = false;
             }
 
             if (parseFloat(priceInput.value) < 0 || isNaN(parseFloat(priceInput.value))) {
-                priceInput.classList.add('border-btn-danger-bg');
+                priceInput.classList.add('border-rose-500');
                 isValid = false;
             }
 

@@ -1,141 +1,133 @@
 @import "tailwindcss";
 
 @theme {
+    /* ─────────── Typography ─────────── */
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
     /* ─────────── Core Palette ─────────── */
 
-    /* Primary – Charcoal */
-    --color-primary-50: #f4f4f4;
-    --color-primary-100: #e0e0e0;
-    --color-primary-200: #c4c4c4;
-    --color-primary-300: #a3a3a3;
-    --color-primary-400: #6b6b6b;
-    --color-primary-500: #383838;
-    /* used for base text & sidebars */
-    --color-primary-600: #2e2e2e;
-    --color-primary-700: #262626;
-    --color-primary-800: #1f1f1f;
-    --color-primary-900: #121212;
+    /* Neutrals – Slate (Professional, Cool Gray) */
+    --color-slate-50: #f8fafc;
+    --color-slate-100: #f1f5f9;
+    --color-slate-200: #e2e8f0;
+    --color-slate-300: #cbd5e1;
+    --color-slate-400: #94a3b8;
+    --color-slate-500: #64748b;
+    --color-slate-600: #475569;
+    --color-slate-700: #334155;
+    --color-slate-800: #1e293b;
+    --color-slate-900: #0f172a;
+    --color-slate-950: #020617;
 
-    /* Secondary – Soft Gray (borders, containers) */
-    --color-secondary-50: #fafafa;
-    --color-secondary-100: #f0f0f0;
-    --color-secondary-200: #dcdcdc;
-    --color-secondary-300: #c5c5c5;
-    --color-secondary-400: #9d9d9d;
-    --color-secondary-500: #7b7b7b;
-    --color-secondary-600: #5c5c5c;
-    --color-secondary-700: #424242;
-    --color-secondary-800: #2e2e2e;
-    --color-secondary-900: #1a1a1a;
+    /* Primary/Accent – Indigo (Vibrant, Tech) */
+    --color-indigo-50: #eef2ff;
+    --color-indigo-100: #e0e7ff;
+    --color-indigo-200: #c7d2fe;
+    --color-indigo-300: #a5b4fc;
+    --color-indigo-400: #818cf8;
+    --color-indigo-500: #6366f1;
+    --color-indigo-600: #4f46e5;
+    --color-indigo-700: #4338ca;
+    --color-indigo-800: #3730a3;
+    --color-indigo-900: #312e81;
+    --color-indigo-950: #1e1b4b;
 
-    /* Accent – Construction Yellow */
-    --color-accent-50: #fffdea;
-    --color-accent-100: #fff5b8;
-    --color-accent-200: #ffee78;
-    --color-accent-300: #fde047;
-    --color-accent-400: #facc15;
-    --color-accent-500: #eab308;
-    /* used for buttons/links */
-    --color-accent-600: #ca8a04;
-    --color-accent-700: #a16207;
-    --color-accent-800: #854d0e;
-    --color-accent-900: #713f12;
+    /* Semantic Mappings */
+    
+    /* Document/Backgrounds */
+    --color-bg-base: var(--color-slate-50);       /* Main app background */
+    --color-bg-subtle: white;                     /* Cards/Panels */
+    --color-bg-sidebar: var(--color-slate-900);   /* Dark Sidebar */
+    --color-bg-topbar: white;                     /* Light Topbar */
 
-    /* ─────────── Layout ─────────── */
+    /* Text */
+    --color-fg-base: var(--color-slate-900);      /* Primary text */
+    --color-fg-muted: var(--color-slate-500);     /* Secondary text */
+    --color-fg-inverted: white;                   /* Text on dark bg */
+    --color-fg-accent: var(--color-indigo-600);   /* Link/Accent text */
 
-    --color-bg-base: var(--color-secondary-50);
-    /* app background */
-    --color-bg-subtle: var(--color-secondary-100);
-    /* cards/panels */
-    --color-bg-sidebar: var(--color-primary-100);
-    /* sidebar bg */
-    --color-bg-topbar: var(--color-primary-200);
-    /* topbar bg */
+    /* Borders */
+    --color-border-base: var(--color-slate-200);
+    --color-border-subtle: var(--color-slate-100);
 
-    --color-fg-base: var(--color-primary-800);
-    /* main text */
-    --color-fg-muted: var(--color-primary-500);
-    /* secondary text */
-    --color-fg-inverted: white;
-    /* for dark bg */
+    /* UI States */
+    --color-primary-500: var(--color-indigo-600); /* Focus rings, active states */
 
     /* ─────────── Buttons ─────────── */
 
-    --color-btn-primary-bg: var(--color-accent-500);
-    --color-btn-primary-hover: var(--color-accent-600);
-    --color-btn-primary-text: black;
+    /* Primary Button (Indigo) */
+    --color-btn-primary-bg: var(--color-indigo-600);
+    --color-btn-primary-hover: var(--color-indigo-500);
+    --color-btn-primary-text: white;
 
-    --color-btn-secondary-bg: var(--color-primary-100);
-    --color-btn-secondary-hover: var(--color-primary-200);
-    --color-btn-secondary-text: var(--color-primary-800);
+    /* Secondary Button (White/Slate) */
+    --color-btn-secondary-bg: white;
+    --color-btn-secondary-hover: var(--color-slate-50);
+    --color-btn-secondary-text: var(--color-slate-700);
+    --color-btn-secondary-border: var(--color-slate-300);
 
-    --color-btn-alert-bg: #facc15;
-    --color-btn-alert-hover: #eab308;
-    --color-btn-alert-text: #1f1f1f;
+    /* Alert/Warning Button (Amber) */
+    --color-btn-alert-bg: #f59e0b;
+    --color-btn-alert-hover: #d97706;
+    --color-btn-alert-text: white;
 
-    --color-btn-danger-bg: #dc2626;
-    --color-btn-danger-hover: #b91c1c;
+    /* Danger Button (Red) */
+    --color-btn-danger-bg: #ef4444;
+    --color-btn-danger-hover: #dc2626;
     --color-btn-danger-text: white;
 }
 
 @theme dark {
     /* ─────────── Dark Mode ─────────── */
 
-    --color-primary-50: #121212;
-    --color-primary-100: #1a1a1a;
-    --color-primary-200: #2a2a2a;
-    --color-primary-300: #3a3a3a;
-    --color-primary-400: #4b4b4b;
-    --color-primary-500: #5c5c5c;
-    --color-primary-600: #7d7d7d;
-    --color-primary-700: #b0b0b0;
-    --color-primary-800: #dcdcdc;
-    --color-primary-900: #f5f5f5;
+    /* Backgrounds */
+    --color-bg-base: var(--color-slate-950);      /* Deep dark background */
+    --color-bg-subtle: var(--color-slate-900);    /* Cards/Panels */
+    --color-bg-sidebar: var(--color-slate-950);   /* Sidebar matches bg or slightly lighter */
+    --color-bg-topbar: var(--color-slate-900);
 
-    --color-secondary-50: #1a1a1a;
-    --color-secondary-100: #222222;
-    --color-secondary-200: #2e2e2e;
-    --color-secondary-300: #3c3c3c;
-    --color-secondary-400: #4d4d4d;
-    --color-secondary-500: #666666;
-    --color-secondary-600: #a0a0a0;
-    --color-secondary-700: #cccccc;
-    --color-secondary-800: #e6e6e6;
-    --color-secondary-900: #f9f9f9;
+    /* Text */
+    --color-fg-base: var(--color-slate-100);
+    --color-fg-muted: var(--color-slate-400);
+    --color-fg-inverted: var(--color-slate-900);
+    --color-fg-accent: var(--color-indigo-400);
 
-    --color-accent-50: #292100;
-    --color-accent-100: #4d3c00;
-    --color-accent-200: #7a5d00;
-    --color-accent-300: #a77900;
-    --color-accent-400: #d49a00;
-    --color-accent-500: #facc15;
-    --color-accent-600: #fde047;
-    --color-accent-700: #fef08a;
-    --color-accent-800: #fef9c3;
-    --color-accent-900: #fefce8;
+    /* Borders */
+    --color-border-base: var(--color-slate-800);
+    --color-border-subtle: var(--color-slate-800);
 
-    --color-bg-base: var(--color-secondary-50);
-    --color-bg-subtle: var(--color-secondary-100);
-    --color-bg-sidebar: var(--color-secondary-200);
-    --color-bg-topbar: var(--color-secondary-300);
+    /* UI States */
+    --color-primary-500: var(--color-indigo-500);
 
-    --color-fg-base: var(--color-primary-800);
-    --color-fg-muted: var(--color-primary-500);
-    --color-fg-inverted: black;
+    /* Buttons */
+    --color-btn-primary-bg: var(--color-indigo-500);
+    --color-btn-primary-hover: var(--color-indigo-400);
+    --color-btn-primary-text: white;
 
-    --color-btn-primary-bg: var(--color-accent-500);
-    --color-btn-primary-hover: var(--color-accent-400);
-    --color-btn-primary-text: black;
+    --color-btn-secondary-bg: var(--color-slate-800);
+    --color-btn-secondary-hover: var(--color-slate-700);
+    --color-btn-secondary-text: var(--color-slate-200);
+    --color-btn-secondary-border: var(--color-slate-700);
+}
 
-    --color-btn-secondary-bg: var(--color-primary-200);
-    --color-btn-secondary-hover: var(--color-primary-300);
-    --color-btn-secondary-text: var(--color-primary-800);
+/* ─────────── Custom Utilities ─────────── */
 
-    --color-btn-alert-bg: #fde047;
-    --color-btn-alert-hover: #facc15;
-    --color-btn-alert-text: #1f1f1f;
+@layer utilities {
+    .glass {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .card-hover {
+        @apply transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5;
+    }
 
-    --color-btn-danger-bg: #ef4444;
-    --color-btn-danger-hover: #dc2626;
-    --color-btn-danger-text: white;
+    .input-base {
+        @apply w-full px-3 py-2 border border-border-base rounded-lg focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 bg-bg-subtle text-fg-base transition-colors duration-200 outline-none;
+    }
+    
+    .btn {
+        @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
+    }
 }

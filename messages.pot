@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-02-08 00:44-0600\n"
+"POT-Creation-Date: 2026-02-09 16:30-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -107,11 +107,11 @@ msgstr ""
 msgid "Account created successfully!"
 msgstr ""
 
-#: app/auth/templates/auth/base.html:38
+#: app/auth/templates/auth/base.html:54
 msgid "Business management simplified"
 msgstr ""
 
-#: app/auth/templates/auth/base.html:52
+#: app/auth/templates/auth/base.html:70
 msgid "All rights reserved."
 msgstr ""
 
@@ -119,39 +119,39 @@ msgstr ""
 msgid "Login - Trackdesk"
 msgstr ""
 
-#: app/auth/templates/auth/login.html:10
-msgid "Sign in to your account"
-msgstr ""
-
-#: app/auth/templates/auth/login.html:21
-#: app/auth/templates/auth/register.html:36
+#: app/auth/templates/auth/login.html:13
+#: app/auth/templates/auth/register.html:39
 msgid "Email address"
 msgstr ""
 
-#: app/auth/templates/auth/login.html:35
-#: app/auth/templates/auth/register.html:50
-#: app/users/templates/users/form.html:51
+#: app/auth/templates/auth/login.html:29
+#: app/auth/templates/auth/register.html:54
+#: app/users/templates/users/form.html:90
 msgid "Password"
 msgstr ""
 
-#: app/auth/templates/auth/login.html:52
+#: app/auth/templates/auth/login.html:49
 msgid "Remember me"
 msgstr ""
 
-#: app/auth/templates/auth/login.html:59
+#: app/auth/templates/auth/login.html:56
 msgid "Forgot password?"
 msgstr ""
 
-#: app/auth/templates/auth/login.html:73
-#: app/auth/templates/auth/register.html:94
+#: app/auth/templates/auth/login.html:65
+#: app/auth/templates/auth/register.html:106
 msgid "Sign in"
 msgstr ""
 
-#: app/auth/templates/auth/login.html:83
-msgid "Don't have an account?"
+#: app/auth/templates/auth/login.html:78
+msgid "Or"
 msgstr ""
 
 #: app/auth/templates/auth/login.html:86
+msgid "Don't have an account?"
+msgstr ""
+
+#: app/auth/templates/auth/login.html:89
 msgid "Create an account"
 msgstr ""
 
@@ -159,44 +159,172 @@ msgstr ""
 msgid "Register - Trackdesk"
 msgstr ""
 
-#: app/auth/templates/auth/register.html:11
+#: app/auth/templates/auth/register.html:10
 msgid "Create your account"
 msgstr ""
 
-#: app/auth/templates/auth/register.html:22 app/inventory/routes.py:232
-#: app/inventory/templates/inventory/index.html:148
-#: app/inventory/templates/inventory/view.html:46
-#: app/invoices/templates/invoices/view.html:146
-#: app/suppliers/templates/suppliers/index.html:95
-#: app/suppliers/templates/suppliers/view.html:82
+#: app/auth/templates/auth/register.html:13
+msgid "Start managing your business today"
+msgstr ""
+
+#: app/auth/templates/auth/register.html:24 app/inventory/routes.py:232
+#: app/inventory/templates/inventory/index.html:157
+#: app/inventory/templates/inventory/view.html:49
+#: app/suppliers/templates/suppliers/index.html:101
 msgid "Name"
 msgstr ""
 
-#: app/auth/templates/auth/register.html:64
-#: app/users/templates/users/form.html:64
+#: app/auth/templates/auth/register.html:69
+#: app/users/templates/users/form.html:102
 msgid "Confirm Password"
 msgstr ""
 
-#: app/auth/templates/auth/register.html:82
+#: app/auth/templates/auth/register.html:85 app/templates/client-search.html:82
 msgid "Create Account"
 msgstr ""
 
-#: app/auth/templates/auth/register.html:91
+#: app/auth/templates/auth/register.html:98
 msgid "Already have an account?"
 msgstr ""
 
 #: app/companies/templates/companies/form.html:3
-#: app/companies/templates/companies/form.html:8
-#: app/companies/templates/companies/view.html:37
+#: app/companies/templates/companies/form.html:17
+#: app/companies/templates/companies/view.html:41
 msgid "Edit Company"
 msgstr ""
 
 #: app/companies/templates/companies/form.html:3
-#: app/companies/templates/companies/form.html:8
+#: app/companies/templates/companies/form.html:17
 msgid "New Company"
 msgstr ""
 
 #: app/companies/templates/companies/form.html:3
+#: app/payments/templates/payments/form.html:3
+msgid ""
+"Business\n"
+"Management System"
+msgstr ""
+
+#: app/companies/templates/companies/form.html:20
+msgid "Update company information and user access"
+msgstr ""
+
+#: app/companies/templates/companies/form.html:20
+msgid ""
+"Create a new\n"
+"                    company organization"
+msgstr ""
+
+#: app/companies/templates/companies/form.html:41
+msgid "Company Information"
+msgstr ""
+
+#: app/companies/templates/companies/form.html:46
+msgid "Company Name"
+msgstr ""
+
+#: app/companies/templates/companies/form.html:52
+msgid "Enter company name"
+msgstr ""
+
+#: app/companies/templates/companies/form.html:58
+msgid "Preferred Currency"
+msgstr ""
+
+#: app/companies/templates/companies/form.html:63
+msgid "e.g., $, USD, EUR"
+msgstr ""
+
+#: app/companies/templates/companies/form.html:66
+msgid ""
+"Default\n"
+"                                    Tax Rate (%)"
+msgstr ""
+
+#: app/companies/templates/companies/form.html:76
+msgid ""
+"Tax\n"
+"                                Identifier (VAT/TIN)"
+msgstr ""
+
+#: app/companies/templates/companies/form.html:82
+msgid "Regular identifier number"
+msgstr ""
+
+#: app/companies/templates/companies/form.html:86
+msgid ""
+"Contact\n"
+"                                Details"
+msgstr ""
+
+#: app/companies/templates/companies/form.html:92
+#: app/companies/templates/companies/view.html:98
+msgid "Physical Address"
+msgstr ""
+
+#: app/companies/templates/companies/form.html:96
+msgid "Enter company address"
+msgstr ""
+
+#: app/companies/templates/companies/form.html:101
+#: app/customers/templates/customers/form.html:59
+#: app/customers/templates/customers/view.html:109
+msgid "Phone Number"
+msgstr ""
+
+#: app/companies/templates/companies/form.html:110
+msgid "Public Email"
+msgstr ""
+
+#: app/companies/templates/companies/form.html:129
+msgid "User Access Management"
+msgstr ""
+
+#: app/companies/templates/companies/form.html:134
+msgid "Select Authorized Users"
+msgstr ""
+
+#: app/companies/templates/companies/form.html:162
+msgid "No users available for assignment"
+msgstr ""
+
+#: app/companies/templates/companies/form.html:169
+msgid "Selected users will be able to switch to this company and manage its data."
+msgstr ""
+
+#: app/companies/templates/companies/form.html:179
+#: app/customers/templates/customers/form.html:80
+#: app/customers/templates/customers/index.html:224
+#: app/customers/templates/customers/view.html:432
+#: app/inventory/templates/inventory/form.html:172
+#: app/inventory/templates/inventory/view.html:271
+#: app/inventory/templates/inventory/view.html:313
+#: app/invoices/templates/invoices/form.html:330
+#: app/orders/templates/orders/form.html:241
+#: app/payments/templates/payments/form.html:189
+#: app/suppliers/templates/suppliers/form.html:92
+#: app/suppliers/templates/suppliers/index.html:255
+#: app/suppliers/templates/suppliers/view.html:243
+#: app/users/templates/users/form.html:173
+msgid "Cancel"
+msgstr ""
+
+#: app/companies/templates/companies/form.html:184
+msgid "Update Company"
+msgstr ""
+
+#: app/companies/templates/companies/form.html:184
+#: app/companies/templates/companies/index.html:15
+#: app/companies/templates/companies/index.html:137
+msgid "Create Company"
+msgstr ""
+
+#: app/companies/templates/companies/index.html:3
+#: app/companies/templates/companies/index.html:9
+#: app/templates/sidebar.html:103 app/users/templates/users/index.html:106
+msgid "Companies"
+msgstr ""
+
 #: app/companies/templates/companies/index.html:3
 #: app/companies/templates/companies/view.html:3
 #: app/inventory/templates/inventory/form.html:4
@@ -204,123 +332,13 @@ msgstr ""
 #: app/inventory/templates/inventory/view.html:3
 #: app/invoices/templates/invoices/form.html:4
 #: app/invoices/templates/invoices/index.html:3
-#: app/invoices/templates/invoices/view.html:4
 #: app/orders/templates/orders/form.html:4
 #: app/orders/templates/orders/index.html:3
 #: app/orders/templates/orders/view.html:3
-#: app/payments/templates/payments/form.html:3
 #: app/payments/templates/payments/index.html:3
 #: app/payments/templates/payments/view.html:3
-#: app/users/templates/users/form.html:3 app/users/templates/users/index.html:3
-#: app/users/templates/users/view.html:3
+#: app/users/templates/users/index.html:3 app/users/templates/users/view.html:3
 msgid "Business Management System"
-msgstr ""
-
-#: app/companies/templates/companies/form.html:9
-msgid "Update company information"
-msgstr ""
-
-#: app/companies/templates/companies/form.html:10
-msgid "Create a new company"
-msgstr ""
-
-#: app/companies/templates/companies/form.html:15
-#: app/companies/templates/companies/view.html:41
-msgid "Back to Companies"
-msgstr ""
-
-#: app/companies/templates/companies/form.html:31
-#: app/companies/templates/companies/view.html:53
-msgid "Company Information"
-msgstr ""
-
-#: app/companies/templates/companies/form.html:34
-msgid "Company Name"
-msgstr ""
-
-#: app/companies/templates/companies/form.html:38
-msgid "Enter company name"
-msgstr ""
-
-#: app/companies/templates/companies/form.html:41
-msgid "Company Currency"
-msgstr ""
-
-#: app/companies/templates/companies/form.html:46
-msgid "$, USD, EUR, ...."
-msgstr ""
-
-#: app/companies/templates/companies/form.html:49
-msgid "Company Tax Rate"
-msgstr ""
-
-#: app/companies/templates/companies/form.html:57
-msgid "Company Address"
-msgstr ""
-
-#: app/companies/templates/companies/form.html:65
-msgid "Company Phone"
-msgstr ""
-
-#: app/companies/templates/companies/form.html:73
-msgid "Company Email"
-msgstr ""
-
-#: app/companies/templates/companies/form.html:81
-msgid "Company Tax Identifier"
-msgstr ""
-
-#: app/companies/templates/companies/form.html:94
-msgid "User Assignments"
-msgstr ""
-
-#: app/companies/templates/companies/form.html:97
-#: app/companies/templates/companies/view.html:223
-msgid "Assign Users"
-msgstr ""
-
-#: app/companies/templates/companies/form.html:118
-msgid "No users available"
-msgstr ""
-
-#: app/companies/templates/companies/form.html:121
-msgid "Select users who will have access to this company"
-msgstr ""
-
-#: app/companies/templates/companies/form.html:130
-#: app/customers/templates/customers/form.html:74
-#: app/customers/templates/customers/index.html:203
-#: app/customers/templates/customers/view.html:375
-#: app/inventory/templates/inventory/form.html:153
-#: app/inventory/templates/inventory/view.html:236
-#: app/inventory/templates/inventory/view.html:272
-#: app/invoices/templates/invoices/form.html:325
-#: app/invoices/templates/invoices/view.html:599
-#: app/orders/templates/orders/form.html:218
-#: app/payments/templates/payments/form.html:148
-#: app/suppliers/templates/suppliers/form.html:92
-#: app/suppliers/templates/suppliers/index.html:229
-#: app/suppliers/templates/suppliers/view.html:142
-#: app/templates/client-search.html:54 app/users/templates/users/form.html:114
-msgid "Cancel"
-msgstr ""
-
-#: app/companies/templates/companies/form.html:134
-msgid "Update Company"
-msgstr ""
-
-#: app/companies/templates/companies/form.html:134
-#: app/companies/templates/companies/index.html:15
-#: app/companies/templates/companies/index.html:120
-msgid "Create Company"
-msgstr ""
-
-#: app/companies/templates/companies/index.html:3
-#: app/companies/templates/companies/index.html:9
-#: app/templates/sidebar.html:106 app/users/templates/users/form.html:91
-#: app/users/templates/users/index.html:104
-#: app/users/templates/users/view.html:138
-msgid "Companies"
 msgstr ""
 
 #: app/companies/templates/companies/index.html:10
@@ -331,237 +349,236 @@ msgstr ""
 msgid "Search Companies"
 msgstr ""
 
-#: app/companies/templates/companies/index.html:31
+#: app/companies/templates/companies/index.html:32
 msgid "Company name..."
 msgstr ""
 
-#: app/companies/templates/companies/index.html:39
-#: app/inventory/templates/inventory/index.html:81
-#: app/inventory/templates/inventory/index.html:110
-#: app/invoices/templates/invoices/index.html:25
-#: app/payments/templates/payments/index.html:65
-#: app/suppliers/templates/suppliers/index.html:77
+#: app/companies/templates/companies/index.html:41
+#: app/inventory/templates/inventory/index.html:87
+#: app/inventory/templates/inventory/index.html:119
+#: app/invoices/templates/invoices/index.html:26
+#: app/payments/templates/payments/index.html:70
+#: app/suppliers/templates/suppliers/index.html:83
 #: app/users/templates/users/index.html:24
 msgid "Search"
 msgstr ""
 
-#: app/companies/templates/companies/index.html:43
+#: app/companies/templates/companies/index.html:45
 #: app/customers/templates/customers/index.html:25
-#: app/invoices/templates/invoices/index.html:89
-#: app/payments/templates/payments/index.html:120
-#: app/users/templates/users/index.html:78
+#: app/invoices/templates/invoices/index.html:100
+#: app/payments/templates/payments/index.html:116
+#: app/users/templates/users/index.html:80
 msgid "Reset"
 msgstr ""
 
-#: app/companies/templates/companies/index.html:63
-#: app/companies/templates/companies/view.html:20
-#: app/customers/templates/customers/index.html:65
-#: app/users/templates/users/index.html:107
+#: app/companies/templates/companies/index.html:71
+#: app/companies/templates/companies/view.html:21
+#: app/customers/templates/customers/index.html:69
+#: app/customers/templates/customers/view.html:305
+#: app/users/templates/users/index.html:109
 msgid "Created"
 msgstr ""
 
-#: app/companies/templates/companies/index.html:69
-#: app/customers/templates/customers/index.html:119
-#: app/customers/templates/customers/view.html:226
-#: app/customers/templates/customers/view.html:306
-#: app/inventory/templates/inventory/index.html:243
-#: app/invoices/templates/invoices/index.html:151
-#: app/payments/templates/payments/index.html:193
-#: app/suppliers/templates/suppliers/index.html:137
-#: app/suppliers/templates/suppliers/view.html:105
-#: app/users/templates/users/index.html:179
+#: app/companies/templates/companies/index.html:79
+#: app/customers/templates/customers/index.html:128
+#: app/inventory/templates/inventory/index.html:253
+#: app/invoices/templates/invoices/index.html:178
+#: app/payments/templates/payments/index.html:191
+#: app/suppliers/templates/suppliers/index.html:147
+#: app/users/templates/users/index.html:187
 msgid "View"
 msgstr ""
 
-#: app/companies/templates/companies/index.html:73
+#: app/companies/templates/companies/index.html:84
 #: app/customers/templates/customers/form.html:3
-#: app/customers/templates/customers/form.html:8
-#: app/customers/templates/customers/index.html:123
-#: app/customers/templates/customers/view.html:229
-#: app/customers/templates/customers/view.html:309
-#: app/inventory/templates/inventory/index.html:247
+#: app/customers/templates/customers/form.html:9
+#: app/customers/templates/customers/index.html:132
+#: app/inventory/templates/inventory/index.html:258
 #: app/inventory/templates/inventory/view.html:22
 #: app/invoices/templates/invoices/form.html:3
 #: app/invoices/templates/invoices/form.html:14
-#: app/invoices/templates/invoices/index.html:155
-#: app/invoices/templates/invoices/view.html:35
-#: app/payments/templates/payments/index.html:197
-#: app/payments/templates/payments/view.html:14
-#: app/suppliers/templates/suppliers/index.html:141
-#: app/suppliers/templates/suppliers/view.html:21
-#: app/suppliers/templates/suppliers/view.html:109
-#: app/users/templates/users/index.html:183
+#: app/invoices/templates/invoices/index.html:183
+#: app/payments/templates/payments/index.html:196
+#: app/suppliers/templates/suppliers/index.html:151
+#: app/users/templates/users/index.html:192
 msgid "Edit"
 msgstr ""
 
-#: app/companies/templates/companies/index.html:81
-#: app/companies/templates/companies/view.html:100
-#: app/templates/sidebar.html:109 app/users/templates/users/index.html:3
+#: app/companies/templates/companies/index.html:93
+#: app/companies/templates/companies/view.html:111
+#: app/companies/templates/companies/view.html:144
+#: app/templates/sidebar.html:106 app/users/templates/users/index.html:3
 #: app/users/templates/users/index.html:9
 msgid "Users"
 msgstr ""
 
-#: app/companies/templates/companies/index.html:89
-#: app/orders/templates/orders/index.html:281
+#: app/companies/templates/companies/index.html:104
+#: app/orders/templates/orders/index.html:300
+#: app/suppliers/templates/suppliers/view.html:183
 msgid "View Details"
 msgstr ""
 
-#: app/companies/templates/companies/index.html:95
-#: app/customers/templates/customers/index.html:127
-#: app/customers/templates/customers/index.html:208
-#: app/customers/templates/customers/view.html:58
-#: app/customers/templates/customers/view.html:380
-#: app/inventory/templates/inventory/index.html:254
+#: app/companies/templates/companies/index.html:111
+#: app/customers/templates/customers/index.html:136
+#: app/customers/templates/customers/index.html:230
+#: app/inventory/templates/inventory/index.html:266
 #: app/inventory/templates/inventory/view.html:30
-#: app/invoices/templates/invoices/index.html:168
-#: app/payments/templates/payments/index.html:203
-#: app/suppliers/templates/suppliers/index.html:145
-#: app/suppliers/templates/suppliers/index.html:234
-#: app/suppliers/templates/suppliers/view.html:25
-#: app/suppliers/templates/suppliers/view.html:148
-#: app/users/templates/users/index.html:200
+#: app/invoices/templates/invoices/index.html:196
+#: app/payments/templates/payments/index.html:205
+#: app/suppliers/templates/suppliers/index.html:156
+#: app/suppliers/templates/suppliers/index.html:260
+#: app/users/templates/users/index.html:211
 msgid "Delete"
 msgstr ""
 
-#: app/companies/templates/companies/index.html:96
+#: app/companies/templates/companies/index.html:112
 msgid ""
 "Are you sure you want to delete this company? This action cannot be "
 "undone."
 msgstr ""
 
-#: app/companies/templates/companies/index.html:110
+#: app/companies/templates/companies/index.html:126
 msgid "No companies found"
 msgstr ""
 
-#: app/companies/templates/companies/index.html:113
-msgid "No companies match your search criteria."
+#: app/companies/templates/companies/index.html:129
+msgid ""
+"No companies match your search criteria. Try a different search term or "
+"clear the filters."
 msgstr ""
 
-#: app/companies/templates/companies/index.html:115
-msgid "Get started by creating your first company."
+#: app/companies/templates/companies/index.html:132
+msgid ""
+"Get started by creating your first company to begin managing your "
+"business operations."
 msgstr ""
 
-#: app/companies/templates/companies/view.html:20
-#: app/users/templates/users/view.html:78
-#: app/users/templates/users/view.html:107
-#: app/users/templates/users/view.html:155
+#: app/companies/templates/companies/view.html:22
+#: app/users/templates/users/view.html:92
+#: app/users/templates/users/view.html:137
 msgid "Unknown"
 msgstr ""
 
-#: app/companies/templates/companies/view.html:28
-msgid "tax"
+#: app/companies/templates/companies/view.html:26
+msgid "Currency"
 msgstr ""
 
-#: app/companies/templates/companies/view.html:58
-#: app/customers/templates/customers/form.html:48
-#: app/customers/templates/customers/view.html:77
-msgid "Tax Identifier"
+#: app/companies/templates/companies/view.html:31
+msgid "Tax Rate"
 msgstr ""
 
-#: app/companies/templates/companies/view.html:62
-#: app/customers/templates/customers/form.html:39
-#: app/customers/templates/customers/view.html:88
-#: app/users/templates/users/form.html:41
-#: app/users/templates/users/view.html:37
-msgid "Email Address"
+#: app/companies/templates/companies/view.html:45
+#: app/suppliers/templates/suppliers/view.html:30
+#: app/users/templates/users/view.html:46
+msgid "Back"
 msgstr ""
 
-#: app/companies/templates/companies/view.html:74
-#: app/customers/templates/customers/form.html:54
-#: app/customers/templates/customers/view.html:101
-msgid "Phone Number"
+#: app/companies/templates/companies/view.html:59
+msgid "Legal & Contact Details"
 msgstr ""
 
-#: app/companies/templates/companies/view.html:87
-msgid "Business Address"
+#: app/companies/templates/companies/view.html:69
+#: app/orders/templates/orders/view.html:292
+msgid ""
+"Email\n"
+"                            Address"
+msgstr ""
+
+#: app/companies/templates/companies/view.html:83
+msgid ""
+"Phone\n"
+"                            Number"
+msgstr ""
+
+#: app/companies/templates/companies/view.html:101
+#: app/customers/templates/customers/view.html:126
+msgid "No address recorded"
 msgstr ""
 
 #: app/companies/templates/companies/view.html:112 app/customers/routes.py:137
 #: app/customers/templates/customers/index.html:3
 #: app/customers/templates/customers/index.html:8
-#: app/customers/templates/customers/view.html:23 app/templates/sidebar.html:72
+#: app/customers/templates/customers/view.html:20 app/templates/sidebar.html:69
 msgid "Clients"
 msgstr ""
 
-#: app/companies/templates/companies/view.html:124
+#: app/companies/templates/companies/view.html:113
 #: app/suppliers/templates/suppliers/index.html:3
 #: app/suppliers/templates/suppliers/index.html:8
-#: app/suppliers/templates/suppliers/view.html:3 app/templates/sidebar.html:75
+#: app/suppliers/templates/suppliers/view.html:3 app/templates/sidebar.html:72
 msgid "Suppliers"
 msgstr ""
 
-#: app/companies/templates/companies/view.html:136
-#: app/inventory/templates/inventory/index.html:3 app/templates/sidebar.html:78
+#: app/companies/templates/companies/view.html:114
+#: app/dashboard/templates/dashboard/index.html:112
+#: app/inventory/templates/inventory/index.html:3 app/templates/sidebar.html:75
 msgid "Inventory"
 msgstr ""
 
-#: app/companies/templates/companies/view.html:148
-#: app/templates/sidebar.html:86
+#: app/companies/templates/companies/view.html:115
+#: app/templates/sidebar.html:83
 msgid "Documents"
 msgstr ""
 
-#: app/companies/templates/companies/view.html:160
+#: app/companies/templates/companies/view.html:116
 #: app/payments/templates/payments/index.html:3
-#: app/payments/templates/payments/index.html:9 app/templates/sidebar.html:95
+#: app/payments/templates/payments/index.html:9 app/templates/sidebar.html:92
 msgid "Payments"
 msgstr ""
 
-#: app/companies/templates/companies/view.html:176
-msgid "Assigned Users"
+#: app/companies/templates/companies/view.html:139
+msgid "Authorized Access"
 msgstr ""
 
-#: app/companies/templates/companies/view.html:201
-#: app/users/templates/users/index.html:64
-#: app/users/templates/users/index.html:152
-#: app/users/templates/users/view.html:48
-msgid "Active"
+#: app/companies/templates/companies/view.html:182
+msgid ""
+"No assigned\n"
+"                            users"
 msgstr ""
 
-#: app/companies/templates/companies/view.html:205
-#: app/users/templates/users/index.html:66
-#: app/users/templates/users/index.html:158
-#: app/users/templates/users/view.html:54
-msgid "Inactive"
+#: app/companies/templates/companies/view.html:186
+msgid "Manage Access"
 msgstr ""
 
-#: app/companies/templates/companies/view.html:220
-msgid "No users assigned to this company"
+#: app/companies/templates/companies/view.html:198
+msgid "Operational Activity"
 msgstr ""
 
-#: app/companies/templates/companies/view.html:235
-msgid "Recent Activity"
-msgstr ""
-
-#: app/companies/templates/companies/view.html:244
+#: app/companies/templates/companies/view.html:208
 msgid "Recent Documents"
 msgstr ""
 
-#: app/companies/templates/companies/view.html:276
+#: app/companies/templates/companies/view.html:241
 msgid "Recent Payments"
 msgstr ""
 
-#: app/companies/templates/companies/view.html:304
-msgid "No recent activity"
+#: app/companies/templates/companies/view.html:272
+msgid ""
+"No recent\n"
+"                                activity recorded"
 msgstr ""
 
-#: app/companies/templates/companies/view.html:317
-msgid "Danger Zone"
+#: app/companies/templates/companies/view.html:287
+msgid "Critical Operations"
 msgstr ""
 
-#: app/companies/templates/companies/view.html:323
-#: app/companies/templates/companies/view.html:333
-msgid "Delete Company"
+#: app/companies/templates/companies/view.html:290
+msgid ""
+"Deleting this company will permanently remove all associated users, "
+"clients, suppliers,\n"
+"                        inventory, documents, and financial data. There "
+"is no undo for this action."
 msgstr ""
 
-#: app/companies/templates/companies/view.html:325
-msgid "Once you delete a company, there is no going back. Please be certain."
-msgstr ""
-
-#: app/companies/templates/companies/view.html:332
+#: app/companies/templates/companies/view.html:298
 msgid ""
 "Are you sure you want to delete this company? This action cannot be "
 "undone and will remove all associated data including clients, suppliers, "
 "inventory, documents, payments, and reports."
+msgstr ""
+
+#: app/companies/templates/companies/view.html:299
+msgid "Delete Entire Organization"
 msgstr ""
 
 #: app/customers/routes.py:19
@@ -597,7 +614,7 @@ msgstr ""
 msgid "You do not have access to this client"
 msgstr ""
 
-#: app/customers/routes.py:221 app/customers/templates/customers/view.html:46
+#: app/customers/routes.py:221 app/customers/templates/customers/view.html:53
 msgid "Edit Client"
 msgstr ""
 
@@ -622,53 +639,63 @@ msgid "Unauthorized"
 msgstr ""
 
 #: app/customers/templates/customers/form.html:3
-#: app/customers/templates/customers/form.html:8
+#: app/customers/templates/customers/form.html:9
 msgid "New"
 msgstr ""
 
 #: app/customers/templates/customers/form.html:3
-msgid "Client - Business Management System"
+msgid ""
+"Client - Business Management\n"
+"System"
 msgstr ""
 
-#: app/customers/templates/customers/form.html:8
-#: app/customers/templates/customers/form.html:77
-#: app/invoices/templates/invoices/form.html:77
-#: app/invoices/templates/invoices/index.html:106
-#: app/payments/templates/payments/index.html:140
+#: app/customers/templates/customers/form.html:10
+#: app/customers/templates/customers/form.html:83
+#: app/invoices/templates/invoices/form.html:108
+#: app/invoices/templates/invoices/index.html:119
+#: app/payments/templates/payments/index.html:136
 msgid "Client"
 msgstr ""
 
-#: app/customers/templates/customers/form.html:9
+#: app/customers/templates/customers/form.html:11
 msgid "Update client information"
 msgstr ""
 
-#: app/customers/templates/customers/form.html:9
-msgid "Add a new client to your system"
+#: app/customers/templates/customers/form.html:11
+msgid ""
+"Add a\n"
+"            new client to your system"
 msgstr ""
 
-#: app/customers/templates/customers/form.html:14
+#: app/customers/templates/customers/form.html:17
 msgid "Back to Clients"
 msgstr ""
 
-#: app/customers/templates/customers/form.html:28
+#: app/customers/templates/customers/form.html:31
 #: app/customers/templates/customers/index.html:45
 msgid "Client Name"
 msgstr ""
 
-#: app/customers/templates/customers/form.html:63
-#: app/customers/templates/customers/view.html:116
-#: app/invoices/templates/invoices/view.html:173
-#: app/orders/templates/orders/view.html:260
+#: app/customers/templates/customers/form.html:42
+#: app/customers/templates/customers/view.html:95
+#: app/users/templates/users/form.html:55
+msgid "Email Address"
+msgstr ""
+
+#: app/customers/templates/customers/form.html:52
+msgid "Tax Identifier"
+msgstr ""
+
+#: app/customers/templates/customers/form.html:68
 #: app/suppliers/templates/suppliers/form.html:80
-#: app/suppliers/templates/suppliers/view.html:58
 msgid "Address"
 msgstr ""
 
-#: app/customers/templates/customers/form.html:77
+#: app/customers/templates/customers/form.html:83
 msgid "Update"
 msgstr ""
 
-#: app/customers/templates/customers/form.html:77
+#: app/customers/templates/customers/form.html:83
 msgid "Save"
 msgstr ""
 
@@ -689,372 +716,337 @@ msgstr ""
 msgid "New Client"
 msgstr ""
 
-#: app/customers/templates/customers/index.html:54
+#: app/customers/templates/customers/index.html:55
 msgid "Contact"
 msgstr ""
 
-#: app/customers/templates/customers/index.html:60
-#: app/customers/templates/customers/view.html:154
-#: app/customers/templates/customers/view.html:173
+#: app/customers/templates/customers/index.html:63
+#: app/customers/templates/customers/view.html:172
+#: app/customers/templates/customers/view.html:194
 #: app/invoices/templates/invoices/index.html:3
 #: app/invoices/templates/invoices/index.html:9
-#: app/invoices/templates/invoices/index.html:44 app/templates/sidebar.html:92
+#: app/invoices/templates/invoices/index.html:47 app/templates/sidebar.html:89
 msgid "Invoices"
 msgstr ""
 
-#: app/customers/templates/customers/index.html:61
+#: app/customers/templates/customers/index.html:65
+#: app/dashboard/templates/dashboard/index.html:71
 msgid "Outstanding"
 msgstr ""
 
-#: app/customers/templates/customers/index.html:71
-#: app/customers/templates/customers/view.html:196
-#: app/customers/templates/customers/view.html:276
-#: app/inventory/templates/inventory/index.html:184
-#: app/invoices/templates/invoices/index.html:121
-#: app/invoices/templates/invoices/view.html:234
-#: app/orders/templates/orders/index.html:217
-#: app/payments/templates/payments/index.html:152
-#: app/payments/templates/payments/view.html:107
-#: app/suppliers/templates/suppliers/index.html:99
-#: app/suppliers/templates/suppliers/view.html:86
-#: app/users/templates/users/index.html:110
-#: app/users/templates/users/view.html:191
+#: app/customers/templates/customers/index.html:77
+#: app/customers/templates/customers/view.html:224
+#: app/customers/templates/customers/view.html:314
+#: app/inventory/templates/inventory/index.html:193
+#: app/invoices/templates/invoices/index.html:135
+#: app/orders/templates/orders/index.html:234
+#: app/payments/templates/payments/index.html:148
+#: app/suppliers/templates/suppliers/index.html:105
+#: app/suppliers/templates/suppliers/view.html:139
+#: app/users/templates/users/index.html:112
 msgid "Actions"
 msgstr ""
 
-#: app/customers/templates/customers/index.html:100
+#: app/customers/templates/customers/index.html:107
 msgid "invoices"
 msgstr ""
 
-#: app/customers/templates/customers/index.html:103
+#: app/customers/templates/customers/index.html:111
 msgid "quotes"
 msgstr ""
 
-#: app/customers/templates/customers/index.html:142
-#: app/orders/templates/orders/index.html:356
+#: app/customers/templates/customers/index.html:151
 msgid "Showing"
 msgstr ""
 
-#: app/customers/templates/customers/index.html:143
-#: app/orders/templates/orders/index.html:358
+#: app/customers/templates/customers/index.html:153
 msgid "to"
 msgstr ""
 
-#: app/customers/templates/customers/index.html:145
-#: app/orders/templates/orders/index.html:360
+#: app/customers/templates/customers/index.html:156
+#: app/invoices/templates/invoices/index.html:232
 msgid "of"
 msgstr ""
 
-#: app/customers/templates/customers/index.html:146
-#: app/orders/templates/orders/index.html:362
+#: app/customers/templates/customers/index.html:157
 msgid "results"
 msgstr ""
 
-#: app/customers/templates/customers/index.html:152
-#: app/orders/templates/orders/index.html:343
+#: app/customers/templates/customers/index.html:163
+#: app/invoices/templates/invoices/index.html:242
 msgid "Previous"
 msgstr ""
 
-#: app/customers/templates/customers/index.html:159
-#: app/orders/templates/orders/index.html:349
+#: app/customers/templates/customers/index.html:170
+#: app/invoices/templates/invoices/index.html:265
 msgid "Next"
 msgstr ""
 
-#: app/customers/templates/customers/index.html:169
+#: app/customers/templates/customers/index.html:183
 msgid "No clients found matching"
 msgstr ""
 
-#: app/customers/templates/customers/index.html:172
-#: app/suppliers/templates/suppliers/index.html:158
+#: app/customers/templates/customers/index.html:187
+#: app/suppliers/templates/suppliers/index.html:175
 msgid "Clear search"
 msgstr ""
 
-#: app/customers/templates/customers/index.html:180
+#: app/customers/templates/customers/index.html:194
 msgid "No clients yet"
 msgstr ""
 
-#: app/customers/templates/customers/index.html:181
+#: app/customers/templates/customers/index.html:195
 msgid "Get started by adding your first client"
 msgstr ""
 
-#: app/customers/templates/customers/index.html:184
-msgid "Add Client"
+#: app/customers/templates/customers/index.html:198
+msgid "Add First Client"
 msgstr ""
 
-#: app/customers/templates/customers/index.html:195
-#: app/customers/templates/customers/view.html:367
-#: app/suppliers/templates/suppliers/index.html:222
-#: app/suppliers/templates/suppliers/view.html:136
+#: app/customers/templates/customers/index.html:214
+#: app/customers/templates/customers/view.html:415
+#: app/suppliers/templates/suppliers/index.html:247
 msgid "Confirm Deletion"
 msgstr ""
 
-#: app/customers/templates/customers/index.html:197
-#: app/customers/templates/customers/view.html:369
+#: app/customers/templates/customers/index.html:216
 msgid "Are you sure you want to delete client"
 msgstr ""
 
-#: app/customers/templates/customers/index.html:198
-#: app/customers/templates/customers/view.html:370
-#: app/suppliers/templates/suppliers/index.html:224
-#: app/suppliers/templates/suppliers/view.html:138
+#: app/customers/templates/customers/index.html:218
+#: app/suppliers/templates/suppliers/index.html:250
 msgid "This action cannot be undone."
 msgstr ""
 
-#: app/customers/templates/customers/view.html:12
+#: app/customers/templates/customers/view.html:13
 #: app/dashboard/templates/dashboard/index.html:3
-#: app/dashboard/templates/dashboard/index.html:8 app/templates/sidebar.html:69
+#: app/dashboard/templates/dashboard/index.html:9 app/templates/header.html:14
+#: app/templates/sidebar.html:66
 msgid "Dashboard"
 msgstr ""
 
-#: app/customers/templates/customers/view.html:41
-msgid "Client ID"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:50
-#: app/dashboard/templates/dashboard/index.html:14
-msgid "New Invoice"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:54
-msgid "New Quote"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:67
-#: app/invoices/templates/invoices/view.html:140
-msgid "Client Information"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:72
-#: app/users/templates/users/form.html:32
-#: app/users/templates/users/view.html:32
-msgid "Full Name"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:83
-#: app/customers/templates/customers/view.html:96
-#: app/customers/templates/customers/view.html:109
-#: app/customers/templates/customers/view.html:120
-msgid "Not provided"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:125
+#: app/customers/templates/customers/view.html:45
 msgid "Client Since"
 msgstr ""
 
-#: app/customers/templates/customers/view.html:134
-msgid "Financial Summary"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:138
-msgid "Total Invoiced"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:144
-msgid "Outstanding Balance"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:159
-#: app/customers/templates/customers/view.html:177
-#: app/invoices/templates/invoices/index.html:41
-msgid "Quotes"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:191
-#: app/invoices/templates/invoices/index.html:103
-msgid "Invoice #"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:192
-#: app/customers/templates/customers/view.html:272
-#: app/invoices/templates/invoices/view.html:222
-#: app/payments/templates/payments/index.html:134
-msgid "Date"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:193
-#: app/invoices/templates/invoices/form.html:127
-#: app/invoices/templates/invoices/index.html:112
-#: app/payments/templates/payments/view.html:80
-msgid "Due Date"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:194
-#: app/customers/templates/customers/view.html:274
-#: app/invoices/templates/invoices/index.html:115
-#: app/invoices/templates/invoices/view.html:225
-#: app/invoices/templates/invoices/view.html:566
-#: app/payments/templates/payments/index.html:143
-#: app/payments/templates/payments/view.html:29
-msgid "Amount"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:195
-#: app/customers/templates/customers/view.html:275
-#: app/invoices/templates/invoices/form.html:94
-#: app/invoices/templates/invoices/index.html:49
-#: app/invoices/templates/invoices/index.html:118
-#: app/invoices/templates/invoices/view.html:104
-#: app/users/templates/users/index.html:60
-#: app/users/templates/users/index.html:101
-#: app/users/templates/users/view.html:42
-msgid "Status"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:234
-#: app/customers/templates/customers/view.html:314
-#: app/inventory/templates/inventory/view.html:105
-msgid "Download"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:251
-msgid "No invoices yet"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:252
-msgid "Create your first invoice for this client"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:255
-#: app/invoices/templates/invoices/index.html:15
-msgid "Create Invoice"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:271
-msgid "Quote #"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:273
-msgid "Valid Until"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:331
-msgid "No quotes yet"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:332
-msgid "Create your first quote for this client"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:335
-msgid "Create Quote"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:345
-#: app/invoices/templates/invoices/form.html:283
-#: app/invoices/templates/invoices/view.html:231
-#: app/invoices/templates/invoices/view.html:472
-#: app/invoices/templates/invoices/view.html:590
-#: app/payments/templates/payments/form.html:138
-#: app/payments/templates/payments/index.html:149
-#: app/payments/templates/payments/view.html:47
-msgid "Notes"
-msgstr ""
-
-#: app/customers/templates/customers/view.html:357
-msgid "Save Notes"
-msgstr ""
-
-#: app/dashboard/templates/dashboard/index.html:9
-msgid "Welcome back"
-msgstr ""
-
-#: app/dashboard/templates/dashboard/index.html:9
-msgid "Here's an overview of your business."
-msgstr ""
-
-#: app/dashboard/templates/dashboard/index.html:25
-msgid "Total Clients"
-msgstr ""
-
-#: app/dashboard/templates/dashboard/index.html:46
-#: app/dashboard/templates/dashboard/index.html:81
-#: app/dashboard/templates/dashboard/index.html:116
-#: app/dashboard/templates/dashboard/index.html:151
-msgid "from last month"
-msgstr ""
-
-#: app/dashboard/templates/dashboard/index.html:50
-msgid "View all clients"
-msgstr ""
-
-#: app/dashboard/templates/dashboard/index.html:60
-msgid "Outstanding Invoices"
-msgstr ""
-
-#: app/dashboard/templates/dashboard/index.html:85
-msgid "View all invoices"
-msgstr ""
-
-#: app/dashboard/templates/dashboard/index.html:95
-#: app/suppliers/templates/suppliers/index.html:98
-#: app/suppliers/templates/suppliers/view.html:70
-msgid "Inventory Items"
-msgstr ""
-
-#: app/dashboard/templates/dashboard/index.html:120
-msgid "View inventory"
-msgstr ""
-
-#: app/dashboard/templates/dashboard/index.html:130
-msgid "Revenue"
-msgstr ""
-
-#: app/dashboard/templates/dashboard/index.html:155
-msgid "View payments"
-msgstr ""
-
-#: app/dashboard/templates/dashboard/index.html:167
-msgid "Recent Invoices"
-msgstr ""
-
-#: app/dashboard/templates/dashboard/index.html:169
-#: app/dashboard/templates/dashboard/index.html:209
-msgid "View All"
-msgstr ""
-
-#: app/dashboard/templates/dashboard/index.html:183 app/invoices/routes.py:96
+#: app/customers/templates/customers/view.html:58
+#: app/dashboard/templates/dashboard/index.html:215 app/invoices/routes.py:96
 #: app/invoices/routes.py:266 app/invoices/routes.py:309
 #: app/invoices/templates/invoices/form.html:4
 #: app/invoices/templates/invoices/form.html:14
-#: app/invoices/templates/invoices/form.html:69
-#: app/invoices/templates/invoices/view.html:3
-#: app/invoices/templates/invoices/view.html:15
-#: app/invoices/templates/invoices/view.html:98
-#: app/payments/templates/payments/form.html:33
-#: app/payments/templates/payments/index.html:137
+#: app/invoices/templates/invoices/form.html:74
+#: app/payments/templates/payments/index.html:133
 msgid "Invoice"
 msgstr ""
 
-#: app/dashboard/templates/dashboard/index.html:187
-#: app/payments/templates/payments/form.html:210
-msgid "Due"
-msgstr ""
-
-#: app/dashboard/templates/dashboard/index.html:199
-msgid "No recent invoices"
-msgstr ""
-
-#: app/dashboard/templates/dashboard/index.html:207
-msgid "Recent Quotes"
-msgstr ""
-
-#: app/dashboard/templates/dashboard/index.html:223 app/invoices/routes.py:96
+#: app/customers/templates/customers/view.html:62
+#: app/dashboard/templates/dashboard/index.html:267 app/invoices/routes.py:96
 #: app/invoices/routes.py:268 app/invoices/routes.py:309
 #: app/invoices/templates/invoices/form.html:3
 #: app/invoices/templates/invoices/form.html:14
-#: app/invoices/templates/invoices/form.html:71
-#: app/invoices/templates/invoices/view.html:3
-#: app/invoices/templates/invoices/view.html:13
-#: app/invoices/templates/invoices/view.html:96
+#: app/invoices/templates/invoices/form.html:76
 msgid "Quote"
 msgstr ""
 
-#: app/dashboard/templates/dashboard/index.html:228
-msgid "Issued"
+#: app/customers/templates/customers/view.html:76
+msgid "Core Details"
 msgstr ""
 
-#: app/dashboard/templates/dashboard/index.html:240
-msgid "No recent quotes"
+#: app/customers/templates/customers/view.html:83
+msgid "Legal Identifier"
+msgstr ""
+
+#: app/customers/templates/customers/view.html:89
+#: app/inventory/templates/inventory/index.html:215
+#: app/invoices/services/invoice_pdf_service.py:164
+#: app/orders/templates/orders/view.html:180
+#: app/users/templates/users/view.html:194
+msgid "N/A"
+msgstr ""
+
+#: app/customers/templates/customers/view.html:123
+msgid "Primary Address"
+msgstr ""
+
+#: app/customers/templates/customers/view.html:140
+msgid "Account Ledger"
+msgstr ""
+
+#: app/customers/templates/customers/view.html:146
+msgid ""
+"Total\n"
+"                            Lifetime Value"
+msgstr ""
+
+#: app/customers/templates/customers/view.html:158
+msgid "Current AR Balance"
+msgstr ""
+
+#: app/customers/templates/customers/view.html:178
+#: app/customers/templates/customers/view.html:199
+#: app/invoices/templates/invoices/index.html:44
+msgid "Quotes"
+msgstr ""
+
+#: app/customers/templates/customers/view.html:213
+msgid "Reference"
+msgstr ""
+
+#: app/customers/templates/customers/view.html:215
+msgid "Dated"
+msgstr ""
+
+#: app/customers/templates/customers/view.html:217
+msgid "Terms"
+msgstr ""
+
+#: app/customers/templates/customers/view.html:219
+msgid "Net Amount"
+msgstr ""
+
+#: app/customers/templates/customers/view.html:221
+#: app/customers/templates/customers/view.html:311
+#: app/invoices/templates/invoices/form.html:83
+#: app/invoices/templates/invoices/index.html:53
+#: app/invoices/templates/invoices/index.html:131
+#: app/users/templates/users/index.html:62
+#: app/users/templates/users/index.html:103
+msgid "Status"
+msgstr ""
+
+#: app/customers/templates/customers/view.html:282
+msgid "No Invoices Found"
+msgstr ""
+
+#: app/customers/templates/customers/view.html:283
+msgid ""
+"You haven't recorded any invoices for this client\n"
+"                    yet."
+msgstr ""
+
+#: app/customers/templates/customers/view.html:287
+msgid "Generate Invoice"
+msgstr ""
+
+#: app/customers/templates/customers/view.html:303
+msgid "Quotation #"
+msgstr ""
+
+#: app/customers/templates/customers/view.html:307
+msgid "Expiry"
+msgstr ""
+
+#: app/customers/templates/customers/view.html:309
+msgid "Estimate Value"
+msgstr ""
+
+#: app/customers/templates/customers/view.html:372
+msgid "No Quotes Found"
+msgstr ""
+
+#: app/customers/templates/customers/view.html:373
+msgid "There are no active quotations for this client."
+msgstr ""
+
+#: app/customers/templates/customers/view.html:377
+msgid "Create Quotation"
+msgstr ""
+
+#: app/customers/templates/customers/view.html:390
+msgid "Account Management"
+msgstr ""
+
+#: app/customers/templates/customers/view.html:393
+msgid ""
+"Deleting this client will permanently remove their profile and "
+"association with all documents.\n"
+"                    This action is irreversible."
+msgstr ""
+
+#: app/customers/templates/customers/view.html:399
+msgid "Permanently Delete Client"
+msgstr ""
+
+#: app/customers/templates/customers/view.html:417
+#: app/inventory/templates/inventory/index.html:378
+#: app/orders/templates/orders/index.html:438
+#: app/suppliers/templates/suppliers/index.html:248
+#: app/suppliers/templates/suppliers/view.html:226
+msgid "Are you sure you want to delete"
+msgstr ""
+
+#: app/customers/templates/customers/view.html:419
+msgid "All associated history will be lost forever."
+msgstr ""
+
+#: app/customers/templates/customers/view.html:427
+msgid "Confirm & Delete"
+msgstr ""
+
+#: app/dashboard/templates/dashboard/index.html:10
+msgid "Welcome back"
+msgstr ""
+
+#: app/dashboard/templates/dashboard/index.html:11
+msgid ""
+"Here's what's happening\n"
+"                today."
+msgstr ""
+
+#: app/dashboard/templates/dashboard/index.html:17
+msgid "New Invoice"
+msgstr ""
+
+#: app/dashboard/templates/dashboard/index.html:30
+msgid "Total Clients"
+msgstr ""
+
+#: app/dashboard/templates/dashboard/index.html:54
+#: app/dashboard/templates/dashboard/index.html:95
+#: app/dashboard/templates/dashboard/index.html:136
+#: app/dashboard/templates/dashboard/index.html:178
+msgid "vs last month"
+msgstr ""
+
+#: app/dashboard/templates/dashboard/index.html:59
+msgid "View All Clients"
+msgstr ""
+
+#: app/dashboard/templates/dashboard/index.html:100
+msgid "Manage Invoices"
+msgstr ""
+
+#: app/dashboard/templates/dashboard/index.html:141
+msgid "Check Inventory"
+msgstr ""
+
+#: app/dashboard/templates/dashboard/index.html:153
+msgid "Revenue"
+msgstr ""
+
+#: app/dashboard/templates/dashboard/index.html:183
+msgid "Analyze Revenue"
+msgstr ""
+
+#: app/dashboard/templates/dashboard/index.html:196
+msgid "Recent Invoices"
+msgstr ""
+
+#: app/dashboard/templates/dashboard/index.html:199
+#: app/dashboard/templates/dashboard/index.html:251
+msgid "View All"
+msgstr ""
+
+#: app/dashboard/templates/dashboard/index.html:239
+msgid "No recent invoices found"
+msgstr ""
+
+#: app/dashboard/templates/dashboard/index.html:248
+msgid "Recent Quotes"
+msgstr ""
+
+#: app/dashboard/templates/dashboard/index.html:291
+msgid "No recent quotes found"
 msgstr ""
 
 #: app/inventory/routes.py:110 app/inventory/routes.py:177
@@ -1093,35 +1085,33 @@ msgstr ""
 msgid "An error occurred while deleting the inventory item"
 msgstr ""
 
-#: app/inventory/routes.py:232 app/inventory/templates/inventory/form.html:51
-#: app/inventory/templates/inventory/index.html:156
-#: app/inventory/templates/inventory/view.html:52
-#: app/invoices/templates/invoices/form.html:159
-#: app/invoices/templates/invoices/view.html:371
-#: app/suppliers/templates/suppliers/view.html:83
+#: app/inventory/routes.py:232 app/inventory/templates/inventory/form.html:55
+#: app/inventory/templates/inventory/index.html:165
+#: app/inventory/templates/inventory/view.html:57
+#: app/invoices/templates/invoices/form.html:173
+#: app/invoices/templates/invoices/form.html:211
+#: app/invoices/templates/invoices/form.html:257
 msgid "Description"
 msgstr ""
 
-#: app/inventory/routes.py:232 app/inventory/templates/inventory/index.html:162
-#: app/orders/templates/orders/view.html:113
-#: app/suppliers/templates/suppliers/view.html:84
+#: app/inventory/routes.py:232 app/inventory/templates/inventory/index.html:171
+#: app/orders/templates/orders/view.html:143
 msgid "Quantity"
 msgstr ""
 
 #: app/inventory/routes.py:232 app/inventory/routes.py:667
-#: app/inventory/templates/inventory/index.html:172
-#: app/suppliers/templates/suppliers/view.html:85
+#: app/inventory/templates/inventory/index.html:181
+#: app/invoices/templates/invoices/form.html:179
 msgid "Price"
 msgstr ""
 
-#: app/inventory/routes.py:232 app/inventory/templates/inventory/form.html:96
-#: app/inventory/templates/inventory/index.html:180
-#: app/inventory/templates/inventory/view.html:81 app/orders/routes.py:154
-#: app/orders/templates/orders/form.html:47
-#: app/orders/templates/orders/index.html:106
-#: app/orders/templates/orders/index.html:185
-#: app/orders/templates/orders/view.html:81
-#: app/orders/templates/orders/view.html:225
+#: app/inventory/routes.py:232 app/inventory/templates/inventory/form.html:106
+#: app/inventory/templates/inventory/index.html:189
+#: app/inventory/templates/inventory/view.html:92 app/orders/routes.py:154
+#: app/orders/templates/orders/form.html:54
+#: app/orders/templates/orders/index.html:115
+#: app/orders/templates/orders/index.html:198
+#: app/orders/templates/orders/view.html:97
 msgid "Supplier"
 msgstr ""
 
@@ -1148,99 +1138,100 @@ msgid "Update the details of your inventory item"
 msgstr ""
 
 #: app/inventory/templates/inventory/form.html:19
-msgid "Add a new item to your inventory"
+msgid ""
+"Add a new item to your\n"
+"                inventory"
 msgstr ""
 
-#: app/inventory/templates/inventory/form.html:35
+#: app/inventory/templates/inventory/form.html:38
+#: app/users/templates/users/form.html:41
 msgid "Basic Information"
 msgstr ""
 
-#: app/inventory/templates/inventory/form.html:40
+#: app/inventory/templates/inventory/form.html:44
 msgid "Item Name"
 msgstr ""
 
-#: app/inventory/templates/inventory/form.html:45
+#: app/inventory/templates/inventory/form.html:49
 msgid "Enter item name"
 msgstr ""
 
-#: app/inventory/templates/inventory/form.html:55
+#: app/inventory/templates/inventory/form.html:60
 msgid "Enter item description (optional)"
 msgstr ""
 
-#: app/inventory/templates/inventory/form.html:64
+#: app/inventory/templates/inventory/form.html:71
 msgid "Inventory Details"
 msgstr ""
 
-#: app/inventory/templates/inventory/form.html:69
-#: app/inventory/templates/inventory/view.html:59
+#: app/inventory/templates/inventory/form.html:77
+#: app/inventory/templates/inventory/view.html:67
 msgid "Current Quantity"
 msgstr ""
 
-#: app/inventory/templates/inventory/form.html:80
-#: app/inventory/templates/inventory/view.html:74
-#: app/invoices/templates/invoices/form.html:167
-#: app/invoices/templates/invoices/view.html:379
-#: app/orders/templates/orders/form.html:103
-#: app/orders/templates/orders/view.html:116
+#: app/inventory/templates/inventory/form.html:89
+#: app/orders/templates/orders/form.html:115
+#: app/orders/templates/orders/view.html:147
+#: app/suppliers/templates/suppliers/view.html:136
 msgid "Unit Price"
 msgstr ""
 
-#: app/inventory/templates/inventory/form.html:100
+#: app/inventory/templates/inventory/form.html:110
 msgid "Select a supplier (optional)"
 msgstr ""
 
-#: app/inventory/templates/inventory/form.html:112
-#: app/orders/templates/orders/form.html:63
+#: app/inventory/templates/inventory/form.html:122
+#: app/orders/templates/orders/form.html:71
 msgid "No suppliers available."
 msgstr ""
 
-#: app/inventory/templates/inventory/form.html:114
-#: app/orders/templates/orders/form.html:65
+#: app/inventory/templates/inventory/form.html:125
+#: app/orders/templates/orders/form.html:74
 msgid "Add a supplier"
 msgstr ""
 
-#: app/inventory/templates/inventory/form.html:123
+#: app/inventory/templates/inventory/form.html:136
 msgid "Current Status"
 msgstr ""
 
-#: app/inventory/templates/inventory/form.html:127
-#: app/inventory/templates/inventory/view.html:161
+#: app/inventory/templates/inventory/form.html:142
+#: app/inventory/templates/inventory/view.html:192
+#: app/suppliers/templates/suppliers/view.html:133
 msgid "Stock Level"
 msgstr ""
 
-#: app/inventory/templates/inventory/form.html:132
-#: app/inventory/templates/inventory/index.html:68
-#: app/inventory/templates/inventory/view.html:67
+#: app/inventory/templates/inventory/form.html:148
+#: app/inventory/templates/inventory/index.html:74
+#: app/inventory/templates/inventory/view.html:75
 msgid "Out of Stock"
 msgstr ""
 
-#: app/inventory/templates/inventory/form.html:133
-#: app/inventory/templates/inventory/index.html:56
-#: app/inventory/templates/inventory/view.html:68
+#: app/inventory/templates/inventory/form.html:149
+#: app/inventory/templates/inventory/index.html:61
+#: app/inventory/templates/inventory/view.html:76
 msgid "Low Stock"
 msgstr ""
 
-#: app/inventory/templates/inventory/form.html:133
-#: app/inventory/templates/inventory/view.html:68
+#: app/inventory/templates/inventory/form.html:149
+#: app/inventory/templates/inventory/view.html:76
 msgid "In Stock"
 msgstr ""
 
-#: app/inventory/templates/inventory/form.html:138
-#: app/inventory/templates/inventory/index.html:44
-#: app/inventory/templates/inventory/view.html:130
-#: app/orders/templates/orders/index.html:48
+#: app/inventory/templates/inventory/form.html:155
+#: app/inventory/templates/inventory/index.html:47
+#: app/orders/templates/orders/index.html:50
 msgid "Total Value"
 msgstr ""
 
-#: app/inventory/templates/inventory/form.html:158
+#: app/inventory/templates/inventory/form.html:177
 msgid "Update Item"
 msgstr ""
 
-#: app/inventory/templates/inventory/form.html:158
+#: app/inventory/templates/inventory/form.html:177
 msgid "Create Item"
 msgstr ""
 
-#: app/inventory/templates/inventory/form.html:208
+#: app/inventory/templates/inventory/form.html:227
 msgid "Please correct the highlighted fields"
 msgstr ""
 
@@ -1252,93 +1243,84 @@ msgstr ""
 msgid "Manage your inventory items and track stock levels"
 msgstr ""
 
-#: app/inventory/templates/inventory/index.html:15
+#: app/inventory/templates/inventory/index.html:16
 msgid "Export"
 msgstr ""
 
-#: app/inventory/templates/inventory/index.html:19
-#: app/inventory/templates/inventory/index.html:276
-#: app/invoices/templates/invoices/form.html:143
-#: app/orders/templates/orders/form.html:79
-#: app/suppliers/templates/suppliers/view.html:73
+#: app/inventory/templates/inventory/index.html:20
+#: app/invoices/templates/invoices/form.html:159
+#: app/orders/templates/orders/form.html:92
+#: app/suppliers/templates/suppliers/view.html:118
 msgid "Add Item"
 msgstr ""
 
-#: app/inventory/templates/inventory/index.html:32
+#: app/inventory/templates/inventory/index.html:34
 msgid "Total Items"
 msgstr ""
 
-#: app/inventory/templates/inventory/index.html:87
+#: app/inventory/templates/inventory/index.html:94
 msgid "Search items, description..."
 msgstr ""
 
-#: app/inventory/templates/inventory/index.html:96
-#: app/orders/templates/orders/index.html:109
+#: app/inventory/templates/inventory/index.html:104
+#: app/orders/templates/orders/index.html:118
 msgid "All Suppliers"
 msgstr ""
 
-#: app/inventory/templates/inventory/index.html:115
-#: app/suppliers/templates/suppliers/index.html:82
+#: app/inventory/templates/inventory/index.html:124
+#: app/suppliers/templates/suppliers/index.html:88
 msgid "Clear"
 msgstr ""
 
-#: app/inventory/templates/inventory/index.html:124
-#: app/orders/templates/orders/index.html:154
+#: app/inventory/templates/inventory/index.html:133
+#: app/orders/templates/orders/index.html:165
 msgid "Delete Selected"
 msgstr ""
 
-#: app/inventory/templates/inventory/index.html:206
-#: app/invoices/services/invoice_pdf_service.py:164
-#: app/orders/templates/orders/view.html:143
-msgid "N/A"
-msgstr ""
-
-#: app/inventory/templates/inventory/index.html:219
+#: app/inventory/templates/inventory/index.html:228
 msgid "Decrease stock"
 msgstr ""
 
-#: app/inventory/templates/inventory/index.html:224
+#: app/inventory/templates/inventory/index.html:233
 msgid "Increase stock"
 msgstr ""
 
-#: app/inventory/templates/inventory/index.html:237
-#: app/orders/templates/orders/index.html:253
-#: app/orders/templates/orders/view.html:82
+#: app/inventory/templates/inventory/index.html:246
+#: app/orders/templates/orders/index.html:270
 msgid "No supplier"
 msgstr ""
 
-#: app/inventory/templates/inventory/index.html:255
+#: app/inventory/templates/inventory/index.html:267
 #: app/inventory/templates/inventory/view.html:29
 msgid "Are you sure you want to delete this item?"
 msgstr ""
 
-#: app/inventory/templates/inventory/index.html:271
+#: app/inventory/templates/inventory/index.html:283
 msgid "No inventory items found"
 msgstr ""
 
-#: app/inventory/templates/inventory/index.html:272
-msgid "Get started by adding your first inventory item"
+#: app/inventory/templates/inventory/index.html:284
+msgid ""
+"Get started by adding your first inventory\n"
+"                                item to track your stocks and prices."
 msgstr ""
 
-#: app/inventory/templates/inventory/index.html:363
-#: app/orders/templates/orders/index.html:447
-#: app/suppliers/templates/suppliers/index.html:223
-#: app/suppliers/templates/suppliers/view.html:137
-msgid "Are you sure you want to delete"
+#: app/inventory/templates/inventory/index.html:289
+msgid "Add First Item"
 msgstr ""
 
-#: app/inventory/templates/inventory/index.html:363
+#: app/inventory/templates/inventory/index.html:378
 msgid "selected items?"
 msgstr ""
 
-#: app/inventory/templates/inventory/index.html:377
-#: app/inventory/templates/inventory/index.html:382
-#: app/inventory/templates/inventory/index.html:419
-#: app/inventory/templates/inventory/index.html:424
-#: app/inventory/templates/inventory/view.html:322
-#: app/inventory/templates/inventory/view.html:327
-#: app/orders/templates/orders/index.html:461
-#: app/orders/templates/orders/index.html:466
+#: app/inventory/templates/inventory/index.html:392
+#: app/inventory/templates/inventory/index.html:397
+#: app/inventory/templates/inventory/index.html:434
+#: app/inventory/templates/inventory/index.html:439
+#: app/inventory/templates/inventory/view.html:363
+#: app/inventory/templates/inventory/view.html:368
+#: app/orders/templates/orders/index.html:452
+#: app/orders/templates/orders/index.html:457
 msgid "An error occurred"
 msgstr ""
 
@@ -1350,129 +1332,146 @@ msgstr ""
 msgid "Inventory Item Details"
 msgstr ""
 
-#: app/inventory/templates/inventory/view.html:42
+#: app/inventory/templates/inventory/view.html:44
 msgid "Item Information"
 msgstr ""
 
-#: app/inventory/templates/inventory/view.html:90
-#: app/inventory/templates/inventory/view.html:113
-#: app/inventory/templates/inventory/view.html:260
-msgid "Barcode"
+#: app/inventory/templates/inventory/view.html:82
+msgid ""
+"Unit\n"
+"                            Price"
 msgstr ""
 
-#: app/inventory/templates/inventory/view.html:95
-#: app/orders/templates/orders/view.html:110
+#: app/inventory/templates/inventory/view.html:106
+msgid "Barcode Information"
+msgstr ""
+
+#: app/inventory/templates/inventory/view.html:112
+#: app/orders/templates/orders/view.html:139
 msgid "Item Code"
 msgstr ""
 
-#: app/inventory/templates/inventory/view.html:101
-#: app/inventory/templates/inventory/view.html:188
-msgid "View Barcode"
+#: app/inventory/templates/inventory/view.html:121
+msgid "Show Barcode"
 msgstr ""
 
-#: app/inventory/templates/inventory/view.html:115
-msgid "Barcode for"
+#: app/inventory/templates/inventory/view.html:125
+msgid "Download"
 msgstr ""
 
-#: app/inventory/templates/inventory/view.html:126
-msgid "Stock Management"
+#: app/inventory/templates/inventory/view.html:133
+#: app/inventory/templates/inventory/view.html:298
+msgid "Barcode"
 msgstr ""
 
-#: app/inventory/templates/inventory/view.html:138
+#: app/inventory/templates/inventory/view.html:135
+msgid ""
+"Dynamic Barcode\n"
+"                            Generator"
+msgstr ""
+
+#: app/inventory/templates/inventory/view.html:149
+msgid "Quick Actions"
+msgstr ""
+
+#: app/inventory/templates/inventory/view.html:155
+msgid "Stock Value"
+msgstr ""
+
+#: app/inventory/templates/inventory/view.html:165
 msgid "Remove 1"
 msgstr ""
 
-#: app/inventory/templates/inventory/view.html:143
+#: app/inventory/templates/inventory/view.html:170
 msgid "Add 1"
 msgstr ""
 
-#: app/inventory/templates/inventory/view.html:150
+#: app/inventory/templates/inventory/view.html:177
 msgid "Custom Adjustment"
 msgstr ""
 
-#: app/inventory/templates/inventory/view.html:157
-msgid "Item Status"
-msgstr ""
-
-#: app/inventory/templates/inventory/view.html:166
-msgid "Critical"
-msgstr ""
-
-#: app/inventory/templates/inventory/view.html:167
-msgid "Low"
-msgstr ""
-
-#: app/inventory/templates/inventory/view.html:167
-msgid "Good"
-msgstr ""
-
-#: app/inventory/templates/inventory/view.html:171
-msgid "Value Status"
-msgstr ""
-
-#: app/inventory/templates/inventory/view.html:173
-msgid "High Value"
-msgstr ""
-
-#: app/inventory/templates/inventory/view.html:174
-msgid "Medium Value"
-msgstr ""
-
-#: app/inventory/templates/inventory/view.html:175
-msgid "Low Value"
-msgstr ""
-
-#: app/inventory/templates/inventory/view.html:183
-msgid "Barcode Actions"
-msgstr ""
-
-#: app/inventory/templates/inventory/view.html:193
-msgid "Download PNG"
+#: app/inventory/templates/inventory/view.html:186
+msgid "Inventory Health"
 msgstr ""
 
 #: app/inventory/templates/inventory/view.html:198
-#: app/inventory/templates/inventory/view.html:253
-msgid "Print Barcode"
+msgid "Critical"
+msgstr ""
+
+#: app/inventory/templates/inventory/view.html:199
+msgid "Low"
+msgstr ""
+
+#: app/inventory/templates/inventory/view.html:199
+msgid "Good"
 msgstr ""
 
 #: app/inventory/templates/inventory/view.html:204
-msgid "Barcode format: Code128"
+msgid "Portfolio Tier"
 msgstr ""
 
-#: app/inventory/templates/inventory/view.html:205
-msgid "Item code: "
+#: app/inventory/templates/inventory/view.html:207
+msgid "High Value"
 msgstr ""
 
-#: app/inventory/templates/inventory/view.html:217
-msgid "Adjust Stock Level"
+#: app/inventory/templates/inventory/view.html:208
+msgid "Medium Value"
+msgstr ""
+
+#: app/inventory/templates/inventory/view.html:209
+msgid "Low Value"
+msgstr ""
+
+#: app/inventory/templates/inventory/view.html:219
+msgid "Print Options"
 msgstr ""
 
 #: app/inventory/templates/inventory/view.html:225
-msgid "Adjustment Amount"
+msgid "Preview Barcode"
 msgstr ""
 
-#: app/inventory/templates/inventory/view.html:228
-msgid "Enter positive or negative number"
+#: app/inventory/templates/inventory/view.html:230
+msgid "Download PNG"
 msgstr ""
 
-#: app/inventory/templates/inventory/view.html:229
-msgid "Use positive numbers to add stock, negative to remove"
+#: app/inventory/templates/inventory/view.html:235
+msgid "Print Label"
 msgstr ""
 
-#: app/inventory/templates/inventory/view.html:240
-msgid "Adjust Stock"
+#: app/inventory/templates/inventory/view.html:249
+msgid "Adjust Stock Level"
 msgstr ""
 
-#: app/inventory/templates/inventory/view.html:264
+#: app/inventory/templates/inventory/view.html:258
+msgid ""
+"Adjustment\n"
+"                        Amount"
+msgstr ""
+
+#: app/inventory/templates/inventory/view.html:262
+msgid "e.g. 5 or -5"
+msgstr ""
+
+#: app/inventory/templates/inventory/view.html:263
+msgid ""
+"Use positive numbers to add stock, negative\n"
+"                        to remove"
+msgstr ""
+
+#: app/inventory/templates/inventory/view.html:275
+msgid "Confirm Adjustment"
+msgstr ""
+
+#: app/inventory/templates/inventory/view.html:290
+msgid "Barcode Label Preview"
+msgstr ""
+
+#: app/inventory/templates/inventory/view.html:304
 msgid "Code: "
 msgstr ""
 
-#: app/inventory/templates/inventory/view.html:265
-msgid "Price: "
-msgstr ""
-
-#: app/inventory/templates/inventory/view.html:276
-msgid "Print"
+#: app/inventory/templates/inventory/view.html:317
+msgid "Print Now"
 msgstr ""
 
 #: app/invoices/routes.py:106
@@ -1532,448 +1531,228 @@ msgid "Create a new invoice or quote"
 msgstr ""
 
 #: app/invoices/templates/invoices/form.html:31
-#: app/invoices/templates/invoices/view.html:59
 msgid "Back to Documents"
 msgstr ""
 
-#: app/invoices/templates/invoices/form.html:48
-msgid "Document Information"
+#: app/invoices/templates/invoices/form.html:50
+msgid "Document Details"
 msgstr ""
 
-#: app/invoices/templates/invoices/form.html:52
+#: app/invoices/templates/invoices/form.html:56
 msgid "Document Number"
 msgstr ""
 
-#: app/invoices/templates/invoices/form.html:57
-msgid "Auto-generated if left blank"
-msgstr ""
-
-#: app/invoices/templates/invoices/form.html:62
-#: app/invoices/templates/invoices/view.html:91
-msgid "Document Type"
+#: app/invoices/templates/invoices/form.html:61
+msgid "Auto-generated"
 msgstr ""
 
 #: app/invoices/templates/invoices/form.html:67
-msgid "Select document type"
+msgid "Document Type"
 msgstr ""
 
-#: app/invoices/templates/invoices/form.html:86
-msgid "Select a client"
+#: app/invoices/templates/invoices/form.html:72
+msgid "Select type"
 msgstr ""
 
-#: app/invoices/templates/invoices/form.html:99
-msgid "Select a status"
+#: app/invoices/templates/invoices/form.html:88
+msgid "Select status"
 msgstr ""
 
-#: app/invoices/templates/invoices/form.html:101
-#: app/invoices/templates/invoices/index.html:53
-#: app/invoices/templates/invoices/index.html:146
-#: app/invoices/templates/invoices/view.html:113
-#: app/invoices/templates/invoices/view.html:118
-#: app/payments/templates/payments/view.html:69
+#: app/invoices/templates/invoices/form.html:90
+#: app/invoices/templates/invoices/index.html:58
+#: app/invoices/templates/invoices/index.html:170
+#: app/payments/templates/payments/view.html:113
 msgid "Draft"
 msgstr ""
 
-#: app/invoices/templates/invoices/form.html:103
-#: app/invoices/templates/invoices/index.html:55
-#: app/invoices/templates/invoices/view.html:115
+#: app/invoices/templates/invoices/form.html:92
+#: app/invoices/templates/invoices/index.html:60
 msgid "Sent"
 msgstr ""
 
-#: app/invoices/templates/invoices/form.html:105
-#: app/invoices/templates/invoices/index.html:57
-#: app/invoices/templates/invoices/view.html:109
+#: app/invoices/templates/invoices/form.html:94
+#: app/invoices/templates/invoices/index.html:62
 msgid "Paid"
 msgstr ""
 
-#: app/invoices/templates/invoices/form.html:107
-#: app/invoices/templates/invoices/index.html:60
-#: app/invoices/templates/invoices/view.html:111
+#: app/invoices/templates/invoices/form.html:96
+#: app/invoices/templates/invoices/index.html:65
 msgid "Overdue"
 msgstr ""
 
-#: app/invoices/templates/invoices/form.html:109
-#: app/invoices/templates/invoices/index.html:62
+#: app/invoices/templates/invoices/form.html:98
+#: app/invoices/templates/invoices/index.html:67
 msgid "Pending"
 msgstr ""
 
-#: app/invoices/templates/invoices/form.html:111
-#: app/invoices/templates/invoices/index.html:65
+#: app/invoices/templates/invoices/form.html:100
+#: app/invoices/templates/invoices/index.html:70
 msgid "Credit"
 msgstr ""
 
 #: app/invoices/templates/invoices/form.html:117
-#: app/invoices/templates/invoices/index.html:109
-#: app/invoices/templates/invoices/view.html:124
+msgid ""
+"Select a\n"
+"                                        client..."
+msgstr ""
+
+#: app/invoices/templates/invoices/form.html:128
+#: app/invoices/templates/invoices/index.html:122
 msgid "Issue Date"
 msgstr ""
 
-#: app/invoices/templates/invoices/form.html:140
-#: app/orders/templates/orders/index.html:201
-msgid "Items"
+#: app/invoices/templates/invoices/form.html:139
+#: app/invoices/templates/invoices/index.html:125
+#: app/payments/templates/payments/view.html:126
+msgid "Due Date"
 msgstr ""
 
 #: app/invoices/templates/invoices/form.html:155
-#: app/invoices/templates/invoices/view.html:367
-#: app/orders/templates/orders/form.html:91
+msgid "Line Items"
+msgstr ""
+
+#: app/invoices/templates/invoices/form.html:170
+#: app/orders/templates/orders/form.html:103
 msgid "Item"
 msgstr ""
 
-#: app/invoices/templates/invoices/form.html:163
-#: app/invoices/templates/invoices/view.html:375
-#: app/orders/templates/orders/form.html:99
+#: app/invoices/templates/invoices/form.html:176
+#: app/orders/templates/orders/form.html:111
 msgid "Qty"
 msgstr ""
 
-#: app/invoices/templates/invoices/form.html:171
-#: app/invoices/templates/invoices/view.html:383
-msgid "Discount"
+#: app/invoices/templates/invoices/form.html:182
+msgid "Disc."
 msgstr ""
 
-#: app/invoices/templates/invoices/form.html:175
-#: app/invoices/templates/invoices/form.html:310
-#: app/invoices/templates/invoices/view.html:387
-#: app/invoices/templates/invoices/view.html:509
-#: app/orders/templates/orders/form.html:107
-#: app/orders/templates/orders/view.html:119
-#: app/payments/templates/payments/form.html:209
+#: app/invoices/templates/invoices/form.html:185
+#: app/invoices/templates/invoices/form.html:316
+#: app/orders/templates/orders/form.html:119
+#: app/orders/templates/orders/view.html:151
 msgid "Total"
 msgstr ""
 
-#: app/invoices/templates/invoices/form.html:179
-#: app/orders/templates/orders/form.html:111
-msgid "Action"
+#: app/invoices/templates/invoices/form.html:203
+#: app/invoices/templates/invoices/form.html:249
+#: app/invoices/templates/invoices/item_row.html:9
+msgid "Select product"
 msgstr ""
 
-#: app/invoices/templates/invoices/form.html:194
-#: app/invoices/templates/invoices/form.html:239
-#: app/orders/templates/orders/form.html:126
-#: app/orders/templates/orders/form.html:165
-msgid "Select a product"
+#: app/invoices/templates/invoices/form.html:293
+msgid ""
+"Notes &\n"
+"                                Terms"
 msgstr ""
 
-#: app/invoices/templates/invoices/form.html:286
-msgid "Additional notes or terms..."
+#: app/invoices/templates/invoices/form.html:297
+msgid "Enter any additional notes or terms for the client..."
 msgstr ""
 
-#: app/invoices/templates/invoices/form.html:291
-#: app/invoices/templates/invoices/view.html:485
+#: app/invoices/templates/invoices/form.html:303
 msgid "Summary"
 msgstr ""
 
-#: app/invoices/templates/invoices/form.html:294
-#: app/invoices/templates/invoices/view.html:496
+#: app/invoices/templates/invoices/form.html:306
 msgid "Subtotal"
 msgstr ""
 
-#: app/invoices/templates/invoices/form.html:299
-#: app/invoices/templates/invoices/form.html:304
-#: app/invoices/templates/invoices/view.html:500
-#: app/invoices/templates/invoices/view.html:504
+#: app/invoices/templates/invoices/form.html:311
 msgid "Tax"
 msgstr ""
 
-#: app/invoices/templates/invoices/form.html:329
+#: app/invoices/templates/invoices/form.html:337
+msgid "Preview PDF"
+msgstr ""
+
+#: app/invoices/templates/invoices/form.html:343
 msgid "Update Document"
 msgstr ""
 
-#: app/invoices/templates/invoices/form.html:329
+#: app/invoices/templates/invoices/form.html:343
 msgid "Save Document"
-msgstr ""
-
-#: app/invoices/templates/invoices/form.html:335
-msgid "Download PDF"
 msgstr ""
 
 #: app/invoices/templates/invoices/index.html:10
 msgid "Manage your invoices and payments"
 msgstr ""
 
-#: app/invoices/templates/invoices/index.html:31
+#: app/invoices/templates/invoices/index.html:15
+#: app/invoices/templates/invoices/index.html:218
+msgid "Create Invoice"
+msgstr ""
+
+#: app/invoices/templates/invoices/index.html:33
 msgid "Invoice #, client..."
 msgstr ""
 
-#: app/invoices/templates/invoices/index.html:37
+#: app/invoices/templates/invoices/index.html:40
 msgid "Type"
 msgstr ""
 
-#: app/invoices/templates/invoices/index.html:40
+#: app/invoices/templates/invoices/index.html:43
 msgid "All"
 msgstr ""
 
-#: app/invoices/templates/invoices/index.html:52
+#: app/invoices/templates/invoices/index.html:57
 msgid "All Statuses"
 msgstr ""
 
-#: app/invoices/templates/invoices/index.html:71
-#: app/payments/templates/payments/index.html:102
+#: app/invoices/templates/invoices/index.html:77
+#: app/payments/templates/payments/index.html:98
 msgid "Date From"
 msgstr ""
 
-#: app/invoices/templates/invoices/index.html:77
-#: app/payments/templates/payments/index.html:108
+#: app/invoices/templates/invoices/index.html:85
+#: app/payments/templates/payments/index.html:104
 msgid "Date To"
 msgstr ""
 
-#: app/invoices/templates/invoices/index.html:85
-#: app/orders/templates/orders/index.html:137
-#: app/payments/templates/payments/index.html:116
-#: app/users/templates/users/index.html:74
+#: app/invoices/templates/invoices/index.html:95
+#: app/orders/templates/orders/index.html:148
 msgid "Apply Filters"
 msgstr ""
 
-#: app/invoices/templates/invoices/index.html:132
-#: app/payments/templates/payments/form.html:201
-#: app/payments/templates/payments/form.html:229
-#: app/payments/templates/payments/form.html:233
+#: app/invoices/templates/invoices/index.html:116
+msgid "Invoice #"
+msgstr ""
+
+#: app/invoices/templates/invoices/index.html:128
+#: app/payments/templates/payments/index.html:139
+msgid "Amount"
+msgstr ""
+
+#: app/invoices/templates/invoices/index.html:151
+#: app/payments/templates/payments/form.html:244
+#: app/payments/templates/payments/form.html:268
+#: app/payments/templates/payments/form.html:272
 msgid "No Client"
 msgstr ""
 
-#: app/invoices/templates/invoices/index.html:160
+#: app/invoices/templates/invoices/index.html:188
 msgid "Print PDF"
 msgstr ""
 
-#: app/invoices/templates/invoices/index.html:169
+#: app/invoices/templates/invoices/index.html:197
 msgid "Are you sure you want to delete this invoice?"
 msgstr ""
 
-#: app/invoices/templates/invoices/index.html:184
-#: app/payments/templates/payments/form.html:193
+#: app/invoices/templates/invoices/index.html:213
+#: app/payments/templates/payments/form.html:236
 msgid "No invoices found"
 msgstr ""
 
-#: app/invoices/templates/invoices/index.html:187
-msgid "Create your first invoice"
+#: app/invoices/templates/invoices/index.html:214
+msgid ""
+"Get started by creating a new\n"
+"                                    invoice."
 msgstr ""
 
-#: app/invoices/templates/invoices/item_row.html:5
-msgid "Select an item"
+#: app/invoices/templates/invoices/index.html:232
+msgid "Showing page"
 msgstr ""
 
-#: app/invoices/templates/invoices/view.html:20
-msgid "Quote details and information"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:22
-msgid "Invoice details and information"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:30
-#: app/invoices/templates/invoices/view.html:209
-#: app/invoices/templates/invoices/view.html:556
-#: app/invoices/templates/invoices/view.html:603
-msgid "Add Payment"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:40
-msgid "Convert to Invoice"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:47
-msgid "Download PDF Quote"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:49
-msgid "Download PDF Invoice"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:55
-msgid "PDF No tax"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:73
-msgid "Quote Information"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:76
-msgid "Invoice Information"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:83
-msgid "Quote Number"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:85
-msgid "Invoice Number"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:151
-#: app/orders/templates/orders/view.html:236
-#: app/suppliers/templates/suppliers/index.html:96
-#: app/suppliers/templates/suppliers/view.html:39
-#: app/users/templates/users/index.html:95
-msgid "Email"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:162
-#: app/orders/templates/orders/view.html:248
-#: app/suppliers/templates/suppliers/form.html:70
-#: app/suppliers/templates/suppliers/index.html:97
-#: app/suppliers/templates/suppliers/view.html:49
-msgid "Phone"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:184
-msgid "No client assigned"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:198
-msgid "Payment History"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:202
-msgid "payments"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:228
-#: app/payments/templates/payments/index.html:146
-msgid "Method"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:247
-msgid "No date"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:265
-#: app/invoices/templates/invoices/view.html:575
-#: app/payments/templates/payments/form.html:120
-#: app/payments/templates/payments/index.html:84
-msgid "Cash"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:267
-#: app/invoices/templates/invoices/view.html:576
-#: app/payments/templates/payments/form.html:125
-#: app/payments/templates/payments/index.html:90
-msgid "Bank Transfer"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:269
-#: app/invoices/templates/invoices/view.html:577
-#: app/payments/templates/payments/form.html:128
-#: app/payments/templates/payments/index.html:93
-msgid "Credit Card"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:271
-#: app/invoices/templates/invoices/view.html:578
-#: app/payments/templates/payments/form.html:122
-#: app/payments/templates/payments/index.html:87
-msgid "Cheque"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:281
-msgid "No notes"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:289
-#: app/payments/templates/payments/view.html:125
-msgid "Delete Payment"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:290
-#: app/payments/templates/payments/index.html:204
-#: app/payments/templates/payments/view.html:124
-msgid "Are you sure you want to delete this payment?"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:301
-msgid "Total Payments:"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:311
-msgid "Remaining:"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:315
-msgid "Fully Paid"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:329
-msgid "No payments recorded"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:330
-msgid "Add payments to track what has been received for this invoice"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:334
-msgid "Add First Payment"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:349
-msgid "Quote Items"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:351
-msgid "Invoice Items"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:355
-#: app/orders/templates/orders/index.html:268
-#: app/orders/templates/orders/view.html:98
-#: app/suppliers/templates/suppliers/index.html:128
-msgid "items"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:405
-msgid "Unknown Item"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:416
-msgid "Custom Item"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:424
-msgid "No description"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:452
-msgid "No items found"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:453
-msgid "Add items to this document to see them here"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:522
-msgid "Total Paid"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:526
-#: app/payments/templates/payments/form.html:205
-msgid "Remaining"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:539
-msgid "This quote is valid until"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:540
-msgid "no expiration date"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:572
-#: app/payments/templates/payments/form.html:112
-#: app/payments/templates/payments/index.html:77
-#: app/payments/templates/payments/view.html:38
-msgid "Payment Method"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:579
-#: app/payments/templates/payments/form.html:131
-#: app/payments/templates/payments/index.html:96
-msgid "Other"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:584
-#: app/payments/templates/payments/form.html:104
-#: app/payments/templates/payments/view.html:33
-msgid "Payment Date"
-msgstr ""
-
-#: app/invoices/templates/invoices/view.html:593
-msgid "Optional payment notes..."
+#: app/invoices/templates/invoices/item_row.html:17
+msgid "Item description..."
 msgstr ""
 
 #: app/orders/routes.py:70
@@ -1992,19 +1771,16 @@ msgstr ""
 msgid "An error occurred while deleting the purchase order"
 msgstr ""
 
-#: app/orders/routes.py:154 app/orders/templates/orders/form.html:40
-#: app/orders/templates/orders/index.html:174
-#: app/orders/templates/orders/view.html:73
+#: app/orders/routes.py:154 app/orders/templates/orders/index.html:186
 msgid "Order Number"
 msgstr ""
 
-#: app/orders/routes.py:154 app/orders/templates/orders/index.html:190
-#: app/orders/templates/orders/view.html:85
-#: app/payments/templates/payments/form.html:61
+#: app/orders/routes.py:154 app/orders/templates/orders/index.html:204
+#: app/payments/templates/payments/form.html:91
 msgid "Total Amount"
 msgstr ""
 
-#: app/orders/routes.py:154 app/orders/templates/orders/view.html:181
+#: app/orders/routes.py:154 app/orders/templates/orders/view.html:225
 msgid "Items Count"
 msgstr ""
 
@@ -2052,34 +1828,56 @@ msgstr ""
 msgid "Create a new purchase order"
 msgstr ""
 
-#: app/orders/templates/orders/form.html:36
-#: app/orders/templates/orders/view.html:68
+#: app/orders/templates/orders/form.html:38
+#: app/orders/templates/orders/view.html:78
 msgid "Order Information"
 msgstr ""
 
-#: app/orders/templates/orders/form.html:51
+#: app/orders/templates/orders/form.html:44
+#: app/orders/templates/orders/view.html:84
+msgid ""
+"Order\n"
+"                            Number"
+msgstr ""
+
+#: app/orders/templates/orders/form.html:58
 msgid "Select a supplier"
 msgstr ""
 
-#: app/orders/templates/orders/form.html:76
-#: app/orders/templates/orders/view.html:96
+#: app/orders/templates/orders/form.html:88
+#: app/orders/templates/orders/view.html:122
 msgid "Order Items"
 msgstr ""
 
-#: app/orders/templates/orders/form.html:95 app/templates/product-list.html:33
+#: app/orders/templates/orders/form.html:107
 msgid "Code"
 msgstr ""
 
-#: app/orders/templates/orders/form.html:203
-#: app/orders/templates/orders/view.html:205
-msgid "Order Total"
+#: app/orders/templates/orders/form.html:123
+msgid "Action"
 msgstr ""
 
-#: app/orders/templates/orders/form.html:223
+#: app/orders/templates/orders/form.html:138
+msgid "Select a product"
+msgstr ""
+
+#: app/orders/templates/orders/form.html:183
+msgid ""
+"Select a\n"
+"                                                product"
+msgstr ""
+
+#: app/orders/templates/orders/form.html:226
+msgid ""
+"Order\n"
+"                                Total"
+msgstr ""
+
+#: app/orders/templates/orders/form.html:246
 msgid "Update Order"
 msgstr ""
 
-#: app/orders/templates/orders/form.html:223
+#: app/orders/templates/orders/form.html:246
 msgid "Create Order"
 msgstr ""
 
@@ -2089,179 +1887,217 @@ msgid "Purchase Orders"
 msgstr ""
 
 #: app/orders/templates/orders/index.html:11
-msgid "Manage purchase orders and track supplier deliveries"
+msgid ""
+"Manage purchase orders and track supplier\n"
+"                deliveries"
 msgstr ""
 
-#: app/orders/templates/orders/index.html:17
+#: app/orders/templates/orders/index.html:18
 msgid "Export CSV"
 msgstr ""
 
-#: app/orders/templates/orders/index.html:22
+#: app/orders/templates/orders/index.html:23
 msgid "New Purchase Order"
 msgstr ""
 
-#: app/orders/templates/orders/index.html:34
+#: app/orders/templates/orders/index.html:35
 msgid "Total Orders"
 msgstr ""
 
-#: app/orders/templates/orders/index.html:36
+#: app/orders/templates/orders/index.html:37
 msgid "All time"
 msgstr ""
 
-#: app/orders/templates/orders/index.html:50
+#: app/orders/templates/orders/index.html:53
 msgid "All orders"
 msgstr ""
 
-#: app/orders/templates/orders/index.html:62
-#: app/orders/templates/orders/index.html:126
-#: app/payments/templates/payments/index.html:37
+#: app/orders/templates/orders/index.html:66
+#: app/orders/templates/orders/index.html:137
+#: app/payments/templates/payments/index.html:39
 msgid "This Month"
 msgstr ""
 
-#: app/orders/templates/orders/index.html:64
+#: app/orders/templates/orders/index.html:68
 msgid "New orders"
 msgstr ""
 
-#: app/orders/templates/orders/index.html:76
+#: app/orders/templates/orders/index.html:81
 msgid "Avg Order Value"
 msgstr ""
 
-#: app/orders/templates/orders/index.html:78
+#: app/orders/templates/orders/index.html:84
 msgid "Per order"
 msgstr ""
 
-#: app/orders/templates/orders/index.html:93
+#: app/orders/templates/orders/index.html:100
 msgid "Search Orders"
 msgstr ""
 
-#: app/orders/templates/orders/index.html:99
+#: app/orders/templates/orders/index.html:107
 msgid "Search by order number, supplier name..."
 msgstr ""
 
-#: app/orders/templates/orders/index.html:120
+#: app/orders/templates/orders/index.html:130
 msgid "Date Range"
 msgstr ""
 
-#: app/orders/templates/orders/index.html:123
+#: app/orders/templates/orders/index.html:134
 msgid "All Time"
 msgstr ""
 
-#: app/orders/templates/orders/index.html:124
-#: app/users/templates/users/view.html:148
+#: app/orders/templates/orders/index.html:135
 msgid "Today"
 msgstr ""
 
-#: app/orders/templates/orders/index.html:125
+#: app/orders/templates/orders/index.html:136
 msgid "This Week"
 msgstr ""
 
-#: app/orders/templates/orders/index.html:127
+#: app/orders/templates/orders/index.html:138
 msgid "This Quarter"
 msgstr ""
 
-#: app/orders/templates/orders/index.html:143
+#: app/orders/templates/orders/index.html:154
 msgid "Clear Filters"
 msgstr ""
 
-#: app/orders/templates/orders/index.html:150
-#: app/orders/templates/orders/index.html:423
+#: app/orders/templates/orders/index.html:161
+#: app/orders/templates/orders/index.html:414
 msgid "selected"
 msgstr ""
 
-#: app/orders/templates/orders/index.html:206
+#: app/orders/templates/orders/index.html:216
+msgid "Items"
+msgstr ""
+
+#: app/orders/templates/orders/index.html:222
 msgid "Date Created"
 msgstr ""
 
 #: app/orders/templates/orders/index.html:286
-#: app/orders/templates/orders/view.html:20
+#: app/orders/templates/orders/view.html:126
+#: app/suppliers/templates/suppliers/index.html:136
+msgid "items"
+msgstr ""
+
+#: app/orders/templates/orders/index.html:305
+#: app/orders/templates/orders/view.html:24
 msgid "Edit Order"
 msgstr ""
 
-#: app/orders/templates/orders/index.html:293
-#: app/orders/templates/orders/view.html:41
+#: app/orders/templates/orders/index.html:313
+#: app/orders/templates/orders/view.html:47
 msgid "Delete Order"
 msgstr ""
 
-#: app/orders/templates/orders/index.html:294
-#: app/orders/templates/orders/view.html:39
+#: app/orders/templates/orders/index.html:314
+#: app/orders/templates/orders/view.html:45
 msgid "Are you sure you want to delete this purchase order?"
 msgstr ""
 
-#: app/orders/templates/orders/index.html:310
+#: app/orders/templates/orders/index.html:331
 msgid "No purchase orders found"
 msgstr ""
 
-#: app/orders/templates/orders/index.html:313
+#: app/orders/templates/orders/index.html:334
 msgid ""
 "Try adjusting your search criteria or filters to find what you're looking"
 " for."
 msgstr ""
 
-#: app/orders/templates/orders/index.html:315
+#: app/orders/templates/orders/index.html:337
 msgid ""
 "Get started by creating your first purchase order to track supplier "
-"orders and inventory."
+"orders and\n"
+"                                inventory."
 msgstr ""
 
-#: app/orders/templates/orders/index.html:322
+#: app/orders/templates/orders/index.html:345
 msgid "Create First Order"
 msgstr ""
 
-#: app/orders/templates/orders/index.html:447
+#: app/orders/templates/orders/index.html:438
 msgid "selected purchase orders? This action cannot be undone."
 msgstr ""
 
 #: app/orders/templates/orders/view.html:3
-#: app/orders/templates/orders/view.html:54
+#: app/orders/templates/orders/view.html:16
 msgid "Purchase Order"
 msgstr ""
 
-#: app/orders/templates/orders/view.html:13
-msgid "Back to Orders"
-msgstr ""
-
-#: app/orders/templates/orders/view.html:26
-msgid "More"
-msgstr ""
-
-#: app/orders/templates/orders/view.html:33
+#: app/orders/templates/orders/view.html:37
 msgid "Duplicate Order"
 msgstr ""
 
-#: app/orders/templates/orders/view.html:57
+#: app/orders/templates/orders/view.html:58
 msgid "Created on"
 msgstr ""
 
-#: app/orders/templates/orders/view.html:77
-msgid "Order Date"
+#: app/orders/templates/orders/view.html:64
+#: app/users/templates/users/index.html:67
+#: app/users/templates/users/index.html:157
+msgid "Active"
 msgstr ""
 
-#: app/orders/templates/orders/view.html:107
+#: app/orders/templates/orders/view.html:91
+msgid ""
+"Order\n"
+"                            Date"
+msgstr ""
+
+#: app/orders/templates/orders/view.html:103
+msgid ""
+"No\n"
+"                                supplier"
+msgstr ""
+
+#: app/orders/templates/orders/view.html:108
+msgid ""
+"Total\n"
+"                            Amount"
+msgstr ""
+
+#: app/orders/templates/orders/view.html:135
 msgid "Item Details"
 msgstr ""
 
-#: app/orders/templates/orders/view.html:161
-msgid "Order Total:"
+#: app/orders/templates/orders/view.html:201
+#: app/orders/templates/orders/view.html:252
+msgid "Order Total"
 msgstr ""
 
-#: app/orders/templates/orders/view.html:177
+#: app/orders/templates/orders/view.html:220
 msgid "Order Summary"
 msgstr ""
 
-#: app/orders/templates/orders/view.html:186
+#: app/orders/templates/orders/view.html:231
 msgid "Total Quantity"
 msgstr ""
 
-#: app/orders/templates/orders/view.html:194
-msgid "Average Item Price"
+#: app/orders/templates/orders/view.html:240
+msgid "Avg Item Price"
 msgstr ""
 
-#: app/orders/templates/orders/view.html:214
-#: app/suppliers/templates/suppliers/view.html:34
-msgid "Supplier Information"
+#: app/orders/templates/orders/view.html:265
+msgid "Supplier Contact"
 msgstr ""
 
-#: app/orders/templates/orders/view.html:293
+#: app/orders/templates/orders/view.html:278
+msgid ""
+"Primary\n"
+"                            Supplier"
+msgstr ""
+
+#: app/orders/templates/orders/view.html:307
+msgid "Direct Phone"
+msgstr ""
+
+#: app/orders/templates/orders/view.html:322
+msgid "Registered Office"
+msgstr ""
+
+#: app/orders/templates/orders/view.html:355
 msgid "Create a duplicate of this purchase order?"
 msgstr ""
 
@@ -2293,61 +2129,107 @@ msgid "Error deleting payment: %(error)s"
 msgstr ""
 
 #: app/payments/templates/payments/form.html:3
-#: app/payments/templates/payments/form.html:8
-#: app/payments/templates/payments/view.html:111
+#: app/payments/templates/payments/form.html:17
+#: app/payments/templates/payments/view.html:23
 msgid "Edit Payment"
 msgstr ""
 
 #: app/payments/templates/payments/form.html:3
-#: app/payments/templates/payments/form.html:8
-#: app/payments/templates/payments/form.html:151
+#: app/payments/templates/payments/form.html:17
+#: app/payments/templates/payments/form.html:194
 #: app/payments/templates/payments/index.html:15
+#: app/payments/templates/payments/index.html:227
 msgid "Record Payment"
 msgstr ""
 
-#: app/payments/templates/payments/form.html:9
+#: app/payments/templates/payments/form.html:20
 msgid "Update payment details"
 msgstr ""
 
-#: app/payments/templates/payments/form.html:10
+#: app/payments/templates/payments/form.html:20
 msgid "Record a new payment"
 msgstr ""
 
-#: app/payments/templates/payments/form.html:15
-#: app/payments/templates/payments/view.html:18
-msgid "Back to Payments"
+#: app/payments/templates/payments/form.html:43
+msgid "Invoice Selection"
 msgstr ""
 
-#: app/payments/templates/payments/form.html:36
-msgid "Search for an invoice..."
+#: app/payments/templates/payments/form.html:52
+msgid "Search for an invoice by number or client..."
 msgstr ""
 
-#: app/payments/templates/payments/form.html:44
-msgid "Start typing to search for invoices by number or client name"
-msgstr ""
-
-#: app/payments/templates/payments/form.html:70
+#: app/payments/templates/payments/form.html:102
 msgid "Remaining Balance"
 msgstr ""
 
-#: app/payments/templates/payments/form.html:90
-msgid "Payment Amount"
+#: app/payments/templates/payments/form.html:127
+#: app/payments/templates/payments/view.html:3
+#: app/payments/templates/payments/view.html:15
+msgid "Payment Details"
 msgstr ""
 
-#: app/payments/templates/payments/form.html:117
-msgid "Select payment method"
+#: app/payments/templates/payments/form.html:133
+msgid ""
+"Payment\n"
+"                                Amount"
 msgstr ""
 
-#: app/payments/templates/payments/form.html:140
+#: app/payments/templates/payments/form.html:149
+msgid ""
+"Payment\n"
+"                                Date"
+msgstr ""
+
+#: app/payments/templates/payments/form.html:158
+msgid ""
+"Payment\n"
+"                                Method"
+msgstr ""
+
+#: app/payments/templates/payments/form.html:163
+msgid "Select method"
+msgstr ""
+
+#: app/payments/templates/payments/form.html:164
+#: app/payments/templates/payments/index.html:89
+msgid "Cash"
+msgstr ""
+
+#: app/payments/templates/payments/form.html:164
+#: app/payments/templates/payments/index.html:89
+msgid "Cheque"
+msgstr ""
+
+#: app/payments/templates/payments/form.html:165
+msgid "Bank Transfer"
+msgstr ""
+
+#: app/payments/templates/payments/form.html:165
+#: app/payments/templates/payments/index.html:90
+msgid "Credit Card"
+msgstr ""
+
+#: app/payments/templates/payments/form.html:165
+#: app/payments/templates/payments/index.html:90
+msgid "Other"
+msgstr ""
+
+#: app/payments/templates/payments/form.html:175
+#: app/payments/templates/payments/index.html:145
+#: app/payments/templates/payments/view.html:67
+msgid "Notes"
+msgstr ""
+
+#: app/payments/templates/payments/form.html:177
 msgid "Additional notes about this payment..."
 msgstr ""
 
-#: app/payments/templates/payments/form.html:151
+#: app/payments/templates/payments/form.html:194
 msgid "Update Payment"
 msgstr ""
 
-#: app/payments/templates/payments/form.html:210
-msgid "No due date"
+#: app/payments/templates/payments/form.html:248
+msgid "Remaining"
 msgstr ""
 
 #: app/payments/templates/payments/index.html:10
@@ -2358,66 +2240,116 @@ msgstr ""
 msgid "Total Payments"
 msgstr ""
 
-#: app/payments/templates/payments/index.html:49
+#: app/payments/templates/payments/index.html:52
 msgid "Average Payment"
 msgstr ""
 
-#: app/payments/templates/payments/index.html:71
-msgid "Invoice #, client, notes..."
+#: app/payments/templates/payments/index.html:77
+msgid "Invoice, client..."
 msgstr ""
 
-#: app/payments/templates/payments/index.html:81
+#: app/payments/templates/payments/index.html:84
+#: app/payments/templates/payments/view.html:56
+msgid "Payment Method"
+msgstr ""
+
+#: app/payments/templates/payments/index.html:88
 msgid "All Methods"
 msgstr ""
 
-#: app/payments/templates/payments/index.html:169
+#: app/payments/templates/payments/index.html:89
+msgid ""
+"Bank\n"
+"                    Transfer"
+msgstr ""
+
+#: app/payments/templates/payments/index.html:112
+#: app/users/templates/users/index.html:76
+msgid "Apply"
+msgstr ""
+
+#: app/payments/templates/payments/index.html:130
+msgid "Date"
+msgstr ""
+
+#: app/payments/templates/payments/index.html:142
+msgid "Method"
+msgstr ""
+
+#: app/payments/templates/payments/index.html:165
 msgid "No Invoice"
 msgstr ""
 
-#: app/payments/templates/payments/index.html:184
-#: app/payments/templates/payments/view.html:41
+#: app/payments/templates/payments/index.html:181
+#: app/payments/templates/payments/view.html:61
 msgid "Not specified"
 msgstr ""
 
-#: app/payments/templates/payments/index.html:219
-msgid "No payments found"
+#: app/payments/templates/payments/index.html:206
+msgid "Are you sure you want to delete this payment?"
 msgstr ""
 
 #: app/payments/templates/payments/index.html:222
-msgid "Record your first payment"
+msgid "No payments found"
 msgstr ""
 
-#: app/payments/templates/payments/view.html:3
-#: app/payments/templates/payments/view.html:8
-msgid "Payment Details"
+#: app/payments/templates/payments/index.html:223
+msgid ""
+"Get started by recording your first\n"
+"                                    payment."
 msgstr ""
 
-#: app/payments/templates/payments/view.html:9
-msgid "Payment information and details"
+#: app/payments/templates/payments/view.html:16
+msgid "Transaction and invoice association details"
 msgstr ""
 
-#: app/payments/templates/payments/view.html:26
-msgid "Payment Information"
+#: app/payments/templates/payments/view.html:35
+msgid "Payment Summary"
 msgstr ""
 
-#: app/payments/templates/payments/view.html:57
-msgid "Related Invoice"
+#: app/payments/templates/payments/view.html:40
+msgid "Total Amount Paid"
 msgstr ""
 
-#: app/payments/templates/payments/view.html:75
-msgid "Invoice Total"
+#: app/payments/templates/payments/view.html:50
+msgid "Payment Date"
 msgstr ""
 
-#: app/payments/templates/payments/view.html:89
-msgid "View Invoice"
+#: app/payments/templates/payments/view.html:83
+msgid "Associated Document"
 msgstr ""
 
-#: app/payments/templates/payments/view.html:99
-msgid "No invoice associated with this payment"
+#: app/payments/templates/payments/view.html:120
+msgid ""
+"Invoice\n"
+"                            Total"
 msgstr ""
 
-#: app/payments/templates/payments/view.html:116
-msgid "Add Another Payment"
+#: app/payments/templates/payments/view.html:136
+msgid "View Full Invoice"
+msgstr ""
+
+#: app/payments/templates/payments/view.html:148
+msgid "No associated invoice"
+msgstr ""
+
+#: app/payments/templates/payments/view.html:162
+msgid "Danger Zone"
+msgstr ""
+
+#: app/payments/templates/payments/view.html:165
+msgid ""
+"Deleting this payment record will revert the associated invoice balance. "
+"This action cannot be\n"
+"                undone."
+msgstr ""
+
+#: app/payments/templates/payments/view.html:174
+msgid "Are you sure you want to delete this payment record?"
+msgstr ""
+
+#: app/payments/templates/payments/view.html:175
+msgid "Permanently Delete"
 msgstr ""
 
 #: app/suppliers/routes.py:31
@@ -2471,7 +2403,6 @@ msgid "Update supplier information"
 msgstr ""
 
 #: app/suppliers/templates/suppliers/form.html:34
-#: app/suppliers/templates/suppliers/view.html:17
 msgid "Back to Suppliers"
 msgstr ""
 
@@ -2489,6 +2420,11 @@ msgstr ""
 
 #: app/suppliers/templates/suppliers/form.html:63
 msgid "Enter contact email"
+msgstr ""
+
+#: app/suppliers/templates/suppliers/form.html:70
+#: app/suppliers/templates/suppliers/index.html:103
+msgid "Phone"
 msgstr ""
 
 #: app/suppliers/templates/suppliers/form.html:75
@@ -2511,206 +2447,346 @@ msgstr ""
 msgid "Manage your suppliers and vendors"
 msgstr ""
 
-#: app/suppliers/templates/suppliers/index.html:25
+#: app/suppliers/templates/suppliers/index.html:26
 msgid "Total Suppliers"
 msgstr ""
 
-#: app/suppliers/templates/suppliers/index.html:37
+#: app/suppliers/templates/suppliers/index.html:40
 msgid "With Inventory Items"
 msgstr ""
 
-#: app/suppliers/templates/suppliers/index.html:49
+#: app/suppliers/templates/suppliers/index.html:54
 msgid "Without Inventory Items"
 msgstr ""
 
-#: app/suppliers/templates/suppliers/index.html:70
+#: app/suppliers/templates/suppliers/index.html:76
 msgid "Search suppliers..."
 msgstr ""
 
-#: app/suppliers/templates/suppliers/index.html:130
+#: app/suppliers/templates/suppliers/index.html:102
+#: app/users/templates/users/index.html:97
+msgid "Email"
+msgstr ""
+
+#: app/suppliers/templates/suppliers/index.html:104
+msgid "Inventory Items"
+msgstr ""
+
+#: app/suppliers/templates/suppliers/index.html:140
 msgid "No items"
 msgstr ""
 
-#: app/suppliers/templates/suppliers/index.html:156
+#: app/suppliers/templates/suppliers/index.html:172
 msgid "No suppliers found matching "
 msgstr ""
 
-#: app/suppliers/templates/suppliers/index.html:160
+#: app/suppliers/templates/suppliers/index.html:177
 msgid "No suppliers found."
 msgstr ""
 
-#: app/suppliers/templates/suppliers/index.html:162
+#: app/suppliers/templates/suppliers/index.html:180
 msgid "Add your first supplier"
 msgstr ""
 
-#: app/suppliers/templates/suppliers/index.html:175
+#: app/suppliers/templates/suppliers/index.html:195
 msgid "Showing "
 msgstr ""
 
-#: app/suppliers/templates/suppliers/index.html:175
-msgid " of "
+#: app/suppliers/templates/suppliers/index.html:195
+msgid ""
+" of\n"
+"            "
 msgstr ""
 
-#: app/suppliers/templates/suppliers/index.html:175
+#: app/suppliers/templates/suppliers/index.html:196
 msgid " suppliers."
 msgstr ""
 
-#: app/suppliers/templates/suppliers/view.html:10
-msgid "Supplier details and inventory items"
+#: app/suppliers/templates/suppliers/view.html:19
+msgid "Procurement Partner"
 msgstr ""
 
-#: app/suppliers/templates/suppliers/view.html:121
-msgid "No inventory items found for this supplier."
+#: app/suppliers/templates/suppliers/view.html:22
+msgid "Active Inventory Items"
 msgstr ""
 
-#: app/suppliers/templates/suppliers/view.html:124
-msgid "Add First Item"
+#: app/suppliers/templates/suppliers/view.html:34
+#: app/users/templates/users/view.html:42
+msgid "Edit Profile"
 msgstr ""
 
-#: app/templates/client-search.html:15
-msgid "Select Client"
+#: app/suppliers/templates/suppliers/view.html:47
+msgid "Contact Portfolio"
 msgstr ""
 
-#: app/templates/client-search.html:26
-msgid "Search by name, email or phone..."
+#: app/suppliers/templates/suppliers/view.html:55
+msgid "Business Email"
 msgstr ""
 
-#: app/templates/client-search.html:34
-msgid "Type to search for clients"
+#: app/suppliers/templates/suppliers/view.html:70
+msgid "Support Hotline"
 msgstr ""
 
-#: app/templates/client-search.html:45
-msgid "Create New Client"
+#: app/suppliers/templates/suppliers/view.html:84
+msgid ""
+"Office\n"
+"                            Address"
 msgstr ""
 
-#: app/templates/flash.html:25
+#: app/suppliers/templates/suppliers/view.html:99
+msgid ""
+"Terminate\n"
+"                            Partnership"
+msgstr ""
+
+#: app/suppliers/templates/suppliers/view.html:114
+msgid "Catalog Inventory"
+msgstr ""
+
+#: app/suppliers/templates/suppliers/view.html:130
+msgid "Product Name"
+msgstr ""
+
+#: app/suppliers/templates/suppliers/view.html:158
+msgid ""
+"No\n"
+"                                                    description available"
+msgstr ""
+
+#: app/suppliers/templates/suppliers/view.html:169
+msgid "Units"
+msgstr ""
+
+#: app/suppliers/templates/suppliers/view.html:199
+msgid "No Inventory Stock"
+msgstr ""
+
+#: app/suppliers/templates/suppliers/view.html:200
+msgid ""
+"This supplier doesn't have any linked\n"
+"                            inventory items yet."
+msgstr ""
+
+#: app/suppliers/templates/suppliers/view.html:204
+msgid "Add First Product"
+msgstr ""
+
+#: app/suppliers/templates/suppliers/view.html:224
+msgid "End Partnership?"
+msgstr ""
+
+#: app/suppliers/templates/suppliers/view.html:228
+msgid "This will dissociate all tied inventory items."
+msgstr ""
+
+#: app/suppliers/templates/suppliers/view.html:238
+msgid "Terminate & Delete"
+msgstr ""
+
+#: app/templates/client-search.html:24
+msgid "Client Directory"
+msgstr ""
+
+#: app/templates/client-search.html:27
+msgid "Select or link a counterparty"
+msgstr ""
+
+#: app/templates/client-search.html:39
+msgid "Search clients"
+msgstr ""
+
+#: app/templates/client-search.html:47
+msgid "Search by name, email or mobile..."
+msgstr ""
+
+#: app/templates/client-search.html:61
+msgid "Ready for query"
+msgstr ""
+
+#: app/templates/client-search.html:62
+msgid ""
+"Enter\n"
+"                                        keywords above to scan your "
+"client database"
+msgstr ""
+
+#: app/templates/client-search.html:77
+msgid "Entity not found?"
+msgstr ""
+
+#: app/templates/client-search.html:92
+msgid "Close Search"
+msgstr ""
+
+#: app/templates/flash.html:41
 msgid "Success"
 msgstr ""
 
-#: app/templates/flash.html:27
+#: app/templates/flash.html:43
 msgid "Error"
 msgstr ""
 
-#: app/templates/flash.html:29
+#: app/templates/flash.html:45
 msgid "Warning"
 msgstr ""
 
-#: app/templates/flash.html:31
+#: app/templates/flash.html:47
 msgid "Information"
 msgstr ""
 
-#: app/templates/flash.html:40
-msgid "Close"
+#: app/templates/header.html:47
+msgid "Switch Company"
 msgstr ""
 
-#: app/templates/header.html:84
+#: app/templates/header.html:71
+msgid "Switch Language"
+msgstr ""
+
+#: app/templates/header.html:115
+msgid "My Profile"
+msgstr ""
+
+#: app/templates/header.html:122 app/templates/sidebar.html:120
 msgid "Sign out"
 msgstr ""
 
-#: app/templates/product-list.html:5
-msgid "Select Product"
+#: app/templates/product-list.html:9
+msgid ""
+"Select Catalog\n"
+"                    Item"
 msgstr ""
 
-#: app/templates/product-list.html:6
-msgid "Search and select a product to add"
+#: app/templates/product-list.html:11
+msgid ""
+"Provisioning system\n"
+"                    search"
 msgstr ""
 
-#: app/templates/product-list.html:16
-msgid "Search by name, code, or description..."
+#: app/templates/product-list.html:27
+msgid "Search items by name, SKU, or description..."
 msgstr ""
 
-#: app/templates/product-list.html:40
+#: app/templates/product-list.html:45
+msgid "Ref"
+msgstr ""
+
+#: app/templates/product-list.html:56
 msgid "in stock"
 msgstr ""
 
-#: app/templates/product-list.html:52
-msgid "No products found"
+#: app/templates/product-list.html:75
+msgid "No matching assets found"
 msgstr ""
 
-#: app/templates/sidebar.html:66
+#: app/templates/sidebar.html:63
 msgid "Main"
 msgstr ""
 
-#: app/templates/sidebar.html:89
+#: app/templates/sidebar.html:86
 msgid "Orders"
 msgstr ""
 
-#: app/templates/sidebar.html:103
-msgid "Settings"
+#: app/templates/sidebar.html:100
+msgid "Manage"
 msgstr ""
 
-#: app/users/templates/users/form.html:3 app/users/templates/users/form.html:9
-#: app/users/templates/users/view.html:15
-#: app/users/templates/users/view.html:196
+#: app/users/templates/users/form.html:3 app/users/templates/users/form.html:17
 msgid "Edit User"
 msgstr ""
 
-#: app/users/templates/users/form.html:3 app/users/templates/users/form.html:9
+#: app/users/templates/users/form.html:3 app/users/templates/users/form.html:17
 msgid "New User"
 msgstr ""
 
-#: app/users/templates/users/form.html:11
-msgid "Update user information and permissions"
+#: app/users/templates/users/form.html:3
+msgid ""
+"Business Management\n"
+"System"
 msgstr ""
 
-#: app/users/templates/users/form.html:12
-msgid "Create a new system user"
+#: app/users/templates/users/form.html:20
+msgid "Update user information and system permissions"
 msgstr ""
 
-#: app/users/templates/users/form.html:17
-#: app/users/templates/users/view.html:19
-msgid "Back to Users"
+#: app/users/templates/users/form.html:20
+msgid ""
+"Create a new\n"
+"                    system user account"
 msgstr ""
 
-#: app/users/templates/users/form.html:36
+#: app/users/templates/users/form.html:46
+msgid "Full Name"
+msgstr ""
+
+#: app/users/templates/users/form.html:51
 msgid "Enter full name"
 msgstr ""
 
-#: app/users/templates/users/form.html:45
+#: app/users/templates/users/form.html:61
 msgid "Enter email address"
 msgstr ""
 
-#: app/users/templates/users/form.html:53
-msgid "Leave blank to keep current password"
+#: app/users/templates/users/form.html:65
+#: app/users/templates/users/view.html:72
+msgid "Access Role"
 msgstr ""
 
-#: app/users/templates/users/form.html:58
-msgid "Enter password"
-msgstr ""
-
-#: app/users/templates/users/form.html:70
-msgid "Confirm password"
-msgstr ""
-
-#: app/users/templates/users/form.html:75
-#: app/users/templates/users/index.html:36
-#: app/users/templates/users/index.html:98
-#: app/users/templates/users/view.html:61
-msgid "Role"
-msgstr ""
-
-#: app/users/templates/users/form.html:79
+#: app/users/templates/users/form.html:69
 msgid "Select a role"
 msgstr ""
 
-#: app/users/templates/users/form.html:106
-msgid "No companies available. Please create a company first."
+#: app/users/templates/users/form.html:84
+msgid "Security"
 msgstr ""
 
-#: app/users/templates/users/form.html:118
+#: app/users/templates/users/form.html:96
+msgid "Enter password"
+msgstr ""
+
+#: app/users/templates/users/form.html:96
+msgid "Leave blank to keep current"
+msgstr ""
+
+#: app/users/templates/users/form.html:109
+msgid "Confirm password"
+msgstr ""
+
+#: app/users/templates/users/form.html:120
+msgid "Company Access"
+msgstr ""
+
+#: app/users/templates/users/form.html:125
+msgid "Available Companies"
+msgstr ""
+
+#: app/users/templates/users/form.html:147
+msgid "Organization"
+msgstr ""
+
+#: app/users/templates/users/form.html:155
+msgid ""
+"No companies found. Create one\n"
+"                                    first."
+msgstr ""
+
+#: app/users/templates/users/form.html:162
+msgid "A user must be assigned to at least one company to access the system."
+msgstr ""
+
+#: app/users/templates/users/form.html:178
 msgid "Update User"
 msgstr ""
 
-#: app/users/templates/users/form.html:118
+#: app/users/templates/users/form.html:178
 msgid "Create User"
 msgstr ""
 
-#: app/users/templates/users/form.html:133
+#: app/users/templates/users/form.html:192
 msgid "Passwords do not match"
 msgstr ""
 
-#: app/users/templates/users/form.html:149
-msgid "Please select at least one company"
+#: app/users/templates/users/form.html:208
+msgid "Please select at least one company access"
 msgstr ""
 
 #: app/users/templates/users/index.html:10
@@ -2718,148 +2794,197 @@ msgid "Manage system users and their permissions"
 msgstr ""
 
 #: app/users/templates/users/index.html:15
+#: app/users/templates/users/index.html:234
 msgid "Add User"
 msgstr ""
 
-#: app/users/templates/users/index.html:30
+#: app/users/templates/users/index.html:31
 msgid "Name or email..."
 msgstr ""
 
-#: app/users/templates/users/index.html:39
+#: app/users/templates/users/index.html:38
+#: app/users/templates/users/index.html:100
+msgid "Role"
+msgstr ""
+
+#: app/users/templates/users/index.html:41
 msgid "All Roles"
 msgstr ""
 
-#: app/users/templates/users/index.html:48
+#: app/users/templates/users/index.html:50
 msgid "Company"
 msgstr ""
 
-#: app/users/templates/users/index.html:51
+#: app/users/templates/users/index.html:53
 msgid "All Companies"
 msgstr ""
 
-#: app/users/templates/users/index.html:63
+#: app/users/templates/users/index.html:65
 msgid "All Status"
 msgstr ""
 
-#: app/users/templates/users/index.html:92
+#: app/users/templates/users/index.html:69
+#: app/users/templates/users/index.html:163
+msgid "Inactive"
+msgstr ""
+
+#: app/users/templates/users/index.html:94
 msgid "User"
 msgstr ""
 
-#: app/users/templates/users/index.html:128
+#: app/users/templates/users/index.html:131
 msgid "You"
 msgstr ""
 
-#: app/users/templates/users/index.html:143
+#: app/users/templates/users/index.html:148
 msgid "No Role"
 msgstr ""
 
-#: app/users/templates/users/index.html:170
+#: app/users/templates/users/index.html:176
 msgid "No companies"
 msgstr ""
 
-#: app/users/templates/users/index.html:189
+#: app/users/templates/users/index.html:198
 msgid "Deactivate"
 msgstr ""
 
-#: app/users/templates/users/index.html:189
+#: app/users/templates/users/index.html:198
 msgid "Activate"
 msgstr ""
 
-#: app/users/templates/users/index.html:194
-#: app/users/templates/users/view.html:208
+#: app/users/templates/users/index.html:204
 msgid "Send Password Reset"
 msgstr ""
 
-#: app/users/templates/users/index.html:201
+#: app/users/templates/users/index.html:212
 msgid "Are you sure you want to delete this user?"
 msgstr ""
 
-#: app/users/templates/users/index.html:218
+#: app/users/templates/users/index.html:229
 msgid "No users found"
 msgstr ""
 
-#: app/users/templates/users/index.html:221
-msgid "Add your first user"
+#: app/users/templates/users/index.html:230
+msgid ""
+"Get started by adding your first system\n"
+"                                    user to manage the application."
 msgstr ""
 
-#: app/users/templates/users/view.html:10
-msgid "User details and information"
+#: app/users/templates/users/view.html:27
+msgid "Active Account"
 msgstr ""
 
-#: app/users/templates/users/view.html:28
-msgid "User Information"
+#: app/users/templates/users/view.html:33
+msgid "Suspended"
 msgstr ""
 
-#: app/users/templates/users/view.html:69
-msgid "No Role Assigned"
+#: app/users/templates/users/view.html:59
+msgid "Profile Details"
 msgstr ""
 
-#: app/users/templates/users/view.html:76
+#: app/users/templates/users/view.html:66
+msgid "Full Legal Name"
+msgstr ""
+
+#: app/users/templates/users/view.html:82
+msgid "Restricted Access"
+msgstr ""
+
+#: app/users/templates/users/view.html:90
 msgid "Account Created"
 msgstr ""
 
-#: app/users/templates/users/view.html:83
-msgid "Last Updated"
+#: app/users/templates/users/view.html:100
+msgid "Last Profile Update"
 msgstr ""
 
-#: app/users/templates/users/view.html:85
+#: app/users/templates/users/view.html:102
 msgid "Never"
 msgstr ""
 
-#: app/users/templates/users/view.html:93
-msgid "Associated Companies"
+#: app/users/templates/users/view.html:116
+msgid "Assigned Organizations"
 msgstr ""
 
-#: app/users/templates/users/view.html:106
-msgid "Member since"
-msgstr ""
-
-#: app/users/templates/users/view.html:120
-msgid "No companies assigned"
-msgstr ""
-
-#: app/users/templates/users/view.html:123
-msgid "Assign Companies"
-msgstr ""
-
-#: app/users/templates/users/view.html:134
-msgid "Quick Stats"
-msgstr ""
-
-#: app/users/templates/users/view.html:143
-msgid "Account Age"
+#: app/users/templates/users/view.html:136
+msgid "Access granted"
 msgstr ""
 
 #: app/users/templates/users/view.html:150
-msgid "1 day"
+msgid ""
+"No company\n"
+"                            access assigned"
 msgstr ""
 
-#: app/users/templates/users/view.html:152
-msgid "days"
+#: app/users/templates/users/view.html:154
+msgid "Assign Access Now"
 msgstr ""
 
-#: app/users/templates/users/view.html:161
-#: app/users/templates/users/view.html:176
-msgid "Role Permissions"
+#: app/users/templates/users/view.html:168
+msgid "Account Snapshot"
 msgstr ""
 
-#: app/users/templates/users/view.html:203
-msgid "Deactivate User"
+#: app/users/templates/users/view.html:174
+msgid ""
+"Total\n"
+"                            Companies"
 msgstr ""
 
-#: app/users/templates/users/view.html:203
-msgid "Activate User"
+#: app/users/templates/users/view.html:181
+msgid ""
+"Account\n"
+"                            Seniority"
 msgstr ""
 
-#: app/users/templates/users/view.html:212
-msgid "Are you sure you want to delete this user? This action cannot be undone."
+#: app/users/templates/users/view.html:187
+msgid "New Today"
 msgstr ""
 
-#: app/users/templates/users/view.html:216
-msgid "Delete User"
+#: app/users/templates/users/view.html:189
+msgid "1 Day"
 msgstr ""
 
-#: app/users/templates/users/view.html:221
-msgid "You cannot modify your own account status"
+#: app/users/templates/users/view.html:191
+msgid "Days"
+msgstr ""
+
+#: app/users/templates/users/view.html:201
+msgid ""
+"Active\n"
+"                            Rights"
+msgstr ""
+
+#: app/users/templates/users/view.html:219
+msgid "Active Permissions"
+msgstr ""
+
+#: app/users/templates/users/view.html:239
+msgid "Security Actions"
+msgstr ""
+
+#: app/users/templates/users/view.html:249
+msgid "Deactivate Account"
+msgstr ""
+
+#: app/users/templates/users/view.html:249
+msgid "Restore Account"
+msgstr ""
+
+#: app/users/templates/users/view.html:254
+msgid "Force Password Reset"
+msgstr ""
+
+#: app/users/templates/users/view.html:259
+msgid ""
+"CRITICAL: This will permanently delete this user account. This action "
+"cannot be undone. Are you sure?"
+msgstr ""
+
+#: app/users/templates/users/view.html:263
+msgid "Delete User Permanently"
+msgstr ""
+
+#: app/users/templates/users/view.html:270
+msgid "Self-management of account status is restricted for security."
 msgstr ""
 
