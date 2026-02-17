@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-02-09 16:30-0600\n"
+"POT-Creation-Date: 2026-02-16 18:59-0600\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,8 +74,8 @@ msgid "other"
 msgstr ""
 
 #: app/auth/routes.py:21 app/auth/routes.py:62 app/invoices/routes.py:43
-#: app/invoices/routes.py:85 app/invoices/routes.py:182
-#: app/invoices/routes.py:292
+#: app/invoices/routes.py:85 app/invoices/routes.py:149
+#: app/invoices/routes.py:239 app/invoices/routes.py:349
 msgid "Invalid CSRF token. Please try again."
 msgstr ""
 
@@ -112,6 +112,7 @@ msgid "Business management simplified"
 msgstr ""
 
 #: app/auth/templates/auth/base.html:70
+#: app/invoices/templates/invoices/view.html:352
 msgid "All rights reserved."
 msgstr ""
 
@@ -300,6 +301,7 @@ msgstr ""
 #: app/inventory/templates/inventory/view.html:271
 #: app/inventory/templates/inventory/view.html:313
 #: app/invoices/templates/invoices/form.html:330
+#: app/invoices/templates/invoices/view.html:458
 #: app/orders/templates/orders/form.html:241
 #: app/payments/templates/payments/form.html:189
 #: app/suppliers/templates/suppliers/form.html:92
@@ -332,6 +334,7 @@ msgstr ""
 #: app/inventory/templates/inventory/view.html:3
 #: app/invoices/templates/invoices/form.html:4
 #: app/invoices/templates/invoices/index.html:3
+#: app/invoices/templates/invoices/view.html:4
 #: app/orders/templates/orders/form.html:4
 #: app/orders/templates/orders/index.html:3
 #: app/orders/templates/orders/view.html:3
@@ -398,6 +401,7 @@ msgstr ""
 #: app/invoices/templates/invoices/form.html:3
 #: app/invoices/templates/invoices/form.html:14
 #: app/invoices/templates/invoices/index.html:183
+#: app/invoices/templates/invoices/view.html:75
 #: app/payments/templates/payments/index.html:196
 #: app/suppliers/templates/suppliers/index.html:151
 #: app/users/templates/users/index.html:192
@@ -468,6 +472,7 @@ msgid "Tax Rate"
 msgstr ""
 
 #: app/companies/templates/companies/view.html:45
+#: app/invoices/templates/invoices/view.html:35
 #: app/suppliers/templates/suppliers/view.html:30
 #: app/users/templates/users/view.html:46
 msgid "Back"
@@ -831,20 +836,24 @@ msgstr ""
 
 #: app/customers/templates/customers/view.html:58
 #: app/dashboard/templates/dashboard/index.html:215 app/invoices/routes.py:96
-#: app/invoices/routes.py:266 app/invoices/routes.py:309
+#: app/invoices/routes.py:323 app/invoices/routes.py:366
 #: app/invoices/templates/invoices/form.html:4
 #: app/invoices/templates/invoices/form.html:14
 #: app/invoices/templates/invoices/form.html:74
+#: app/invoices/templates/invoices/view.html:3
+#: app/invoices/templates/invoices/view.html:16
 #: app/payments/templates/payments/index.html:133
 msgid "Invoice"
 msgstr ""
 
 #: app/customers/templates/customers/view.html:62
 #: app/dashboard/templates/dashboard/index.html:267 app/invoices/routes.py:96
-#: app/invoices/routes.py:268 app/invoices/routes.py:309
+#: app/invoices/routes.py:325 app/invoices/routes.py:366
 #: app/invoices/templates/invoices/form.html:3
 #: app/invoices/templates/invoices/form.html:14
 #: app/invoices/templates/invoices/form.html:76
+#: app/invoices/templates/invoices/view.html:3
+#: app/invoices/templates/invoices/view.html:14
 msgid "Quote"
 msgstr ""
 
@@ -909,6 +918,7 @@ msgstr ""
 #: app/invoices/templates/invoices/form.html:83
 #: app/invoices/templates/invoices/index.html:53
 #: app/invoices/templates/invoices/index.html:131
+#: app/invoices/templates/invoices/view.html:302
 #: app/users/templates/users/index.html:62
 #: app/users/templates/users/index.html:103
 msgid "Status"
@@ -1170,6 +1180,7 @@ msgid "Current Quantity"
 msgstr ""
 
 #: app/inventory/templates/inventory/form.html:89
+#: app/invoices/templates/invoices/view.html:179
 #: app/orders/templates/orders/form.html:115
 #: app/orders/templates/orders/view.html:147
 #: app/suppliers/templates/suppliers/view.html:136
@@ -1479,20 +1490,38 @@ msgstr ""
 msgid "Error creating document: %(error)s"
 msgstr ""
 
-#: app/invoices/routes.py:220
+#: app/invoices/routes.py:164
+msgid "Payment amount must be greater than 0"
+msgstr ""
+
+#: app/invoices/routes.py:183 app/payments/routes.py:193
+msgid "Payment recorded successfully"
+msgstr ""
+
+#: app/invoices/routes.py:188
+#, python-format
+msgid "Invalid payment data: %(error)s"
+msgstr ""
+
+#: app/invoices/routes.py:192 app/payments/routes.py:198
+#, python-format
+msgid "Error recording payment: %(error)s"
+msgstr ""
+
+#: app/invoices/routes.py:277
 msgid "Document number already exists"
 msgstr ""
 
-#: app/invoices/routes.py:270
+#: app/invoices/routes.py:327
 msgid "updated successfully"
 msgstr ""
 
-#: app/invoices/routes.py:278
+#: app/invoices/routes.py:335
 #, python-format
 msgid "Error updating document: %(error)s"
 msgstr ""
 
-#: app/invoices/routes.py:313
+#: app/invoices/routes.py:370
 #, python-format
 msgid "Error deleting document: %(error)s"
 msgstr ""
@@ -1561,6 +1590,7 @@ msgstr ""
 #: app/invoices/templates/invoices/form.html:90
 #: app/invoices/templates/invoices/index.html:58
 #: app/invoices/templates/invoices/index.html:170
+#: app/invoices/templates/invoices/view.html:21
 #: app/payments/templates/payments/view.html:113
 msgid "Draft"
 msgstr ""
@@ -1598,11 +1628,13 @@ msgstr ""
 
 #: app/invoices/templates/invoices/form.html:128
 #: app/invoices/templates/invoices/index.html:122
+#: app/invoices/templates/invoices/view.html:95
 msgid "Issue Date"
 msgstr ""
 
 #: app/invoices/templates/invoices/form.html:139
 #: app/invoices/templates/invoices/index.html:125
+#: app/invoices/templates/invoices/view.html:104
 #: app/payments/templates/payments/view.html:126
 msgid "Due Date"
 msgstr ""
@@ -1617,16 +1649,20 @@ msgid "Item"
 msgstr ""
 
 #: app/invoices/templates/invoices/form.html:176
+#: app/invoices/templates/invoices/view.html:175
 #: app/orders/templates/orders/form.html:111
 msgid "Qty"
 msgstr ""
 
 #: app/invoices/templates/invoices/form.html:182
+#: app/invoices/templates/invoices/view.html:183
 msgid "Disc."
 msgstr ""
 
 #: app/invoices/templates/invoices/form.html:185
 #: app/invoices/templates/invoices/form.html:316
+#: app/invoices/templates/invoices/view.html:187
+#: app/invoices/templates/invoices/view.html:253
 #: app/orders/templates/orders/form.html:119
 #: app/orders/templates/orders/view.html:151
 msgid "Total"
@@ -1653,10 +1689,12 @@ msgid "Summary"
 msgstr ""
 
 #: app/invoices/templates/invoices/form.html:306
+#: app/invoices/templates/invoices/view.html:245
 msgid "Subtotal"
 msgstr ""
 
 #: app/invoices/templates/invoices/form.html:311
+#: app/invoices/templates/invoices/view.html:249
 msgid "Tax"
 msgstr ""
 
@@ -1717,6 +1755,8 @@ msgid "Invoice #"
 msgstr ""
 
 #: app/invoices/templates/invoices/index.html:128
+#: app/invoices/templates/invoices/view.html:298
+#: app/invoices/templates/invoices/view.html:389
 #: app/payments/templates/payments/index.html:139
 msgid "Amount"
 msgstr ""
@@ -1753,6 +1793,173 @@ msgstr ""
 
 #: app/invoices/templates/invoices/item_row.html:17
 msgid "Item description..."
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:26
+msgid "Quote details and information"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:28
+msgid "Invoice details and information"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:41
+#: app/invoices/templates/invoices/view.html:342
+msgid "Add Payment"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:48
+msgid "PDF"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:57
+msgid "Standard PDF"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:62
+msgid "No Tax PDF"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:89
+msgid "Quote Information"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:91
+msgid "Invoice Information"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:113
+msgid "Created By"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:120
+msgid "System"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:128
+msgid "Client Information"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:157
+msgid "No client associated with this document."
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:171
+msgid "Item & Description"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:196
+msgid "Custom Item"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:224
+msgid "No items added to this document."
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:237
+#: app/invoices/templates/invoices/view.html:290
+#: app/payments/templates/payments/form.html:175
+#: app/payments/templates/payments/index.html:145
+#: app/payments/templates/payments/view.html:67
+msgid "Notes"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:239
+msgid "No notes provided."
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:258
+msgid "Amount Paid"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:262
+msgid "Balance Due"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:276
+msgid "Payment History"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:286
+#: app/payments/templates/payments/index.html:130
+msgid "Date"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:294
+#: app/payments/templates/payments/index.html:142
+msgid "Method"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:323
+msgid "Recorded"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:336
+msgid "No payments recorded"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:337
+msgid "Record a payment to mark this invoice as paid."
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:352
+msgid "StartUp POS"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:377
+#: app/invoices/templates/invoices/view.html:454
+#: app/payments/templates/payments/form.html:3
+#: app/payments/templates/payments/form.html:17
+#: app/payments/templates/payments/form.html:194
+#: app/payments/templates/payments/index.html:15
+#: app/payments/templates/payments/index.html:227
+msgid "Record Payment"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:409
+#: app/payments/templates/payments/view.html:50
+msgid "Payment Date"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:422
+#: app/payments/templates/payments/index.html:84
+#: app/payments/templates/payments/view.html:56
+msgid "Payment Method"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:427
+#: app/payments/templates/payments/form.html:164
+#: app/payments/templates/payments/index.html:89
+msgid "Cash"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:428
+#: app/payments/templates/payments/form.html:165
+msgid "Bank Transfer"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:430
+#: app/payments/templates/payments/form.html:165
+#: app/payments/templates/payments/index.html:90
+msgid "Credit Card"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:431
+msgid "Check"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:432
+#: app/payments/templates/payments/form.html:165
+#: app/payments/templates/payments/index.html:90
+msgid "Other"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:440
+msgid "Reference / Note"
+msgstr ""
+
+#: app/invoices/templates/invoices/view.html:445
+msgid "Optional transaction ID or note"
 msgstr ""
 
 #: app/orders/routes.py:70
@@ -2101,15 +2308,6 @@ msgstr ""
 msgid "Create a duplicate of this purchase order?"
 msgstr ""
 
-#: app/payments/routes.py:193
-msgid "Payment recorded successfully"
-msgstr ""
-
-#: app/payments/routes.py:198
-#, python-format
-msgid "Error recording payment: %(error)s"
-msgstr ""
-
 #: app/payments/routes.py:282
 msgid "Payment updated successfully"
 msgstr ""
@@ -2132,14 +2330,6 @@ msgstr ""
 #: app/payments/templates/payments/form.html:17
 #: app/payments/templates/payments/view.html:23
 msgid "Edit Payment"
-msgstr ""
-
-#: app/payments/templates/payments/form.html:3
-#: app/payments/templates/payments/form.html:17
-#: app/payments/templates/payments/form.html:194
-#: app/payments/templates/payments/index.html:15
-#: app/payments/templates/payments/index.html:227
-msgid "Record Payment"
 msgstr ""
 
 #: app/payments/templates/payments/form.html:20
@@ -2192,32 +2382,7 @@ msgstr ""
 
 #: app/payments/templates/payments/form.html:164
 #: app/payments/templates/payments/index.html:89
-msgid "Cash"
-msgstr ""
-
-#: app/payments/templates/payments/form.html:164
-#: app/payments/templates/payments/index.html:89
 msgid "Cheque"
-msgstr ""
-
-#: app/payments/templates/payments/form.html:165
-msgid "Bank Transfer"
-msgstr ""
-
-#: app/payments/templates/payments/form.html:165
-#: app/payments/templates/payments/index.html:90
-msgid "Credit Card"
-msgstr ""
-
-#: app/payments/templates/payments/form.html:165
-#: app/payments/templates/payments/index.html:90
-msgid "Other"
-msgstr ""
-
-#: app/payments/templates/payments/form.html:175
-#: app/payments/templates/payments/index.html:145
-#: app/payments/templates/payments/view.html:67
-msgid "Notes"
 msgstr ""
 
 #: app/payments/templates/payments/form.html:177
@@ -2248,11 +2413,6 @@ msgstr ""
 msgid "Invoice, client..."
 msgstr ""
 
-#: app/payments/templates/payments/index.html:84
-#: app/payments/templates/payments/view.html:56
-msgid "Payment Method"
-msgstr ""
-
 #: app/payments/templates/payments/index.html:88
 msgid "All Methods"
 msgstr ""
@@ -2266,14 +2426,6 @@ msgstr ""
 #: app/payments/templates/payments/index.html:112
 #: app/users/templates/users/index.html:76
 msgid "Apply"
-msgstr ""
-
-#: app/payments/templates/payments/index.html:130
-msgid "Date"
-msgstr ""
-
-#: app/payments/templates/payments/index.html:142
-msgid "Method"
 msgstr ""
 
 #: app/payments/templates/payments/index.html:165
@@ -2309,10 +2461,6 @@ msgstr ""
 
 #: app/payments/templates/payments/view.html:40
 msgid "Total Amount Paid"
-msgstr ""
-
-#: app/payments/templates/payments/view.html:50
-msgid "Payment Date"
 msgstr ""
 
 #: app/payments/templates/payments/view.html:83

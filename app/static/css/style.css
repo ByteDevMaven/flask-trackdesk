@@ -341,6 +341,9 @@
   .pointer-events-none {
     pointer-events: none;
   }
+  .invisible {
+    visibility: hidden;
+  }
   .visible {
     visibility: visible;
   }
@@ -2386,6 +2389,13 @@
   .group-focus-within\:text-indigo-500 {
     &:is(:where(.group):focus-within *) {
       color: var(--color-indigo-500);
+    }
+  }
+  .group-hover\:visible {
+    &:is(:where(.group):hover *) {
+      @media (hover: hover) {
+        visibility: visible;
+      }
     }
   }
   .group-hover\:block {

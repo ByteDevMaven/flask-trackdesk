@@ -49,17 +49,19 @@ _('Business Management System') }}{% endblock %}
                         class="fas fa-chevron-down ml-2 text-xs"></i>
                 </button>
                 <div
-                    class="absolute right-0 mt-2 w-48 bg-slate-800 rounded-lg shadow-lg border border-slate-700 hidden group-hover:block z-20">
-                    <a href="{{ url_for('invoices.print_invoice', company_id=session.get('selected_company_id'), id=invoice.id) }}"
-                        target="_blank"
-                        class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white first:rounded-t-lg">
-                        {{ _('Standard PDF') }}
-                    </a>
-                    <a href="{{ url_for('invoices.print_invoice', company_id=session.get('selected_company_id'), id=invoice.id, tax=0) }}"
-                        target="_blank"
-                        class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white last:rounded-b-lg">
-                        {{ _('No Tax PDF') }}
-                    </a>
+                    class="absolute right-0 pt-2 w-48 invisible group-hover:visible z-20">
+                    <div class="bg-slate-800 rounded-lg shadow-lg border border-slate-700 overflow-hidden">
+                        <a href="{{ url_for('invoices.print_invoice', company_id=session.get('selected_company_id'), id=invoice.id) }}"
+                            target="_blank"
+                            class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white first:rounded-t-lg">
+                            {{ _('Standard PDF') }}
+                        </a>
+                        <a href="{{ url_for('invoices.print_invoice', company_id=session.get('selected_company_id'), id=invoice.id, tax=0) }}"
+                            target="_blank"
+                            class="block px-4 py-2 text-sm text-slate-300 hover:bg-slate-700 hover:text-white last:rounded-b-lg">
+                            {{ _('No Tax PDF') }}
+                        </a>
+                    </div>
                 </div>
             </div>
 
