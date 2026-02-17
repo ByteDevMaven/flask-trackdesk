@@ -216,7 +216,7 @@ msgstr "Actualizar información de la empresa"
 msgid ""
 "Create a new\n"
 "                    company organization"
-msgstr ""
+msgstr "Crear una nueva organización de empresa"
 
 #: app/companies/templates/companies/form.html:41
 msgid "Company Information"
@@ -232,49 +232,42 @@ msgstr "Ingrese el nombre de la empresa"
 
 #: app/companies/templates/companies/form.html:58
 msgid "Preferred Currency"
-msgstr ""
+msgstr "Moneda Preferida"
 
 #: app/companies/templates/companies/form.html:63
-#, fuzzy
 msgid "e.g., $, USD, EUR"
-msgstr "$, USD, EUR, ...."
+msgstr "p.ej., $, USD, EUR"
 
 #: app/companies/templates/companies/form.html:66
-#, fuzzy
 msgid ""
 "Default\n"
 "                                    Tax Rate (%)"
-msgstr "Seleccione un cliente"
+msgstr "Tasa de Impuesto Predeterminada (%)"
 
 #: app/companies/templates/companies/form.html:76
-#, fuzzy
 msgid ""
 "Tax\n"
 "                                Identifier (VAT/TIN)"
-msgstr "Notas y términos"
+msgstr "Identificador de Impuestos (VAT/TIN)"
 
 #: app/companies/templates/companies/form.html:82
-#, fuzzy
 msgid "Regular identifier number"
-msgstr "Identificador de Impuestos (RTN)"
+msgstr "Número de identificador regular"
 
 #: app/companies/templates/companies/form.html:86
-#, fuzzy
 msgid ""
 "Contact\n"
 "                                Details"
-msgstr "Notas y términos"
+msgstr "Detalles de Contacto"
 
 #: app/companies/templates/companies/form.html:92
 #: app/companies/templates/companies/view.html:98
-#, fuzzy
 msgid "Physical Address"
-msgstr "Dirección de correo electrónico"
+msgstr "Dirección Física"
 
 #: app/companies/templates/companies/form.html:96
-#, fuzzy
 msgid "Enter company address"
-msgstr "Dirección de la Empresa"
+msgstr "Ingrese la dirección de la empresa"
 
 #: app/companies/templates/companies/form.html:101
 #: app/customers/templates/customers/form.html:59
@@ -284,7 +277,7 @@ msgstr "Número de teléfono"
 
 #: app/companies/templates/companies/form.html:110
 msgid "Public Email"
-msgstr ""
+msgstr "Correo Electrónico Público"
 
 #: app/companies/templates/companies/form.html:129
 #, fuzzy
@@ -458,18 +451,16 @@ msgid "No companies found"
 msgstr "No hay empresas encontradas"
 
 #: app/companies/templates/companies/index.html:129
-#, fuzzy
 msgid ""
 "No companies match your search criteria. Try a different search term or "
 "clear the filters."
-msgstr "Ninguna empresa coincide con sus criterios de búsqueda."
+msgstr "Ninguna empresa coincide con sus criterios de búsqueda. Intente un término de búsqueda diferente o borre los filtros."
 
 #: app/companies/templates/companies/index.html:132
-#, fuzzy
 msgid ""
 "Get started by creating your first company to begin managing your "
 "business operations."
-msgstr "Comience creando su primera empresa."
+msgstr "Comience creando su primera empresa para comenzar a administrar sus operaciones comerciales."
 
 #: app/companies/templates/companies/view.html:22
 #: app/users/templates/users/view.html:92
@@ -478,45 +469,40 @@ msgid "Unknown"
 msgstr "Desconocido"
 
 #: app/companies/templates/companies/view.html:26
-#, fuzzy
 msgid "Currency"
-msgstr "Moneda de la empresa"
+msgstr "Moneda"
 
 #: app/companies/templates/companies/view.html:31
-#, fuzzy
 msgid "Tax Rate"
-msgstr "Porcentaje de Impuesto"
+msgstr "Tasa de Impuesto"
 
 #: app/companies/templates/companies/view.html:45
 #: app/suppliers/templates/suppliers/view.html:30
 #: app/users/templates/users/view.html:46
 msgid "Back"
-msgstr ""
+msgstr "Atrás"
 
 #: app/companies/templates/companies/view.html:59
-#, fuzzy
 msgid "Legal & Contact Details"
-msgstr "Ingrese el correo electrónico de contacto"
+msgstr "Detalles Legales y de Contacto"
 
 #: app/companies/templates/companies/view.html:69
 #: app/orders/templates/orders/view.html:292
-#, fuzzy
 msgid ""
 "Email\n"
 "                            Address"
-msgstr "Notas y términos"
+msgstr "Dirección de Correo Electrónico"
 
 #: app/companies/templates/companies/view.html:83
-#, fuzzy
 msgid ""
 "Phone\n"
 "                            Number"
-msgstr "Notas y términos"
+msgstr "Número de Teléfono"
 
 #: app/companies/templates/companies/view.html:101
 #: app/customers/templates/customers/view.html:126
 msgid "No address recorded"
-msgstr ""
+msgstr "No hay dirección registrada"
 
 #: app/companies/templates/companies/view.html:112 app/customers/routes.py:137
 #: app/customers/templates/customers/index.html:3
@@ -551,24 +537,21 @@ msgstr "Pagos"
 
 #: app/companies/templates/companies/view.html:139
 msgid "Authorized Access"
-msgstr ""
+msgstr "Acceso Autorizado"
 
 #: app/companies/templates/companies/view.html:182
-#, fuzzy
 msgid ""
 "No assigned\n"
 "                            users"
-msgstr "Notas y términos"
+msgstr "No hay usuarios asignados"
 
 #: app/companies/templates/companies/view.html:186
-#, fuzzy
 msgid "Manage Access"
-msgstr "Gestionar facturas"
+msgstr "Administrar Acceso"
 
 #: app/companies/templates/companies/view.html:198
-#, fuzzy
 msgid "Operational Activity"
-msgstr "Actividad reciente"
+msgstr "Actividad Operacional"
 
 #: app/companies/templates/companies/view.html:208
 msgid "Recent Documents"
@@ -579,15 +562,14 @@ msgid "Recent Payments"
 msgstr "Pagos recientes"
 
 #: app/companies/templates/companies/view.html:272
-#, fuzzy
 msgid ""
 "No recent\n"
 "                                activity recorded"
-msgstr "Notas y términos"
+msgstr "Ninguna actividad reciente registrada"
 
 #: app/companies/templates/companies/view.html:287
 msgid "Critical Operations"
-msgstr ""
+msgstr "Operaciones Críticas"
 
 #: app/companies/templates/companies/view.html:290
 msgid ""
@@ -595,7 +577,7 @@ msgid ""
 "clients, suppliers,\n"
 "                        inventory, documents, and financial data. There "
 "is no undo for this action."
-msgstr ""
+msgstr "Eliminar esta empresa eliminará permanentemente todos los usuarios, clientes, proveedores, inventario, documentos y datos financieros asociados. No hay deshacer para esta acción."
 
 #: app/companies/templates/companies/view.html:298
 msgid ""
@@ -603,8 +585,9 @@ msgid ""
 "undone and will remove all associated data including clients, suppliers, "
 "inventory, documents, payments, and reports."
 msgstr ""
-"Estas seguro de querer borrar esta empresa? Esta accion no se revertir y "
-"se perdera toda la información asociada."
+"¿Estás seguro de que quieres eliminar esta empresa? Esta acción no se puede "
+"deshacer y eliminará toda la información asociada, incluyendo clientes, proveedores, "
+"inventario, documentos, pagos e informes."
 
 #: app/companies/templates/companies/view.html:299
 msgid "Delete Entire Organization"
@@ -1075,7 +1058,7 @@ msgstr "Ingresos"
 
 #: app/dashboard/templates/dashboard/index.html:183
 msgid "Analyze Revenue"
-msgstr "AnalizarIngresos"
+msgstr "Analizar Ingresos"
 
 #: app/dashboard/templates/dashboard/index.html:196
 msgid "Recent Invoices"
@@ -2393,9 +2376,8 @@ msgid "Payment Summary"
 msgstr "Pagos"
 
 #: app/payments/templates/payments/view.html:40
-#, fuzzy
 msgid "Total Amount Paid"
-msgstr "Cantidad total"
+msgstr "Cantidad Total Pagada"
 
 #: app/payments/templates/payments/view.html:50
 msgid "Payment Date"
@@ -2443,6 +2425,22 @@ msgstr "¿Estás seguro de que quieres eliminar este pago?"
 #, fuzzy
 msgid "Permanently Delete"
 msgstr "Fecha de pago"
+
+#: app/invoices/templates/invoices/view.html
+msgid "Amount Paid"
+msgstr "Cantidad Pagada"
+
+#: app/invoices/templates/invoices/view.html
+msgid "Balance Due"
+msgstr "Saldo Pendiente"
+
+#: app/invoices/templates/invoices/view.html
+msgid "Payment History"
+msgstr "Historial de Pagos"
+
+#: app/invoices/templates/invoices/view.html
+msgid "No payments recorded"
+msgstr "No se han registrado pagos"
 
 #: app/suppliers/routes.py:31
 msgid "You do not have access to this company"
