@@ -359,13 +359,13 @@ _('Business Management System') }}{% endblock %}
             <div id="addPaymentModal" class="fixed inset-0 z-50 hidden" aria-labelledby="modal-title" role="dialog"
                 aria-modal="true">
                 <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-                    <div class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm transition-opacity" aria-hidden="true"
+                    <div class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm transition-opacity z-40" aria-hidden="true"
                         onclick="hideAddPaymentModal()"></div>
 
                     <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
 
                     <div
-                        class="inline-block align-bottom bg-slate-800 rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full border border-slate-700">
+                        class="relative z-50 inline-block align-bottom bg-slate-800 rounded-xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full border border-slate-700">
                         <div class="bg-slate-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                             <div class="sm:flex sm:items-start">
                                 <div
