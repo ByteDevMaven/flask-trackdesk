@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', function () {
             setTimeout(() => {
                 searchInput.focus();
             }, 50);
+            // Fetch recommended clients when modal opens
+            fetchRecommendations();
         });
     }
 
@@ -61,8 +63,8 @@ document.addEventListener('DOMContentLoaded', function () {
             clearTimeout(searchTimeout);
 
             if (query.length < 2) {
-                resultsList.classList.add('hidden');
-                emptyState.classList.remove('hidden');
+                // Show recommendations when query is short
+                fetchRecommendations();
                 return;
             }
 
@@ -141,4 +143,88 @@ document.addEventListener('DOMContentLoaded', function () {
             }, 300);
         });
     }
+
+    // Fetch recommended clients (top clients by document count)
+    function fetchRecommendations() {
+        const companyId = companyIdInput ? companyIdInput.value : '';
+        if (!companyId) return;
+
+        fetch(`/${companyId}/clients/search`)
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                resultsList.innerHTML = '';
+
+                if (data.results && data.results.length > 0) {
+                    emptyState.classList.add('hidden');
+                    resultsList.classList.remove('hidden');
+
+                    // If recommended, show a small header item
+                    if (data.recommended) {
+                        const header = document.createElement('li');
+                        header.className = 'px-4 py-2 text-xs text-slate-400 uppercase tracking-wider';
+                        header.textContent = 'Recommended';
+                        resultsList.appendChild(header);
+                    }
+
+                    data.results.forEach(client => {
+                        const li = document.createElement('li');
+                        li.className = 'px-4 py-3 hover:bg-slate-700/50 cursor-pointer transition flex justify-between items-center group border-b border-slate-700/50 last:border-0';
+
+                        let rightSide = '';
+                        if (client.doc_count !== undefined) {
+                            rightSide = `<span class="text-xs text-slate-400 mr-2">${client.doc_count} docs</span>`;
+                        } else {
+                            rightSide = `<i class="fas fa-chevron-right text-slate-500 group-hover:text-indigo-400 transition-colors text-xs"></i>`;
+                        }
+
+                        li.innerHTML = `
+                                <div class="flex items-center">
+                                    <div class="h-8 w-8 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400 mr-3">
+                                        <span class="text-xs font-bold">${client.name.substring(0, 2).toUpperCase()}</span>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-slate-200 group-hover:text-indigo-400 transition-colors">${client.name}</div>
+                                        <div class="text-xs text-slate-400">
+                                            ${client.email ? `<span class="mr-2"><i class="fas fa-envelope mr-1 text-slate-500"></i>${client.email}</span>` : ''}
+                                            ${client.identifier ? `<span><i class="fas fa-id-card mr-1 text-slate-500"></i>${client.identifier}</span>` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center">
+                                    ${rightSide}
+                                </div>
+                            `;
+
+                        li.addEventListener('click', function () {
+                            if (clientIdInput) clientIdInput.value = client.id;
+                            if (selectedNameSpan) {
+                                selectedNameSpan.textContent = client.name;
+                                selectedNameSpan.classList.remove('text-slate-400'); // Remove placeholder style
+                                selectedNameSpan.classList.add('text-slate-200', 'font-medium'); // Add selected style
+                            }
+                            closeModal();
+
+                            const event = new CustomEvent('client-selected', { detail: client });
+                            document.dispatchEvent(event);
+                        });
+
+                        resultsList.appendChild(li);
+                    });
+                } else {
+                    resultsList.classList.add('hidden');
+                    emptyState.classList.remove('hidden');
+                    emptyState.innerHTML = `
+                        <div class="mb-2"><i class="far fa-sad-tear text-2xl text-slate-600"></i></div>
+                        <span class="text-slate-400">No recommendations found</span>
+                    `;
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching recommendations:', error);
+            });
+    }
+
 });

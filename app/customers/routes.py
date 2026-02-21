@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from flask_babel import _, get_locale
-from sqlalchemy import or_
+from sqlalchemy import or_, func
 import math
 
 from models import Client, Payment, Document, DocumentType, db
@@ -359,12 +359,33 @@ def search(company_id):
         return {'error': _('Unauthorized')}, 403
 
     query_term = request.args.get('q', '').strip()
-    
+
+    # If no query provided, return recommended clients (those with most documents)
     if not query_term:
-        return {'results': []}
+        # Join documents and count per client, ordered by count desc
+        top_clients = db.session.query(
+            Client,
+            func.count(Document.id).label('doc_count')
+        ).join(Document, Client.id == Document.client_id).filter(
+            Client.company_id == company_id,
+            Document.company_id == company_id
+        ).group_by(Client.id).order_by(func.count(Document.id).desc()).limit(10).all()
+
+        results = []
+        for client, doc_count in top_clients:
+            results.append({
+                'id': client.id,
+                'name': client.name,
+                'email': client.email or '',
+                'identifier': client.identifier or '',
+                'phone': client.phone or '',
+                'doc_count': int(doc_count)
+            })
+
+        return {'results': results, 'recommended': True}
 
     search_term = f"%{query_term}%"
-    
+
     clients = Client.query.filter(
         Client.company_id == company_id,
         or_(
