@@ -152,7 +152,7 @@ def draw_header(c, document, page_num, total_pages, width, height, font_name, fo
     c.drawString(70, height - 110, str(total_pages))
 
     if document.issued_date:
-        c.drawString(480, height - 156, document.issued_date.strftime("%d/%m/%Y"))
+        c.drawString(480, height - 165, document.issued_date.strftime("%d/%m/%Y"))
 
     if document.due_date:
         if document.type == DocumentType.quote:
@@ -163,17 +163,17 @@ def draw_header(c, document, page_num, total_pages, width, height, font_name, fo
                 if document.payments and document.payments.first()
                 else _("N/A")
             )
-            c.drawString(480, height - 172, payment_condition)
+            c.drawString(480, height - 180, payment_condition)
 
-    c.drawString(480, height - 187, f"{document.company_id:04d}")
+    c.drawString(480, height - 196, f"{document.company_id:04d}")
     seller_name = current_user.name if current_user and current_user.name else "ADMIN"
-    c.drawString(480, height - 202, seller_name[:20])
+    c.drawString(480, height - 210, seller_name[:20])
 
 
 def draw_client_info(c, client, document, height, font_name):
     """Draw client information."""
     c.setFont(font_name, 10)
-    y = height - 155
+    y = height - 165
     if client:
         c.drawString(140, y, client.name[:55])
         c.drawString(140, y - 15, client.identifier or "")
@@ -224,7 +224,7 @@ def draw_totals(c, subtotal, vta_exenta, gravada15, gravada18, exonerada,
     c.drawRightString(x + 50, totals_start_y - 117, f"{session['currency']}{imp18:,.2f}")
 
     c.setFont(font_bold, 11)
-    c.drawRightString(x + 50, totals_start_y - 145, f"{session['currency']}{total_final:,.2f}")
+    c.drawRightString(x + 50, totals_start_y - 140, f"{session['currency']}{total_final:,.2f}")
 
     c.setFont(font_name, 10)
     words = number_to_words(total_final)
