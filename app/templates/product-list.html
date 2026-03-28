@@ -37,7 +37,9 @@
                     data-id="{{ inventory_item.id }}" data-name="{{ inventory_item.name }}"
                     data-description="{{ inventory_item.description|e }}" data-price="{{ inventory_item.price }}"
                     data-stock="{{ inventory_item.quantity }}"
-                    data-search="{{ (inventory_item.name + ' ' + (inventory_item.description or '') + ' ' + inventory_item.id|string)|lower }}">
+                    {% set item_barcode = (session.get('selected_company_id')|string + "%06d"|format(inventory_item.id)) %}
+                    data-barcode="{{ item_barcode }}"
+                    data-search="{{ (inventory_item.name + ' ' + (inventory_item.description or '') + ' ' + inventory_item.id|string + ' ' + item_barcode)|lower }}">
                     <div class="flex items-start justify-between mb-4">
                         <div class="flex-1">
                             <h4 class="font-black text-slate-100 group-hover:text-indigo-300 transition-colors">{{

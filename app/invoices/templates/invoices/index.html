@@ -166,6 +166,7 @@
                                 {% elif invoice.status.value == 'overdue' %}bg-rose-500/10 text-rose-400
                                 {% elif invoice.status.value == 'draft' %}bg-slate-500/10 text-slate-400
                                 {% elif invoice.status.value == 'pending' %}bg-amber-500/10 text-amber-400
+                                {% elif invoice.status.value == 'exchange' %}bg-purple-500/10 text-purple-400
                                 {% else %}bg-blue-500/10 text-blue-400{% endif %}">
                                 {{ _(invoice.status.value.title()) if invoice.status else _('Draft') }}
                             </span>

@@ -37,6 +37,7 @@ class InvoiceType(enum.Enum):
     overdue = _('overdue')
     pending = _('pending')
     credit = _('credit')
+    exchange = _('exchange')
 
 class PaymentMethod(enum.Enum):
     cash = _('cash')
@@ -169,7 +170,6 @@ class Document(db.Model):
     @property
     def subtotal(self):
         """Calculate subtotal from document items (before tax)"""
-        from models import DocumentItem
         items = DocumentItem.query.filter_by(document_id=self.id).all()
         total = 0
         for item in items:
@@ -181,7 +181,6 @@ class Document(db.Model):
     @property
     def tax_amount(self):
         """Calculate tax amount based on subtotal and company tax rate"""
-        from models import Company
         company = Company.query.get(self.company_id)
         if company and company.tax_rate:
             return round(self.subtotal * (company.tax_rate / 100), 2)

@@ -17,7 +17,7 @@ _('Business Management System') }}{% endblock %}
                     {% endif %}
                 </h2>
                 <span
-                    class="px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wide {% if invoice.status.value == 'paid' %}bg-emerald-500/20 text-emerald-300 border border-emerald-500/20{% elif invoice.status.value == 'overdue' %}bg-rose-500/20 text-rose-300 border border-rose-500/20{% elif invoice.status.value == 'draft' %}bg-slate-500/20 text-slate-300 border border-slate-500/20{% elif invoice.status.value == 'sent' %}bg-blue-500/20 text-blue-300 border border-blue-500/20{% else %}bg-amber-500/20 text-amber-300 border border-amber-500/20{% endif %}">
+                    class="px-2.5 py-0.5 rounded-full text-xs font-semibold uppercase tracking-wide {% if invoice.status.value == 'paid' %}bg-emerald-500/20 text-emerald-300 border border-emerald-500/20{% elif invoice.status.value == 'overdue' %}bg-rose-500/20 text-rose-300 border border-rose-500/20{% elif invoice.status.value == 'draft' %}bg-slate-500/20 text-slate-300 border border-slate-500/20{% elif invoice.status.value == 'sent' %}bg-blue-500/20 text-blue-300 border border-blue-500/20{% elif invoice.status.value == 'exchange' %}bg-purple-500/20 text-purple-300 border border-purple-500/20{% else %}bg-amber-500/20 text-amber-300 border border-amber-500/20{% endif %}">
                     {{ _(invoice.status.value.title()) if invoice.status else _('Draft') }}
                 </span>
             </div>

@@ -98,6 +98,8 @@ endblock %}
                                     %}>{{ _('Pending') }}</option>
                                 <option value="credit" {% if invoice and invoice.status=='credit' %}selected{% endif %}>
                                     {{ _('Credit') }}</option>
+                                <option value="exchange" {% if invoice and invoice.status=='exchange' %}selected{% endif %}>
+                                    {{ _('Exchange') }}</option>
                             </select>
                         </div>
 
@@ -149,15 +151,26 @@ endblock %}
 
                 <!-- Items Section -->
                 <div class="p-6 md:p-8">
-                    <div class="flex justify-between items-center mb-6">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                         <h3 class="text-lg font-bold text-slate-100 flex items-center">
                             <span class="w-1 h-6 bg-indigo-500 rounded-full mr-3"></span>
                             {{ _('Line Items') }}
                         </h3>
-                        <button type="button" id="add-item"
-                            class="inline-flex items-center px-3 py-1.5 bg-indigo-500/10 text-indigo-400 text-sm font-medium rounded-md hover:bg-indigo-500/20 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 border border-indigo-500/20">
-                            <i class="fas fa-plus mr-1.5"></i> {{ _('Add Item') }}
-                        </button>
+                        <div class="flex items-center gap-3 w-full sm:w-auto">
+                            <div class="relative group flex-1 sm:w-64">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-barcode text-slate-500 text-xs group-focus-within:text-indigo-400 transition-colors"></i>
+                                </div>
+                                <input type="text" id="barcode-scan" 
+                                    placeholder="{{ _('Scan barcode (F2)...') }}"
+                                    class="block w-full pl-9 pr-3 py-1.5 bg-slate-900/50 border border-slate-700 rounded-lg text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+                                    autocomplete="off">
+                            </div>
+                            <button type="button" id="add-item"
+                                class="inline-flex items-center px-4 py-1.5 bg-indigo-500/10 text-indigo-400 text-sm font-medium rounded-lg hover:bg-indigo-500/20 transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 border border-indigo-500/20 whitespace-nowrap">
+                                <i class="fas fa-plus mr-1.5"></i> {{ _('Add Item') }}
+                            </button>
+                        </div>
                     </div>
 
                     <div class="border border-slate-700 rounded-lg overflow-hidden mb-8 shadow-sm">

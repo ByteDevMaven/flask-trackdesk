@@ -11,7 +11,7 @@ from flask_babel import _
 from barcode.writer import ImageWriter
 from PIL import Image, ImageDraw, ImageFont
 
-from models import db, InventoryItem, Supplier
+from models import db, InventoryItem, Supplier, Document, DocumentItem, PurchaseOrder, PurchaseOrderItem, DocumentType
 from extensions import limiter
 
 from . import inventory
@@ -146,7 +146,52 @@ def create(company_id):
 @limiter.exempt
 def view(company_id, id):
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
-    return render_template('inventory/view.html', company_id=company_id, item=item)
+    
+    movements = []
+    
+    # Fetch Sales (DocumentItems)
+    # Only include completed invoices (e.g. sent, paid) if we want to be strict, 
+    # but showing all related documents is better for "movement" context.
+    sales = db.session.query(DocumentItem, Document).join(Document).filter(
+        DocumentItem.inventory_item_id == id,
+        Document.company_id == company_id
+    ).all()
+    
+    for line_item, doc in sales:
+        movements.append({
+            'date': doc.issued_date or doc.created_at,
+            'type': 'Sale' if doc.type == DocumentType.invoice else 'Quote',
+            'reference': doc.document_number,
+            'qty_change': -line_item.quantity,
+            'price': line_item.unit_price,
+            'total': -(line_item.quantity * (line_item.unit_price or 0)),
+            'status': doc.status.value if doc.status else 'draft'
+        })
+        
+    # Fetch Purchases (PurchaseOrderItems)
+    purchases = db.session.query(PurchaseOrderItem, PurchaseOrder).join(PurchaseOrder).filter(
+        PurchaseOrderItem.inventory_item_id == id,
+        PurchaseOrder.company_id == company_id
+    ).all()
+    
+    for line_item, po in purchases:
+        movements.append({
+            'date': po.created_at,
+            'type': 'Purchase',
+            'reference': po.order_number,
+            'qty_change': line_item.quantity,
+            'price': line_item.price,
+            'total': line_item.quantity * (line_item.price or 0),
+            'status': 'completed' # POs don't have a status in models.py yet
+        })
+        
+    # Sort movements by date descending
+    movements.sort(key=lambda x: x['date'], reverse=True)
+    
+    return render_template('inventory/view.html', 
+                          company_id=company_id, 
+                          item=item,
+                          movements=movements)
 
 @inventory.route('/<int:company_id>/inventory/<int:id>/edit_item', methods=['GET'])
 @login_required

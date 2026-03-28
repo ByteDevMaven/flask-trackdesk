@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
     itemIndex = document.querySelectorAll(".item-row").length
   }
 
-  addItemBtn.addEventListener("click", async () => {
+  async function addNewRow() {
     const formData = new FormData()
     formData.append("index", itemIndex)
     formData.append("csrf_token", csrftoken)
@@ -43,6 +43,43 @@ document.addEventListener("DOMContentLoaded", () => {
     if (row) {
       itemsContainer.appendChild(row)
       itemIndex++
+      return row
+    }
+    return null
+  }
+
+  function populateRow(row, productData) {
+    if (!row) return
+
+    // Update hidden input
+    row.querySelector(".item-id-input").value = productData.id
+
+    // Update button text
+    const nameEl = row.querySelector(".product-name")
+    nameEl.textContent = productData.name
+    nameEl.classList.remove("text-slate-400", "italic")
+
+    // Update description
+    row.querySelector(".item-description").value = productData.description
+
+    // Update price
+    row.querySelector(".item-price").value = Number.parseFloat(productData.price).toFixed(2)
+
+    const qtyInput = row.querySelector(".item-quantity")
+    if (!qtyInput.value || Number(qtyInput.value) <= 0) {
+      qtyInput.value = 1
+    }
+
+    // Update quantity max
+    qtyInput.setAttribute("max", productData.stock)
+
+    updateRowTotal(row)
+    updateTotals()
+  }
+
+  addItemBtn.addEventListener("click", async () => {
+    const row = await addNewRow()
+    if (row) {
       updateRowTotal(row)
       updateTotals()
     }
@@ -110,35 +147,13 @@ document.addEventListener("DOMContentLoaded", () => {
   productsList.addEventListener("click", (e) => {
     const card = e.target.closest(".product-card")
     if (card && currentRow) {
-      const productId = card.dataset.id
-      const productName = card.dataset.name
-      const productDescription = card.dataset.description
-      const productPrice = card.dataset.price
-      const productStock = card.dataset.stock
-
-      // Update hidden input
-      currentRow.querySelector(".item-id-input").value = productId
-
-      // Update button text
-      currentRow.querySelector(".product-name").textContent = productName
-      currentRow.querySelector(".product-name").classList.remove("text-fg-muted")
-
-      // Update description
-      currentRow.querySelector(".item-description").value = productDescription
-
-      // Update price
-      currentRow.querySelector(".item-price").value = Number.parseFloat(productPrice).toFixed(2)
-
-      const qtyInput = currentRow.querySelector(".item-quantity")
-      if (!qtyInput.value || Number(qtyInput.value) <= 0) {
-        qtyInput.value = 1
-      }
-
-      // Update quantity max
-      currentRow.querySelector(".item-quantity").setAttribute("max", productStock)
-
-      updateRowTotal(currentRow)
-      updateTotals()
+      populateRow(currentRow, {
+        id: card.dataset.id,
+        name: card.dataset.name,
+        description: card.dataset.description,
+        price: card.dataset.price,
+        stock: card.dataset.stock
+      })
 
       modal.classList.add("hidden")
       currentRow = null
@@ -197,6 +212,86 @@ document.addEventListener("DOMContentLoaded", () => {
     if (tax15El) tax15El.textContent = currency + tax15.toFixed(2)
     if (totalEl) totalEl.textContent = currency + total.toFixed(2)
   }
+
+  // Barcode Scanner Logic
+  const barcodeScan = document.getElementById("barcode-scan")
+
+  barcodeScan?.addEventListener("keydown", async (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault()
+      const value = barcodeScan.value.trim()
+      if (!value) return
+
+      const productCards = productsList.querySelectorAll(".product-card")
+      let foundCard = null
+
+      // Search by barcode first, then by ID
+      productCards.forEach(card => {
+        if (card.dataset.barcode === value || card.dataset.id === value) {
+          foundCard = card
+        }
+      })
+
+      // If not found, try name match (only if unique)
+      if (!foundCard) {
+        const matches = []
+        productCards.forEach(card => {
+          if (card.dataset.name.toLowerCase().includes(value.toLowerCase())) {
+            matches.push(card)
+          }
+        })
+        if (matches.length === 1) {
+          foundCard = matches[0]
+        }
+      }
+
+      if (foundCard) {
+        // Check if item already exists in the list
+        const existingRow = Array.from(document.querySelectorAll(".item-row")).find(row => 
+          row.querySelector(".item-id-input").value === foundCard.dataset.id
+        )
+
+        if (existingRow) {
+          const qtyInput = existingRow.querySelector(".item-quantity")
+          qtyInput.value = parseInt(qtyInput.value || 0) + 1
+          updateRowTotal(existingRow)
+          updateTotals()
+          
+          // Flash the row to show it was updated
+          existingRow.classList.add("bg-indigo-500/10", "transition-all", "duration-300")
+          setTimeout(() => existingRow.classList.remove("bg-indigo-500/10"), 1000)
+        } else {
+          const newRow = await addNewRow()
+          if (newRow) {
+            populateRow(newRow, {
+              id: foundCard.dataset.id,
+              name: foundCard.dataset.name,
+              description: foundCard.dataset.description,
+              price: foundCard.dataset.price,
+              stock: foundCard.dataset.stock
+            })
+            // Flash the new row
+            newRow.classList.add("bg-emerald-500/10", "transition-all", "duration-300")
+            setTimeout(() => newRow.classList.remove("bg-emerald-500/10"), 1000)
+          }
+        }
+        barcodeScan.value = ""
+        barcodeScan.classList.remove("border-rose-500")
+      } else {
+        // Not found
+        barcodeScan.classList.add("border-rose-500")
+        setTimeout(() => barcodeScan.classList.remove("border-rose-500"), 2000)
+      }
+    }
+  })
+
+  // Global F2 to focus scan
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "F2") {
+      e.preventDefault()
+      barcodeScan?.focus()
+    }
+  })
 
   // Initialize
   document.querySelectorAll(".item-row").forEach(updateRowTotal)
