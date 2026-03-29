@@ -1,6 +1,6 @@
 import csv
 from io import StringIO, BytesIO
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import barcode
 from flask import render_template, request, redirect, session, url_for, flash, current_app, jsonify
@@ -11,7 +11,7 @@ from flask_babel import _
 from barcode.writer import ImageWriter
 from PIL import Image, ImageDraw, ImageFont
 
-from models import db, InventoryItem, Supplier, Document, DocumentItem, PurchaseOrder, PurchaseOrderItem, DocumentType
+from models import db, InventoryItem, Supplier, Document, DocumentItem, PurchaseOrder, PurchaseOrderItem, DocumentType, StockMovement, StockMovementType
 from extensions import limiter
 
 from . import inventory
@@ -147,51 +147,75 @@ def create(company_id):
 def view(company_id, id):
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
     
+    # Fetch movements from StockMovement table
+    db_movements = StockMovement.query.filter_by(
+        inventory_item_id=id,
+        company_id=company_id
+    ).order_by(StockMovement.date.desc()).all()
+    
     movements = []
-    
-    # Fetch Sales (DocumentItems)
-    # Only include completed invoices (e.g. sent, paid) if we want to be strict, 
-    # but showing all related documents is better for "movement" context.
-    sales = db.session.query(DocumentItem, Document).join(Document).filter(
-        DocumentItem.inventory_item_id == id,
-        Document.company_id == company_id
-    ).all()
-    
-    for line_item, doc in sales:
+    for m in db_movements:
         movements.append({
-            'date': doc.issued_date or doc.created_at,
-            'type': 'Sale' if doc.type == DocumentType.invoice else 'Quote',
-            'reference': doc.document_number,
-            'qty_change': -line_item.quantity,
-            'price': line_item.unit_price,
-            'total': -(line_item.quantity * (line_item.unit_price or 0)),
-            'status': doc.status.value if doc.status else 'draft'
+            'date': m.date,
+            'type': m.type.value.title(),
+            'reference': m.reference or '-',
+            'qty_change': m.quantity,
+            'status': 'completed', # All movements in this table are considered completed
+            'notes': m.notes
         })
-        
-    # Fetch Purchases (PurchaseOrderItems)
-    purchases = db.session.query(PurchaseOrderItem, PurchaseOrder).join(PurchaseOrder).filter(
-        PurchaseOrderItem.inventory_item_id == id,
-        PurchaseOrder.company_id == company_id
-    ).all()
-    
-    for line_item, po in purchases:
-        movements.append({
-            'date': po.created_at,
-            'type': 'Purchase',
-            'reference': po.order_number,
-            'qty_change': line_item.quantity,
-            'price': line_item.price,
-            'total': line_item.quantity * (line_item.price or 0),
-            'status': 'completed' # POs don't have a status in models.py yet
-        })
-        
-    # Sort movements by date descending
-    movements.sort(key=lambda x: x['date'], reverse=True)
     
     return render_template('inventory/view.html', 
                           company_id=company_id, 
                           item=item,
                           movements=movements)
+
+@inventory.route('/<int:company_id>/inventory/movements')
+@login_required
+@limiter.exempt
+def movements(company_id):
+    page = request.args.get('page', 1, type=int)
+    per_page = int(current_app.config.get('ITEMS_PER_PAGE', 20))
+    
+    query = StockMovement.query.filter_by(company_id=company_id)
+    
+    # Filtering
+    search = request.args.get('search', '')
+    if search:
+        query = query.join(InventoryItem).filter(
+            or_(
+                InventoryItem.name.ilike(f'%{search}%'),
+                StockMovement.reference.ilike(f'%{search}%')
+            )
+        )
+        
+    movement_type = request.args.get('type')
+    if movement_type and movement_type in [t.value for t in StockMovementType]:
+        query = query.filter(StockMovement.type == movement_type)
+        
+    # Period filtering
+    period = request.args.get('period', 'all')
+    today = datetime.now()
+    if period == 'day':
+        start_date = today.replace(hour=0, minute=0, second=0, microsecond=0)
+        query = query.filter(StockMovement.date >= start_date)
+    elif period == 'week':
+        # Start of the week (Monday)
+        start_date = (today - timedelta(days=today.weekday())).replace(hour=0, minute=0, second=0, microsecond=0)
+        query = query.filter(StockMovement.date >= start_date)
+    elif period == 'month':
+        start_date = today.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+        query = query.filter(StockMovement.date >= start_date)
+    
+    pagination = query.order_by(StockMovement.date.desc()).paginate(page=page, per_page=per_page)
+    movements = pagination.items
+    
+    return render_template('inventory/movements.html',
+                          company_id=company_id,
+                          movements=movements,
+                          pagination=pagination,
+                          search=search,
+                          movement_type=movement_type,
+                          period=period)
 
 @inventory.route('/<int:company_id>/inventory/<int:id>/edit_item', methods=['GET'])
 @login_required
@@ -509,8 +533,20 @@ def api_adjust_stock(company_id, id):
     
     try:
         new_quantity = max(0, item.quantity + adjustment)
-        item.quantity = new_quantity
         
+        # Log movement
+        movement = StockMovement(
+            company_id=company_id,
+            inventory_item_id=id,
+            user_id=current_user.id if current_user.is_authenticated else None,
+            type=StockMovementType.adjustment,
+            quantity=adjustment,
+            reference=_('Manual Adjustment'),
+            date=datetime.now()
+        )
+        db.session.add(movement)
+        
+        item.quantity = new_quantity
         db.session.commit()
 
         return jsonify({

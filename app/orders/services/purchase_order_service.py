@@ -1,5 +1,5 @@
 from datetime import datetime
-from models import db, PurchaseOrder, PurchaseOrderItem, InventoryItem, Supplier
+from models import db, PurchaseOrder, PurchaseOrderItem, InventoryItem, Supplier, StockMovement, StockMovementType
 from sqlalchemy import or_, desc, asc
 from sqlalchemy import func
 from flask_babel import _
@@ -50,6 +50,17 @@ def create_purchase_order(company_id, form_data):
                     item_total = quantity * price
                     inventory_item.quantity = (inventory_item.quantity or 0) + quantity
                     db.session.add(inventory_item)
+                    
+                    # Log movement
+                    movement = StockMovement(
+                        company_id=company_id,
+                        inventory_item_id=int(item_id),
+                        type=StockMovementType.incoming,
+                        quantity=quantity,
+                        reference=f"PO {order_number}",
+                        date=datetime.now()
+                    )
+                    db.session.add(movement)
                     
                     po_item = PurchaseOrderItem(inventory_item_id=int(item_id),
                                                 name=inventory_item.name,

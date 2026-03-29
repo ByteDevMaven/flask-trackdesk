@@ -2,7 +2,7 @@ from datetime import datetime
 from flask import session
 from models import (
     db, Document, DocumentItem, InventoryItem,
-    DocumentType, Payment, PaymentMethod
+    DocumentType, Payment, PaymentMethod, StockMovement, StockMovementType
 )
 
 
@@ -75,6 +75,18 @@ def create_invoice_or_quote(company_id, form, user_id):
             inv = InventoryItem.query.get(int(inv_id))
             if inv:
                 inv.quantity = max((inv.quantity or 0) - qty, 0)
+                
+                # Log movement
+                movement = StockMovement(
+                    company_id=company_id,
+                    inventory_item_id=int(inv_id),
+                    user_id=user_id,
+                    type=StockMovementType.outgoing,
+                    quantity=-qty,
+                    reference=f"INV {document_number}",
+                    date=document.issued_date or datetime.now()
+                )
+                db.session.add(movement)
 
         db.session.add(DocumentItem(
             document_id=document.id,

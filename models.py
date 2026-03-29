@@ -39,6 +39,11 @@ class InvoiceType(enum.Enum):
     credit = _('credit')
     exchange = _('exchange')
 
+class StockMovementType(enum.Enum):
+    incoming = 'incoming'
+    outgoing = 'outgoing'
+    adjustment = 'adjustment'
+
 class PaymentMethod(enum.Enum):
     cash = _('cash')
     bank_transfer = _('bank transfer')
@@ -245,3 +250,22 @@ class Notification(db.Model):
     status = db.Column(db.String, index=True)  # 'sent', 'failed', etc.
     created_at = db.Column(db.DateTime, default=datetime.now())
     updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
+
+class StockMovement(db.Model):
+    __tablename__ = 'stock_movements'
+    id = db.Column(db.Integer, primary_key=True)
+    company_id = db.Column(db.Integer, db.ForeignKey('companies.id'), nullable=False, index=True)
+    inventory_item_id = db.Column(db.Integer, db.ForeignKey('inventory_items.id'), nullable=False, index=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), index=True)
+    
+    type = db.Column(db.Enum(StockMovementType), nullable=False)
+    quantity = db.Column(db.Integer, nullable=False)
+    reference = db.Column(db.String, index=True) # Invoice #, PO #, or adjustment reason
+    notes = db.Column(db.Text)
+    
+    date = db.Column(db.DateTime, default=datetime.now(), index=True)
+    created_at = db.Column(db.DateTime, default=datetime.now())
+
+    inventory_item = db.relationship('InventoryItem', backref='movements')
+    company = db.relationship('Company', backref='stock_movements')
+    user = db.relationship('User', backref='stock_movements')

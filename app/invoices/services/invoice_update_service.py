@@ -1,6 +1,6 @@
 from flask import session
-from models import db, DocumentItem, InventoryItem, DocumentType
-
+from models import db, DocumentItem, InventoryItem, DocumentType, StockMovement, StockMovementType
+from datetime import datetime
 
 def update_invoice_or_quote(document, form):
     old_items = DocumentItem.query.filter_by(document_id=document.id).all()
@@ -9,6 +9,13 @@ def update_invoice_or_quote(document, form):
             inv = InventoryItem.query.get(old.inventory_item_id)
             if inv:
                 inv.quantity += old.quantity
+    
+    # Delete old movements for this invoice
+    StockMovement.query.filter_by(
+        company_id=document.company_id,
+        reference=f"INV {document.document_number}",
+        type=StockMovementType.outgoing
+    ).delete()
 
     DocumentItem.query.filter_by(document_id=document.id).delete()
 
@@ -51,6 +58,18 @@ def update_invoice_or_quote(document, form):
                 if inv.quantity < quantity:
                     raise ValueError(f"Not enough stock for: {inv.name}")
                 inv.quantity -= quantity
+                
+                # Log new movement
+                movement = StockMovement(
+                    company_id=document.company_id,
+                    inventory_item_id=inv_id,
+                    user_id=document.user_id,
+                    type=StockMovementType.outgoing,
+                    quantity=-quantity,
+                    reference=f"INV {document.document_number}",
+                    date=document.issued_date or datetime.now()
+                )
+                db.session.add(movement)
 
         item_total = quantity * unit_price
         item_discount = item_total * (discount / 100)

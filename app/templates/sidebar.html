@@ -74,6 +74,9 @@
 
             {{ nav_link(_('Inventory'), 'inventory', 'fa-boxes-stacked',
             url_for('inventory.index', company_id=session.get('selected_company_id'))) }}
+
+            {{ nav_link(_('Movements'), 'inventory.movements', 'fa-history',
+            url_for('inventory.movements', company_id=session.get('selected_company_id'))) }}
         </div>
 
         <!-- ===== DOCUMENTS ===== -->
