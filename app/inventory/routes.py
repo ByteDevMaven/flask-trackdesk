@@ -1,20 +1,19 @@
 import csv
-from io import StringIO, BytesIO
+from io import StringIO
 from datetime import datetime, timedelta
 
 import barcode
 from flask import render_template, request, redirect, session, url_for, flash, current_app, jsonify
 from flask_login import login_required
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy import or_, and_, desc, asc, func
+from sqlalchemy import or_, and_
 from flask_babel import _
-from barcode.writer import ImageWriter
-from PIL import Image, ImageDraw, ImageFont
 
-from models import db, InventoryItem, Supplier, Document, DocumentItem, PurchaseOrder, PurchaseOrderItem, DocumentType, StockMovement, StockMovementType
+from models import db, InventoryItem, Supplier, StockMovement, StockMovementType
 from extensions import limiter
 
 from . import inventory
+from .services import InventoryService
 
 @inventory.route('/<int:company_id>/inventory')
 @login_required
@@ -23,60 +22,29 @@ def index(company_id):
     page = request.args.get('page', 1, type=int)
     per_page = int(current_app.config.get('ITEMS_PER_PAGE', 15))
     
-    query = InventoryItem.query.filter_by(company_id=company_id)
-    
-    # Apply search filter
+    # Get filters and sorting from request
     search = request.args.get('search', '')
-    if search:
-        query = query.filter(
-            or_(
-                InventoryItem.name.ilike(f'%{search}%'),
-                InventoryItem.description.ilike(f'%{search}%')
-            )
-        )
-    
-    # Apply supplier filter
     supplier_id = request.args.get('supplier_id', '')
-    if supplier_id and supplier_id.isdigit():
-        query = query.filter_by(supplier_id=int(supplier_id))
-    
-    # Apply sorting
     sort_by = request.args.get('sort', 'name')
     sort_order = request.args.get('order', 'asc')
     
-    if sort_by == 'name':
-        query = query.order_by(asc(InventoryItem.name) if sort_order == 'asc' else desc(InventoryItem.name))
-    elif sort_by == 'quantity':
-        query = query.order_by(asc(InventoryItem.quantity) if sort_order == 'asc' else desc(InventoryItem.quantity))
-    elif sort_by == 'price':
-        query = query.order_by(asc(InventoryItem.price) if sort_order == 'asc' else desc(InventoryItem.price))
-    else:
-        query = query.order_by(InventoryItem.name)
-    
-    # Pagination
-    pagination = query.paginate(page=page, per_page=per_page, error_out=False)
+    # Apply sorting and pagination using InventoryService
+    pagination = InventoryService.get_inventory_items(
+        company_id=company_id,
+        page=page,
+        per_page=per_page,
+        search=search,
+        supplier_id=supplier_id,
+        sort_by=sort_by,
+        sort_order=sort_order
+    )
     inventory_items = pagination.items
     
     # Filter options
     suppliers = Supplier.query.filter_by(company_id=company_id).order_by(Supplier.name).all()
     
     # Stats
-    total_items = InventoryItem.query.filter_by(company_id=company_id).count()
-    low_stock_items = InventoryItem.query.filter(
-        and_(InventoryItem.company_id == company_id, InventoryItem.quantity <= 10)
-    ).count()
-    out_of_stock_items = InventoryItem.query.filter(
-        and_(InventoryItem.company_id == company_id, InventoryItem.quantity == 0)
-    ).count()
-    total_value = db.session.query(func.sum(InventoryItem.quantity * InventoryItem.price))\
-        .filter_by(company_id=company_id).scalar() or 0
-    
-    stats = {
-        'total_items': total_items,
-        'low_stock_items': low_stock_items,
-        'out_of_stock_items': out_of_stock_items,
-        'total_value': total_value
-    }
+    stats = InventoryService.get_inventory_stats(company_id)
 
     return render_template('inventory/index.html', 
                           company_id=company_id,
@@ -599,22 +567,8 @@ def api_search(company_id):
 @limiter.exempt
 def api_stats(company_id):
     """Get inventory statistics"""
-    total_items = InventoryItem.query.filter_by(company_id=company_id).count()
-    low_stock_items = InventoryItem.query.filter(
-        and_(InventoryItem.company_id == company_id, InventoryItem.quantity <= 10)
-    ).count()
-    out_of_stock_items = InventoryItem.query.filter(
-        and_(InventoryItem.company_id == company_id, InventoryItem.quantity == 0)
-    ).count()
-    total_value = db.session.query(func.sum(InventoryItem.quantity * InventoryItem.price)).filter_by(company_id=company_id).scalar() or 0
-    
-    return jsonify({
-        'total_items': total_items,
-        'low_stock_items': low_stock_items,
-        'out_of_stock_items': out_of_stock_items,
-        'total_value': float(total_value),
-        'in_stock_items': total_items - out_of_stock_items
-    })
+    stats = InventoryService.get_inventory_stats(company_id)
+    return jsonify(stats)
 
 @inventory.route('/<int:company_id>/inventory/<int:id>/barcode')
 @login_required
@@ -624,55 +578,16 @@ def view_barcode(company_id, id):
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
     
     try:
-        # Generate barcode data (company_id + zero-padded item_id)
-        barcode_data = f"{company_id}{id:06d}"
-        
-        # Create barcode
-        code128 = barcode.get_barcode_class('code128')
-        barcode_instance = code128(barcode_data, writer=ImageWriter())
-        
-        # Generate barcode image in memory
-        buffer = BytesIO()
-        barcode_instance.write(buffer)
-        buffer.seek(0)
-        
-        # Open with PIL to add item information
-        barcode_img = Image.open(buffer)
-        
-        # Create a new image with extra space for text
-        img_width, img_height = barcode_img.size
-        new_height = img_height + 80  # Add space for text
-        final_img = Image.new('RGB', (img_width, new_height), 'white')
-        
-        # Paste barcode
-        final_img.paste(barcode_img, (0, 0))
-        
-        # Add text information
-        draw = ImageDraw.Draw(final_img)
-        
-        try:
-            # Try to use a better font
-            font_large = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 16)
-            font_small = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 12)
-        except:
-            # Fallback to default font
-            font_large = ImageFont.load_default()
-            font_small = ImageFont.load_default()
-        
-        # Add item name
-        text_y = img_height + 10
-        draw.text((10, text_y), item.name[:40], fill='black', font=font_large)
-        
-        # Add price and code
-        text_y += 25
-        draw.text((10, text_y), f"{session['currency']}{item.price:.2f}", fill='black', font=font_small)
-        draw.text((img_width - 100, text_y), f"Code: {barcode_data}", fill='black', font=font_small)
-        
-        # Save to buffer
-        output_buffer = BytesIO()
-        final_img.save(output_buffer, format='PNG')
-        output_buffer.seek(0)
-        
+        currency_symbol = session.get('currency', '$')
+        output_buffer, barcode_data = InventoryService.generate_barcode_image(
+            company_id=company_id, 
+            item_id=item.id, 
+            item_name=item.name, 
+            item_price=item.price, 
+            currency_symbol=currency_symbol,
+            for_download=False,
+            compact=False
+        )
         from flask import Response
         return Response(
             output_buffer.getvalue(),
@@ -682,20 +597,9 @@ def view_barcode(company_id, id):
         
     except Exception as e:
         current_app.logger.error(f"Barcode generation error: {str(e)}")
-        # Return a simple error image
-        error_img = Image.new('RGB', (300, 100), 'white')
-        draw = ImageDraw.Draw(error_img)
-        draw.text((10, 40), "Barcode generation failed", fill='red')
-        
-        error_buffer = BytesIO()
-        error_img.save(error_buffer, format='PNG')
-        error_buffer.seek(0)
-        
+        # Return a simple error response or default image
         from flask import Response
-        return Response(
-            error_buffer.getvalue(),
-            mimetype='image/png'
-        )
+        return Response('Barcode generation failed', status=500)
 
 @inventory.route('/<int:company_id>/inventory/<int:id>/barcode/download')
 @login_required
@@ -705,59 +609,16 @@ def download_barcode(company_id, id):
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
     
     try:
-        # Generate barcode data
-        barcode_data = f"{company_id}{id:06d}"
-        
-        # Create barcode
-        code128 = barcode.get_barcode_class('code128')
-        barcode_instance = code128(barcode_data, writer=ImageWriter())
-        
-        # Generate barcode image in memory
-        buffer = BytesIO()
-        barcode_instance.write(buffer)
-        buffer.seek(0)
-        
-        # Open with PIL to add item information
-        barcode_img = Image.open(buffer)
-        
-        # Create a new image with extra space for text
-        img_width, img_height = barcode_img.size
-        new_height = img_height + 60 # Add more space for download version
-        final_img = Image.new('RGB', (img_width, new_height), 'white')
-        
-        # Paste barcode
-        final_img.paste(barcode_img, (0, 0))
-        
-        # Add text information
-        draw = ImageDraw.Draw(final_img)
-        
-        try:
-            font_large = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 18)
-            font_medium = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 14)
-            #font_small = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 12)
-        except:
-            font_large = ImageFont.load_default()
-            font_medium = ImageFont.load_default()
-            #font_small = ImageFont.load_default()
-        
-        # Add item information
-        text_y = img_height + 10
-        draw.text((10, text_y), item.name[:50], fill='black', font=font_large)
-        
-        text_y += 25
-        draw.text((10, text_y), f"{_('Price')} {session['currency']}{item.price:,.2f}", fill='black', font=font_medium)
-        #draw.text((img_width - 150, text_y), f"Qty: {item.quantity}", fill='black', font=font_medium)
-        
-        #text_y += 20
-        #draw.text((10, text_y), f"Code: {barcode_data}", fill='black', font=font_small)
-        
-        #if item.supplier:
-        #    draw.text((img_width - 200, text_y), f"Supplier: {item.supplier.name[:20]}", fill='black', font=font_small)
-        
-        # Save to buffer
-        output_buffer = BytesIO()
-        final_img.save(output_buffer, format='PNG', dpi=(300, 300))  # High DPI for printing
-        output_buffer.seek(0)
+        currency_symbol = session.get('currency', '$')
+        output_buffer, barcode_data = InventoryService.generate_barcode_image(
+            company_id=company_id, 
+            item_id=item.id, 
+            item_name=item.name, 
+            item_price=item.price, 
+            currency_symbol=currency_symbol,
+            for_download=True,
+            compact=False
+        )
         
         from flask import Response
         return Response(
@@ -772,3 +633,36 @@ def download_barcode(company_id, id):
         current_app.logger.error(f"Barcode download error: {str(e)}")
         flash(_('An error occurred while generating the barcode'), 'error')
         return redirect(url_for('inventory.view', company_id=company_id, id=id))
+
+@inventory.route('/<int:company_id>/inventory/<int:id>/print-barcodes')
+@login_required
+@limiter.exempt
+def print_barcodes(company_id, id):
+    """Print multiple tight-packed barcodes on a letter-sized page"""
+    item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
+    copies = request.args.get('copies', 48, type=int)
+    
+    try:
+        currency_symbol = session.get('currency', '$')
+        import base64
+        output_buffer, barcode_data = InventoryService.generate_barcode_image(
+            company_id=company_id, 
+            item_id=item.id, 
+            item_name=item.name, 
+            item_price=item.price, 
+            currency_symbol=currency_symbol,
+            for_download=False,
+            compact=True
+        )
+        barcode_b64 = base64.b64encode(output_buffer.getvalue()).decode('utf-8')
+        
+    except Exception as e:
+        current_app.logger.error(f"Barcode print prep error: {str(e)}")
+        flash(_('An error occurred while generating the printable barcodes'), 'error')
+        return redirect(url_for('inventory.view', company_id=company_id, id=id))
+
+    return render_template('inventory/print_barcodes.html',
+                          company_id=company_id,
+                          item=item,
+                          copies=copies,
+                          barcode_b64=barcode_b64)

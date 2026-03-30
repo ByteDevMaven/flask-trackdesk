@@ -293,9 +293,14 @@
                 </a>
 
                 <button type="button" onclick="printBarcode()"
-                    class="w-full bg-indigo-600 text-white px-4 py-3 rounded-xl hover:bg-indigo-500 transition-all font-bold flex items-center justify-center text-sm shadow-lg shadow-indigo-500/20">
-                    <i class="fas fa-print mr-2"></i>{{ _('Print Label') }}
+                    class="w-full bg-slate-700 text-white px-4 py-3 rounded-xl hover:bg-slate-600 transition-all font-bold flex items-center justify-center text-sm border border-slate-600">
+                    <i class="fas fa-tag mr-2"></i>{{ _('Print Single Label') }}
                 </button>
+
+                <a href="{{ url_for('inventory.print_barcodes', company_id=company_id, id=item.id) }}"
+                    class="w-full bg-indigo-600 text-white px-4 py-3 rounded-xl hover:bg-indigo-500 transition-all font-bold flex items-center justify-center text-sm shadow-lg shadow-indigo-500/20 mt-4">
+                    <i class="fas fa-print mr-2"></i>{{ _('Print Sheet') }}
+                </a>
             </div>
         </div>
     </div>

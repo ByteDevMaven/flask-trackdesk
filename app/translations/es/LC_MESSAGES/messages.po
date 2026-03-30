@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2026-03-29 00:05-0600\n"
+"POT-Creation-Date: 2026-03-29 22:07-0600\n"
 "PO-Revision-Date: 2025-07-17 02:05-0600\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: es\n"
@@ -173,7 +173,7 @@ msgstr "Crea tu cuenta"
 msgid "Start managing your business today"
 msgstr "Empieza a gestionar tu negocio hoy"
 
-#: app/auth/templates/auth/register.html:24 app/inventory/routes.py:301
+#: app/auth/templates/auth/register.html:24 app/inventory/routes.py:269
 #: app/inventory/templates/inventory/index.html:157
 #: app/inventory/templates/inventory/view.html:49
 #: app/suppliers/templates/suppliers/index.html:101
@@ -303,8 +303,8 @@ msgstr "Seleccione usuarios que tendrán acceso a esta empresa"
 #: app/customers/templates/customers/index.html:224
 #: app/customers/templates/customers/view.html:432
 #: app/inventory/templates/inventory/form.html:172
-#: app/inventory/templates/inventory/view.html:333
-#: app/inventory/templates/inventory/view.html:375
+#: app/inventory/templates/inventory/view.html:338
+#: app/inventory/templates/inventory/view.html:380
 #: app/invoices/templates/invoices/form.html:343
 #: app/invoices/templates/invoices/view.html:458
 #: app/orders/templates/orders/form.html:241
@@ -1082,43 +1082,43 @@ msgstr "Cotizaciones Recientes"
 msgid "No recent quotes found"
 msgstr "No hay cotizaciones recientes"
 
-#: app/inventory/routes.py:110 app/inventory/routes.py:246
+#: app/inventory/routes.py:78 app/inventory/routes.py:214
 msgid "Name is required"
 msgstr "Se requiere el nombre"
 
-#: app/inventory/routes.py:114 app/inventory/routes.py:250
+#: app/inventory/routes.py:82 app/inventory/routes.py:218
 msgid "Quantity cannot be negative"
 msgstr "La cantidad no puede ser negativa"
 
-#: app/inventory/routes.py:118 app/inventory/routes.py:254
+#: app/inventory/routes.py:86 app/inventory/routes.py:222
 msgid "Price cannot be negative"
 msgstr "El precio no puede ser negativo"
 
-#: app/inventory/routes.py:133
+#: app/inventory/routes.py:101
 msgid "Inventory item created successfully"
 msgstr "Elemento de inventario creado con éxito"
 
-#: app/inventory/routes.py:138
+#: app/inventory/routes.py:106
 msgid "An error occurred while creating the inventory item"
 msgstr "Se produjo un error al crear el elemento de inventario"
 
-#: app/inventory/routes.py:265
+#: app/inventory/routes.py:233
 msgid "Inventory item updated successfully"
 msgstr "Elemento de inventario actualizado correctamente"
 
-#: app/inventory/routes.py:270
+#: app/inventory/routes.py:238
 msgid "An error occurred while updating the inventory item"
 msgstr "Se produjo un error al actualizar el elemento de inventario"
 
-#: app/inventory/routes.py:282
+#: app/inventory/routes.py:250
 msgid "Inventory item deleted successfully"
 msgstr "Elemento de inventario eliminado con éxito"
 
-#: app/inventory/routes.py:285
+#: app/inventory/routes.py:253
 msgid "An error occurred while deleting the inventory item"
 msgstr "Se produjo un error al eliminar el elemento de inventario"
 
-#: app/inventory/routes.py:301 app/inventory/templates/inventory/form.html:55
+#: app/inventory/routes.py:269 app/inventory/templates/inventory/form.html:55
 #: app/inventory/templates/inventory/index.html:165
 #: app/inventory/templates/inventory/view.html:57
 #: app/invoices/templates/invoices/form.html:186
@@ -1127,18 +1127,19 @@ msgstr "Se produjo un error al eliminar el elemento de inventario"
 msgid "Description"
 msgstr "Descripción"
 
-#: app/inventory/routes.py:301 app/inventory/templates/inventory/index.html:171
+#: app/inventory/routes.py:269 app/inventory/templates/inventory/index.html:171
 #: app/orders/templates/orders/view.html:143
 msgid "Quantity"
 msgstr "Cantidad"
 
-#: app/inventory/routes.py:301 app/inventory/routes.py:748
+#: app/inventory/routes.py:269 app/inventory/services/inventory_service.py:166
+#: app/inventory/services/inventory_service.py:175
 #: app/inventory/templates/inventory/index.html:181
 #: app/invoices/templates/invoices/form.html:192
 msgid "Price"
 msgstr "Precio"
 
-#: app/inventory/routes.py:301 app/inventory/templates/inventory/form.html:106
+#: app/inventory/routes.py:269 app/inventory/templates/inventory/form.html:106
 #: app/inventory/templates/inventory/index.html:189
 #: app/inventory/templates/inventory/view.html:92 app/orders/routes.py:154
 #: app/orders/templates/orders/form.html:54
@@ -1148,18 +1149,21 @@ msgstr "Precio"
 msgid "Supplier"
 msgstr "Proveedor"
 
-#: app/inventory/routes.py:544
-#, fuzzy
+#: app/inventory/routes.py:512 app/inventory/services/inventory_service.py:72
 msgid "Manual Adjustment"
-msgstr "Ajuste personalizado"
+msgstr "Ajuste Manual"
 
-#: app/inventory/routes.py:557
+#: app/inventory/routes.py:525
 msgid "Stock adjusted successfully"
 msgstr "Inventario ajustado con éxito"
 
-#: app/inventory/routes.py:773
+#: app/inventory/routes.py:634
 msgid "An error occurred while generating the barcode"
 msgstr "Se produjo un error al generar el código de barras"
+
+#: app/inventory/routes.py:661
+msgid "An error occurred while generating the printable barcodes"
+msgstr "Se produjo un error al generar los códigos de barras"
 
 #: app/inventory/templates/inventory/form.html:3
 #: app/inventory/templates/inventory/form.html:16
@@ -1356,8 +1360,8 @@ msgstr "artículos seleccionados?"
 #: app/inventory/templates/inventory/index.html:397
 #: app/inventory/templates/inventory/index.html:434
 #: app/inventory/templates/inventory/index.html:439
-#: app/inventory/templates/inventory/view.html:425
 #: app/inventory/templates/inventory/view.html:430
+#: app/inventory/templates/inventory/view.html:435
 #: app/orders/templates/orders/index.html:452
 #: app/orders/templates/orders/index.html:457
 msgid "An error occurred"
@@ -1520,7 +1524,7 @@ msgid "Download"
 msgstr "Descargar"
 
 #: app/inventory/templates/inventory/view.html:195
-#: app/inventory/templates/inventory/view.html:360
+#: app/inventory/templates/inventory/view.html:365
 msgid "Barcode"
 msgstr "Código de barras"
 
@@ -1595,42 +1599,46 @@ msgid "Download PNG"
 msgstr "Descargar PNG"
 
 #: app/inventory/templates/inventory/view.html:297
-msgid "Print Label"
-msgstr "Imprimir código de barras"
+msgid "Print Single Label"
+msgstr "Imprimir etiqueta"
 
-#: app/inventory/templates/inventory/view.html:311
+#: app/inventory/templates/inventory/view.html:302
+msgid "Print Sheet"
+msgstr "Imprimir Hoja"
+
+#: app/inventory/templates/inventory/view.html:316
 msgid "Adjust Stock Level"
 msgstr "Ajustar el nivel de stock"
 
-#: app/inventory/templates/inventory/view.html:320
+#: app/inventory/templates/inventory/view.html:325
 msgid ""
 "Adjustment\n"
 "                        Amount"
 msgstr "Ajustar"
 
-#: app/inventory/templates/inventory/view.html:324
+#: app/inventory/templates/inventory/view.html:329
 msgid "e.g. 5 or -5"
-msgstr ""
+msgstr "e.g. 5 o -5"
 
-#: app/inventory/templates/inventory/view.html:325
+#: app/inventory/templates/inventory/view.html:330
 msgid ""
 "Use positive numbers to add stock, negative\n"
 "                        to remove"
 msgstr "Use números positivos para agregar stock, negativo para eliminar"
 
-#: app/inventory/templates/inventory/view.html:337
+#: app/inventory/templates/inventory/view.html:342
 msgid "Confirm Adjustment"
 msgstr "Ajuste personalizado"
 
-#: app/inventory/templates/inventory/view.html:352
+#: app/inventory/templates/inventory/view.html:357
 msgid "Barcode Label Preview"
 msgstr "Previa de Codigo de Barra"
 
-#: app/inventory/templates/inventory/view.html:366
+#: app/inventory/templates/inventory/view.html:371
 msgid "Code: "
 msgstr "Código:"
 
-#: app/inventory/templates/inventory/view.html:379
+#: app/inventory/templates/inventory/view.html:384
 msgid "Print Now"
 msgstr "Imprimir"
 

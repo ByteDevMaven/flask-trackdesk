@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Barcodes - {{ item.name }}</title>
+    <style>
+        /* CSS reset and print optimization */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f4f6; /* Subtle grey for screen viewing */
+            display: flex;
+            justify-content: center;
+        }
+
+        .print-container {
+            width: 8.5in;
+            background: white;
+            padding: 0.5in;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin: 20px 0;
+        }
+
+        /* 
+           A letter size page is 8.5in x 11in 
+           Inside 0.5in margins, we have 7.5in x 10in usable space.
+           We can do a grid of 3 x 10 = 30 or 4 x 10 = 40 barcodes.
+        */
+        .barcode-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 columns */
+            gap: 0.25in 0.15in; 
+            align-content: start;
+        }
+
+        .barcode-item {
+            text-align: center;
+            border: 1px dashed #ccc;
+            padding: 0.05in;
+            page-break-inside: avoid;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 1.25in; /* Fix height to ensure uniform grid */
+        }
+
+        .barcode-item img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .print-controls {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        button {
+            background-color: #4f46e5;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button.outline {
+            background-color: transparent;
+            color: #4f46e5;
+            border: 1px solid #4f46e5;
+        }
+
+        @media print {
+            body {
+                background: white;
+                display: block;
+            }
+            .print-container {
+                box-shadow: none;
+                margin: 0;
+                padding: 0; /* Reset for print margins */
+                width: 100%;
+            }
+            .print-controls {
+                display: none;
+            }
+            @page {
+                size: letter;
+                margin: 0.5in;
+            }
+            .barcode-item {
+                border: none; /* remove dashed lines when printing */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="print-controls">
+        <button onclick="window.print()">Print Now</button>
+        <button class="outline" onclick="window.history.back()">Back</button>
+        
+        <form style="margin-top: 10px; border-top: 1px solid #eee; padding-top: 10px;" method="get">
+            <label style="font-size: 14px; display: block; margin-bottom: 5px;">Number of copies:</label>
+            <div style="display: flex; gap: 5px;">
+                <input type="number" name="copies" value="{{ copies }}" min="1" max="200" style="width: 60px; padding: 5px;">
+                <button type="submit" style="padding: 5px 10px;">Update</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="print-container">
+        <div class="barcode-grid">
+            {% for i in range(copies) %}
+            <div class="barcode-item">
+                <img src="data:image/png;base64,{{ barcode_b64 }}" alt="Barcode for {{ item.name }}" />
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        // Optional: auto-trigger print after 500ms when page fully loads
+        // window.addEventListener('load', () => setTimeout(() => window.print(), 500));
+    </script>
+</body>
+</html>
