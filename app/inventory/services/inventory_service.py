@@ -101,7 +101,7 @@ class InventoryService:
         }
         
         if compact:
-            # Significant reduction in size for printing many per page
+            # Enhanced size for readability in grid printing
             writer_options.update({
                 'module_width': 0.15,
                 'module_height': 5.0,
@@ -154,28 +154,28 @@ class InventoryService:
                     # fallback approximation
                     return len(text) * 6
             
-        text_y = img_height + (2 if compact else 10)
-        truncate_len = 22 if compact else (50 if for_download else 40)
+        text_y = img_height + (5 if compact else 10)
+        truncate_len = 25 if compact else (50 if for_download else 40)
         name_text = item_name[:truncate_len]
         
-        if compact:
-            # Center item name
-            draw.text(((img_width - get_text_width(name_text, font_large)) / 2, text_y), name_text, fill='black', font=font_large)
-            text_y += 12
-            # Center price
-            price_text = f"{_('Price')} {currency_symbol}{item_price:,.2f}"
-            draw.text(((img_width - get_text_width(price_text, font_medium)) / 2, text_y), price_text, fill='black', font=font_medium)
-            text_y += 12
-            # Center code
-            draw.text(((img_width - get_text_width(barcode_data, font_medium)) / 2, text_y), barcode_data, fill='black', font=font_medium)
-        else:
-            # Item name
-            draw.text((10, text_y), name_text, fill='black', font=font_large)
-            text_y += 25
-            price_text = f"{_('Price')} {currency_symbol}{item_price:,.2f}" if for_download else f"{currency_symbol}{item_price:.2f}"
-            draw.text((10, text_y), price_text, fill='black', font=font_medium)
-            if not for_download:
-                draw.text((img_width - 100, text_y), f"Code: {barcode_data}", fill='black', font=font_medium)
+        # Consistent layout: Item Name on top, Price/Code on bottom
+        # Item name
+        draw.text((5 if compact else 10, text_y), name_text, fill='black', font=font_large)
+        
+        # Second line position
+        text_y += (15 if compact else 25)
+        
+        # Price (bottom left)
+        price_text = f"{currency_symbol}{item_price:,.2f}"
+        if for_download:
+            price_text = f"{_('Price')} {price_text}"
+        draw.text((5 if compact else 10, text_y), price_text, fill='black', font=font_medium)
+        
+        # Code (bottom right - only if not for download or if compact)
+        if not for_download or compact:
+            code_text = barcode_data if compact else f"Code: {barcode_data}"
+            code_width = get_text_width(code_text, font_medium)
+            draw.text((img_width - code_width - (5 if compact else 10), text_y), code_text, fill='black', font=font_medium)
             
         output_buffer = BytesIO()
         final_img.save(output_buffer, format='PNG', dpi=(300, 300) if (for_download or compact) else (72, 72))
