@@ -40,6 +40,10 @@
                         class="bg-indigo-600 text-white px-6 py-3 rounded-xl hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-500/20 font-bold flex items-center text-sm">
                         <i class="fas fa-edit mr-2 text-xs"></i> {{ _('Edit Company') }}
                     </a>
+                    <a href="{{ url_for('companies.sequences_index', id=company.id) }}"
+                        class="bg-emerald-600 text-white px-6 py-3 rounded-xl hover:bg-emerald-500 transition-all shadow-lg shadow-emerald-500/20 font-bold flex items-center text-sm">
+                        <i class="fas fa-barcode mr-2 text-xs"></i> {{ _('Sequences') }}
+                    </a>
                     <a href="{{ url_for('companies.index') }}"
                         class="bg-slate-700 text-slate-300 px-6 py-3 rounded-xl hover:bg-slate-600 transition-all font-bold text-sm border border-slate-600">
                         <i class="fas fa-arrow-left mr-2 text-xs"></i> {{ _('Back') }}
@@ -113,6 +117,7 @@
             (_('Suppliers'), stats.suppliers_count, 'fa-truck', 'purple'),
             (_('Inventory'), stats.inventory_count, 'fa-boxes', 'amber'),
             (_('Documents'), stats.documents_count, 'fa-file-invoice', 'rose'),
+            (_('Sequences'), company.document_sequences|length, 'fa-barcode', 'indigo'),
             (_('Payments'), stats.payments_count, 'fa-credit-card', 'sky')
             ] %}
             <div

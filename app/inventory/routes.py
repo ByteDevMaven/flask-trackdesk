@@ -1,15 +1,13 @@
 import csv
 from io import StringIO
-from datetime import datetime, timedelta
+from datetime import datetime
 
-import barcode
 from flask import render_template, request, redirect, session, url_for, flash, current_app, jsonify
 from flask_login import login_required
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy import or_, and_
 from flask_babel import _
 
-from models import db, InventoryItem, Supplier, StockMovement, StockMovementType
+from models import db, InventoryItem, Supplier
 from extensions import limiter
 
 from . import inventory
@@ -67,41 +65,21 @@ def create(company_id):
     
     if request.method == 'POST':
         try:
-            name = request.form.get('name', '').strip()
-            description = request.form.get('description', '').strip()
-            quantity = int(request.form.get('quantity', 0))
-            price = float(request.form.get('price', 0.0))
-            supplier_id = request.form.get('supplier_id')
-            
-            # Validation
-            if not name:
-                flash(_('Name is required'), 'error')
-                return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, selected_id=selected_id, item=None, form_data=request.form)
-            
-            if quantity < 0:
-                flash(_('Quantity cannot be negative'), 'error')
-                return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, selected_id=selected_id, item=None, form_data=request.form)
-            
-            if price < 0:
-                flash(_('Price cannot be negative'), 'error')
-                return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, selected_id=selected_id, item=None, form_data=request.form)
-            
-            item = InventoryItem(
-                company_id=company_id, # type: ignore
-                name=name, # type: ignore
-                description=description if description else None, # type: ignore
-                quantity=quantity, # type: ignore
-                price=price, # type: ignore
-                supplier_id=int(supplier_id) if supplier_id and supplier_id.isdigit() else None # type: ignore
+            InventoryService.create_inventory_item(
+                company_id=company_id,
+                name=request.form.get('name', '').strip(),
+                description=request.form.get('description', '').strip(),
+                quantity=int(request.form.get('quantity', 0)),
+                price=float(request.form.get('price', 0.0)),
+                supplier_id=request.form.get('supplier_id')
             )
-            
-            db.session.add(item)
-            db.session.commit()
-            
             flash(_('Inventory item created successfully'), 'success')
             return redirect(url_for('inventory.index', company_id=company_id))
             
-        except (ValueError, SQLAlchemyError) as e:
+        except ValueError as e:
+            flash(str(e), 'error')
+            return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, selected_id=selected_id, item=None, form_data=request.form)
+        except SQLAlchemyError as e:
             db.session.rollback()
             flash(_('An error occurred while creating the inventory item'), 'error')
             current_app.logger.error(f"Database error: {str(e)}")
@@ -115,11 +93,9 @@ def create(company_id):
 def view(company_id, id):
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
     
-    # Fetch movements from StockMovement table
-    db_movements = StockMovement.query.filter_by(
-        inventory_item_id=id,
-        company_id=company_id
-    ).order_by(StockMovement.date.desc()).all()
+    # Fetch movements using InventoryService
+    pagination = InventoryService.get_stock_movements(company_id, item_id=id, per_page=100)
+    db_movements = pagination.items
     
     movements = []
     for m in db_movements:
@@ -143,38 +119,18 @@ def view(company_id, id):
 def movements(company_id):
     page = request.args.get('page', 1, type=int)
     per_page = int(current_app.config.get('ITEMS_PER_PAGE', 20))
-    
-    query = StockMovement.query.filter_by(company_id=company_id)
-    
-    # Filtering
     search = request.args.get('search', '')
-    if search:
-        query = query.join(InventoryItem).filter(
-            or_(
-                InventoryItem.name.ilike(f'%{search}%'),
-                StockMovement.reference.ilike(f'%{search}%')
-            )
-        )
-        
     movement_type = request.args.get('type')
-    if movement_type and movement_type in [t.value for t in StockMovementType]:
-        query = query.filter(StockMovement.type == movement_type)
-        
-    # Period filtering
     period = request.args.get('period', 'all')
-    today = datetime.now()
-    if period == 'day':
-        start_date = today.replace(hour=0, minute=0, second=0, microsecond=0)
-        query = query.filter(StockMovement.date >= start_date)
-    elif period == 'week':
-        # Start of the week (Monday)
-        start_date = (today - timedelta(days=today.weekday())).replace(hour=0, minute=0, second=0, microsecond=0)
-        query = query.filter(StockMovement.date >= start_date)
-    elif period == 'month':
-        start_date = today.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
-        query = query.filter(StockMovement.date >= start_date)
     
-    pagination = query.order_by(StockMovement.date.desc()).paginate(page=page, per_page=per_page)
+    pagination = InventoryService.get_stock_movements(
+        company_id=company_id,
+        movement_type=movement_type,
+        period=period,
+        search=search,
+        page=page,
+        per_page=per_page
+    )
     movements = pagination.items
     
     return render_template('inventory/movements.html',
@@ -203,37 +159,23 @@ def update(company_id, id):
     suppliers = Supplier.query.filter_by(company_id=company_id).order_by(Supplier.name).all()
     
     try:
-        name = request.form.get('name', '').strip()
-        description = request.form.get('description', '').strip()
-        quantity = int(request.form.get('quantity', 0))
-        price = float(request.form.get('price', 0.0))
-        supplier_id = request.form.get('supplier_id')
-        
-        # Validation
-        if not name:
-            flash(_('Name is required'), 'error')
-            return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, item=item, form_data=request.form)
-        
-        if quantity < 0:
-            flash(_('Quantity cannot be negative'), 'error')
-            return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, item=item, form_data=request.form)
-        
-        if price < 0:
-            flash(_('Price cannot be negative'), 'error')
-            return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, item=item, form_data=request.form)
-        
-        item.name = name
-        item.description = description if description else None
-        item.quantity = quantity
-        item.price = price
-        item.supplier_id = int(supplier_id) if supplier_id and supplier_id.isdigit() else None
-        
-        db.session.commit()
+        InventoryService.update_inventory_item(
+            company_id=company_id,
+            item_id=id,
+            name=request.form.get('name', '').strip(),
+            description=request.form.get('description', '').strip(),
+            quantity=int(request.form.get('quantity', 0)),
+            price=float(request.form.get('price', 0.0)),
+            supplier_id=request.form.get('supplier_id')
+        )
         
         flash(_('Inventory item updated successfully'), 'success')
         return redirect(url_for('inventory.index', company_id=company_id))
         
-    except (ValueError, SQLAlchemyError) as e:
+    except ValueError as e:
+        flash(str(e), 'error')
+        return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, item=item, form_data=request.form)
+    except SQLAlchemyError as e:
         db.session.rollback()
         flash(_('An error occurred while updating the inventory item'), 'error')
         current_app.logger.error(f"Database error: {str(e)}")
@@ -242,16 +184,12 @@ def update(company_id, id):
 @inventory.route('/<int:company_id>/inventory/<int:id>/delete_item', methods=['POST'])
 @login_required
 def delete(company_id, id):
-    item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
-    
     try:
-        db.session.delete(item)
-        db.session.commit()
+        InventoryService.delete_inventory_item(company_id, id)
         flash(_('Inventory item deleted successfully'), 'success')
-    except SQLAlchemyError as e:
-        db.session.rollback()
+    except Exception as e:
         flash(_('An error occurred while deleting the inventory item'), 'error')
-        current_app.logger.error(f"Database error: {str(e)}")
+        current_app.logger.error(f"Delete error: {str(e)}")
     
     return redirect(url_for('inventory.index', company_id=company_id))
 
@@ -297,22 +235,15 @@ def api_get_items(company_id):
     page = request.args.get('page', 1, type=int)
     per_page = min(request.args.get('per_page', 20, type=int), 100)
     search = request.args.get('search', '')
-    supplier_id = request.args.get('supplier_id', type=int)
+    supplier_id = request.args.get('supplier_id')
     
-    query = InventoryItem.query.filter_by(company_id=company_id)
-    
-    if search:
-        query = query.filter(
-            or_(
-                InventoryItem.name.ilike(f'%{search}%'),
-                InventoryItem.description.ilike(f'%{search}%')
-            )
-        )
-    
-    if supplier_id:
-        query = query.filter_by(supplier_id=supplier_id)
-    
-    pagination = query.paginate(page=page, per_page=per_page, error_out=False)
+    pagination = InventoryService.get_inventory_items(
+        company_id=company_id,
+        page=page,
+        per_page=per_page,
+        search=search,
+        supplier_id=supplier_id
+    )
     items = pagination.items
     
     return jsonify({
@@ -362,30 +293,14 @@ def api_create_item(company_id):
         return jsonify({'error': 'No data provided'}), 400
     
     try:
-        # Validation
-        if not data.get('name'):
-            return jsonify({'error': 'Name is required'}), 400
-        
-        quantity = data.get('quantity', 0)
-        price = data.get('price', 0.0)
-        
-        if quantity < 0:
-            return jsonify({'error': 'Quantity cannot be negative'}), 400
-        
-        if price < 0:
-            return jsonify({'error': 'Price cannot be negative'}), 400
-        
-        item = InventoryItem(
-            company_id=company_id, # type: ignore
-            name=data['name'],  # type: ignore
-            description=data.get('description'), # type: ignore
-            quantity=quantity, # type: ignore
-            price=price, # type: ignore
-            supplier_id=data.get('supplier_id') # type: ignore
+        item = InventoryService.create_inventory_item(
+            company_id=company_id,
+            name=data.get('name'),
+            description=data.get('description'),
+            quantity=data.get('quantity', 0),
+            price=data.get('price', 0.0),
+            supplier_id=data.get('supplier_id')
         )
-        
-        db.session.add(item)
-        db.session.commit()
         
         return jsonify({
             'id': item.id,
@@ -396,6 +311,8 @@ def api_create_item(company_id):
             'supplier_id': item.supplier_id
         }), 201
         
+    except ValueError as e:
+        return jsonify({'error': str(e)}), 400
     except SQLAlchemyError as e:
         db.session.rollback()
         current_app.logger.error(f"API create error: {str(e)}")
@@ -406,29 +323,20 @@ def api_create_item(company_id):
 @limiter.exempt
 def api_update_item(company_id, id):
     """Update an inventory item"""
-    item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
-    
     data = request.get_json()
     if not data:
         return jsonify({'error': 'No data provided'}), 400
     
     try:
-        # Validation
-        if 'name' in data and not data['name']:
-            return jsonify({'error': 'Name is required'}), 400
-        
-        if 'quantity' in data and data['quantity'] < 0:
-            return jsonify({'error': 'Quantity cannot be negative'}), 400
-        
-        if 'price' in data and data['price'] < 0:
-            return jsonify({'error': 'Price cannot be negative'}), 400
-        
-        # Update fields
-        for field in ['name', 'description', 'quantity', 'price', 'supplier_id']:
-            if field in data:
-                setattr(item, field, data[field])
-        
-        db.session.commit()
+        item = InventoryService.update_inventory_item(
+            company_id=company_id,
+            item_id=id,
+            name=data.get('name'),
+            description=data.get('description'),
+            quantity=data.get('quantity'),
+            price=data.get('price'),
+            supplier_id=data.get('supplier_id')
+        )
         
         return jsonify({
             'id': item.id,
@@ -439,6 +347,8 @@ def api_update_item(company_id, id):
             'supplier_id': item.supplier_id
         })
         
+    except ValueError as e:
+        return jsonify({'error': str(e)}), 400
     except SQLAlchemyError as e:
         db.session.rollback()
         current_app.logger.error(f"API update error: {str(e)}")
@@ -473,12 +383,7 @@ def api_bulk_delete(company_id):
         return jsonify({'error': 'No items selected'}), 400
     
     try:
-        deleted_count = InventoryItem.query.filter(
-            and_(InventoryItem.id.in_(item_ids), InventoryItem.company_id == company_id)
-        ).delete(synchronize_session=False)
-        
-        db.session.commit()
-        
+        deleted_count = InventoryService.bulk_delete_items(company_id, item_ids)
         return jsonify({
             'message': f'{deleted_count} items deleted successfully',
             'deleted_count': deleted_count
@@ -494,32 +399,19 @@ def api_bulk_delete(company_id):
 @limiter.exempt
 def api_adjust_stock(company_id, id):
     """Adjust stock quantity for an item"""
-    item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
-    
     data = request.get_json()
     adjustment = int(data.get('adjustment', 0)) if data else 0
     
     try:
-        new_quantity = max(0, item.quantity + adjustment)
-        
-        # Log movement
-        movement = StockMovement(
+        new_quantity = InventoryService.adjust_stock(
             company_id=company_id,
-            inventory_item_id=id,
-            user_id=current_user.id if current_user.is_authenticated else None,
-            type=StockMovementType.adjustment,
-            quantity=adjustment,
-            reference=_('Manual Adjustment'),
-            date=datetime.now()
+            item_id=id,
+            adjustment=adjustment
         )
-        db.session.add(movement)
-        
-        item.quantity = new_quantity
-        db.session.commit()
 
         return jsonify({
             'success': True,
-            'id': item.id,
+            'id': id,
             'new_quantity': new_quantity,
             'adjustment': adjustment,
             'message': _('Stock adjusted successfully')
@@ -536,19 +428,7 @@ def api_adjust_stock(company_id, id):
 def api_search(company_id):
     """Search inventory items"""
     query = request.args.get('q', '').strip()
-    
-    if not query or len(query) < 2:
-        return jsonify([])
-    
-    items = InventoryItem.query.filter(
-        and_(
-            InventoryItem.company_id == company_id,
-            or_(
-                InventoryItem.name.ilike(f'%{query}%'),
-                InventoryItem.description.ilike(f'%{query}%')
-            )
-        )
-    ).limit(10).all()
+    items = InventoryService.search_inventory_items(company_id, query)
     
     results = []
     for item in items:

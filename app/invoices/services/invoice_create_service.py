@@ -1,14 +1,40 @@
-from datetime import datetime
+from datetime import datetime, date
 from flask import session
+from flask_babel import _
 from models import (
-    db, Document, DocumentItem, InventoryItem,
+    db, Document, DocumentItem, InventoryItem, DocumentSequence,
     DocumentType, Payment, PaymentMethod, StockMovement, StockMovementType
 )
 
 
 def _generate_document_number(company_id, doc_type):
+    if doc_type == DocumentType.invoice:
+        # Honduras SAR Compliance Implementation
+        # We use with_for_update() to lock the sequence record and prevent race conditions
+        seq = db.session.query(DocumentSequence).filter(
+            DocumentSequence.company_id == company_id
+        ).with_for_update().first()
+
+        if not seq:
+            raise Exception(_("No active CAI configuration found for this company."))
+        
+        if seq.expiration_date < date.today():
+            raise Exception(_("The CAI sequence has expired (Limit date: %(date)s).", date=seq.expiration_date))
+
+        if seq.current >= seq.range_end:
+            raise Exception(_("The CAI sequence range has been exhausted."))
+
+        # Increment and save inside the transaction
+        seq.current += 1
+        db.session.add(seq)
+        
+        # Format: 000-001-01-XXXXXXXX
+        # 000 = establishment, 001 = emission point, 01 = invoice type
+        return f"000-001-01-{seq.current:08d}"
+    
+    # Fallback to legacy logic for non-invoice document types (e.g. quotes)
     company_id_str = str(company_id)
-    type_letter = 'I' if doc_type == DocumentType.invoice else 'Q'
+    type_letter = 'Q' if doc_type == DocumentType.quote else 'X'
     prefix = f"{type_letter}-{company_id_str}-"
 
     last_doc = Document.query.filter(

@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block title %}{% if sequence %}{{ _('Edit Sequence') }}{% else %}{{ _('New Sequence') }}{% endif %} - {{ company.name }}{% endblock %}
+
+{% block content %}
+<div class="animate-fadeIn">
+    <!-- Header -->
+    <div class="mb-8">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <a href="{{ url_for('companies.sequences_index', id=company.id) }}"
+                    class="w-10 h-10 flex items-center justify-center rounded-xl bg-slate-800 text-slate-400 hover:text-white transition-all border border-slate-700 hover:bg-slate-700 shadow-md">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <div>
+                    <h2 class="text-3xl font-extrabold text-white tracking-tight">
+                        {% if sequence %}{{ _('Edit Sequence') }}{% else %}{{ _('New Sequence') }}{% endif %}
+                    </h2>
+                    <p class="text-slate-400 text-sm mt-1 font-medium">
+                        {{ _('Configure SAR Honduras compliance for') }} <span class="text-indigo-400">{{ company.name }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form -->
+    <div class="bg-slate-800 rounded-2xl shadow-xl border border-slate-700/50 shadow-black/30 overflow-hidden max-w-4xl">
+        <form class="p-8"
+            action="{% if sequence %}{{ url_for('companies.sequence_update', id=company.id, seq_id=sequence.id) }}{% else %}{{ url_for('companies.sequence_store', id=company.id) }}{% endif %}"
+            method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <div class="space-y-8">
+                <div class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700/50">
+                    <h3 class="text-lg font-bold text-white mb-8 flex items-center">
+                        <i class="fas fa-file-contract mr-3 text-emerald-400"></i>
+                        {{ _('CAI & Authorization Details') }}
+                    </h3>
+
+                    <div class="space-y-6">
+                        <div>
+                            <label for="cai" class="block text-sm font-bold text-slate-300 mb-2">{{ _('CAI Number') }} <span class="text-rose-500">*</span></label>
+                            <input type="text" id="cai" name="cai" value="{{ sequence.cai if sequence else '' }}" required
+                                class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500
+                                       focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 focus:outline-none transition-all sm:text-sm"
+                                placeholder="{{ _('e.g., 1A2B3C-4D5E6F-7G8H9I-0J1K2L-3M4N5O-6P') }}">
+                            <p class="text-[10px] text-slate-500 mt-2 font-bold uppercase tracking-widest">{{ _('The authorization key provided by SAR Honduras.') }}</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="range_start" class="block text-sm font-bold text-slate-300 mb-2">{{ _('Range Start') }} <span class="text-rose-500">*</span></label>
+                                <input type="number" id="range_start" name="range_start" value="{{ sequence.range_start if sequence else '1' }}" required
+                                    class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500
+                                           focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 focus:outline-none transition-all sm:text-sm"
+                                    placeholder="1">
+                            </div>
+                            <div>
+                                <label for="range_end" class="block text-sm font-bold text-slate-300 mb-2">{{ _('Range End') }} <span class="text-rose-500">*</span></label>
+                                <input type="number" id="range_end" name="range_end" value="{{ sequence.range_end if sequence else '1000' }}" required
+                                    class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500
+                                           focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 focus:outline-none transition-all sm:text-sm"
+                                    placeholder="1000">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="expiration_date" class="block text-sm font-bold text-slate-300 mb-2">{{ _('Expiration Date') }} <span class="text-rose-500">*</span></label>
+                                <input type="date" id="expiration_date" name="expiration_date" value="{{ sequence.expiration_date.strftime('%Y-%m-%d') if sequence else '' }}" required
+                                    class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500
+                                           focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 focus:outline-none transition-all sm:text-sm">
+                            </div>
+                            {% if sequence %}
+                            <div>
+                                <label for="current" class="block text-sm font-bold text-slate-300 mb-2">{{ _('Current Sequence (Last Used)') }}</label>
+                                <input type="number" id="current" name="current" value="{{ sequence.current }}"
+                                    class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white placeholder-slate-500
+                                           focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 focus:outline-none transition-all sm:text-sm">
+                                <p class="text-[10px] text-slate-500 mt-2 font-bold uppercase tracking-widest text-rose-400">{{ _('Careful: Changing this manualy may skip numbers or cause duplicates.') }}</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-end space-x-4 mt-12 pt-8 border-t border-slate-700/50">
+                <a href="{{ url_for('companies.sequences_index', id=company.id) }}"
+                    class="px-8 py-3 border border-slate-600 rounded-xl text-slate-300 font-bold hover:bg-slate-700 hover:text-white transition-all">
+                    {{ _('Cancel') }}
+                </a>
+                <button type="submit"
+                    class="px-8 py-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-all shadow-lg shadow-emerald-500/20 font-bold flex items-center">
+                    <i class="fas fa-save mr-2 text-sm"></i>
+                    {% if sequence %}{{ _('Update Sequence') }}{% else %}{{ _('Save Sequence') }}{% endif %}
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

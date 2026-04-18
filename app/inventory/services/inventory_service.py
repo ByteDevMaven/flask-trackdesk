@@ -1,5 +1,5 @@
 from io import BytesIO
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import barcode
 from barcode.writer import ImageWriter
@@ -100,15 +100,15 @@ class InventoryService:
             'text': barcode_data,
         }
         
-        if compact:
-            # Enhanced size for readability in grid printing
-            writer_options.update({
-                'module_width': 0.15,
-                'module_height': 5.0,
-                'font_size': 1, # Cannot be 0, so make it tiny
-                'write_text': False,
-                'quiet_zone': 2.0
-            })
+        # if compact:
+        #     # Enhanced size for readability in grid printing
+        #     writer_options.update({
+        #         'module_width': 0.15,
+        #         'module_height': 5.0,
+        #         'font_size': 1, # Cannot be 0, so make it tiny
+        #         'write_text': False,
+        #         'quiet_zone': 2.0
+        #     })
         
         writer.set_options(writer_options)
 
@@ -182,3 +182,121 @@ class InventoryService:
         output_buffer.seek(0)
         
         return output_buffer, barcode_data
+
+    @staticmethod
+    def create_inventory_item(company_id, name, description=None, quantity=0, price=0.0, supplier_id=None):
+        if not name:
+            raise ValueError(_('Name is required'))
+        if quantity < 0:
+            raise ValueError(_('Quantity cannot be negative'))
+        if price < 0:
+            raise ValueError(_('Price cannot be negative'))
+
+        item = InventoryItem(
+            company_id=company_id,
+            name=name,
+            description=description,
+            quantity=quantity,
+            price=price,
+            supplier_id=int(supplier_id) if supplier_id and str(supplier_id).isdigit() else None
+        )
+        db.session.add(item)
+        db.session.commit()
+        return item
+
+    @staticmethod
+    def get_inventory_item(company_id, item_id):
+        return InventoryItem.query.filter_by(id=item_id, company_id=company_id).first()
+
+    @staticmethod
+    def update_inventory_item(company_id, item_id, name=None, description=None, quantity=None, price=None, supplier_id=None):
+        item = InventoryItem.query.filter_by(id=item_id, company_id=company_id).first_or_404()
+        
+        if name is not None:
+            if not name.strip():
+                raise ValueError(_('Name is required'))
+            item.name = name.strip()
+            
+        if description is not None:
+            item.description = description if description else None
+            
+        if quantity is not None:
+            if quantity < 0:
+                raise ValueError(_('Quantity cannot be negative'))
+            item.quantity = quantity
+            
+        if price is not None:
+            if price < 0:
+                raise ValueError(_('Price cannot be negative'))
+            item.price = price
+            
+        if supplier_id is not None:
+            item.supplier_id = int(supplier_id) if str(supplier_id).isdigit() else None
+            
+        db.session.commit()
+        return item
+
+    @staticmethod
+    def delete_inventory_item(company_id, item_id):
+        item = InventoryItem.query.filter_by(id=item_id, company_id=company_id).first_or_404()
+        db.session.delete(item)
+        db.session.commit()
+        return True
+
+    @staticmethod
+    def get_stock_movements(company_id, item_id=None, movement_type=None, period='all', search='', page=1, per_page=20):
+        query = StockMovement.query.filter_by(company_id=company_id)
+        
+        if item_id:
+            query = query.filter_by(inventory_item_id=item_id)
+            
+        if search:
+            query = query.join(InventoryItem).filter(
+                or_(
+                    InventoryItem.name.ilike(f'%{search}%'),
+                    StockMovement.reference.ilike(f'%{search}%')
+                )
+            )
+            
+        if movement_type and movement_type in [t.value for t in StockMovementType]:
+            query = query.filter(StockMovement.type == movement_type)
+            
+        today = datetime.now()
+        if period == 'day':
+            start_date = today.replace(hour=0, minute=0, second=0, microsecond=0)
+            query = query.filter(StockMovement.date >= start_date)
+        elif period == 'week':
+            start_date = (today - timedelta(days=today.weekday())).replace(hour=0, minute=0, second=0, microsecond=0)
+            query = query.filter(StockMovement.date >= start_date)
+        elif period == 'month':
+            start_date = today.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+            query = query.filter(StockMovement.date >= start_date)
+            
+        return query.order_by(StockMovement.date.desc()).paginate(page=page, per_page=per_page, error_out=False)
+
+    @staticmethod
+    def bulk_delete_items(company_id, item_ids):
+        if not item_ids:
+            return 0
+        
+        deleted_count = InventoryItem.query.filter(
+            and_(InventoryItem.id.in_(item_ids), InventoryItem.company_id == company_id)
+        ).delete(synchronize_session=False)
+        
+        db.session.commit()
+        return deleted_count
+
+    @staticmethod
+    def search_inventory_items(company_id, query, limit=10):
+        if not query or len(query) < 2:
+            return []
+            
+        return InventoryItem.query.filter(
+            and_(
+                InventoryItem.company_id == company_id,
+                or_(
+                    InventoryItem.name.ilike(f'%{query}%'),
+                    InventoryItem.description.ilike(f'%{query}%')
+                )
+            )
+        ).limit(limit).all()

@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required
 
-from models import db, Company, User, Client, Supplier, InventoryItem, Document, Payment, Report
+from models import db, Company, User, Client, Supplier, InventoryItem, Document, Payment, Report, DocumentSequence
 
 from . import companies
 
@@ -217,3 +217,113 @@ def search():
         })
     
     return jsonify(results)
+
+@companies.route('/companies/<int:id>/sequences')
+@login_required
+def sequences_index(id):
+    """List all document sequences for a company"""
+    company = Company.query.get_or_404(id)
+    sequences = DocumentSequence.query.filter_by(company_id=id).order_by(DocumentSequence.expiration_date.desc()).all()
+    return render_template('companies/sequences/index.html', company=company, sequences=sequences, today=datetime.now().date())
+
+@companies.route('/companies/<int:id>/sequences/create')
+@login_required
+def sequence_create(id):
+    """Form to create a new document sequence"""
+    company = Company.query.get_or_404(id)
+    return render_template('companies/sequences/form.html', company=company, sequence=None)
+
+@companies.route('/companies/<int:id>/sequences/store', methods=['POST'])
+@login_required
+def sequence_store(id):
+    """Store a new document sequence"""
+    company = Company.query.get_or_404(id)
+    try:
+        cai = request.form.get('cai', '').strip()
+        range_start = int(request.form.get('range_start', 0))
+        range_end = int(request.form.get('range_end', 0))
+        expiration_date_str = request.form.get('expiration_date', '')
+        
+        if not all([cai, range_start, range_end, expiration_date_str]):
+            flash('All fields are required.', 'error')
+            return redirect(url_for('companies.sequence_create', id=id))
+        
+        expiration_date = datetime.strptime(expiration_date_str, '%Y-%m-%d').date()
+        
+        sequence = DocumentSequence(
+            company_id=id,
+            cai=cai,
+            range_start=range_start,
+            range_end=range_end,
+            current=range_start - 1,
+            expiration_date=expiration_date
+        )
+        
+        db.session.add(sequence)
+        db.session.commit()
+        
+        flash('Document sequence created successfully!', 'success')
+        return redirect(url_for('companies.sequences_index', id=id))
+        
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error creating sequence: {str(e)}', 'error')
+        return redirect(url_for('companies.sequence_create', id=id))
+
+@companies.route('/companies/<int:id>/sequences/<int:seq_id>/edit')
+@login_required
+def sequence_edit(id, seq_id):
+    """Form to edit an existing document sequence"""
+    company = Company.query.get_or_404(id)
+    sequence = DocumentSequence.query.filter_by(id=seq_id, company_id=id).first_or_404()
+    return render_template('companies/sequences/form.html', company=company, sequence=sequence)
+
+@companies.route('/companies/<int:id>/sequences/<int:seq_id>/update', methods=['POST'])
+@login_required
+def sequence_update(id, seq_id):
+    """Update an existing document sequence"""
+    company = Company.query.get_or_404(id)
+    sequence = DocumentSequence.query.filter_by(id=seq_id, company_id=id).first_or_404()
+    
+    try:
+        cai = request.form.get('cai', '').strip()
+        range_start = int(request.form.get('range_start', 0))
+        range_end = int(request.form.get('range_end', 0))
+        current = int(request.form.get('current', sequence.current))
+        expiration_date_str = request.form.get('expiration_date', '')
+        
+        if not all([cai, expiration_date_str]):
+            flash('CAI and Expiration Date are required.', 'error')
+            return redirect(url_for('companies.sequence_edit', id=id, seq_id=seq_id))
+        
+        sequence.cai = cai
+        sequence.range_start = range_start
+        sequence.range_end = range_end
+        sequence.current = current
+        sequence.expiration_date = datetime.strptime(expiration_date_str, '%Y-%m-%d').date()
+        
+        db.session.commit()
+        
+        flash('Document sequence updated successfully!', 'success')
+        return redirect(url_for('companies.sequences_index', id=id))
+        
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error updating sequence: {str(e)}', 'error')
+        return redirect(url_for('companies.sequence_edit', id=id, seq_id=seq_id))
+
+@companies.route('/companies/<int:id>/sequences/<int:seq_id>/delete', methods=['POST'])
+@login_required
+def sequence_delete(id, seq_id):
+    """Delete a document sequence"""
+    sequence = DocumentSequence.query.filter_by(id=seq_id, company_id=id).first_or_404()
+    
+    try:
+        db.session.delete(sequence)
+        db.session.commit()
+        flash('Document sequence deleted successfully!', 'success')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'Error deleting sequence: {str(e)}', 'error')
+        
+    return redirect(url_for('companies.sequences_index', id=id))
