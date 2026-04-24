@@ -61,7 +61,7 @@
                 </div>
                 {% endif %}
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-4">
                     <div class="bg-slate-900/40 p-4 rounded-xl border border-slate-700/30">
                         <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">{{
                             _('Current Quantity')
@@ -83,6 +83,13 @@
                             Price') }}</label>
                         <p class="text-3xl font-extrabold text-white">{{ session.get('currency') }}{{
                             "{:,.2f}".format(item.price) }}</p>
+                    </div>
+
+                    <div class="bg-indigo-500/5 p-4 rounded-xl border border-indigo-500/20">
+                        <label class="block text-xs font-bold text-indigo-400/80 uppercase tracking-widest mb-2">{{
+                            _('Price (Inc. Tax)') }}</label>
+                        <p class="text-3xl font-extrabold text-indigo-400">{{ session.get('currency') }}{{
+                            "{:,.6f}".format(item.price * (1 + session.get('tax_rate', 0) / 100)) }}</p>
                     </div>
                 </div>
 

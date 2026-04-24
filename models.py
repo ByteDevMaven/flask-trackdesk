@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 import enum
 
 from flask_sqlalchemy import SQLAlchemy
@@ -61,8 +61,8 @@ class Company(db.Model):
     phone = db.Column(db.String, index=True)
     email = db.Column(db.String, index=True)
     identifier = db.Column(db.String(50), index=True)
-    created_at = db.Column(db.DateTime, default=datetime.now())
-    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC))
+    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC), onupdate=lambda: datetime.now(UTC))
 
 class Role(db.Model):
     __tablename__ = 'roles'
@@ -85,8 +85,8 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String, nullable=False)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), index=True)
     companies = db.relationship('Company', secondary=user_companies, backref='users')
-    created_at = db.Column(db.DateTime, default=datetime.now())
-    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC))
+    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC), onupdate=lambda: datetime.now(UTC))
 
 class Client(db.Model):
     __tablename__ = 'clients'
@@ -97,8 +97,8 @@ class Client(db.Model):
     email = db.Column(db.String, index=True)
     phone = db.Column(db.String, index=True)
     address = db.Column(db.String)
-    created_at = db.Column(db.DateTime, default=datetime.now())
-    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC))
+    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC), onupdate=lambda: datetime.now(UTC))
 
 class Supplier(db.Model):
     __tablename__ = 'suppliers'
@@ -108,8 +108,8 @@ class Supplier(db.Model):
     contact_email = db.Column(db.String, index=True)
     phone = db.Column(db.String, index=True)
     address = db.Column(db.String)
-    created_at = db.Column(db.DateTime, default=datetime.now())
-    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC))
+    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC), onupdate=lambda: datetime.now(UTC))
 
 class InventoryItem(db.Model):
     __tablename__ = 'inventory_items'
@@ -123,8 +123,8 @@ class InventoryItem(db.Model):
     supplier_id = db.Column(db.Integer, db.ForeignKey('suppliers.id'), index=True)
 
     supplier = db.relationship('Supplier', backref='inventory_items')
-    created_at = db.Column(db.DateTime, default=datetime.now())
-    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC))
+    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC), onupdate=lambda: datetime.now(UTC))
 
 class PurchaseOrder(db.Model):
     __tablename__ = 'purchase_orders'
@@ -135,8 +135,8 @@ class PurchaseOrder(db.Model):
     supplier_id = db.Column(db.Integer, db.ForeignKey('suppliers.id'), nullable=False, index=True)
 
     total_amount = db.Column(db.Float, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.now())
-    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC))
+    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC), onupdate=lambda: datetime.now(UTC))
 
     supplier = db.relationship('Supplier', backref='purchase_orders')
     items = db.relationship('PurchaseOrderItem', backref='purchase_order', cascade='all, delete-orphan')
@@ -167,8 +167,8 @@ class Document(db.Model):
     total_amount = db.Column(db.Float)
     issued_date = db.Column(db.DateTime)
     due_date = db.Column(db.DateTime)
-    created_at = db.Column(db.DateTime, default=datetime.now())
-    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC))
+    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC), onupdate=lambda: datetime.now(UTC))
 
     payments = db.relationship('Payment', backref='document', cascade='all, delete-orphan', lazy='dynamic')
 
@@ -214,8 +214,8 @@ class DocumentItem(db.Model):
     quantity = db.Column(db.Integer)
     unit_price = db.Column(db.Float)
     discount = db.Column(db.Float, default=0.0)
-    created_at = db.Column(db.DateTime, default=datetime.now())
-    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC))
+    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC), onupdate=lambda: datetime.now(UTC))
 
 class Payment(db.Model):
     __tablename__ = 'payments'
@@ -226,8 +226,8 @@ class Payment(db.Model):
     payment_date = db.Column(db.DateTime)
     method = db.Column(db.Enum(PaymentMethod), nullable=False, default=PaymentMethod.cash)
     notes = db.Column(db.String)
-    created_at = db.Column(db.DateTime, default=datetime.now())
-    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC))
+    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC), onupdate=lambda: datetime.now(UTC))
 
 class Report(db.Model):
     __tablename__ = 'reports'
@@ -237,8 +237,8 @@ class Report(db.Model):
     report_type = db.Column(db.String, index=True)
     generated_by = db.Column(db.Integer, db.ForeignKey('users.id'), index=True)
     file_url = db.Column(db.String)
-    created_at = db.Column(db.DateTime, default=datetime.now())
-    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC))
+    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC), onupdate=lambda: datetime.now(UTC))
 
 class Notification(db.Model):
     __tablename__ = 'notifications'
@@ -248,8 +248,8 @@ class Notification(db.Model):
     message = db.Column(db.Text)
     sent_at = db.Column(db.DateTime)
     status = db.Column(db.String, index=True)  # 'sent', 'failed', etc.
-    created_at = db.Column(db.DateTime, default=datetime.now())
-    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC))
+    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC), onupdate=lambda: datetime.now(UTC))
 
 class StockMovement(db.Model):
     __tablename__ = 'stock_movements'
@@ -263,8 +263,8 @@ class StockMovement(db.Model):
     reference = db.Column(db.String, index=True) # Invoice #, PO #, or adjustment reason
     notes = db.Column(db.Text)
     
-    date = db.Column(db.DateTime, default=datetime.now(), index=True)
-    created_at = db.Column(db.DateTime, default=datetime.now())
+    date = db.Column(db.DateTime, default=lambda: datetime.now(UTC), index=True)
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC))
 
     inventory_item = db.relationship('InventoryItem', backref='movements')
     company = db.relationship('Company', backref='stock_movements')
@@ -281,7 +281,7 @@ class DocumentSequence(db.Model):
     current = db.Column(db.Integer, nullable=False) # Should be initialized to range_start - 1
     expiration_date = db.Column(db.Date, nullable=False)
 
-    created_at = db.Column(db.DateTime, default=datetime.now())
-    updated_at = db.Column(db.DateTime, default=datetime.now(), onupdate=datetime.now())
+    created_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC))
+    updated_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC), onupdate=lambda: datetime.now(UTC))
 
     company = db.relationship('Company', backref='document_sequences')

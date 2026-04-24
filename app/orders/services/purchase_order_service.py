@@ -1,6 +1,5 @@
 from datetime import datetime
-from models import db, PurchaseOrder, PurchaseOrderItem, InventoryItem, Supplier, StockMovement, StockMovementType
-from sqlalchemy import or_, desc, asc
+from models import db, PurchaseOrder, PurchaseOrderItem, InventoryItem, StockMovement, StockMovementType
 from sqlalchemy import func
 from flask_babel import _
 from sqlalchemy.exc import SQLAlchemyError
