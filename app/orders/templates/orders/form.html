@@ -75,6 +75,15 @@ _('Business Management System') }}{% endblock %}
                         </p>
                         {% endif %}
                     </div>
+
+                    <div>
+                        <label for="created_at" class="block text-sm font-bold text-slate-300 mb-2">
+                            {{ _('Date') }} <span class="text-rose-500">*</span>
+                        </label>
+                        <input type="date" id="created_at" name="created_at" required
+                            value="{{ order.created_at.strftime('%Y-%m-%d') if order else (form_data.created_at if form_data else now.strftime('%Y-%m-%d')) }}"
+                            class="w-full px-4 py-3 bg-slate-900 border border-slate-700 rounded-xl text-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 focus:outline-none transition-all sm:text-sm">
+                    </div>
                 </div>
             </div>
         </div>

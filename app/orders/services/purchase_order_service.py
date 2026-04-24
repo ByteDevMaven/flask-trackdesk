@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 from models import db, PurchaseOrder, PurchaseOrderItem, InventoryItem, StockMovement, StockMovementType
 from sqlalchemy import func
 from flask_babel import _
@@ -16,10 +16,19 @@ def create_purchase_order(company_id, form_data):
         next_seq = int(last_id) + 1
         order_number = f"PO-{company_id}-{next_seq:06d}"
         
+        created_at_str = form_data.get('created_at')
+        created_at = None
+        if created_at_str:
+            try:
+                created_at = datetime.strptime(created_at_str, '%Y-%m-%d').replace(tzinfo=UTC)
+            except ValueError:
+                pass
+
         po = PurchaseOrder(company_id=company_id,
                            order_number=order_number,
                            supplier_id=int(supplier_id),
-                           total_amount=0.0)
+                           total_amount=0.0,
+                           created_at=created_at or datetime.now(UTC))
         db.session.add(po)
         db.session.flush()
         
@@ -57,7 +66,7 @@ def create_purchase_order(company_id, form_data):
                         type=StockMovementType.incoming,
                         quantity=quantity,
                         reference=f"PO {order_number}",
-                        date=datetime.now()
+                        date=lambda: datetime.now(UTC)
                     )
                     db.session.add(movement)
                     
@@ -101,6 +110,13 @@ def update_purchase_order(company_id, order_id, form_data):
             return {'success': False, 'error': _('Supplier is required')}
 
         purchase_order.supplier_id = int(supplier_id)
+
+        created_at_str = form_data.get('created_at')
+        if created_at_str:
+            try:
+                purchase_order.created_at = datetime.strptime(created_at_str, '%Y-%m-%d').replace(tzinfo=UTC)
+            except ValueError:
+                pass
 
         PurchaseOrderItem.query.filter_by(
             purchase_order_id=purchase_order.id

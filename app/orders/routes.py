@@ -1,6 +1,6 @@
 import csv
 from io import StringIO
-from datetime import datetime
+from datetime import datetime, UTC
 
 from flask import render_template, request, redirect, url_for, flash, current_app
 from flask_login import login_required
@@ -75,14 +75,16 @@ def create(company_id):
                                    company_id=company_id,
                                    suppliers=suppliers,
                                    inventory_items=inventory_items,
-                                   purchase_order=None,
-                                   form_data=request.form)
+                                   order=None,
+                                   form_data=request.form,
+                                   now=datetime.now(UTC))
     return render_template('orders/form.html',
                            company_id=company_id,
                            suppliers=suppliers,
                            inventory_items=inventory_items,
-                           purchase_order=None,
-                           form_data=None)
+                           order=None,
+                           form_data=None,
+                           now=datetime.now(UTC))
 
 @orders.route('/<int:company_id>/purchase-orders/<int:id>')
 @login_required
@@ -102,7 +104,8 @@ def edit(company_id, id):
                           suppliers=suppliers,
                           inventory_items=inventory_items,
                           order=purchase_order, 
-                          form_data=None)
+                          form_data=None,
+                          now=datetime.now(UTC))
 
 @orders.route('/<int:company_id>/purchase-orders/<int:id>/update', methods=['POST'])
 @login_required
@@ -122,8 +125,9 @@ def update(company_id, id):
                                company_id=company_id,
                                suppliers=suppliers,
                                inventory_items=inventory_items,
-                               purchase_order=purchase_order,
-                               form_data=request.form)
+                               order=purchase_order,
+                               form_data=request.form,
+                               now=datetime.now(UTC))
 
 @orders.route('/<int:company_id>/purchase-orders/<int:id>/delete', methods=['POST'])
 @login_required

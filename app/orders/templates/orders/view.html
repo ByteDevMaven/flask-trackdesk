@@ -108,7 +108,7 @@
                         <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">{{ _('Total
                             Amount') }}</label>
                         <p class="text-3xl font-extrabold text-emerald-400">{{ session.get('currency') }}{{
-                            "{:,}".format(order.total_amount) }}</p>
+                            "{:,.2f}".format(order.total_amount) }}</p>
                     </div>
                 </div>
             </div>
@@ -202,7 +202,7 @@
                             </td>
                             <td class="px-8 py-6 whitespace-nowrap">
                                 <div class="text-2xl font-extrabold text-emerald-400">{{ session.get('currency') }}{{
-                                    "{:,}".format(order.total_amount) }}</div>
+                                    "{:,.2f}".format(order.total_amount) }}</div>
                             </td>
                         </tr>
                     </tfoot>
@@ -252,7 +252,7 @@
                     <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">{{ _('Order Total')
                         }}</span>
                     <span class="text-4xl font-extrabold text-emerald-400 text-center">{{ session.get('currency') }}{{
-                        "{:,}".format(order.total_amount) }}</span>
+                        "{:,.2f}".format(order.total_amount) }}</span>
                 </div>
             </div>
         </div>
