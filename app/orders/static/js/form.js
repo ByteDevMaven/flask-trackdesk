@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const quantity = parseFloat(row.querySelector(".item-quantity")?.value) || 0
         const price = parseFloat(row.querySelector(".item-price")?.value) || 0
         const total = quantity * price
-        row.querySelector(".item-total").textContent = currency + total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 6 })
+        row.querySelector(".item-total").textContent = currency + total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 10 })
     }
 
     function updateOrderTotal() {
@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const price = parseFloat(row.querySelector(".item-price")?.value) || 0
             total += quantity * price
         })
-        document.getElementById("order-total").textContent = currency + total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 6 })
+        document.getElementById("order-total").textContent = currency + total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 10 })
     }
 
     // Initial calculation

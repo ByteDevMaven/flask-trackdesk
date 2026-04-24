@@ -161,7 +161,7 @@ _('Business Management System') }}{% endblock %}
                                     </td>
                                     <td class="px-4 py-4">
                                         <div class="item-total font-extrabold text-white text-sm">
-                                            {{ session.get('currency') }}{{ "{:,.4f}".format((item.quantity or 0) *
+                                            {{ session.get('currency') }}{{ "{:,}".format((item.quantity or 0) *
                                             (item.price or 0)) }}
                                         </div>
                                     </td>

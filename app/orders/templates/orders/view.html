@@ -108,7 +108,7 @@
                         <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">{{ _('Total
                             Amount') }}</label>
                         <p class="text-3xl font-extrabold text-emerald-400">{{ session.get('currency') }}{{
-                            "{:,.4f}".format(order.total_amount) }}</p>
+                            "{:,}".format(order.total_amount) }}</p>
                     </div>
                 </div>
             </div>
@@ -185,11 +185,11 @@
                             </td>
                             <td class="px-6 py-6 whitespace-nowrap">
                                 <div class="text-sm font-bold text-slate-400">{{ session.get('currency') }}{{
-                                    "{:,.4f}".format(item.price) }}</div>
+                                    "{:,}".format(item.price) }}</div>
                             </td>
                             <td class="px-8 py-6 whitespace-nowrap">
                                 <div class="text-sm font-extrabold text-white">{{ session.get('currency') }}{{
-                                    "{:,.4f}".format(item.total) }}</div>
+                                    "{:,}".format(item.total) }}</div>
                             </td>
                         </tr>
                         {% endfor %}
@@ -202,7 +202,7 @@
                             </td>
                             <td class="px-8 py-6 whitespace-nowrap">
                                 <div class="text-2xl font-extrabold text-emerald-400">{{ session.get('currency') }}{{
-                                    "{:,.4f}".format(order.total_amount) }}</div>
+                                    "{:,}".format(order.total_amount) }}</div>
                             </td>
                         </tr>
                     </tfoot>
@@ -241,7 +241,7 @@
                         }}</span>
                     <span class="font-bold text-slate-200">
                         {% if order.items|length > 0 %}
-                        {{ session.get('currency') }}{{ "{:,.4f}".format(order.total_amount / order.items|length) }}
+                        {{ session.get('currency') }}{{ "{:,}".format(order.total_amount / order.items|length) }}
                         {% else %}
                         {{ session.get('currency') }}0.00
                         {% endif %}
@@ -252,7 +252,7 @@
                     <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">{{ _('Order Total')
                         }}</span>
                     <span class="text-4xl font-extrabold text-emerald-400 text-center">{{ session.get('currency') }}{{
-                        "{:,.4f}".format(order.total_amount) }}</span>
+                        "{:,}".format(order.total_amount) }}</span>
                 </div>
             </div>
         </div>
