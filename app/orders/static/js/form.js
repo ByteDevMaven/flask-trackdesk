@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             currentRow.querySelector(".code-input").value = productCode
 
-            currentRow.querySelector(".item-price").value = Number.parseFloat(productPrice).toFixed(2)
+            currentRow.querySelector(".item-price").value = Number.parseFloat(productPrice)
 
             updateRowTotal(currentRow)
             updateOrderTotal()
@@ -140,7 +140,7 @@ document.addEventListener("DOMContentLoaded", () => {
             class="w-full px-2 py-1 text-sm border border-primary-300 rounded focus:ring-accent-500 focus:border-accent-500 item-quantity bg-bg-base text-fg-base">
         </td>
         <td class="px-4 py-3">
-          <input type="number" name="items[${index}][price]" value="0.00" min="0" step="0.01"
+          <input type="number" name="items[${index}][price]" value="0.00" min="0" step="any"
             class="w-full px-2 py-1 text-sm border border-primary-300 rounded focus:ring-accent-500 focus:border-accent-500 item-price bg-bg-base text-fg-base">
         </td>
         <td class="px-4 py-3">
@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const quantity = parseFloat(row.querySelector(".item-quantity")?.value) || 0
         const price = parseFloat(row.querySelector(".item-price")?.value) || 0
         const total = quantity * price
-        row.querySelector(".item-total").textContent = currency + total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+        row.querySelector(".item-total").textContent = currency + total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 6 })
     }
 
     function updateOrderTotal() {
@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const price = parseFloat(row.querySelector(".item-price")?.value) || 0
             total += quantity * price
         })
-        document.getElementById("order-total").textContent = currency + total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+        document.getElementById("order-total").textContent = currency + total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 6 })
     }
 
     // Initial calculation
