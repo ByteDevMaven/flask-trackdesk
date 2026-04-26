@@ -2,6 +2,7 @@ from datetime import datetime, UTC
 from models import db, PurchaseOrder, PurchaseOrderItem, InventoryItem, StockMovement, StockMovementType
 from sqlalchemy import func
 from flask_babel import _
+from flask import current_app
 from sqlalchemy.exc import SQLAlchemyError
 
 
@@ -16,6 +17,14 @@ def create_purchase_order(company_id, form_data):
         next_seq = int(last_id) + 1
         order_number = f"PO-{company_id}-{next_seq:06d}"
         
+        buy_date_str = form_data.get('buy_date')
+        buy_date = None
+        if buy_date_str:
+            try:
+                buy_date = datetime.strptime(buy_date_str, '%Y-%m-%d').date()
+            except ValueError:
+                pass
+
         created_at_str = form_data.get('created_at')
         created_at = None
         if created_at_str:
@@ -28,6 +37,7 @@ def create_purchase_order(company_id, form_data):
                            order_number=order_number,
                            supplier_id=int(supplier_id),
                            total_amount=0.0,
+                           buy_date=buy_date or (created_at.date() if created_at else datetime.now(UTC).date()),
                            created_at=created_at or datetime.now(UTC))
         db.session.add(po)
         db.session.flush()
@@ -66,7 +76,7 @@ def create_purchase_order(company_id, form_data):
                         type=StockMovementType.incoming,
                         quantity=quantity,
                         reference=f"PO {order_number}",
-                        date=lambda: datetime.now(UTC)
+                        date=created_at or datetime.now(UTC)
                     )
                     db.session.add(movement)
                     
@@ -93,6 +103,7 @@ def create_purchase_order(company_id, form_data):
     
     except Exception as e:
         db.session.rollback()
+        current_app.logger.error(f"Error creating purchase order: {str(e)}")
         return {'success': False, 'error': _('An error occurred while creating the purchase order')}
     
 def update_purchase_order(company_id, order_id, form_data):
@@ -110,6 +121,13 @@ def update_purchase_order(company_id, order_id, form_data):
             return {'success': False, 'error': _('Supplier is required')}
 
         purchase_order.supplier_id = int(supplier_id)
+
+        buy_date_str = form_data.get('buy_date')
+        if buy_date_str:
+            try:
+                purchase_order.buy_date = datetime.strptime(buy_date_str, '%Y-%m-%d').date()
+            except ValueError:
+                pass
 
         created_at_str = form_data.get('created_at')
         if created_at_str:
@@ -181,6 +199,7 @@ def update_purchase_order(company_id, order_id, form_data):
 
         return {'success': True, 'order': purchase_order}
 
-    except SQLAlchemyError:
+    except SQLAlchemyError as e:
         db.session.rollback()
+        current_app.logger.error(f"Error updating purchase order: {str(e)}")
         return {'success': False, 'error': _('An error occurred while updating the purchase order')}

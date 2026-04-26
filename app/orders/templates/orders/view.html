@@ -88,7 +88,12 @@
                             {{ order.order_number }}</p>
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">{{ _('Order
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">{{ _('Buy
+                            Date') }}</label>
+                        <p class="text-xl font-bold text-white">{{ order.buy_date.strftime('%B %d, %Y') if order.buy_date else _('N/A') }}</p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-widest mb-2">{{ _('System
                             Date') }}</label>
                         <p class="text-xl font-bold text-white">{{ order.created_at.strftime('%B %d, %Y') }}</p>
                     </div>

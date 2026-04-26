@@ -85,6 +85,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String, nullable=False)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), index=True)
     companies = db.relationship('Company', secondary=user_companies, backref='users')
+    last_login = db.Column(db.DateTime, default=lambda: datetime.now(UTC))
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC))
     updated_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC), onupdate=lambda: datetime.now(UTC))
 
@@ -135,6 +136,7 @@ class PurchaseOrder(db.Model):
     supplier_id = db.Column(db.Integer, db.ForeignKey('suppliers.id'), nullable=False, index=True)
 
     total_amount = db.Column(db.Float, nullable=False)
+    buy_date = db.Column(db.Date, index=True)
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC))
     updated_at = db.Column(db.DateTime, default=lambda: datetime.now(UTC), onupdate=lambda: datetime.now(UTC))
 

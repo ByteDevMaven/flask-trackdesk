@@ -1,3 +1,4 @@
+from datetime import datetime, UTC
 from flask import render_template, request, redirect, url_for, flash, current_app
 from flask_login import login_user, logout_user, current_user
 from flask_wtf.csrf import validate_csrf
@@ -36,7 +37,8 @@ def login():
             next_page = request.args.get('next')
             if not next_page or urlparse(next_page).netloc != '':
                 next_page = url_for('dashboard.index', company_id=current_user.companies[0].id)
-                
+            user.last_login = datetime.now(UTC)
+            db.session.commit()
             return redirect(next_page)
         else:
             flash(_("Invalid username or password"), 'warning')

@@ -217,11 +217,11 @@
                     </th>
                     <th scope="col"
                         class="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-widest">
-                        <a href="{{ url_for('orders.index', company_id=company_id, sort='created_at', order='desc' if sort_by == 'created_at' and sort_order == 'asc' else 'asc', filtered_args=filtered_args) }}"
+                        <a href="{{ url_for('orders.index', company_id=company_id, sort='buy_date', order='desc' if sort_by == 'buy_date' and sort_order == 'asc' else 'asc', filtered_args=filtered_args) }}"
                             class="group inline-flex items-center hover:text-indigo-400 transition-colors">
-                            {{ _('Date Created') }}
+                            {{ _('Buy Date') }}
                             <span class="ml-2 flex-none opacity-50">
-                                {% if sort_by == 'created_at' %}
+                                {% if sort_by == 'buy_date' %}
                                 <i class="fas fa-sort-{{ 'up' if sort_order == 'asc' else 'down' }}"></i>
                                 {% else %}
                                 <i class="fas fa-sort"></i>
@@ -288,7 +288,7 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
                         <div class="flex flex-col">
-                            <span class="font-bold text-slate-400">{{ order.created_at.strftime('%Y-%m-%d') }}</span>
+                            <span class="font-bold text-slate-400">{{ order.buy_date.strftime('%Y-%m-%d') if order.buy_date else _('N/A') }}</span>
                             <span class="text-[10px] font-medium opacity-70">{{ order.created_at.strftime('%H:%M')
                                 }}</span>
                         </div>
