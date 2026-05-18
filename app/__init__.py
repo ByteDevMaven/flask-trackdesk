@@ -5,8 +5,8 @@ from flask_babel import Babel
 from dotenv import load_dotenv
 
 from config import Config
-from models import db, migrate
-from extensions import bcrypt, limiter, csrf
+from app.models import db, migrate
+from app.extensions import bcrypt, limiter, csrf
 
 from app.auth import auth as auth_bp
 from app.dashboard import dashboard as dashboard_bp
@@ -63,7 +63,7 @@ def register_extensions(app: Flask):
 
     @login_manager.user_loader
     def load_user(user_id):
-        from models import User
+        from app.models import User
         return db.session.get(User, int(user_id))
 
 def register_blueprints(app: Flask):
@@ -81,7 +81,7 @@ def register_blueprints(app: Flask):
 def register_request_hooks(app: Flask):
     @app.before_request
     def ensure_company_selected():
-        from models import user_companies
+        from app.models import user_companies
         if current_user.is_authenticated and 'selected_company_id' not in session:
             user_company = db.session.query(user_companies).filter_by(user_id=current_user.id).first()
             if user_company:

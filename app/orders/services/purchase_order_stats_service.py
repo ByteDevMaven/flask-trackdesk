@@ -1,4 +1,4 @@
-from models import PurchaseOrder, db
+from app.models import PurchaseOrder, db
 from sqlalchemy import func
 from datetime import datetime
 

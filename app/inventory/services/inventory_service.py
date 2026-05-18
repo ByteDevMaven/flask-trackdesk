@@ -8,7 +8,7 @@ from sqlalchemy import or_, and_, desc, asc, func
 from flask_babel import _
 from flask_login import current_user
 
-from models import db, InventoryItem, StockMovement, StockMovementType
+from app.models import db, InventoryItem, StockMovement, StockMovementType
 
 
 class InventoryService:

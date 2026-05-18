@@ -7,7 +7,7 @@ from flask_login import login_required
 from sqlalchemy.exc import SQLAlchemyError
 from flask_babel import _
 
-from models import db, PurchaseOrder, Supplier, InventoryItem
+from app.models import db, PurchaseOrder, Supplier, InventoryItem
 
 from .services import create_purchase_order, update_purchase_order, get_purchase_orders, get_purchase_order_stats
 from . import orders

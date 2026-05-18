@@ -4,7 +4,7 @@ from sqlalchemy import func
 from datetime import datetime, timedelta
 from flask_babel import _
 
-from models import Client, Document, DocumentType, InventoryItem, Payment, db
+from app.models import Client, Document, DocumentType, InventoryItem, Payment, db
 
 from . import dashboard
 

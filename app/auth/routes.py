@@ -7,8 +7,8 @@ from wtforms.validators import ValidationError
 from urllib.parse import urlparse
 
 from . import auth
-from extensions import bcrypt, limiter
-from models import User, Company, Role, db
+from app.extensions import bcrypt, limiter
+from app.models import User, Company, Role, db
 
 @auth.route('/login', methods=["GET", "POST"])
 @limiter.limit("5 per minute")

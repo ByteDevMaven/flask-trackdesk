@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required
 
-from models import db, Company, User, Client, Supplier, InventoryItem, Document, Payment, Report, DocumentSequence
+from app.models import db, Company, User, Client, Supplier, InventoryItem, Document, Payment, Report, DocumentSequence
 
 from . import companies
 

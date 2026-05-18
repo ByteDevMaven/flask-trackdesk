@@ -7,8 +7,8 @@ from flask_login import login_required
 from sqlalchemy.exc import SQLAlchemyError
 from flask_babel import _
 
-from models import db, InventoryItem, Supplier
-from extensions import limiter
+from app.models import db, InventoryItem, Supplier
+from app.extensions import limiter
 
 from . import inventory
 from .services import InventoryService

@@ -1,7 +1,7 @@
 from datetime import datetime, date
 from flask import session
 from flask_babel import _
-from models import (
+from app.models import (
     db, Document, DocumentItem, InventoryItem, DocumentSequence,
     DocumentType, Payment, PaymentMethod, StockMovement, StockMovementType
 )

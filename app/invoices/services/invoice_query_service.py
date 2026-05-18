@@ -1,7 +1,7 @@
 from sqlalchemy import or_
 from datetime import datetime
 from flask import current_app
-from models import db, Document, Client, DocumentType
+from app.models import db, Document, Client, DocumentType
 
 
 def get_invoice_list(company_id, filters):

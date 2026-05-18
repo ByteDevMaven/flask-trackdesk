@@ -1,5 +1,5 @@
 from flask import session
-from models import db, DocumentItem, InventoryItem, DocumentType, StockMovement, StockMovementType
+from app.models import db, DocumentItem, InventoryItem, DocumentType, StockMovement, StockMovementType
 from datetime import datetime
 
 def update_invoice_or_quote(document, form):

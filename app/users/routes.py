@@ -9,8 +9,8 @@ from flask import render_template, request, redirect, url_for, flash, jsonify, c
 from flask_login import login_required, current_user
 from sqlalchemy import or_
 
-from extensions import bcrypt
-from models import db, User, Role, Company
+from app.extensions import bcrypt
+from app.models import db, User, Role, Company
 
 from . import users
 

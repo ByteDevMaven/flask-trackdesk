@@ -6,9 +6,9 @@ from sqlalchemy import or_
 from datetime import datetime
 from wtforms import ValidationError
 
-from extensions import limiter
+from app.extensions import limiter
 
-from models import db, Document, DocumentItem, Client, InventoryItem, DocumentType, Payment, PaymentMethod
+from app.models import db, Document, DocumentItem, Client, InventoryItem, DocumentType, Payment, PaymentMethod
 
 from .services import get_invoice_list, create_invoice_or_quote, update_invoice_or_quote, generate_invoice_pdf
 from . import invoices

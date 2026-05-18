@@ -12,7 +12,7 @@ from reportlab.pdfbase.ttfonts import TTFont
 from PyPDF2 import PdfReader, PdfWriter
 from num2words import num2words
 
-from models import (
+from app.models import (
     DocumentItem, Client, InventoryItem,
     DocumentType, PaymentMethod
 )

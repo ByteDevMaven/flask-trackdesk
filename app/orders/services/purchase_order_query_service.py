@@ -1,4 +1,4 @@
-from models import PurchaseOrder, Supplier
+from app.models import PurchaseOrder, Supplier
 from sqlalchemy import asc, desc, or_
 
 

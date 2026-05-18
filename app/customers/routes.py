@@ -4,7 +4,7 @@ from flask_babel import _, get_locale
 from sqlalchemy import or_, func
 import math
 
-from models import Client, Payment, Document, DocumentType, db
+from app.models import Client, Payment, Document, DocumentType, db
 
 from . import customers
 

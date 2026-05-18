@@ -4,7 +4,7 @@ from flask import current_app, render_template, request, redirect, url_for, flas
 from flask_login import login_required, current_user
 from flask_babel import _
 
-from models import db, Supplier, Company, InventoryItem, user_companies
+from app.models import db, Supplier, Company, InventoryItem, user_companies
 
 from . import suppliers
 

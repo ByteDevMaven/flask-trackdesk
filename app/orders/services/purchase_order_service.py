@@ -1,5 +1,5 @@
 from datetime import datetime, UTC
-from models import db, PurchaseOrder, PurchaseOrderItem, InventoryItem, StockMovement, StockMovementType
+from app.models import db, PurchaseOrder, PurchaseOrderItem, InventoryItem, StockMovement, StockMovementType
 from sqlalchemy import func
 from flask_babel import _
 from flask import current_app

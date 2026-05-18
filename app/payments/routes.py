@@ -4,8 +4,8 @@ from flask_babel import _
 from sqlalchemy import or_, desc
 from datetime import datetime
 
-from models import db, Payment, Document, DocumentType, Client
-from extensions import limiter
+from app.models import db, Payment, Document, DocumentType, Client
+from app.extensions import limiter
 
 from . import payments
 

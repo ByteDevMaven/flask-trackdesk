@@ -6,7 +6,7 @@ from datetime import datetime
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from app import create_app
-from models import db, StockMovement, StockMovementType, PurchaseOrderItem, PurchaseOrder, DocumentItem, Document, DocumentType
+from app.models import db, StockMovement, StockMovementType, PurchaseOrderItem, PurchaseOrder, DocumentItem, Document, DocumentType
 
 def populate_movements():
     app = create_app()

@@ -5,7 +5,7 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from app import create_app
-from models import db, Document, DocumentType
+from app.models import db, Document, DocumentType
 import argparse
 
 def migrate_invoices(dry_run=True):
