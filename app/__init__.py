@@ -118,7 +118,11 @@ def register_routes(app: Flask):
 def register_context_processors(app: Flask):
     @app.context_processor
     def inject_conf_var():
+        from datetime import datetime, UTC
         return dict(
             AVAILABLE_LANGUAGES=Config.LANGUAGES,
-            CURRENT_LANGUAGE=get_locale()
+            CURRENT_LANGUAGE=get_locale(),
+            now=datetime.now(UTC),
+            company_id=session.get('selected_company_id'),
+            current_user=current_user
         )

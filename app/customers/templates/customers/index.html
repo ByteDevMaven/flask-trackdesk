@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+
+{% block title %}Clientes – TrackDesk{% endblock %}
+{% block sidebar_title %}Clientes{% endblock %}
+
+{% block sidebar_nav %}
+  {% set cid = company_id or session.get('selected_company_id') %}
+  <a href="{{ url_for('customers.index', company_id=cid) }}"
+     class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'customers.index' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+    <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if request.endpoint == 'customers.index' else 'bg-slate-300' }}"></span>
+    Todos los Clientes
+  </a>
+  <a href="{{ url_for('customers.create', company_id=cid) }}"
+     class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'customers.create' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+    <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if request.endpoint == 'customers.create' else 'bg-slate-300' }}"></span>
+    Nuevo Cliente
+  </a>
+{% endblock %}
+
+{% block page_title %}Clientes{% endblock %}
+
+{% block content %}
+<div class="flex flex-col h-full overflow-hidden">
+
+  <!-- Barra de acciones -->
+  <header class="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between flex-shrink-0">
+    <!-- Búsqueda -->
+    <form method="GET" action="{{ request.path }}" class="relative">
+      <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+      </svg>
+      <input name="search" value="{{ search }}" type="text" placeholder="Buscar clientes..."
+             class="w-72 pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+    </form>
+
+    <!-- Botón nuevo -->
+    <button type="button"
+            data-action="open-drawer"
+            data-url="{{ url_for('customers.create', company_id=company_id) }}"
+            data-title="Nuevo Cliente"
+            class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+      </svg>
+      Nuevo Cliente
+    </button>
+  </header>
+
+  <!-- Tabla -->
+  <div class="flex-1 overflow-y-auto p-6">
+    <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
+
+      <!-- Header tabla -->
+      <div class="px-4 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+        <span class="text-sm text-slate-500">{{ pagination.total_items }} cliente{{ 's' if pagination.total_items != 1 else '' }}</span>
+      </div>
+
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-slate-100">
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Cliente</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Contacto</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Facturas</th>
+            <th class="px-4 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Saldo</th>
+            <th class="w-12 px-4 py-3"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-50">
+          {% for client in clients %}
+          {% set stats = client_stats.get(client.id, {}) %}
+          <tr class="hover:bg-slate-50 transition-colors">
+            <td class="px-4 py-3">
+              <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-700 text-sm font-bold flex-shrink-0">
+                  {{ client.name[:2]|upper }}
+                </div>
+                <div>
+                  <a href="{{ url_for('customers.view', company_id=company_id, id=client.id) }}"
+                     class="text-sm font-medium text-slate-900 hover:text-emerald-700 transition-colors">
+                    {{ client.name }}
+                  </a>
+                  {% if client.identifier %}
+                  <p class="text-xs text-slate-400">{{ client.identifier }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            </td>
+            <td class="px-4 py-3">
+              <p class="text-sm text-slate-700">{{ client.email or '—' }}</p>
+              <p class="text-xs text-slate-400">{{ client.phone or '' }}</p>
+            </td>
+            <td class="px-4 py-3">
+              <span class="text-sm text-slate-700">{{ stats.get('total_invoices', 0) }}</span>
+            </td>
+            <td class="px-4 py-3 text-right">
+              {% set outstanding = stats.get('outstanding_amount', 0) %}
+              <span class="text-sm font-medium {{ 'text-rose-600' if outstanding > 0 else 'text-slate-500' }}">
+                {{ session.get('currency', 'L') }} {{ "%.2f"|format(outstanding) }}
+              </span>
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex items-center gap-1 justify-end">
+                <button type="button"
+                        data-action="open-drawer"
+                        data-url="{{ url_for('customers.edit', company_id=company_id, id=client.id) }}"
+                        data-title="Editar Cliente"
+                        class="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
+                        title="Editar">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                  </svg>
+                </button>
+                <button type="button"
+                        data-action="confirm-delete"
+                        data-url="{{ url_for('customers.delete', company_id=company_id, id=client.id) }}"
+                        data-name="{{ client.name }}"
+                        class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                        title="Eliminar">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="5" class="px-4 py-16 text-center">
+              <div class="flex flex-col items-center gap-3">
+                <div class="w-14 h-14 bg-slate-100 rounded-full flex items-center justify-center">
+                  <svg class="w-7 h-7 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                  </svg>
+                </div>
+                <p class="text-sm font-medium text-slate-500">No hay clientes registrados</p>
+                <button type="button"
+                        data-action="open-drawer"
+                        data-url="{{ url_for('customers.create', company_id=company_id) }}"
+                        data-title="Nuevo Cliente"
+                        class="text-sm text-emerald-600 hover:text-emerald-700 font-medium">
+                  Agregar primer cliente →
+                </button>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <!-- Paginación -->
+      {% if pagination.total_pages > 1 %}
+      <div class="px-4 py-3 border-t border-slate-100 flex items-center justify-between">
+        <p class="text-sm text-slate-500">
+          Mostrando {{ (pagination.page - 1) * pagination.per_page + 1 }}–{{ [pagination.page * pagination.per_page, pagination.total_items]|min }} de {{ pagination.total_items }}
+        </p>
+        <div class="flex items-center gap-1">
+          {% if pagination.has_prev %}
+          <a href="?page={{ pagination.prev_page }}{% if search %}&search={{ search }}{% endif %}"
+             class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">Anterior</a>
+          {% endif %}
+          {% for p in range(1, pagination.total_pages + 1) %}
+          <a href="?page={{ p }}{% if search %}&search={{ search }}{% endif %}"
+             class="px-3 py-1.5 text-sm rounded transition-colors {{ 'font-medium text-white bg-emerald-600' if p == pagination.page else 'text-slate-600 hover:bg-slate-100' }}">
+            {{ p }}
+          </a>
+          {% endfor %}
+          {% if pagination.has_next %}
+          <a href="?page={{ pagination.next_page }}{% if search %}&search={{ search }}{% endif %}"
+             class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">Siguiente</a>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}{{ company.name }} – TrackDesk{% endblock %}
+{% block sidebar_title %}Empresas{% endblock %}
+{% block sidebar_nav %}
+  <a href="{{ url_for('companies.index') }}" class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>← Volver</a>
+{% endblock %}
+{% block page_title %}{{ company.name }}{% endblock %}
+
+{% block content %}
+<div class="p-6 max-w-4xl mx-auto">
+  <div class="bg-white rounded-lg border border-slate-200 p-6 mb-6">
+    <div class="flex items-start justify-between mb-4">
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-lg">{{ company.name[:2]|upper }}</div>
+        <div>
+          <h2 class="text-xl font-bold text-slate-900">{{ company.name }}</h2>
+          <p class="text-sm text-slate-500">{{ company.identifier or '' }}</p>
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button type="button" data-action="open-drawer" data-url="{{ url_for('companies.edit', id=company.id) }}" data-title="Editar Empresa" class="flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm text-slate-700 hover:bg-slate-50">Editar</button>
+        <a href="{{ url_for('companies.sequences_index', id=company.id) }}" class="flex items-center gap-2 px-3 py-2 bg-slate-100 rounded-lg text-sm text-slate-700 hover:bg-slate-200">Secuencias CAI</a>
+        <a href="{{ url_for('set_company', id=company.id) }}" class="flex items-center gap-2 px-3 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700">Seleccionar</a>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-3 gap-4 text-sm mb-6">
+      <div><p class="text-xs text-slate-500">Moneda</p><p class="font-medium text-slate-900">{{ company.currency }}</p></div>
+      <div><p class="text-xs text-slate-500">ISV</p><p class="font-medium text-slate-900">{{ company.tax_rate }}%</p></div>
+      <div><p class="text-xs text-slate-500">Email</p><p class="font-medium text-slate-900">{{ company.email or '—' }}</p></div>
+      <div><p class="text-xs text-slate-500">Teléfono</p><p class="font-medium text-slate-900">{{ company.phone or '—' }}</p></div>
+      <div class="col-span-2"><p class="text-xs text-slate-500">Dirección</p><p class="font-medium text-slate-900">{{ company.address or '—' }}</p></div>
+    </div>
+
+    <!-- Estadísticas -->
+    <div class="grid grid-cols-4 gap-3 border-t border-slate-100 pt-4">
+      {% for label, val in [('Clientes', stats.clients_count), ('Proveedores', stats.suppliers_count), ('Productos', stats.inventory_count), ('Documentos', stats.documents_count)] %}
+      <div class="text-center">
+        <p class="text-lg font-bold text-slate-900">{{ val }}</p>
+        <p class="text-xs text-slate-500">{{ label }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -76,10 +76,16 @@ def index(company_id = None):
         Document.type == DocumentType.invoice
     ).order_by(Document.issued_date.desc()).limit(5).all()
 
+    for inv in recent_invoices:
+        inv.client = Client.query.get(inv.client_id) if inv.client_id else None
+
     recent_quotes = Document.query.filter(
         Document.company_id == company_id,
         Document.type == DocumentType.quote
     ).order_by(Document.issued_date.desc()).limit(5).all()
+
+    for q in recent_quotes:
+        q.client = Client.query.get(q.client_id) if q.client_id else None
     
     # Check for overdue invoices and update their status
     overdue_invoices = Document.query.filter(

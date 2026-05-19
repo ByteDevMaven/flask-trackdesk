@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}Órdenes de Compra – TrackDesk{% endblock %}
+{% block sidebar_title %}Órdenes de Compra{% endblock %}
+{% block sidebar_nav %}
+  <a href="{{ url_for('orders.index', company_id=company_id) }}" class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'orders.index' else 'text-slate-600 hover:bg-slate-50' }} text-sm"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>Todas las Órdenes</a>
+  <a href="{{ url_for('orders.create', company_id=company_id) }}" class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'orders.create' else 'text-slate-600 hover:bg-slate-50' }} text-sm"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>Nueva Orden</a>
+{% endblock %}
+{% block page_title %}Órdenes de Compra{% endblock %}
+
+{% block content %}
+<div class="flex flex-col h-full overflow-hidden">
+  <header class="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between flex-shrink-0">
+    <form method="GET" action="{{ request.path }}" class="relative">
+      <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      <input name="search" value="{{ search }}" type="text" placeholder="Buscar órdenes..." class="w-72 pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+    </form>
+    <a href="{{ url_for('orders.create', company_id=company_id) }}" class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+      Nueva Orden
+    </a>
+  </header>
+
+  <div class="flex-1 overflow-y-auto p-6">
+    <!-- Stats rápidas -->
+    {% if stats %}
+    <div class="grid grid-cols-3 gap-4 mb-6">
+      <div class="bg-white border border-slate-200 rounded-lg p-4">
+        <p class="text-xs text-slate-500 mb-1">Total Órdenes</p>
+        <p class="text-2xl font-bold text-slate-900">{{ stats.get('total', 0) }}</p>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-lg p-4">
+        <p class="text-xs text-slate-500 mb-1">Pendientes</p>
+        <p class="text-2xl font-bold text-amber-600">{{ stats.get('pending', 0) }}</p>
+      </div>
+      <div class="bg-white border border-slate-200 rounded-lg p-4">
+        <p class="text-xs text-slate-500 mb-1">Recibidas</p>
+        <p class="text-2xl font-bold text-emerald-600">{{ stats.get('received', 0) }}</p>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-slate-100">
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Orden #</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Proveedor</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Fecha</th>
+            <th class="px-4 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Total</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Estado</th>
+            <th class="w-20 px-4 py-3"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-50">
+          {% for order in orders %}
+          {% set sv = order.status.value if order.status else '' %}
+          {% set sm = {'pending':('Pendiente','bg-amber-50 text-amber-700'),'received':('Recibida','bg-emerald-50 text-emerald-700'),'cancelled':('Cancelada','bg-rose-50 text-rose-700'),'partial':('Parcial','bg-sky-50 text-sky-700')} %}
+          {% set sl, sc = sm.get(sv.lower(), ('—','bg-slate-100 text-slate-500')) %}
+          <tr class="hover:bg-slate-50 transition-colors">
+            <td class="px-4 py-3">
+              <a href="{{ url_for('orders.view', company_id=company_id, id=order.id) }}" class="text-sm font-medium text-emerald-600 hover:text-emerald-700">OC-{{ '%04d'|format(order.id) }}</a>
+            </td>
+            <td class="px-4 py-3 text-sm text-slate-700">{{ order.supplier.name if order.supplier else '—' }}</td>
+            <td class="px-4 py-3 text-sm text-slate-600">{{ order.order_date.strftime('%d/%m/%Y') if order.order_date else '—' }}</td>
+            <td class="px-4 py-3 text-sm font-medium text-slate-900 text-right">{{ session.get('currency','L') }} {{ "%.2f"|format(order.total_amount or 0) }}</td>
+            <td class="px-4 py-3"><span class="text-xs font-medium px-2 py-0.5 rounded-full {{ sc }}">{{ sl }}</span></td>
+            <td class="px-4 py-3">
+              <div class="flex gap-1 justify-end">
+                <a href="{{ url_for('orders.edit', company_id=company_id, id=order.id) }}" class="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                </a>
+                <button type="button" data-action="confirm-delete" data-url="{{ url_for('orders.delete', company_id=company_id, id=order.id) }}" data-name="Orden OC-{{ '%04d'|format(order.id) }}" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+          {% else %}
+          <tr><td colspan="6" class="px-4 py-16 text-center text-sm text-slate-400">No hay órdenes de compra</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -18,3 +18,10 @@ class StockMovement(BaseModel):
     inventory_item = db.relationship('InventoryItem', backref='movements')
     company = db.relationship('Company', backref='stock_movements')
     user = db.relationship('User', backref='stock_movements')
+
+    @property
+    def qty_change(self):
+        if self.type == StockMovementType.outgoing:
+            return -self.quantity
+        return self.quantity
+
