@@ -2,7 +2,7 @@
 /node_modules
 **/__pycache__
 /.vscode
-
+/HTML Templates
 /instance
 
 .env
