@@ -1,145 +1,246 @@
 {% extends "base.html" %}
+{% set sv = invoice.status.value if invoice.status else '' %}
+{% set sm = {
+'paid':('Pagada','bg-emerald-50 text-emerald-700 border-emerald-100','bg-emerald-500'),
+'overdue':('Vencida','bg-rose-50 text-rose-700 border-rose-100 shadow-rose-50/50','bg-rose-500'),
+'pending':('Pendiente','bg-amber-50 text-amber-700 border-amber-100','bg-amber-500'),
+'partial':('Parcial','bg-sky-50 text-sky-700 border-sky-100','bg-sky-500'),
+'draft':('Borrador','bg-slate-50 text-slate-600 border-slate-100','bg-slate-400'),
+'sent':('Enviada','bg-blue-50 text-blue-700 border-blue-100','bg-blue-400')
+} %}
+{% set sl, sc, sd = sm.get(sv.lower(), ('—','bg-slate-50 text-slate-500 border-slate-100','bg-slate-300')) %}
+
 {% block title %}{{ invoice.document_number }} – TrackDesk{% endblock %}
 {% block sidebar_title %}Facturas{% endblock %}
+
 {% block sidebar_nav %}
-  {% set cid = invoice.company_id %}
-  <a href="{{ url_for('invoices.index', company_id=cid) }}" class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>← Volver</a>
-  <a href="{{ url_for('invoices.print_invoice', company_id=cid, id=invoice.id) }}" target="_blank" class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>Imprimir / PDF</a>
+{% set cid = invoice.company_id %}
+<div class="px-3 py-2 mb-4">
+  <a href="{{ url_for('invoices.index', company_id=cid) }}"
+    class="flex items-center gap-3 text-slate-600 hover:text-emerald-700 text-sm font-medium transition-colors">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+    </svg>
+    Volver a Facturas
+  </a>
+</div>
+
+<div class="px-4 space-y-4">
+  <!-- Estado de Pago Card -->
+  <div class="{{ sc }} rounded-lg p-3.5 border shadow-sm">
+    <p class="text-[10px] uppercase font-bold tracking-wider mb-1 opacity-80">Estado de Pago</p>
+    <div class="flex items-center gap-2">
+      <span class="w-2 h-2 rounded-full {{ sd }} {% if sv.lower() == 'overdue' %}animate-pulse{% endif %}"></span>
+      <span class="text-base font-bold">{{ sl }}</span>
+    </div>
+  </div>
+
+  <!-- Total Facturado Card -->
+  <div class="bg-slate-50 rounded-lg p-3.5 border border-slate-100 shadow-sm">
+    <p class="text-[10px] uppercase font-bold text-slate-500 tracking-wider mb-1">Monto Total</p>
+    <p class="text-xl font-bold text-slate-700">{{ session.get('currency','L') }} {{ "%.2f"|format(invoice.total_amount
+      or 0) }}</p>
+  </div>
+
+  <!-- Acciones Rápidas -->
+  <div class="pt-2">
+    <a href="{{ url_for('invoices.print_invoice', company_id=cid, id=invoice.id) }}" target="_blank"
+      class="flex items-center justify-center gap-2 px-4 py-2.5 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm bg-white w-full">
+      <svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+      Imprimir / Exportar PDF (Con IVA)
+    </a>
+    <a href="{{ url_for('invoices.print_invoice', company_id=cid, id=invoice.id, tax=0) }}" target="_blank"
+      class="flex items-center justify-center gap-2 px-4 py-2.5 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm bg-white w-full">
+      <svg class="w-4 h-4 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+      </svg>
+      Imprimir / Exportar PDF (Sin IVA)
+    </a>
+  </div>
+</div>
 {% endblock %}
 {% block page_title %}{{ invoice.document_number }}{% endblock %}
 
 {% block content %}
-<div class="p-6 max-w-4xl mx-auto">
-  {% set sv = invoice.status.value if invoice.status else '' %}
-  {% set sm = {'paid':('Pagada','bg-emerald-50 text-emerald-700'),'overdue':('Vencida','bg-rose-50 text-rose-700'),'pending':('Pendiente','bg-amber-50 text-amber-700'),'partial':('Parcial','bg-sky-50 text-sky-700'),'draft':('Borrador','bg-slate-100 text-slate-600'),'sent':('Enviada','bg-blue-50 text-blue-700')} %}
-  {% set sl, sc = sm.get(sv.lower(), ('—','bg-slate-100 text-slate-500')) %}
+<div class="flex-1 overflow-y-auto p-6 bg-slate-50">
 
-  <!-- Header -->
-  <div class="bg-white rounded-lg border border-slate-200 p-6 mb-4">
-    <div class="flex items-start justify-between mb-6">
+  <!-- Ficha Principal de la Factura -->
+  <div class="bg-white rounded-lg border border-slate-200 overflow-hidden mb-6 p-6 shadow-sm">
+    <div class="flex flex-col sm:flex-row items-start justify-between gap-4 mb-6">
       <div>
-        <div class="flex items-center gap-3 mb-2">
+        <div class="flex flex-wrap items-center gap-3 mb-1">
           <h2 class="text-xl font-bold text-slate-900">{{ invoice.document_number }}</h2>
-          <span class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-medium {{ sc }}">{{ sl }}</span>
-          <span class="inline-flex px-2 py-0.5 rounded text-xs font-medium {{ 'bg-emerald-50 text-emerald-700' if invoice.type and invoice.type.value == 'invoice' else 'bg-sky-50 text-sky-700' }}">
+          <span
+            class="inline-flex px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider {{ 'bg-emerald-50 text-emerald-700 border border-emerald-100' if invoice.type and invoice.type.value == 'invoice' else 'bg-sky-50 text-sky-700 border border-sky-100' }}">
             {{ 'Factura' if invoice.type and invoice.type.value == 'invoice' else 'Cotización' }}
           </span>
         </div>
         <p class="text-sm text-slate-500">
-          Emitida: {{ invoice.issued_date.strftime('%d de %B, %Y') if invoice.issued_date else '—' }}
-          {% if invoice.due_date %} · Vence: {{ invoice.due_date.strftime('%d de %B, %Y') }}{% endif %}
+          Emitida: {{ invoice.issued_date.strftime('%d/%m/%Y') if invoice.issued_date else '—' }}
+          {% if invoice.due_date %} · Vence: {{ invoice.due_date.strftime('%d/%m/%Y') }}{% endif %}
         </p>
       </div>
-      <div class="flex gap-2">
+
+      <div class="flex items-center gap-2">
         <a href="{{ url_for('invoices.edit', company_id=invoice.company_id, id=invoice.id) }}"
-           class="flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm text-slate-700 hover:bg-slate-50 transition-colors">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+          class="flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors shadow-sm bg-white">
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+          </svg>
           Editar
-        </a>
-        <a href="{{ url_for('invoices.print_invoice', company_id=invoice.company_id, id=invoice.id) }}" target="_blank"
-           class="flex items-center gap-2 px-3 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
-          Imprimir PDF
         </a>
       </div>
     </div>
 
-    <!-- Cliente -->
+    <!-- Cliente Ficha Info -->
     {% if invoice.client %}
-    <div class="bg-slate-50 rounded-lg p-4 mb-6">
-      <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">Cliente</p>
-      <p class="text-sm font-semibold text-slate-900">{{ invoice.client.name }}</p>
-      {% if invoice.client.identifier %}<p class="text-xs text-slate-500">RTN: {{ invoice.client.identifier }}</p>{% endif %}
-      {% if invoice.client.email %}<p class="text-xs text-slate-500">{{ invoice.client.email }}</p>{% endif %}
-      {% if invoice.client.phone %}<p class="text-xs text-slate-500">{{ invoice.client.phone }}</p>{% endif %}
-      {% if invoice.client.address %}<p class="text-xs text-slate-500">{{ invoice.client.address }}</p>{% endif %}
+    <div class="bg-slate-50/70 border border-slate-100 rounded-xl p-5 mb-6">
+      <h3 class="text-xs font-semibold uppercase text-slate-400 tracking-wider mb-3">Información del Cliente</h3>
+      <div class="flex items-start gap-4">
+        <div
+          class="w-12 h-12 rounded-full bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-600 text-lg font-bold flex-shrink-0">
+          {{ invoice.client.name[:2]|upper }}
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-2 text-sm">
+          <div>
+            <p class="text-slate-500 text-xs">Nombre Comercial</p>
+            <p class="font-semibold text-slate-800">{{ invoice.client.name }}</p>
+          </div>
+          {% if invoice.client.identifier %}
+          <div>
+            <p class="text-slate-500 text-xs">RTN / Identificador</p>
+            <p class="font-semibold text-slate-800">{{ invoice.client.identifier }}</p>
+          </div>
+          {% endif %}
+          {% if invoice.client.email %}
+          <div>
+            <p class="text-slate-500 text-xs">Correo Electrónico</p>
+            <a href="mailto:{{ invoice.client.email }}" class="font-medium text-emerald-600 hover:text-emerald-700">{{
+              invoice.client.email }}</a>
+          </div>
+          {% endif %}
+          {% if invoice.client.phone %}
+          <div>
+            <p class="text-slate-500 text-xs">Teléfono</p>
+            <p class="font-semibold text-slate-800">{{ invoice.client.phone }}</p>
+          </div>
+          {% endif %}
+          {% if invoice.client.address %}
+          <div class="md:col-span-2 mt-1">
+            <p class="text-slate-500 text-xs">Dirección de Entrega</p>
+            <p class="font-medium text-slate-700">{{ invoice.client.address }}</p>
+          </div>
+          {% endif %}
+        </div>
+      </div>
     </div>
     {% endif %}
 
-    <!-- Ítems -->
-    <table class="w-full mb-6">
-      <thead>
-        <tr class="border-b border-slate-200">
-          <th class="text-left text-xs font-semibold text-slate-500 py-2">Descripción</th>
-          <th class="text-right text-xs font-semibold text-slate-500 py-2">Cant.</th>
-          <th class="text-right text-xs font-semibold text-slate-500 py-2">Precio Unit.</th>
-          <th class="text-right text-xs font-semibold text-slate-500 py-2">Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in document_items %}
-        <tr class="border-b border-slate-100">
-          <td class="py-3 text-sm text-slate-800">
-            {{ item.inventory_item.name if item.inventory_item else item.description or 'Ítem' }}
-          </td>
-          <td class="py-3 text-sm text-slate-600 text-right">{{ item.quantity }}</td>
-          <td class="py-3 text-sm text-slate-600 text-right">{{ session.get('currency','L') }} {{ "%.2f"|format(item.unit_price or 0) }}</td>
-          <td class="py-3 text-sm font-medium text-slate-900 text-right">{{ session.get('currency','L') }} {{ "%.2f"|format((item.quantity or 0) * (item.unit_price or 0)) }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    <!-- Listado de Ítems / Productos -->
+    <div class="overflow-x-auto mb-6">
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-slate-150 bg-slate-50/20 text-slate-500">
+            <th class="text-left text-xs font-semibold py-2 px-3">Descripción del Producto</th>
+            <th class="text-right text-xs font-semibold py-2 px-3 w-20">Cant.</th>
+            <th class="text-right text-xs font-semibold py-2 px-3 w-32">Precio Unitario</th>
+            <th class="text-right text-xs font-semibold py-2 px-3 w-36">Total</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          {% for item in document_items %}
+          <tr class="hover:bg-slate-50/50 transition-colors">
+            <td class="py-3 px-3 text-sm text-slate-800 font-medium">
+              {{ item.inventory_item.name if item.inventory_item else item.description or 'Ítem' }}
+            </td>
+            <td class="py-3 px-3 text-sm text-slate-600 text-right font-medium">{{ item.quantity }}</td>
+            <td class="py-3 px-3 text-sm text-slate-600 text-right font-medium">
+              {{ session.get('currency','L') }} {{ "%.2f"|format(item.unit_price or 0) }}
+            </td>
+            <td class="py-3 px-3 text-sm font-semibold text-slate-900 text-right">
+              {{ session.get('currency','L') }} {{ "%.2f"|format((item.quantity or 0) * (item.unit_price or 0)) }}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
 
-    <!-- Totales -->
-    <div class="flex justify-end">
-      <div class="w-64">
+    <!-- Tabla de Cómputo de Totales -->
+    <div class="flex justify-end pt-4 border-t border-slate-100">
+      <div class="w-80 space-y-2">
         {% if invoice.discount_amount %}
-        <div class="flex justify-between text-sm text-slate-600 mb-1">
-          <span>Descuento</span>
-          <span>-{{ session.get('currency','L') }} {{ "%.2f"|format(invoice.discount_amount) }}</span>
+        <div class="flex justify-between text-sm text-slate-600">
+          <span class="font-medium">Descuento aplicado</span>
+          <span class="font-semibold text-rose-600">-{{ session.get('currency','L') }} {{
+            "%.2f"|format(invoice.discount_amount) }}</span>
         </div>
         {% endif %}
         {% if invoice.tax_amount %}
-        <div class="flex justify-between text-sm text-slate-600 mb-1">
-          <span>Impuesto</span>
-          <span>{{ session.get('currency','L') }} {{ "%.2f"|format(invoice.tax_amount) }}</span>
+        <div class="flex justify-between text-sm text-slate-600">
+          <span class="font-medium">Impuesto (ISV)</span>
+          <span class="font-semibold text-slate-800">{{ session.get('currency','L') }} {{
+            "%.2f"|format(invoice.tax_amount) }}</span>
         </div>
         {% endif %}
-        <div class="flex justify-between text-base font-bold text-slate-900 border-t border-slate-200 pt-2 mt-2">
-          <span>Total</span>
+        <div class="flex justify-between text-base font-bold text-slate-900 border-t border-slate-150 pt-2.5 mt-1">
+          <span>Importe Total</span>
           <span>{{ session.get('currency','L') }} {{ "%.2f"|format(invoice.total_amount or 0) }}</span>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Registrar Pago -->
-  {% if invoice.type and invoice.type.value == 'invoice' and sv not in ['paid','pagado'] %}
-  <div class="bg-white rounded-lg border border-slate-200 p-6">
-    <h3 class="text-sm font-semibold text-slate-900 mb-4">Registrar Pago</h3>
+  <!-- Panel Registrar Pago (Si aplica) -->
+  {% if invoice.type and invoice.type.value == 'invoice' and sv.lower() not in ['paid','pagado'] %}
+  <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-sm">
+    <h3 class="text-sm font-bold text-slate-900 mb-4">Registrar Transacción de Pago</h3>
     <form method="POST" action="{{ url_for('invoices.add_payment', company_id=invoice.company_id, id=invoice.id) }}">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
-          <label class="block text-sm font-medium text-slate-700 mb-1.5">Monto <span class="text-rose-500">*</span></label>
+          <label class="block text-sm font-semibold text-slate-700 mb-1.5">Monto del Pago <span
+              class="text-rose-500">*</span></label>
           <div class="relative">
-            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">{{ session.get('currency','L') }}</span>
+            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm font-medium">{{
+              session.get('currency','L') }}</span>
             <input type="number" name="amount" step="0.01" min="0.01" required
-                   class="w-full pl-8 pr-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+              class="w-full pl-8 pr-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white">
           </div>
         </div>
+
         <div>
-          <label class="block text-sm font-medium text-slate-700 mb-1.5">Fecha</label>
+          <label class="block text-sm font-semibold text-slate-700 mb-1.5">Fecha de Operación</label>
           <input type="date" name="payment_date" value="{{ now.strftime('%Y-%m-%d') }}"
-                 class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white">
         </div>
+
         <div>
-          <label class="block text-sm font-medium text-slate-700 mb-1.5">Método de Pago</label>
-          <select name="payment_method" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+          <label class="block text-sm font-semibold text-slate-700 mb-1.5">Método de Pago</label>
+          <select name="payment_method"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
             <option value="cash">Efectivo</option>
-            <option value="card">Tarjeta</option>
-            <option value="transfer">Transferencia</option>
+            <option value="card">Tarjeta de Crédito / Débito</option>
+            <option value="transfer">Transferencia Bancaria</option>
             <option value="check">Cheque</option>
           </select>
         </div>
+
         <div>
-          <label class="block text-sm font-medium text-slate-700 mb-1.5">Referencia</label>
-          <input type="text" name="reference" placeholder="N° de transacción..."
-                 class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+          <label class="block text-sm font-semibold text-slate-700 mb-1.5">Referencia de Transacción</label>
+          <input type="text" name="reference" placeholder="Ej: N° de depósito o transferencia..."
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white">
         </div>
       </div>
+
       <div class="mt-4 flex justify-end">
-        <button type="submit" class="px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
+        <button type="submit"
+          class="px-5 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-semibold hover:bg-emerald-700 transition-colors shadow-sm">
           Registrar Pago
         </button>
       </div>

@@ -1,207 +1,385 @@
 {% extends "base.html" %}
-{% block title %}{{ 'Nueva' if not invoice else 'Editar' }} {{ 'Cotización' if doc_type == 'quote' else 'Factura' }} – TrackDesk{% endblock %}
+{% block title %}{{ 'Nueva' if not invoice else 'Editar' }} {{ 'Cotización' if doc_type == 'quote' else 'Factura' }} –
+TrackDesk{% endblock %}
 {% block sidebar_title %}Facturas{% endblock %}
+
 {% block sidebar_nav %}
-  {% set cid = session.get('selected_company_id') %}
-  <a href="{{ url_for('invoices.index', company_id=cid) }}" class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>← Volver</a>
+{% set cid = session.get('selected_company_id') %}
+<div class="px-3 py-2 space-y-5">
+  <!-- Volver Control -->
+  <a href="{{ url_for('invoices.index', company_id=cid) }}"
+    class="flex items-center gap-3 text-slate-600 hover:text-emerald-700 text-sm font-medium transition-colors mb-2">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+    </svg>
+    Volver a Facturas
+  </a>
+
+  <!-- Estado del Documento Card -->
+  <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm space-y-2">
+    <p class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Estado del Documento</p>
+
+    {% set current_status = invoice.status.value if invoice and invoice.status else ('draft' if doc_type == 'quote' else
+    'pending') %}
+    <select name="status" form="invoice-form"
+      class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 font-semibold text-slate-700 cursor-pointer shadow-sm">
+      <option value="draft" {{ 'selected' if current_status=='draft' else '' }}>Borrador</option>
+      <option value="pending" {{ 'selected' if current_status=='pending' else '' }}>Pendiente</option>
+      <option value="issued" {{ 'selected' if current_status=='issued' else '' }}>Emitida</option>
+      <option value="sent" {{ 'selected' if current_status=='sent' else '' }}>Enviada</option>
+      <option value="partial" {{ 'selected' if current_status=='partial' else '' }}>Pago Parcial</option>
+      <option value="paid" {{ 'selected' if current_status=='paid' else '' }}>Pagada</option>
+      <option value="overdue" {{ 'selected' if current_status=='overdue' else '' }}>Vencida</option>
+      <option value="cancelled" {{ 'selected' if current_status=='cancelled' else '' }}>Cancelada</option>
+      <option value="credit" {{ 'selected' if current_status=='credit' else '' }}>Nota de Crédito</option>
+      <option value="exchange" {{ 'selected' if current_status=='exchange' else '' }}>Intercambio</option>
+    </select>
+  </div>
+
+  <!-- Live Total Card -->
+  <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 shadow-sm">
+    <p class="text-[10px] uppercase font-bold text-slate-500 tracking-wider mb-1">Monto Total Estimado</p>
+    <p class="text-2xl font-black text-slate-800">{{ session.get('currency','L') }} <span
+        id="sidebar-total-display">0.00</span></p>
+  </div>
+</div>
 {% endblock %}
+
 {% block page_title %}{{ 'Nueva Cotización' if doc_type == 'quote' else 'Nueva Factura' }}{% endblock %}
 
 {% block content %}
 {% set cid = session.get('selected_company_id') %}
-<form method="POST" action="{{ url_for('invoices.update', company_id=cid, id=invoice.id) if invoice else url_for('invoices.store', company_id=cid) }}" id="invoice-form" class="p-6 space-y-6 max-w-4xl mx-auto">
-  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-  <input type="hidden" name="type" value="{{ doc_type or 'invoice' }}">
+<div class="flex-1 overflow-y-auto p-6 bg-slate-50">
 
-  <!-- Encabezado -->
-  <div class="bg-white rounded-lg border border-slate-200 p-5">
-    <div class="grid grid-cols-2 gap-5">
-      <div>
-        <label class="block text-sm font-medium text-slate-700 mb-1.5">Cliente <span class="text-rose-500">*</span></label>
-        <select name="client_id" required id="client-select" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
-          <option value="">Seleccionar cliente...</option>
-          {% for client in clients %}
-          <option value="{{ client.id }}" {{ 'selected' if (invoice and invoice.client_id == client.id) or (customer_id == client.id) else '' }}>{{ client.name }}</option>
-          {% endfor %}
-        </select>
+  <form method="POST"
+    action="{{ url_for('invoices.update', company_id=cid, id=invoice.id) if invoice else url_for('invoices.store', company_id=cid) }}"
+    id="invoice-form" class="space-y-6 max-w-7xl mx-auto">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="hidden" name="type" value="{{ doc_type or 'invoice' }}">
+
+    <!-- Encabezado de Selección del Cliente -->
+    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-sm">
+      <h3 class="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
+        <span class="w-1 h-3.5 bg-emerald-600 rounded-full"></span>
+        Información del Cliente
+      </h3>
+
+      <!-- ID del Cliente Seleccionado -->
+      <input type="hidden" name="client_id" id="selected-client-id" required
+        value="{{ invoice.client_id if invoice else (customer_id or '') }}">
+
+      <!-- Placeholder cuando NO hay cliente seleccionado -->
+      <div id="client-selection-placeholder" class="{% if invoice or customer_id %}hidden{% endif %}">
+        <button type="button" id="open-client-modal-btn"
+          class="w-full py-8 border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center gap-2 hover:border-emerald-500 hover:bg-emerald-50/20 transition-all text-slate-500 hover:text-emerald-700">
+          <div
+            class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-500 hover:bg-emerald-100 hover:text-emerald-700 transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+          </div>
+          <span class="text-sm font-semibold">Seleccionar Cliente para el Documento</span>
+          <span class="text-xs text-slate-400">Haga click para buscar entre sus contactos registrados</span>
+        </button>
       </div>
-      <div>
-        <label class="block text-sm font-medium text-slate-700 mb-1.5">Fecha de emisión</label>
-        <input type="date" name="issued_date" value="{{ (invoice.issued_date.strftime('%Y-%m-%d') if invoice and invoice.issued_date else now.strftime('%Y-%m-%d')) }}" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-      </div>
-      <div>
-        <label class="block text-sm font-medium text-slate-700 mb-1.5">Fecha de vencimiento</label>
-        <input type="date" name="due_date" value="{{ invoice.due_date.strftime('%Y-%m-%d') if invoice and invoice.due_date else '' }}" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-      </div>
-      <div>
-        <label class="block text-sm font-medium text-slate-700 mb-1.5">Notas / Observaciones</label>
-        <input type="text" name="notes" value="{{ invoice.notes if invoice else '' }}" placeholder="Notas opcionales..." class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+
+      <!-- Card cuando SÍ hay cliente seleccionado -->
+      {% set sel_client = None %}
+      {% if invoice and invoice.client %}
+      {% set sel_client = invoice.client %}
+      {% elif customer_id %}
+      {% for c in clients %}
+      {% if c.id == customer_id %}
+      {% set sel_client = c %}
+      {% endif %}
+      {% endfor %}
+      {% endif %}
+
+      <div id="client-selected-card"
+        class="{% if not sel_client %}hidden{% endif %} bg-slate-50 border border-slate-150 rounded-xl p-5">
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex items-start gap-4">
+            <div id="client-avatar-initials"
+              class="w-12 h-12 rounded-full bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-600 text-lg font-bold flex-shrink-0">
+              {{ sel_client.name[:2]|upper if sel_client else 'CL' }}
+            </div>
+            <div>
+              <p id="client-display-name" class="font-bold text-slate-800 text-base">{{ sel_client.name if sel_client
+                else '' }}</p>
+              <p id="client-display-identifier" class="text-xs text-slate-500 font-medium mt-0.5">{% if sel_client and
+                sel_client.identifier %}RTN / ID: {{ sel_client.identifier }}{% endif %}</p>
+              <p id="client-display-email" class="text-xs text-emerald-600 font-medium mt-0.5">{% if sel_client and
+                sel_client.email %}{{ sel_client.email }}{% endif %}</p>
+            </div>
+          </div>
+
+          <button type="button" id="change-client-btn"
+            class="px-3 py-1.5 border border-slate-200 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-800 transition-all bg-white shadow-sm">
+            Cambiar Cliente
+          </button>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Ítems de la Factura -->
-  <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
-    <div class="px-5 py-3 border-b border-slate-100 flex items-center justify-between">
-      <h3 class="text-sm font-semibold text-slate-900">Ítems</h3>
-      <button type="button" id="add-item-btn" class="flex items-center gap-1.5 text-sm text-emerald-600 font-medium hover:text-emerald-700">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-        Agregar ítem
+    <!-- Fechas y Datos del Documento -->
+    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-sm">
+      <h3 class="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
+        <span class="w-1 h-3.5 bg-emerald-600 rounded-full"></span>
+        Detalles de Emisión
+      </h3>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-1.5">Fecha de Emisión</label>
+          <input type="date" name="issued_date" required
+            value="{{ (invoice.issued_date.strftime('%Y-%m-%d') if invoice and invoice.issued_date else now.strftime('%Y-%m-%d')) }}"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-slate-700">
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-1.5">Fecha de Vencimiento</label>
+          <input type="date" name="due_date"
+            value="{{ invoice.due_date.strftime('%Y-%m-%d') if invoice and invoice.due_date else '' }}"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-slate-700">
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-slate-700 mb-1.5">Notas / Comentarios</label>
+          <input type="text" name="notes" value="{{ invoice.notes if invoice else '' }}"
+            placeholder="Comentarios en la factura..."
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-slate-700">
+        </div>
+      </div>
+    </div>
+
+    <!-- Detalle de Ítems / Productos -->
+    <div class="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm">
+      <div class="px-5 py-3.5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+        <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+          <span class="w-1 h-3.5 bg-emerald-600 rounded-full"></span>
+          Ítems del Documento
+        </h3>
+        <button type="button" id="add-item-btn"
+          class="flex items-center gap-1.5 text-xs bg-emerald-50 border border-emerald-100 text-emerald-700 px-3 py-1.5 rounded-lg font-bold hover:bg-emerald-100 transition-all shadow-sm">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+          Agregar Ítem Manual
+        </button>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full" id="items-table">
+          <thead>
+            <tr
+              class="border-b border-slate-150 text-xs font-bold text-slate-500 uppercase tracking-wider bg-slate-50/30">
+              <th class="px-4 py-2.5 text-left w-56">Catálogo / Producto</th>
+              <th class="px-4 py-2.5 text-left">Descripción Personalizada</th>
+              <th class="px-4 py-2.5 text-right w-20">Cant.</th>
+              <th class="px-4 py-2.5 text-right w-24">Precio Unit.</th>
+              <th class="px-4 py-2.5 text-right w-24">Desc. (%)</th>
+              <th class="px-4 py-2.5 text-right w-24">Subtotal</th>
+              <th class="w-10 px-2 py-2.5"></th>
+            </tr>
+          </thead>
+          <tbody id="items-body" class="divide-y divide-slate-100">
+            {% set existing_items = document_items or [] %}
+            {% for item in existing_items %}
+            <tr class="item-row hover:bg-slate-50/30 transition-colors">
+              <td class="px-4 py-3">
+                <input type="hidden" name="items[{{ loop.index0 }}][inventory_item_id]" class="item-product-id"
+                  value="{{ item.inventory_item_id or '' }}">
+                <div class="relative flex items-center">
+                  <input type="text" readonly placeholder="Buscar en catálogo..."
+                    value="{{ item.inventory_item.name if item.inventory_item else 'Servicio Manual' }}"
+                    class="item-product-trigger w-full pl-3 pr-8 py-1.5 border border-slate-200 rounded-lg text-sm bg-slate-50 cursor-pointer focus:outline-none hover:bg-slate-100 transition-colors font-medium text-slate-700">
+                  <button type="button"
+                    class="clear-product-btn absolute right-2 text-slate-400 hover:text-rose-500 {% if not item.inventory_item_id %}hidden{% endif %}"
+                    title="Remover producto catálogo">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+              </td>
+              <td class="px-4 py-3">
+                <input type="text" name="items[{{ loop.index0 }}][description]" value="{{ item.description or '' }}"
+                  placeholder="Escriba descripción..."
+                  class="w-full text-sm border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-emerald-500 bg-white text-slate-700">
+              </td>
+              <td class="px-4 py-3">
+                <input type="number" name="items[{{ loop.index0 }}][quantity]" value="{{ item.quantity or 1 }}" min="1"
+                  step="1"
+                  class="w-full text-sm border border-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-emerald-500 text-right item-qty font-medium text-slate-700">
+              </td>
+              <td class="px-4 py-3">
+                <input type="number" name="items[{{ loop.index0 }}][unit_price]" value="{{ item.unit_price or 0 }}"
+                  min="0" step="0.01"
+                  class="w-full text-sm border border-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-emerald-500 text-right item-price font-medium text-slate-700">
+              </td>
+              <td class="px-4 py-3">
+                <input type="number" name="items[{{ loop.index0 }}][discount]" value="{{ item.discount or 0 }}" min="0"
+                  max="100" step="0.1"
+                  class="w-full text-sm border border-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-emerald-500 text-right item-discount font-semibold text-rose-600 bg-rose-50/20">
+              </td>
+              <td class="px-4 py-3 text-sm font-bold text-slate-800 text-right item-subtotal">
+                {{ "%.2f"|format((item.quantity or 0) * (item.unit_price or 0) * (1 - (item.discount or 0) / 100)) }}
+              </td>
+              <td class="px-2 py-3 text-center">
+                <button type="button" class="remove-item text-slate-400 hover:text-rose-500 transition-colors">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                </button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Cómputo de Totales -->
+      <div class="px-5 py-5 border-t border-slate-100 bg-slate-50/50 flex justify-end">
+        <div class="w-72 space-y-2.5 text-sm">
+          <div class="flex justify-between items-center text-slate-600 font-medium">
+            <span>Subtotal de ítems</span>
+            <span class="font-bold text-slate-800" id="subtotal-display">0.00</span>
+          </div>
+
+          <div class="flex justify-between items-center text-slate-600 font-medium">
+            <span>Descuento Adicional (General)</span>
+            <div class="relative w-36">
+              <span class="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-semibold">{{
+                session.get('currency','L') }}</span>
+              <input type="number" name="discount_amount" id="discount-input"
+                value="{{ invoice.discount_amount if invoice else 0 }}" min="0" step="0.01"
+                class="w-full text-sm border border-slate-300 rounded-lg px-2 py-1.5 pl-6.5 focus:outline-none focus:ring-1 focus:ring-emerald-500 text-right bg-white font-bold text-slate-700">
+            </div>
+          </div>
+
+          <div
+            class="flex justify-between items-center text-slate-900 border-t border-slate-200 pt-3 text-base font-bold">
+            <span>Total Facturado</span>
+            <span id="total-display">0.00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botonera inferior -->
+    <div class="flex items-center gap-3 pb-4">
+      <a href="{{ url_for('invoices.index', company_id=cid) }}"
+        class="px-4 py-2.5 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors bg-white shadow-sm">
+        Cancelar
+      </a>
+      <button type="submit"
+        class="flex-1 px-5 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-bold hover:bg-emerald-700 transition-colors shadow-sm">
+        {{ 'Guardar Cambios' if invoice else ('Crear Cotización' if doc_type == 'quote' else 'Crear Factura') }}
+      </button>
+    </div>
+  </form>
+</div>
+
+<!-- Modal 1: Buscar Cliente -->
+<div id="customer-modal"
+  class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center hidden z-50 p-4 transition-all">
+  <div
+    class="bg-white rounded-xl border border-slate-200 w-full max-w-lg shadow-xl flex flex-col max-h-[85vh] overflow-hidden">
+
+    <!-- Modal Header -->
+    <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
+      <h3 class="text-base font-bold text-slate-900">Buscar Cliente</h3>
+      <button type="button" id="close-customer-modal" class="text-slate-400 hover:text-slate-600">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
       </button>
     </div>
 
-    <table class="w-full" id="items-table">
-      <thead>
-        <tr class="border-b border-slate-100 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-          <th class="px-4 py-2 text-left w-48">Producto</th>
-          <th class="px-4 py-2 text-left">Descripción</th>
-          <th class="px-4 py-2 text-right w-20">Cant.</th>
-          <th class="px-4 py-2 text-right w-28">Precio Unit.</th>
-          <th class="px-4 py-2 text-right w-28">Subtotal</th>
-          <th class="w-8 px-2 py-2"></th>
-        </tr>
-      </thead>
-      <tbody id="items-body">
-        {% set existing_items = document_items or [] %}
-        {% for item in existing_items %}
-        <tr class="border-b border-slate-50 item-row">
-          <td class="px-4 py-2">
-            <select name="items[{{ loop.index0 }}][inventory_item_id]" class="w-full text-sm border border-slate-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-emerald-500 bg-white item-product">
-              <option value="">Manual</option>
-              {% for inv in inventory_items %}
-              <option value="{{ inv.id }}" data-price="{{ inv.price }}"
-                {{ 'selected' if item.inventory_item_id == inv.id else '' }}>{{ inv.name }}</option>
-              {% endfor %}
-            </select>
-          </td>
-          <td class="px-4 py-2">
-            <input type="text" name="items[{{ loop.index0 }}][description]" value="{{ item.description or '' }}" placeholder="Descripción..." class="w-full text-sm border border-slate-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-emerald-500">
-          </td>
-          <td class="px-4 py-2">
-            <input type="number" name="items[{{ loop.index0 }}][quantity]" value="{{ item.quantity or 1 }}" min="1" step="1" class="w-full text-sm border border-slate-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-emerald-500 text-right item-qty">
-          </td>
-          <td class="px-4 py-2">
-            <input type="number" name="items[{{ loop.index0 }}][unit_price]" value="{{ item.unit_price or 0 }}" min="0" step="0.01" class="w-full text-sm border border-slate-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-emerald-500 text-right item-price">
-          </td>
-          <td class="px-4 py-2 text-sm font-medium text-slate-900 text-right item-subtotal">
-            {{ "%.2f"|format((item.quantity or 0) * (item.unit_price or 0)) }}
-          </td>
-          <td class="px-2 py-2">
-            <button type="button" class="remove-item text-slate-400 hover:text-rose-500 transition-colors">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-            </button>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-
-    <!-- Totales -->
-    <div class="px-5 py-4 border-t border-slate-100 bg-slate-50/70">
-      <div class="flex flex-col items-end gap-2 text-sm">
-        <div class="flex justify-between w-48">
-          <span class="text-slate-600">Subtotal</span>
-          <span class="font-medium" id="subtotal-display">0.00</span>
-        </div>
-        <div class="flex justify-between w-48 items-center gap-2">
-          <span class="text-slate-600">Descuento</span>
-          <div class="relative w-28">
-            <span class="absolute left-2 top-1/2 -translate-y-1/2 text-slate-400 text-xs">{{ session.get('currency','L') }}</span>
-            <input type="number" name="discount_amount" id="discount-input" value="{{ invoice.discount_amount if invoice else 0 }}" min="0" step="0.01" class="w-full text-sm border border-slate-200 rounded px-2 py-1 pl-6 focus:outline-none focus:ring-1 focus:ring-emerald-500 text-right">
-          </div>
-        </div>
-        <div class="flex justify-between w-48 text-base font-bold text-slate-900 border-t border-slate-200 pt-2">
-          <span>Total</span>
-          <span id="total-display">0.00</span>
-        </div>
+    <!-- Search Input -->
+    <div class="p-4 border-b border-slate-50 bg-slate-50/50">
+      <div class="relative">
+        <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <input type="text" id="customer-search-input" placeholder="Escriba nombre o RTN para buscar..."
+          class="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-slate-700 font-medium">
       </div>
     </div>
-  </div>
 
-  <!-- Botón de guardar -->
-  <div class="flex gap-3 pb-4">
-    <a href="{{ url_for('invoices.index', company_id=cid) }}" class="px-4 py-2 border border-slate-300 rounded-lg text-sm text-slate-700 hover:bg-slate-50">Cancelar</a>
-    <button type="submit" class="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700">
-      {{ 'Guardar' if invoice else ('Crear Cotización' if doc_type == 'quote' else 'Crear Factura') }}
-    </button>
+    <!-- Customers Scrollable List -->
+    <div class="flex-1 overflow-y-auto divide-y divide-slate-50 p-2 space-y-0.5" id="customer-list-box">
+      <!-- Mapped dynamically via JS -->
+    </div>
   </div>
-</form>
+</div>
+
+<!-- Modal 2: Buscar Producto -->
+<div id="product-modal"
+  class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center hidden z-50 p-4 transition-all">
+  <div
+    class="bg-white rounded-xl border border-slate-200 w-full max-w-lg shadow-xl flex flex-col max-h-[85vh] overflow-hidden">
+
+    <!-- Modal Header -->
+    <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
+      <h3 class="text-base font-bold text-slate-900">Buscar Producto en Catálogo</h3>
+      <button type="button" id="close-product-modal" class="text-slate-400 hover:text-slate-600">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Search Input -->
+    <div class="p-4 border-b border-slate-50 bg-slate-50/50">
+      <div class="relative">
+        <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <input type="text" id="product-search-input" placeholder="Buscar por nombre de producto..."
+          class="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-slate-700 font-medium">
+      </div>
+    </div>
+
+    <!-- Products Scrollable List -->
+    <div class="flex-1 overflow-y-auto divide-y divide-slate-50 p-2 space-y-0.5" id="product-list-box">
+      <!-- Mapped dynamically via JS -->
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
-<script>
-(function() {
-  // Item row template
-  let itemIndex = {{ (document_items|length) if document_items else 0 }};
-
-  const inventoryItems = {{ inventory_items | map(attribute='id') | list | tojson }};
-  const inventoryNames = {{ inventory_items | map(attribute='name') | list | tojson }};
-  const inventoryPrices = {{ inventory_items | map(attribute='price') | list | tojson }};
-
-  function buildItemRow(idx) {
-    let options = '<option value="">Manual</option>';
-    for (let i = 0; i < inventoryItems.length; i++) {
-      options += `<option value="${inventoryItems[i]}" data-price="${inventoryPrices[i]}">${inventoryNames[i]}</option>`;
-    }
-    return `
-      <tr class="border-b border-slate-50 item-row">
-        <td class="px-4 py-2"><select name="items[${idx}][inventory_item_id]" class="w-full text-sm border border-slate-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-emerald-500 bg-white item-product">${options}</select></td>
-        <td class="px-4 py-2"><input type="text" name="items[${idx}][description]" placeholder="Descripción..." class="w-full text-sm border border-slate-200 rounded px-2 py-1 focus:outline-none focus:ring-1 focus:ring-emerald-500"></td>
-        <td class="px-4 py-2"><input type="number" name="items[${idx}][quantity]" value="1" min="1" class="w-full text-sm border border-slate-200 rounded px-2 py-1 focus:outline-none text-right item-qty"></td>
-        <td class="px-4 py-2"><input type="number" name="items[${idx}][unit_price]" value="0" min="0" step="0.01" class="w-full text-sm border border-slate-200 rounded px-2 py-1 focus:outline-none text-right item-price"></td>
-        <td class="px-4 py-2 text-sm font-medium text-slate-900 text-right item-subtotal">0.00</td>
-        <td class="px-2 py-2"><button type="button" class="remove-item text-slate-400 hover:text-rose-500"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg></button></td>
-      </tr>`;
-  }
-
-  function updateTotals() {
-    let subtotal = 0;
-    document.querySelectorAll('#items-body .item-row').forEach(row => {
-      const qty = parseFloat(row.querySelector('.item-qty').value) || 0;
-      const price = parseFloat(row.querySelector('.item-price').value) || 0;
-      const sub = qty * price;
-      row.querySelector('.item-subtotal').textContent = sub.toFixed(2);
-      subtotal += sub;
-    });
-    const discount = parseFloat(document.getElementById('discount-input').value) || 0;
-    const total = Math.max(0, subtotal - discount);
-    document.getElementById('subtotal-display').textContent = subtotal.toFixed(2);
-    document.getElementById('total-display').textContent = total.toFixed(2);
-  }
-
-  // Add item
-  document.getElementById('add-item-btn').addEventListener('click', () => {
-    const row = document.createElement('tr');
-    row.innerHTML = buildItemRow(itemIndex++).trim();
-    // Fix: extract tr inner
-    const temp = document.createElement('tbody');
-    temp.innerHTML = buildItemRow(itemIndex - 1);
-    document.getElementById('items-body').appendChild(temp.firstChild);
-    bindRowEvents(document.getElementById('items-body').lastElementChild);
-    updateTotals();
-  });
-
-  // Remove item
-  function bindRowEvents(row) {
-    row.querySelector('.remove-item').addEventListener('click', () => {
-      row.remove();
-      updateTotals();
-    });
-    row.querySelector('.item-qty').addEventListener('input', updateTotals);
-    row.querySelector('.item-price').addEventListener('input', updateTotals);
-    row.querySelector('.item-product').addEventListener('change', function() {
-      const opt = this.options[this.selectedIndex];
-      const price = parseFloat(opt.dataset.price) || 0;
-      row.querySelector('.item-price').value = price.toFixed(2);
-      updateTotals();
-    });
-  }
-
-  // Bind existing rows
-  document.querySelectorAll('#items-body .item-row').forEach(bindRowEvents);
-
-  document.getElementById('discount-input').addEventListener('input', updateTotals);
-  updateTotals();
-})();
+<script id="invoice-form-data" type="application/json">
+{
+  "docType": "{{ doc_type or 'invoice' }}",
+  "itemIndex": {{ document_items|length if document_items else 0 }},
+  "clients": [
+    {% for c in clients %}
+    {
+      "id": {{ c.id|tojson }},
+      "name": {{ c.name|tojson }},
+      "identifier": {{ (c.identifier or '')|tojson }},
+      "email": {{ (c.email or '')|tojson }}
+    }{{ "," if not loop.last else "" }}
+    {% endfor %}
+  ],
+  "inventoryItems": [
+    {% for item in inventory_items %}
+    {
+      "id": {{ item.id|tojson }},
+      "name": {{ item.name|tojson }},
+      "price": {{ (item.price or 0.0)|tojson }},
+      "stock": {{ (item.quantity or 0)|tojson }}
+    }{{ "," if not loop.last else "" }}
+    {% endfor %}
+  ]
+}
 </script>
+<script src="{{ url_for('invoices.static', filename='js/invoice-form.js') }}"></script>
 {% endblock %}

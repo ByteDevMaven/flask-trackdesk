@@ -4,47 +4,153 @@
 
 {% block sidebar_nav %}
   {% set cid = session.get('selected_company_id') %}
-  <a href="{{ url_for('invoices.index', company_id=cid) }}" class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if not request.args.get('status') else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
-    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>Todas
-  </a>
+  {% set act_status = request.args.get('status', '') %}
+  {% set act_type = request.args.get('type', '') %}
+  {% set search = request.args.get('search', '') %}
+  
+  <div class="px-2 py-1 space-y-1">
+    <!-- Todas -->
+    <a href="{{ url_for('invoices.index', company_id=cid) }}{% if search %}?search={{ search }}{% endif %}"
+       class="flex items-center justify-between px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-semibold' if not act_status and not act_type else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+      <div class="flex items-center gap-3">
+        <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if not act_status and not act_type else 'bg-slate-300' }}"></span>
+        Todos los documentos
+      </div>
+      <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">{{ stats.total }}</span>
+    </a>
+    
+    <!-- Facturas -->
+    <a href="{{ url_for('invoices.index', company_id=cid, type='invoice') }}{% if search %}&search={{ search }}{% endif %}"
+       class="flex items-center justify-between px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-semibold' if act_type == 'invoice' and not act_status else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+      <div class="flex items-center gap-3">
+        <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if act_type == 'invoice' and not act_status else 'bg-slate-300' }}"></span>
+        Facturas
+      </div>
+      <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">{{ stats.invoices }}</span>
+    </a>
+    
+    <!-- Cotizaciones -->
+    <a href="{{ url_for('invoices.index', company_id=cid, type='quote') }}{% if search %}&search={{ search }}{% endif %}"
+       class="flex items-center justify-between px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-semibold' if act_type == 'quote' and not act_status else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+      <div class="flex items-center gap-3">
+        <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if act_type == 'quote' and not act_status else 'bg-slate-300' }}"></span>
+        Cotizaciones
+      </div>
+      <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-100">{{ stats.quotes }}</span>
+    </a>
+
+    <div class="mt-4 mb-2 px-3">
+      <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Estados (Facturas)</span>
+    </div>
+
+    <!-- Pagadas -->
+    <a href="{{ url_for('invoices.index', company_id=cid, status='paid') }}{% if search %}&search={{ search }}{% endif %}"
+       class="flex items-center justify-between px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-semibold' if act_status == 'paid' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+      <div class="flex items-center gap-3">
+        <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if act_status == 'paid' else 'bg-slate-300' }}"></span>
+        Pagadas
+      </div>
+      <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">{{ stats.paid }}</span>
+    </a>
+
+    <!-- Pendientes -->
+    <a href="{{ url_for('invoices.index', company_id=cid, status='pending') }}{% if search %}&search={{ search }}{% endif %}"
+       class="flex items-center justify-between px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-semibold' if act_status == 'pending' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+      <div class="flex items-center gap-3">
+        <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if act_status == 'pending' else 'bg-slate-300' }}"></span>
+        Pendientes
+      </div>
+      <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">{{ stats.pending }}</span>
+    </a>
+
+    <!-- Vencidas -->
+    <a href="{{ url_for('invoices.index', company_id=cid, status='overdue') }}{% if search %}&search={{ search }}{% endif %}"
+       class="flex items-center justify-between px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-semibold' if act_status == 'overdue' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+      <div class="flex items-center gap-3">
+        <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if act_status == 'overdue' else 'bg-slate-300' }}"></span>
+        Vencidas
+      </div>
+      <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-rose-100 text-rose-800">{{ stats.overdue }}</span>
+    </a>
+
+    <!-- Borradores -->
+    <a href="{{ url_for('invoices.index', company_id=cid, status='draft') }}{% if search %}&search={{ search }}{% endif %}"
+       class="flex items-center justify-between px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-semibold' if act_status == 'draft' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+      <div class="flex items-center gap-3">
+        <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if act_status == 'draft' else 'bg-slate-300' }}"></span>
+        Borradores
+      </div>
+      <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">{{ stats.draft }}</span>
+    </a>
+  </div>
 {% endblock %}
 
 {% block page_title %}Facturas y Cotizaciones{% endblock %}
 
 {% block content %}
-<div class="flex flex-col h-full overflow-hidden">
+<div class="flex flex-col h-full overflow-hidden bg-slate-50">
+  
+  <!-- Acciones barra superior -->
   <header class="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between flex-shrink-0">
     <form method="GET" action="{{ request.path }}" class="relative">
-      <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-      <input name="search" value="{{ request.args.get('search', '') }}" type="text" placeholder="Buscar facturas..." class="w-72 pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+      <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+      </svg>
+      <input name="search" value="{{ request.args.get('search', '') }}" type="text" placeholder="Buscar documentos..."
+             class="w-72 pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+      {% if request.args.get('status') %}
+        <input type="hidden" name="status" value="{{ request.args.get('status') }}">
+      {% endif %}
+      {% if request.args.get('type') %}
+        <input type="hidden" name="type" value="{{ request.args.get('type') }}">
+      {% endif %}
     </form>
+    
     <div class="flex items-center gap-2">
-      <a href="{{ url_for('invoices.create', company_id=session.get('selected_company_id'), type='quote') }}" class="flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm text-slate-700 hover:bg-slate-50 transition-colors">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+      <a href="{{ url_for('invoices.create', company_id=session.get('selected_company_id'), type='quote') }}"
+         class="flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors shadow-sm bg-white">
+        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
         Nueva Cotización
       </a>
-      <a href="{{ url_for('invoices.create', company_id=session.get('selected_company_id')) }}" class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+      <a href="{{ url_for('invoices.create', company_id=session.get('selected_company_id')) }}"
+         class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors shadow-sm">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+        </svg>
         Nueva Factura
       </a>
     </div>
   </header>
 
   <div class="flex-1 overflow-y-auto p-6">
-    <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
-      <div class="px-4 py-3 border-b border-slate-100 bg-slate-50">
-        <span class="text-sm text-slate-500">{{ pagination.total }} documento{{ 's' if pagination.total != 1 else '' }}</span>
+    
+    <!-- Tabla -->
+    <div class="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm">
+      
+      <!-- Table Header with Bulk Actions -->
+      <div class="px-4 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <input type="checkbox" class="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500">
+          <span class="text-sm text-slate-600 font-medium">Seleccionar todos</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-sm text-slate-500 font-medium">{{ pagination.total }} documento{{ 's' if pagination.total != 1 else '' }}</span>
+        </div>
       </div>
+
       <table class="w-full">
         <thead>
-          <tr class="border-b border-slate-100">
+          <tr class="border-b border-slate-100 bg-slate-50/50">
+            <th class="w-12 px-4 py-3"></th>
             <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">N° Documento</th>
             <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Cliente</th>
             <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Tipo</th>
-            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Fecha</th>
-            <th class="px-4 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Monto</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Fecha Emisión</th>
+            <th class="px-4 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Monto Total</th>
             <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Estado</th>
-            <th class="w-16 px-4 py-3"></th>
+            <th class="w-24 px-4 py-3"></th>
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-50">
@@ -53,50 +159,130 @@
           {% set sm = {'paid':('Pagada','bg-emerald-50 text-emerald-700','bg-emerald-500'),'overdue':('Vencida','bg-rose-50 text-rose-700','bg-rose-500'),'pending':('Pendiente','bg-amber-50 text-amber-700','bg-amber-500'),'partial':('Parcial','bg-sky-50 text-sky-700','bg-sky-500'),'draft':('Borrador','bg-slate-100 text-slate-600','bg-slate-400'),'sent':('Enviada','bg-blue-50 text-blue-700','bg-blue-400')} %}
           {% set sl, sc, sd = sm.get(sv.lower(), ('—','bg-slate-100 text-slate-500','bg-slate-300')) %}
           {% set tv = invoice.type.value if invoice.type else '' %}
-          <tr class="hover:bg-slate-50 transition-colors">
+          <tr class="hover:bg-slate-50/80 transition-colors">
             <td class="px-4 py-3">
-              <a href="{{ url_for('invoices.view', company_id=invoice.company_id, id=invoice.id) }}" class="text-sm font-medium text-emerald-600 hover:text-emerald-700">{{ invoice.document_number }}</a>
+              <input type="checkbox" class="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500">
+            </td>
+            <td class="px-4 py-3">
+              <a href="{{ url_for('invoices.view', company_id=invoice.company_id, id=invoice.id) }}"
+                 class="text-sm font-semibold text-emerald-600 hover:text-emerald-700 transition-colors block">
+                {{ invoice.document_number }}
+              </a>
             </td>
             <td class="px-4 py-3">
               {% if invoice.client %}
-              <div class="flex items-center gap-2">
-                <div class="w-7 h-7 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 text-xs font-bold flex-shrink-0">{{ invoice.client.name[:2]|upper }}</div>
-                <span class="text-sm text-slate-700 truncate max-w-[120px]">{{ invoice.client.name }}</span>
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-full bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-600 text-xs font-bold flex-shrink-0">
+                  {{ invoice.client.name[:2]|upper }}
+                </div>
+                <div>
+                  <span class="text-sm font-medium text-slate-800 block truncate max-w-[150px]">{{ invoice.client.name }}</span>
+                  {% if invoice.client.email %}
+                  <span class="text-[10px] text-slate-400 block truncate max-w-[150px] mt-0.5">{{ invoice.client.email }}</span>
+                  {% endif %}
+                </div>
               </div>
-              {% else %}<span class="text-sm text-slate-400">—</span>{% endif %}
+              {% else %}
+              <span class="text-sm text-slate-400 font-medium">—</span>
+              {% endif %}
             </td>
             <td class="px-4 py-3">
-              <span class="text-xs font-medium px-2 py-0.5 rounded {{ 'bg-emerald-50 text-emerald-700' if tv == 'invoice' else 'bg-sky-50 text-sky-700' }}">{{ 'Factura' if tv == 'invoice' else 'Cotización' }}</span>
+              {% if tv == 'invoice' %}
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
+                Factura
+              </span>
+              {% else %}
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-sky-50 text-sky-700 border border-sky-100">
+                Cotización
+              </span>
+              {% endif %}
             </td>
-            <td class="px-4 py-3 text-sm text-slate-600">{{ invoice.issued_date.strftime('%d/%m/%Y') if invoice.issued_date else '—' }}</td>
-            <td class="px-4 py-3 text-sm font-medium text-slate-900 text-right">{{ session.get('currency','L') }} {{ "%.2f"|format(invoice.total_amount or 0) }}</td>
+            <td class="px-4 py-3 text-sm text-slate-600 font-medium">
+              {{ invoice.issued_date.strftime('%d/%m/%Y') if invoice.issued_date else '—' }}
+            </td>
+            <td class="px-4 py-3 text-sm font-semibold text-slate-800 text-right">
+              {{ session.get('currency','L') }} {{ "%.2f"|format(invoice.total_amount or 0) }}
+            </td>
             <td class="px-4 py-3">
-              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium {{ sc }}">
-                <span class="w-1 h-1 rounded-full {{ sd }}"></span>{{ sl }}
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold {{ sc }} border">
+                <span class="w-1.5 h-1.5 rounded-full {{ sd }}"></span>
+                {{ sl }}
               </span>
             </td>
             <td class="px-4 py-3">
               <div class="flex items-center gap-1 justify-end">
-                <a href="{{ url_for('invoices.edit', company_id=invoice.company_id, id=invoice.id) }}" class="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors" title="Editar">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                <a href="{{ url_for('invoices.edit', company_id=invoice.company_id, id=invoice.id) }}"
+                   class="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
+                   title="Editar">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+                  </svg>
                 </a>
-                <button type="button" data-action="confirm-delete" data-url="{{ url_for('invoices.delete', company_id=invoice.company_id, id=invoice.id) }}" data-name="{{ invoice.document_number }}" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                <button type="button"
+                        data-action="confirm-delete"
+                        data-url="{{ url_for('invoices.delete', company_id=invoice.company_id, id=invoice.id) }}"
+                        data-name="{{ invoice.document_number }}"
+                        class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                        title="Eliminar">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                  </svg>
                 </button>
               </div>
             </td>
           </tr>
           {% else %}
-          <tr><td colspan="7" class="px-4 py-16 text-center text-sm text-slate-400">No hay documentos registrados</td></tr>
+          <tr>
+            <td colspan="8" class="px-4 py-16 text-center">
+              <div class="flex flex-col items-center gap-3">
+                <div class="w-14 h-14 bg-slate-50 border border-slate-100 rounded-full flex items-center justify-center text-slate-400">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                  </svg>
+                </div>
+                <p class="text-sm font-semibold text-slate-500">No hay documentos registrados</p>
+              </div>
+            </td>
+          </tr>
           {% endfor %}
         </tbody>
       </table>
+
+      <!-- Paginación -->
       {% if pagination.pages > 1 %}
-      <div class="px-4 py-3 border-t border-slate-100 flex items-center justify-between">
-        <p class="text-sm text-slate-500">Página {{ pagination.page }} de {{ pagination.pages }}</p>
+      <div class="px-4 py-3 border-t border-slate-100 flex items-center justify-between bg-white">
+        <p class="text-sm text-slate-500 font-medium">
+          Mostrando {{ (pagination.page - 1) * pagination.per_page + 1 }} a
+          {% if pagination.page * pagination.per_page > pagination.total %}{{ pagination.total }}{% else %}{{ pagination.page * pagination.per_page }}{% endif %}
+          de {{ pagination.total }} resultados
+        </p>
         <div class="flex items-center gap-1">
-          {% if pagination.has_prev %}<a href="?page={{ pagination.prev_num }}" class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded">Anterior</a>{% endif %}
-          {% if pagination.has_next %}<a href="?page={{ pagination.next_num }}" class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded">Siguiente</a>{% endif %}
+          {% if pagination.has_prev %}
+          <a href="?page={{ pagination.prev_num }}{% if request.args.get('status') %}&status={{ request.args.get('status') }}{% endif %}{% if request.args.get('type') %}&type={{ request.args.get('type') }}{% endif %}{% if request.args.get('search') %}&search={{ request.args.get('search') }}{% endif %}"
+             class="px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded transition-colors">Anterior</a>
+          {% else %}
+          <span class="px-3 py-1.5 text-sm font-medium text-slate-400 rounded cursor-not-allowed">Anterior</span>
+          {% endif %}
+          
+          {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+            {% if page_num %}
+              {% if page_num == pagination.page %}
+              <span class="px-3 py-1.5 text-sm font-bold text-white bg-emerald-600 rounded shadow-sm">{{ page_num }}</span>
+              {% else %}
+              <a href="?page={{ page_num }}{% if request.args.get('status') %}&status={{ request.args.get('status') }}{% endif %}{% if request.args.get('type') %}&type={{ request.args.get('type') }}{% endif %}{% if request.args.get('search') %}&search={{ request.args.get('search') }}{% endif %}"
+                 class="px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded transition-colors">{{ page_num }}</a>
+              {% endif %}
+            {% else %}
+              <span class="px-2 text-slate-400 font-medium">...</span>
+            {% endif %}
+          {% endfor %}
+
+          {% if pagination.has_next %}
+          <a href="?page={{ pagination.next_num }}{% if request.args.get('status') %}&status={{ request.args.get('status') }}{% endif %}{% if request.args.get('type') %}&type={{ request.args.get('type') }}{% endif %}{% if request.args.get('search') %}&search={{ request.args.get('search') }}{% endif %}"
+             class="px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded transition-colors">Siguiente</a>
+          {% else %}
+          <span class="px-3 py-1.5 text-sm font-medium text-slate-400 rounded cursor-not-allowed">Siguiente</span>
+          {% endif %}
         </div>
       </div>
       {% endif %}
@@ -104,3 +290,4 @@
   </div>
 </div>
 {% endblock %}
+

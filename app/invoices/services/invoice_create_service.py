@@ -58,7 +58,6 @@ def create_invoice_or_quote(company_id, form, user_id):
         document_number = _generate_document_number(company_id, doc_type)
 
     document = Document(
-        company_id=company_id,
         document_number=document_number,
         type=doc_type,
         client_id=int(form.get("client_id")) if form.get("client_id") else None,
@@ -69,6 +68,7 @@ def create_invoice_or_quote(company_id, form, user_id):
         due_date=datetime.strptime(form.get("due_date"), "%Y-%m-%d")
         if form.get("due_date") else None
     )
+    document.company_id = company_id
 
     db.session.add(document)
     db.session.flush()

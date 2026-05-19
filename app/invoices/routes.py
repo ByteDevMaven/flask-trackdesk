@@ -24,10 +24,23 @@ def index(company_id):
     for doc in pagination.items:
         doc.client = Contact.query.get(doc.client_id) if doc.client_id else None
 
+    # Compute statistics for sidebar filters
+    from app.models.enums import DocumentType
+    stats = {
+        'total': Document.query.filter(Document.company_id == company_id, Document.type.in_([DocumentType.invoice, DocumentType.quote])).count(),
+        'invoices': Document.query.filter_by(company_id=company_id, type=DocumentType.invoice).count(),
+        'quotes': Document.query.filter_by(company_id=company_id, type=DocumentType.quote).count(),
+        'paid': Document.query.filter_by(company_id=company_id, status='paid').count(),
+        'pending': Document.query.filter_by(company_id=company_id, status='pending').count(),
+        'overdue': Document.query.filter_by(company_id=company_id, status='overdue').count(),
+        'draft': Document.query.filter_by(company_id=company_id, status='draft').count()
+    }
+
     return render_template(
         "invoices/index.html",
         invoices=pagination.items,
-        pagination=pagination
+        pagination=pagination,
+        stats=stats
     )
 
 
