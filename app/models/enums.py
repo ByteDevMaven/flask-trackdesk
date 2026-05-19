@@ -28,3 +28,7 @@ class PaymentMethod(enum.Enum):
     credit_card = _('credit card')
     cheque = _('cheque')
     other = _('other')
+
+class ContactType(enum.Enum):
+    customer = 'customer'
+    supplier = 'supplier'

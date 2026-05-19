@@ -5,8 +5,7 @@ from .company import Company
 from .role import Role
 from .permission import Permission
 from .user import User
-from .client import Client
-from .supplier import Supplier
+from .contact import Contact
 from .inventory_item import InventoryItem
 from .purchase_order import PurchaseOrder
 from .purchase_order_item import PurchaseOrderItem
@@ -22,7 +21,7 @@ __all__ = [
     'db', 'migrate',
     'DocumentType', 'InvoiceType', 'StockMovementType', 'PaymentMethod',
     'role_permissions', 'user_companies',
-    'Company', 'Role', 'Permission', 'User', 'Client', 'Supplier',
+    'Company', 'Role', 'Permission', 'User', 'Contact',
     'InventoryItem', 'PurchaseOrder', 'PurchaseOrderItem',
     'Document', 'DocumentItem', 'Payment', 'Report', 'Notification',
     'StockMovement', 'DocumentSequence'

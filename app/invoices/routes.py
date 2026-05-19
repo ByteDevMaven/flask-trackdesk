@@ -8,8 +8,9 @@ from wtforms import ValidationError
 
 from app.extensions import limiter
 
-from app.models import db, Document, DocumentItem, Client, InventoryItem, DocumentType, Payment, PaymentMethod
+from app.models import db, Document, DocumentItem, Contact, InventoryItem, DocumentType, Payment, PaymentMethod
 
+from app.models.enums import ContactType
 from .services import get_invoice_list, create_invoice_or_quote, update_invoice_or_quote, generate_invoice_pdf
 from . import invoices
 
@@ -21,7 +22,7 @@ def index(company_id):
     pagination = get_invoice_list(company_id, request.args)
 
     for doc in pagination.items:
-        doc.client = Client.query.get(doc.client_id) if doc.client_id else None
+        doc.client = Contact.query.get(doc.client_id) if doc.client_id else None
 
     return render_template(
         "invoices/index.html",
@@ -56,7 +57,7 @@ def item_row():
 @limiter.exempt
 def create(company_id):
     # Get clients and inventory items for the form
-    clients = Client.query.filter_by(company_id=company_id).all()
+    clients = Contact.query.filter_by(company_id=company_id, type=ContactType.customer).all()
     inventory_items = InventoryItem.query.filter(
         InventoryItem.company_id == company_id,
         InventoryItem.quantity > 0
@@ -119,7 +120,7 @@ def view(company_id, id):
     
     # Get client information
     if document.client_id:
-        document.client = Client.query.get(document.client_id)
+        document.client = Contact.query.get(document.client_id)
     else:
         document.client = None
     
@@ -205,11 +206,11 @@ def edit(company_id, id):
     
     # Get client information
     if document.client_id:
-        document.client = Client.query.get(document.client_id)
+        document.client = Contact.query.get(document.client_id)
     else:
         document.client = None
     
-    clients = Client.query.filter_by(company_id=company_id).all()
+    clients = Contact.query.filter_by(company_id=company_id, type=ContactType.customer).all()
     inventory_items = InventoryItem.query.filter_by(company_id=company_id).all()
     document_items = DocumentItem.query.filter_by(document_id=document.id).all()
     

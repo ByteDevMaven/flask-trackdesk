@@ -13,13 +13,13 @@ from PyPDF2 import PdfReader, PdfWriter
 from num2words import num2words
 
 from app.models import (
-    DocumentItem, Client, InventoryItem,
+    DocumentItem, Contact, InventoryItem,
     DocumentType, PaymentMethod
 )
 
 
 def generate_invoice_pdf(document, request):
-    client = Client.query.get(document.client_id) if document.client_id else None
+    client = Contact.query.get(document.client_id) if document.client_id else None
 
     document_items = DocumentItem.query.filter_by(
         document_id=document.id

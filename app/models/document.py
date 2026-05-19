@@ -6,13 +6,14 @@ class Document(BaseModel):
     company_id = db.Column(db.Integer, db.ForeignKey('companies.id'), nullable=False, index=True)
     document_number = db.Column(db.String, unique=True, nullable=False, index=True)
     type = db.Column(db.Enum(DocumentType), nullable=False)
-    client_id = db.Column(db.Integer, db.ForeignKey('clients.id'), index=True)
+    client_id = db.Column(db.Integer, db.ForeignKey('contacts.id'), index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), index=True)
     status = db.Column(db.Enum(InvoiceType), nullable=False, default=InvoiceType.draft)
     total_amount = db.Column(db.Float)
     issued_date = db.Column(db.DateTime)
     due_date = db.Column(db.DateTime)
 
+    client = db.relationship('Contact', backref='documents')
     payments = db.relationship('Payment', backref='document', cascade='all, delete-orphan', lazy='dynamic')
 
     @property

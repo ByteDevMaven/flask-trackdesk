@@ -7,7 +7,8 @@ from flask_login import login_required
 from sqlalchemy.exc import SQLAlchemyError
 from flask_babel import _
 
-from app.models import db, PurchaseOrder, Supplier, InventoryItem
+from app.models import db, PurchaseOrder, Contact, InventoryItem
+from app.models.enums import ContactType
 
 from .services import create_purchase_order, update_purchase_order, get_purchase_orders, get_purchase_order_stats
 from . import orders
@@ -33,9 +34,9 @@ def index(company_id):
         sort_order=sort_order,
     )
 
-    suppliers = Supplier.query.filter_by(
-        company_id=company_id
-    ).order_by(Supplier.name).all()
+    suppliers = Contact.query.filter_by(
+        company_id=company_id, type=ContactType.supplier
+    ).order_by(Contact.name).all()
 
     stats = get_purchase_order_stats(company_id)
 
@@ -61,7 +62,7 @@ def index(company_id):
 @orders.route('/<int:company_id>/purchase-orders/create', methods=['GET', 'POST'])
 @login_required
 def create(company_id):
-    suppliers = Supplier.query.filter_by(company_id=company_id).order_by(Supplier.name).all()
+    suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
     inventory_items = InventoryItem.query.filter_by(company_id=company_id).order_by(InventoryItem.name).all()
     
     if request.method == 'POST':
@@ -96,7 +97,7 @@ def view(company_id, id):
 @login_required
 def edit(company_id, id):
     purchase_order = PurchaseOrder.query.filter_by(id=id, company_id=company_id).first_or_404()
-    suppliers = Supplier.query.filter_by(company_id=company_id).order_by(Supplier.name).all()
+    suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
     inventory_items = InventoryItem.query.filter_by(company_id=company_id).order_by(InventoryItem.name).all()
     
     return render_template('orders/form.html', 
@@ -110,7 +111,7 @@ def edit(company_id, id):
 @orders.route('/<int:company_id>/purchase-orders/<int:id>/update', methods=['POST'])
 @login_required
 def update(company_id, id):
-    suppliers = Supplier.query.filter_by(company_id=company_id).order_by(Supplier.name).all()
+    suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
     inventory_items = InventoryItem.query.filter_by(company_id=company_id).order_by(InventoryItem.name).all()
 
     result = update_purchase_order(company_id, id, request.form)
@@ -155,7 +156,7 @@ def export(company_id):
     
     # Write header
     writer.writerow([
-        _('Order Number'), _('Supplier'), _('Total Amount'), _('Items Count'), _('Created Date')
+        _('Order Number'), _('Contact'), _('Total Amount'), _('Items Count'), _('Created Date')
     ])
     
     # Write data

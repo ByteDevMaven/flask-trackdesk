@@ -4,7 +4,7 @@ from flask_babel import _
 from sqlalchemy import or_, desc
 from datetime import datetime
 
-from app.models import db, Payment, Document, DocumentType, Client
+from app.models import db, Payment, Document, DocumentType, Contact
 from app.extensions import limiter
 
 from . import payments
@@ -23,14 +23,14 @@ def index(company_id):
     query = db.session.query(Payment).filter(
         Payment.company_id == company_id
     ).join(Document, Payment.document_id == Document.id, isouter=True)\
-     .join(Client, Document.client_id == Client.id, isouter=True)
+     .join(Contact, Document.client_id == Contact.id, isouter=True)
     
     # Apply filters
     if search:
         query = query.filter(
             or_(
                 Document.document_number.ilike(f'%{search}%'),
-                Client.name.ilike(f'%{search}%'),
+                Contact.name.ilike(f'%{search}%'),
                 Payment.notes.ilike(f'%{search}%')
             )
         )
@@ -69,7 +69,7 @@ def index(company_id):
         if payment.document_id:
             payment.document = Document.query.get(payment.document_id)
             if payment.document and payment.document.client_id:
-                payment.document.client = Client.query.get(payment.document.client_id)
+                payment.document.client = Contact.query.get(payment.document.client_id)
     
     # Calculate totals
     total_payments = db.session.query(db.func.sum(Payment.amount)).filter(
@@ -97,7 +97,7 @@ def create(company_id):
         ).first()
         
         if selected_invoice and selected_invoice.client_id:
-            selected_invoice.client = Client.query.get(selected_invoice.client_id)
+            selected_invoice.client = Contact.query.get(selected_invoice.client_id)
     
     return render_template('payments/form.html', 
                          payment=None,
@@ -117,13 +117,13 @@ def search_invoices(company_id):
             Document.status == 'overdue',
             Document.status == 'pending'
         )
-    ).join(Client, Document.client_id == Client.id, isouter=True)
+    ).join(Contact, Document.client_id == Contact.id, isouter=True)
     
     if search:
         query = query.filter(
             or_(
                 Document.document_number.ilike(f'%{search}%'),
-                Client.name.ilike(f'%{search}%')
+                Contact.name.ilike(f'%{search}%')
             )
         )
     
@@ -141,7 +141,7 @@ def search_invoices(company_id):
         
         client_name = ''
         if invoice.client_id:
-            client = Client.query.get(invoice.client_id)
+            client = Contact.query.get(invoice.client_id)
             client_name = client.name if client else ''
         
         results.append({
@@ -211,7 +211,7 @@ def view(company_id, id):
     if payment.document_id:
         payment.document = Document.query.get(payment.document_id)
         if payment.document and payment.document.client_id:
-            payment.document.client = Client.query.get(payment.document.client_id)
+            payment.document.client = Contact.query.get(payment.document.client_id)
     
     return render_template('payments/view.html', payment=payment)
 
@@ -229,7 +229,7 @@ def edit(company_id, id):
     if payment.document_id:
         selected_invoice = Document.query.get(payment.document_id)
         if selected_invoice and selected_invoice.client_id:
-            selected_invoice.client = Client.query.get(selected_invoice.client_id)
+            selected_invoice.client = Contact.query.get(selected_invoice.client_id)
     
     return render_template('payments/form.html', 
                          payment=payment,

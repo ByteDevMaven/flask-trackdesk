@@ -10,7 +10,7 @@ def create_purchase_order(company_id, form_data):
     try:
         supplier_id = form_data.get('supplier_id')
         if not supplier_id or not supplier_id.isdigit():
-            return {'success': False, 'error': _('Supplier is required')}
+            return {'success': False, 'error': _('Contact is required')}
         
         last_id = db.session.query(func.max(PurchaseOrder.id))\
             .filter_by(company_id=company_id).scalar() or 0
@@ -118,7 +118,7 @@ def update_purchase_order(company_id, order_id, form_data):
 
         supplier_id = form_data.get('supplier_id')
         if not supplier_id or not supplier_id.isdigit():
-            return {'success': False, 'error': _('Supplier is required')}
+            return {'success': False, 'error': _('Contact is required')}
 
         purchase_order.supplier_id = int(supplier_id)
 

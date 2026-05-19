@@ -8,6 +8,6 @@ class InventoryItem(BaseModel):
     quantity = db.Column(db.Integer)
     price = db.Column(db.Float)
     discount = db.Column(db.Float, default=0.0)
-    supplier_id = db.Column(db.Integer, db.ForeignKey('suppliers.id'), index=True)
+    supplier_id = db.Column(db.Integer, db.ForeignKey('contacts.id'), index=True)
 
-    supplier = db.relationship('Supplier', backref='inventory_items')
+    supplier = db.relationship('Contact', backref='inventory_items')

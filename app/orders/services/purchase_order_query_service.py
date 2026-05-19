@@ -1,4 +1,4 @@
-from app.models import PurchaseOrder, Supplier
+from app.models import PurchaseOrder, Contact
 from sqlalchemy import asc, desc, or_
 
 
@@ -18,7 +18,7 @@ def get_purchase_orders(
             or_(
                 PurchaseOrder.order_number.ilike(f'%{search}%'),
                 PurchaseOrder.supplier.has(
-                    Supplier.name.ilike(f'%{search}%')
+                    Contact.name.ilike(f'%{search}%')
                 )
             )
         )

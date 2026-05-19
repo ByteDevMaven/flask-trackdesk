@@ -4,7 +4,8 @@ from sqlalchemy import func
 from datetime import datetime, timedelta
 from flask_babel import _
 
-from app.models import Client, Document, DocumentType, InventoryItem, Payment, db
+from app.models import Contact, Document, DocumentType, InventoryItem, Payment, db
+from app.models.enums import ContactType
 
 from . import dashboard
 
@@ -22,7 +23,7 @@ def index(company_id = None):
     last_day_of_last_month = first_day_of_month - timedelta(days=1)
 
     # Current month metrics
-    client_count = Client.query.filter_by(company_id=company_id).count()
+    client_count = Contact.query.filter_by(company_id=company_id, type=ContactType.customer).count()
     outstanding_invoice_count = Document.query.filter(
         Document.company_id == company_id,
         Document.type == DocumentType.invoice,
@@ -37,9 +38,10 @@ def index(company_id = None):
     ).scalar() or 0
 
     # Previous month metrics for comparison
-    last_month_clients = Client.query.filter(
-        Client.company_id == company_id,
-        Client.created_at < first_day_of_month
+    last_month_clients = Contact.query.filter(
+        Contact.company_id == company_id,
+        Contact.type == ContactType.customer,
+        Contact.created_at < first_day_of_month
     ).count()
     
     last_month_outstanding = Document.query.filter(
@@ -77,7 +79,7 @@ def index(company_id = None):
     ).order_by(Document.issued_date.desc()).limit(5).all()
 
     for inv in recent_invoices:
-        inv.client = Client.query.get(inv.client_id) if inv.client_id else None
+        inv.client = Contact.query.get(inv.client_id) if inv.client_id else None
 
     recent_quotes = Document.query.filter(
         Document.company_id == company_id,
@@ -85,7 +87,7 @@ def index(company_id = None):
     ).order_by(Document.issued_date.desc()).limit(5).all()
 
     for q in recent_quotes:
-        q.client = Client.query.get(q.client_id) if q.client_id else None
+        q.client = Contact.query.get(q.client_id) if q.client_id else None
     
     # Check for overdue invoices and update their status
     overdue_invoices = Document.query.filter(

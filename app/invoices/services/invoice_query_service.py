@@ -1,7 +1,7 @@
 from sqlalchemy import or_
 from datetime import datetime
 from flask import current_app
-from app.models import db, Document, Client, DocumentType
+from app.models import db, Document, Contact, DocumentType
 
 
 def get_invoice_list(company_id, filters):
@@ -19,10 +19,10 @@ def get_invoice_list(company_id, filters):
     )
 
     if search:
-        query = query.outerjoin(Client).filter(
+        query = query.outerjoin(Contact).filter(
             or_(
                 Document.document_number.ilike(f"%{search}%"),
-                Client.name.ilike(f"%{search}%")
+                Contact.name.ilike(f"%{search}%")
             )
         )
 

@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required
 
-from app.models import db, Company, User, Client, Supplier, InventoryItem, Document, Payment, Report, DocumentSequence
+from app.models import db, Company, User, Contact, Contact, InventoryItem, Document, Payment, Report, DocumentSequence
 
 from . import companies
 
@@ -88,8 +88,8 @@ def view(id):
     # Get company statistics
     stats = {
         'users_count': len(company.users),
-        'clients_count': Client.query.filter_by(company_id=company.id).count(),
-        'suppliers_count': Supplier.query.filter_by(company_id=company.id).count(),
+        'clients_count': Contact.query.filter_by(company_id=company.id).count(),
+        'suppliers_count': Contact.query.filter_by(company_id=company.id).count(),
         'inventory_count': InventoryItem.query.filter_by(company_id=company.id).count(),
         'documents_count': Document.query.filter_by(company_id=company.id).count(),
         'payments_count': Payment.query.filter_by(company_id=company.id).count(),
@@ -170,8 +170,8 @@ def delete(id):
     
     try:
         # Check if company has related data
-        has_clients = Client.query.filter_by(company_id=company.id).first() is not None
-        has_suppliers = Supplier.query.filter_by(company_id=company.id).first() is not None
+        has_clients = Contact.query.filter_by(company_id=company.id).first() is not None
+        has_suppliers = Contact.query.filter_by(company_id=company.id).first() is not None
         has_inventory = InventoryItem.query.filter_by(company_id=company.id).first() is not None
         has_documents = Document.query.filter_by(company_id=company.id).first() is not None
         has_payments = Payment.query.filter_by(company_id=company.id).first() is not None

@@ -7,10 +7,11 @@ from flask_login import login_required
 from sqlalchemy.exc import SQLAlchemyError
 from flask_babel import _
 
-from app.models import db, InventoryItem, Supplier
+from app.models import db, InventoryItem, Contact
 from app.extensions import limiter
 
 from . import inventory
+from app.models.enums import ContactType
 from .services import InventoryService
 
 @inventory.route('/<int:company_id>/inventory')
@@ -39,7 +40,7 @@ def index(company_id):
     inventory_items = pagination.items
     
     # Filter options
-    suppliers = Supplier.query.filter_by(company_id=company_id).order_by(Supplier.name).all()
+    suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
     
     # Stats
     stats = InventoryService.get_inventory_stats(company_id)
@@ -60,7 +61,7 @@ def index(company_id):
 @limiter.exempt
 def create(company_id):
     # Get suppliers for dropdown
-    suppliers = Supplier.query.filter_by(company_id=company_id).order_by(Supplier.name).all()
+    suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
     selected_id = request.args.get('supplier_id', type=int)
     
     if request.method == 'POST':
@@ -146,7 +147,7 @@ def movements(company_id):
 @limiter.exempt
 def edit(company_id, id):
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
-    suppliers = Supplier.query.filter_by(company_id=company_id).order_by(Supplier.name).all()
+    suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
     selected_id = request.args.get('supplier_id', type=int)
     
     return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, selected_id=selected_id, item=item, form_data=None)
@@ -156,7 +157,7 @@ def edit(company_id, id):
 @limiter.exempt
 def update(company_id, id):
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
-    suppliers = Supplier.query.filter_by(company_id=company_id).order_by(Supplier.name).all()
+    suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
     
     try:
         InventoryService.update_inventory_item(
@@ -204,7 +205,7 @@ def export(company_id):
     
     # Write header
     writer.writerow([
-        _('Name'), _('Description'), _('Quantity'), _('Price'), _('Supplier')
+        _('Name'), _('Description'), _('Quantity'), _('Price'), _('Contact')
     ])
     
     # Write data

@@ -1,31 +1,31 @@
 {% extends "base.html" %}
-{% block title %}{{ supplier.name }} – Proveedor TrackDesk{% endblock %}
-{% block sidebar_title %}Proveedores{% endblock %}
+{% block title %}{{ contact.name }} – Contacto TrackDesk{% endblock %}
+{% block sidebar_title %}Contactos{% endblock %}
 {% block sidebar_nav %}
-  <a href="{{ url_for('suppliers.index', company_id=company_id) }}" class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>← Volver</a>
+  <a href="{{ url_for('contacts.index', company_id=company_id) }}" class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>← Volver</a>
 {% endblock %}
-{% block page_title %}{{ supplier.name }}{% endblock %}
+{% block page_title %}{{ contact.name }}{% endblock %}
 
 {% block content %}
 <div class="p-6 max-w-3xl mx-auto">
   <div class="bg-white rounded-lg border border-slate-200 p-6 mb-6">
     <div class="flex items-start justify-between mb-4">
       <div>
-        <h2 class="text-xl font-bold text-slate-900">{{ supplier.name }}</h2>
-        <p class="text-sm text-slate-500">{{ supplier.contact_email or '—' }}</p>
-        <p class="text-sm text-slate-500">{{ supplier.phone or '—' }}</p>
+        <h2 class="text-xl font-bold text-slate-900">{{ contact.name }}</h2>
+        <p class="text-sm text-slate-500">{{ contact.email or '—' }}</p>
+        <p class="text-sm text-slate-500">{{ contact.phone or '—' }}</p>
       </div>
       <div class="flex gap-2">
-        <button type="button" data-action="open-drawer" data-url="{{ url_for('suppliers.edit', company_id=company_id, supplier_id=supplier.id) }}" data-title="Editar Proveedor" class="flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm text-slate-700 hover:bg-slate-50">Editar</button>
+        <button type="button" data-action="open-drawer" data-url="{{ url_for('contacts.edit', company_id=company_id, contact_id=contact.id) }}" data-title="Editar Contacto" class="flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm text-slate-700 hover:bg-slate-50">Editar</button>
       </div>
     </div>
-    {% if supplier.address %}<p class="text-sm text-slate-600 bg-slate-50 rounded-lg p-3">{{ supplier.address }}</p>{% endif %}
+    {% if contact.address %}<p class="text-sm text-slate-600 bg-slate-50 rounded-lg p-3">{{ contact.address }}</p>{% endif %}
   </div>
 
   {% if inventory_items %}
   <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
     <div class="px-4 py-3 border-b border-slate-100">
-      <h3 class="text-sm font-semibold text-slate-900">Productos de este Proveedor ({{ inventory_items|length }})</h3>
+      <h3 class="text-sm font-semibold text-slate-900">Productos de este Contacto ({{ inventory_items|length }})</h3>
     </div>
     <table class="w-full">
       <thead>
