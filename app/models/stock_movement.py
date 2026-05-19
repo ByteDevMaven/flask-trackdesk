@@ -22,6 +22,6 @@ class StockMovement(BaseModel):
     @property
     def qty_change(self):
         if self.type == StockMovementType.outgoing:
-            return -self.quantity
-        return self.quantity
+            return -abs(self.quantity)
+        return abs(self.quantity)
 

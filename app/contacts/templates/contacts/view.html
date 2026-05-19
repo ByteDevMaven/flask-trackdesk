@@ -2,50 +2,254 @@
 {% block title %}{{ contact.name }} – Contacto TrackDesk{% endblock %}
 {% block sidebar_title %}Contactos{% endblock %}
 {% block sidebar_nav %}
-  <a href="{{ url_for('contacts.index', company_id=company_id) }}" class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>← Volver</a>
+{% set cid = company_id or session.get('selected_company_id') %}
+<div class="px-3 py-2 mb-4">
+  <a href="{{ url_for('contacts.index', company_id=cid) }}"
+    class="flex items-center gap-3 text-slate-600 hover:text-emerald-700 text-sm font-medium transition-colors">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+    Volver a Contactos
+  </a>
+</div>
+
+{% if contact.type.name == 'customer' %}
+<div class="px-4 space-y-4">
+  <div class="bg-emerald-50 rounded-lg p-3 border border-emerald-100">
+    <p class="text-[10px] uppercase font-bold text-emerald-600 tracking-wider mb-1">Total Pagado</p>
+    <p class="text-lg font-bold text-emerald-700">{{ session.get('currency','L') }} {{ "%.2f"|format(stats.total_revenue) }}</p>
+  </div>
+  <div class="bg-rose-50 rounded-lg p-3 border border-rose-100">
+    <p class="text-[10px] uppercase font-bold text-rose-600 tracking-wider mb-1">Pendiente de Pago</p>
+    <p class="text-lg font-bold text-rose-700">{{ session.get('currency','L') }} {{ "%.2f"|format(stats.pending_payments) }}</p>
+  </div>
+  <div class="bg-slate-50 rounded-lg p-3 border border-slate-100">
+    <p class="text-[10px] uppercase font-bold text-slate-500 tracking-wider mb-1">Total Facturas</p>
+    <p class="text-lg font-bold text-slate-700">{{ stats.total_invoices }}</p>
+  </div>
+</div>
+{% else %}
+<div class="px-4 space-y-4">
+  <div class="bg-emerald-50 rounded-lg p-3 border border-emerald-100">
+    <p class="text-[10px] uppercase font-bold text-emerald-600 tracking-wider mb-1">Valor en Inventario</p>
+    <p class="text-lg font-bold text-emerald-700">{{ session.get('currency','L') }} {{ "%.2f"|format(stats.total_value) }}</p>
+  </div>
+  <div class="bg-purple-50 rounded-lg p-3 border border-purple-100">
+    <p class="text-[10px] uppercase font-bold text-purple-600 tracking-wider mb-1">Productos Únicos</p>
+    <p class="text-lg font-bold text-purple-700">{{ stats.total_products }}</p>
+  </div>
+  <div class="bg-rose-50 rounded-lg p-3 border border-rose-100">
+    <p class="text-[10px] uppercase font-bold text-rose-600 tracking-wider mb-1">Bajo Stock (≤5)</p>
+    <p class="text-lg font-bold text-rose-700">{{ stats.low_stock }}</p>
+  </div>
+</div>
+{% endif %}
 {% endblock %}
-{% block page_title %}{{ contact.name }}{% endblock %}
+{% block page_title %}Detalles del Contacto{% endblock %}
 
 {% block content %}
-<div class="p-6 max-w-3xl mx-auto">
-  <div class="bg-white rounded-lg border border-slate-200 p-6 mb-6">
-    <div class="flex items-start justify-between mb-4">
-      <div>
-        <h2 class="text-xl font-bold text-slate-900">{{ contact.name }}</h2>
-        <p class="text-sm text-slate-500">{{ contact.email or '—' }}</p>
-        <p class="text-sm text-slate-500">{{ contact.phone or '—' }}</p>
+<div class="flex-1 overflow-y-auto p-6 bg-slate-50">
+  
+  <!-- Encabezado del contacto -->
+  <div class="bg-white rounded-lg border border-slate-200 overflow-hidden mb-6 p-6">
+    <div class="flex flex-col sm:flex-row items-start justify-between gap-4">
+      <div class="flex items-center gap-4">
+        {% set name_color = 'bg-sky-100 text-sky-600' if contact.type.name == 'customer' else 'bg-purple-100 text-purple-600' %}
+        <div class="w-16 h-16 rounded-full {{ name_color }} flex items-center justify-center text-2xl font-bold flex-shrink-0">
+          {{ contact.name[:2]|upper }}
+        </div>
+        <div>
+          <div class="flex items-center gap-3 mb-1">
+            <h2 class="text-xl font-bold text-slate-900">{{ contact.name }}</h2>
+            {% if contact.type.name == 'customer' %}
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700">
+              <span class="w-1 h-1 rounded-full bg-emerald-500"></span>
+              Cliente
+            </span>
+            {% else %}
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-purple-50 text-purple-700">
+              <span class="w-1 h-1 rounded-full bg-purple-500"></span>
+              Proveedor
+            </span>
+            {% endif %}
+          </div>
+          <div class="flex items-center gap-4 text-sm text-slate-500">
+            {% if contact.email %}
+            <span class="flex items-center gap-1">
+              <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              {{ contact.email }}
+            </span>
+            {% endif %}
+            {% if contact.phone %}
+            <span class="flex items-center gap-1">
+              <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+              {{ contact.phone }}
+            </span>
+            {% endif %}
+            {% if contact.identifier %}
+            <span class="flex items-center gap-1">
+              <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"/></svg>
+              ID: {{ contact.identifier }}
+            </span>
+            {% endif %}
+          </div>
+        </div>
       </div>
       <div class="flex gap-2">
-        <button type="button" data-action="open-drawer" data-url="{{ url_for('contacts.edit', company_id=company_id, contact_id=contact.id) }}" data-title="Editar Contacto" class="flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm text-slate-700 hover:bg-slate-50">Editar</button>
+        <button type="button" data-action="open-drawer" data-url="{{ url_for('contacts.edit', company_id=company_id, contact_id=contact.id) }}" data-title="Editar Contacto" class="flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors shadow-sm">
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+          Editar
+        </button>
       </div>
     </div>
-    {% if contact.address %}<p class="text-sm text-slate-600 bg-slate-50 rounded-lg p-3">{{ contact.address }}</p>{% endif %}
+    {% if contact.address %}
+    <div class="mt-4 pt-4 border-t border-slate-100 flex items-start gap-2">
+      <svg class="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      <p class="text-sm text-slate-600">{{ contact.address }}</p>
+    </div>
+    {% endif %}
   </div>
 
-  {% if inventory_items %}
-  <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
-    <div class="px-4 py-3 border-b border-slate-100">
-      <h3 class="text-sm font-semibold text-slate-900">Productos de este Contacto ({{ inventory_items|length }})</h3>
+  <!-- Contenido Relacionado -->
+  {% if contact.type.name == 'customer' %}
+    <!-- Facturas de Cliente -->
+    <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
+      <div class="px-4 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+        <h3 class="text-sm font-semibold text-slate-800">Facturas del Cliente</h3>
+        <span class="text-xs bg-emerald-100 text-emerald-700 font-medium px-2 py-0.5 rounded-full">{{ items.total }}</span>
+      </div>
+      
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-slate-100">
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Documento</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Fecha</th>
+            <th class="px-4 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Monto</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Estado</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-50">
+          {% for doc in items.items %}
+          {% set sv = doc.status.value if doc.status else '' %}
+          {% set sm = {'paid':('Pagada','bg-emerald-50 text-emerald-700','bg-emerald-500'),'overdue':('Vencida','bg-rose-50 text-rose-700','bg-rose-500'),'pending':('Pendiente','bg-amber-50 text-amber-700','bg-amber-500'),'partial':('Parcial','bg-sky-50 text-sky-700','bg-sky-500'),'draft':('Borrador','bg-slate-100 text-slate-600','bg-slate-400'),'sent':('Enviada','bg-blue-50 text-blue-700','bg-blue-400')} %}
+          {% set sl, sc, sd = sm.get(sv.lower(), ('—','bg-slate-100 text-slate-500','bg-slate-300')) %}
+          <tr class="hover:bg-slate-50 transition-colors">
+            <td class="px-4 py-3">
+              <a href="{{ url_for('invoices.view', company_id=company_id, id=doc.id) }}" class="text-sm font-medium text-emerald-600 hover:text-emerald-700">{{ doc.document_number }}</a>
+            </td>
+            <td class="px-4 py-3 text-sm text-slate-600">{{ doc.issued_date.strftime('%d/%m/%Y') if doc.issued_date else '—' }}</td>
+            <td class="px-4 py-3 text-sm font-medium text-slate-900 text-right">{{ session.get('currency','L') }} {{ "%.2f"|format(doc.total_amount or 0) }}</td>
+            <td class="px-4 py-3">
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium {{ sc }}">
+                <span class="w-1 h-1 rounded-full {{ sd }}"></span>{{ sl }}
+              </span>
+            </td>
+          </tr>
+          {% else %}
+          <tr><td colspan="4" class="px-4 py-16 text-center text-sm text-slate-400">Este cliente no tiene facturas registradas</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      
+      <!-- Pagination -->
+      {% if items.pages > 1 %}
+      <div class="px-4 py-3 border-t border-slate-100 flex items-center justify-between bg-white">
+        <p class="text-sm text-slate-500">
+          Mostrando {{ (items.page - 1) * items.per_page + 1 }} a 
+          {% if items.page * items.per_page > items.total %}{{ items.total }}{% else %}{{ items.page * items.per_page }}{% endif %} 
+          de {{ items.total }}
+        </p>
+        <div class="flex items-center gap-1">
+          {% if items.has_prev %}
+          <a href="?page={{ items.prev_num }}" class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">Anterior</a>
+          {% else %}
+          <span class="px-3 py-1.5 text-sm text-slate-400 rounded cursor-not-allowed">Anterior</span>
+          {% endif %}
+          
+          {% for page_num in items.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+            {% if page_num %}
+              {% if page_num == items.page %}
+              <span class="px-3 py-1.5 text-sm font-medium text-white bg-emerald-600 rounded">{{ page_num }}</span>
+              {% else %}
+              <a href="?page={{ page_num }}" class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">{{ page_num }}</a>
+              {% endif %}
+            {% else %}
+              <span class="px-2 text-slate-400">...</span>
+            {% endif %}
+          {% endfor %}
+
+          {% if items.has_next %}
+          <a href="?page={{ items.next_num }}" class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">Siguiente</a>
+          {% else %}
+          <span class="px-3 py-1.5 text-sm text-slate-400 rounded cursor-not-allowed">Siguiente</span>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
     </div>
-    <table class="w-full">
-      <thead>
-        <tr class="border-b border-slate-100">
-          <th class="px-4 py-2 text-left text-xs font-semibold text-slate-500">Producto</th>
-          <th class="px-4 py-2 text-right text-xs font-semibold text-slate-500">Stock</th>
-          <th class="px-4 py-2 text-right text-xs font-semibold text-slate-500">Precio</th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-slate-50">
-        {% for item in inventory_items %}
-        <tr class="hover:bg-slate-50">
-          <td class="px-4 py-2 text-sm text-slate-800">{{ item.name }}</td>
-          <td class="px-4 py-2 text-sm text-right {{ 'text-rose-600' if item.quantity <= 5 else 'text-slate-700' }}">{{ item.quantity }}</td>
-          <td class="px-4 py-2 text-sm font-medium text-right">{{ session.get('currency','L') }} {{ "%.2f"|format(item.price or 0) }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+  {% else %}
+    <!-- Productos del Proveedor -->
+    <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
+      <div class="px-4 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+        <h3 class="text-sm font-semibold text-slate-800">Productos Suministrados</h3>
+        <span class="text-xs bg-purple-100 text-purple-700 font-medium px-2 py-0.5 rounded-full">{{ items.total }}</span>
+      </div>
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-slate-100">
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Producto</th>
+            <th class="px-4 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Stock</th>
+            <th class="px-4 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Precio Unitario</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-50">
+          {% for item in items.items %}
+          <tr class="hover:bg-slate-50 transition-colors">
+            <td class="px-4 py-3 text-sm font-medium text-slate-800">{{ item.name }}</td>
+            <td class="px-4 py-3 text-sm text-right {{ 'text-rose-600 font-medium' if item.quantity <= 5 else 'text-slate-600' }}">{{ item.quantity }}</td>
+            <td class="px-4 py-3 text-sm text-slate-900 text-right">{{ session.get('currency','L') }} {{ "%.2f"|format(item.price or 0) }}</td>
+          </tr>
+          {% else %}
+          <tr><td colspan="3" class="px-4 py-16 text-center text-sm text-slate-400">Este proveedor no tiene productos registrados</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      
+      <!-- Pagination -->
+      {% if items.pages > 1 %}
+      <div class="px-4 py-3 border-t border-slate-100 flex items-center justify-between bg-white">
+        <p class="text-sm text-slate-500">
+          Mostrando {{ (items.page - 1) * items.per_page + 1 }} a 
+          {% if items.page * items.per_page > items.total %}{{ items.total }}{% else %}{{ items.page * items.per_page }}{% endif %} 
+          de {{ items.total }}
+        </p>
+        <div class="flex items-center gap-1">
+          {% if items.has_prev %}
+          <a href="?page={{ items.prev_num }}" class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">Anterior</a>
+          {% else %}
+          <span class="px-3 py-1.5 text-sm text-slate-400 rounded cursor-not-allowed">Anterior</span>
+          {% endif %}
+          
+          {% for page_num in items.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+            {% if page_num %}
+              {% if page_num == items.page %}
+              <span class="px-3 py-1.5 text-sm font-medium text-white bg-emerald-600 rounded">{{ page_num }}</span>
+              {% else %}
+              <a href="?page={{ page_num }}" class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">{{ page_num }}</a>
+              {% endif %}
+            {% else %}
+              <span class="px-2 text-slate-400">...</span>
+            {% endif %}
+          {% endfor %}
+
+          {% if items.has_next %}
+          <a href="?page={{ items.next_num }}" class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">Siguiente</a>
+          {% else %}
+          <span class="px-3 py-1.5 text-sm text-slate-400 rounded cursor-not-allowed">Siguiente</span>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
   {% endif %}
+  
 </div>
 {% endblock %}

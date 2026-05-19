@@ -2,9 +2,15 @@
 {% block title %}Contactos – TrackDesk{% endblock %}
 {% block sidebar_title %}Contactos{% endblock %}
 {% block sidebar_nav %}
-  {% set cid = selected_company_id or session.get('selected_company_id') %}
-  <a href="{{ url_for('contacts.index', company_id=cid) }}" class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'contacts.index' else 'text-slate-600 hover:bg-slate-50' }} text-sm"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>Todos los Contactos</a>
-  <a href="{{ url_for('contacts.create', company_id=cid) }}" class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'contacts.create' else 'text-slate-600 hover:bg-slate-50' }} text-sm"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>Nuevo Contacto</a>
+{% set cid = selected_company_id or session.get('selected_company_id') %}
+<a href="{{ url_for('contacts.index', company_id=cid) }}"
+  class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'contacts.index' else 'text-slate-600 hover:bg-slate-50' }} text-sm"><span
+    class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if request.endpoint == 'contacts.index' else 'bg-slate-300' }}"></span>Todos
+  los Contactos</a>
+<a href="{{ url_for('contacts.create', company_id=cid) }}"
+  class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'contacts.create' else 'text-slate-600 hover:bg-slate-50' }} text-sm"><span
+    class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if request.endpoint == 'contacts.create' else 'bg-slate-300' }}"></span>Nuevo
+  Contacto</a>
 {% endblock %}
 {% block page_title %}Contactos{% endblock %}
 
@@ -13,67 +19,167 @@
   <header class="bg-white border-b border-slate-200 flex flex-col flex-shrink-0">
     <div class="px-6 py-3 flex items-center justify-between">
       <form method="GET" action="{{ request.path }}" class="relative">
-        <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-        <input name="search" value="{{ search }}" type="text" placeholder="Buscar contactos..." class="w-72 pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+        <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <input name="search" value="{{ search }}" type="text" placeholder="Buscar contactos..."
+          class="w-72 pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
         {% if contact_type_filter %}
         <input type="hidden" name="type" value="{{ contact_type_filter }}">
         {% endif %}
       </form>
-      <button type="button" data-action="open-drawer" data-url="{{ url_for('contacts.create', company_id=selected_company_id) }}" data-title="Nuevo Contacto" class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+      <button type="button" data-action="open-drawer"
+        data-url="{{ url_for('contacts.create', company_id=selected_company_id) }}" data-title="Nuevo Contacto"
+        class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
         Nuevo Contacto
       </button>
     </div>
     <div class="px-6 flex gap-6">
-      <a href="{{ url_for('contacts.index', company_id=selected_company_id, search=search) }}" class="pb-3 text-sm font-medium border-b-2 {{ 'border-emerald-600 text-emerald-700' if not contact_type_filter else 'border-transparent text-slate-500 hover:text-slate-700' }}">Todos</a>
-      <a href="{{ url_for('contacts.index', company_id=selected_company_id, type='customer', search=search) }}" class="pb-3 text-sm font-medium border-b-2 {{ 'border-emerald-600 text-emerald-700' if contact_type_filter == 'customer' else 'border-transparent text-slate-500 hover:text-slate-700' }}">Clientes</a>
-      <a href="{{ url_for('contacts.index', company_id=selected_company_id, type='supplier', search=search) }}" class="pb-3 text-sm font-medium border-b-2 {{ 'border-emerald-600 text-emerald-700' if contact_type_filter == 'supplier' else 'border-transparent text-slate-500 hover:text-slate-700' }}">Proveedores</a>
+      <a href="{{ url_for('contacts.index', company_id=selected_company_id, search=search) }}"
+        class="pb-3 text-sm font-medium border-b-2 {{ 'border-emerald-600 text-emerald-700' if not contact_type_filter else 'border-transparent text-slate-500 hover:text-slate-700' }}">Todos</a>
+      <a href="{{ url_for('contacts.index', company_id=selected_company_id, type='customer', search=search) }}"
+        class="pb-3 text-sm font-medium border-b-2 {{ 'border-emerald-600 text-emerald-700' if contact_type_filter == 'customer' else 'border-transparent text-slate-500 hover:text-slate-700' }}">Clientes</a>
+      <a href="{{ url_for('contacts.index', company_id=selected_company_id, type='supplier', search=search) }}"
+        class="pb-3 text-sm font-medium border-b-2 {{ 'border-emerald-600 text-emerald-700' if contact_type_filter == 'supplier' else 'border-transparent text-slate-500 hover:text-slate-700' }}">Proveedores</a>
     </div>
   </header>
 
-  <div class="flex-1 overflow-y-auto p-6">
+  <div class="flex-1 overflow-y-auto p-6 bg-slate-50">
     <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
+      <!-- Table Header with Bulk Actions -->
+      <div class="px-4 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <input type="checkbox" class="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500">
+          <span class="text-sm text-slate-600">Seleccionar todos</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-sm text-slate-500">{{ contacts.total }} contacto{{ 's' if contacts.total != 1 else ''
+            }}</span>
+        </div>
+      </div>
+
+      <!-- Table -->
       <table class="w-full">
         <thead>
           <tr class="border-b border-slate-100">
+            <th class="w-12 px-4 py-3"></th>
             <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Contacto</th>
-            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Contacto</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Tipo</th>
             <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Teléfono</th>
             <th class="w-20 px-4 py-3"></th>
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-50">
-          {% for contact in contacts %}
+          {% for contact in contacts.items %}
           <tr class="hover:bg-slate-50 transition-colors">
             <td class="px-4 py-3">
+              <input type="checkbox" class="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500">
+            </td>
+            <td class="px-4 py-3">
               <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center text-slate-600 text-sm font-bold">{{ contact.name[:2]|upper }}</div>
-                <div class="flex flex-col">
-                  <a href="{{ url_for('contacts.view', company_id=selected_company_id, contact_id=contact.id) }}" class="text-sm font-medium text-slate-900 hover:text-emerald-700">{{ contact.name }}</a>
-                  {% if not contact_type_filter %}
-                  <span class="text-[10px] uppercase font-bold tracking-wider {{ 'text-blue-600' if contact.type.name == 'customer' else 'text-purple-600' }}">{{ 'Cliente' if contact.type.name == 'customer' else 'Proveedor' }}</span>
-                  {% endif %}
+                {% set name_color = 'bg-sky-100 text-sky-600' if contact.type.name == 'customer' else 'bg-purple-100
+                text-purple-600' %}
+                <div
+                  class="w-8 h-8 rounded-full {{ name_color }} flex items-center justify-center text-xs font-bold flex-shrink-0">
+                  {{ contact.name[:2]|upper }}</div>
+                <div>
+                  <a href="{{ url_for('contacts.view', company_id=selected_company_id, contact_id=contact.id) }}"
+                    class="text-sm font-medium text-slate-800 hover:text-emerald-700 block">{{ contact.name }}</a>
+                  <span class="text-xs text-slate-500">{{ contact.email or '—' }}</span>
                 </div>
               </div>
             </td>
-            <td class="px-4 py-3 text-sm text-slate-600">{{ contact.email or '—' }}</td>
+            <td class="px-4 py-3">
+              {% if contact.type.name == 'customer' %}
+              <span
+                class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700">
+                <span class="w-1 h-1 rounded-full bg-emerald-500"></span>
+                Cliente
+              </span>
+              {% else %}
+              <span
+                class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-purple-50 text-purple-700">
+                <span class="w-1 h-1 rounded-full bg-purple-500"></span>
+                Proveedor
+              </span>
+              {% endif %}
+            </td>
             <td class="px-4 py-3 text-sm text-slate-600">{{ contact.phone or '—' }}</td>
             <td class="px-4 py-3">
               <div class="flex gap-1 justify-end">
-                <button type="button" data-action="open-drawer" data-url="{{ url_for('contacts.edit', company_id=selected_company_id, contact_id=contact.id) }}" data-title="Editar Contacto" class="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                <button type="button" data-action="open-drawer"
+                  data-url="{{ url_for('contacts.edit', company_id=selected_company_id, contact_id=contact.id) }}"
+                  data-title="Editar Contacto"
+                  class="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
                 </button>
-                <button type="button" data-action="confirm-delete" data-url="{{ url_for('contacts.delete', company_id=selected_company_id, contact_id=contact.id) }}" data-name="{{ contact.name }}" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors">
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                <button type="button" data-action="confirm-delete"
+                  data-url="{{ url_for('contacts.delete', company_id=selected_company_id, contact_id=contact.id) }}"
+                  data-name="{{ contact.name }}"
+                  class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
                 </button>
               </div>
             </td>
           </tr>
           {% else %}
-          <tr><td colspan="4" class="px-4 py-16 text-center text-sm text-slate-400">No hay contactos registrados</td></tr>
+          <tr>
+            <td colspan="5" class="px-4 py-16 text-center text-sm text-slate-400">No hay contactos registrados</td>
+          </tr>
           {% endfor %}
         </tbody>
       </table>
+
+      <!-- Pagination -->
+      {% if contacts.pages > 1 %}
+      <div class="px-4 py-3 border-t border-slate-100 flex items-center justify-between bg-white">
+        <p class="text-sm text-slate-500">
+          Mostrando {{ (contacts.page - 1) * contacts.per_page + 1 }} a
+          {% if contacts.page * contacts.per_page > contacts.total %}{{ contacts.total }}{% else %}{{ contacts.page *
+          contacts.per_page }}{% endif %}
+          de {{ contacts.total }} resultados
+        </p>
+        <div class="flex items-center gap-1">
+          {% if contacts.has_prev %}
+          <a href="?page={{ contacts.prev_num }}{% if search %}&search={{ search }}{% endif %}{% if contact_type_filter %}&type={{ contact_type_filter }}{% endif %}"
+            class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">Anterior</a>
+          {% else %}
+          <span class="px-3 py-1.5 text-sm text-slate-400 rounded cursor-not-allowed">Anterior</span>
+          {% endif %}
+
+          {% for page_num in contacts.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+          {% if page_num %}
+          {% if page_num == contacts.page %}
+          <span class="px-3 py-1.5 text-sm font-medium text-white bg-emerald-600 rounded">{{ page_num }}</span>
+          {% else %}
+          <a href="?page={{ page_num }}{% if search %}&search={{ search }}{% endif %}{% if contact_type_filter %}&type={{ contact_type_filter }}{% endif %}"
+            class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">{{ page_num }}</a>
+          {% endif %}
+          {% else %}
+          <span class="px-2 text-slate-400">...</span>
+          {% endif %}
+          {% endfor %}
+
+          {% if contacts.has_next %}
+          <a href="?page={{ contacts.next_num }}{% if search %}&search={{ search }}{% endif %}{% if contact_type_filter %}&type={{ contact_type_filter }}{% endif %}"
+            class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">Siguiente</a>
+          {% else %}
+          <span class="px-3 py-1.5 text-sm text-slate-400 rounded cursor-not-allowed">Siguiente</span>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
     </div>
   </div>
 </div>

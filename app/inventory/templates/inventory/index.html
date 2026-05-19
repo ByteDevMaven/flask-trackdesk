@@ -24,7 +24,7 @@
 {% block page_title %}Inventario{% endblock %}
 
 {% block content %}
-<div class="flex flex-col h-full overflow-hidden">
+<div class="flex flex-col h-full overflow-hidden bg-slate-50">
 
   <!-- Acciones barra superior -->
   <header class="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between flex-shrink-0">
@@ -38,8 +38,8 @@
 
     <div class="flex items-center gap-2">
       <a href="{{ url_for('inventory.export', company_id=company_id) }}"
-         class="flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm text-slate-600 hover:bg-slate-50 transition-colors">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+         class="flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors shadow-sm bg-white">
+        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
         </svg>
         Exportar
@@ -48,7 +48,7 @@
               data-action="open-drawer"
               data-url="{{ url_for('inventory.create', company_id=company_id) }}"
               data-title="Nuevo Producto"
-              class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
+              class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors shadow-sm">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
         </svg>
@@ -61,54 +61,88 @@
 
     <!-- Estadísticas rápidas -->
     {% if stats %}
-    <div class="grid grid-cols-3 gap-4 mb-6">
-      <div class="bg-white border border-slate-200 rounded-lg p-4">
-        <p class="text-xs text-slate-500 mb-1">Total Productos</p>
-        <p class="text-2xl font-bold text-slate-900">{{ stats.get('total_items', 0) }}</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div class="bg-white border border-slate-200 rounded-lg p-4 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs font-semibold uppercase text-slate-400 tracking-wider mb-1">Total Productos</p>
+          <p class="text-2xl font-bold text-slate-900">{{ stats.get('total_items', 0) }}</p>
+        </div>
+        <div class="w-10 h-10 rounded-lg bg-sky-50 flex items-center justify-center text-sky-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
+        </div>
       </div>
-      <div class="bg-white border border-slate-200 rounded-lg p-4">
-        <p class="text-xs text-slate-500 mb-1">Stock Bajo</p>
-        <p class="text-2xl font-bold text-rose-600">{{ stats.get('low_stock', 0) }}</p>
+      <div class="bg-white border border-slate-200 rounded-lg p-4 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs font-semibold uppercase text-slate-400 tracking-wider mb-1">Stock Bajo (≤ 5)</p>
+          <p class="text-2xl font-bold text-rose-600">{{ stats.get('low_stock', 0) }}</p>
+        </div>
+        <div class="w-10 h-10 rounded-lg bg-rose-50 flex items-center justify-center text-rose-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+          </svg>
+        </div>
       </div>
-      <div class="bg-white border border-slate-200 rounded-lg p-4">
-        <p class="text-xs text-slate-500 mb-1">Valor Total</p>
-        <p class="text-2xl font-bold text-slate-900">{{ session.get('currency', 'L') }} {{ "%.2f"|format(stats.get('total_value', 0)) }}</p>
+      <div class="bg-white border border-slate-200 rounded-lg p-4 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs font-semibold uppercase text-slate-400 tracking-wider mb-1">Valor Inventario</p>
+          <p class="text-2xl font-bold text-slate-900">{{ session.get('currency', 'L') }} {{ "%.2f"|format(stats.get('total_value', 0)) }}</p>
+        </div>
+        <div class="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
       </div>
     </div>
     {% endif %}
 
     <!-- Tabla -->
-    <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
-      <div class="px-4 py-3 border-b border-slate-100 bg-slate-50">
-        <span class="text-sm text-slate-500">{{ pagination.total }} producto{{ 's' if pagination.total != 1 else '' }}</span>
+    <div class="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm">
+      
+      <!-- Table Header with Bulk Actions -->
+      <div class="px-4 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <input type="checkbox" class="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500">
+          <span class="text-sm text-slate-600 font-medium">Seleccionar todos</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="text-sm text-slate-500 font-medium">{{ pagination.total }} producto{{ 's' if pagination.total != 1 else '' }}</span>
+        </div>
       </div>
+
       <table class="w-full">
         <thead>
-          <tr class="border-b border-slate-100">
+          <tr class="border-b border-slate-100 bg-slate-50/50">
+            <th class="w-12 px-4 py-3"></th>
             <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Producto</th>
             <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Proveedor</th>
             <th class="px-4 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Stock</th>
             <th class="px-4 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Precio</th>
-            <th class="w-20 px-4 py-3"></th>
+            <th class="w-24 px-4 py-3"></th>
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-50">
           {% for item in inventory_items %}
-          <tr class="hover:bg-slate-50 transition-colors">
+          <tr class="hover:bg-slate-50/80 transition-colors">
+            <td class="px-4 py-3">
+              <input type="checkbox" class="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500">
+            </td>
             <td class="px-4 py-3">
               <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-lg bg-violet-100 flex items-center justify-center flex-shrink-0">
-                  <svg class="w-5 h-5 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                <div class="w-8 h-8 rounded bg-violet-50 border border-violet-100 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-4 h-4 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
                   </svg>
                 </div>
                 <div>
                   <a href="{{ url_for('inventory.view', company_id=company_id, id=item.id) }}"
-                     class="text-sm font-medium text-slate-900 hover:text-emerald-700 transition-colors">
+                     class="text-sm font-semibold text-slate-800 hover:text-emerald-700 transition-colors block">
                     {{ item.name }}
                   </a>
                   {% if item.description %}
-                  <p class="text-xs text-slate-400 truncate max-w-[200px]">{{ item.description }}</p>
+                  <p class="text-xs text-slate-400 truncate max-w-[240px] mt-0.5">{{ item.description }}</p>
                   {% endif %}
                 </div>
               </div>
@@ -117,14 +151,19 @@
               {{ item.supplier.name if item.supplier else '—' }}
             </td>
             <td class="px-4 py-3 text-right">
-              <span class="text-sm font-semibold {{ 'text-rose-600' if item.quantity <= 5 else 'text-slate-900' }}">
+              {% if item.quantity <= 5 %}
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-100">
+                <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span>
+                {{ item.quantity }} (Bajo)
+              </span>
+              {% else %}
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                 {{ item.quantity }}
               </span>
-              {% if item.quantity <= 5 %}
-              <span class="ml-1 text-xs text-rose-500">⚠ bajo</span>
               {% endif %}
             </td>
-            <td class="px-4 py-3 text-sm font-medium text-slate-900 text-right">
+            <td class="px-4 py-3 text-sm font-semibold text-slate-800 text-right">
               {{ session.get('currency', 'L') }} {{ "%.2f"|format(item.price or 0) }}
             </td>
             <td class="px-4 py-3">
@@ -154,14 +193,14 @@
           </tr>
           {% else %}
           <tr>
-            <td colspan="5" class="px-4 py-16 text-center">
+            <td colspan="6" class="px-4 py-16 text-center">
               <div class="flex flex-col items-center gap-3">
-                <div class="w-14 h-14 bg-violet-100 rounded-full flex items-center justify-center">
-                  <svg class="w-7 h-7 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-14 h-14 bg-violet-50 border border-violet-100 rounded-full flex items-center justify-center">
+                  <svg class="w-6 h-6 text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
                   </svg>
                 </div>
-                <p class="text-sm font-medium text-slate-500">No hay productos en inventario</p>
+                <p class="text-sm font-semibold text-slate-500">No hay productos en inventario</p>
               </div>
             </td>
           </tr>
@@ -171,16 +210,37 @@
 
       <!-- Paginación -->
       {% if pagination.pages > 1 %}
-      <div class="px-4 py-3 border-t border-slate-100 flex items-center justify-between">
-        <p class="text-sm text-slate-500">Página {{ pagination.page }} de {{ pagination.pages }}</p>
+      <div class="px-4 py-3 border-t border-slate-100 flex items-center justify-between bg-white">
+        <p class="text-sm text-slate-500 font-medium">
+          Mostrando {{ (pagination.page - 1) * pagination.per_page + 1 }} a
+          {% if pagination.page * pagination.per_page > pagination.total %}{{ pagination.total }}{% else %}{{ pagination.page * pagination.per_page }}{% endif %}
+          de {{ pagination.total }} resultados
+        </p>
         <div class="flex items-center gap-1">
           {% if pagination.has_prev %}
           <a href="?page={{ pagination.prev_num }}{% if search %}&search={{ search }}{% endif %}"
-             class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">Anterior</a>
+             class="px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded transition-colors">Anterior</a>
+          {% else %}
+          <span class="px-3 py-1.5 text-sm font-medium text-slate-400 rounded cursor-not-allowed">Anterior</span>
           {% endif %}
+          
+          {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+            {% if page_num %}
+              {% if page_num == pagination.page %}
+              <span class="px-3 py-1.5 text-sm font-bold text-white bg-emerald-600 rounded shadow-sm">{{ page_num }}</span>
+              {% else %}
+              <a href="?page={{ page_num }}{% if search %}&search={{ search }}{% endif %}" class="px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded transition-colors">{{ page_num }}</a>
+              {% endif %}
+            {% else %}
+              <span class="px-2 text-slate-400 font-medium">...</span>
+            {% endif %}
+          {% endfor %}
+
           {% if pagination.has_next %}
           <a href="?page={{ pagination.next_num }}{% if search %}&search={{ search }}{% endif %}"
-             class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">Siguiente</a>
+             class="px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded transition-colors">Siguiente</a>
+          {% else %}
+          <span class="px-3 py-1.5 text-sm font-medium text-slate-400 rounded cursor-not-allowed">Siguiente</span>
           {% endif %}
         </div>
       </div>
@@ -189,3 +249,4 @@
   </div>
 </div>
 {% endblock %}
+

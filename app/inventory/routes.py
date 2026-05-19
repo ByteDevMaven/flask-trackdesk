@@ -94,8 +94,11 @@ def create(company_id):
 def view(company_id, id):
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
     
-    # Fetch movements using InventoryService
-    pagination = InventoryService.get_stock_movements(company_id, item_id=id, per_page=100)
+    page = request.args.get('page', 1, type=int)
+    per_page = 10
+    
+    # Fetch movements using InventoryService with dynamic page support
+    pagination = InventoryService.get_stock_movements(company_id, item_id=id, page=page, per_page=per_page)
     db_movements = pagination.items
     
     movements = []
@@ -112,7 +115,8 @@ def view(company_id, id):
     return render_template('inventory/view.html', 
                           company_id=company_id, 
                           item=item,
-                          movements=movements)
+                          movements=movements,
+                          pagination=pagination)
 
 @inventory.route('/<int:company_id>/inventory/movements')
 @login_required

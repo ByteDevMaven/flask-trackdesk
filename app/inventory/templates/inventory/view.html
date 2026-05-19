@@ -1,82 +1,214 @@
 {% extends "base.html" %}
 {% block title %}{{ item.name }} – Inventario TrackDesk{% endblock %}
 {% block sidebar_title %}Inventario{% endblock %}
+
 {% block sidebar_nav %}
-  <a href="{{ url_for('inventory.index', company_id=company_id) }}" class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>← Volver</a>
+{% set cid = company_id or session.get('selected_company_id') %}
+<div class="px-3 py-2 mb-4">
+  <a href="{{ url_for('inventory.index', company_id=cid) }}"
+     class="flex items-center gap-3 text-slate-600 hover:text-emerald-700 text-sm font-medium transition-colors">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+    </svg>
+    Volver a Inventario
+  </a>
+</div>
+
+<div class="px-4 space-y-4">
+  <!-- Stock Actual -->
+  {% if item.quantity <= 5 %}
+  <div class="bg-rose-50 rounded-lg p-3 border border-rose-100 shadow-sm">
+    <p class="text-[10px] uppercase font-bold text-rose-600 tracking-wider mb-1">Stock Actual (Bajo)</p>
+    <p class="text-xl font-bold text-rose-700">{{ item.quantity }}</p>
+  </div>
+  {% else %}
+  <div class="bg-emerald-50 rounded-lg p-3 border border-emerald-100 shadow-sm">
+    <p class="text-[10px] uppercase font-bold text-emerald-600 tracking-wider mb-1">Stock Actual</p>
+    <p class="text-xl font-bold text-emerald-700">{{ item.quantity }}</p>
+  </div>
+  {% endif %}
+
+  <!-- Precio Unitario -->
+  <div class="bg-slate-50 rounded-lg p-3 border border-slate-100 shadow-sm">
+    <p class="text-[10px] uppercase font-bold text-slate-500 tracking-wider mb-1">Precio Unitario</p>
+    <p class="text-xl font-bold text-slate-700">{{ session.get('currency','L') }} {{ "%.2f"|format(item.price or 0) }}</p>
+  </div>
+
+  <!-- Valor Total -->
+  <div class="bg-sky-50 rounded-lg p-3 border border-sky-100 shadow-sm">
+    <p class="text-[10px] uppercase font-bold text-sky-600 tracking-wider mb-1">Valor Total</p>
+    <p class="text-xl font-bold text-sky-700">{{ session.get('currency','L') }} {{ "%.2f"|format((item.quantity or 0) * (item.price or 0)) }}</p>
+  </div>
+</div>
 {% endblock %}
-{% block page_title %}{{ item.name }}{% endblock %}
+
+{% block page_title %}Detalles del Producto{% endblock %}
 
 {% block content %}
-<div class="p-6 max-w-4xl mx-auto">
-  <div class="bg-white rounded-lg border border-slate-200 p-6 mb-6">
-    <div class="flex items-start justify-between mb-4">
+<div class="flex-1 overflow-y-auto p-6 bg-slate-50">
+  
+  <!-- Ficha del Producto -->
+  <div class="bg-white rounded-lg border border-slate-200 overflow-hidden mb-6 p-6 shadow-sm">
+    <div class="flex flex-col sm:flex-row items-start justify-between gap-4 mb-6">
       <div class="flex items-center gap-4">
-        <div class="w-12 h-12 rounded-lg bg-violet-100 flex items-center justify-center">
-          <svg class="w-6 h-6 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+        <div class="w-16 h-16 rounded-xl bg-violet-50 border border-violet-100 flex items-center justify-center flex-shrink-0">
+          <svg class="w-8 h-8 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+          </svg>
         </div>
         <div>
-          <h2 class="text-xl font-bold text-slate-900">{{ item.name }}</h2>
-          {% if item.supplier %}<p class="text-sm text-slate-500">Proveedor: {{ item.supplier.name }}</p>{% endif %}
+          <h2 class="text-xl font-bold text-slate-900 mb-1">{{ item.name }}</h2>
+          <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-slate-500">
+            {% if item.supplier %}
+            <span class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+              Proveedor: <strong class="text-slate-700 font-semibold">{{ item.supplier.name }}</strong>
+            </span>
+            {% endif %}
+            <span class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+              ID Producto: <strong class="text-slate-700 font-semibold">#{{ item.id }}</strong>
+            </span>
+          </div>
         </div>
       </div>
-      <div class="flex gap-2">
-        <button type="button" data-action="open-drawer" data-url="{{ url_for('inventory.edit', company_id=company_id, id=item.id) }}" data-title="Editar Producto" class="flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm text-slate-700 hover:bg-slate-50">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+      
+      <div class="flex flex-wrap items-center gap-2">
+        <button type="button"
+                data-action="open-drawer"
+                data-url="{{ url_for('inventory.edit', company_id=company_id, id=item.id) }}"
+                data-title="Editar Producto"
+                class="flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors shadow-sm bg-white">
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+          </svg>
           Editar
         </button>
-        <a href="{{ url_for('inventory.download_barcode', company_id=company_id, id=item.id) }}" class="flex items-center gap-2 px-3 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700">
-          Descargar Código de Barras
+        <a href="{{ url_for('inventory.download_barcode', company_id=company_id, id=item.id) }}"
+           class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors shadow-sm">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+          </svg>
+          Código de Barras
         </a>
       </div>
     </div>
 
-    <div class="grid grid-cols-3 gap-4 mb-4">
-      <div class="bg-slate-50 rounded-lg p-4 text-center">
-        <p class="text-xs text-slate-500 mb-1">Stock Actual</p>
-        <p class="text-2xl font-bold {{ 'text-rose-600' if item.quantity <= 5 else 'text-slate-900' }}">{{ item.quantity }}</p>
-      </div>
-      <div class="bg-slate-50 rounded-lg p-4 text-center">
-        <p class="text-xs text-slate-500 mb-1">Precio Unitario</p>
-        <p class="text-2xl font-bold text-slate-900">{{ session.get('currency','L') }} {{ "%.2f"|format(item.price or 0) }}</p>
-      </div>
-      <div class="bg-slate-50 rounded-lg p-4 text-center">
-        <p class="text-xs text-slate-500 mb-1">Valor Total</p>
-        <p class="text-2xl font-bold text-slate-900">{{ session.get('currency','L') }} {{ "%.2f"|format((item.quantity or 0) * (item.price or 0)) }}</p>
-      </div>
-    </div>
-
     {% if item.description %}
-    <div class="text-sm text-slate-600 bg-slate-50 rounded-lg p-4">{{ item.description }}</div>
+    <div class="border-t border-slate-100 pt-4">
+      <h3 class="text-xs font-semibold uppercase text-slate-400 tracking-wider mb-2">Descripción del Producto</h3>
+      <p class="text-sm text-slate-600 bg-slate-50/50 rounded-lg border border-slate-100 p-4 leading-relaxed">
+        {{ item.description }}
+      </p>
+    </div>
     {% endif %}
   </div>
 
-  <!-- Movimientos -->
-  {% if movements %}
-  <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
-    <div class="px-4 py-3 border-b border-slate-100">
-      <h3 class="text-sm font-semibold text-slate-900">Historial de Movimientos</h3>
+  <!-- Historial de Movimientos -->
+  <div class="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm">
+    <div class="px-4 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+      <h3 class="text-sm font-bold text-slate-900">Historial de Movimientos</h3>
+      <span class="text-xs bg-slate-150 text-slate-600 font-medium px-2 py-0.5 rounded-full bg-slate-100">
+        {{ movements|length }} registro{{ 's' if movements|length != 1 else '' }}
+      </span>
     </div>
+    
+    {% if movements %}
     <table class="w-full">
       <thead>
-        <tr class="border-b border-slate-100">
-          <th class="px-4 py-2 text-left text-xs font-semibold text-slate-500">Fecha</th>
-          <th class="px-4 py-2 text-left text-xs font-semibold text-slate-500">Tipo</th>
-          <th class="px-4 py-2 text-left text-xs font-semibold text-slate-500">Referencia</th>
-          <th class="px-4 py-2 text-right text-xs font-semibold text-slate-500">Cantidad</th>
+        <tr class="border-b border-slate-100 bg-slate-50/20">
+          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Fecha</th>
+          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Tipo</th>
+          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Referencia</th>
+          <th class="px-4 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Cantidad</th>
         </tr>
       </thead>
       <tbody class="divide-y divide-slate-50">
         {% for m in movements %}
-        <tr class="hover:bg-slate-50">
-          <td class="px-4 py-2 text-sm text-slate-600">{{ m.date.strftime('%d/%m/%Y') if m.date else '—' }}</td>
-          <td class="px-4 py-2 text-sm text-slate-700">{{ m.type }}</td>
-          <td class="px-4 py-2 text-sm text-slate-600">{{ m.reference }}</td>
-          <td class="px-4 py-2 text-sm font-medium text-right {{ 'text-emerald-600' if m.qty_change > 0 else 'text-rose-600' }}">{{ '+' if m.qty_change > 0 else '' }}{{ m.qty_change }}</td>
+        <tr class="hover:bg-slate-50/80 transition-colors">
+          <td class="px-4 py-3 text-sm text-slate-600 font-medium">
+            {{ m.date.strftime('%d/%m/%Y %I:%M %p') if m.date else '—' }}
+          </td>
+          <td class="px-4 py-3">
+            {% if m.type.lower().startswith('in') or m.type.lower() == 'entrada' %}
+            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              Entrada
+            </span>
+            {% elif m.type.lower().startswith('out') or m.type.lower() == 'salida' %}
+            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-100">
+              <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+              Salida
+            </span>
+            {% else %}
+            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-100">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+              Ajuste
+            </span>
+            {% endif %}
+          </td>
+          <td class="px-4 py-3 text-sm text-slate-600">
+            <span class="font-medium text-slate-800">{{ m.reference or '—' }}</span>
+            {% if m.notes %}
+            <p class="text-xs text-slate-400 mt-0.5">{{ m.notes }}</p>
+            {% endif %}
+          </td>
+          <td class="px-4 py-3 text-sm font-bold text-right {{ 'text-emerald-600' if m.qty_change > 0 else 'text-rose-600' }}">
+            {{ '+' if m.qty_change > 0 else '' }}{{ m.qty_change }}
+          </td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
+    
+    <!-- Pagination -->
+    {% if pagination and pagination.pages > 1 %}
+    <div class="px-4 py-3 border-t border-slate-100 flex items-center justify-between bg-white">
+      <p class="text-sm text-slate-500 font-medium">
+        Mostrando {{ (pagination.page - 1) * pagination.per_page + 1 }} a 
+        {% if pagination.page * pagination.per_page > pagination.total %}{{ pagination.total }}{% else %}{{ pagination.page * pagination.per_page }}{% endif %} 
+        de {{ pagination.total }} resultados
+      </p>
+      <div class="flex items-center gap-1">
+        {% if pagination.has_prev %}
+        <a href="?page={{ pagination.prev_num }}" class="px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded transition-colors">Anterior</a>
+        {% else %}
+        <span class="px-3 py-1.5 text-sm font-medium text-slate-400 rounded cursor-not-allowed">Anterior</span>
+        {% endif %}
+        
+        {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+          {% if page_num %}
+            {% if page_num == pagination.page %}
+            <span class="px-3 py-1.5 text-sm font-bold text-white bg-emerald-600 rounded shadow-sm">{{ page_num }}</span>
+            {% else %}
+            <a href="?page={{ page_num }}" class="px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded transition-colors">{{ page_num }}</a>
+            {% endif %}
+          {% else %}
+          <span class="px-2 text-slate-400 font-medium">...</span>
+          {% endif %}
+        {% endfor %}
+
+        {% if pagination.has_next %}
+        <a href="?page={{ pagination.next_num }}" class="px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded transition-colors">Siguiente</a>
+        {% else %}
+        <span class="px-3 py-1.5 text-sm font-medium text-slate-400 rounded cursor-not-allowed">Siguiente</span>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+    {% else %}
+    <div class="px-4 py-12 text-center">
+      <div class="flex flex-col items-center gap-3">
+        <div class="w-12 h-12 bg-slate-50 border border-slate-100 rounded-full flex items-center justify-center text-slate-400">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+          </svg>
+        </div>
+        <p class="text-sm font-semibold text-slate-400">No hay movimientos registrados para este producto</p>
+      </div>
+    </div>
+    {% endif %}
   </div>
-  {% endif %}
 </div>
 {% endblock %}
+

@@ -3,7 +3,7 @@ from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required, current_user
 from flask_babel import _
 from . import contacts
-from app.models import db, Contact, Company, user_companies, Role
+from app.models import db, Contact, Company, user_companies, Role, Document, InventoryItem
 from app.models.enums import ContactType
 from sqlalchemy import exc
 
@@ -108,14 +108,45 @@ def create(company_id):
 def view(company_id, contact_id):
     contact = Contact.query.filter_by(id=contact_id, company_id=company_id).first_or_404()
     
-    # If customer, we can show invoices. If supplier, we can show inventory items.
-    # In the template we can access contact.documents and contact.inventory_items
-    
+    page = request.args.get('page', 1, type=int)
+    per_page = 15
+    stats = {}
+    items = None
+
+    if contact.type.name == 'customer':
+        items = Document.query.filter_by(client_id=contact.id).order_by(Document.issued_date.desc()).paginate(page=page, per_page=per_page, error_out=False)
+        all_docs = Document.query.filter_by(client_id=contact.id).all()
+        
+        total_revenue = sum(doc.calculate_paid_amount() for doc in all_docs)
+        pending_payments = sum(doc.calculate_balance_due() for doc in all_docs)
+        total_invoices = len(all_docs)
+        
+        stats = {
+            'total_revenue': total_revenue,
+            'pending_payments': pending_payments,
+            'total_invoices': total_invoices
+        }
+    else:
+        items = InventoryItem.query.filter_by(supplier_id=contact.id).order_by(InventoryItem.name).paginate(page=page, per_page=per_page, error_out=False)
+        all_items = InventoryItem.query.filter_by(supplier_id=contact.id).all()
+        
+        total_inventory_value = sum((item.price or 0) * (item.quantity or 0) for item in all_items)
+        total_products = len(all_items)
+        low_stock_products = sum(1 for item in all_items if (item.quantity or 0) <= 5)
+        
+        stats = {
+            'total_value': total_inventory_value,
+            'total_products': total_products,
+            'low_stock': low_stock_products
+        }
+
     return render_template(
         'contacts/view.html',
         contact=contact,
         company_id=company_id,
-        ContactType=ContactType
+        ContactType=ContactType,
+        items=items,
+        stats=stats
     )
 
 @contacts.route('/<int:company_id>/contacts/<int:contact_id>/edit', methods=['GET', 'POST'])
