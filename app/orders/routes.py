@@ -154,12 +154,12 @@ def export(company_id):
     output = StringIO()
     writer = csv.writer(output)
     
-    # Write header
+                  
     writer.writerow([
         _('Order Number'), _('Contact'), _('Total Amount'), _('Items Count'), _('Created Date')
     ])
     
-    # Write data
+                
     for order in orders:
         writer.writerow([
             order.order_number,

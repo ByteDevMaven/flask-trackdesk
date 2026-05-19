@@ -9,7 +9,7 @@ from alembic import op
 import sqlalchemy as sa
 
 
-# revision identifiers, used by Alembic.
+                                        
 revision = 'a2b1c3d4e5f6'
 down_revision = '46e167baf673'
 branch_labels = None
@@ -17,18 +17,18 @@ depends_on = None
 
 
 def upgrade():
-    # Add updated_at to stock_movements
+                                       
     op.add_column('stock_movements', sa.Column('updated_at', sa.DateTime(), nullable=True))
     
-    # Add created_at and updated_at to roles
+                                            
     op.add_column('roles', sa.Column('created_at', sa.DateTime(), nullable=True))
     op.add_column('roles', sa.Column('updated_at', sa.DateTime(), nullable=True))
     
-    # Add created_at and updated_at to permissions
+                                                  
     op.add_column('permissions', sa.Column('created_at', sa.DateTime(), nullable=True))
     op.add_column('permissions', sa.Column('updated_at', sa.DateTime(), nullable=True))
     
-    # Add created_at and updated_at to purchase_order_items
+                                                           
     op.add_column('purchase_order_items', sa.Column('created_at', sa.DateTime(), nullable=True))
     op.add_column('purchase_order_items', sa.Column('updated_at', sa.DateTime(), nullable=True))
 

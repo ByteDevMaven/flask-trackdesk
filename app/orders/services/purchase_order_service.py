@@ -69,7 +69,7 @@ def create_purchase_order(company_id, form_data):
                     inventory_item.quantity = (inventory_item.quantity or 0) + quantity
                     db.session.add(inventory_item)
                     
-                    # Log movement
+                                  
                     movement = StockMovement(
                         company_id=company_id,
                         inventory_item_id=int(item_id),

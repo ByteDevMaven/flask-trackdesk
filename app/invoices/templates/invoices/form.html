@@ -6,7 +6,6 @@ TrackDesk{% endblock %}
 {% block sidebar_nav %}
 {% set cid = session.get('selected_company_id') %}
 <div class="px-3 py-2 space-y-5">
-  <!-- Volver Control -->
   <a href="{{ url_for('invoices.index', company_id=cid) }}"
     class="flex items-center gap-3 text-slate-600 hover:text-emerald-700 text-sm font-medium transition-colors mb-2">
     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -15,7 +14,6 @@ TrackDesk{% endblock %}
     Volver a Facturas
   </a>
 
-  <!-- Estado del Documento Card -->
   <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm space-y-2">
     <p class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Estado del Documento</p>
 
@@ -36,7 +34,6 @@ TrackDesk{% endblock %}
     </select>
   </div>
 
-  <!-- Live Total Card -->
   <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 shadow-sm">
     <p class="text-[10px] uppercase font-bold text-slate-500 tracking-wider mb-1">Monto Total Estimado</p>
     <p class="text-2xl font-black text-slate-800">{{ session.get('currency','L') }} <span
@@ -57,18 +54,15 @@ TrackDesk{% endblock %}
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <input type="hidden" name="type" value="{{ doc_type or 'invoice' }}">
 
-    <!-- Encabezado de Selección del Cliente -->
     <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-sm">
       <h3 class="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
         <span class="w-1 h-3.5 bg-emerald-600 rounded-full"></span>
         Información del Cliente
       </h3>
 
-      <!-- ID del Cliente Seleccionado -->
       <input type="hidden" name="client_id" id="selected-client-id" required
         value="{{ invoice.client_id if invoice else (customer_id or '') }}">
 
-      <!-- Placeholder cuando NO hay cliente seleccionado -->
       <div id="client-selection-placeholder" class="{% if invoice or customer_id %}hidden{% endif %}">
         <button type="button" id="open-client-modal-btn"
           class="w-full py-8 border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center gap-2 hover:border-emerald-500 hover:bg-emerald-50/20 transition-all text-slate-500 hover:text-emerald-700">
@@ -83,7 +77,6 @@ TrackDesk{% endblock %}
         </button>
       </div>
 
-      <!-- Card cuando SÍ hay cliente seleccionado -->
       {% set sel_client = None %}
       {% if invoice and invoice.client %}
       {% set sel_client = invoice.client %}
@@ -121,7 +114,6 @@ TrackDesk{% endblock %}
       </div>
     </div>
 
-    <!-- Fechas y Datos del Documento -->
     <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-sm">
       <h3 class="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
         <span class="w-1 h-3.5 bg-emerald-600 rounded-full"></span>
@@ -152,7 +144,6 @@ TrackDesk{% endblock %}
       </div>
     </div>
 
-    <!-- Detalle de Ítems / Productos -->
     <div class="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm">
       <div class="px-5 py-3.5 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
         <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
@@ -239,7 +230,6 @@ TrackDesk{% endblock %}
         </table>
       </div>
 
-      <!-- Cómputo de Totales -->
       <div class="px-5 py-5 border-t border-slate-100 bg-slate-50/50 flex justify-end">
         <div class="w-72 space-y-2.5 text-sm">
           <div class="flex justify-between items-center text-slate-600 font-medium">
@@ -267,7 +257,6 @@ TrackDesk{% endblock %}
       </div>
     </div>
 
-    <!-- Botonera inferior -->
     <div class="flex items-center gap-3 pb-4">
       <a href="{{ url_for('invoices.index', company_id=cid) }}"
         class="px-4 py-2.5 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors bg-white shadow-sm">
@@ -281,13 +270,11 @@ TrackDesk{% endblock %}
   </form>
 </div>
 
-<!-- Modal 1: Buscar Cliente -->
 <div id="customer-modal"
   class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center hidden z-50 p-4 transition-all">
   <div
     class="bg-white rounded-xl border border-slate-200 w-full max-w-lg shadow-xl flex flex-col max-h-[85vh] overflow-hidden">
 
-    <!-- Modal Header -->
     <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
       <h3 class="text-base font-bold text-slate-900">Buscar Cliente</h3>
       <button type="button" id="close-customer-modal" class="text-slate-400 hover:text-slate-600">
@@ -297,7 +284,6 @@ TrackDesk{% endblock %}
       </button>
     </div>
 
-    <!-- Search Input -->
     <div class="p-4 border-b border-slate-50 bg-slate-50/50">
       <div class="relative">
         <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor"
@@ -310,20 +296,16 @@ TrackDesk{% endblock %}
       </div>
     </div>
 
-    <!-- Customers Scrollable List -->
     <div class="flex-1 overflow-y-auto divide-y divide-slate-50 p-2 space-y-0.5" id="customer-list-box">
-      <!-- Mapped dynamically via JS -->
     </div>
   </div>
 </div>
 
-<!-- Modal 2: Buscar Producto -->
 <div id="product-modal"
   class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center hidden z-50 p-4 transition-all">
   <div
     class="bg-white rounded-xl border border-slate-200 w-full max-w-lg shadow-xl flex flex-col max-h-[85vh] overflow-hidden">
 
-    <!-- Modal Header -->
     <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
       <h3 class="text-base font-bold text-slate-900">Buscar Producto en Catálogo</h3>
       <button type="button" id="close-product-modal" class="text-slate-400 hover:text-slate-600">
@@ -333,7 +315,6 @@ TrackDesk{% endblock %}
       </button>
     </div>
 
-    <!-- Search Input -->
     <div class="p-4 border-b border-slate-50 bg-slate-50/50">
       <div class="relative">
         <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor"
@@ -346,9 +327,7 @@ TrackDesk{% endblock %}
       </div>
     </div>
 
-    <!-- Products Scrollable List -->
     <div class="flex-1 overflow-y-auto divide-y divide-slate-50 p-2 space-y-0.5" id="product-list-box">
-      <!-- Mapped dynamically via JS -->
     </div>
   </div>
 </div>

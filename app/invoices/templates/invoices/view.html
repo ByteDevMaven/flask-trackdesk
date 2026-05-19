@@ -26,7 +26,6 @@
 </div>
 
 <div class="px-4 space-y-4">
-  <!-- Estado de Pago Card -->
   <div class="{{ sc }} rounded-lg p-3.5 border shadow-sm">
     <p class="text-[10px] uppercase font-bold tracking-wider mb-1 opacity-80">Estado de Pago</p>
     <div class="flex items-center gap-2">
@@ -35,14 +34,12 @@
     </div>
   </div>
 
-  <!-- Total Facturado Card -->
   <div class="bg-slate-50 rounded-lg p-3.5 border border-slate-100 shadow-sm">
     <p class="text-[10px] uppercase font-bold text-slate-500 tracking-wider mb-1">Monto Total</p>
     <p class="text-xl font-bold text-slate-700">{{ session.get('currency','L') }} {{ "%.2f"|format(invoice.total_amount
       or 0) }}</p>
   </div>
 
-  <!-- Acciones Rápidas -->
   <div class="pt-2">
     <a href="{{ url_for('invoices.print_invoice', company_id=cid, id=invoice.id) }}" target="_blank"
       class="flex items-center justify-center gap-2 px-4 py-2.5 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm bg-white w-full">
@@ -68,7 +65,6 @@
 {% block content %}
 <div class="flex-1 overflow-y-auto p-6 bg-slate-50">
 
-  <!-- Ficha Principal de la Factura -->
   <div class="bg-white rounded-lg border border-slate-200 overflow-hidden mb-6 p-6 shadow-sm">
     <div class="flex flex-col sm:flex-row items-start justify-between gap-4 mb-6">
       <div>
@@ -97,7 +93,6 @@
       </div>
     </div>
 
-    <!-- Cliente Ficha Info -->
     {% if invoice.client %}
     <div class="bg-slate-50/70 border border-slate-100 rounded-xl p-5 mb-6">
       <h3 class="text-xs font-semibold uppercase text-slate-400 tracking-wider mb-3">Información del Cliente</h3>
@@ -141,7 +136,6 @@
     </div>
     {% endif %}
 
-    <!-- Listado de Ítems / Productos -->
     <div class="overflow-x-auto mb-6">
       <table class="w-full">
         <thead>
@@ -171,7 +165,6 @@
       </table>
     </div>
 
-    <!-- Tabla de Cómputo de Totales -->
     <div class="flex justify-end pt-4 border-t border-slate-100">
       <div class="w-80 space-y-2">
         {% if invoice.discount_amount %}
@@ -196,7 +189,6 @@
     </div>
   </div>
 
-  <!-- Panel Registrar Pago (Si aplica) -->
   {% if invoice.type and invoice.type.value == 'invoice' and sv.lower() not in ['paid','pagado'] %}
   <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-sm">
     <h3 class="text-sm font-bold text-slate-900 mb-4">Registrar Transacción de Pago</h3>

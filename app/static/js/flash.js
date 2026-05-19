@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Get all flash messages
     const flashMessages = document.querySelectorAll('.flash-message');
 
-    // Add click event to close buttons
     document.querySelectorAll('.flash-close').forEach(button => {
         button.addEventListener('click', function () {
             const message = this.closest('.flash-message');
@@ -13,7 +11,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Auto-dismiss messages after 5 seconds
     flashMessages.forEach(message => {
         setTimeout(() => {
             if (message) {

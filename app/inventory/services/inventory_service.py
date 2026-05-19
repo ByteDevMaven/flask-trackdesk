@@ -87,11 +87,11 @@ class InventoryService:
         
         writer = ImageWriter()
         
-        # Configure writer options
+                                  
         writer_options = {
-            'module_width': 0.2, # defaults to 0.2
-            'module_height': 15.0, # defaults to 15.0
-            'quiet_zone': 6.5, # defaults to 6.5
+            'module_width': 0.2,                  
+            'module_height': 15.0,                   
+            'quiet_zone': 6.5,                  
             'font_size': 10,
             'text_distance': 5.0,
             'background': 'white',
@@ -100,15 +100,15 @@ class InventoryService:
             'text': barcode_data,
         }
         
-        # if compact:
-        #     # Enhanced size for readability in grid printing
-        #     writer_options.update({
-        #         'module_width': 0.15,
-        #         'module_height': 5.0,
-        #         'font_size': 1, # Cannot be 0, so make it tiny
-        #         'write_text': False,
-        #         'quiet_zone': 2.0
-        #     })
+                     
+                                                              
+                                     
+                                       
+                                       
+                                                                
+                                      
+                                   
+                
         
         writer.set_options(writer_options)
 
@@ -120,10 +120,10 @@ class InventoryService:
         
         barcode_img = Image.open(buffer)
         
-        # We manually add text on top/bottom
+                                            
         img_width, img_height = barcode_img.size
         
-        # Extra space for manually written text
+                                               
         extra_space = 45 if compact else (60 if for_download else 80)
         new_height = img_height + extra_space
         final_img = Image.new('RGB', (img_width, new_height), 'white')
@@ -144,34 +144,34 @@ class InventoryService:
             
         def get_text_width(text, font):
             try:
-                # new PIL
+                         
                 return draw.textbbox((0, 0), text, font=font)[2] - draw.textbbox((0, 0), text, font=font)[0]
             except Exception:
                 try:
-                    # older PIL
+                               
                     return draw.textsize(text, font=font)[0]
                 except Exception:
-                    # fallback approximation
+                                            
                     return len(text) * 6
             
         text_y = img_height + (5 if compact else 10)
         truncate_len = 25 if compact else (50 if for_download else 40)
         name_text = item_name[:truncate_len]
         
-        # Consistent layout: Item Name on top, Price/Code on bottom
-        # Item name
+                                                                   
+                   
         draw.text((5 if compact else 10, text_y), name_text, fill='black', font=font_large)
         
-        # Second line position
+                              
         text_y += (15 if compact else 25)
         
-        # Price (bottom left)
+                             
         price_text = f"{currency_symbol}{item_price:,.2f}"
         if for_download:
             price_text = f"{_('Price')} {price_text}"
         draw.text((5 if compact else 10, text_y), price_text, fill='black', font=font_medium)
         
-        # Code (bottom right - only if not for download or if compact)
+                                                                      
         if not for_download or compact:
             code_text = barcode_data if compact else f"Code: {barcode_data}"
             code_width = get_text_width(code_text, font_medium)

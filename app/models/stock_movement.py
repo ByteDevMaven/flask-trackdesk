@@ -10,7 +10,7 @@ class StockMovement(BaseModel):
     
     type = db.Column(db.Enum(StockMovementType), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
-    reference = db.Column(db.String, index=True) # Invoice #, PO #, or adjustment reason
+    reference = db.Column(db.String, index=True)                                        
     notes = db.Column(db.Text)
     
     date = db.Column(db.DateTime, default=lambda: datetime.now(UTC), index=True)

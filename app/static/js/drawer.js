@@ -6,7 +6,6 @@
 
 'use strict';
 
-// ─── Drawer Open/Close ────────────────────────────────────────────────────────
 
 function openDrawer(title) {
   const drawer = document.getElementById('side-drawer');
@@ -30,7 +29,6 @@ function closeDrawer() {
   overlay.classList.add('hidden');
   document.body.style.overflow = '';
 
-  // Limpiar contenido después de la animación
   setTimeout(() => {
     const body = document.getElementById('drawer-body');
     if (body) body.innerHTML = '';
@@ -39,13 +37,11 @@ function closeDrawer() {
 
 window.closeDrawer = closeDrawer;
 
-// ─── AJAX Loader ─────────────────────────────────────────────────────────────
 
 async function loadDrawerContent(url, title) {
   const body = document.getElementById('drawer-body');
   if (!body) return;
 
-  // Mostrar spinner
   body.innerHTML = `
     <div class="flex items-center justify-center h-64">
       <div class="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
@@ -64,7 +60,6 @@ async function loadDrawerContent(url, title) {
     const html = await res.text();
     body.innerHTML = html;
 
-    // Interceptar submit del formulario dentro del drawer
     const form = body.querySelector('form[data-drawer-form]');
     if (form) attachDrawerFormSubmit(form);
 
@@ -83,7 +78,6 @@ async function loadDrawerContent(url, title) {
   }
 }
 
-// ─── Form Submit Handler ──────────────────────────────────────────────────────
 
 function attachDrawerFormSubmit(form) {
   form.addEventListener('submit', async (e) => {
@@ -96,7 +90,6 @@ function attachDrawerFormSubmit(form) {
       submitBtn.textContent = 'Guardando...';
     }
 
-    // Limpiar errores previos
     form.querySelectorAll('.field-error').forEach(el => el.remove());
     form.querySelectorAll('.border-rose-500').forEach(el => {
       el.classList.remove('border-rose-500');
@@ -118,7 +111,6 @@ function attachDrawerFormSubmit(form) {
         const successMsg = form.dataset.successMessage || 'Operación exitosa';
         window.triggerToast(successMsg, true);
 
-        // Recargar tabla/lista si existe
         const reloadTarget = form.dataset.reloadTarget;
         if (reloadTarget) {
           const target = document.querySelector(reloadTarget);
@@ -126,12 +118,10 @@ function attachDrawerFormSubmit(form) {
             await reloadSection(target);
           }
         } else {
-          // Fallback: recargar página completa
           setTimeout(() => location.reload(), 600);
         }
 
       } else {
-        // Mostrar errores de validación
         if (data && data.errors) {
           Object.entries(data.errors).forEach(([field, msg]) => {
             const input = form.querySelector(`[name="${field}"]`);
@@ -178,17 +168,14 @@ async function reloadSection(target) {
   }
 }
 
-// ─── Event Delegation ─────────────────────────────────────────────────────────
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Cerrar drawer con overlay o botón X
   const overlay = document.getElementById('drawer-overlay');
   const closeBtn = document.getElementById('drawer-close-btn');
 
   if (overlay) overlay.addEventListener('click', closeDrawer);
   if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
 
-  // Botones con data-action="open-drawer"
   document.addEventListener('click', (e) => {
     const btn = e.target.closest('[data-action="open-drawer"]');
     if (!btn) return;
@@ -199,7 +186,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (url) loadDrawerContent(url, title);
   });
 
-  // Botones con data-action="confirm-delete"
   document.addEventListener('click', (e) => {
     const btn = e.target.closest('[data-action="confirm-delete"]');
     if (!btn) return;
@@ -219,7 +205,6 @@ document.addEventListener('DOMContentLoaded', () => {
         form.method = 'POST';
         form.action = url;
 
-        // Incluir CSRF token
         const csrfInput = document.createElement('input');
         csrfInput.type = 'hidden';
         csrfInput.name = 'csrf_token';

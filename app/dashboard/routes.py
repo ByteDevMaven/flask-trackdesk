@@ -22,7 +22,7 @@ def index(company_id = None):
     first_day_of_last_month = datetime(today.year, today.month - 1, 1) if today.month > 1 else datetime(today.year - 1, 12, 1)
     last_day_of_last_month = first_day_of_month - timedelta(days=1)
 
-    # Current month metrics
+                           
     client_count = Contact.query.filter_by(company_id=company_id, type=ContactType.customer).count()
     outstanding_invoice_count = Document.query.filter(
         Document.company_id == company_id,
@@ -31,13 +31,13 @@ def index(company_id = None):
     ).count()
     inventory_count = InventoryItem.query.filter_by(company_id=company_id).count()
     
-    # Calculate revenue for month-to-date (sum of payments in current month)
+                                                                            
     revenue = db.session.query(func.sum(Payment.amount)).filter(
         Payment.company_id == company_id,
         Payment.payment_date >= first_day_of_month
     ).scalar() or 0
 
-    # Previous month metrics for comparison
+                                           
     last_month_clients = Contact.query.filter(
         Contact.company_id == company_id,
         Contact.type == ContactType.customer,
@@ -62,7 +62,7 @@ def index(company_id = None):
         Payment.payment_date <= last_day_of_last_month
     ).scalar() or 0
 
-    # Calculate growth percentages
+                                  
     def calculate_growth(current, previous):
         if previous == 0:
             return 100 if current > 0 else 0
@@ -89,7 +89,7 @@ def index(company_id = None):
     for q in recent_quotes:
         q.client = Contact.query.get(q.client_id) if q.client_id else None
     
-    # Check for overdue invoices and update their status
+                                                        
     overdue_invoices = Document.query.filter(
         Document.company_id == company_id,
         Document.type == DocumentType.invoice,
@@ -101,7 +101,7 @@ def index(company_id = None):
         if invoice.status != 'overdue':
             invoice.status = 'overdue'
     
-    # Commit any status changes
+                               
     if overdue_invoices:
         db.session.commit()
     
@@ -113,14 +113,14 @@ def index(company_id = None):
         revenue=revenue,
         recent_invoices=recent_invoices,
         recent_quotes=recent_quotes,
-        # Growth metrics
+                        
         client_growth=client_growth,
         outstanding_growth=outstanding_growth,
         inventory_growth=inventory_growth,
         revenue_growth=revenue_growth
     )
 
-# Custom template filters
+                         
 @dashboard.app_template_filter('format_currency')
 def format_currency(value):
     """Format a number as currency"""
@@ -146,5 +146,5 @@ def locale_date(value):
     try:
         return format_datetime(value, format='medium')
     except:
-        # Fall back to basic formatting
+                                       
         return value.strftime("%b %d, %Y")

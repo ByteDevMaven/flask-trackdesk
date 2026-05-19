@@ -9,8 +9,8 @@ from app.models import (
 
 def _generate_document_number(company_id, doc_type):
     if doc_type == DocumentType.invoice:
-        # Honduras SAR Compliance Implementation
-        # We use with_for_update() to lock the sequence record and prevent race conditions
+                                                
+                                                                                          
         seq = db.session.query(DocumentSequence).filter(
             DocumentSequence.company_id == company_id
         ).with_for_update().first()
@@ -24,15 +24,15 @@ def _generate_document_number(company_id, doc_type):
         if seq.current >= seq.range_end:
             raise Exception(_("The CAI sequence range has been exhausted."))
 
-        # Increment and save inside the transaction
+                                                   
         seq.current += 1
         db.session.add(seq)
         
-        # Format: 000-001-01-XXXXXXXX
-        # 000 = establishment, 001 = emission point, 01 = invoice type
+                                     
+                                                                      
         return f"000-001-01-{seq.current:08d}"
     
-    # Fallback to legacy logic for non-invoice document types (e.g. quotes)
+                                                                           
     company_id_str = str(company_id)
     type_letter = 'Q' if doc_type == DocumentType.quote else 'X'
     prefix = f"{type_letter}-{company_id_str}-"
@@ -73,7 +73,7 @@ def create_invoice_or_quote(company_id, form, user_id):
     db.session.add(document)
     db.session.flush()
 
-    # ---- Parse items ----
+                           
     items_data = {}
     for key, value in form.items():
         if key.startswith("items[") and "][" in key:
@@ -102,7 +102,7 @@ def create_invoice_or_quote(company_id, form, user_id):
             if inv:
                 inv.quantity = max((inv.quantity or 0) - qty, 0)
                 
-                # Log movement
+                              
                 movement = StockMovement(
                     company_id=company_id,
                     inventory_item_id=int(inv_id),

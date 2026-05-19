@@ -48,7 +48,6 @@
 {% block content %}
 <div class="flex-1 overflow-y-auto p-6 bg-slate-50">
   
-  <!-- Encabezado del contacto -->
   <div class="bg-white rounded-lg border border-slate-200 overflow-hidden mb-6 p-6">
     <div class="flex flex-col sm:flex-row items-start justify-between gap-4">
       <div class="flex items-center gap-4">
@@ -108,9 +107,7 @@
     {% endif %}
   </div>
 
-  <!-- Contenido Relacionado -->
   {% if contact.type.name == 'customer' %}
-    <!-- Facturas de Cliente -->
     <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
       <div class="px-4 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
         <h3 class="text-sm font-semibold text-slate-800">Facturas del Cliente</h3>
@@ -149,7 +146,6 @@
         </tbody>
       </table>
       
-      <!-- Pagination -->
       {% if items.pages > 1 %}
       <div class="px-4 py-3 border-t border-slate-100 flex items-center justify-between bg-white">
         <p class="text-sm text-slate-500">
@@ -186,7 +182,6 @@
       {% endif %}
     </div>
   {% else %}
-    <!-- Productos del Proveedor -->
     <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
       <div class="px-4 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
         <h3 class="text-sm font-semibold text-slate-800">Productos Suministrados</h3>
@@ -213,7 +208,6 @@
         </tbody>
       </table>
       
-      <!-- Pagination -->
       {% if items.pages > 1 %}
       <div class="px-4 py-3 border-t border-slate-100 flex items-center justify-between bg-white">
         <p class="text-sm text-slate-500">

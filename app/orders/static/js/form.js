@@ -173,7 +173,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("order-total").textContent = currency + total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 10 })
     }
 
-    // Initial calculation
     document.querySelectorAll(".item-row").forEach(updateRowTotal)
     updateOrderTotal()
 })

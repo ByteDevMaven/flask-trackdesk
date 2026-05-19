@@ -33,13 +33,13 @@ def create_app():
     app.config.from_object(Config)
     Config.init_app(app)
 
-    # Register extensions
+                         
     register_extensions(app)
 
-    # Register blueprints
+                         
     register_blueprints(app)
 
-    # Register context processors, request hooks, routes
+                                                        
     register_context_processors(app)
     register_request_hooks(app)
     register_routes(app)

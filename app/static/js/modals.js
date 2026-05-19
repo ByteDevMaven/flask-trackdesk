@@ -6,7 +6,6 @@
 
 'use strict';
 
-// ─── Toast Notifications ─────────────────────────────────────────────────────
 
 /**
  * Muestra una notificación toast deslizante.
@@ -49,24 +48,20 @@ window.triggerToast = function(message, isSuccess = true, duration = 4000) {
 
   container.appendChild(toast);
 
-  // Animar entrada
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       toast.classList.remove('translate-x-full', 'opacity-0');
     });
   });
 
-  // Auto-remover
   const timer = setTimeout(() => {
     toast.classList.add('translate-x-full', 'opacity-0');
     setTimeout(() => toast.remove(), 300);
   }, duration);
 
-  // Cancelar al hacer hover
   toast.addEventListener('mouseenter', () => clearTimeout(timer));
 };
 
-// ─── Confirm Modal ────────────────────────────────────────────────────────────
 
 /**
  * Muestra un modal de confirmación personalizado.
@@ -140,14 +135,12 @@ function closeConfirmModal() {
   }
 }
 
-// Cerrar al hacer clic en el backdrop
 document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('confirm-modal');
   if (modal) {
     modal.querySelector('#confirm-modal-backdrop').addEventListener('click', closeConfirmModal);
   }
 
-  // Inicializar toasts desde flashes del servidor (renderizados en el DOM)
   document.querySelectorAll('[data-flash-message]').forEach(el => {
     const msg = el.dataset.flashMessage;
     const cat = el.dataset.flashCategory;

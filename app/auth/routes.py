@@ -75,13 +75,13 @@ def register(companyID=None):
         elif password != confirmpassword:
             flash(_("Passwords must match!"), 'warning')
         else:
-            # Create or get company
+                                   
             company = Company.query.get(company_id)
             if not company:
                 flash(_("No valid company found."), 'error')
                 redirect(url_for("auth.register", company_id=companyID))
 
-            # Optional: assign a default role
+                                             
             default_role = Role.query.filter_by(name="user").first()
 
             user = User(

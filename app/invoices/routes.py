@@ -24,7 +24,7 @@ def index(company_id):
     for doc in pagination.items:
         doc.client = Contact.query.get(doc.client_id) if doc.client_id else None
 
-    # Compute statistics for sidebar filters
+                                            
     from app.models.enums import DocumentType
     stats = {
         'total': Document.query.filter(Document.company_id == company_id, Document.type.in_([DocumentType.invoice, DocumentType.quote])).count(),
@@ -69,7 +69,7 @@ def item_row():
 @login_required
 @limiter.exempt
 def create(company_id):
-    # Get clients and inventory items for the form
+                                                  
     clients = Contact.query.filter_by(company_id=company_id, type=ContactType.customer).all()
     inventory_items = InventoryItem.query.filter(
         InventoryItem.company_id == company_id,
@@ -131,13 +131,13 @@ def view(company_id, id):
         or_(Document.type == DocumentType.invoice, Document.type == DocumentType.quote)
     ).first_or_404()
     
-    # Get client information
+                            
     if document.client_id:
         document.client = Contact.query.get(document.client_id)
     else:
         document.client = None
     
-    # Get document items with inventory information
+                                                   
     document_items = DocumentItem.query.filter_by(document_id=document.id).all()
     for item in document_items:
         if item.inventory_item_id:
@@ -178,10 +178,10 @@ def add_payment(company_id, id):
             flash(_('Payment amount must be greater than 0'), 'error')
             return redirect(url_for('invoices.view', company_id=company_id, id=id))
 
-        # Parse payment date
+                            
         payment_date = datetime.strptime(payment_date_str, '%Y-%m-%d') if payment_date_str else datetime.now()
 
-        # Create payment record
+                               
         payment = Payment(
             company_id=company_id,
             document_id=id,
@@ -217,7 +217,7 @@ def edit(company_id, id):
         or_(Document.type == DocumentType.invoice, Document.type == DocumentType.quote)
     ).first_or_404()
     
-    # Get client information
+                            
     if document.client_id:
         document.client = Contact.query.get(document.client_id)
     else:
@@ -227,7 +227,7 @@ def edit(company_id, id):
     inventory_items = InventoryItem.query.filter_by(company_id=company_id).all()
     document_items = DocumentItem.query.filter_by(document_id=document.id).all()
     
-    # Get inventory information for each document item
+                                                      
     for item in document_items:
         if item.inventory_item_id:
             item.inventory_item = InventoryItem.query.get(item.inventory_item_id)
@@ -370,10 +370,10 @@ def delete(company_id, id):
     ).first_or_404()
     
     try:
-        # Delete related items first
+                                    
         DocumentItem.query.filter_by(document_id=document.id).delete()
         
-        # Delete the document
+                             
         db.session.delete(document)
         db.session.commit()
         

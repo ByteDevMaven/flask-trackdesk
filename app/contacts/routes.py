@@ -197,8 +197,8 @@ def edit(company_id, contact_id):
 def delete(company_id, contact_id):
     contact = Contact.query.filter_by(id=contact_id, company_id=company_id).first_or_404()
     
-    # We should prevent deleting if they have documents or inventory items linked, but for now we cascade or restrict in DB.
-    # We'll just try and catch.
+                                                                                                                            
+                               
     try:
         db.session.delete(contact)
         db.session.commit()

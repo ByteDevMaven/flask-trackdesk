@@ -10,7 +10,7 @@ def update_invoice_or_quote(document, form):
             if inv:
                 inv.quantity += old.quantity
     
-    # Delete old movements for this invoice
+                                           
     StockMovement.query.filter_by(
         company_id=document.company_id,
         reference=f"INV {document.document_number}",
@@ -59,7 +59,7 @@ def update_invoice_or_quote(document, form):
                     raise ValueError(f"Not enough stock for: {inv.name}")
                 inv.quantity -= quantity
                 
-                # Log new movement
+                                  
                 movement = StockMovement(
                     company_id=document.company_id,
                     inventory_item_id=inv_id,

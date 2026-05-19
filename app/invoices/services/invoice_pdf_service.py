@@ -42,7 +42,7 @@ def generate_invoice_pdf(document, request):
 
     template_pdf = PdfReader(template_path)
 
-    # Fonts
+           
     try:
         font_dir = os.path.join(current_app.static_folder, "fonts")
         pdfmetrics.registerFont(TTFont("Arial", os.path.join(font_dir, "arial.ttf")))
@@ -51,17 +51,17 @@ def generate_invoice_pdf(document, request):
     except Exception:
         font_name, font_bold = "Helvetica", "Helvetica-Bold"
 
-    # -------------------------
-    # Pagination
-    # -------------------------
+                               
+                
+                               
     width, height = A4
     items_per_page = 25
     total_pages = math.ceil(len(document_items) / items_per_page) or 1
     output_pdf = PdfWriter()
 
-    # -------------------------
-    # Totals
-    # -------------------------
+                               
+            
+                               
     tax_param = request.args.get("tax", "1")
     include_tax = tax_param != "0"
     tax_rate = session.get("tax_rate", 15) / 100
@@ -70,7 +70,7 @@ def generate_invoice_pdf(document, request):
     subtotal = round(total_amount / (1 + tax_rate), 2)
 
     vta_exenta = subtotal
-    venta_gravada_15 = subtotal #* 0.6
+    venta_gravada_15 = subtotal       
     venta_gravada_18 = 0
     venta_exonerada = 0
     imp_15 = round(subtotal * tax_rate, 2) if include_tax else 0
@@ -83,9 +83,9 @@ def generate_invoice_pdf(document, request):
             lang=get_locale().language
         )
 
-    # -------------------------
-    # Page loop
-    # -------------------------
+                               
+               
+                               
     for page_num in range(total_pages):
         page_items = document_items[
             page_num * items_per_page:(page_num + 1) * items_per_page
@@ -125,9 +125,9 @@ def generate_invoice_pdf(document, request):
         output_pdf.add_page(template_page)
         overlay_buffer.close()
 
-    # -------------------------
-    # Output
-    # -------------------------
+                               
+            
+                               
     doc_type = "quo" if document.type == DocumentType.quote else "inv"
     filename = f"{doc_type}_{document.document_number}.pdf"
 

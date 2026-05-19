@@ -47,7 +47,7 @@ def store():
             flash('Company name is required.', 'error')
             return redirect(url_for('companies.create'))
         
-        # Check if company name already exists
+                                              
         existing_company = Company.query.filter_by(name=name).first()
         if existing_company:
             flash('A company with this name already exists.', 'error')
@@ -64,7 +64,7 @@ def store():
             created_at=datetime.now() # type: ignore
         )
         
-        # Add selected users to the company
+                                           
         if user_ids:
             users = User.query.filter(User.id.in_(user_ids)).all()
             company.users.extend(users) # type: ignore
@@ -85,7 +85,7 @@ def store():
 def view(id):
     company = Company.query.get_or_404(id)
     
-    # Get company statistics
+                            
     stats = {
         'users_count': len(company.users),
         'clients_count': Contact.query.filter_by(company_id=company.id).count(),
@@ -96,7 +96,7 @@ def view(id):
         'reports_count': Report.query.filter_by(company_id=company.id).count()
     }
     
-    # Get recent activity
+                         
     recent_documents = Document.query.filter_by(company_id=company.id).order_by(Document.issued_date.desc()).limit(5).all()
     recent_payments = Payment.query.filter_by(company_id=company.id).order_by(Payment.payment_date.desc()).limit(5).all()
     
@@ -132,7 +132,7 @@ def update(id):
             flash('Company name is required.', 'error')
             return redirect(url_for('companies.edit', id=id))
         
-        # Check if company name already exists (excluding current company)
+                                                                          
         existing_company = Company.query.filter(Company.name == name, Company.id != id).first()
         if existing_company:
             flash('A company with this name already exists.', 'error')
@@ -147,7 +147,7 @@ def update(id):
         company.identifier = identifier
         company.updated_at = datetime.now()
         
-        # Update user associations
+                                  
         company.users.clear()
         if user_ids:
             users = User.query.filter(User.id.in_(user_ids)).all()
@@ -169,7 +169,7 @@ def delete(id):
     company = Company.query.get_or_404(id)
     
     try:
-        # Check if company has related data
+                                           
         has_clients = Contact.query.filter_by(company_id=company.id).first() is not None
         has_suppliers = Contact.query.filter_by(company_id=company.id).first() is not None
         has_inventory = InventoryItem.query.filter_by(company_id=company.id).first() is not None
@@ -181,7 +181,7 @@ def delete(id):
             flash('Cannot delete company with existing data. Please remove all related clients, suppliers, inventory, documents, payments, and reports first.', 'error')
             return redirect(url_for('companies.view', id=id))
         
-        # Clear user associations
+                                 
         company.users.clear()
         
         db.session.delete(company)

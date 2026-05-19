@@ -32,7 +32,6 @@
       <div class="col-span-2"><p class="text-xs text-slate-500">Dirección</p><p class="font-medium text-slate-900">{{ company.address or '—' }}</p></div>
     </div>
 
-    <!-- Estadísticas -->
     <div class="grid grid-cols-4 gap-3 border-t border-slate-100 pt-4">
       {% for label, val in [('Clientes', stats.clients_count), ('Proveedores', stats.suppliers_count), ('Productos', stats.inventory_count), ('Documentos', stats.documents_count)] %}
       <div class="text-center">

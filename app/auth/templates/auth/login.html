@@ -11,7 +11,6 @@
 </head>
 <body class="bg-slate-50 min-h-screen flex items-center justify-center p-4">
 
-  <!-- Flash messages renderizados como data-attributes -->
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% for category, message in messages %}
       <div data-flash-message="{{ message }}" data-flash-category="{{ category }}" class="hidden"></div>
@@ -20,7 +19,6 @@
 
   <div class="w-full max-w-md">
 
-    <!-- Logo -->
     <div class="text-center mb-8">
       <div class="inline-flex items-center justify-center w-12 h-12 bg-emerald-600 rounded-xl mb-4 shadow-lg">
         <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -31,12 +29,10 @@
       <p class="text-slate-500 mt-1 text-sm">Inicia sesión en tu cuenta de TrackDesk</p>
     </div>
 
-    <!-- Card de login -->
     <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-8">
       <form method="POST" action="{{ url_for('auth.login') }}">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-        <!-- Email -->
         <div class="mb-5">
           <label for="email" class="block text-sm font-medium text-slate-700 mb-1.5">
             Correo electrónico
@@ -47,7 +43,6 @@
                  class="w-full px-4 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors">
         </div>
 
-        <!-- Contraseña -->
         <div class="mb-5">
           <div class="flex items-center justify-between mb-1.5">
             <label for="password" class="block text-sm font-medium text-slate-700">Contraseña</label>
@@ -67,14 +62,12 @@
           </div>
         </div>
 
-        <!-- Recordarme -->
         <div class="flex items-center mb-6">
           <input type="checkbox" id="remember" name="remember"
                  class="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500">
           <label for="remember" class="ml-2 text-sm text-slate-600">Mantener sesión iniciada</label>
         </div>
 
-        <!-- Botón -->
         <button type="submit"
                 class="w-full bg-emerald-600 text-white py-2.5 px-4 rounded-lg text-sm font-medium hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors">
           Iniciar sesión
@@ -83,7 +76,6 @@
     </div>
   </div>
 
-  <!-- Toast container -->
   <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2 w-80"></div>
 
   <script src="{{ url_for('static', filename='js/modals.js') }}"></script>

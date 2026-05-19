@@ -17,7 +17,6 @@
 
 <body class="bg-slate-50 text-slate-800 antialiased">
 
-  <!-- Flash messages renderizados como data-attributes para modals.js -->
   {% with messages = get_flashed_messages(with_categories=true) %}
   {% for category, message in messages %}
   <div data-flash-message="{{ message }}" data-flash-category="{{ category }}" class="hidden"></div>
@@ -26,10 +25,8 @@
 
   <div class="flex h-screen overflow-hidden">
 
-    <!-- ═══ SIDEBAR PRIMARIO ═══════════════════════════════════════════════ -->
     <aside id="primary-sidebar" class="w-16 bg-slate-800 flex flex-col items-center py-4 flex-shrink-0 z-30">
 
-      <!-- Logo -->
       <a href="{{ url_for('dashboard.index') }}"
         class="w-10 h-10 bg-emerald-500 rounded-lg flex items-center justify-center mb-8 hover:bg-emerald-600 transition-colors">
         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -37,11 +34,9 @@
         </svg>
       </a>
 
-      <!-- Íconos de módulos -->
       <nav class="flex-1 flex flex-col items-center gap-1">
         {% set company = session.get('selected_company_id') %}
 
-        <!-- Dashboard -->
         <a href="{{ url_for('dashboard.index') }}"
           class="w-10 h-10 rounded-lg flex items-center justify-center transition-colors {% if request.endpoint and 'dashboard' in request.endpoint %}bg-slate-700 text-white{% else %}text-slate-400 hover:bg-slate-700 hover:text-white{% endif %}"
           title="Dashboard">
@@ -51,7 +46,6 @@
           </svg>
         </a>
 
-        <!-- Contactos -->
         {% if company %}
         <a href="{{ url_for('contacts.index', company_id=company) }}"
           class="w-10 h-10 rounded-lg flex items-center justify-center transition-colors {% if request.endpoint and 'contacts' in request.endpoint %}bg-slate-700 text-white{% else %}text-slate-400 hover:bg-slate-700 hover:text-white{% endif %}"
@@ -62,7 +56,6 @@
           </svg>
         </a>
 
-        <!-- Inventario -->
         <a href="{{ url_for('inventory.index', company_id=company) }}"
           class="w-10 h-10 rounded-lg flex items-center justify-center transition-colors {% if request.endpoint and 'inventory' in request.endpoint %}bg-slate-700 text-white{% else %}text-slate-400 hover:bg-slate-700 hover:text-white{% endif %}"
           title="Inventario">
@@ -72,7 +65,6 @@
           </svg>
         </a>
 
-        <!-- Facturas -->
         <a href="{{ url_for('invoices.index', company_id=company) }}"
           class="w-10 h-10 rounded-lg flex items-center justify-center transition-colors {% if request.endpoint and 'invoices' in request.endpoint %}bg-slate-700 text-white{% else %}text-slate-400 hover:bg-slate-700 hover:text-white{% endif %}"
           title="Facturas">
@@ -82,7 +74,6 @@
           </svg>
         </a>
 
-        <!-- Pagos -->
         <a href="{{ url_for('payments.index', company_id=company) }}"
           class="w-10 h-10 rounded-lg flex items-center justify-center transition-colors {% if request.endpoint and 'payments' in request.endpoint %}bg-slate-700 text-white{% else %}text-slate-400 hover:bg-slate-700 hover:text-white{% endif %}"
           title="Pagos">
@@ -92,7 +83,6 @@
           </svg>
         </a>
 
-        <!-- Órdenes de Compra -->
         <a href="{{ url_for('orders.index', company_id=company) }}"
           class="w-10 h-10 rounded-lg flex items-center justify-center transition-colors {% if request.endpoint and 'orders' in request.endpoint %}bg-slate-700 text-white{% else %}text-slate-400 hover:bg-slate-700 hover:text-white{% endif %}"
           title="Órdenes de Compra">
@@ -105,7 +95,6 @@
 
         <div class="w-8 h-px bg-slate-700 my-2"></div>
 
-        <!-- Usuarios (solo admins) -->
         {% if current_user.is_authenticated and current_user.role and current_user.role.name in ['admin', 'superadmin']
         %}
         <a href="{{ url_for('users.index') }}"
@@ -118,7 +107,6 @@
         </a>
         {% endif %}
 
-        <!-- Empresas -->
         <a href="{{ url_for('companies.index') }}"
           class="w-10 h-10 rounded-lg flex items-center justify-center transition-colors {% if request.endpoint and 'companies' in request.endpoint %}bg-slate-700 text-white{% else %}text-slate-400 hover:bg-slate-700 hover:text-white{% endif %}"
           title="Empresas">
@@ -129,7 +117,6 @@
         </a>
       </nav>
 
-      <!-- Avatar del usuario -->
       {% if current_user.is_authenticated %}
       <div
         class="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center text-white text-sm font-semibold cursor-pointer"
@@ -139,7 +126,6 @@
       {% endif %}
     </aside>
 
-    <!-- ═══ SIDEBAR SECUNDARIO ═══════════════════════════════════════════════ -->
     <aside id="secondary-sidebar"
       class="w-56 bg-white border-r border-slate-200 flex flex-col flex-shrink-0 transition-all duration-300 overflow-hidden z-20">
       <div class="p-4 border-b border-slate-100 flex items-center justify-between">
@@ -156,7 +142,6 @@
         {% block sidebar_nav %}{% endblock %}
       </nav>
 
-      <!-- Empresa activa -->
       {% if session.get('selected_company_id') and current_user.is_authenticated %}
       <div class="p-3 border-t border-slate-100 bg-slate-50/50">
         <div class="flex items-center gap-3 p-2 rounded-xl bg-white border border-slate-100 shadow-sm">
@@ -177,7 +162,6 @@
       {% endif %}
     </aside>
 
-    <!-- Botón para expandir sidebar colapsado -->
     <button id="expand-sidebar-btn"
       class="hidden w-6 bg-white border-r border-slate-200 flex-shrink-0 items-center justify-center hover:bg-slate-50 transition-colors z-20">
       <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -185,17 +169,14 @@
       </svg>
     </button>
 
-    <!-- ═══ CONTENIDO PRINCIPAL ══════════════════════════════════════════════ -->
     <div class="flex-1 flex flex-col overflow-hidden">
 
-      <!-- Top Bar -->
       <header class="h-14 bg-white border-b border-slate-200 flex items-center justify-between px-6 flex-shrink-0 z-10">
         <div class="flex items-center gap-4">
           <h1 class="text-base font-semibold text-slate-900">{% block page_title %}{% endblock %}</h1>
         </div>
 
         <div class="flex items-center gap-2">
-          <!-- Buscador global -->
           <div class="relative hidden md:block">
             <input id="global-search" type="text" placeholder="Buscar..."
               class="w-56 h-9 pl-9 pr-4 text-sm bg-slate-100 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-colors">
@@ -206,7 +187,6 @@
             </svg>
           </div>
 
-          <!-- Selector de empresa -->
           {% if current_user.is_authenticated and current_user.companies|length > 1 %}
           <div class="relative" id="company-menu-wrapper">
             <button id="company-menu-btn"
@@ -245,7 +225,6 @@
           </div>
           {% endif %}
 
-          <!-- Botón de cerrar sesión -->
           <a href="{{ url_for('auth.logout') }}"
             class="w-9 h-9 rounded-lg flex items-center justify-center text-slate-500 hover:bg-slate-100 hover:text-rose-600 transition-colors"
             title="Cerrar sesión">
@@ -257,14 +236,12 @@
         </div>
       </header>
 
-      <!-- Área de contenido scrollable -->
       <main class="flex-1 overflow-y-auto bg-slate-50">
         {% block content %}{% endblock %}
       </main>
     </div>
   </div>
 
-  <!-- ═══ MODAL DE CONFIRMACIÓN GLOBAL ════════════════════════════════════════ -->
   <div id="confirm-modal" class="fixed inset-0 z-50 hidden">
     <div id="confirm-modal-backdrop" class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm"></div>
     <div class="relative flex items-center justify-center min-h-screen p-4">
@@ -293,7 +270,6 @@
     </div>
   </div>
 
-  <!-- ═══ DRAWER LATERAL GLOBAL ════════════════════════════════════════════════ -->
   <div id="drawer-overlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 hidden transition-opacity"></div>
   <aside id="side-drawer"
     class="fixed right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl z-50 flex flex-col transform translate-x-full transition-transform duration-300">
@@ -309,9 +285,7 @@
     <div id="drawer-body" class="flex-1 overflow-y-auto"></div>
   </aside>
 
-  <!-- ═══ CONTENEDOR DE TOASTS ═════════════════════════════════════════════════ -->
   <div id="toast-container" class="fixed top-4 right-4 z-[60] flex flex-col gap-2 w-80 pointer-events-none">
-    <!-- Los toasts se insertan aquí dinámicamente -->
   </div>
 
   <script src="{{ url_for('static', filename='js/modals.js') }}"></script>

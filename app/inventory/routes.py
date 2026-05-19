@@ -21,13 +21,13 @@ def index(company_id):
     page = request.args.get('page', 1, type=int)
     per_page = int(current_app.config.get('ITEMS_PER_PAGE', 15))
     
-    # Get filters and sorting from request
+                                          
     search = request.args.get('search', '')
     supplier_id = request.args.get('supplier_id', '')
     sort_by = request.args.get('sort', 'name')
     sort_order = request.args.get('order', 'asc')
     
-    # Apply sorting and pagination using InventoryService
+                                                         
     pagination = InventoryService.get_inventory_items(
         company_id=company_id,
         page=page,
@@ -39,10 +39,10 @@ def index(company_id):
     )
     inventory_items = pagination.items
     
-    # Filter options
+                    
     suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
     
-    # Stats
+           
     stats = InventoryService.get_inventory_stats(company_id)
 
     return render_template('inventory/index.html', 
@@ -60,7 +60,7 @@ def index(company_id):
 @login_required
 @limiter.exempt
 def create(company_id):
-    # Get suppliers for dropdown
+                                
     suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
     selected_id = request.args.get('supplier_id', type=int)
     
@@ -97,7 +97,7 @@ def view(company_id, id):
     page = request.args.get('page', 1, type=int)
     per_page = 10
     
-    # Fetch movements using InventoryService with dynamic page support
+                                                                      
     pagination = InventoryService.get_stock_movements(company_id, item_id=id, page=page, per_page=per_page)
     db_movements = pagination.items
     
@@ -108,7 +108,7 @@ def view(company_id, id):
             'type': m.type.value.title(),
             'reference': m.reference or '-',
             'qty_change': m.quantity,
-            'status': 'completed', # All movements in this table are considered completed
+            'status': 'completed',                                                       
             'notes': m.notes
         })
     
@@ -207,12 +207,12 @@ def export(company_id):
     output = StringIO()
     writer = csv.writer(output)
     
-    # Write header
+                  
     writer.writerow([
         _('Name'), _('Description'), _('Quantity'), _('Price'), _('Contact')
     ])
     
-    # Write data
+                
     for item in items:
         writer.writerow([
             item.name,
@@ -231,7 +231,7 @@ def export(company_id):
         headers={'Content-Disposition': f'attachment; filename=inventory_{company_id}_{datetime.now().strftime("%Y%m%d")}.csv'}
     )
 
-# API Routes
+            
 @inventory.route('/api/<int:company_id>/inventory/items', methods=['GET'])
 @login_required
 @limiter.exempt
@@ -482,7 +482,7 @@ def view_barcode(company_id, id):
         
     except Exception as e:
         current_app.logger.error(f"Barcode generation error: {str(e)}")
-        # Return a simple error response or default image
+                                                         
         from flask import Response
         return Response('Barcode generation failed', status=500)
 

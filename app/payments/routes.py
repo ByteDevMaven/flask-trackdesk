@@ -19,13 +19,13 @@ def index(company_id):
     date_from = request.args.get('date_from', '')
     date_to = request.args.get('date_to', '')
     
-    # Base query with joins
+                           
     query = db.session.query(Payment).filter(
         Payment.company_id == company_id
     ).join(Document, Payment.document_id == Document.id, isouter=True)\
      .join(Contact, Document.client_id == Contact.id, isouter=True)
     
-    # Apply filters
+                   
     if search:
         query = query.filter(
             or_(
@@ -52,10 +52,10 @@ def index(company_id):
         except ValueError:
             pass
     
-    # Order by payment date (newest first)
+                                          
     query = query.order_by(desc(Payment.payment_date))
     
-    # Paginate
+              
     pagination = query.paginate( # type: ignore
         page=page, 
         per_page=int(current_app.config.get('ITEMS_PER_PAGE', 20)),
@@ -64,14 +64,14 @@ def index(company_id):
     
     payments = pagination.items
     
-    # Get related data for each payment
+                                       
     for payment in payments:
         if payment.document_id:
             payment.document = Document.query.get(payment.document_id)
             if payment.document and payment.document.client_id:
                 payment.document.client = Contact.query.get(payment.document.client_id)
     
-    # Calculate totals
+                      
     total_payments = db.session.query(db.func.sum(Payment.amount)).filter(
         Payment.company_id == company_id
     ).scalar() or 0
@@ -85,7 +85,7 @@ def index(company_id):
 @login_required
 @limiter.exempt
 def create(company_id):
-    # Pre-select invoice if provided
+                                    
     invoice_id = request.args.get('invoice_id', type=int)
     selected_invoice = None
     
@@ -109,7 +109,7 @@ def create(company_id):
 def search_invoices(company_id):
     search = request.args.get('q', '')
     
-    # Search for unpaid or partially paid invoices
+                                                  
     query = db.session.query(Document).filter(
         Document.company_id == company_id,
         or_(
@@ -129,10 +129,10 @@ def search_invoices(company_id):
     
     invoices = query.limit(10).all()
     
-    # Calculate remaining balance for each invoice
+                                                  
     results = []
     for invoice in invoices:
-        # Get total payments for this invoice
+                                             
         total_paid = db.session.query(db.func.sum(Payment.amount)).filter(
             Payment.document_id == invoice.id
         ).scalar() or 0
@@ -161,7 +161,7 @@ def search_invoices(company_id):
 @limiter.exempt
 def store(company_id):
     try:
-        # Create the payment
+                            
         payment = Payment(
             company_id=company_id, # type: ignore
             document_id=int(request.form.get('document_id')) if request.form.get('document_id') else None, # type: ignore
@@ -173,17 +173,17 @@ def store(company_id):
         
         db.session.add(payment)
         
-        # Update invoice status if applicable
+                                             
         if payment.document_id:
             invoice = Document.query.get(payment.document_id)
             if invoice:
-                # Calculate total payments for this invoice
+                                                           
                 total_paid = db.session.query(db.func.sum(Payment.amount)).filter(
                     Payment.document_id == invoice.id
                 ).scalar() or 0
                 total_paid += payment.amount
                 
-                # Update invoice status based on payment
+                                                        
                 if total_paid >= (invoice.total_amount or 0):
                     invoice.status = 'paid'
                 elif total_paid > 0:
@@ -207,7 +207,7 @@ def view(company_id, id):
         Payment.company_id == company_id
     ).first_or_404()
     
-    # Get related document and client information
+                                                 
     if payment.document_id:
         payment.document = Document.query.get(payment.document_id)
         if payment.document and payment.document.client_id:
@@ -224,7 +224,7 @@ def edit(company_id, id):
         Payment.company_id == company_id
     ).first_or_404()
     
-    # Get related document information
+                                      
     selected_invoice = None
     if payment.document_id:
         selected_invoice = Document.query.get(payment.document_id)
@@ -248,14 +248,14 @@ def update(company_id, id):
         old_amount = payment.amount
         old_document_id = payment.document_id
         
-        # Update payment fields
+                               
         payment.document_id = int(request.form.get('document_id')) if request.form.get('document_id') else None # type: ignore
         payment.amount = float(request.form.get('amount', 0))
         payment.payment_date = datetime.strptime(request.form.get('payment_date'), '%Y-%m-%d') if request.form.get('payment_date') else payment.payment_date # type: ignore
         payment.method = request.form.get('method', payment.method)
         payment.notes = request.form.get('notes', payment.notes)
         
-        # Update invoice statuses
+                                 
         invoices_to_update = set()
         if old_document_id:
             invoices_to_update.add(old_document_id)
@@ -265,12 +265,12 @@ def update(company_id, id):
         for invoice_id in invoices_to_update:
             invoice = Document.query.get(invoice_id)
             if invoice:
-                # Recalculate total payments for this invoice
+                                                             
                 total_paid = db.session.query(db.func.sum(Payment.amount)).filter(
                     Payment.document_id == invoice_id
                 ).scalar() or 0
                 
-                # Update invoice status
+                                       
                 if total_paid >= (invoice.total_amount or 0):
                     invoice.status = 'paid'
                 elif total_paid > 0:
@@ -298,19 +298,19 @@ def delete(company_id, id):
     try:
         document_id = payment.document_id
         
-        # Delete the payment
+                            
         db.session.delete(payment)
         
-        # Update invoice status if applicable
+                                             
         if document_id:
             invoice = Document.query.get(document_id)
             if invoice:
-                # Recalculate total payments for this invoice
+                                                             
                 total_paid = db.session.query(db.func.sum(Payment.amount)).filter(
                     Payment.document_id == document_id
                 ).scalar() or 0
                 
-                # Update invoice status
+                                       
                 if total_paid >= (invoice.total_amount or 0):
                     invoice.status = 'paid'
                 elif total_paid > 0:

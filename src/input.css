@@ -1,12 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-    /* ─────────── Typography ─────────── */
     --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
 
-    /* ─────────── Core Palette ─────────── */
 
-    /* Neutrals – Slate (Professional, Cool Gray) */
     --color-slate-50: #f8fafc;
     --color-slate-100: #f1f5f9;
     --color-slate-200: #e2e8f0;
@@ -19,7 +16,6 @@
     --color-slate-900: #0f172a;
     --color-slate-950: #020617;
 
-    /* Primary/Accent – Indigo (Vibrant, Tech) */
     --color-indigo-50: #eef2ff;
     --color-indigo-100: #e0e7ff;
     --color-indigo-200: #c7d2fe;
@@ -32,74 +28,58 @@
     --color-indigo-900: #312e81;
     --color-indigo-950: #1e1b4b;
 
-    /* Semantic Mappings */
     
-    /* Document/Backgrounds */
     --color-bg-base: var(--color-slate-50);       /* Main app background */
     --color-bg-subtle: white;                     /* Cards/Panels */
     --color-bg-sidebar: var(--color-slate-900);   /* Dark Sidebar */
     --color-bg-topbar: white;                     /* Light Topbar */
 
-    /* Text */
     --color-fg-base: var(--color-slate-900);      /* Primary text */
     --color-fg-muted: var(--color-slate-500);     /* Secondary text */
     --color-fg-inverted: white;                   /* Text on dark bg */
     --color-fg-accent: var(--color-indigo-600);   /* Link/Accent text */
 
-    /* Borders */
     --color-border-base: var(--color-slate-200);
     --color-border-subtle: var(--color-slate-100);
 
-    /* UI States */
     --color-primary-500: var(--color-indigo-600); /* Focus rings, active states */
 
-    /* ─────────── Buttons ─────────── */
 
-    /* Primary Button (Indigo) */
     --color-btn-primary-bg: var(--color-indigo-600);
     --color-btn-primary-hover: var(--color-indigo-500);
     --color-btn-primary-text: white;
 
-    /* Secondary Button (White/Slate) */
     --color-btn-secondary-bg: white;
     --color-btn-secondary-hover: var(--color-slate-50);
     --color-btn-secondary-text: var(--color-slate-700);
     --color-btn-secondary-border: var(--color-slate-300);
 
-    /* Alert/Warning Button (Amber) */
     --color-btn-alert-bg: #f59e0b;
     --color-btn-alert-hover: #d97706;
     --color-btn-alert-text: white;
 
-    /* Danger Button (Red) */
     --color-btn-danger-bg: #ef4444;
     --color-btn-danger-hover: #dc2626;
     --color-btn-danger-text: white;
 }
 
 @theme dark {
-    /* ─────────── Dark Mode ─────────── */
 
-    /* Backgrounds */
     --color-bg-base: var(--color-slate-950);      /* Deep dark background */
     --color-bg-subtle: var(--color-slate-900);    /* Cards/Panels */
     --color-bg-sidebar: var(--color-slate-950);   /* Sidebar matches bg or slightly lighter */
     --color-bg-topbar: var(--color-slate-900);
 
-    /* Text */
     --color-fg-base: var(--color-slate-100);
     --color-fg-muted: var(--color-slate-400);
     --color-fg-inverted: var(--color-slate-900);
     --color-fg-accent: var(--color-indigo-400);
 
-    /* Borders */
     --color-border-base: var(--color-slate-800);
     --color-border-subtle: var(--color-slate-800);
 
-    /* UI States */
     --color-primary-500: var(--color-indigo-500);
 
-    /* Buttons */
     --color-btn-primary-bg: var(--color-indigo-500);
     --color-btn-primary-hover: var(--color-indigo-400);
     --color-btn-primary-text: white;
@@ -110,7 +90,6 @@
     --color-btn-secondary-border: var(--color-slate-700);
 }
 
-/* ─────────── Custom Utilities ─────────── */
 
 @layer utilities {
     .glass {

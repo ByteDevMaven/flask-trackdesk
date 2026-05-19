@@ -22,7 +22,6 @@
   </header>
 
   <div class="flex-1 overflow-y-auto p-6">
-    <!-- Total -->
     <div class="bg-emerald-600 rounded-lg p-5 text-white mb-6">
       <p class="text-sm font-medium text-emerald-100 mb-1">Total Recibido</p>
       <p class="text-3xl font-bold">{{ session.get('currency','L') }} {{ "%.2f"|format(total_payments) }}</p>
