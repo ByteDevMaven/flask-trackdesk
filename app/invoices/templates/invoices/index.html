@@ -146,7 +146,7 @@
         <tbody class="divide-y divide-slate-50">
           {% for invoice in invoices %}
           {% set sv = invoice.status.value if invoice.status else '' %}
-          {% set sm = {'paid':('Pagada','bg-emerald-50 text-emerald-700','bg-emerald-500'),'overdue':('Vencida','bg-rose-50 text-rose-700','bg-rose-500'),'pending':('Pendiente','bg-amber-50 text-amber-700','bg-amber-500'),'partial':('Parcial','bg-sky-50 text-sky-700','bg-sky-500'),'draft':('Borrador','bg-slate-100 text-slate-600','bg-slate-400'),'sent':('Enviada','bg-blue-50 text-blue-700','bg-blue-400')} %}
+          {% set sm = {'paid':('Pagada','bg-emerald-50 text-emerald-700','bg-emerald-500'),'overdue':('Vencida','bg-rose-50 text-rose-700','bg-rose-500'),'pending':('Pendiente','bg-amber-50 text-amber-700','bg-amber-500'),'partial':('Parcial','bg-sky-50 text-sky-700','bg-sky-500'),'draft':('Borrador','bg-slate-100 text-slate-600','bg-slate-400'),'sent':('Enviada','bg-blue-50 text-blue-700','bg-blue-400'),'issued':('Emitida','bg-indigo-50 text-indigo-700','bg-indigo-500'),'cancelled':('Cancelada','bg-slate-50 text-slate-600','bg-slate-400'),'credit':('Nota de Crédito','bg-purple-50 text-purple-700','bg-purple-500'),'exchange':('Intercambio','bg-orange-50 text-orange-700','bg-orange-500')} %}
           {% set sl, sc, sd = sm.get(sv.lower(), ('—','bg-slate-100 text-slate-500','bg-slate-300')) %}
           {% set tv = invoice.type.value if invoice.type else '' %}
           <tr class="hover:bg-slate-50/80 transition-colors">
