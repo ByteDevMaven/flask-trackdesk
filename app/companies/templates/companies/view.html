@@ -1,45 +1,371 @@
 {% extends "base.html" %}
 {% block title %}{{ company.name }} – TrackDesk{% endblock %}
 {% block sidebar_title %}Empresas{% endblock %}
+
 {% block sidebar_nav %}
-  <a href="{{ url_for('companies.index') }}" class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>← Volver</a>
+  <div class="px-2 py-1 space-y-4">
+    <a href="{{ url_for('companies.index') }}"
+       class="flex items-center gap-2 text-slate-600 hover:text-emerald-700 text-sm font-medium transition-colors">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+      </svg>
+      Volver a Empresas
+    </a>
+
+    <div class="border-t border-slate-250/60 pt-4 space-y-1">
+      <a href="{{ url_for('companies.sequences_index', id=company.id) }}"
+         class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 text-sm font-semibold transition-all">
+        <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+        Secuencias CAI
+      </a>
+      <a href="{{ url_for('companies.edit', id=company.id) }}"
+         class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 text-sm font-semibold transition-all">
+        <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+        Editar Empresa
+      </a>
+    </div>
+  </div>
 {% endblock %}
-{% block page_title %}{{ company.name }}{% endblock %}
+
+{% block page_title %}Dashboard – {{ company.name }}{% endblock %}
 
 {% block content %}
-<div class="p-6 max-w-4xl mx-auto">
-  <div class="bg-white rounded-lg border border-slate-200 p-6 mb-6">
-    <div class="flex items-start justify-between mb-4">
-      <div class="flex items-center gap-4">
-        <div class="w-12 h-12 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-lg">{{ company.name[:2]|upper }}</div>
+{% set active_id = session.get('selected_company_id')|int if session.get('selected_company_id') else 0 %}
+{% set is_active = (company.id == active_id) %}
+
+<div class="flex-1 overflow-y-auto bg-slate-50">
+
+  <!-- Breadcrumbs & Header -->
+  <div class="px-6 pt-5 pb-2 flex items-center justify-between">
+    <nav class="flex items-center gap-2 text-sm text-slate-500">
+      <a href="{{ url_for('companies.index') }}" class="hover:text-slate-700 transition-colors">Empresas</a>
+      <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      <span class="text-slate-800 font-medium">{{ company.name }}</span>
+    </nav>
+
+    <div class="flex gap-2">
+      <a href="{{ url_for('companies.edit', id=company.id) }}"
+         class="flex items-center gap-2 px-3.5 py-2 border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 shadow-sm transition-colors">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+        Editar
+      </a>
+      <a href="{{ url_for('companies.sequences_index', id=company.id) }}"
+         class="flex items-center gap-2 px-3.5 py-2 border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 shadow-sm transition-colors">
+        <svg class="w-3.5 h-3.5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        Secuencias CAI
+      </a>
+      {% if not is_active %}
+      <a href="{{ url_for('set_company', id=company.id) }}"
+         class="flex items-center gap-2 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-semibold shadow-sm transition-colors">
+        Seleccionar Empresa
+      </a>
+      {% else %}
+      <span class="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 shadow-sm">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        Seleccionada
+      </span>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- Main View Grid -->
+  <div class="p-6 space-y-6">
+
+    <!-- KPI Summary Row -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm flex items-center gap-4">
+        <div class="w-10 h-10 rounded-lg bg-sky-100 flex items-center justify-center text-sky-600 flex-shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
         <div>
-          <h2 class="text-xl font-bold text-slate-900">{{ company.name }}</h2>
-          <p class="text-sm text-slate-500">{{ company.identifier or '' }}</p>
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Clientes</p>
+          <p class="text-xl font-bold text-slate-900 mt-0.5">{{ stats.clients_count }}</p>
         </div>
       </div>
-      <div class="flex gap-2">
-        <button type="button" data-action="open-drawer" data-url="{{ url_for('companies.edit', id=company.id) }}" data-title="Editar Empresa" class="flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm text-slate-700 hover:bg-slate-50">Editar</button>
-        <a href="{{ url_for('companies.sequences_index', id=company.id) }}" class="flex items-center gap-2 px-3 py-2 bg-slate-100 rounded-lg text-sm text-slate-700 hover:bg-slate-200">Secuencias CAI</a>
-        <a href="{{ url_for('set_company', id=company.id) }}" class="flex items-center gap-2 px-3 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700">Seleccionar</a>
+
+      <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm flex items-center gap-4">
+        <div class="w-10 h-10 rounded-lg bg-violet-100 flex items-center justify-center text-violet-600 flex-shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+        </div>
+        <div>
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Proveedores</p>
+          <p class="text-xl font-bold text-slate-900 mt-0.5">{{ stats.suppliers_count }}</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm flex items-center gap-4">
+        <div class="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center text-amber-600 flex-shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+        </div>
+        <div>
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Productos</p>
+          <p class="text-xl font-bold text-slate-900 mt-0.5">{{ stats.inventory_count }}</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm flex items-center gap-4">
+        <div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-600 flex-shrink-0">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        </div>
+        <div>
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Documentos</p>
+          <p class="text-xl font-bold text-slate-900 mt-0.5">{{ stats.documents_count }}</p>
+        </div>
       </div>
     </div>
 
-    <div class="grid grid-cols-3 gap-4 text-sm mb-6">
-      <div><p class="text-xs text-slate-500">Moneda</p><p class="font-medium text-slate-900">{{ company.currency }}</p></div>
-      <div><p class="text-xs text-slate-500">ISV</p><p class="font-medium text-slate-900">{{ company.tax_rate }}%</p></div>
-      <div><p class="text-xs text-slate-500">Email</p><p class="font-medium text-slate-900">{{ company.email or '—' }}</p></div>
-      <div><p class="text-xs text-slate-500">Teléfono</p><p class="font-medium text-slate-900">{{ company.phone or '—' }}</p></div>
-      <div class="col-span-2"><p class="text-xs text-slate-500">Dirección</p><p class="font-medium text-slate-900">{{ company.address or '—' }}</p></div>
+    <!-- Two Column Dashboard Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <!-- Left 2 Columns: Details & Tables -->
+      <div class="lg:col-span-2 space-y-6">
+
+        <!-- Company Card -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="px-5 py-4 border-b border-slate-100 bg-slate-50/50 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-gradient-to-br {{ 'from-emerald-500 to-teal-600 text-white' if is_active else 'from-slate-100 to-slate-200 text-slate-700' }} flex items-center justify-center font-black text-base flex-shrink-0 shadow-inner">
+              {{ company.name[:2]|upper }}
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-slate-900">{{ company.name }}</h3>
+              {% if company.identifier %}
+              <p class="text-xs text-slate-400 font-mono mt-0.5">ID / RTN: {{ company.identifier }}</p>
+              {% else %}
+              <p class="text-xs text-slate-400 italic mt-0.5">Sin RTN registrado</p>
+              {% endif %}
+            </div>
+          </div>
+
+          <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-sm">
+            <div>
+              <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider mb-1">Moneda Comercial</p>
+              <p class="font-bold text-slate-800">{{ company.currency }}</p>
+            </div>
+            <div>
+              <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider mb-1">Tasa ISV</p>
+              <p class="font-bold text-slate-800">{{ company.tax_rate }}%</p>
+            </div>
+            <div>
+              <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider mb-1">Correo de Facturación</p>
+              <p class="font-medium text-slate-800 truncate">{{ company.email or '—' }}</p>
+            </div>
+            <div>
+              <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider mb-1">Teléfono Corporativo</p>
+              <p class="font-medium text-slate-800">{{ company.phone or '—' }}</p>
+            </div>
+            <div class="md:col-span-2">
+              <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider mb-1">Dirección Registrada</p>
+              <p class="font-medium text-slate-800 leading-relaxed">{{ company.address or '—' }}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Documents -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="px-5 py-4 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+            <h3 class="text-sm font-bold text-slate-900">Documentos Recientes</h3>
+            <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">Últimos 5</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-slate-100 bg-slate-50/30 text-slate-500 font-semibold text-xs uppercase text-left">
+                  <th class="px-5 py-3">Número</th>
+                  <th class="px-5 py-3">Tipo</th>
+                  <th class="px-5 py-3">Fecha Emisión</th>
+                  <th class="px-5 py-3 text-right">Monto</th>
+                  <th class="px-5 py-3 text-right">Estado</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-50">
+                {% for doc in recent_documents %}
+                {% set st = doc.status.value if doc.status else 'draft' %}
+                <tr class="hover:bg-slate-50/50 transition-colors">
+                  <td class="px-5 py-3 font-semibold text-slate-800">
+                    <a href="{{ url_for('invoices.view', company_id=company.id, id=doc.id) }}" class="text-emerald-600 hover:underline">
+                      {{ doc.document_number }}
+                    </a>
+                  </td>
+                  <td class="px-5 py-3 text-slate-600 capitalize">
+                    {{ 'Factura' if doc.type.value == 'invoice' else 'Cotización' }}
+                  </td>
+                  <td class="px-5 py-3 text-slate-500">
+                    {{ doc.issued_date.strftime('%d/%m/%Y') if doc.issued_date else '—' }}
+                  </td>
+                  <td class="px-5 py-3 text-right font-bold text-slate-800">
+                    {{ company.currency }} {{ "%.2f"|format(doc.total_amount or 0.0) }}
+                  </td>
+                  <td class="px-5 py-3 text-right">
+                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold border
+                      {% if st == 'paid' or st == 'issued' %}bg-emerald-50 text-emerald-700 border-emerald-100
+                      {% elif st == 'draft' %}bg-slate-50 text-slate-500 border-slate-150
+                      {% elif st == 'pending' %}bg-amber-50 text-amber-700 border-amber-100
+                      {% elif st == 'cancelled' %}bg-rose-50 text-rose-700 border-rose-100
+                      {% else %}bg-slate-50 text-slate-600 border-slate-100{% endif %}">
+                      {{ st | capitalize }}
+                    </span>
+                  </td>
+                </tr>
+                {% else %}
+                <tr>
+                  <td colspan="5" class="px-5 py-8 text-center text-slate-400 italic">No hay documentos registrados recientemente</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Recent Payments -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="px-5 py-4 border-b border-slate-100 bg-slate-50/50 flex justify-between items-center">
+            <h3 class="text-sm font-bold text-slate-900">Pagos Recibidos Recientes</h3>
+            <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">Últimos 5</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="border-b border-slate-100 bg-slate-50/30 text-slate-500 font-semibold text-xs uppercase text-left">
+                  <th class="px-5 py-3">Fecha</th>
+                  <th class="px-5 py-3">Factura</th>
+                  <th class="px-5 py-3">Método</th>
+                  <th class="px-5 py-3">Notas</th>
+                  <th class="px-5 py-3 text-right">Monto</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-50">
+                {% for pay in recent_payments %}
+                {% set pm = pay.method.value if pay.method else '' %}
+                <tr class="hover:bg-slate-50/50 transition-colors">
+                  <td class="px-5 py-3 text-slate-700 font-medium">
+                    {{ pay.payment_date.strftime('%d/%m/%Y') if pay.payment_date else '—' }}
+                  </td>
+                  <td class="px-5 py-3 font-semibold text-slate-800">
+                    {% if pay.document %}
+                    <a href="{{ url_for('invoices.view', company_id=company.id, id=pay.document.id) }}" class="text-emerald-600 hover:underline">
+                      {{ pay.document.document_number }}
+                    </a>
+                    {% else %}
+                    <span class="text-slate-400">—</span>
+                    {% endif %}
+                  </td>
+                  <td class="px-5 py-3">
+                    <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold
+                      {% if pm == 'cash' %}bg-emerald-50 text-emerald-700
+                      {% elif pm == 'card' %}bg-sky-50 text-sky-700
+                      {% elif pm == 'bank transfer' %}bg-violet-50 text-violet-700
+                      {% elif pm == 'check' %}bg-amber-50 text-amber-700
+                      {% else %}bg-slate-100 text-slate-600{% endif %}">
+                      {{ pm | capitalize }}
+                    </span>
+                  </td>
+                  <td class="px-5 py-3 text-slate-500 max-w-[150px] truncate" title="{{ pay.notes or '' }}">
+                    {{ pay.notes or '—' }}
+                  </td>
+                  <td class="px-5 py-3 text-right font-bold text-emerald-700">
+                    {{ company.currency }} {{ "%.2f"|format(pay.amount or 0.0) }}
+                  </td>
+                </tr>
+                {% else %}
+                <tr>
+                  <td colspan="5" class="px-5 py-8 text-center text-slate-400 italic">No hay pagos registrados recientemente</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Shortcuts & Widgets -->
+      <div class="space-y-6">
+
+        <!-- Active Company Selection Panel -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4">
+          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Estado de Sesión</h3>
+          
+          {% if is_active %}
+          <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-4 text-emerald-800 space-y-2">
+            <div class="flex items-center gap-2 font-bold text-sm">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+              Sesión Activa
+            </div>
+            <p class="text-xs text-emerald-700/90 leading-relaxed">
+              Las cotizaciones, facturas, compras y movimientos de inventario que generes se asociarán de forma predeterminada a esta empresa.
+            </p>
+          </div>
+          {% else %}
+          <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-slate-700 space-y-3">
+            <div class="flex items-center gap-2 font-bold text-sm text-slate-800">
+              <span class="w-2.5 h-2.5 rounded-full bg-slate-350"></span>
+              No Seleccionada
+            </div>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Para crear facturas, registrar pagos o administrar inventarios bajo este perfil, necesitas activarla en tu sesión.
+            </p>
+            <a href="{{ url_for('set_company', id=company.id) }}"
+               class="w-full flex items-center justify-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition-all shadow-sm">
+              Activar en Sesión
+            </a>
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Billing sequence widget (CAI) -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4">
+          <div class="flex justify-between items-center">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Facturación CAI</h3>
+            <span class="text-[10px] font-bold bg-indigo-50 text-indigo-700 px-2 py-0.5 rounded border border-indigo-100">Secuencias</span>
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Administra las claves y secuencias autorizadas por el ente recaudador (código CAI, rangos numéricos y fechas límite de emisión) para mantener la facturación regulada al día.
+          </p>
+          <div class="pt-2">
+            <a href="{{ url_for('companies.sequences_index', id=company.id) }}"
+               class="w-full flex items-center justify-center gap-1.5 px-4 py-2 border border-slate-250 text-slate-700 font-semibold text-xs rounded-lg hover:bg-slate-50 transition-colors shadow-sm bg-transparent">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+              Ver Secuencias Autorizadas
+            </a>
+          </div>
+        </div>
+
+        <!-- Quick actions -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-5 space-y-4">
+          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Acciones Rápidas</h3>
+          
+          <div class="flex flex-col gap-2">
+            <a href="{{ url_for('companies.edit', id=company.id) }}"
+               class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg border border-slate-100 hover:border-slate-250 hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-all">
+              <span class="w-2 h-2 rounded-full bg-slate-350"></span>
+              Modificar Perfil Comercial
+            </a>
+            <a href="{{ url_for('companies.sequence_create', id=company.id) }}"
+               class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg border border-slate-100 hover:border-slate-250 hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-all">
+              <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+              Agregar Rango / Clave CAI
+            </a>
+            {% if is_active %}
+            <a href="{{ url_for('invoices.create', company_id=company.id) }}"
+               class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg border border-slate-100 hover:border-slate-250 hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-all">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              Nueva Factura de Venta
+            </a>
+            <a href="{{ url_for('orders.create', company_id=company.id) }}"
+               class="flex items-center gap-2.5 px-3 py-2.5 rounded-lg border border-slate-100 hover:border-slate-250 hover:bg-slate-50 text-xs font-semibold text-slate-700 transition-all">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              Nueva Orden de Compra
+            </a>
+            {% endif %}
+          </div>
+        </div>
+
+      </div>
+
     </div>
 
-    <div class="grid grid-cols-4 gap-3 border-t border-slate-100 pt-4">
-      {% for label, val in [('Clientes', stats.clients_count), ('Proveedores', stats.suppliers_count), ('Productos', stats.inventory_count), ('Documentos', stats.documents_count)] %}
-      <div class="text-center">
-        <p class="text-lg font-bold text-slate-900">{{ val }}</p>
-        <p class="text-xs text-slate-500">{{ label }}</p>
-      </div>
-      {% endfor %}
-    </div>
   </div>
 </div>
 {% endblock %}

@@ -1,90 +1,455 @@
 {% extends "base.html" %}
 {% block title %}{{ 'Nueva' if not order else 'Editar' }} Orden de Compra – TrackDesk{% endblock %}
 {% block sidebar_title %}Órdenes de Compra{% endblock %}
+
 {% block sidebar_nav %}
-  <a href="{{ url_for('orders.index', company_id=company_id) }}" class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>← Volver</a>
+{% set cid = company_id %}
+<div class="px-3 py-2 space-y-4">
+
+  <a href="{{ url_for('orders.index', company_id=cid) }}"
+     class="flex items-center gap-2 text-slate-600 hover:text-emerald-700 text-sm font-medium transition-colors">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+    </svg>
+    Volver a Órdenes
+  </a>
+
+  <div class="bg-violet-600 rounded-xl p-4 text-white shadow-sm">
+    <p class="text-[10px] uppercase font-bold text-violet-200 tracking-wider mb-1">Total de la Orden</p>
+    <p class="text-3xl font-black tracking-tight">
+      <span class="text-violet-200 text-lg font-bold">{{ session.get('currency','L') }}</span>
+      <span id="sidebar-total-display">0.00</span>
+    </p>
+    <p class="text-[11px] text-violet-200 mt-2" id="sidebar-items-display">0 ítems agregados</p>
+  </div>
+
+  {% if order %}
+  <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm">
+    <p class="text-[10px] uppercase font-bold text-slate-500 tracking-wider mb-2">Orden Actual</p>
+    <p class="text-sm font-bold text-slate-800">{{ order.order_number }}</p>
+    <p class="text-xs text-slate-500 mt-1">{{ order.buy_date.strftime('%d/%m/%Y') if order.buy_date else '—' }}</p>
+  </div>
+  {% endif %}
+
+  <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
+    <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-3">Guía Rápida</p>
+    <div class="space-y-2 text-xs text-slate-600">
+      <div class="flex items-start gap-2"><span class="w-4 h-4 rounded-full bg-violet-100 text-violet-600 flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">1</span>Selecciona el proveedor y la fecha</div>
+      <div class="flex items-start gap-2"><span class="w-4 h-4 rounded-full bg-violet-100 text-violet-600 flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">2</span>Busca productos del catálogo</div>
+      <div class="flex items-start gap-2"><span class="w-4 h-4 rounded-full bg-violet-100 text-violet-600 flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">3</span>Ajusta cantidades y precios de compra</div>
+    </div>
+  </div>
+
+</div>
 {% endblock %}
+
 {% block page_title %}{{ 'Nueva' if not order else 'Editar' }} Orden de Compra{% endblock %}
 
 {% block content %}
-<form method="POST"
-      action="{{ url_for('orders.update', company_id=company_id, id=order.id) if order else url_for('orders.create', company_id=company_id) }}"
-      class="p-6 max-w-3xl mx-auto space-y-5">
-  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<div class="flex-1 overflow-y-auto bg-slate-50">
 
-  <div class="bg-white rounded-lg border border-slate-200 p-5 space-y-4">
-    <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Detalles de la Orden</h2>
-
-    <div class="grid grid-cols-2 gap-4">
-      <div>
-        <label class="block text-sm font-medium text-slate-700 mb-1.5">Proveedor <span class="text-rose-500">*</span></label>
-        <select name="supplier_id" required class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
-          <option value="">Seleccionar proveedor...</option>
-          {% for s in suppliers %}
-          <option value="{{ s.id }}" {{ 'selected' if order and order.supplier_id == s.id else '' }}>{{ s.name }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div>
-        <label class="block text-sm font-medium text-slate-700 mb-1.5">Fecha de la Orden</label>
-        <input type="date" name="order_date" value="{{ (order.order_date.strftime('%Y-%m-%d') if order and order.order_date else now.strftime('%Y-%m-%d')) }}"
-               class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-      </div>
-    </div>
-
-    <div>
-      <label class="block text-sm font-medium text-slate-700 mb-1.5">Notas</label>
-      <textarea name="notes" rows="2" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none">{{ order.notes if order else '' }}</textarea>
-    </div>
+  <div class="px-6 pt-5 pb-2">
+    <nav class="flex items-center gap-2 text-sm text-slate-500">
+      <a href="{{ url_for('orders.index', company_id=company_id) }}" class="hover:text-slate-700 transition-colors">Órdenes de Compra</a>
+      <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      <span class="text-slate-800 font-medium">{{ 'Nueva Orden' if not order else 'Editar ' + order.order_number }}</span>
+    </nav>
   </div>
 
-  <div class="bg-white rounded-lg border border-slate-200 p-5">
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Ítems de la Orden</h2>
-      <button type="button" id="add-order-item" class="text-sm text-emerald-600 font-medium hover:text-emerald-700">+ Agregar ítem</button>
-    </div>
-    <div id="order-items-container" class="space-y-3">
-      {% set existing = (order.items if order else []) %}
-      {% for oi in existing %}
-      <div class="flex items-center gap-3 order-item-row">
-        <select name="items[{{ loop.index0 }}][inventory_item_id]" class="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500 bg-white">
-          <option value="">Seleccionar...</option>
-          {% for inv in inventory_items %}
-          <option value="{{ inv.id }}" {{ 'selected' if oi.inventory_item_id == inv.id else '' }}>{{ inv.name }}</option>
-          {% endfor %}
-        </select>
-        <input type="number" name="items[{{ loop.index0 }}][quantity]" value="{{ oi.quantity }}" min="1" placeholder="Cant." class="w-20 px-2 py-2 border border-slate-200 rounded-lg text-sm text-right focus:outline-none focus:ring-1 focus:ring-emerald-500">
-        <input type="number" name="items[{{ loop.index0 }}][unit_cost]" value="{{ oi.unit_cost }}" min="0" step="0.01" placeholder="Costo" class="w-28 px-2 py-2 border border-slate-200 rounded-lg text-sm text-right focus:outline-none focus:ring-1 focus:ring-emerald-500">
-        <button type="button" class="remove-order-item text-slate-400 hover:text-rose-500">×</button>
-      </div>
-      {% endfor %}
-    </div>
-  </div>
+  <form method="POST"
+        action="{{ url_for('orders.update', company_id=company_id, id=order.id) if order else url_for('orders.create', company_id=company_id) }}"
+        id="order-form"
+        class="p-6 space-y-5">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-  <div class="flex gap-3">
-    <a href="{{ url_for('orders.index', company_id=company_id) }}" class="px-4 py-2 border border-slate-300 rounded-lg text-sm text-slate-700 hover:bg-slate-50">Cancelar</a>
-    <button type="submit" class="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700">{{ 'Crear Orden' if not order else 'Actualizar Orden' }}</button>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+
+      <div class="lg:col-span-2 space-y-5">
+
+        <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+          <div class="px-5 py-3.5 border-b border-slate-100 bg-slate-50/50">
+            <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+              <span class="w-1 h-3.5 bg-violet-600 rounded-full"></span>
+              Detalles de la Orden
+            </h3>
+          </div>
+          <div class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-1.5">Proveedor <span class="text-rose-500">*</span></label>
+              <div class="relative">
+                <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                <select name="supplier_id" id="supplier-select" required
+                        class="w-full pl-9 pr-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 bg-white transition-colors appearance-none">
+                  <option value="">Seleccionar proveedor...</option>
+                  {% for s in suppliers %}
+                  <option value="{{ s.id }}" {{ 'selected' if order and order.supplier_id == s.id else '' }}>{{ s.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-1.5">Fecha de Compra</label>
+              <div class="relative">
+                <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                <input type="date" name="buy_date"
+                       value="{{ order.buy_date.strftime('%Y-%m-%d') if order and order.buy_date else now.strftime('%Y-%m-%d') }}"
+                       class="w-full pl-9 pr-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 transition-colors">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+          <div class="px-5 py-3.5 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+            <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+              <span class="w-1 h-3.5 bg-violet-600 rounded-full"></span>
+              Ítems de la Orden
+            </h3>
+            <button type="button" id="open-product-modal-btn"
+                    class="flex items-center gap-1.5 text-xs bg-violet-50 border border-violet-100 text-violet-700 px-3 py-1.5 rounded-lg font-bold hover:bg-violet-100 transition-all shadow-sm">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+              Buscar Producto
+            </button>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full" id="items-table">
+              <thead>
+                <tr class="border-b border-slate-100 bg-slate-50/30">
+                  <th class="px-4 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Producto</th>
+                  <th class="px-4 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider w-28">Código</th>
+                  <th class="px-4 py-2.5 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider w-24">Cantidad</th>
+                  <th class="px-4 py-2.5 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider w-32">Precio Unit.</th>
+                  <th class="px-4 py-2.5 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider w-28">Total</th>
+                  <th class="w-10 px-2 py-2.5"></th>
+                </tr>
+              </thead>
+              <tbody id="order-items-container" class="divide-y divide-slate-100">
+                {% set existing = (order.items if order else []) %}
+                {% for oi in existing %}
+                <tr class="order-item-row hover:bg-slate-50/30 transition-colors">
+                  <td class="px-4 py-3">
+                    <input type="hidden" name="items[{{ loop.index0 }}][inventory_item_id]" class="item-product-id" value="{{ oi.inventory_item_id }}">
+                    <div class="relative flex items-center">
+                      <input type="text" readonly placeholder="Buscar en catálogo..."
+                             value="{{ oi.name or (oi.inventory_item.name if oi.inventory_item else '') }}"
+                             class="item-product-trigger w-full pl-3 pr-8 py-1.5 border border-slate-200 rounded-lg text-sm bg-slate-50 cursor-pointer focus:outline-none hover:bg-slate-100 transition-colors font-medium text-slate-700">
+                      <button type="button" class="clear-product-btn absolute right-2 text-slate-400 hover:text-rose-500" title="Limpiar">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                      </button>
+                    </div>
+                  </td>
+                  <td class="px-4 py-3">
+                    <input type="text" name="items[{{ loop.index0 }}][code]" value="{{ oi.item_code or '' }}"
+                           placeholder="SKU..." class="item-code w-full px-2 py-1.5 border border-slate-200 rounded-lg text-xs font-mono focus:outline-none focus:ring-1 focus:ring-violet-500">
+                  </td>
+                  <td class="px-4 py-3">
+                    <input type="number" name="items[{{ loop.index0 }}][quantity]" value="{{ oi.quantity }}" min="1"
+                           class="item-qty w-full px-2 py-1.5 border border-slate-200 rounded-lg text-sm text-right focus:outline-none focus:ring-1 focus:ring-violet-500 font-medium">
+                  </td>
+                  <td class="px-4 py-3">
+                    <input type="number" name="items[{{ loop.index0 }}][price]" value="{{ oi.price }}" min="0" step="0.01"
+                           class="item-price w-full px-2 py-1.5 border border-slate-200 rounded-lg text-sm text-right focus:outline-none focus:ring-1 focus:ring-violet-500 font-medium">
+                  </td>
+                  <td class="px-4 py-3 text-sm font-semibold text-slate-800 text-right item-total">
+                    {{ "%.2f"|format((oi.quantity or 0) * (oi.price or 0)) }}
+                  </td>
+                  <td class="px-2 py-3 text-center">
+                    <button type="button" class="remove-order-item text-slate-400 hover:text-rose-500 transition-colors">
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                    </button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <div id="empty-items-msg" class="{{ 'hidden' if existing else '' }} px-5 py-10 text-center">
+            <div class="flex flex-col items-center gap-2 text-slate-400">
+              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+              <p class="text-sm">Haz click en <strong>Buscar Producto</strong> para agregar ítems.</p>
+            </div>
+          </div>
+
+          <div class="px-5 py-4 border-t border-slate-100 bg-slate-50/50 flex justify-end">
+            <div class="w-56 space-y-2 text-sm">
+              <div class="flex justify-between text-slate-600">
+                <span>Subtotal</span>
+                <span class="font-medium" id="subtotal-display">0.00</span>
+              </div>
+              <div class="flex justify-between font-bold text-slate-900 border-t border-slate-200 pt-2 text-base">
+                <span>Total</span>
+                <span id="total-display">0.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="space-y-5">
+        <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden sticky top-6">
+          <div class="px-5 py-3.5 border-b border-slate-100 bg-slate-50/50">
+            <h3 class="text-sm font-bold text-slate-900">Resumen</h3>
+          </div>
+          <div class="p-5 space-y-4">
+            <div>
+              <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider mb-1">Total Estimado</p>
+              <p class="text-2xl font-black text-slate-800">
+                <span class="text-slate-500 text-base font-semibold">{{ session.get('currency','L') }}</span>
+                <span id="summary-total">0.00</span>
+              </p>
+            </div>
+            <div class="pt-3 border-t border-slate-100 space-y-2">
+              <div class="flex justify-between text-sm">
+                <span class="text-slate-500">Ítems</span>
+                <span class="font-semibold text-slate-700" id="summary-items">0</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-slate-500">Proveedor</span>
+                <span class="font-semibold text-slate-700 text-right max-w-[120px] truncate" id="summary-supplier">—</span>
+              </div>
+            </div>
+            <div class="pt-4 space-y-2.5">
+              <button type="submit"
+                      class="w-full px-5 py-2.5 bg-violet-600 text-white rounded-lg text-sm font-bold hover:bg-violet-700 active:scale-[0.98] transition-all shadow-sm">
+                {{ 'Actualizar Orden' if order else 'Crear Orden de Compra' }}
+              </button>
+              <a href="{{ url_for('orders.index', company_id=company_id) }}"
+                 class="block w-full px-5 py-2.5 border border-slate-200 text-slate-700 rounded-lg text-sm font-semibold text-center hover:bg-slate-50 transition-colors bg-white">
+                Cancelar
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </form>
+</div>
+
+{# ── Product Search Modal ── #}
+<div id="product-modal"
+     class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center hidden z-50 p-4 transition-all">
+  <div class="bg-white rounded-xl border border-slate-200 w-full max-w-lg shadow-xl flex flex-col max-h-[85vh] overflow-hidden">
+
+    <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
+      <h3 class="text-base font-bold text-slate-900">Buscar Producto en Catálogo</h3>
+      <button type="button" id="close-product-modal" class="text-slate-400 hover:text-slate-600 transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="p-4 border-b border-slate-50 bg-slate-50/50">
+      <div class="relative">
+        <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <input type="text" id="product-search-input" placeholder="Buscar por nombre de producto..."
+               class="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 bg-white text-slate-700 font-medium">
+      </div>
+    </div>
+
+    <div class="flex-1 overflow-y-auto divide-y divide-slate-50 p-2 space-y-0.5" id="product-list-box"></div>
   </div>
-</form>
+</div>
+
 {% endblock %}
 
 {% block scripts %}
+<script id="order-form-data" type="application/json">
+{
+  "itemIndex": {{ ((order.items|length) if order else 0)|tojson|safe }},
+  "inventoryItems": [
+    {% for inv in inventory_items %}
+    {
+      "id": {{ inv.id|tojson|safe }},
+      "name": {{ inv.name|tojson|safe }},
+      "code": {{ (inv.sku or inv.code or '')|tojson|safe if (inv.sku is defined or inv.code is defined) else '""'|safe }},
+      "price": {{ (inv.price or 0.0)|tojson|safe }},
+      "stock": {{ (inv.quantity or 0)|tojson|safe }}
+    }{{ "," if not loop.last else "" }}
+    {% endfor %}
+  ]
+}
+</script>
 <script>
-let orderItemIdx = {{ (order.items|length) if order else 0 }};
-const invItems = {{ inventory_items | map(attribute='id') | list | tojson }};
-const invNames = {{ inventory_items | map(attribute='name') | list | tojson }};
+(function () {
+  const raw   = JSON.parse(document.getElementById('order-form-data').textContent);
+  let   idx   = raw.itemIndex;
+  const items = raw.inventoryItems;
 
-document.getElementById('add-order-item').addEventListener('click', () => {
-  let opts = '<option value="">Seleccionar...</option>';
-  for (let i = 0; i < invItems.length; i++) opts += `<option value="${invItems[i]}">${invNames[i]}</option>`;
-  const row = document.createElement('div');
-  row.className = 'flex items-center gap-3 order-item-row';
-  row.innerHTML = `<select name="items[${orderItemIdx}][inventory_item_id]" class="flex-1 px-3 py-2 border border-slate-200 rounded-lg text-sm bg-white">${opts}</select><input type="number" name="items[${orderItemIdx}][quantity]" value="1" min="1" placeholder="Cant." class="w-20 px-2 py-2 border border-slate-200 rounded-lg text-sm text-right"><input type="number" name="items[${orderItemIdx}][unit_cost]" value="0" min="0" step="0.01" placeholder="Costo" class="w-28 px-2 py-2 border border-slate-200 rounded-lg text-sm text-right"><button type="button" class="remove-order-item text-slate-400 hover:text-rose-500">×</button>`;
-  row.querySelector('.remove-order-item').addEventListener('click', () => row.remove());
-  document.getElementById('order-items-container').appendChild(row);
-  orderItemIdx++;
-});
+  const container   = document.getElementById('order-items-container');
+  const emptyMsg    = document.getElementById('empty-items-msg');
+  const subtotalEl  = document.getElementById('subtotal-display');
+  const totalEl     = document.getElementById('total-display');
+  const sidebarTot  = document.getElementById('sidebar-total-display');
+  const sidebarItms = document.getElementById('sidebar-items-display');
+  const summaryTot  = document.getElementById('summary-total');
+  const summaryItms = document.getElementById('summary-items');
+  const supplierSel = document.getElementById('supplier-select');
+  const summarySupp = document.getElementById('summary-supplier');
 
-document.querySelectorAll('.remove-order-item').forEach(btn => btn.addEventListener('click', () => btn.closest('.order-item-row').remove()));
+  /* ── Recalculate totals ── */
+  function recalc() {
+    let total = 0, count = 0;
+    container.querySelectorAll('.order-item-row').forEach(row => {
+      const qty  = parseFloat(row.querySelector('.item-qty').value)   || 0;
+      const price = parseFloat(row.querySelector('.item-price').value) || 0;
+      const sub  = qty * price;
+      row.querySelector('.item-total').textContent = sub.toFixed(2);
+      total += sub; count++;
+    });
+    const fmt = total.toFixed(2);
+    [subtotalEl, totalEl, sidebarTot, summaryTot].forEach(el => { if (el) el.textContent = fmt; });
+    if (sidebarItms) sidebarItms.textContent = count + ' ítem' + (count !== 1 ? 's' : '') + ' agregado' + (count !== 1 ? 's' : '');
+    if (summaryItms) summaryItms.textContent = count;
+    emptyMsg.classList.toggle('hidden', count > 0);
+  }
+
+  /* ── Bind a row's events ── */
+  function bindRow(row) {
+    row.querySelector('.item-qty').addEventListener('input', recalc);
+    row.querySelector('.item-price').addEventListener('input', recalc);
+    row.querySelector('.remove-order-item').addEventListener('click', () => { row.remove(); recalc(); });
+    const trigger = row.querySelector('.item-product-trigger');
+    if (trigger) trigger.addEventListener('click', () => openModal(row));
+    const clearBtn = row.querySelector('.clear-product-btn');
+    if (clearBtn) clearBtn.addEventListener('click', () => {
+      row.querySelector('.item-product-id').value = '';
+      row.querySelector('.item-product-trigger').value = '';
+      row.querySelector('.item-code').value = '';
+    });
+  }
+
+  /* ── Build a new empty row ── */
+  function addRow(product) {
+    const row = document.createElement('tr');
+    row.className = 'order-item-row hover:bg-slate-50/30 transition-colors';
+    row.innerHTML = `
+      <td class="px-4 py-3">
+        <input type="hidden" name="items[${idx}][inventory_item_id]" class="item-product-id" value="${product ? product.id : ''}">
+        <div class="relative flex items-center">
+          <input type="text" readonly placeholder="Buscar en catálogo..."
+                 value="${product ? product.name : ''}"
+                 class="item-product-trigger w-full pl-3 pr-8 py-1.5 border border-slate-200 rounded-lg text-sm bg-slate-50 cursor-pointer focus:outline-none hover:bg-slate-100 transition-colors font-medium text-slate-700">
+          <button type="button" class="clear-product-btn absolute right-2 text-slate-400 hover:text-rose-500" title="Limpiar">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </td>
+      <td class="px-4 py-3">
+        <input type="text" name="items[${idx}][code]" value="${product ? (product.code || '') : ''}"
+               class="item-code w-full px-2 py-1.5 border border-slate-200 rounded-lg text-xs font-mono focus:outline-none focus:ring-1 focus:ring-violet-500" placeholder="SKU...">
+      </td>
+      <td class="px-4 py-3">
+        <input type="number" name="items[${idx}][quantity]" value="1" min="1"
+               class="item-qty w-full px-2 py-1.5 border border-slate-200 rounded-lg text-sm text-right focus:outline-none focus:ring-1 focus:ring-violet-500 font-medium">
+      </td>
+      <td class="px-4 py-3">
+        <input type="number" name="items[${idx}][price]" value="${product ? product.price.toFixed(2) : '0.00'}" min="0" step="0.01"
+               class="item-price w-full px-2 py-1.5 border border-slate-200 rounded-lg text-sm text-right focus:outline-none focus:ring-1 focus:ring-violet-500 font-medium">
+      </td>
+      <td class="px-4 py-3 text-sm font-semibold text-slate-800 text-right item-total">
+        ${product ? product.price.toFixed(2) : '0.00'}
+      </td>
+      <td class="px-2 py-3 text-center">
+        <button type="button" class="remove-order-item text-slate-400 hover:text-rose-500 transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+        </button>
+      </td>
+    `;
+    container.appendChild(row);
+    bindRow(row);
+    idx++;
+    recalc();
+    return row;
+  }
+
+  /* ── Existing rows ── */
+  container.querySelectorAll('.order-item-row').forEach(bindRow);
+
+  /* ── Modal logic ── */
+  const modal      = document.getElementById('product-modal');
+  const searchInput = document.getElementById('product-search-input');
+  const listBox    = document.getElementById('product-list-box');
+  let   targetRow  = null;
+
+  function renderList(query) {
+    const q = query.toLowerCase();
+    const filtered = q ? items.filter(i => i.name.toLowerCase().includes(q)) : items;
+    listBox.innerHTML = '';
+    if (filtered.length === 0) {
+      listBox.innerHTML = '<p class="text-sm text-slate-400 text-center py-6">Sin resultados</p>';
+      return;
+    }
+    filtered.forEach(inv => {
+      const el = document.createElement('button');
+      el.type = 'button';
+      el.className = 'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-violet-50 text-left transition-colors group';
+      el.innerHTML = `
+        <div class="w-9 h-9 rounded-lg bg-violet-100 flex items-center justify-center text-violet-600 text-xs font-bold flex-shrink-0">
+          ${inv.name.slice(0,2).toUpperCase()}
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-semibold text-slate-800 truncate group-hover:text-violet-700">${inv.name}</p>
+          <p class="text-xs text-slate-400 mt-0.5">Stock: ${inv.stock} &nbsp;·&nbsp; Precio: {{ session.get('currency','L') }} ${inv.price.toFixed(2)}</p>
+        </div>
+        <span class="text-xs font-semibold text-violet-600 opacity-0 group-hover:opacity-100 transition-opacity">+ Agregar</span>
+      `;
+      el.addEventListener('click', () => selectProduct(inv));
+      listBox.appendChild(el);
+    });
+  }
+
+  function openModal(row) {
+    targetRow = row;
+    searchInput.value = '';
+    renderList('');
+    modal.classList.remove('hidden');
+    setTimeout(() => searchInput.focus(), 50);
+  }
+
+  function closeModal() {
+    modal.classList.add('hidden');
+    targetRow = null;
+  }
+
+  function selectProduct(inv) {
+    if (targetRow) {
+      targetRow.querySelector('.item-product-id').value = inv.id;
+      targetRow.querySelector('.item-product-trigger').value = inv.name;
+      targetRow.querySelector('.item-code').value = inv.code || '';
+      targetRow.querySelector('.item-price').value = inv.price.toFixed(2);
+      recalc();
+    } else {
+      addRow(inv);
+    }
+    closeModal();
+  }
+
+  document.getElementById('open-product-modal-btn').addEventListener('click', () => {
+    targetRow = null;
+    searchInput.value = '';
+    renderList('');
+    modal.classList.remove('hidden');
+    setTimeout(() => searchInput.focus(), 50);
+  });
+  document.getElementById('close-product-modal').addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  searchInput.addEventListener('input', () => renderList(searchInput.value));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  /* ── Supplier summary ── */
+  if (supplierSel && summarySupp) {
+    const updateSupplier = () => {
+      const opt = supplierSel.selectedOptions[0];
+      summarySupp.textContent = (opt && opt.value) ? opt.textContent.trim() : '—';
+    };
+    supplierSel.addEventListener('change', updateSupplier);
+    updateSupplier();
+  }
+
+  recalc();
+})();
 </script>
 {% endblock %}

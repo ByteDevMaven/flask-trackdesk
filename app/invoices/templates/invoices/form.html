@@ -336,25 +336,25 @@ TrackDesk{% endblock %}
 {% block scripts %}
 <script id="invoice-form-data" type="application/json">
 {
-  "docType": "{{ doc_type or 'invoice' }}",
-  "itemIndex": {{ document_items|length if document_items else 0 }},
+  "docType": {{ (doc_type or 'invoice')|tojson|safe }},
+  "itemIndex": {{ (document_items|length if document_items else 0)|tojson|safe }},
   "clients": [
     {% for c in clients %}
     {
-      "id": {{ c.id|tojson }},
-      "name": {{ c.name|tojson }},
-      "identifier": {{ (c.identifier or '')|tojson }},
-      "email": {{ (c.email or '')|tojson }}
+      "id": {{ c.id|tojson|safe }},
+      "name": {{ c.name|tojson|safe }},
+      "identifier": {{ (c.identifier or '')|tojson|safe }},
+      "email": {{ (c.email or '')|tojson|safe }}
     }{{ "," if not loop.last else "" }}
     {% endfor %}
   ],
   "inventoryItems": [
     {% for item in inventory_items %}
     {
-      "id": {{ item.id|tojson }},
-      "name": {{ item.name|tojson }},
-      "price": {{ (item.price or 0.0)|tojson }},
-      "stock": {{ (item.quantity or 0)|tojson }}
+      "id": {{ item.id|tojson|safe }},
+      "name": {{ item.name|tojson|safe }},
+      "price": {{ (item.price or 0.0)|tojson|safe }},
+      "stock": {{ (item.quantity or 0)|tojson|safe }}
     }{{ "," if not loop.last else "" }}
     {% endfor %}
   ]

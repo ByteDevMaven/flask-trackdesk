@@ -3,7 +3,8 @@ from datetime import datetime
 from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required
 
-from app.models import db, Company, User, Contact, Contact, InventoryItem, Document, Payment, Report, DocumentSequence
+from app.models import db, Company, User, Contact, InventoryItem, Document, Payment, Report, DocumentSequence
+from app.models.enums import ContactType
 
 from . import companies
 
@@ -18,17 +19,20 @@ def index():
     if search:
         query = query.filter(Company.name.ilike(f'%{search}%'))
     
-    companies = query.order_by(Company.created_at.desc()).paginate(
+    pagination = query.order_by(Company.created_at.desc()).paginate(
         page=page, per_page=10, error_out=False
     )
     
-    return render_template('companies/index.html', companies=companies, search=search)
+    return render_template('companies/index.html', 
+                           companies=pagination.items, 
+                           pagination=pagination, 
+                           search=search)
 
 @companies.route('/companies/create')
 @login_required
 def create():
     users = User.query.all()
-    return render_template('companies/form.html', company=None, users=users)
+    return render_template('companies/form.html', comp=None, users=users)
 
 @companies.route('/companies/store', methods=['POST'])
 @login_required
@@ -85,18 +89,18 @@ def store():
 def view(id):
     company = Company.query.get_or_404(id)
     
-                            
+    # Get statistics for the company with exact db types
     stats = {
         'users_count': len(company.users),
-        'clients_count': Contact.query.filter_by(company_id=company.id).count(),
-        'suppliers_count': Contact.query.filter_by(company_id=company.id).count(),
+        'clients_count': Contact.query.filter_by(company_id=company.id, type=ContactType.customer).count(),
+        'suppliers_count': Contact.query.filter_by(company_id=company.id, type=ContactType.supplier).count(),
         'inventory_count': InventoryItem.query.filter_by(company_id=company.id).count(),
         'documents_count': Document.query.filter_by(company_id=company.id).count(),
         'payments_count': Payment.query.filter_by(company_id=company.id).count(),
         'reports_count': Report.query.filter_by(company_id=company.id).count()
     }
     
-                         
+    # Get recent activity
     recent_documents = Document.query.filter_by(company_id=company.id).order_by(Document.issued_date.desc()).limit(5).all()
     recent_payments = Payment.query.filter_by(company_id=company.id).order_by(Payment.payment_date.desc()).limit(5).all()
     
@@ -111,7 +115,7 @@ def view(id):
 def edit(id):
     company = Company.query.get_or_404(id)
     users = User.query.all()
-    return render_template('companies/form.html', company=company, users=users)
+    return render_template('companies/form.html', comp=company, users=users)
 
 @companies.route('/companies/<int:id>/update', methods=['POST'])
 @login_required

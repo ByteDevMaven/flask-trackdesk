@@ -1,59 +1,164 @@
 {% extends "base.html" %}
 {% block title %}Secuencias CAI – {{ company.name }}{% endblock %}
 {% block sidebar_title %}Empresas{% endblock %}
+
 {% block sidebar_nav %}
-  <a href="{{ url_for('companies.view', id=company.id) }}" class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>← Volver</a>
-  <a href="{{ url_for('companies.sequence_create', id=company.id) }}" class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>Nueva Secuencia</a>
+  <div class="px-2 py-1 space-y-4">
+    <a href="{{ url_for('companies.view', id=company.id) }}"
+       class="flex items-center gap-2 text-slate-600 hover:text-emerald-700 text-sm font-medium transition-colors">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+      </svg>
+      Volver al Perfil
+    </a>
+
+    <div class="border-t border-slate-200 pt-4 space-y-1">
+      <a href="{{ url_for('companies.sequence_create', id=company.id) }}"
+         class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 text-sm font-semibold transition-all">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        Nueva Secuencia CAI
+      </a>
+    </div>
+  </div>
 {% endblock %}
+
 {% block page_title %}Secuencias CAI – {{ company.name }}{% endblock %}
 
 {% block content %}
-<div class="p-6">
-  <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
-    <div class="px-4 py-3 border-b border-slate-100 flex items-center justify-between">
-      <h3 class="text-sm font-semibold text-slate-900">Secuencias de Facturación</h3>
-      <a href="{{ url_for('companies.sequence_create', id=company.id) }}" class="flex items-center gap-1.5 text-sm text-emerald-600 font-medium hover:text-emerald-700">
-        + Nueva Secuencia
+<div class="flex flex-col h-full overflow-hidden bg-slate-50">
+
+  <!-- Sub Header -->
+  <header class="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between flex-shrink-0">
+    <div class="flex items-center gap-2">
+      <nav class="flex items-center gap-2 text-xs text-slate-500">
+        <a href="{{ url_for('companies.index') }}" class="hover:text-slate-700">Empresas</a>
+        <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <a href="{{ url_for('companies.view', id=company.id) }}" class="hover:text-slate-700">{{ company.name }}</a>
+        <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <span class="text-slate-800 font-medium">Secuencias CAI</span>
+      </nav>
+    </div>
+    <div class="flex items-center gap-2">
+      <a href="{{ url_for('companies.sequence_create', id=company.id) }}"
+         class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors shadow-sm">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        Nueva Secuencia
       </a>
     </div>
-    <table class="w-full">
-      <thead>
-        <tr class="border-b border-slate-100">
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">CAI</th>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Rango</th>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Actual</th>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Vence</th>
-          <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase">Estado</th>
-          <th class="w-16 px-4 py-3"></th>
-        </tr>
-      </thead>
-      <tbody class="divide-y divide-slate-50">
-        {% for seq in sequences %}
-        {% set expired = seq.expiration_date < today %}
-        <tr class="hover:bg-slate-50">
-          <td class="px-4 py-3 text-sm font-mono text-slate-700">{{ seq.cai }}</td>
-          <td class="px-4 py-3 text-sm text-slate-600">{{ seq.range_start }} – {{ seq.range_end }}</td>
-          <td class="px-4 py-3 text-sm text-slate-900 font-medium">{{ seq.current }}</td>
-          <td class="px-4 py-3 text-sm {{ 'text-rose-600 font-medium' if expired else 'text-slate-600' }}">{{ seq.expiration_date.strftime('%d/%m/%Y') }}</td>
-          <td class="px-4 py-3">
-            <span class="text-xs font-medium px-2 py-0.5 rounded-full {{ 'bg-rose-50 text-rose-700' if expired else 'bg-emerald-50 text-emerald-700' }}">{{ 'Vencida' if expired else 'Activa' }}</span>
-          </td>
-          <td class="px-4 py-3">
-            <div class="flex gap-1 justify-end">
-              <a href="{{ url_for('companies.sequence_edit', id=company.id, seq_id=seq.id) }}" class="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-              </a>
-              <button type="button" data-action="confirm-delete" data-url="{{ url_for('companies.sequence_delete', id=company.id, seq_id=seq.id) }}" data-name="Secuencia {{ seq.cai[:8] }}..." class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-              </button>
-            </div>
-          </td>
-        </tr>
-        {% else %}
-        <tr><td colspan="6" class="px-4 py-12 text-center text-sm text-slate-400">Sin secuencias registradas</td></tr>
-        {% endfor %}
-      </tbody>
-    </table>
+  </header>
+
+  <div class="flex-1 overflow-y-auto p-6">
+
+    <!-- Mini Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div class="bg-white rounded-lg border border-slate-200 p-4 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Total Secuencias</p>
+          <p class="text-xl font-bold text-slate-900 mt-1">{{ sequences | length }}</p>
+        </div>
+        <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center flex-shrink-0">
+          <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg border border-slate-200 p-4 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Secuencias Activas</p>
+          {% set active_seqs = sequences | rejectattr('expiration_date', 'lessthan', today) | list %}
+          <p class="text-xl font-bold text-emerald-700 mt-1">{{ active_seqs | length }}</p>
+        </div>
+        <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0">
+          <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg border border-slate-200 p-4 shadow-sm flex items-center justify-between">
+        <div>
+          <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider">Vencidas</p>
+          {% set expired_seqs = sequences | selectattr('expiration_date', 'lessthan', today) | list %}
+          <p class="text-xl font-bold text-rose-700 mt-1">{{ expired_seqs | length }}</p>
+        </div>
+        <div class="w-8 h-8 rounded-lg bg-rose-50 text-rose-600 flex items-center justify-center flex-shrink-0">
+          <svg class="w-4.5 h-4.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table Card -->
+    <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+      <div class="px-5 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+        <span class="text-sm font-semibold text-slate-700">Secuencias Autorizadas por el SAR / Ente Fiscal</span>
+      </div>
+
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-slate-100 bg-slate-50/50 text-slate-550 font-bold text-xs uppercase text-left">
+            <th class="px-5 py-3">Clave CAI</th>
+            <th class="px-5 py-3">Rango Autorizado</th>
+            <th class="px-5 py-3">Número Actual</th>
+            <th class="px-5 py-3">Fecha Vencimiento</th>
+            <th class="px-5 py-3">Estado</th>
+            <th class="w-24 px-5 py-3"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-50">
+          {% for seq in sequences %}
+          {% set expired = seq.expiration_date < today %}
+          <tr class="hover:bg-slate-50/70 transition-colors">
+            <td class="px-5 py-3.5 font-mono text-slate-700 select-all font-semibold tracking-tight max-w-[260px] truncate" title="{{ seq.cai }}">
+              {{ seq.cai }}
+            </td>
+            <td class="px-5 py-3.5 text-slate-600 font-medium">
+              {{ "%03d-%03d-%02d-%08d"|format(1, 1, 1, seq.range_start) }} — {{ "%03d-%03d-%02d-%08d"|format(1, 1, 1, seq.range_end) }}
+            </td>
+            <td class="px-5 py-3.5 font-mono text-slate-900 font-bold">
+              {{ "%03d-%03d-%02d-%08d"|format(1, 1, 1, seq.current) if seq.current >= seq.range_start else '—' }}
+            </td>
+            <td class="px-5 py-3.5 font-medium {{ 'text-rose-600 font-bold' if expired else 'text-slate-650' }}">
+              {{ seq.expiration_date.strftime('%d/%m/%Y') }}
+            </td>
+            <td class="px-5 py-3.5">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold border
+                {{ 'bg-rose-50 text-rose-700 border-rose-100' if expired else 'bg-emerald-50 text-emerald-700 border-emerald-100' }}">
+                <span class="w-1.5 h-1.5 rounded-full {{ 'bg-rose-500' if expired else 'bg-emerald-500' }}"></span>
+                {{ 'Vencida' if expired else 'Activa' }}
+              </span>
+            </td>
+            <td class="px-5 py-3.5">
+              <div class="flex items-center gap-1.5 justify-end">
+                <a href="{{ url_for('companies.sequence_edit', id=company.id, seq_id=seq.id) }}"
+                   class="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
+                   title="Editar">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                </a>
+                <button type="button"
+                        data-action="confirm-delete"
+                        data-url="{{ url_for('companies.sequence_delete', id=company.id, seq_id=seq.id) }}"
+                        data-name="Secuencia CAI {{ seq.cai[:8] }}..."
+                        class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                        title="Eliminar">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="6" class="px-5 py-16 text-center text-slate-400">
+              <div class="flex flex-col items-center gap-3">
+                <div class="w-14 h-14 bg-slate-50 border border-slate-100 rounded-full flex items-center justify-center text-slate-400">
+                  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                </div>
+                <p class="text-sm font-semibold text-slate-500">No hay secuencias registradas</p>
+                <a href="{{ url_for('companies.sequence_create', id=company.id) }}" class="mt-1 text-sm text-emerald-600 hover:text-emerald-700 font-medium">Registrar primera secuencia →</a>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
   </div>
 </div>
 {% endblock %}

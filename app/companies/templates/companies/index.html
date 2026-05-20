@@ -1,56 +1,246 @@
 {% extends "base.html" %}
 {% block title %}Empresas – TrackDesk{% endblock %}
 {% block sidebar_title %}Empresas{% endblock %}
+
 {% block sidebar_nav %}
-  <a href="{{ url_for('companies.index') }}" class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'companies.index' else 'text-slate-600 hover:bg-slate-50' }} text-sm"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>Todas las Empresas</a>
-  <a href="{{ url_for('companies.create') }}" class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'companies.create' else 'text-slate-600 hover:bg-slate-50' }} text-sm"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>Nueva Empresa</a>
+  {% set active_id = session.get('selected_company_id') %}
+  <div class="px-2 py-1 space-y-1">
+    <a href="{{ url_for('companies.index') }}"
+       class="flex items-center justify-between px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-semibold' if not request.args.get('search') else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+      <div class="flex items-center gap-3">
+        <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if not request.args.get('search') else 'bg-slate-300' }}"></span>
+        Todas las Empresas
+      </div>
+      <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">{{ pagination.total }}</span>
+    </a>
+    <a href="{{ url_for('companies.create') }}"
+       class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">
+      <div class="flex items-center gap-3">
+        <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+        Nueva Empresa
+      </div>
+    </a>
+  </div>
 {% endblock %}
-{% block page_title %}Empresas{% endblock %}
+
+{% block page_title %}Listado de Empresas{% endblock %}
 
 {% block content %}
-<div class="flex flex-col h-full overflow-hidden">
+{% set active_id = session.get('selected_company_id')|int if session.get('selected_company_id') else 0 %}
+
+<div class="flex flex-col h-full overflow-hidden bg-slate-50">
+
+  <!-- Search Header -->
   <header class="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between flex-shrink-0">
-    <form method="GET" action="{{ request.path }}" class="relative">
-      <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-      <input name="search" value="{{ search }}" type="text" placeholder="Buscar empresas..." class="w-72 pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
-    </form>
-    <button type="button" data-action="open-drawer" data-url="{{ url_for('companies.create') }}" data-title="Nueva Empresa" class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-      Nueva Empresa
-    </button>
+    <div class="flex items-center gap-3">
+      <form method="GET" action="{{ request.path }}" class="relative">
+        <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <input name="search" value="{{ search }}" type="text" placeholder="Buscar empresas..."
+               class="w-80 pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+      </form>
+      {% if search %}
+      <a href="{{ url_for('companies.index') }}" class="text-xs text-slate-500 hover:text-slate-700 font-medium transition-colors">Limpiar filtros</a>
+      {% endif %}
+    </div>
+    <div class="flex items-center gap-2">
+      <a href="{{ url_for('companies.create') }}"
+         class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors shadow-sm">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        Nueva Empresa
+      </a>
+    </div>
   </header>
 
   <div class="flex-1 overflow-y-auto p-6">
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+
+    <!-- Stats Bar -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm text-slate-500 mb-1">Total de Empresas</p>
+            <p class="text-2xl font-semibold text-slate-900">{{ pagination.total }}</p>
+          </div>
+          <div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-600">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+          </div>
+        </div>
+        <p class="text-xs text-slate-500 mt-3">Empresas registradas en tu perfil</p>
+      </div>
+
+      <div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm text-slate-500 mb-1">Empresa Activa</p>
+            <p class="text-lg font-bold text-emerald-700 truncate max-w-[200px] mt-0.5">
+              {% set active_comp = (companies | selectattr('id', 'equalto', active_id) | first) %}
+              {{ active_comp.name if active_comp else 'Ninguna seleccionada' }}
+            </p>
+          </div>
+          <div class="w-10 h-10 rounded-lg bg-violet-100 flex items-center justify-center text-violet-600">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+        </div>
+        <p class="text-xs text-slate-500 mt-3">Utilizada para transacciones y reportes</p>
+      </div>
+
+      <div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-sm text-slate-500 mb-1">Tasa ISV Estándar</p>
+            <p class="text-2xl font-semibold text-slate-900">15.00%</p>
+          </div>
+          <div class="w-10 h-10 rounded-lg bg-sky-100 flex items-center justify-center text-sky-600">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+          </div>
+        </div>
+        <p class="text-xs text-slate-500 mt-3">Configuración de impuestos por defecto</p>
+      </div>
+    </div>
+
+    <!-- Companies Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
       {% for company in companies %}
-      <div class="bg-white rounded-lg border border-slate-200 p-5 hover:shadow-md transition-shadow">
-        <div class="flex items-start justify-between mb-3">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-700 font-bold text-base">{{ company.name[:2]|upper }}</div>
-            <div>
-              <a href="{{ url_for('companies.view', id=company.id) }}" class="text-sm font-semibold text-slate-900 hover:text-emerald-700">{{ company.name }}</a>
-              {% if company.identifier %}<p class="text-xs text-slate-500">{{ company.identifier }}</p>{% endif %}
+      {% set is_active = (company.id == active_id) %}
+      <div class="bg-white rounded-xl border {{ 'border-emerald-500 ring-2 ring-emerald-500/20 bg-emerald-50/5 shadow-md' if is_active else 'border-slate-200 hover:border-slate-300 hover:shadow-md' }} p-6 transition-all duration-200 flex flex-col justify-between relative group">
+        
+        {% if is_active %}
+        <span class="absolute top-4 right-4 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+          ACTIVA
+        </span>
+        {% endif %}
+
+        <div>
+          <!-- Company Info Header -->
+          <div class="flex items-start gap-4 mb-5">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br {{ 'from-emerald-500 to-teal-600 text-white' if is_active else 'from-slate-100 to-slate-200 text-slate-700' }} flex items-center justify-center font-bold text-lg flex-shrink-0 shadow-inner">
+              {{ company.name[:2]|upper }}
+            </div>
+            <div class="min-w-0 pr-12">
+              <a href="{{ url_for('companies.view', id=company.id) }}" class="text-base font-bold text-slate-900 hover:text-emerald-600 transition-colors truncate block" title="{{ company.name }}">
+                {{ company.name }}
+              </a>
+              {% if company.identifier %}
+              <p class="text-xs text-slate-400 font-mono mt-1">{{ company.identifier }}</p>
+              {% else %}
+              <p class="text-xs text-slate-300 italic mt-1">Sin Identificador / RTN</p>
+              {% endif %}
             </div>
           </div>
-          <div class="flex gap-1">
-            <button type="button" data-action="open-drawer" data-url="{{ url_for('companies.edit', id=company.id) }}" data-title="Editar Empresa" class="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors">
+
+          <!-- Attributes and details -->
+          <div class="space-y-2.5 border-t border-slate-100 pt-4 mb-5 text-sm">
+            <div class="flex justify-between items-center text-slate-600">
+              <span class="text-xs text-slate-400 font-medium">Moneda:</span>
+              <span class="font-semibold text-slate-800">{{ company.currency }}</span>
+            </div>
+            <div class="flex justify-between items-center text-slate-600">
+              <span class="text-xs text-slate-400 font-medium">Tasa ISV:</span>
+              <span class="font-semibold text-slate-800">{{ company.tax_rate }}%</span>
+            </div>
+            {% if company.email %}
+            <div class="flex justify-between items-center text-slate-600">
+              <span class="text-xs text-slate-400 font-medium">Email:</span>
+              <span class="text-slate-800 truncate max-w-[180px] font-medium" title="{{ company.email }}">{{ company.email }}</span>
+            </div>
+            {% endif %}
+            {% if company.phone %}
+            <div class="flex justify-between items-center text-slate-600">
+              <span class="text-xs text-slate-400 font-medium">Teléfono:</span>
+              <span class="text-slate-800 font-medium">{{ company.phone }}</span>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Action Bar -->
+        <div class="flex items-center justify-between border-t border-slate-50 pt-4 mt-auto">
+          <div class="flex gap-1.5">
+            <a href="{{ url_for('companies.view', id=company.id) }}"
+               class="p-2 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
+               title="Ver Detalles">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            </a>
+            <a href="{{ url_for('companies.edit', id=company.id) }}"
+               class="p-2 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
+               title="Editar">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
-            </button>
-            <button type="button" data-action="confirm-delete" data-url="{{ url_for('companies.delete', id=company.id) }}" data-name="{{ company.name }}" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors">
+            </a>
+            <button type="button"
+                    data-action="confirm-delete"
+                    data-url="{{ url_for('companies.delete', id=company.id) }}"
+                    data-name="{{ company.name }}"
+                    class="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                    title="Eliminar">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
             </button>
           </div>
+
+          {% if not is_active %}
+          <a href="{{ url_for('set_company', id=company.id) }}"
+             class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-lg transition-all duration-150">
+            Activar
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+          {% else %}
+          <span class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-lg">Seleccionada</span>
+          {% endif %}
         </div>
-        <div class="flex items-center gap-4 text-xs text-slate-500 border-t border-slate-100 pt-3 mt-3">
-          <span>Moneda: <strong class="text-slate-700">{{ company.currency }}</strong></span>
-          <span>ISV: <strong class="text-slate-700">{{ company.tax_rate }}%</strong></span>
-          <a href="{{ url_for('set_company', id=company.id) }}" class="ml-auto text-emerald-600 font-medium hover:text-emerald-700">Activar →</a>
-        </div>
+
       </div>
       {% else %}
-      <div class="col-span-3 py-16 text-center text-sm text-slate-400">No hay empresas registradas</div>
+      <div class="col-span-full py-16 text-center bg-white rounded-lg border border-slate-200">
+        <div class="flex flex-col items-center gap-3">
+          <div class="w-14 h-14 bg-slate-50 border border-slate-100 rounded-full flex items-center justify-center text-slate-400">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+          </div>
+          <p class="text-sm font-semibold text-slate-500">No hay empresas registradas</p>
+          <a href="{{ url_for('companies.create') }}" class="mt-1 text-sm text-emerald-600 hover:text-emerald-700 font-medium">Registrar primera empresa →</a>
+        </div>
+      </div>
       {% endfor %}
     </div>
+
+    <!-- Pagination Footer -->
+    {% if pagination.pages > 1 %}
+    <div class="bg-white rounded-xl border border-slate-200 px-6 py-4 flex items-center justify-between shadow-sm">
+      <p class="text-sm text-slate-500 font-medium">
+        Mostrando {{ (pagination.page - 1) * pagination.per_page + 1 }} a
+        {% if pagination.page * pagination.per_page > pagination.total %}{{ pagination.total }}{% else %}{{ pagination.page * pagination.per_page }}{% endif %}
+        de {{ pagination.total }} empresas
+      </p>
+      <div class="flex items-center gap-1.5">
+        {% if pagination.has_prev %}
+        <a href="?page={{ pagination.prev_num }}{% if search %}&search={{ search }}{% endif %}"
+           class="px-3.5 py-1.5 border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 rounded-lg transition-colors">Anterior</a>
+        {% else %}
+        <span class="px-3.5 py-1.5 border border-slate-100 text-sm font-medium text-slate-350 rounded-lg cursor-not-allowed">Anterior</span>
+        {% endif %}
+
+        {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+          {% if page_num %}
+            {% if page_num == pagination.page %}
+            <span class="px-3.5 py-1.5 text-sm font-bold text-white bg-emerald-600 rounded-lg shadow-sm">{{ page_num }}</span>
+            {% else %}
+            <a href="?page={{ page_num }}{% if search %}&search={{ search }}{% endif %}"
+               class="px-3.5 py-1.5 border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 rounded-lg transition-colors">{{ page_num }}</a>
+            {% endif %}
+          {% else %}
+            <span class="px-2 text-slate-400 font-medium">...</span>
+          {% endif %}
+        {% endfor %}
+
+        {% if pagination.has_next %}
+        <a href="?page={{ pagination.next_num }}{% if search %}&search={{ search }}{% endif %}"
+           class="px-3.5 py-1.5 border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 rounded-lg transition-colors">Siguiente</a>
+        {% else %}
+        <span class="px-3.5 py-1.5 border border-slate-100 text-sm font-medium text-slate-350 rounded-lg cursor-not-allowed">Siguiente</span>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+
   </div>
 </div>
 {% endblock %}

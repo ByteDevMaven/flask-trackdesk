@@ -1,58 +1,170 @@
 {% extends "base.html" %}
-{% block title %}Orden OC-{{ '%04d'|format(order.id) }} – TrackDesk{% endblock %}
+{% block title %}{{ order.order_number }} – TrackDesk{% endblock %}
 {% block sidebar_title %}Órdenes de Compra{% endblock %}
+
 {% block sidebar_nav %}
-  <a href="{{ url_for('orders.index', company_id=company_id) }}" class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>← Volver</a>
+{% set cid = company_id %}
+<div class="px-3 py-2 space-y-4">
+
+  <a href="{{ url_for('orders.index', company_id=cid) }}"
+     class="flex items-center gap-2 text-slate-600 hover:text-emerald-700 text-sm font-medium transition-colors">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+    </svg>
+    Volver a Órdenes
+  </a>
+
+  <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm space-y-3">
+    <p class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Resumen de Orden</p>
+    <div>
+      <p class="text-xs text-slate-400 mb-0.5">Número</p>
+      <p class="text-sm font-bold text-slate-800">{{ order.order_number }}</p>
+    </div>
+    <div>
+      <p class="text-xs text-slate-400 mb-0.5">Total</p>
+      <p class="text-xl font-black text-slate-800">{{ session.get('currency','L') }} {{ "%.2f"|format(order.total_amount or 0) }}</p>
+    </div>
+    <div>
+      <p class="text-xs text-slate-400 mb-0.5">Ítems</p>
+      <p class="text-sm font-semibold text-slate-700">{{ order.items | length }} producto{{ 's' if order.items | length != 1 else '' }}</p>
+    </div>
+    <div>
+      <p class="text-xs text-slate-400 mb-0.5">Fecha</p>
+      <p class="text-sm font-semibold text-slate-700">{{ order.buy_date.strftime('%d/%m/%Y') if order.buy_date else '—' }}</p>
+    </div>
+  </div>
+
+  <div class="space-y-2 pt-2">
+    <a href="{{ url_for('orders.edit', company_id=cid, id=order.id) }}"
+       class="flex items-center justify-center gap-2 w-full px-4 py-2 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors bg-white">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+      Editar Orden
+    </a>
+    <button type="button"
+            data-action="confirm-delete"
+            data-url="{{ url_for('orders.delete', company_id=cid, id=order.id) }}"
+            data-name="Orden {{ order.order_number }}"
+            class="flex items-center justify-center gap-2 w-full px-4 py-2 border border-rose-200 text-rose-600 rounded-lg text-sm font-semibold hover:bg-rose-50 transition-colors">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+      Eliminar
+    </button>
+  </div>
+
+</div>
 {% endblock %}
-{% block page_title %}OC-{{ '%04d'|format(order.id) }}{% endblock %}
+
+{% block page_title %}{{ order.order_number }}{% endblock %}
 
 {% block content %}
-<div class="p-6 max-w-4xl mx-auto">
-  {% set sv = order.status.value if order.status else '' %}
-  {% set sm = {'pending':('Pendiente','bg-amber-50 text-amber-700'),'received':('Recibida','bg-emerald-50 text-emerald-700'),'cancelled':('Cancelada','bg-rose-50 text-rose-700'),'partial':('Parcial','bg-sky-50 text-sky-700')} %}
-  {% set sl, sc = sm.get(sv.lower(), ('—','bg-slate-100 text-slate-500')) %}
-  <div class="bg-white rounded-lg border border-slate-200 p-6 mb-4">
-    <div class="flex items-start justify-between mb-4">
-      <div>
-        <div class="flex items-center gap-3 mb-1">
-          <h2 class="text-xl font-bold text-slate-900">Orden de Compra #{{ order.id }}</h2>
-          <span class="text-xs font-medium px-2 py-0.5 rounded-full {{ sc }}">{{ sl }}</span>
+<div class="flex-1 overflow-y-auto bg-slate-50">
+
+  <div class="px-6 pt-5 pb-2">
+    <nav class="flex items-center gap-2 text-sm text-slate-500">
+      <a href="{{ url_for('orders.index', company_id=company_id) }}" class="hover:text-slate-700 transition-colors">Órdenes de Compra</a>
+      <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      <span class="text-slate-800 font-semibold">{{ order.order_number }}</span>
+    </nav>
+  </div>
+
+  <div class="p-6 space-y-5">
+
+    <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+      <div class="px-6 py-5 border-b border-slate-100">
+        <div class="flex items-start justify-between">
+          <div>
+            <h1 class="text-xl font-bold text-slate-900 mb-1">{{ order.order_number }}</h1>
+            <p class="text-sm text-slate-500">Registrada el {{ order.created_at.strftime('%d de %B, %Y') if order.created_at else '—' }}</p>
+          </div>
         </div>
-        <p class="text-sm text-slate-500">Proveedor: <strong class="text-slate-700">{{ order.supplier.name if order.supplier else '—' }}</strong></p>
-        <p class="text-sm text-slate-500">Fecha: {{ order.order_date.strftime('%d/%m/%Y') if order.order_date else '—' }}</p>
       </div>
-      <div class="flex gap-2">
-        <a href="{{ url_for('orders.edit', company_id=company_id, id=order.id) }}" class="flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm text-slate-700 hover:bg-slate-50">Editar</a>
-        <button type="button" data-action="confirm-delete" data-url="{{ url_for('orders.delete', company_id=company_id, id=order.id) }}" data-name="Orden OC-{{ '%04d'|format(order.id) }}" class="px-3 py-2 border border-rose-200 text-rose-600 rounded-lg text-sm hover:bg-rose-50">Eliminar</button>
+
+      <div class="grid grid-cols-3 divide-x divide-slate-100">
+        <div class="px-6 py-4">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Proveedor</p>
+          {% if order.supplier %}
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-violet-50 border border-violet-100 flex items-center justify-center text-violet-600 text-sm font-bold flex-shrink-0">
+              {{ order.supplier.name[:2]|upper }}
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-slate-800">{{ order.supplier.name }}</p>
+              {% if order.supplier.email %}<p class="text-xs text-slate-500 mt-0.5">{{ order.supplier.email }}</p>{% endif %}
+              {% if order.supplier.phone %}<p class="text-xs text-slate-500">{{ order.supplier.phone }}</p>{% endif %}
+            </div>
+          </div>
+          {% else %}
+          <p class="text-sm text-slate-400">—</p>
+          {% endif %}
+        </div>
+        <div class="px-6 py-4">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Fecha de Compra</p>
+          <p class="text-sm font-semibold text-slate-800">{{ order.buy_date.strftime('%d/%m/%Y') if order.buy_date else '—' }}</p>
+          <p class="text-xs text-slate-500 mt-1">Documento: {{ order.order_document }}</p>
+        </div>
+        <div class="px-6 py-4">
+          <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Total de la Orden</p>
+          <p class="text-2xl font-black text-slate-900">{{ session.get('currency','L') }} {{ "%.2f"|format(order.total_amount or 0) }}</p>
+          <p class="text-xs text-slate-500 mt-1">{{ order.items | length }} ítem{{ 's' if order.items | length != 1 else '' }}</p>
+        </div>
       </div>
     </div>
 
-    <table class="w-full mb-4">
-      <thead>
-        <tr class="border-b border-slate-200">
-          <th class="text-left text-xs font-semibold text-slate-500 py-2">Producto</th>
-          <th class="text-right text-xs font-semibold text-slate-500 py-2">Cant.</th>
-          <th class="text-right text-xs font-semibold text-slate-500 py-2">Costo Unit.</th>
-          <th class="text-right text-xs font-semibold text-slate-500 py-2">Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for item in order.items %}
-        <tr class="border-b border-slate-50">
-          <td class="py-2 text-sm text-slate-800">{{ item.inventory_item.name if item.inventory_item else item.description or '—' }}</td>
-          <td class="py-2 text-sm text-right">{{ item.quantity }}</td>
-          <td class="py-2 text-sm text-right">{{ session.get('currency','L') }} {{ "%.2f"|format(item.unit_cost or 0) }}</td>
-          <td class="py-2 text-sm font-medium text-right">{{ session.get('currency','L') }} {{ "%.2f"|format((item.quantity or 0) * (item.unit_cost or 0)) }}</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-
-    <div class="flex justify-end">
-      <div class="text-base font-bold text-slate-900">
-        Total: {{ session.get('currency','L') }} {{ "%.2f"|format(order.total_amount or 0) }}
+    <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+      <div class="px-5 py-3.5 border-b border-slate-100 bg-slate-50/50">
+        <h2 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+          <span class="w-1 h-3.5 bg-violet-600 rounded-full"></span>
+          Ítems de la Orden
+        </h2>
+      </div>
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-slate-100 bg-slate-50/30">
+            <th class="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Producto</th>
+            <th class="px-5 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Código</th>
+            <th class="px-5 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Cantidad</th>
+            <th class="px-5 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Precio Unit.</th>
+            <th class="px-5 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Total</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-50">
+          {% for item in order.items %}
+          <tr class="hover:bg-slate-50/50 transition-colors">
+            <td class="px-5 py-3">
+              <p class="text-sm font-medium text-slate-800">{{ item.name or (item.inventory_item.name if item.inventory_item else '—') }}</p>
+            </td>
+            <td class="px-5 py-3">
+              <span class="text-xs font-mono text-slate-500 bg-slate-50 px-2 py-0.5 rounded">{{ item.item_code or '—' }}</span>
+            </td>
+            <td class="px-5 py-3 text-sm font-medium text-slate-700 text-right">{{ item.quantity }}</td>
+            <td class="px-5 py-3 text-sm text-slate-600 text-right">{{ session.get('currency','L') }} {{ "%.2f"|format(item.price or 0) }}</td>
+            <td class="px-5 py-3 text-sm font-semibold text-slate-800 text-right">{{ session.get('currency','L') }} {{ "%.2f"|format(item.total or 0) }}</td>
+          </tr>
+          {% else %}
+          <tr><td colspan="5" class="px-5 py-8 text-center text-sm text-slate-400">Sin ítems registrados</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="px-5 py-4 border-t border-slate-100 bg-slate-50/50 flex justify-end">
+        <div class="w-64 space-y-2">
+          <div class="flex justify-between font-bold text-slate-900 text-base">
+            <span>Total</span>
+            <span>{{ session.get('currency','L') }} {{ "%.2f"|format(order.total_amount or 0) }}</span>
+          </div>
+        </div>
       </div>
     </div>
+
+    <div class="flex items-center gap-3">
+      <a href="{{ url_for('orders.index', company_id=company_id) }}"
+         class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors bg-white">
+        ← Volver a Órdenes
+      </a>
+      <a href="{{ url_for('orders.edit', company_id=company_id, id=order.id) }}"
+         class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 hover:bg-white transition-colors bg-slate-50">
+        Editar Orden
+      </a>
+    </div>
+
   </div>
 </div>
 {% endblock %}

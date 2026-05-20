@@ -1,70 +1,338 @@
 {% extends "base.html" %}
-{% block title %}Registrar Pago – TrackDesk{% endblock %}
+{% block title %}{{ 'Editar' if payment else 'Registrar' }} Pago – TrackDesk{% endblock %}
 {% block sidebar_title %}Pagos{% endblock %}
+
 {% block sidebar_nav %}
-  {% set cid = session.get('selected_company_id') %}
-  <a href="{{ url_for('payments.index', company_id=cid) }}" class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>← Volver</a>
+{% set cid = session.get('selected_company_id') %}
+<div class="px-3 py-2 space-y-4">
+
+  <a href="{{ url_for('payments.index', company_id=cid) }}"
+     class="flex items-center gap-2 text-slate-600 hover:text-emerald-700 text-sm font-medium transition-colors">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+    </svg>
+    Volver a Pagos
+  </a>
+
+  <div class="bg-emerald-600 rounded-xl p-4 text-white shadow-sm">
+    <p class="text-[10px] uppercase font-bold text-emerald-200 tracking-wider mb-1">Monto a Registrar</p>
+    <p class="text-3xl font-black tracking-tight">
+      <span class="text-emerald-200 text-lg font-bold">{{ session.get('currency','L') }}</span>
+      <span id="sidebar-amount-display">0.00</span>
+    </p>
+    <p class="text-[11px] text-emerald-200 mt-2" id="sidebar-method-display">Selecciona un método de pago</p>
+  </div>
+
+  {% if selected_invoice %}
+  <div class="bg-white rounded-xl p-4 border border-slate-200 shadow-sm space-y-2">
+    <p class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Factura Vinculada</p>
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-lg bg-emerald-100 flex items-center justify-center flex-shrink-0">
+        <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+      </div>
+      <div class="min-w-0">
+        <p class="text-sm font-bold text-slate-800">{{ selected_invoice.document_number }}</p>
+        {% if selected_invoice.client %}<p class="text-xs text-slate-500 truncate">{{ selected_invoice.client.name }}</p>{% endif %}
+      </div>
+    </div>
+    <div class="pt-2 border-t border-slate-100 space-y-1">
+      <div class="flex justify-between text-xs">
+        <span class="text-slate-500">Total Factura</span>
+        <span class="font-semibold text-slate-700">{{ session.get('currency','L') }} {{ "%.2f"|format(selected_invoice.total_amount or 0) }}</span>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 shadow-sm">
+    <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-3">Métodos de Pago</p>
+    <div class="space-y-2 text-xs text-slate-600">
+      <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0"></span> Efectivo — pago inmediato</div>
+      <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-sky-500 flex-shrink-0"></span> Tarjeta — crédito o débito</div>
+      <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-violet-500 flex-shrink-0"></span> Transferencia bancaria</div>
+      <div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-amber-500 flex-shrink-0"></span> Cheque — pendiente de cobro</div>
+    </div>
+  </div>
+
+</div>
 {% endblock %}
-{% block page_title %}Registrar Pago{% endblock %}
+
+{% block page_title %}{{ 'Editar Pago' if payment else 'Registrar Pago' }}{% endblock %}
 
 {% block content %}
 {% set cid = session.get('selected_company_id') %}
-<form method="POST" action="{{ url_for('payments.store', company_id=cid) }}" class="p-6 max-w-xl mx-auto space-y-5">
-  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<div class="flex-1 overflow-y-auto bg-slate-50">
 
-  <div class="bg-white rounded-lg border border-slate-200 p-5 space-y-4">
-    <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Datos del Pago</h2>
+  <div class="px-6 pt-5 pb-2">
+    <nav class="flex items-center gap-2 text-sm text-slate-500">
+      <a href="{{ url_for('payments.index', company_id=cid) }}" class="hover:text-slate-700 transition-colors">Pagos</a>
+      <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      <span class="text-slate-800 font-medium">{{ 'Editar Pago' if payment else 'Registrar Pago' }}</span>
+    </nav>
+  </div>
 
-    <div>
-      <label class="block text-sm font-medium text-slate-700 mb-1.5">Factura</label>
-      {% if selected_invoice %}
-        <input type="hidden" name="document_id" value="{{ selected_invoice.id }}">
-        <div class="bg-emerald-50 border border-emerald-200 rounded-lg px-4 py-3 text-sm">
-          <p class="font-medium text-emerald-800">{{ selected_invoice.document_number }}</p>
-          {% if selected_invoice.client %}<p class="text-emerald-600">{{ selected_invoice.client.name }}</p>{% endif %}
-          <p class="text-emerald-600">Total: {{ session.get('currency','L') }} {{ "%.2f"|format(selected_invoice.total_amount or 0) }}</p>
+  <form method="POST"
+        action="{{ url_for('payments.update', company_id=cid, id=payment.id) if payment else url_for('payments.store', company_id=cid) }}"
+        id="payment-form"
+        class="p-6 space-y-5 max-w-5xl">
+
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    {% if selected_invoice %}
+    <input type="hidden" name="document_id" value="{{ selected_invoice.id }}">
+    {% endif %}
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+
+      <div class="lg:col-span-2 space-y-5">
+
+        {% if not selected_invoice %}
+        <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+          <div class="px-5 py-3.5 border-b border-slate-100 bg-slate-50/50">
+            <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+              <span class="w-1 h-3.5 bg-emerald-600 rounded-full"></span>
+              Factura Asociada
+              <span class="text-xs font-normal text-slate-400 ml-1">(opcional)</span>
+            </h3>
+          </div>
+          <div class="p-5">
+            <label class="block text-sm font-medium text-slate-700 mb-1.5">Número de ID de Factura</label>
+            <div class="relative">
+              <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              <input type="number" name="document_id"
+                     value="{{ payment.document_id if payment else '' }}"
+                     placeholder="Ej: 42 — deja vacío si no aplica"
+                     min="1"
+                     class="w-full pl-9 pr-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors bg-white">
+            </div>
+            <p class="text-xs text-slate-400 mt-1.5">Ingresa el ID numérico de la factura para vincular este pago.</p>
+          </div>
         </div>
-      {% else %}
-        <input type="number" name="document_id" placeholder="ID de factura (opcional)" min="1"
-               class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-      {% endif %}
-    </div>
+        {% endif %}
 
-    <div>
-      <label class="block text-sm font-medium text-slate-700 mb-1.5">Monto <span class="text-rose-500">*</span></label>
-      <div class="relative">
-        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">{{ session.get('currency','L') }}</span>
-        <input type="number" name="amount" required min="0.01" step="0.01"
-               class="w-full pl-8 pr-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+        <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+          <div class="px-5 py-3.5 border-b border-slate-100 bg-slate-50/50">
+            <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+              <span class="w-1 h-3.5 bg-emerald-600 rounded-full"></span>
+              Datos del Pago
+            </h3>
+          </div>
+          <div class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
+
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-1.5">
+                Monto <span class="text-rose-500">*</span>
+              </label>
+              <div class="relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm font-semibold">{{ session.get('currency','L') }}</span>
+                <input type="number" name="amount" id="amount-input"
+                       required min="0.01" step="0.01"
+                       value="{{ payment.amount if payment else '' }}"
+                       placeholder="0.00"
+                       class="w-full pl-9 pr-3 py-2.5 border border-slate-300 rounded-lg text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors bg-white">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-1.5">Fecha de Pago</label>
+              <div class="relative">
+                <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                <input type="date" name="payment_date"
+                       value="{{ payment.payment_date.strftime('%Y-%m-%d') if payment and payment.payment_date else now.strftime('%Y-%m-%d') }}"
+                       class="w-full pl-9 pr-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors bg-white">
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+          <div class="px-5 py-3.5 border-b border-slate-100 bg-slate-50/50">
+            <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+              <span class="w-1 h-3.5 bg-emerald-600 rounded-full"></span>
+              Método de Pago
+            </h3>
+          </div>
+          <div class="p-5">
+            {% set cur_method = payment.method.value if payment and payment.method else 'cash' %}
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="method-selector">
+              {% for val, label, color, dot, icon_path in [
+                ('cash',     'Efectivo',       'hover:border-emerald-400 hover:bg-emerald-50', 'bg-emerald-500', 'M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z'),
+                ('card',     'Tarjeta',        'hover:border-sky-400 hover:bg-sky-50',         'bg-sky-500',     'M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z'),
+                ('transfer', 'Transferencia',  'hover:border-violet-400 hover:bg-violet-50',   'bg-violet-500',  'M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4'),
+                ('check',    'Cheque',         'hover:border-amber-400 hover:bg-amber-50',     'bg-amber-500',   'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z')
+              ] %}
+              <label class="method-card relative flex flex-col items-center gap-2 p-4 border-2 rounded-xl cursor-pointer transition-all
+                            {% if val == cur_method %}border-emerald-500 bg-emerald-50{% else %}border-slate-200 bg-white {{ color }}{% endif %}">
+                <input type="radio" name="method" value="{{ val }}" class="sr-only method-radio" {% if val == cur_method %}checked{% endif %}>
+                <span class="w-2 h-2 rounded-full {{ dot }} {% if val != cur_method %}opacity-30{% endif %} transition-opacity"></span>
+                <svg class="w-6 h-6 {% if val == cur_method %}text-emerald-600{% else %}text-slate-400{% endif %} transition-colors"
+                     fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="{{ icon_path }}"/>
+                </svg>
+                <span class="text-xs font-semibold {% if val == cur_method %}text-emerald-700{% else %}text-slate-600{% endif %} transition-colors">{{ label }}</span>
+              </label>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+          <div class="px-5 py-3.5 border-b border-slate-100 bg-slate-50/50">
+            <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+              <span class="w-1 h-3.5 bg-slate-400 rounded-full"></span>
+              Referencia / Notas
+              <span class="text-xs font-normal text-slate-400 ml-1">(opcional)</span>
+            </h3>
+          </div>
+          <div class="p-5">
+            <div class="relative">
+              <svg class="w-4 h-4 text-slate-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"/></svg>
+              <textarea name="notes" rows="2" placeholder="N° de transacción, número de cheque, referencia bancaria…"
+                        class="w-full pl-9 pr-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors bg-white resize-none">{{ payment.notes if payment else '' }}</textarea>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="space-y-5">
+
+        <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden sticky top-6">
+          <div class="px-5 py-3.5 border-b border-slate-100 bg-slate-50/50">
+            <h3 class="text-sm font-bold text-slate-900">Resumen</h3>
+          </div>
+          <div class="p-5 space-y-4">
+
+            <div>
+              <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider mb-1">Monto</p>
+              <p class="text-2xl font-black text-slate-800">
+                <span class="text-slate-500 text-base font-semibold">{{ session.get('currency','L') }}</span>
+                <span id="summary-amount">0.00</span>
+              </p>
+            </div>
+
+            <div class="pt-3 border-t border-slate-100 space-y-2.5">
+              <div class="flex justify-between text-sm">
+                <span class="text-slate-500">Método</span>
+                <span class="font-semibold text-slate-700" id="summary-method">—</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-slate-500">Fecha</span>
+                <span class="font-semibold text-slate-700" id="summary-date">—</span>
+              </div>
+              {% if selected_invoice %}
+              <div class="flex justify-between text-sm">
+                <span class="text-slate-500">Factura</span>
+                <span class="font-semibold text-emerald-600">{{ selected_invoice.document_number }}</span>
+              </div>
+              {% endif %}
+            </div>
+
+            <div class="pt-4 space-y-2.5">
+              <button type="submit"
+                      class="w-full px-5 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-bold hover:bg-emerald-700 active:scale-[0.98] transition-all shadow-sm">
+                {{ 'Guardar Cambios' if payment else 'Registrar Pago' }}
+              </button>
+              <a href="{{ url_for('payments.index', company_id=cid) }}"
+                 class="block w-full px-5 py-2.5 border border-slate-200 text-slate-700 rounded-lg text-sm font-semibold text-center hover:bg-slate-50 transition-colors bg-white">
+                Cancelar
+              </a>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
+  </form>
+</div>
 
-    <div>
-      <label class="block text-sm font-medium text-slate-700 mb-1.5">Fecha</label>
-      <input type="date" name="payment_date" value="{{ now.strftime('%Y-%m-%d') }}"
-             class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-    </div>
+{% block scripts %}
+<script>
+(function () {
+  const amountInput   = document.getElementById('amount-input');
+  const dateInput     = document.querySelector('input[name="payment_date"]');
+  const methodRadios  = document.querySelectorAll('.method-radio');
+  const methodCards   = document.querySelectorAll('.method-card');
 
-    <div>
-      <label class="block text-sm font-medium text-slate-700 mb-1.5">Método de Pago</label>
-      <select name="method" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
-        <option value="cash">Efectivo</option>
-        <option value="card">Tarjeta</option>
-        <option value="transfer">Transferencia</option>
-        <option value="check">Cheque</option>
-      </select>
-    </div>
+  const sidebarAmount  = document.getElementById('sidebar-amount-display');
+  const sidebarMethod  = document.getElementById('sidebar-method-display');
+  const summaryAmount  = document.getElementById('summary-amount');
+  const summaryMethod  = document.getElementById('summary-method');
+  const summaryDate    = document.getElementById('summary-date');
 
-    <div>
-      <label class="block text-sm font-medium text-slate-700 mb-1.5">Referencia / Notas</label>
-      <input type="text" name="notes" placeholder="N° de transacción, cheque, etc."
-             class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
-    </div>
-  </div>
+  const methodLabels = { cash: 'Efectivo', card: 'Tarjeta', transfer: 'Transferencia', check: 'Cheque' };
+  const methodColors = {
+    cash:     { border: 'border-emerald-500', bg: 'bg-emerald-50', text: 'text-emerald-700', icon: 'text-emerald-600', dot: '' },
+    card:     { border: 'border-sky-500',     bg: 'bg-sky-50',     text: 'text-sky-700',     icon: 'text-sky-600',     dot: '' },
+    transfer: { border: 'border-violet-500',  bg: 'bg-violet-50',  text: 'text-violet-700',  icon: 'text-violet-600',  dot: '' },
+    check:    { border: 'border-amber-500',   bg: 'bg-amber-50',   text: 'text-amber-700',   icon: 'text-amber-600',   dot: '' },
+  };
 
-  <div class="flex gap-3">
-    <a href="{{ url_for('payments.index', company_id=cid) }}" class="px-4 py-2 border border-slate-300 rounded-lg text-sm text-slate-700 hover:bg-slate-50">Cancelar</a>
-    <button type="submit" class="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700">Registrar Pago</button>
-  </div>
-</form>
+  function getCheckedMethod() {
+    for (const r of methodRadios) if (r.checked) return r.value;
+    return 'cash';
+  }
+
+  function formatAmount(val) {
+    const n = parseFloat(val);
+    return isNaN(n) ? '0.00' : n.toFixed(2);
+  }
+
+  function formatDate(val) {
+    if (!val) return '—';
+    const [y, m, d] = val.split('-');
+    return `${d}/${m}/${y}`;
+  }
+
+  function updateMethodCards(selected) {
+    methodCards.forEach(card => {
+      const radio = card.querySelector('.method-radio');
+      const val   = radio.value;
+      const svg   = card.querySelector('svg');
+      const label = card.querySelector('span:last-child');
+      const dot   = card.querySelector('span:first-child');
+      const col   = methodColors[val] || methodColors.cash;
+
+      if (val === selected) {
+        card.className = card.className
+          .replace(/border-\S+/, col.border)
+          .replace(/bg-\S+/, col.bg);
+        card.classList.add(col.border, col.bg);
+        card.classList.remove('border-slate-200', 'bg-white');
+        svg.className  = svg.className.replace(/text-\S+/, col.icon);
+        label.className = label.className.replace(/text-\S+/, col.text);
+        dot.classList.remove('opacity-30');
+      } else {
+        card.classList.remove(...Object.values(methodColors).flatMap(c => [c.border, c.bg]));
+        card.classList.add('border-slate-200', 'bg-white');
+        svg.className  = svg.className.replace(/text-\S+/, 'text-slate-400');
+        label.className = label.className.replace(/text-\S+/, 'text-slate-600');
+        dot.classList.add('opacity-30');
+      }
+    });
+  }
+
+  function update() {
+    const amt    = formatAmount(amountInput.value);
+    const method = getCheckedMethod();
+    const label  = methodLabels[method] || method;
+
+    if (sidebarAmount) sidebarAmount.textContent = amt;
+    if (sidebarMethod) sidebarMethod.textContent  = label;
+    if (summaryAmount) summaryAmount.textContent  = amt;
+    if (summaryMethod) summaryMethod.textContent  = label;
+    if (summaryDate)   summaryDate.textContent    = formatDate(dateInput?.value);
+    updateMethodCards(method);
+  }
+
+  amountInput?.addEventListener('input', update);
+  dateInput?.addEventListener('change', update);
+  methodRadios.forEach(r => r.addEventListener('change', update));
+  update();
+})();
+</script>
+{% endblock %}
 {% endblock %}

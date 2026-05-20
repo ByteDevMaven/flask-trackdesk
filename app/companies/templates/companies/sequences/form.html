@@ -1,43 +1,120 @@
 {% extends "base.html" %}
 {% block title %}{{ 'Nueva' if not sequence else 'Editar' }} Secuencia – TrackDesk{% endblock %}
 {% block sidebar_title %}Empresas{% endblock %}
+
 {% block sidebar_nav %}
-  <a href="{{ url_for('companies.sequences_index', id=company.id) }}" class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm"><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>← Volver</a>
+  <div class="px-2 py-1 space-y-4">
+    <a href="{{ url_for('companies.sequences_index', id=company.id) }}"
+       class="flex items-center gap-2 text-slate-600 hover:text-emerald-700 text-sm font-medium transition-colors">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+      </svg>
+      Volver a Secuencias
+    </a>
+
+    <div class="bg-gradient-to-br from-indigo-600 to-violet-700 rounded-xl p-4 text-white shadow-md">
+      <p class="text-[10px] uppercase font-bold text-indigo-200 tracking-wider mb-1">Empresa</p>
+      <p class="text-sm font-bold truncate mb-3">
+        {{ company.name }}
+      </p>
+      <p class="text-[10px] uppercase font-bold text-indigo-200 tracking-wider mb-1">Rango CAI</p>
+      <p class="text-base font-extrabold tracking-tight">
+        {{ 'Nueva Secuencia' if not sequence else 'Modificar Secuencia' }}
+      </p>
+    </div>
+  </div>
 {% endblock %}
+
 {% block page_title %}{{ 'Nueva' if not sequence else 'Editar' }} Secuencia CAI{% endblock %}
 
 {% block content %}
-<form method="POST" action="{{ url_for('companies.sequence_update', id=company.id, seq_id=sequence.id) if sequence else url_for('companies.sequence_store', id=company.id) }}" class="p-6 max-w-xl mx-auto space-y-4">
-  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-  <div class="bg-white rounded-lg border border-slate-200 p-5 space-y-4">
-    <div>
-      <label class="block text-sm font-medium text-slate-700 mb-1.5">CAI <span class="text-rose-500">*</span></label>
-      <input type="text" name="cai" required value="{{ sequence.cai if sequence else '' }}" placeholder="XXXXXX-XXXXXX-XX-XXXXXX-XXXXXX-XXXXXX" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm font-mono focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-    </div>
-    <div class="grid grid-cols-2 gap-4">
-      <div>
-        <label class="block text-sm font-medium text-slate-700 mb-1.5">Rango Inicio <span class="text-rose-500">*</span></label>
-        <input type="number" name="range_start" required min="1" value="{{ sequence.range_start if sequence else '' }}" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-      </div>
-      <div>
-        <label class="block text-sm font-medium text-slate-700 mb-1.5">Rango Fin <span class="text-rose-500">*</span></label>
-        <input type="number" name="range_end" required min="1" value="{{ sequence.range_end if sequence else '' }}" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-      </div>
-    </div>
-    {% if sequence %}
-    <div>
-      <label class="block text-sm font-medium text-slate-700 mb-1.5">Número Actual</label>
-      <input type="number" name="current" value="{{ sequence.current }}" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-    </div>
-    {% endif %}
-    <div>
-      <label class="block text-sm font-medium text-slate-700 mb-1.5">Fecha de Vencimiento <span class="text-rose-500">*</span></label>
-      <input type="date" name="expiration_date" required value="{{ sequence.expiration_date.strftime('%Y-%m-%d') if sequence else '' }}" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-    </div>
+<div class="flex-1 overflow-y-auto bg-slate-50">
+
+  <!-- Breadcrumbs -->
+  <div class="px-6 pt-5 pb-2">
+    <nav class="flex items-center gap-2 text-sm text-slate-500">
+      <a href="{{ url_for('companies.index') }}" class="hover:text-slate-700 transition-colors">Empresas</a>
+      <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      <a href="{{ url_for('companies.view', id=company.id) }}" class="hover:text-slate-700 transition-colors">{{ company.name }}</a>
+      <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      <a href="{{ url_for('companies.sequences_index', id=company.id) }}" class="hover:text-slate-700 transition-colors">Secuencias</a>
+      <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      <span class="text-slate-800 font-medium">{{ 'Nueva Secuencia' if not sequence else 'Editar Secuencia' }}</span>
+    </nav>
   </div>
-  <div class="flex gap-3">
-    <a href="{{ url_for('companies.sequences_index', id=company.id) }}" class="px-4 py-2 border border-slate-300 rounded-lg text-sm text-slate-700 hover:bg-slate-50">Cancelar</a>
-    <button type="submit" class="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700">{{ 'Crear Secuencia' if not sequence else 'Actualizar Secuencia' }}</button>
+
+  <div class="p-6">
+    <form method="POST"
+          action="{{ url_for('companies.sequence_update', id=company.id, seq_id=sequence.id) if sequence else url_for('companies.sequence_store', id=company.id) }}"
+          class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden max-w-3xl">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+      <div class="p-6 space-y-6">
+        <div>
+          <h3 class="text-sm font-semibold text-slate-900 mb-1">Autorización CAI de Facturación</h3>
+          <p class="text-xs text-slate-500">Configura la clave única CAI provista por el ente fiscal y sus respectivos límites.</p>
+        </div>
+
+        <div class="space-y-4">
+          <!-- CAI -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Clave CAI Autorizada <span class="text-rose-500">*</span></label>
+            <input type="text" name="cai" required value="{{ sequence.cai if sequence else '' }}"
+                   placeholder="Ej: XXXXXX-XXXXXX-XX-XXXXXX-XXXXXX-XXXXXX"
+                   class="w-full px-3.5 py-2.5 border border-slate-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-slate-800 placeholder-slate-400 font-mono font-semibold transition-all shadow-inner uppercase tracking-wider">
+          </div>
+
+          <!-- Rango Inicio & Fin in 2 columns -->
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Rango Autorizado (Inicio) <span class="text-rose-500">*</span></label>
+              <input type="number" name="range_start" required min="1" value="{{ sequence.range_start if sequence else '' }}"
+                     placeholder="Ej: 1"
+                     class="w-full px-3.5 py-2.5 border border-slate-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-slate-800 placeholder-slate-400 font-bold transition-all shadow-inner">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Rango Autorizado (Fin) <span class="text-rose-500">*</span></label>
+              <input type="number" name="range_end" required min="1" value="{{ sequence.range_end if sequence else '' }}"
+                     placeholder="Ej: 5000"
+                     class="w-full px-3.5 py-2.5 border border-slate-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-slate-800 placeholder-slate-400 font-bold transition-all shadow-inner">
+            </div>
+          </div>
+
+          <!-- Current (only when editing) -->
+          {% if sequence %}
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Número Correlativo Actual</label>
+            <input type="number" name="current" value="{{ sequence.current }}"
+                   class="w-full px-3.5 py-2.5 border border-slate-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-slate-800 placeholder-slate-400 font-bold transition-all shadow-inner">
+            <p class="text-[11px] text-slate-400 mt-1.5 leading-relaxed">
+              Define el último número de factura emitido. Si es una secuencia nueva o no has emitido facturas, configúralo en `{{ sequence.range_start - 1 }}` (o menor al rango de inicio).
+            </p>
+          </div>
+          {% endif %}
+
+          <!-- Expiration Date -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Fecha Límite de Emisión (Vencimiento) <span class="text-rose-500">*</span></label>
+            <input type="date" name="expiration_date" required value="{{ sequence.expiration_date.strftime('%Y-%m-%d') if sequence else '' }}"
+                   class="w-full px-3.5 py-2.5 border border-slate-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-slate-850 font-semibold transition-all shadow-inner">
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Action Footer -->
+      <div class="flex gap-3 px-6 py-4 border-t border-slate-100 bg-slate-50">
+        <a href="{{ url_for('companies.sequences_index', id=company.id) }}"
+           class="flex-1 px-4 py-2.5 border border-slate-200 text-center rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:border-slate-350 transition-all bg-white shadow-sm">
+          Cancelar
+        </a>
+        <button type="submit"
+                class="flex-1 px-4 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-semibold hover:bg-emerald-700 transition-all shadow-sm">
+          {{ 'Crear Secuencia' if not sequence else 'Guardar Cambios' }}
+        </button>
+      </div>
+
+    </form>
   </div>
-</form>
+</div>
 {% endblock %}

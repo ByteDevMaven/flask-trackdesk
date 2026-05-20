@@ -3,82 +3,161 @@
 {% else %}
 {% extends "base.html" %}
 {% endif %}
-{% block title %}{{ 'Nueva' if not company else 'Editar' }} Empresa – TrackDesk{% endblock %}
+
+{% block title %}{{ 'Nueva' if not comp else 'Editar' }} Empresa – TrackDesk{% endblock %}
 {% block sidebar_title %}Empresas{% endblock %}
-{% block page_title %}{{ 'Nueva' if not company else 'Editar' }} Empresa{% endblock %}
+
+{% block sidebar_nav %}
+<div class="px-3 py-2 space-y-4">
+  <a href="{{ url_for('companies.index') }}"
+     class="flex items-center gap-2 text-slate-600 hover:text-emerald-700 text-sm font-medium transition-colors">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+    </svg>
+    Volver a Empresas
+  </a>
+
+  <div class="bg-gradient-to-br from-emerald-600 to-teal-700 rounded-xl p-4 text-white shadow-md">
+    <p class="text-[10px] uppercase font-bold text-emerald-200 tracking-wider mb-1">Empresa</p>
+    <p class="text-xl font-black tracking-tight truncate">
+      {{ comp.name if comp else 'Nueva Empresa' }}
+    </p>
+    <p class="text-xs text-emerald-100/90 mt-2">Configura tu perfil de facturación, impuestos, moneda y asignación de usuarios.</p>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_title %}{{ 'Nueva' if not comp else 'Editar' }} Empresa{% endblock %}
 
 {% block content %}
-<form method="POST"
-      action="{{ url_for('companies.update', id=company.id) if company else url_for('companies.store') }}"
-      data-drawer-form
-      data-success-message="{{ 'Empresa creada exitosamente' if not company else 'Empresa actualizada exitosamente' }}">
-  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-
-  <div class="p-6 space-y-4">
-    <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Información de la Empresa</h2>
-
-    <div>
-      <label class="block text-sm font-medium text-slate-700 mb-1.5">Nombre <span class="text-rose-500">*</span></label>
-      <input type="text" name="name" required value="{{ company.name if company else '' }}" placeholder="Nombre de la empresa" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-    </div>
-
-    <div>
-      <label class="block text-sm font-medium text-slate-700 mb-1.5">RTN / Identificador</label>
-      <input type="text" name="identifier" value="{{ company.identifier if company else '' }}" placeholder="0000-0000-000000" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-    </div>
-
-    <div class="grid grid-cols-2 gap-4">
-      <div>
-        <label class="block text-sm font-medium text-slate-700 mb-1.5">Moneda</label>
-        <select name="currency" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
-          {% for cur in ['L', 'USD', 'MXN', 'GTQ', 'CRC'] %}
-          <option value="{{ cur }}" {{ 'selected' if company and company.currency == cur else '' }}>{{ cur }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div>
-        <label class="block text-sm font-medium text-slate-700 mb-1.5">Tasa ISV (%)</label>
-        <input type="number" name="tax_rate" min="0" max="100" step="0.01"
-               value="{{ company.tax_rate if company else '15' }}"
-               class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-      </div>
-    </div>
-
-    <div>
-      <label class="block text-sm font-medium text-slate-700 mb-1.5">Correo electrónico</label>
-      <input type="email" name="email" value="{{ company.email if company else '' }}" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-    </div>
-
-    <div>
-      <label class="block text-sm font-medium text-slate-700 mb-1.5">Teléfono</label>
-      <input type="tel" name="phone" value="{{ company.phone if company else '' }}" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
-    </div>
-
-    <div>
-      <label class="block text-sm font-medium text-slate-700 mb-1.5">Dirección</label>
-      <textarea name="address" rows="2" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none">{{ company.address if company else '' }}</textarea>
-    </div>
-
-    {% if users %}
-    <div>
-      <label class="block text-sm font-medium text-slate-700 mb-2">Usuarios asignados</label>
-      <div class="space-y-2 max-h-32 overflow-y-auto border border-slate-200 rounded-lg p-3">
-        {% for user in users %}
-        <label class="flex items-center gap-2">
-          <input type="checkbox" name="user_ids" value="{{ user.id }}"
-                 {{ 'checked' if company and user in company.users else '' }}
-                 class="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500">
-          <span class="text-sm text-slate-700">{{ user.name }} <span class="text-xs text-slate-400">({{ user.email }})</span></span>
-        </label>
-        {% endfor %}
-      </div>
-    </div>
-    {% endif %}
+<div class="flex-1 overflow-y-auto bg-slate-50">
+  {% if not request.headers.get('X-Requested-With') == 'XMLHttpRequest' %}
+  <!-- Breadcrumbs -->
+  <div class="px-6 pt-5 pb-2">
+    <nav class="flex items-center gap-2 text-sm text-slate-500">
+      <a href="{{ url_for('companies.index') }}" class="hover:text-slate-700 transition-colors">Empresas</a>
+      <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      <span class="text-slate-800 font-medium">{{ 'Nueva Empresa' if not comp else 'Editar Empresa' }}</span>
+    </nav>
   </div>
+  {% endif %}
 
-  <div class="flex gap-3 p-4 border-t border-slate-100 bg-slate-50/70">
-    <button type="button" onclick="closeDrawer()" class="flex-1 px-4 py-2 border border-slate-300 rounded-lg text-sm font-medium text-slate-700 hover:bg-white transition-colors">Cancelar</button>
-    <button type="submit" class="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">{{ 'Crear Empresa' if not company else 'Actualizar Empresa' }}</button>
+  <div class="p-6">
+    <form method="POST"
+          action="{{ url_for('companies.update', id=comp.id) if comp else url_for('companies.store') }}"
+          data-drawer-form
+          data-success-message="{{ 'Empresa creada exitosamente' if not comp else 'Empresa actualizada exitosamente' }}"
+          class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden max-w-3xl">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+      <div class="p-6 space-y-6">
+        <div>
+          <h3 class="text-sm font-semibold text-slate-900 mb-1">Información de la Empresa</h3>
+          <p class="text-xs text-slate-500">Completa los campos obligatorios para configurar el perfil corporativo.</p>
+        </div>
+
+        <div class="space-y-4">
+          <!-- Name -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Nombre <span class="text-rose-500">*</span></label>
+            <input type="text" name="name" required value="{{ comp.name if comp else '' }}"
+                   placeholder="Nombre legal o comercial de la empresa"
+                   class="w-full px-3.5 py-2.5 border border-slate-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-slate-800 placeholder-slate-400 font-medium transition-all shadow-inner">
+          </div>
+
+          <!-- Identifier / RTN -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Identificador Tributario (RTN / RFC / NIF)</label>
+            <input type="text" name="identifier" value="{{ comp.identifier if comp else '' }}"
+                   placeholder="Ej. 0801-1990-123456"
+                   class="w-full px-3.5 py-2.5 border border-slate-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-slate-800 placeholder-slate-400 font-medium transition-all shadow-inner">
+          </div>
+
+          <!-- Currency & Tax rate in 2 columns -->
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Moneda por Defecto</label>
+              <select name="currency"
+                      class="w-full px-3.5 py-2.5 border border-slate-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-slate-850 font-semibold transition-all">
+                {% for cur in ['L', 'USD', 'MXN', 'GTQ', 'CRC'] %}
+                <option value="{{ cur }}" {{ 'selected' if comp and comp.currency == cur else '' }}>{{ cur }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Tasa de Impuesto / ISV (%)</label>
+              <input type="number" name="tax_rate" min="0" max="100" step="0.01"
+                     value="{{ comp.tax_rate if comp else '15' }}"
+                     class="w-full px-3.5 py-2.5 border border-slate-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-slate-800 placeholder-slate-400 font-semibold transition-all shadow-inner">
+            </div>
+          </div>
+
+          <!-- Email & Phone in 2 columns -->
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Correo Electrónico</label>
+              <input type="email" name="email" value="{{ comp.email if comp else '' }}"
+                     placeholder="contacto@empresa.com"
+                     class="w-full px-3.5 py-2.5 border border-slate-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-slate-800 placeholder-slate-400 font-medium transition-all shadow-inner">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Teléfono de Contacto</label>
+              <input type="tel" name="phone" value="{{ comp.phone if comp else '' }}"
+                     placeholder="+504 2200-0000"
+                     class="w-full px-3.5 py-2.5 border border-slate-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-slate-800 placeholder-slate-400 font-medium transition-all shadow-inner">
+            </div>
+          </div>
+
+          <!-- Address -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Dirección Física</label>
+            <textarea name="address" rows="3" placeholder="Dirección detallada de las oficinas o local central..."
+                      class="w-full px-3.5 py-2.5 border border-slate-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-slate-800 placeholder-slate-400 font-medium transition-all shadow-inner resize-none">{{ comp.address if comp else '' }}</textarea>
+          </div>
+
+          <!-- Assigned Users (Checkboxes) -->
+          {% if users %}
+          <div>
+            <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Asignar Acceso a Usuarios</label>
+            <div class="border border-slate-200 rounded-xl divide-y divide-slate-100 max-h-48 overflow-y-auto p-2 bg-slate-50/50">
+              {% for user in users %}
+              <label class="flex items-center gap-3 px-3 py-2.5 hover:bg-white rounded-lg transition-colors cursor-pointer group">
+                <input type="checkbox" name="user_ids" value="{{ user.id }}"
+                       {{ 'checked' if comp and user in comp.users else '' }}
+                       class="w-4.5 h-4.5 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500 cursor-pointer">
+                <div class="min-w-0">
+                  <p class="text-sm font-semibold text-slate-800 group-hover:text-slate-900 transition-colors">{{ user.name }}</p>
+                  <p class="text-xs text-slate-400 truncate">{{ user.email }}</p>
+                </div>
+              </label>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+
+        </div>
+      </div>
+
+      <!-- Action Footer -->
+      <div class="flex gap-3 px-6 py-4 border-t border-slate-100 bg-slate-50">
+        {% if request.headers.get('X-Requested-With') == 'XMLHttpRequest' %}
+        <button type="button" onclick="closeDrawer()"
+                class="flex-1 px-4 py-2.5 border border-slate-300 rounded-lg text-sm font-semibold text-slate-700 hover:bg-white hover:border-slate-400 transition-all bg-transparent">
+          Cancelar
+        </button>
+        {% else %}
+        <a href="{{ url_for('companies.index') }}"
+           class="flex-1 px-4 py-2.5 border border-slate-200 text-center rounded-lg text-sm font-semibold text-slate-700 hover:bg-white hover:border-slate-300 transition-all bg-transparent">
+          Cancelar
+        </a>
+        {% endif %}
+        <button type="submit"
+                class="flex-1 px-4 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-semibold hover:bg-emerald-700 transition-all shadow-sm">
+          {{ 'Crear Empresa' if not comp else 'Guardar Cambios' }}
+        </button>
+      </div>
+
+    </form>
   </div>
-</form>
+</div>
 {% endblock %}
