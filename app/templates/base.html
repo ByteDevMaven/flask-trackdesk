@@ -178,14 +178,17 @@
 
         <div class="flex items-center gap-2">
           <div class="relative hidden md:block">
-            <input id="global-search" type="text" placeholder="Buscar..."
+          <form action="{{ url_for('search') }}" method="get" class="relative">
+            <input name="q" id="global-search" type="text" placeholder="Buscar..."
+              value="{{ request.args.get('q', '') }}"
               class="w-56 h-9 pl-9 pr-4 text-sm bg-slate-100 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-colors">
             <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" fill="none"
               stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
-          </div>
+          </form>
+        </div>
 
           {% if current_user.is_authenticated and current_user.companies|length > 1 %}
           <div class="relative" id="company-menu-wrapper">

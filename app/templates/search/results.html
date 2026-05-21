@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Buscar · TrackDesk ERP{% endblock %}
+{% block page_title %}Resultados de búsqueda{% endblock %}
+
+{% block content %}
+<div class="p-6">
+  <div class="max-w-4xl mx-auto">
+    <div class="mb-6">
+      <h2 class="text-xl font-semibold text-slate-900">Resultados para "{{ query }}"</h2>
+      {% if not query %}
+      <p class="mt-2 text-sm text-slate-500">Escribe un término y presiona Enter para buscar contactos, facturas, inventario y órdenes.</p>
+      {% endif %}
+    </div>
+
+    {% if query %}
+      {% for section, items in results.items() %}
+        {% if items %}
+        <div class="mb-8">
+          <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3">{{ section.replace('_', ' ') | title }}</h3>
+          <div class="space-y-2">
+            {% for item in items %}
+            <a href="{{ item.url }}" class="block rounded-xl border border-slate-200 bg-white p-4 transition hover:bg-slate-50">
+              <p class="text-sm font-semibold text-slate-900">{{ item.title }}</p>
+              {% if item.subtitle %}
+              <p class="text-xs text-slate-500 mt-1">{{ item.subtitle }}</p>
+              {% endif %}
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+
+      {% if not results.contacts and not results.documents and not results.inventory_items and not results.purchase_orders and not results.companies %}
+      <div class="rounded-xl border border-slate-200 bg-white p-6 text-sm text-slate-600">
+        No se encontraron resultados para "{{ query }}".
+      </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
