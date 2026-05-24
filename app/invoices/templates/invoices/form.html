@@ -214,7 +214,7 @@ TrackDesk{% endblock %}
                   class="w-full text-sm border border-slate-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-1 focus:ring-emerald-500 text-right item-discount font-semibold text-rose-600 bg-rose-50/20">
               </td>
               <td class="px-4 py-3 text-sm font-bold text-slate-800 text-right item-subtotal">
-                {{ "%.2f"|format((item.quantity or 0) * (item.unit_price or 0) * (1 - (item.discount or 0) / 100)) }}
+                {{ ((item.quantity or 0) * (item.unit_price or 0) * (1 - (item.discount or 0) / 100)) | format_currency }}
               </td>
               <td class="px-2 py-3 text-center">
                 <button type="button" class="remove-item text-slate-400 hover:text-rose-500 transition-colors">

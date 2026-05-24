@@ -194,7 +194,7 @@
                     {{ doc.issued_date.strftime('%d/%m/%Y') if doc.issued_date else '—' }}
                   </td>
                   <td class="px-5 py-3 text-right font-bold text-slate-800">
-                    {{ company.currency }} {{ "%.2f"|format(doc.total_amount or 0.0) }}
+                    {{ company.currency }} {{ (doc.total_amount or 0.0) | format_currency }}
                   </td>
                   <td class="px-5 py-3 text-right">
                     <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold border
@@ -265,7 +265,7 @@
                     {{ pay.notes or '—' }}
                   </td>
                   <td class="px-5 py-3 text-right font-bold text-emerald-700">
-                    {{ company.currency }} {{ "%.2f"|format(pay.amount or 0.0) }}
+                    {{ company.currency }} {{ (pay.amount or 0.0) | format_currency }}
                   </td>
                 </tr>
                 {% else %}

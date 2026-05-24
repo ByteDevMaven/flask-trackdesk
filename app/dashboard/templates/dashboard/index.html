@@ -56,7 +56,7 @@
       <div class="flex items-center justify-between">
         <div>
           <p class="text-xs font-medium text-slate-500 mb-1">Ingresos del mes</p>
-          <p class="text-2xl font-bold text-slate-900">{{ session.get('currency', 'L') }} {{ "%.2f"|format(revenue) }}</p>
+          <p class="text-2xl font-bold text-slate-900">{{ session.get('currency', 'L') }} {{ revenue | format_currency }}</p>
         </div>
         <div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center flex-shrink-0">
           <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -178,7 +178,7 @@
               {% endif %}
             </td>
             <td class="px-4 py-3 text-sm font-medium text-slate-900 text-right">
-              {{ session.get('currency', 'L') }} {{ "%.2f"|format(invoice.total_amount or 0) }}
+              {{ session.get('currency', 'L') }} {{ (invoice.total_amount or 0) | format_currency }}
             </td>
             <td class="px-4 py-3">
               <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium {{ s_cls }}">
@@ -214,7 +214,7 @@
             </p>
           </div>
           <span class="text-xs font-medium text-slate-800 flex-shrink-0">
-            {{ "%.0f"|format(quote.total_amount or 0) }}
+            {{ session.get('currency', 'L') }} {{ (quote.total_amount or 0) | format_currency }}
           </span>
         </div>
         {% else %}

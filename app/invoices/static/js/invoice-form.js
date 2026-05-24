@@ -160,10 +160,10 @@
               <p class="text-sm font-semibold text-slate-800">${p.name || ''}</p>
               ${badgeHtml}
             </div>
-            <p class="text-xs text-slate-400 mt-0.5">${p.price ? 'Precio base: ' + Number(p.price).toFixed(2) : 'Sin precio configurado'}</p>
+            <p class="text-xs text-slate-400 mt-0.5">${p.price ? 'Precio base: ' + Number(p.price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 'Sin precio configurado'}</p>
           </div>
         </div>
-        <span class="text-sm font-bold text-slate-700 px-2.5 py-1 rounded bg-slate-100">${Number(p.price).toFixed(2)}</span>`;
+        <span class="text-sm font-bold text-slate-700 px-2.5 py-1 rounded bg-slate-100">${Number(p.price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>`;
 
       if (!isBlocked) {
         div.addEventListener('click', () => selectProduct(p));
@@ -243,7 +243,7 @@
       const discount = Number(row.querySelector('.item-discount')?.value) || 0;
       const sub = qty * price * (1 - discount / 100);
       const subtotalCell = row.querySelector('.item-subtotal');
-      if (subtotalCell) subtotalCell.textContent = sub.toFixed(2);
+      if (subtotalCell) subtotalCell.textContent = sub.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
       subtotal += sub;
     });
 
@@ -253,9 +253,9 @@
     const subtotalDisplay = document.getElementById('subtotal-display');
     const totalDisplay = document.getElementById('total-display');
     const sidebarTotalDisplay = document.getElementById('sidebar-total-display');
-    if (subtotalDisplay) subtotalDisplay.textContent = subtotal.toFixed(2);
-    if (totalDisplay) totalDisplay.textContent = total.toFixed(2);
-    if (sidebarTotalDisplay) sidebarTotalDisplay.textContent = total.toFixed(2);
+    if (subtotalDisplay) subtotalDisplay.textContent = subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (totalDisplay) totalDisplay.textContent = total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (sidebarTotalDisplay) sidebarTotalDisplay.textContent = total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
 
   function bindRowEvents(row) {

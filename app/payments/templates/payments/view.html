@@ -47,7 +47,7 @@
         <div class="flex items-center justify-between">
           <div>
             <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">Monto Recibido</p>
-            <p class="text-3xl font-bold text-emerald-600">{{ session.get('currency','L') }} {{ "%.2f"|format(payment.amount or 0) }}</p>
+            <p class="text-3xl font-bold text-emerald-600">{{ session.get('currency','L') }} {{ (payment.amount or 0) | format_currency }}</p>
           </div>
           <div class="text-right">
             <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Método</p>
@@ -82,7 +82,7 @@
           {% if payment.document.total_amount %}
           <div class="text-right flex-shrink-0">
             <p class="text-xs text-slate-400 mb-0.5">Total Factura</p>
-            <p class="text-sm font-semibold text-slate-800">{{ session.get('currency','L') }} {{ "%.2f"|format(payment.document.total_amount or 0) }}</p>
+            <p class="text-sm font-semibold text-slate-800">{{ session.get('currency','L') }} {{ (payment.document.total_amount or 0) | format_currency }}</p>
           </div>
           {% endif %}
         </div>
@@ -106,7 +106,7 @@
           </div>
           <div>
             <dt class="text-xs text-slate-500 mb-0.5">Monto</dt>
-            <dd class="text-sm font-semibold text-emerald-700">{{ session.get('currency','L') }} {{ "%.2f"|format(payment.amount or 0) }}</dd>
+            <dd class="text-sm font-semibold text-emerald-700">{{ session.get('currency','L') }} {{ (payment.amount or 0) | format_currency }}</dd>
           </div>
         </dl>
       </div>

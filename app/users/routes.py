@@ -388,7 +388,7 @@ def send_password_reset(id):
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)})
 
-@users.route('/search')
+@users.route('/users/search')
 @login_required
 def search():
     query = request.args.get('q', '').strip()

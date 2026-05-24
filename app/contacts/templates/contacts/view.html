@@ -15,11 +15,11 @@
 <div class="px-4 space-y-4">
   <div class="bg-emerald-50 rounded-lg p-3 border border-emerald-100">
     <p class="text-[10px] uppercase font-bold text-emerald-600 tracking-wider mb-1">Total Pagado</p>
-    <p class="text-lg font-bold text-emerald-700">{{ session.get('currency','L') }} {{ "%.2f"|format(stats.total_revenue) }}</p>
+    <p class="text-lg font-bold text-emerald-700">{{ session.get('currency','L') }} {{ stats.total_revenue | format_currency }}</p>
   </div>
   <div class="bg-rose-50 rounded-lg p-3 border border-rose-100">
     <p class="text-[10px] uppercase font-bold text-rose-600 tracking-wider mb-1">Pendiente de Pago</p>
-    <p class="text-lg font-bold text-rose-700">{{ session.get('currency','L') }} {{ "%.2f"|format(stats.pending_payments) }}</p>
+    <p class="text-lg font-bold text-rose-700">{{ session.get('currency','L') }} {{ stats.pending_payments | format_currency }}</p>
   </div>
   <div class="bg-slate-50 rounded-lg p-3 border border-slate-100">
     <p class="text-[10px] uppercase font-bold text-slate-500 tracking-wider mb-1">Total Facturas</p>
@@ -30,7 +30,7 @@
 <div class="px-4 space-y-4">
   <div class="bg-emerald-50 rounded-lg p-3 border border-emerald-100">
     <p class="text-[10px] uppercase font-bold text-emerald-600 tracking-wider mb-1">Valor en Inventario</p>
-    <p class="text-lg font-bold text-emerald-700">{{ session.get('currency','L') }} {{ "%.2f"|format(stats.total_value) }}</p>
+    <p class="text-lg font-bold text-emerald-700">{{ session.get('currency','L') }} {{ stats.total_value | format_currency }}</p>
   </div>
   <div class="bg-purple-50 rounded-lg p-3 border border-purple-100">
     <p class="text-[10px] uppercase font-bold text-purple-600 tracking-wider mb-1">Productos Únicos</p>
@@ -133,7 +133,7 @@
               <a href="{{ url_for('invoices.view', company_id=company_id, id=doc.id) }}" class="text-sm font-medium text-emerald-600 hover:text-emerald-700">{{ doc.document_number }}</a>
             </td>
             <td class="px-4 py-3 text-sm text-slate-600">{{ doc.issued_date.strftime('%d/%m/%Y') if doc.issued_date else '—' }}</td>
-            <td class="px-4 py-3 text-sm font-medium text-slate-900 text-right">{{ session.get('currency','L') }} {{ "%.2f"|format(doc.total_amount or 0) }}</td>
+            <td class="px-4 py-3 text-sm font-medium text-slate-900 text-right">{{ session.get('currency','L') }} {{ (doc.total_amount or 0) | format_currency }}</td>
             <td class="px-4 py-3">
               <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium {{ sc }}">
                 <span class="w-1 h-1 rounded-full {{ sd }}"></span>{{ sl }}
@@ -200,7 +200,7 @@
           <tr class="hover:bg-slate-50 transition-colors">
             <td class="px-4 py-3 text-sm font-medium text-slate-800">{{ item.name }}</td>
             <td class="px-4 py-3 text-sm text-right {{ 'text-rose-600 font-medium' if item.quantity <= 5 else 'text-slate-600' }}">{{ item.quantity }}</td>
-            <td class="px-4 py-3 text-sm text-slate-900 text-right">{{ session.get('currency','L') }} {{ "%.2f"|format(item.price or 0) }}</td>
+            <td class="px-4 py-3 text-sm text-slate-900 text-right">{{ session.get('currency','L') }} {{ (item.price or 0) | format_currency }}</td>
           </tr>
           {% else %}
           <tr><td colspan="3" class="px-4 py-16 text-center text-sm text-slate-400">Este proveedor no tiene productos registrados</td></tr>

@@ -29,12 +29,12 @@
 
   <div class="bg-slate-50 rounded-lg p-3 border border-slate-100 shadow-sm">
     <p class="text-[10px] uppercase font-bold text-slate-500 tracking-wider mb-1">Precio Unitario</p>
-    <p class="text-xl font-bold text-slate-700">{{ session.get('currency','L') }} {{ "%.2f"|format(item.price or 0) }}</p>
+    <p class="text-xl font-bold text-slate-700">{{ session.get('currency','L') }} {{ (item.price or 0) | format_currency }}</p>
   </div>
 
   <div class="bg-sky-50 rounded-lg p-3 border border-sky-100 shadow-sm">
     <p class="text-[10px] uppercase font-bold text-sky-600 tracking-wider mb-1">Valor Total</p>
-    <p class="text-xl font-bold text-sky-700">{{ session.get('currency','L') }} {{ "%.2f"|format((item.quantity or 0) * (item.price or 0)) }}</p>
+    <p class="text-xl font-bold text-sky-700">{{ session.get('currency','L') }} {{ ((item.quantity or 0) * (item.price or 0)) | format_currency }}</p>
   </div>
 </div>
 {% endblock %}

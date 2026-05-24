@@ -152,7 +152,7 @@
                            class="item-price w-full px-2 py-1.5 border border-slate-200 rounded-lg text-sm text-right focus:outline-none focus:ring-1 focus:ring-violet-500 font-medium">
                   </td>
                   <td class="px-4 py-3 text-sm font-semibold text-slate-800 text-right item-total">
-                    {{ "%.2f"|format((oi.quantity or 0) * (oi.price or 0)) }}
+                    {{ ((oi.quantity or 0) * (oi.price or 0)) | format_currency }}
                   </td>
                   <td class="px-2 py-3 text-center">
                     <button type="button" class="remove-order-item text-slate-400 hover:text-rose-500 transition-colors">
@@ -296,10 +296,10 @@
       const qty  = parseFloat(row.querySelector('.item-qty').value)   || 0;
       const price = parseFloat(row.querySelector('.item-price').value) || 0;
       const sub  = qty * price;
-      row.querySelector('.item-total').textContent = sub.toFixed(2);
+      row.querySelector('.item-total').textContent = sub.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
       total += sub; count++;
     });
-    const fmt = total.toFixed(2);
+    const fmt = total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     [subtotalEl, totalEl, sidebarTot, summaryTot].forEach(el => { if (el) el.textContent = fmt; });
     if (sidebarItms) sidebarItms.textContent = count + ' ítem' + (count !== 1 ? 's' : '') + ' agregado' + (count !== 1 ? 's' : '');
     if (summaryItms) summaryItms.textContent = count;
@@ -392,7 +392,7 @@
         </div>
         <div class="flex-1 min-w-0">
           <p class="text-sm font-semibold text-slate-800 truncate group-hover:text-violet-700">${inv.name}</p>
-          <p class="text-xs text-slate-400 mt-0.5">Stock: ${inv.stock} &nbsp;·&nbsp; Precio: {{ session.get('currency','L') }} ${inv.price.toFixed(2)}</p>
+          <p class="text-xs text-slate-400 mt-0.5">Stock: ${inv.stock} &nbsp;·&nbsp; Precio: {{ session.get('currency','L') }} ${inv.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
         </div>
         <span class="text-xs font-semibold text-violet-600 opacity-0 group-hover:opacity-100 transition-opacity">+ Agregar</span>
       `;

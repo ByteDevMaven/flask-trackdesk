@@ -191,7 +191,7 @@
               {{ invoice.issued_date.strftime('%d/%m/%Y') if invoice.issued_date else '—' }}
             </td>
             <td class="px-4 py-3 text-sm font-semibold text-slate-800 text-right">
-              {{ session.get('currency','L') }} {{ "%.2f"|format(invoice.total_amount or 0) }}
+              {{ session.get('currency','L') }} {{ (invoice.total_amount or 0) | format_currency }}
             </td>
             <td class="px-4 py-3">
               <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold {{ sc }} border">
