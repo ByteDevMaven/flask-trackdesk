@@ -1,0 +1,510 @@
+{% extends "base.html" %}
+{% block title %}{{ user.name }} – Usuarios – TrackDesk{% endblock %}
+{% block sidebar_title %}Usuarios{% endblock %}
+
+{% block sidebar_nav %}
+  <div class="px-2 py-1 space-y-1">
+    <a href="{{ url_for('users.index') }}"
+       class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">
+      <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+      </svg>
+      Todos los Usuarios
+    </a>
+
+    <div class="mt-3 mb-1 px-3">
+      <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Este usuario</span>
+    </div>
+
+    <!-- User avatar card in sidebar -->
+    <div class="mx-1 p-3 bg-slate-50 rounded-xl border border-slate-100">
+      <div class="flex items-center gap-2.5 mb-3">
+        <div class="w-9 h-9 rounded-full bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center text-white text-sm font-bold flex-shrink-0 shadow-sm">
+          {{ user.name[:2]|upper }}
+        </div>
+        <div class="min-w-0">
+          <p class="text-xs font-bold text-slate-800 truncate">{{ user.name }}</p>
+          <p class="text-[11px] text-slate-500 truncate">{{ user.role.name|title if user.role else 'Sin rol' }}</p>
+        </div>
+      </div>
+      {% if user.active %}
+      <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        Activo
+      </span>
+      {% else %}
+      <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-500 border border-slate-200">
+        <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+        Inactivo
+      </span>
+      {% endif %}
+    </div>
+
+    <div class="mt-3 mb-1 px-3">
+      <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Acciones</span>
+    </div>
+
+    <button type="button"
+            data-action="open-drawer"
+            data-url="{{ url_for('users.edit', id=user.id) }}"
+            data-title="Editar Usuario"
+            class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors text-left">
+      <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+      </svg>
+      Editar Datos
+    </button>
+
+    {% if user.id != current_user.id %}
+    <button type="button"
+            onclick="toggleStatusAndReload({{ user.id }})"
+            class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors text-left
+                   {{ 'text-amber-600 hover:bg-amber-50' if user.active else 'text-emerald-600 hover:bg-emerald-50' }}">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        {% if user.active %}
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
+        {% else %}
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+        {% endif %}
+      </svg>
+      {{ 'Desactivar cuenta' if user.active else 'Activar cuenta' }}
+    </button>
+
+    <button type="button"
+            data-action="confirm-delete"
+            data-url="{{ url_for('users.delete', id=user.id) }}"
+            data-name="{{ user.name }}"
+            class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-rose-600 hover:bg-rose-50 text-sm transition-colors text-left">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+      </svg>
+      Eliminar usuario
+    </button>
+    {% endif %}
+
+    {% if user.companies %}
+    <div class="mt-3 mb-1 px-3">
+      <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Empresas</span>
+    </div>
+    {% for company in user.companies %}
+    <a href="{{ url_for('companies.view', id=company.id) }}"
+       class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">
+      <div class="w-5 h-5 rounded bg-slate-200 flex items-center justify-center text-slate-600 text-[10px] font-bold flex-shrink-0">
+        {{ company.name[:2]|upper }}
+      </div>
+      <span class="truncate">{{ company.name }}</span>
+    </a>
+    {% endfor %}
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block page_title %}Perfil de Usuario{% endblock %}
+
+{% block content %}
+<div class="flex flex-col h-full overflow-hidden bg-slate-50">
+
+  <!-- Profile Banner Header -->
+  <div class="bg-white border-b border-slate-200 flex-shrink-0">
+
+    <!-- Breadcrumb -->
+    <div class="px-6 pt-3 flex items-center gap-2 text-xs text-slate-500">
+      <a href="{{ url_for('users.index') }}" class="hover:text-slate-700 transition-colors">Usuarios</a>
+      <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+      </svg>
+      <span class="text-slate-700 font-medium">{{ user.name }}</span>
+    </div>
+
+    <!-- Profile hero row -->
+    <div class="px-6 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-5">
+        <!-- Large avatar -->
+        <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center text-white text-2xl font-bold shadow-md flex-shrink-0">
+          {{ user.name[:2]|upper }}
+        </div>
+        <div>
+          <div class="flex items-center gap-2.5 mb-1">
+            <h2 class="text-xl font-bold text-slate-900">{{ user.name }}</h2>
+            {% if user.id == current_user.id %}
+            <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-50 text-amber-700 border border-amber-200">Tú</span>
+            {% endif %}
+            {% if user.active %}
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              Activo
+            </span>
+            {% else %}
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-500">
+              <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+              Inactivo
+            </span>
+            {% endif %}
+          </div>
+          <div class="flex items-center gap-4 text-sm text-slate-500">
+            <a href="mailto:{{ user.email }}" class="hover:text-emerald-600 transition-colors flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+              {{ user.email }}
+            </a>
+            {% if user.role %}
+            <span class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+              {{ user.role.name|title }}
+            </span>
+            {% endif %}
+            {% if account_age_days is defined %}
+            <span class="flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+              </svg>
+              {{ account_age_days }} días como miembro
+            </span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Action buttons -->
+      <div class="flex items-center gap-2 flex-shrink-0">
+        {% if user.id != current_user.id %}
+        <button type="button"
+                onclick="toggleStatusAndReload({{ user.id }})"
+                class="flex items-center gap-2 px-3 py-2 border rounded-lg text-sm font-medium transition-colors
+                       {{ 'border-slate-200 text-slate-600 hover:bg-slate-50' if user.active else 'border-emerald-200 text-emerald-600 hover:bg-emerald-50' }}">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {% if user.active %}
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
+            {% else %}
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            {% endif %}
+          </svg>
+          {{ 'Desactivar' if user.active else 'Activar' }}
+        </button>
+        {% endif %}
+        <button type="button"
+                data-action="open-drawer"
+                data-url="{{ url_for('users.edit', id=user.id) }}"
+                data-title="Editar Usuario"
+                class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors shadow-sm">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+          </svg>
+          Editar
+        </button>
+      </div>
+    </div>
+
+    <!-- Tab bar -->
+    <div class="px-6 flex gap-6 border-t border-slate-100">
+      <button class="pb-3 pt-1 text-sm font-semibold border-b-2 border-emerald-600 text-emerald-700">
+        Información
+      </button>
+    </div>
+  </div>
+
+  <!-- Main content scrollable area -->
+  <div class="flex-1 overflow-y-auto p-6">
+    <div class="grid grid-cols-12 gap-6">
+
+      <!-- Left column: Account Details -->
+      <div class="col-span-12 lg:col-span-7 xl:col-span-8 space-y-6">
+
+        <!-- Account Info Card -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+            <h3 class="text-sm font-semibold text-slate-900">Información de la Cuenta</h3>
+            <button type="button"
+                    data-action="open-drawer"
+                    data-url="{{ url_for('users.edit', id=user.id) }}"
+                    data-title="Editar Usuario"
+                    class="text-xs font-medium text-emerald-600 hover:text-emerald-700 transition-colors flex items-center gap-1">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+              </svg>
+              Editar
+            </button>
+          </div>
+          <div class="divide-y divide-slate-50">
+            <div class="grid grid-cols-2 divide-x divide-slate-50">
+              <div class="px-6 py-4">
+                <p class="text-xs font-medium text-slate-400 uppercase tracking-wide mb-1">Nombre completo</p>
+                <p class="text-sm font-semibold text-slate-800">{{ user.name }}</p>
+              </div>
+              <div class="px-6 py-4">
+                <p class="text-xs font-medium text-slate-400 uppercase tracking-wide mb-1">Correo electrónico</p>
+                <a href="mailto:{{ user.email }}" class="text-sm text-emerald-600 hover:text-emerald-700 transition-colors font-medium">{{ user.email }}</a>
+              </div>
+            </div>
+            <div class="grid grid-cols-2 divide-x divide-slate-50">
+              <div class="px-6 py-4">
+                <p class="text-xs font-medium text-slate-400 uppercase tracking-wide mb-1">Rol</p>
+                {% if user.role %}
+                {% set role_name = user.role.name|lower %}
+                {% if 'admin' in role_name %}
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-violet-50 text-violet-700 border border-violet-100">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                  {{ user.role.name|title }}
+                </span>
+                {% else %}
+                <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600">
+                  <span class="w-1 h-1 rounded-full bg-slate-400"></span>
+                  {{ user.role.name|title }}
+                </span>
+                {% endif %}
+                {% else %}
+                <span class="text-sm text-slate-400 italic">Sin rol asignado</span>
+                {% endif %}
+              </div>
+              <div class="px-6 py-4">
+                <p class="text-xs font-medium text-slate-400 uppercase tracking-wide mb-1">Estado</p>
+                {% if user.active %}
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                  Cuenta Activa
+                </span>
+                {% else %}
+                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-500 border border-slate-200">
+                  <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                  Cuenta Inactiva
+                </span>
+                {% endif %}
+              </div>
+            </div>
+            <div class="grid grid-cols-2 divide-x divide-slate-50">
+              <div class="px-6 py-4">
+                <p class="text-xs font-medium text-slate-400 uppercase tracking-wide mb-1">ID de usuario</p>
+                <span class="text-sm font-mono text-slate-600 bg-slate-50 px-2 py-0.5 rounded border border-slate-100">#{{ user.id }}</span>
+              </div>
+              <div class="px-6 py-4">
+                <p class="text-xs font-medium text-slate-400 uppercase tracking-wide mb-1">Miembro desde</p>
+                <p class="text-sm text-slate-700">{{ user.created_at.strftime('%d de %B de %Y') if user.created_at else '—' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Companies Card -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+            <div class="flex items-center gap-2">
+              <h3 class="text-sm font-semibold text-slate-900">Empresas Asignadas</h3>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">{{ user.companies|length }}</span>
+            </div>
+            <button type="button"
+                    data-action="open-drawer"
+                    data-url="{{ url_for('users.edit', id=user.id) }}"
+                    data-title="Editar Usuario"
+                    class="text-xs font-medium text-emerald-600 hover:text-emerald-700 transition-colors flex items-center gap-1">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+              </svg>
+              Administrar
+            </button>
+          </div>
+          {% if user.companies %}
+          <div class="divide-y divide-slate-50">
+            {% for company in user.companies %}
+            <div class="flex items-center justify-between px-6 py-4 hover:bg-slate-50/50 transition-colors">
+              <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center text-slate-700 font-bold text-sm flex-shrink-0">
+                  {{ company.name[:2]|upper }}
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-slate-800">{{ company.name }}</p>
+                  <div class="flex items-center gap-3 mt-0.5">
+                    {% if company.identifier %}
+                    <span class="text-xs text-slate-400 font-mono">{{ company.identifier }}</span>
+                    {% endif %}
+                    {% if company.email %}
+                    <span class="text-xs text-slate-400">{{ company.email }}</span>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                {% if company.currency %}
+                <span class="text-xs font-semibold text-slate-500 bg-slate-50 border border-slate-100 px-2 py-1 rounded-lg">{{ company.currency }}</span>
+                {% endif %}
+                {% if company.tax_rate %}
+                <span class="text-xs text-slate-400">ISV {{ company.tax_rate }}%</span>
+                {% endif %}
+                <a href="{{ url_for('companies.view', id=company.id) }}"
+                   class="flex items-center gap-1 text-xs font-medium text-emerald-600 hover:text-emerald-700 transition-colors">
+                  Ver
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                  </svg>
+                </a>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% else %}
+          <div class="px-6 py-12 text-center">
+            <div class="w-12 h-12 bg-slate-50 border border-slate-100 rounded-full flex items-center justify-center text-slate-400 mx-auto mb-3">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+              </svg>
+            </div>
+            <p class="text-sm text-slate-500 font-medium">Sin empresas asignadas</p>
+            <button type="button"
+                    data-action="open-drawer"
+                    data-url="{{ url_for('users.edit', id=user.id) }}"
+                    data-title="Editar Usuario"
+                    class="mt-2 text-sm text-emerald-600 hover:text-emerald-700 font-medium">
+              Asignar empresa →
+            </button>
+          </div>
+          {% endif %}
+        </div>
+
+      </div>
+
+      <!-- Right column: Stats & Danger Zone -->
+      <div class="col-span-12 lg:col-span-5 xl:col-span-4 space-y-6">
+
+        <!-- Quick Stats -->
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+          <div class="px-5 py-4 border-b border-slate-100">
+            <h3 class="text-sm font-semibold text-slate-900">Resumen</h3>
+          </div>
+          <div class="p-5 space-y-4">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center text-emerald-600 flex-shrink-0">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                  </svg>
+                </div>
+                <span class="text-sm text-slate-600">Empresas asignadas</span>
+              </div>
+              <span class="text-sm font-bold text-slate-900">{{ user.companies|length }}</span>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-violet-50 flex items-center justify-center text-violet-600 flex-shrink-0">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                  </svg>
+                </div>
+                <span class="text-sm text-slate-600">Rol</span>
+              </div>
+              <span class="text-sm font-bold text-slate-900">{{ user.role.name|title if user.role else '—' }}</span>
+            </div>
+
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-sky-50 flex items-center justify-center text-sky-600 flex-shrink-0">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                  </svg>
+                </div>
+                <span class="text-sm text-slate-600">Miembro desde</span>
+              </div>
+              <span class="text-sm font-bold text-slate-900">{{ user.created_at.strftime('%d %b %Y') if user.created_at else '—' }}</span>
+            </div>
+
+            {% if account_age_days is defined %}
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center text-amber-600 flex-shrink-0">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                </div>
+                <span class="text-sm text-slate-600">Antigüedad</span>
+              </div>
+              <span class="text-sm font-bold text-slate-900">{{ account_age_days }} días</span>
+            </div>
+            {% endif %}
+
+            <div class="pt-3 border-t border-slate-100">
+              <div class="flex items-center justify-between mb-1.5">
+                <span class="text-xs text-slate-500">Estado de cuenta</span>
+                <span class="text-xs font-semibold {{ 'text-emerald-600' if user.active else 'text-slate-500' }}">
+                  {{ 'Activa' if user.active else 'Inactiva' }}
+                </span>
+              </div>
+              <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                <div class="h-full rounded-full {{ 'bg-emerald-500 w-full' if user.active else 'bg-slate-300 w-1/3' }} transition-all"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Danger Zone -->
+        {% if user.id != current_user.id %}
+        <div class="bg-white rounded-xl border border-rose-200 shadow-sm overflow-hidden">
+          <div class="px-5 py-4 border-b border-rose-100 bg-rose-50/50">
+            <h3 class="text-sm font-semibold text-rose-700 flex items-center gap-2">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+              </svg>
+              Zona de Peligro
+            </h3>
+          </div>
+          <div class="p-5 space-y-3">
+            <div class="p-3 rounded-lg border border-slate-100 bg-slate-50/50">
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <p class="text-xs font-semibold text-slate-700">{{ 'Desactivar' if user.active else 'Activar' }} acceso</p>
+                  <p class="text-xs text-slate-400 mt-0.5">
+                    {% if user.active %}El usuario perderá acceso inmediatamente.{% else %}El usuario podrá volver a iniciar sesión.{% endif %}
+                  </p>
+                </div>
+                <button type="button"
+                        onclick="toggleStatusAndReload({{ user.id }})"
+                        class="flex-shrink-0 px-3 py-1.5 border rounded-lg text-xs font-semibold transition-colors
+                               {{ 'border-amber-200 text-amber-700 hover:bg-amber-50' if user.active else 'border-emerald-200 text-emerald-700 hover:bg-emerald-50' }}">
+                  {{ 'Desactivar' if user.active else 'Activar' }}
+                </button>
+              </div>
+            </div>
+            <div class="p-3 rounded-lg border border-rose-100 bg-rose-50/30">
+              <div class="flex items-center justify-between gap-3">
+                <div>
+                  <p class="text-xs font-semibold text-rose-700">Eliminar cuenta</p>
+                  <p class="text-xs text-rose-400 mt-0.5">Permanente e irreversible.</p>
+                </div>
+                <button type="button"
+                        data-action="confirm-delete"
+                        data-url="{{ url_for('users.delete', id=user.id) }}"
+                        data-name="{{ user.name }}"
+                        class="flex-shrink-0 px-3 py-1.5 border border-rose-300 text-rose-700 hover:bg-rose-50 rounded-lg text-xs font-semibold transition-colors">
+                  Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function toggleStatusAndReload(userId) {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || '';
+    fetch(`/users/${userId}/toggle-status`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-CSRFToken': csrfToken }
+    })
+    .then(r => r.json())
+    .then(data => {
+      if (data.success) {
+        window.location.reload();
+      } else {
+        alert(data.message || 'Error al cambiar el estado');
+      }
+    })
+    .catch(() => alert('Error de conexión'));
+  }
+</script>
+{% endblock %}
