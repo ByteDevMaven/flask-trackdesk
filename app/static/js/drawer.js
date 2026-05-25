@@ -31,7 +31,7 @@ function closeDrawer() {
 
   setTimeout(() => {
     const body = document.getElementById('drawer-body');
-    if (body) body.innerHTML = '';
+    if (body) body.replaceChildren();
   }, 300);
 }
 
@@ -42,11 +42,16 @@ async function loadDrawerContent(url, title) {
   const body = document.getElementById('drawer-body');
   if (!body) return;
 
-  body.innerHTML = `
-    <div class="flex items-center justify-center h-64">
-      <div class="w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
-    </div>
-  `;
+  // Clear body safely
+  body.replaceChildren();
+
+  // Create loading element safely using document.createElement
+  const loaderWrapper = document.createElement('div');
+  loaderWrapper.className = 'flex items-center justify-center h-64';
+  const loader = document.createElement('div');
+  loader.className = 'w-8 h-8 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin';
+  loaderWrapper.appendChild(loader);
+  body.appendChild(loaderWrapper);
 
   openDrawer(title);
 
@@ -58,13 +63,39 @@ async function loadDrawerContent(url, title) {
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
     const html = await res.text();
-    body.innerHTML = html;
+    
+    // Parse fetched HTML string safely using DOMParser
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    
+    // Clear spinner and append parsed HTML nodes safely
+    body.replaceChildren();
+    while (doc.body.firstChild) {
+      body.appendChild(doc.body.firstChild);
+    }
+
+    // Evaluate injected scripts so form-specific JS (like receipt previews) runs perfectly
+    body.querySelectorAll('script').forEach(script => {
+      const newScript = document.createElement('script');
+      if (script.src) {
+        newScript.src = script.src;
+      } else {
+        newScript.textContent = script.textContent;
+      }
+      document.body.appendChild(newScript);
+      newScript.remove();
+    });
 
     const form = body.querySelector('form[data-drawer-form]');
     if (form) attachDrawerFormSubmit(form);
 
   } catch (err) {
-    body.innerHTML = `
+    // Clear body safely
+    body.replaceChildren();
+    
+    // Parse static error HTML template safely using DOMParser
+    const errorParser = new DOMParser();
+    const errorDoc = errorParser.parseFromString(`
       <div class="p-6 text-center">
         <div class="w-12 h-12 bg-rose-100 rounded-full flex items-center justify-center mx-auto mb-3">
           <svg class="w-6 h-6 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -72,12 +103,20 @@ async function loadDrawerContent(url, title) {
           </svg>
         </div>
         <p class="text-sm text-slate-600">Error al cargar el formulario</p>
-        <button onclick="closeDrawer()" class="mt-3 text-sm text-emerald-600 hover:text-emerald-700 font-medium">Cerrar</button>
+        <button id="drawer-error-close-btn" class="mt-3 text-sm text-emerald-600 hover:text-emerald-700 font-medium">Cerrar</button>
       </div>
-    `;
+    `, 'text/html');
+    
+    while (errorDoc.body.firstChild) {
+      body.appendChild(errorDoc.body.firstChild);
+    }
+    
+    const errBtn = body.querySelector('#drawer-error-close-btn');
+    if (errBtn) {
+      errBtn.addEventListener('click', closeDrawer);
+    }
   }
 }
-
 
 function attachDrawerFormSubmit(form) {
   form.addEventListener('submit', async (e) => {
@@ -162,7 +201,12 @@ async function reloadSection(target) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(html, 'text/html');
     const newContent = doc.querySelector(target.id ? `#${target.id}` : target.className);
-    if (newContent) target.innerHTML = newContent.innerHTML;
+    if (newContent) {
+      target.replaceChildren();
+      while (newContent.firstChild) {
+        target.appendChild(newContent.firstChild);
+      }
+    }
   } catch {
     location.reload();
   }

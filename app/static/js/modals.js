@@ -34,17 +34,37 @@ window.triggerToast = function(message, isSuccess = true, duration = 4000) {
     colorClasses
   ].join(' ');
 
-  toast.innerHTML = `
-    <svg class="w-5 h-5 flex-shrink-0 ${iconColor}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${iconPath}"/>
-    </svg>
-    <span class="flex-1 text-slate-700">${message}</span>
-    <button class="text-slate-400 hover:text-slate-600 transition-colors flex-shrink-0" onclick="this.closest('[class*=toast]').remove()">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(`
+    <div class="toast-content flex items-center gap-3 w-full">
+      <svg class="w-5 h-5 flex-shrink-0 ${iconColor}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${iconPath}"/>
       </svg>
-    </button>
-  `;
+      <span class="flex-1 text-slate-700"></span>
+      <button class="text-slate-400 hover:text-slate-600 transition-colors flex-shrink-0">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+  `, 'text/html');
+
+  // Set the message safely via textContent to completely eliminate XSS
+  const messageSpan = doc.querySelector('span');
+  if (messageSpan) messageSpan.textContent = message;
+
+  const closeBtn = doc.querySelector('button');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', () => toast.remove());
+  }
+
+  // Transfer children nodes safely
+  const wrapper = doc.body.firstElementChild;
+  if (wrapper) {
+    while (wrapper.firstChild) {
+      toast.appendChild(wrapper.firstChild);
+    }
+  }
 
   container.appendChild(toast);
 
@@ -91,7 +111,12 @@ window.showConfirmModal = function(options) {
     success: { icon: 'bg-emerald-100', iconStroke: 'text-emerald-600', btn: 'bg-emerald-600 hover:bg-emerald-700', path: 'M5 13l4 4L19 7' },
   };
 
-  const colors = colorMap[type] || colorMap.warning;
+  let colors = colorMap.warning;
+  if (type === 'danger') {
+    colors = colorMap.danger;
+  } else if (type === 'success') {
+    colors = colorMap.success;
+  }
 
   const modal = document.getElementById('confirm-modal');
   if (!modal) return;

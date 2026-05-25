@@ -72,6 +72,8 @@ def create(company_id):
                 description=request.form.get('description', '').strip(),
                 quantity=int(request.form.get('quantity', 0)),
                 price=float(request.form.get('price', 0.0)),
+                cost_price=float(request.form.get('cost_price', 0.0) or 0.0),
+                discount=float(request.form.get('discount', 0.0) or 0.0),
                 supplier_id=request.form.get('supplier_id')
             )
             flash(_('Inventory item created successfully'), 'success')
@@ -92,12 +94,13 @@ def create(company_id):
 @login_required
 @limiter.exempt
 def view(company_id, id):
+    from app.models import Company
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
+    company = Company.query.get_or_404(company_id)
     
     page = request.args.get('page', 1, type=int)
     per_page = 10
     
-                                                                      
     pagination = InventoryService.get_stock_movements(company_id, item_id=id, page=page, per_page=per_page)
     db_movements = pagination.items
     
@@ -105,15 +108,15 @@ def view(company_id, id):
     for m in db_movements:
         movements.append({
             'date': m.date,
-            'type': m.type.value.title(),
+            'type': m.type.value,  # raw enum value: 'incoming', 'outgoing', 'adjustment'
             'reference': m.reference or '-',
-            'qty_change': m.quantity,
-            'status': 'completed',                                                       
+            'qty_change': m.qty_change,  # signed: negative for outgoing
             'notes': m.notes
         })
     
-    return render_template('inventory/view.html', 
-                          company_id=company_id, 
+    return render_template('inventory/view.html',
+                          company_id=company_id,
+                          company=company,
                           item=item,
                           movements=movements,
                           pagination=pagination)
@@ -171,6 +174,8 @@ def update(company_id, id):
             description=request.form.get('description', '').strip(),
             quantity=int(request.form.get('quantity', 0)),
             price=float(request.form.get('price', 0.0)),
+            cost_price=float(request.form.get('cost_price', 0.0) or 0.0),
+            discount=float(request.form.get('discount', 0.0) or 0.0),
             supplier_id=request.form.get('supplier_id')
         )
         
@@ -304,6 +309,8 @@ def api_create_item(company_id):
             description=data.get('description'),
             quantity=data.get('quantity', 0),
             price=data.get('price', 0.0),
+            cost_price=data.get('cost_price', 0.0),
+            discount=data.get('discount', 0.0),
             supplier_id=data.get('supplier_id')
         )
         
@@ -313,6 +320,8 @@ def api_create_item(company_id):
             'description': item.description,
             'quantity': item.quantity,
             'price': item.price,
+            'cost_price': item.cost_price,
+            'discount': item.discount,
             'supplier_id': item.supplier_id
         }), 201
         
@@ -340,6 +349,8 @@ def api_update_item(company_id, id):
             description=data.get('description'),
             quantity=data.get('quantity'),
             price=data.get('price'),
+            cost_price=data.get('cost_price'),
+            discount=data.get('discount'),
             supplier_id=data.get('supplier_id')
         )
         
@@ -349,6 +360,8 @@ def api_update_item(company_id, id):
             'description': item.description,
             'quantity': item.quantity,
             'price': item.price,
+            'cost_price': item.cost_price,
+            'discount': item.discount,
             'supplier_id': item.supplier_id
         })
         

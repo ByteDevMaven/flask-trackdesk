@@ -68,8 +68,7 @@
         </svg>
         <span id="receipt-label" class="text-sm text-slate-400 group-hover:text-emerald-600 transition-colors font-medium">Haga clic o arrastre un archivo aquí</span>
         <span class="text-xs text-slate-400">PDF, PNG, JPG, WEBP — máx. 16 MB</span>
-        <input type="file" name="receipt_file" id="receipt-file-input" accept=".pdf,.png,.jpg,.jpeg,.webp,.heic" class="sr-only"
-               onchange="document.getElementById('receipt-label').textContent = this.files[0]?.name || 'Haga clic o arrastre un archivo aquí'">
+        <input type="file" name="receipt_file" id="receipt-file-input" accept=".pdf,.png,.jpg,.jpeg,.webp,.heic" class="sr-only">
       </label>
       
       {# Vista previa del archivo seleccionado #}

@@ -184,13 +184,17 @@ class InventoryService:
         return output_buffer, barcode_data
 
     @staticmethod
-    def create_inventory_item(company_id, name, description=None, quantity=0, price=0.0, supplier_id=None):
+    def create_inventory_item(company_id, name, description=None, quantity=0, price=0.0, cost_price=0.0, discount=0.0, supplier_id=None):
         if not name:
             raise ValueError(_('Name is required'))
         if quantity < 0:
             raise ValueError(_('Quantity cannot be negative'))
         if price < 0:
             raise ValueError(_('Price cannot be negative'))
+        if cost_price < 0:
+            raise ValueError(_('Cost price cannot be negative'))
+        if discount < 0 or discount > 100:
+            raise ValueError(_('Discount must be between 0 and 100'))
 
         item = InventoryItem(
             company_id=company_id,
@@ -198,6 +202,8 @@ class InventoryService:
             description=description,
             quantity=quantity,
             price=price,
+            cost_price=cost_price,
+            discount=discount,
             supplier_id=int(supplier_id) if supplier_id and str(supplier_id).isdigit() else None
         )
         db.session.add(item)
@@ -209,7 +215,7 @@ class InventoryService:
         return InventoryItem.query.filter_by(id=item_id, company_id=company_id).first()
 
     @staticmethod
-    def update_inventory_item(company_id, item_id, name=None, description=None, quantity=None, price=None, supplier_id=None):
+    def update_inventory_item(company_id, item_id, name=None, description=None, quantity=None, price=None, cost_price=None, discount=None, supplier_id=None):
         item = InventoryItem.query.filter_by(id=item_id, company_id=company_id).first_or_404()
         
         if name is not None:
@@ -229,6 +235,16 @@ class InventoryService:
             if price < 0:
                 raise ValueError(_('Price cannot be negative'))
             item.price = price
+
+        if cost_price is not None:
+            if cost_price < 0:
+                raise ValueError(_('Cost price cannot be negative'))
+            item.cost_price = cost_price
+
+        if discount is not None:
+            if discount < 0 or discount > 100:
+                raise ValueError(_('Discount must be between 0 and 100'))
+            item.discount = discount
             
         if supplier_id is not None:
             item.supplier_id = int(supplier_id) if str(supplier_id).isdigit() else None
