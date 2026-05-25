@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Registrar Gasto · {{ company.name }}{% endblock %}
+{% block page_title %}Registrar Gasto{% endblock %}
+{% block sidebar_title %}Contabilidad{% endblock %}
+
+{% block sidebar_nav %}
+<div class="space-y-0.5">
+  <a href="{{ url_for('accounting.index', company_id=company.id) }}"
+    class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'accounting.index' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+    <span
+      class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if request.endpoint == 'accounting.index' else 'bg-slate-300' }}"></span>
+    Resumen
+  </a>
+
+  <a href="{{ url_for('accounting.ledger', company_id=company.id) }}"
+    class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'accounting.ledger' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+    <span
+      class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if request.endpoint == 'accounting.ledger' else 'bg-slate-300' }}"></span>
+    Libro Mayor
+  </a>
+
+  <a href="{{ url_for('accounting.chart_of_accounts', company_id=company.id) }}"
+    class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'accounting.chart_of_accounts' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+    <span
+      class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if request.endpoint == 'accounting.chart_of_accounts' else 'bg-slate-300' }}"></span>
+    Plan de Cuentas
+  </a>
+
+  <div class="pt-4 pb-1 px-3">
+    <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Acciones rápidas</span>
+  </div>
+
+  <button data-action="open-drawer" data-url="{{ url_for('accounting.create_expense', company_id=company.id) }}"
+    data-title="Registrar Gasto"
+    class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">
+    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+    Registrar Gasto
+  </button>
+
+  <button data-action="open-drawer" data-url="{{ url_for('accounting.create_project', company_id=company.id) }}"
+    data-title="Nuevo Proyecto"
+    class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">
+    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+    Nuevo Proyecto
+  </button>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto p-6">
+  <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+    {% include 'accounting/partials/expense_form.html' %}
+  </div>
+</div>
+{% endblock %}

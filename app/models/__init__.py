@@ -1,5 +1,5 @@
 from app.extensions import db, migrate
-from .enums import DocumentType, InvoiceType, StockMovementType, PaymentMethod
+from .enums import DocumentType, InvoiceType, StockMovementType, PaymentMethod, AccountType
 from .associations import role_permissions, user_companies
 from .company import Company
 from .role import Role
@@ -16,6 +16,10 @@ from .report import Report
 from .notification import Notification
 from .stock_movement import StockMovement
 from .document_sequence import DocumentSequence
+from .account import Account
+from .project import Project
+from .expense import Expense
+from .ledger_entry import LedgerEntry
 
 __all__ = [
     'db', 'migrate',
@@ -24,5 +28,6 @@ __all__ = [
     'Company', 'Role', 'Permission', 'User', 'Contact',
     'InventoryItem', 'PurchaseOrder', 'PurchaseOrderItem',
     'Document', 'DocumentItem', 'Payment', 'Report', 'Notification',
-    'StockMovement', 'DocumentSequence'
+    'StockMovement', 'DocumentSequence',
+    'AccountType', 'Account', 'Project', 'Expense', 'LedgerEntry'
 ]

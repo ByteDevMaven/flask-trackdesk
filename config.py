@@ -26,6 +26,11 @@ class Config:
     
                          
     LANGUAGES = {}
+    
+    # File uploads for expense receipts
+    UPLOAD_FOLDER = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'app', 'static', 'uploads')
+    MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16 MB max
+    ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg', 'webp', 'heic'}
 
     @staticmethod
     def init_app(app):

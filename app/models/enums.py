@@ -1,5 +1,12 @@
 import enum
 
+class AccountType(enum.Enum):
+    asset = 'asset'
+    liability = 'liability'
+    equity = 'equity'
+    revenue = 'revenue'
+    expense = 'expense'
+
 class DocumentType(enum.Enum):
     quote = 'quote'
     invoice = 'invoice'

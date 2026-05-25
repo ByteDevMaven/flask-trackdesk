@@ -1,0 +1,43 @@
+<form method="POST"
+      action="{{ url_for('accounting.create_project', company_id=company.id) }}"
+      data-drawer-form
+      data-success-message="Proyecto creado exitosamente">
+
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+  <div class="p-6 space-y-5">
+
+    <div>
+      <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Nombre del Proyecto <span class="text-rose-500">*</span></label>
+      <input type="text" name="name" required autofocus
+             placeholder="Ej: Construcción del nuevo edificio, Campaña Q2…"
+             class="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+    </div>
+
+    <div>
+      <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Descripción</label>
+      <textarea name="description" rows="4"
+                placeholder="Describa el propósito del proyecto o grupo de costos…"
+                class="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none"></textarea>
+    </div>
+
+    <div class="rounded-lg bg-blue-50 border border-blue-100 p-3">
+      <p class="text-xs text-blue-700">
+        <strong>Consejo:</strong> Los proyectos le permiten agrupar gastos e ingresos relacionados para generar reportes. Por ejemplo, rastree todos los costos de una construcción o una campaña.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="sticky bottom-0 bg-white border-t border-slate-200 p-4 flex gap-3 z-10">
+    <button type="button" onclick="closeDrawer()"
+            class="flex-1 px-4 py-2.5 border border-slate-300 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors">
+      Cancelar
+    </button>
+    <button type="submit"
+            class="flex-1 px-4 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-semibold hover:bg-emerald-700 transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+      Crear Proyecto
+    </button>
+  </div>
+
+</form>

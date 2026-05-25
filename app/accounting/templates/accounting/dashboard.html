@@ -1,0 +1,285 @@
+{% extends "base.html" %}
+
+{% block title %}Contabilidad · {{ company.name }}{% endblock %}
+{% block page_title %}Contabilidad{% endblock %}
+{% block sidebar_title %}Contabilidad{% endblock %}
+
+{% block sidebar_nav %}
+<div class="space-y-0.5">
+  <a href="{{ url_for('accounting.index', company_id=company.id) }}"
+    class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'accounting.index' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+    <span
+      class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if request.endpoint == 'accounting.index' else 'bg-slate-300' }}"></span>
+    Resumen
+  </a>
+
+  <a href="{{ url_for('accounting.ledger', company_id=company.id) }}"
+    class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'accounting.ledger' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+    <span
+      class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if request.endpoint == 'accounting.ledger' else 'bg-slate-300' }}"></span>
+    Libro Mayor
+  </a>
+
+  <a href="{{ url_for('accounting.chart_of_accounts', company_id=company.id) }}"
+    class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'accounting.chart_of_accounts' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+    <span
+      class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if request.endpoint == 'accounting.chart_of_accounts' else 'bg-slate-300' }}"></span>
+    Plan de Cuentas
+  </a>
+
+  <div class="pt-4 pb-1 px-3">
+    <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Acciones rápidas</span>
+  </div>
+
+  <button data-action="open-drawer" data-url="{{ url_for('accounting.create_expense', company_id=company.id) }}"
+    data-title="Registrar Gasto"
+    class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">
+    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+    Registrar Gasto
+  </button>
+
+  <button data-action="open-drawer" data-url="{{ url_for('accounting.create_project', company_id=company.id) }}"
+    data-title="Nuevo Proyecto"
+    class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">
+    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+    Nuevo Proyecto
+  </button>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="flex flex-col h-full overflow-hidden bg-slate-50">
+  <header class="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between flex-shrink-0">
+    <h1 class="text-lg font-semibold text-slate-800">Centro de Mando Financiero</h1>
+    <div class="flex items-center gap-2">
+      <button data-action="open-drawer" data-url="{{ url_for('accounting.create_project', company_id=company.id) }}"
+        data-title="Nuevo Proyecto"
+        class="flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors shadow-sm bg-white">
+        Nuevo Proyecto
+      </button>
+      <button data-action="open-drawer" data-url="{{ url_for('accounting.create_expense', company_id=company.id) }}"
+        data-title="Registrar Gasto"
+        class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors shadow-sm">
+        + Registrar Gasto
+      </button>
+    </div>
+  </header>
+
+  <div class="flex-1 overflow-y-auto p-6 space-y-6">
+
+    {% set revenue = type_totals.get('revenue', 0.0) %}
+    {% set expense = type_totals.get('expense', 0.0) %}
+    {% set asset = type_totals.get('asset', 0.0) %}
+    {% set profit = revenue - expense %}
+    {% set margin = (profit / revenue * 100) if revenue > 0 else 0 %}
+
+    {% set expense_pct = (expense / revenue * 100) if revenue > 0 else 0 %}
+    {% if expense_pct > 100 %}{% set expense_pct = 100 %}{% endif %}
+    {% set profit_pct = 100 - expense_pct %}
+
+    <!-- Visual Health Bar -->
+    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-sm">
+      <div class="flex items-end justify-between mb-4">
+        <div>
+          <h2 class="text-sm font-semibold text-slate-800">Métricas de Rentabilidad</h2>
+          <p class="text-xs text-slate-500 mt-1">Análisis de ingresos vs. gastos</p>
+        </div>
+        <div class="text-right">
+          <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Margen de Beneficio</span>
+          <p class="text-2xl font-bold {% if margin >= 0 %}text-emerald-600{% else %}text-rose-600{% endif %} mt-1">
+            {{ "%.1f"|format(margin) }}%
+          </p>
+        </div>
+      </div>
+
+      <!-- CSS Stacked Bar -->
+      <div class="h-4 w-full bg-slate-100 rounded-full overflow-hidden flex shadow-inner">
+        {% if revenue > 0 %}
+        <div class="h-full bg-rose-500 transition-all duration-500 relative group" style="width: {{ expense_pct }}%">
+          <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        </div>
+        <div class="h-full bg-emerald-500 transition-all duration-500 relative group" style="width: {{ profit_pct }}%">
+          <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        </div>
+        {% else %}
+        <div class="h-full w-full bg-slate-200"></div>
+        {% endif %}
+      </div>
+      <div class="flex items-center justify-between mt-3 text-xs font-medium">
+        <div class="flex items-center gap-1.5">
+          <span class="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-sm"></span>
+          <span class="text-slate-600">Gastos ({{ company.currency }}{{ "%.2f"|format(expense) }})</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <span class="text-slate-600">Beneficio Neto ({{ company.currency }}{{ "%.2f"|format(profit) }})</span>
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-sm"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Metric Cards -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+        <p class="text-sm font-medium text-slate-500 mb-2">Ingresos Brutos</p>
+        <p class="text-2xl font-bold text-slate-900">{{ company.currency }}{{ "%.2f"|format(revenue) }}</p>
+        <p class="text-xs text-sky-600 mt-1 font-medium bg-sky-50 inline-block px-2 py-0.5 rounded-full">Cuentas de
+          ingreso</p>
+      </div>
+      <div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+        <p class="text-sm font-medium text-slate-500 mb-2">Gastos Totales</p>
+        <p class="text-2xl font-bold text-slate-900">{{ company.currency }}{{ "%.2f"|format(expense) }}</p>
+        <p class="text-xs text-rose-600 mt-1 font-medium bg-rose-50 inline-block px-2 py-0.5 rounded-full">Operativos y
+          Generales</p>
+      </div>
+      <div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+        <p class="text-sm font-medium text-slate-500 mb-2">Beneficio Neto</p>
+        <p class="text-2xl font-bold {% if profit >= 0 %}text-emerald-600{% else %}text-rose-600{% endif %}">{{
+          company.currency }}{{ "%.2f"|format(profit) }}</p>
+        <p
+          class="text-xs {% if profit >= 0 %}text-emerald-600 bg-emerald-50{% else %}text-rose-600 bg-rose-50{% endif %} mt-1 font-medium inline-block px-2 py-0.5 rounded-full">
+          Resultado del periodo</p>
+      </div>
+      <div class="bg-white rounded-lg border border-slate-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+        <p class="text-sm font-medium text-slate-500 mb-2">Total Activos</p>
+        <p class="text-2xl font-bold text-slate-900">{{ company.currency }}{{ "%.2f"|format(asset) }}</p>
+        <p class="text-xs text-indigo-600 mt-1 font-medium bg-indigo-50 inline-block px-2 py-0.5 rounded-full">Efectivo,
+          bancos y bienes</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+      <div class="lg:col-span-2 bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm flex flex-col">
+        <div class="px-5 py-4 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+          <h2 class="text-sm font-semibold text-slate-800">Gastos Recientes (Impacto en Cuenta)</h2>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left">
+            <thead>
+              <tr class="border-b border-slate-100 bg-slate-50/50">
+                <th class="px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Fecha</th>
+                <th class="px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Descripción</th>
+                <th class="px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Proyecto / Categoría
+                </th>
+                <th class="px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Comprobante</th>
+                <th class="px-5 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Monto
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-50 text-sm">
+              {% for exp in expenses %}
+              <tr class="hover:bg-slate-50/80 transition-colors">
+                <td class="px-5 py-3 text-slate-600 font-medium whitespace-nowrap">
+                  {{ exp.date.strftime('%d/%m/%Y') if exp.date else '-' }}
+                </td>
+                <td class="px-5 py-3">
+                  <p class="font-bold text-slate-800 truncate max-w-[180px]">{{ exp.description or '-' }}</p>
+                  <p class="text-[10px] uppercase font-semibold text-slate-400 truncate mt-0.5">CTA: {{ exp.account.name
+                    }}</p>
+                </td>
+                <td class="px-5 py-3">
+                  {% if exp.project %}
+                  <span
+                    class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-indigo-50 text-indigo-700 border border-indigo-100">
+                    {{ exp.project.name }}
+                  </span>
+                  {% else %}
+                  <span class="text-slate-400 font-medium">-</span>
+                  {% endif %}
+                </td>
+                <td class="px-5 py-3">
+                  {% if exp.receipt_url %}
+                  {% set ext = exp.receipt_url.rsplit('.', 1)[-1].lower() %}
+                  {% if ext in ['jpg','jpeg','png','webp','heic'] %}
+                  <a href="{{ url_for('static', filename=exp.receipt_url) }}" target="_blank"
+                    class="inline-flex items-center gap-1 text-xs text-sky-600 hover:text-sky-700 font-semibold bg-sky-50 px-2 py-1 rounded">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                      </path>
+                    </svg>
+                    Ver imagen
+                  </a>
+                  {% else %}
+                  <a href="{{ url_for('static', filename=exp.receipt_url) }}" target="_blank"
+                    class="inline-flex items-center gap-1 text-xs text-rose-600 hover:text-rose-700 font-semibold bg-rose-50 px-2 py-1 rounded">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z">
+                      </path>
+                    </svg>
+                    Ver PDF
+                  </a>
+                  {% endif %}
+                  {% else %}
+                  <span class="text-slate-400 text-xs italic">- No adjunto -</span>
+                  {% endif %}
+                </td>
+                <td class="px-5 py-3 text-right font-mono font-bold text-rose-600 whitespace-nowrap">
+                  -{{ company.currency }}{{ "%.2f"|format(exp.amount) }}
+                </td>
+              </tr>
+              {% else %}
+              <tr>
+                <td colspan="5" class="px-5 py-14 text-center">
+                  <div class="flex flex-col items-center justify-center">
+                    <svg class="w-8 h-8 text-slate-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                      </path>
+                    </svg>
+                    <p class="text-slate-500 font-medium text-sm">No hay gastos registrados aún.</p>
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        <div class="bg-white rounded-lg border border-slate-200 shadow-sm flex flex-col" id="proyectos">
+          <div class="px-5 py-4 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+            <h2 class="text-sm font-semibold text-slate-800">Centro de Costos (Proyectos)</h2>
+            <button data-action="open-drawer"
+              data-url="{{ url_for('accounting.create_project', company_id=company.id) }}" data-title="Nuevo Proyecto"
+              class="text-xs font-semibold text-emerald-600 hover:text-emerald-700 transition-colors uppercase tracking-wider">
+              + Añadir
+            </button>
+          </div>
+          <div class="p-2 flex-1 overflow-y-auto max-h-[400px]">
+            {% for proj in projects %}
+            <div id="proyecto-{{ proj.id }}"
+              class="flex items-center gap-3 p-3 rounded-md hover:bg-slate-50/80 transition-colors border border-transparent hover:border-slate-100">
+              <div
+                class="w-8 h-8 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 text-xs font-bold flex-shrink-0">
+                {{ proj.name[:2]|upper }}
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-bold text-slate-800 truncate">{{ proj.name }}</p>
+                {% if proj.description %}
+                <p class="text-xs text-slate-500 truncate mt-0.5">{{ proj.description }}</p>
+                {% endif %}
+              </div>
+              <div class="text-right">
+                <p
+                  class="text-[10px] uppercase font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full inline-block">
+                  {{ proj.expenses|length }} Mov.
+                </p>
+              </div>
+            </div>
+            {% else %}
+            <div class="p-5 text-center">
+              <p class="text-sm text-slate-400 font-medium">Sin centros de costos configurados.</p>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

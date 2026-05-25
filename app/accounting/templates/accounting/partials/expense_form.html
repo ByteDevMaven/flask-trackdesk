@@ -1,0 +1,201 @@
+<form
+  method="POST"
+  action="{{ url_for('accounting.create_expense', company_id=company.id) }}"
+  enctype="multipart/form-data"
+  data-drawer-form
+  data-success-message="Gasto registrado exitosamente">
+
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+  <div class="p-6 space-y-5">
+
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Monto <span class="text-rose-500">*</span></label>
+        <div class="relative">
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-sm font-medium">$</span>
+          <input type="number" step="0.01" min="0" name="amount" id="exp-amount" required
+                 placeholder="0.00"
+                 class="w-full pl-7 pr-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Fecha <span class="text-rose-500">*</span></label>
+        <input type="date" name="date" required
+               value="{{ now.strftime('%Y-%m-%d') }}"
+               class="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Descripción</label>
+      <input type="text" name="description" id="exp-desc"
+             placeholder="Ej: Suministros de oficina, renovación del edificio…"
+             class="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+    </div>
+
+    <div>
+      <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Cuenta de Gasto <span class="text-rose-500">*</span></label>
+      <select name="account_id" required
+              class="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white">
+        <option value="">— Seleccione una cuenta —</option>
+        {% for acc in accounts %}
+        <option value="{{ acc.id }}">{{ acc.name }} <span class="text-slate-400">({{ acc.type.value }})</span></option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Proyecto / Grupo de Costos</label>
+      <select name="project_id"
+              class="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white">
+        <option value="">— Ninguno —</option>
+        {% for proj in projects %}
+        <option value="{{ proj.id }}">{{ proj.name }}</option>
+        {% endfor %}
+      </select>
+      <p class="text-xs text-slate-400 mt-1">Agrupe este gasto bajo un proyecto para fines de reportes.</p>
+    </div>
+
+    {# File upload #}
+    <div>
+      <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Recibo / Adjunto</label>
+      <label id="receipt-drop-zone"
+             class="flex flex-col items-center justify-center gap-2 w-full h-28 border-2 border-dashed border-slate-300 rounded-xl cursor-pointer hover:border-emerald-400 hover:bg-emerald-50/40 transition-colors group">
+        <svg class="w-7 h-7 text-slate-300 group-hover:text-emerald-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+        </svg>
+        <span id="receipt-label" class="text-sm text-slate-400 group-hover:text-emerald-600 transition-colors font-medium">Haga clic o arrastre un archivo aquí</span>
+        <span class="text-xs text-slate-400">PDF, PNG, JPG, WEBP — máx. 16 MB</span>
+        <input type="file" name="receipt_file" id="receipt-file-input" accept=".pdf,.png,.jpg,.jpeg,.webp,.heic" class="sr-only"
+               onchange="document.getElementById('receipt-label').textContent = this.files[0]?.name || 'Haga clic o arrastre un archivo aquí'">
+      </label>
+      
+      {# Vista previa del archivo seleccionado #}
+      <div id="receipt-preview-wrapper" class="hidden mt-3">
+        {# Previsualización de imagen #}
+        <div id="receipt-image-preview" class="hidden">
+          <div class="relative inline-block">
+            <img id="receipt-preview-img" src="" alt="Vista previa"
+                 class="max-h-48 w-full object-contain rounded-lg border border-slate-200 bg-slate-50">
+            <button type="button" id="receipt-clear-btn"
+                    class="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-slate-800/70 text-white flex items-center justify-center hover:bg-rose-600 transition-colors text-xs">
+              ✕
+            </button>
+          </div>
+          <p id="receipt-filename-img" class="text-xs text-slate-500 mt-1.5 truncate"></p>
+        </div>
+
+        {# Previsualización de PDF / archivo genérico #}
+        <div id="receipt-file-preview" class="hidden">
+          <div class="flex items-center gap-3 p-3 bg-slate-50 border border-slate-200 rounded-lg">
+            <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+              </svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p id="receipt-filename-pdf" class="text-sm font-medium text-slate-700 truncate"></p>
+              <p id="receipt-filesize" class="text-xs text-slate-400 mt-0.5"></p>
+            </div>
+            <button type="button" id="receipt-clear-btn-pdf"
+                    class="text-slate-400 hover:text-rose-600 transition-colors flex-shrink-0 text-sm font-medium">
+              Quitar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="sticky bottom-0 bg-white border-t border-slate-200 p-4 flex gap-3 z-10">
+    <button type="button" onclick="closeDrawer()"
+            class="flex-1 px-4 py-2.5 border border-slate-300 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors">
+      Cancelar
+    </button>
+    <button type="submit"
+            class="flex-1 px-4 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-semibold hover:bg-emerald-700 transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+      Registrar Gasto
+    </button>
+  </div>
+
+</form>
+
+<script>
+(function() {
+  const input    = document.getElementById('receipt-file-input');
+  const label    = document.getElementById('receipt-label');
+  const wrapper  = document.getElementById('receipt-preview-wrapper');
+  const imgDiv   = document.getElementById('receipt-image-preview');
+  const fileDiv  = document.getElementById('receipt-file-preview');
+  const previewImg  = document.getElementById('receipt-preview-img');
+  const fnImg    = document.getElementById('receipt-filename-img');
+  const fnPdf    = document.getElementById('receipt-filename-pdf');
+  const sizeEl   = document.getElementById('receipt-filesize');
+  const clearImg = document.getElementById('receipt-clear-btn');
+  const clearPdf = document.getElementById('receipt-clear-btn-pdf');
+
+  function formatBytes(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  }
+
+  function showPreview(file) {
+    if (!file) return;
+    wrapper.classList.remove('hidden');
+    const isImage = file.type.startsWith('image/');
+
+    if (isImage) {
+      imgDiv.classList.remove('hidden');
+      fileDiv.classList.add('hidden');
+      const reader = new FileReader();
+      reader.onload = e => { previewImg.src = e.target.result; };
+      reader.readAsDataURL(file);
+      fnImg.textContent = file.name;
+    } else {
+      fileDiv.classList.remove('hidden');
+      imgDiv.classList.add('hidden');
+      fnPdf.textContent = file.name;
+      sizeEl.textContent = formatBytes(file.size);
+    }
+    label.textContent = file.name;
+  }
+
+  function clearFile() {
+    input.value = '';
+    previewImg.src = '';
+    wrapper.classList.add('hidden');
+    imgDiv.classList.add('hidden');
+    fileDiv.classList.add('hidden');
+    label.textContent = 'Haga clic o arrastre un archivo aquí';
+  }
+
+  if (input) {
+    input.addEventListener('change', () => { if (input.files[0]) showPreview(input.files[0]); });
+  }
+  if (clearImg) clearImg.addEventListener('click', clearFile);
+  if (clearPdf) clearPdf.addEventListener('click', clearFile);
+
+  // Drag and drop
+  const dropZone = document.getElementById('receipt-drop-zone');
+  if (dropZone) {
+    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('border-emerald-400', 'bg-emerald-50/40'); });
+    dropZone.addEventListener('dragleave', () => { dropZone.classList.remove('border-emerald-400', 'bg-emerald-50/40'); });
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropZone.classList.remove('border-emerald-400', 'bg-emerald-50/40');
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        // Inject into input
+        const dt = new DataTransfer();
+        dt.items.add(file);
+        input.files = dt.files;
+        showPreview(file);
+      }
+    });
+  }
+})();
+</script>

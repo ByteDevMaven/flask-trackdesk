@@ -9,6 +9,7 @@ from app.invoices import invoices as invoices_bp
 from app.payments import payments as payments_bp
 from app.users import users as users_bp
 from app.companies import companies as companies_bp
+from app.accounting import accounting as accounting_bp
 
 def register_blueprints(app: Flask):
     app.register_blueprint(auth_bp)
@@ -20,3 +21,4 @@ def register_blueprints(app: Flask):
     app.register_blueprint(payments_bp)
     app.register_blueprint(users_bp)
     app.register_blueprint(companies_bp)
+    app.register_blueprint(accounting_bp)

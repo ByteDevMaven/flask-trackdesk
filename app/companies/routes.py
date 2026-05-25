@@ -3,8 +3,8 @@ from datetime import datetime
 from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required
 
-from app.models import db, Company, User, Contact, InventoryItem, Document, Payment, Report, DocumentSequence
-from app.models.enums import ContactType
+from app.models import db, Company, User, Contact, InventoryItem, Document, Payment, Report, DocumentSequence, Account
+from app.models.enums import ContactType, AccountType
 
 from . import companies
 
@@ -74,6 +74,19 @@ def store():
             company.users.extend(users) # type: ignore
         
         db.session.add(company)
+        db.session.flush() # Flush to get company.id
+        
+        # Generate default accounts
+        default_accounts = [
+            Account(company_id=company.id, name='Cash/Bank', type=AccountType.asset, is_default=True),
+            Account(company_id=company.id, name='Accounts Receivable', type=AccountType.asset, is_default=True),
+            Account(company_id=company.id, name='Inventory', type=AccountType.asset, is_default=True),
+            Account(company_id=company.id, name='Accounts Payable', type=AccountType.liability, is_default=True),
+            Account(company_id=company.id, name='Sales Revenue', type=AccountType.revenue, is_default=True),
+            Account(company_id=company.id, name='Cost of Goods Sold (COGS)', type=AccountType.expense, is_default=True),
+            Account(company_id=company.id, name='General Expenses', type=AccountType.expense, is_default=True)
+        ]
+        db.session.add_all(default_accounts)
         db.session.commit()
         
         flash('Company created successfully!', 'success')

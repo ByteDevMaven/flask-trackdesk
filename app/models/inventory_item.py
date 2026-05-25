@@ -7,6 +7,7 @@ class InventoryItem(BaseModel):
     description = db.Column(db.String)
     quantity = db.Column(db.Integer)
     price = db.Column(db.Float)
+    cost_price = db.Column(db.Float, default=0.0)
     discount = db.Column(db.Float, default=0.0)
     supplier_id = db.Column(db.Integer, db.ForeignKey('contacts.id'), index=True)
 
