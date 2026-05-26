@@ -20,6 +20,7 @@ from .account import Account
 from .project import Project
 from .expense import Expense
 from .ledger_entry import LedgerEntry
+from .audit import AuditLog
 
 __all__ = [
     'db', 'migrate',
@@ -29,5 +30,6 @@ __all__ = [
     'InventoryItem', 'PurchaseOrder', 'PurchaseOrderItem',
     'Document', 'DocumentItem', 'Payment', 'Report', 'Notification',
     'StockMovement', 'DocumentSequence',
-    'AccountType', 'Account', 'Project', 'Expense', 'LedgerEntry'
+    'AccountType', 'Account', 'Project', 'Expense', 'LedgerEntry',
+    'AuditLog'
 ]

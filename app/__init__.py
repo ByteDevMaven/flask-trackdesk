@@ -8,7 +8,7 @@ from app.context_processors import register_context_processors
 from app.hooks import register_request_hooks
 from app.routes import register_routes
 from app.cli import register_cli
-from app.middleware import init_rbac
+from app.middleware import init_rbac, register_audit_listeners
 
 load_dotenv()
 
@@ -18,6 +18,7 @@ def create_app():
     Config.init_app(app)
 
     register_extensions(app)
+    register_audit_listeners()
     register_blueprints(app)
     register_context_processors(app)
     register_request_hooks(app)
