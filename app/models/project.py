@@ -5,6 +5,7 @@ class Project(BaseModel):
     company_id = db.Column(db.Integer, db.ForeignKey('companies.id'), nullable=False, index=True)
     name = db.Column(db.String, nullable=False)
     description = db.Column(db.String)
+    budget = db.Column(db.Float, default=0.0)
     status = db.Column(db.String, default='active')
     
     company = db.relationship('Company', backref=db.backref('projects', lazy='dynamic'))

@@ -68,11 +68,7 @@
   <div class="flex-1 overflow-y-auto p-6 bg-slate-50">
     <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
 
-      <div class="px-4 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <input type="checkbox" class="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500">
-          <span class="text-sm text-slate-600">Seleccionar todo</span>
-        </div>
+      <div class="px-4 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-end">
         <div class="flex items-center gap-2">
           <span class="text-sm text-slate-500">{{ pagination.total if pagination else movements|length }}
             movimientos</span>
@@ -90,7 +86,6 @@
       <table class="w-full">
         <thead>
           <tr class="border-b border-slate-100">
-            <th class="w-12 px-4 py-3"></th>
             <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Fecha</th>
             <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Tipo</th>
             <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Producto</th>
@@ -103,9 +98,6 @@
         <tbody class="divide-y divide-slate-50">
           {% for m in movements %}
           <tr class="hover:bg-slate-50 transition-colors">
-            <td class="px-4 py-3">
-              <input type="checkbox" class="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500">
-            </td>
             <td class="px-4 py-3 text-sm text-slate-600">
               {{ m.date.strftime('%d/%m/%Y') if m.date else '—' }}
             </td>
@@ -165,7 +157,7 @@
           </tr>
           {% else %}
           <tr>
-            <td colspan="7" class="px-4 py-16 text-center text-sm text-slate-400">No hay movimientos registrados</td>
+            <td colspan="6" class="px-4 py-16 text-center text-sm text-slate-400">No hay movimientos registrados</td>
           </tr>
           {% endfor %}
         </tbody>

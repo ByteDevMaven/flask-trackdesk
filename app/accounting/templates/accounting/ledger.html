@@ -133,7 +133,7 @@
               <td class="px-5 py-3 text-right">
                 {% if entry.debit > 0 %}
                 <span class="font-mono font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded">
-                  ${{ "%.2f"|format(entry.debit) }}
+                  {{ company.currency }}{{ "%.2f"|format(entry.debit) }}
                 </span>
                 {% else %}
                 <span class="text-slate-300 font-medium">-</span>
@@ -142,7 +142,7 @@
               <td class="px-5 py-3 text-right">
                 {% if entry.credit > 0 %}
                 <span class="font-mono font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded">
-                  ${{ "%.2f"|format(entry.credit) }}
+                  {{ company.currency }}{{ "%.2f"|format(entry.credit) }}
                 </span>
                 {% else %}
                 <span class="text-slate-300 font-medium">-</span>

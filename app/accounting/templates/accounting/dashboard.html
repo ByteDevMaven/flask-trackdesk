@@ -216,8 +216,8 @@
                   <span class="text-slate-400 text-xs italic">- No adjunto -</span>
                   {% endif %}
                 </td>
-                <td class="px-5 py-3 text-right font-mono font-bold text-rose-600 whitespace-nowrap">
-                  -{{ company.currency }}{{ "%.2f"|format(exp.amount) }}
+                <td class="px-5 py-3 text-right font-mono font-bold whitespace-nowrap {% if exp.account.type.value == 'revenue' %}text-emerald-600{% else %}text-rose-600{% endif %}">
+                  {% if exp.account.type.value == 'revenue' %}+{% else %}-{% endif %}{{ company.currency }}{{ "%.2f"|format(exp.amount) }}
                 </td>
               </tr>
               {% else %}
@@ -263,10 +263,19 @@
                 <p class="text-xs text-slate-500 truncate mt-0.5">{{ proj.description }}</p>
                 {% endif %}
               </div>
-              <div class="text-right">
+              <div class="text-right flex flex-col items-end gap-1">
+                {% if proj.budget and proj.budget > 0 %}
+                <p class="text-[10px] font-bold text-slate-600 bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded border border-emerald-100">
+                  Presupuesto: {{ company.currency }}{{ "%.2f"|format(proj.budget) }}
+                </p>
+                {% else %}
+                <p class="text-[10px] font-medium text-slate-400">
+                  Sin presupuesto
+                </p>
+                {% endif %}
                 <p
                   class="text-[10px] uppercase font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full inline-block">
-                  {{ proj.expenses|length }} Mov.
+                  {{ expense_counts.get(proj.id, 0) }} Mov.
                 </p>
               </div>
             </div>

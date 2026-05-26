@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, flash, jsonify, current_app
 from flask_login import login_required
-from datetime import datetime
+from datetime import datetime, UTC
 from werkzeug.utils import secure_filename
 import os
 import uuid
@@ -51,6 +51,15 @@ def index(company_id):
         key = acc.type.value
         type_totals[key] = type_totals.get(key, 0.0) + (acc.balance or 0.0)
 
+    # Pre-compute expense count per project in one query to avoid N+1
+    expense_count_rows = (
+        db.session.query(Expense.project_id, db.func.count(Expense.id))
+        .filter(Expense.company_id == company.id, Expense.project_id.isnot(None))
+        .group_by(Expense.project_id)
+        .all()
+    )
+    expense_counts = {row[0]: row[1] for row in expense_count_rows}
+
     return render_template(
         'accounting/dashboard.html',
         company=company,
@@ -61,6 +70,7 @@ def index(company_id):
         total_projects=total_projects,
         total_accounts=total_accounts,
         type_totals=type_totals,
+        expense_counts=expense_counts,
     )
 
 
@@ -88,7 +98,7 @@ def create_expense(company_id):
             description = request.form.get('description', '').strip()
             project_id_str = request.form.get('project_id', '').strip()
             project_id = int(project_id_str) if project_id_str else None
-            expense_date = datetime.strptime(date_str, '%Y-%m-%d') if date_str else datetime.utcnow()
+            expense_date = datetime.strptime(date_str, '%Y-%m-%d') if date_str else datetime.now(UTC)
 
             # Handle receipt upload
             receipt_url = None
@@ -108,33 +118,69 @@ def create_expense(company_id):
             db.session.flush()
 
             # Double-entry ledger
-            cash_account = Account.query.filter_by(company_id=company.id, name='Cash/Bank').first()
+            cash_account = Account.query.filter_by(company_id=company.id, name='Caja y Bancos').first()
             if not cash_account:
                 cash_account = Account.query.filter_by(company_id=company.id, type=AccountType.asset).first()
 
+            # Update account balances directly for dashboard calculation
+            account = Account.query.get(account_id)
+            is_revenue = account and account.type.value == 'revenue'
+
+            if account:
+                account.balance = (account.balance or 0.0) + amount
             if cash_account:
-                debit_entry = LedgerEntry(
-                    company_id=company.id,
-                    account_id=account_id,
-                    project_id=project_id,
-                    date=expense_date,
-                    description=f"Expense: {description}",
-                    debit=amount,
-                    credit=0.0,
-                    reference_type='Expense',
-                    reference_id=expense.id,
-                )
-                credit_entry = LedgerEntry(
-                    company_id=company.id,
-                    account_id=cash_account.id,
-                    project_id=project_id,
-                    date=expense_date,
-                    description=f"Payment for: {description}",
-                    debit=0.0,
-                    credit=amount,
-                    reference_type='Expense',
-                    reference_id=expense.id,
-                )
+                if is_revenue:
+                    cash_account.balance = (cash_account.balance or 0.0) + amount
+                else:
+                    cash_account.balance = (cash_account.balance or 0.0) - amount
+
+            if cash_account:
+                if is_revenue:
+                    debit_entry = LedgerEntry(
+                        company_id=company.id,
+                        account_id=cash_account.id,
+                        project_id=project_id,
+                        date=expense_date,
+                        description=f"Cobro: {description}",
+                        debit=amount,
+                        credit=0.0,
+                        reference_type='Income',
+                        reference_id=expense.id,
+                    )
+                    credit_entry = LedgerEntry(
+                        company_id=company.id,
+                        account_id=account_id,
+                        project_id=project_id,
+                        date=expense_date,
+                        description=f"Ingreso: {description}",
+                        debit=0.0,
+                        credit=amount,
+                        reference_type='Income',
+                        reference_id=expense.id,
+                    )
+                else:
+                    debit_entry = LedgerEntry(
+                        company_id=company.id,
+                        account_id=account_id,
+                        project_id=project_id,
+                        date=expense_date,
+                        description=f"Gasto: {description}",
+                        debit=amount,
+                        credit=0.0,
+                        reference_type='Expense',
+                        reference_id=expense.id,
+                    )
+                    credit_entry = LedgerEntry(
+                        company_id=company.id,
+                        account_id=cash_account.id,
+                        project_id=project_id,
+                        date=expense_date,
+                        description=f"Pago por: {description}",
+                        debit=0.0,
+                        credit=amount,
+                        reference_type='Expense',
+                        reference_id=expense.id,
+                    )
                 db.session.add_all([debit_entry, credit_entry])
 
             db.session.commit()
@@ -143,7 +189,7 @@ def create_expense(company_id):
                 return jsonify({'success': True, 'message': 'Expense recorded successfully.'})
 
             flash('Expense recorded successfully!', 'success')
-            return redirect(url_for('accounting.dashboard', company_id=company.id))
+            return redirect(url_for('accounting.index', company_id=company.id))
 
         except Exception as e:
             db.session.rollback()
@@ -162,7 +208,7 @@ def create_expense(company_id):
             company=company,
             accounts=expense_accounts,
             projects=projects,
-            now=datetime.utcnow(),
+            now=datetime.now(UTC),
         )
 
     return render_template(
@@ -170,7 +216,7 @@ def create_expense(company_id):
         company=company,
         accounts=expense_accounts,
         projects=projects,
-        now=datetime.utcnow(),
+        now=datetime.now(UTC),
     )
 
 
@@ -182,6 +228,7 @@ def create_project(company_id):
     if request.method == 'POST':
         name = request.form.get('name', '').strip()
         description = request.form.get('description', '').strip()
+        budget_str = request.form.get('budget', '').strip()
         is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
 
         if not name:
@@ -191,7 +238,12 @@ def create_project(company_id):
             flash(msg, 'error')
             return redirect(url_for('accounting.create_project', company_id=company.id))
 
-        project = Project(company_id=company.id, name=name, description=description)
+        try:
+            budget = float(budget_str) if budget_str else 0.0
+        except ValueError:
+            budget = 0.0
+
+        project = Project(company_id=company.id, name=name, description=description, budget=budget)
         db.session.add(project)
         db.session.commit()
 
@@ -199,7 +251,7 @@ def create_project(company_id):
             return jsonify({'success': True, 'message': 'Project created successfully.'})
 
         flash('Project created successfully.', 'success')
-        return redirect(url_for('accounting.dashboard', company_id=company.id))
+        return redirect(url_for('accounting.index', company_id=company.id))
 
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         return render_template('accounting/partials/project_form.html', company=company)

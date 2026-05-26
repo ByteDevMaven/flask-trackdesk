@@ -137,7 +137,7 @@
           <div class="text-right">
             <p class="text-xs font-medium text-slate-400 uppercase tracking-wider mb-0.5">Saldo Total</p>
             <p class="text-sm font-bold {% if ns.subtotal >= 0 %}text-slate-800{% else %}text-rose-600{% endif %}">
-              ${{ "%.2f"|format(ns.subtotal) }}
+              {{ company.currency }}{{ "%.2f"|format(ns.subtotal) }}
             </p>
           </div>
         </div>
@@ -156,7 +156,7 @@
                 <td class="px-5 py-3.5 text-right">
                   <span
                     class="font-mono font-bold {% if (acc.balance or 0) >= 0 %}text-slate-700{% else %}text-rose-600{% endif %}">
-                    ${{ "%.2f"|format(acc.balance or 0.0) }}
+                    {{ company.currency }}{{ "%.2f"|format(acc.balance or 0.0) }}
                   </span>
                 </td>
               </tr>
