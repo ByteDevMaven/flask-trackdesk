@@ -2,7 +2,7 @@ from flask import current_app, render_template, request, redirect, url_for, flas
 from flask_login import login_required
 from flask_babel import _
 from sqlalchemy import or_, desc
-from datetime import datetime
+from datetime import datetime, UTC
 
 from app.models import db, Payment, Document, DocumentType, Contact
 from app.extensions import limiter
@@ -299,7 +299,8 @@ def delete(company_id, id):
         document_id = payment.document_id
         
                             
-        db.session.delete(payment)
+        payment.is_deleted = True
+        payment.deleted_at = datetime.now(UTC)
         
                                              
         if document_id:

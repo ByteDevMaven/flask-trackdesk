@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 
 from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required
@@ -201,7 +201,8 @@ def delete(id):
                                  
         company.users.clear()
         
-        db.session.delete(company)
+        company.is_deleted = True
+        company.deleted_at = datetime.now(UTC)
         db.session.commit()
         
         flash('Company deleted successfully!', 'success')
@@ -336,7 +337,8 @@ def sequence_delete(id, seq_id):
     sequence = DocumentSequence.query.filter_by(id=seq_id, company_id=id).first_or_404()
     
     try:
-        db.session.delete(sequence)
+        sequence.is_deleted = True
+        sequence.deleted_at = datetime.now(UTC)
         db.session.commit()
         flash('Document sequence deleted successfully!', 'success')
     except Exception as e:

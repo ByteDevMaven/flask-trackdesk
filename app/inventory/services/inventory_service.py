@@ -1,5 +1,5 @@
 from io import BytesIO
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, UTC
 
 import barcode
 from barcode.writer import ImageWriter
@@ -255,7 +255,8 @@ class InventoryService:
     @staticmethod
     def delete_inventory_item(company_id, item_id):
         item = InventoryItem.query.filter_by(id=item_id, company_id=company_id).first_or_404()
-        db.session.delete(item)
+        item.is_deleted = True
+        item.deleted_at = datetime.now(UTC)
         db.session.commit()
         return True
 
@@ -295,12 +296,15 @@ class InventoryService:
         if not item_ids:
             return 0
         
-        deleted_count = InventoryItem.query.filter(
+        items = InventoryItem.query.filter(
             and_(InventoryItem.id.in_(item_ids), InventoryItem.company_id == company_id)
-        ).delete(synchronize_session=False)
+        ).all()
+        for item in items:
+            item.is_deleted = True
+            item.deleted_at = datetime.now(UTC)
         
         db.session.commit()
-        return deleted_count
+        return len(items)
 
     @staticmethod
     def search_inventory_items(company_id, query, limit=10):

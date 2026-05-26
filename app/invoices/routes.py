@@ -3,7 +3,7 @@ from flask_login import login_required, current_user
 from flask_wtf.csrf import validate_csrf
 from flask_babel import _
 from sqlalchemy import or_
-from datetime import datetime
+from datetime import datetime, UTC
 from wtforms import ValidationError
 
 from app.extensions import limiter
@@ -371,10 +371,13 @@ def delete(company_id, id):
     
     try:
                                     
-        DocumentItem.query.filter_by(document_id=document.id).delete()
+        items = DocumentItem.query.filter_by(document_id=document.id).all()
+        for item in items:
+            item.is_deleted = True
+            item.deleted_at = datetime.now(UTC)
         
-                             
-        db.session.delete(document)
+        document.is_deleted = True
+        document.deleted_at = datetime.now(UTC)
         db.session.commit()
         
         doc_type_name = _('Invoice') if document.type == DocumentType.invoice else _('Quote')

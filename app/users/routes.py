@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime, timezone, UTC
 import re
 import secrets
 import smtplib
@@ -322,7 +322,8 @@ def delete(id):
     
     try:
         user_name = user.name
-        db.session.delete(user)
+        user.is_deleted = True
+        user.deleted_at = datetime.now(UTC)
         db.session.commit()
         
         flash(f'User {user_name} has been deleted successfully!', 'success')

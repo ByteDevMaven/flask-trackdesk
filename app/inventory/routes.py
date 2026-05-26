@@ -1,6 +1,6 @@
 import csv
 from io import StringIO
-from datetime import datetime
+from datetime import datetime, UTC
 
 from flask import render_template, request, redirect, session, url_for, flash, current_app, jsonify
 from flask_login import login_required
@@ -380,7 +380,8 @@ def api_delete_item(company_id, id):
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
     
     try:
-        db.session.delete(item)
+        item.is_deleted = True
+        item.deleted_at = datetime.now(UTC)
         db.session.commit()
         return jsonify({'message': 'Item deleted successfully'})
         

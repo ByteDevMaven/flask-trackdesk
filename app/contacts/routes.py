@@ -1,4 +1,5 @@
 import math
+from datetime import datetime, UTC
 from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required, current_user
 from flask_babel import _
@@ -200,7 +201,8 @@ def delete(company_id, contact_id):
                                                                                                                             
                                
     try:
-        db.session.delete(contact)
+        contact.is_deleted = True
+        contact.deleted_at = datetime.now(UTC)
         db.session.commit()
         return jsonify({'success': True, 'message': _('Contact deleted successfully')})
     except exc.IntegrityError:

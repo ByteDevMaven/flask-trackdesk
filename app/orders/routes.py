@@ -134,9 +134,9 @@ def update(company_id, id):
 @login_required
 def delete(company_id, id):
     purchase_order = PurchaseOrder.query.filter_by(id=id, company_id=company_id).first_or_404()
-    
     try:
-        db.session.delete(purchase_order)
+        purchase_order.is_deleted = True
+        purchase_order.deleted_at = datetime.now(UTC)
         db.session.commit()
         flash(_('Purchase order deleted successfully'), 'success')
     except SQLAlchemyError as e:
