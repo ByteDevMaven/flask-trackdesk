@@ -8,7 +8,7 @@ from urllib.parse import urlparse
 
 from . import auth
 from app.extensions import bcrypt, limiter
-from app.models import User, Company, Role, db
+from app.models import User, db
 
 @auth.route('/login', methods=["GET", "POST"])
 @limiter.limit("5 per minute")
@@ -51,54 +51,9 @@ def logout():
     flash(_("Logout success."), 'success')
     return redirect(url_for("auth.login"))
 
-@auth.route('/register', methods=["GET", "POST"])
-@auth.route('/register/<int:companyID>', methods=["GET", "POST"])
-@limiter.limit("2 per minute", override_defaults=False)
-def register(companyID=None):
-    if request.method == "POST" and current_app.config.get("ALLOW_REGISTRATION", False):
-        csrf_token = request.form.get("csrf_token")
-
-        try:
-            validate_csrf(csrf_token)
-        except ValidationError:
-            flash(_("Invalid CSRF token. Please try again."), "error")
-            return redirect(url_for("auth.register"))
-
-        email = request.form.get("email")
-        name = request.form.get("name")
-        password = request.form.get("password")
-        confirmpassword = request.form.get("confirmpassword")
-        company_id = request.form.get("company_id")
-
-        if User.query.filter_by(email=email).first():
-            flash(_("Email already exists"), 'warning')
-        elif password != confirmpassword:
-            flash(_("Passwords must match!"), 'warning')
-        else:
-                                   
-            company = Company.query.get(company_id)
-            if not company:
-                flash(_("No valid company found."), 'error')
-                redirect(url_for("auth.register", company_id=companyID))
-
-                                             
-            default_role = Role.query.filter_by(name="user").first()
-
-            user = User(
-                name=name,
-                email=email,
-                password_hash=bcrypt.generate_password_hash(password).decode('utf-8'),
-                role_id=default_role.id if default_role else None
-            )
-            user.companies.append(company)
-
-            db.session.add(user)
-            db.session.commit()
-
-            flash(_("Account created successfully!"), "success")
-            return redirect(url_for("auth.login"))
-
-    return render_template("auth/register.html", company_id=companyID)
+@auth.route('/register')
+def register():
+    pass
 
 @auth.route('/forgot_password')
 def forgot_password():

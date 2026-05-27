@@ -22,7 +22,7 @@ def _add_filtering_criteria(execute_state):
         execute_state.statement = execute_state.statement.options(
             with_loader_criteria(
                 BaseModel,
-                lambda cls: cls.is_deleted == False,
+                lambda cls: (cls.is_deleted == False) | (cls.is_deleted == None),
                 include_aliases=True
             )
         )
