@@ -15,6 +15,29 @@ def register_cli(app: Flask):
             seed_default_roles_and_permissions(db, Role, Permission)
         print('[OK] RBAC roles and permissions seeded successfully.')
 
+    @app.cli.command('update-user-role')
+    @click.argument('email')
+    @click.argument('role_name')
+    def update_user_role(email, role_name):
+        """Update a user's role by email.
+
+        Example usage:
+          flask update-user-role user@example.com admin
+        """
+        from app.models import User, Role
+        with app.app_context():
+            user = User.query.filter_by(email=email).first()
+            if not user:
+                print(f'[ERROR] No user found with email: {email}')
+                return
+            role = Role.query.filter_by(name=role_name).first()
+            if not role:
+                print(f'[ERROR] No role found with name: {role_name}')
+                return
+            user.role = role
+            db.session.commit()
+            print(f'[OK] Updated role for user {email} to {role_name}.')
+
     @app.cli.command('migrate-db')
     @click.option('-m', '--message', default='Auto migration', help='Migration message')
     @click.option('--autogenerate/--no-autogenerate', default=True, help='Autogenerate migration')
