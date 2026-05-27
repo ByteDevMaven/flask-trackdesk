@@ -166,7 +166,7 @@ def store(company_id):
             company_id=company_id, # type: ignore
             document_id=int(request.form.get('document_id')) if request.form.get('document_id') else None, # type: ignore
             amount=float(request.form.get('amount', 0)), # type: ignore
-            payment_date=datetime.strptime(request.form.get('payment_date'), '%Y-%m-%d') if request.form.get('payment_date') else datetime.now(), # type: ignore
+            payment_date=datetime.strptime(request.form.get('payment_date'), '%Y-%m-%d') if request.form.get('payment_date') else datetime.now(UTC), # type: ignore
             method=request.form.get('method', ''), # type: ignore
             notes=request.form.get('notes', '') # type: ignore
         )

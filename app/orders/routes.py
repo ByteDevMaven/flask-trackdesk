@@ -175,5 +175,5 @@ def export(company_id):
     return Response(
         output.getvalue(),
         mimetype='text/csv',
-        headers={'Content-Disposition': f'attachment; filename=purchase_orders_{company_id}_{datetime.now().strftime("%Y%m%d")}.csv'}
+        headers={'Content-Disposition': f'attachment; filename=purchase_orders_{company_id}_{datetime.now(UTC).strftime("%Y%m%d")}.csv'}
     )

@@ -1,9 +1,8 @@
-from flask import render_template, request, redirect, url_for, flash, jsonify, current_app
-from flask_login import login_required
 from datetime import datetime, UTC
-from werkzeug.utils import secure_filename
 import os
 import uuid
+from flask import render_template, request, redirect, url_for, flash, jsonify, current_app
+from flask_login import login_required
 
 from app.models import db, Company, Account, Expense, LedgerEntry, Project
 from app.models.enums import AccountType

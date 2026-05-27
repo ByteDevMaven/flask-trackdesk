@@ -1,7 +1,7 @@
 from flask import render_template, session
 from flask_login import login_required
 from sqlalchemy import func
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, UTC
 from flask_babel import _
 
 from app.models import Contact, Document, DocumentType, InventoryItem, Payment, db
@@ -17,7 +17,7 @@ def index(company_id = None):
     if company_id == None:
         company_id = session.get('selected_company_id')
 
-    today = datetime.now()
+    today = datetime.now(UTC)
     first_day_of_month = datetime(today.year, today.month, 1)
     first_day_of_last_month = datetime(today.year, today.month - 1, 1) if today.month > 1 else datetime(today.year - 1, 12, 1)
     last_day_of_last_month = first_day_of_month - timedelta(days=1)

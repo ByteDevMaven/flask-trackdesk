@@ -58,20 +58,20 @@ def store():
             return redirect(url_for('companies.create'))
         
         company = Company(
-            name=name, # type: ignore
-            currency=currency, # type: ignore
-            tax_rate=float(tax_rate), # type: ignore
-            address=address, # type: ignore
-            phone=phone, # type: ignore
-            email=email, # type: ignore
-            identifier=identifier, # type: ignore
-            created_at=datetime.now() # type: ignore
+            name=name,
+            currency=currency,
+            tax_rate=float(tax_rate),
+            address=address,
+            phone=phone,
+            email=email,
+            identifier=identifier,
+            created_at=datetime.now(UTC)
         )
         
                                            
         if user_ids:
             users = User.query.filter(User.id.in_(user_ids)).all()
-            company.users.extend(users) # type: ignore
+            company.users.extend(users)
         
         db.session.add(company)
         db.session.flush() # Flush to get company.id
@@ -162,7 +162,7 @@ def update(id):
         company.phone = phone
         company.email = email
         company.identifier = identifier
-        company.updated_at = datetime.now()
+        company.updated_at = datetime.now(UTC)
         
                                   
         company.users.clear()
@@ -242,7 +242,7 @@ def sequences_index(id):
     """List all document sequences for a company"""
     company = Company.query.get_or_404(id)
     sequences = DocumentSequence.query.filter_by(company_id=id).order_by(DocumentSequence.expiration_date.desc()).all()
-    return render_template('companies/sequences/index.html', company=company, sequences=sequences, today=datetime.now().date())
+    return render_template('companies/sequences/index.html', company=company, sequences=sequences, today=datetime.now(UTC).date())
 
 @companies.route('/companies/<int:id>/sequences/create')
 @login_required

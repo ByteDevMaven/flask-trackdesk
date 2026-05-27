@@ -1,4 +1,4 @@
-from datetime import datetime, timezone, UTC
+from datetime import datetime, UTC
 import re
 import secrets
 import smtplib
@@ -216,8 +216,8 @@ def store():
 @login_required
 def view(id):
     user = User.query.get_or_404(id)
-    now = datetime.now(timezone.utc)
-    created_at = user.created_at.replace(tzinfo=timezone.utc)
+    now = datetime.now(UTC)
+    created_at = user.created_at.replace(tzinfo=UTC)
     days = (now - created_at).days
     return render_template('users/view.html', user=user, account_age_days=days)
 
@@ -371,7 +371,7 @@ def send_password_reset(id):
         from flask import session
         session[f'reset_token_{reset_token}'] = {
             'user_id': user.id,
-            'expires': (datetime.now() + datetime.timedelta(hours=1)).isoformat()
+            'expires': (datetime.now(UTC) + datetime.timedelta(hours=1)).isoformat()
         }
         
                     

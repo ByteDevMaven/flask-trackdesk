@@ -1,4 +1,4 @@
-from datetime import datetime, date
+from datetime import datetime, date, UTC
 from flask import session
 from flask_babel import _
 from app.models import (
@@ -64,7 +64,7 @@ def create_invoice_or_quote(company_id, form, user_id):
         user_id=user_id,
         status=form.get("status", "draft"),
         issued_date=datetime.strptime(form.get("issued_date"), "%Y-%m-%d")
-        if form.get("issued_date") else datetime.now(),
+        if form.get("issued_date") else datetime.now(UTC),
         due_date=datetime.strptime(form.get("due_date"), "%Y-%m-%d")
         if form.get("due_date") else None
     )
@@ -110,7 +110,7 @@ def create_invoice_or_quote(company_id, form, user_id):
                     type=StockMovementType.outgoing,
                     quantity=-qty,
                     reference=f"INV {document_number}",
-                    date=document.issued_date or datetime.now()
+                    date=document.issued_date or datetime.now(UTC)
                 )
                 db.session.add(movement)
 
@@ -133,7 +133,7 @@ def create_invoice_or_quote(company_id, form, user_id):
             company_id=company_id,
             document_id=document.id,
             amount=document.total_amount,
-            payment_date=datetime.now(),
+            payment_date=datetime.now(UTC),
             method=PaymentMethod.cash,
             notes=form.get("notes", "")
         ))

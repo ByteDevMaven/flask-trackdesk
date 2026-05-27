@@ -145,10 +145,13 @@ def view(company_id, id):
         else:
             item.inventory_item = None
     
+    payments = Payment.query.filter_by(document_id=document.id).order_by(Payment.payment_date.desc()).all()
+    
     return render_template('invoices/view.html', 
                          invoice=document, 
                          document_items=document_items,
-                         now=datetime.now())
+                         payments=payments,
+                         now=datetime.now(UTC))
 
 
 @invoices.route('/<int:company_id>/invoices/<int:id>/add-payment', methods=['POST'])
@@ -179,7 +182,7 @@ def add_payment(company_id, id):
             return redirect(url_for('invoices.view', company_id=company_id, id=id))
 
                             
-        payment_date = datetime.strptime(payment_date_str, '%Y-%m-%d') if payment_date_str else datetime.now()
+        payment_date = datetime.strptime(payment_date_str, '%Y-%m-%d') if payment_date_str else datetime.now(UTC)
 
                                
         payment = Payment(

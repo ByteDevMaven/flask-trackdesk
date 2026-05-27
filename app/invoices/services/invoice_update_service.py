@@ -1,6 +1,6 @@
 from flask import session
 from app.models import db, DocumentItem, InventoryItem, DocumentType, StockMovement, StockMovementType
-from datetime import datetime
+from datetime import datetime, UTC
 
 def update_invoice_or_quote(document, form):
     old_items = DocumentItem.query.filter_by(document_id=document.id).all()
@@ -67,7 +67,7 @@ def update_invoice_or_quote(document, form):
                     type=StockMovementType.outgoing,
                     quantity=-quantity,
                     reference=f"INV {document.document_number}",
-                    date=document.issued_date or datetime.now()
+                    date=document.issued_date or datetime.now(UTC)
                 )
                 db.session.add(movement)
 
