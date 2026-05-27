@@ -1,9 +1,5 @@
-from io import BytesIO
 from datetime import datetime, timedelta, UTC
 
-import barcode
-from barcode.writer import ImageWriter
-from PIL import Image, ImageDraw, ImageFont
 from sqlalchemy import or_, and_, desc, asc, func
 from flask_babel import _
 from flask_login import current_user
@@ -78,110 +74,6 @@ class InventoryService:
         db.session.commit()
         return new_quantity
 
-    @staticmethod
-    def generate_barcode_image(company_id, item_id, item_name, item_price, currency_symbol='$', for_download=False, compact=False):
-        """Generates a barcode image in memory and returns (output_buffer, barcode_data)."""
-        barcode_data = f"{company_id}{item_id:06d}"
-        
-        code128 = barcode.get_barcode_class('code128')
-        
-        writer = ImageWriter()
-        
-                                  
-        writer_options = {
-            'module_width': 0.2,                  
-            'module_height': 15.0,                   
-            'quiet_zone': 6.5,                  
-            'font_size': 10,
-            'text_distance': 5.0,
-            'background': 'white',
-            'foreground': 'black',
-            'write_text': True,
-            'text': barcode_data,
-        }
-        
-                     
-                                                              
-                                     
-                                       
-                                       
-                                                                
-                                      
-                                   
-                
-        
-        writer.set_options(writer_options)
-
-        barcode_instance = code128(barcode_data, writer=writer)
-        
-        buffer = BytesIO()
-        barcode_instance.write(buffer, options=writer_options)
-        buffer.seek(0)
-        
-        barcode_img = Image.open(buffer)
-        
-                                            
-        img_width, img_height = barcode_img.size
-        
-                                               
-        extra_space = 45 if compact else (60 if for_download else 80)
-        new_height = img_height + extra_space
-        final_img = Image.new('RGB', (img_width, new_height), 'white')
-        final_img.paste(barcode_img, (0, 0)) 
-        
-        draw = ImageDraw.Draw(final_img)
-        
-        try:
-            if compact:
-                font_large = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 9)
-                font_medium = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 8)
-            else:
-                font_large = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 18 if for_download else 16)
-                font_medium = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 14 if for_download else 12)
-        except Exception:
-            font_large = ImageFont.load_default()
-            font_medium = ImageFont.load_default()
-            
-        def get_text_width(text, font):
-            try:
-                         
-                return draw.textbbox((0, 0), text, font=font)[2] - draw.textbbox((0, 0), text, font=font)[0]
-            except Exception:
-                try:
-                               
-                    return draw.textsize(text, font=font)[0]
-                except Exception:
-                                            
-                    return len(text) * 6
-            
-        text_y = img_height + (5 if compact else 10)
-        truncate_len = 25 if compact else (50 if for_download else 40)
-        name_text = item_name[:truncate_len]
-        
-                                                                   
-                   
-        draw.text((5 if compact else 10, text_y), name_text, fill='black', font=font_large)
-        
-                              
-        text_y += (15 if compact else 25)
-        
-                             
-        price_text = f"{currency_symbol}{item_price:,.2f}"
-        if for_download:
-            price_text = f"{_('Price')} {price_text}"
-        draw.text((5 if compact else 10, text_y), price_text, fill='black', font=font_medium)
-        
-                                                                      
-        if not for_download or compact:
-            code_text = barcode_data if compact else f"Code: {barcode_data}"
-            code_width = get_text_width(code_text, font_medium)
-            draw.text((img_width - code_width - (5 if compact else 10), text_y), code_text, fill='black', font=font_medium)
-            
-        output_buffer = BytesIO()
-        final_img.save(output_buffer, format='PNG', dpi=(300, 300) if (for_download or compact) else (72, 72))
-        output_buffer.seek(0)
-        
-        return output_buffer, barcode_data
 
     @staticmethod
     def create_inventory_item(company_id, name, description=None, quantity=0, price=0.0, cost_price=0.0, discount=0.0, supplier_id=None):

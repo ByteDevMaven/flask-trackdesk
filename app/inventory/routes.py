@@ -2,7 +2,7 @@ import csv
 from io import StringIO
 from datetime import datetime, UTC
 
-from flask import render_template, request, redirect, session, url_for, flash, current_app, jsonify
+from flask import render_template, request, redirect, session, url_for, flash, current_app, jsonify, Response
 from flask_login import login_required
 from sqlalchemy.exc import SQLAlchemyError
 from flask_babel import _
@@ -228,8 +228,7 @@ def export(company_id):
         ])
     
     output.seek(0)
-    
-    from flask import Response
+
     return Response(
         output.getvalue(),
         mimetype='text/csv',
@@ -472,96 +471,16 @@ def api_stats(company_id):
 @inventory.route('/<int:company_id>/inventory/<int:id>/barcode')
 @login_required
 @limiter.exempt
-def view_barcode(company_id, id):
-    """Generate and return barcode image for an inventory item"""
+def barcode(company_id, id):
+    """Barcode label for an inventory item"""
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
-    
-    try:
-        currency_symbol = session.get('currency', '$')
-        output_buffer, barcode_data = InventoryService.generate_barcode_image(
-            company_id=company_id, 
-            item_id=item.id, 
-            item_name=item.name, 
-            item_price=item.price, 
-            currency_symbol=currency_symbol,
-            for_download=False,
-            compact=False
-        )
-        from flask import Response
-        return Response(
-            output_buffer.getvalue(),
-            mimetype='image/png',
-            headers={'Content-Disposition': f'inline; filename=barcode_{barcode_data}.png'}
-        )
-        
-    except Exception as e:
-        current_app.logger.error(f"Barcode generation error: {str(e)}")
-                                                         
-        from flask import Response
-        return Response('Barcode generation failed', status=500)
+    copies = request.args.get('copies', 12, type=int)
+    currency_symbol = session.get('currency', '$')
+    barcode_value = f"{company_id}{item.id:06d}"
 
-@inventory.route('/<int:company_id>/inventory/<int:id>/barcode/download')
-@login_required
-@limiter.exempt
-def download_barcode(company_id, id):
-    """Download barcode as PNG file"""
-    item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
-    
-    try:
-        currency_symbol = session.get('currency', '$')
-        output_buffer, barcode_data = InventoryService.generate_barcode_image(
-            company_id=company_id, 
-            item_id=item.id, 
-            item_name=item.name, 
-            item_price=item.price, 
-            currency_symbol=currency_symbol,
-            for_download=True,
-            compact=False
-        )
-        
-        from flask import Response
-        return Response(
-            output_buffer.getvalue(),
-            mimetype='image/png',
-            headers={
-                'Content-Disposition': f'attachment; filename=barcode_{item.name.replace(" ", "_")}_{barcode_data}.png'
-            }
-        )
-        
-    except Exception as e:
-        current_app.logger.error(f"Barcode download error: {str(e)}")
-        flash(_('An error occurred while generating the barcode'), 'error')
-        return redirect(url_for('inventory.view', company_id=company_id, id=id))
-
-@inventory.route('/<int:company_id>/inventory/<int:id>/print-barcodes')
-@login_required
-@limiter.exempt
-def print_barcodes(company_id, id):
-    """Print multiple tight-packed barcodes on a letter-sized page"""
-    item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
-    copies = request.args.get('copies', 48, type=int)
-    
-    try:
-        currency_symbol = session.get('currency', '$')
-        import base64
-        output_buffer, barcode_data = InventoryService.generate_barcode_image(
-            company_id=company_id, 
-            item_id=item.id, 
-            item_name=item.name, 
-            item_price=item.price, 
-            currency_symbol=currency_symbol,
-            for_download=False,
-            compact=True
-        )
-        barcode_b64 = base64.b64encode(output_buffer.getvalue()).decode('utf-8')
-        
-    except Exception as e:
-        current_app.logger.error(f"Barcode print prep error: {str(e)}")
-        flash(_('An error occurred while generating the printable barcodes'), 'error')
-        return redirect(url_for('inventory.view', company_id=company_id, id=id))
-
-    return render_template('inventory/print_barcodes.html',
+    return render_template('inventory/barcode.html',
                           company_id=company_id,
                           item=item,
                           copies=copies,
-                          barcode_b64=barcode_b64)
+                          currency_symbol=currency_symbol,
+                          barcode_value=barcode_value)

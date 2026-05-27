@@ -95,7 +95,7 @@
           </svg>
           Editar
         </button>
-        <a href="{{ url_for('inventory.download_barcode', company_id=company_id, id=item.id) }}"
+        <a href="{{ url_for('inventory.barcode', company_id=company_id, id=item.id) }}"
           class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors shadow-sm">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

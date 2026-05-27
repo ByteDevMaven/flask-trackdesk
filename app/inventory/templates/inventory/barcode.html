@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diseñador de Etiquetas — {{ item.name }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { inter: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* ── Sidebar scrollbar ── */
+        #sidebar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        #sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        #sidebar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        /* ── Label canvas ── */
+        .label-card {
+            background: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .label-card .label-name {
+            width: 100%;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+
+        .label-card .label-price {
+            width: 100%;
+            white-space: nowrap;
+        }
+
+        .label-card .label-barcode-wrap {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .label-card svg,
+        .label-card canvas {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .label-name {
+            overflow: visible !important;
+        }
+
+        .label-name,
+        .label-price {
+            text-rendering: geometricPrecision;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Print grid ── */
+        @media print {
+            body {
+                background: white !important;
+            }
+
+            #no-print {
+                display: none !important;
+            }
+
+            #print-area {
+                display: grid !important;
+                padding: 6mm;
+                box-sizing: border-box;
+            }
+
+            .label-card {
+                box-shadow: none !important;
+            }
+        }
+
+        /* ── Range inputs ── */
+        input[type=range] {
+            accent-color: #10b981;
+        }
+
+        /* ── Tab active ── */
+        .tab-btn.active {
+            background: #10b981;
+            color: white;
+        }
+
+        /* ── Zoom wrapper ── */
+        #preview-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 260px;
+        }
+
+        /* ── Template card ── */
+        .tpl-card {
+            transition: box-shadow .15s;
+        }
+
+        .tpl-card:hover {
+            box-shadow: 0 4px 16px rgba(16, 185, 129, .25);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen transition-colors duration-300">
+
+    <!-- ════════════════════════════════════════════════════
+     TOP NAV (no-print)
+═══════════════════════════════════════════════════════ -->
+    <header id="no-print"
+        class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 shadow-sm sticky top-0 z-50">
+        <div class="flex items-center justify-between px-5 py-3 max-w-screen-2xl mx-auto">
+            <div class="flex items-center gap-3">
+                <button onclick="window.history.back()"
+                    class="flex items-center gap-1.5 text-slate-500 hover:text-emerald-600 dark:hover:text-emerald-400 text-sm font-medium transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                    Volver
+                </button>
+                <span class="text-slate-300 dark:text-slate-700">|</span>
+                <h1 class="text-base font-bold text-slate-900 dark:text-white">
+                    🏷️ Diseñador de Etiquetas
+                    <span class="ml-1.5 text-emerald-500 font-normal text-sm">— {{ item.name }}</span>
+                </h1>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <!-- Dark mode toggle -->
+                <button id="btn-dark" title="Alternar modo oscuro"
+                    class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
+                    <svg id="icon-sun" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    <svg id="icon-moon" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                    </svg>
+                </button>
+                <!-- Undo/Redo -->
+                <button id="btn-undo" title="Deshacer (Ctrl+Z)"
+                    class="p-2 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition disabled:opacity-30"
+                    disabled>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 10h10a8 8 0 018 8v2M3 10l6 6M3 10l6-6" />
+                    </svg>
+                </button>
+                <button id="btn-redo" title="Rehacer (Ctrl+Y)"
+                    class="p-2 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition disabled:opacity-30"
+                    disabled>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 10H11a8 8 0 00-8 8v2M21 10l-6 6M21 10l-6-6" />
+                    </svg>
+                </button>
+                <div class="w-px h-6 bg-slate-200 dark:bg-slate-700 mx-1"></div>
+                <!-- Export buttons -->
+                <button id="btn-png"
+                    class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-500 hover:bg-sky-600 text-white text-sm font-semibold transition shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    PNG
+                </button>
+                <button id="btn-pdf"
+                    class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-500 hover:bg-rose-600 text-white text-sm font-semibold transition shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    </svg>
+                    PDF
+                </button>
+                <button id="btn-print"
+                    class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition shadow-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                    </svg>
+                    Imprimir
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ════════════════════════════════════════════════════
+     MAIN LAYOUT
+═══════════════════════════════════════════════════════ -->
+    <div class="flex max-w-screen-2xl mx-auto" style="min-height: calc(100vh - 57px)">
+
+        <!-- ── SIDEBAR ── -->
+        <aside id="sidebar" id="no-print"
+            class="w-80 shrink-0 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 overflow-y-auto"
+            style="max-height: calc(100vh - 57px); position: sticky; top: 57px;">
+
+            <!-- Tabs -->
+            <div class="flex border-b border-slate-200 dark:border-slate-800 px-2 pt-2 gap-1">
+                <button class="tab-btn active flex-1 py-1.5 rounded-t-lg text-xs font-semibold transition"
+                    data-tab="design">Diseño</button>
+                <button
+                    class="tab-btn flex-1 py-1.5 rounded-t-lg text-xs font-semibold transition bg-slate-100 dark:bg-slate-800 text-slate-500"
+                    data-tab="bulk">Lote</button>
+                <button
+                    class="tab-btn flex-1 py-1.5 rounded-t-lg text-xs font-semibold transition bg-slate-100 dark:bg-slate-800 text-slate-500"
+                    data-tab="templates">Plantillas</button>
+            </div>
+
+            <!-- ── TAB: DESIGN ── -->
+            <div id="tab-design" class="tab-content p-4 space-y-5">
+
+                <!-- Label Size -->
+                <section>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Tamaño Etiqueta</h3>
+                    <div class="grid grid-cols-3 gap-1 mb-2">
+                        <button
+                            class="size-btn text-xs py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-emerald-400 font-medium transition"
+                            data-w="50" data-h="30">50×30mm</button>
+                        <button
+                            class="size-btn text-xs py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-emerald-400 font-medium transition"
+                            data-w="100" data-h="50">100×50mm</button>
+                        <button
+                            class="size-btn text-xs py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-emerald-400 font-medium transition active-size"
+                            data-w="90" data-h="40">90×40mm</button>
+                    </div>
+                    <div class="flex gap-2">
+                        <label class="flex-1">
+                            <span class="text-xs text-slate-500">A (mm)</span>
+                            <input id="lbl-w" type="number" min="30" max="300" value="90"
+                                class="w-full mt-0.5 px-2 py-1 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 focus:ring-2 focus:ring-emerald-400 outline-none">
+                        </label>
+                        <label class="flex-1">
+                            <span class="text-xs text-slate-500">H (mm)</span>
+                            <input id="lbl-h" type="number" min="20" max="300" value="40"
+                                class="w-full mt-0.5 px-2 py-1 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 focus:ring-2 focus:ring-emerald-400 outline-none">
+                        </label>
+                    </div>
+                </section>
+
+                <hr class="border-slate-100 dark:border-slate-800">
+
+                <!-- Barcode Type -->
+                <section>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Tipo de Código</h3>
+                    <div class="flex gap-1">
+                        <button
+                            class="type-btn flex-1 py-1.5 text-xs rounded-lg border border-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-semibold transition"
+                            data-type="CODE128">Barras</button>
+                        <button
+                            class="type-btn flex-1 py-1.5 text-xs rounded-lg border border-slate-200 dark:border-slate-700 font-medium transition"
+                            data-type="QR">Código QR</button>
+                    </div>
+                </section>
+
+                <hr class="border-slate-100 dark:border-slate-800">
+
+                <!-- Content Fields -->
+                <section>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Contenido</h3>
+                    <div class="space-y-2">
+                        <label class="block">
+                            <span class="text-xs text-slate-500">Nombre de Producto</span>
+                            <input id="f-name" type="text" value="{{ item.name }}"
+                                class="w-full mt-0.5 px-2 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 focus:ring-2 focus:ring-emerald-400 outline-none">
+                        </label>
+                        <label class="block">
+                            <span class="text-xs text-slate-500">SKU / Código</span>
+                            <input id="f-sku" type="text" value="{{ barcode_value }}"
+                                class="w-full mt-0.5 px-2 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 focus:ring-2 focus:ring-emerald-400 outline-none">
+                        </label>
+                        <label class="block">
+                            <span class="text-xs text-slate-500">Precio</span>
+                            <input id="f-price" type="text" value="{{ currency_symbol }}{{ '%.2f'|format(item.price) }}"
+                                class="w-full mt-0.5 px-2 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 focus:ring-2 focus:ring-emerald-400 outline-none">
+                        </label>
+                    </div>
+                    <!-- Visibility toggles -->
+                    <div class="flex gap-3 mt-2">
+                        <label class="flex items-center gap-1.5 text-xs cursor-pointer">
+                            <input id="show-name" type="checkbox" checked class="accent-emerald-500"> Nombre
+                        </label>
+                        <label class="flex items-center gap-1.5 text-xs cursor-pointer">
+                            <input id="show-price" type="checkbox" checked class="accent-emerald-500"> Precio
+                        </label>
+                        <label class="flex items-center gap-1.5 text-xs cursor-pointer">
+                            <input id="show-bcode-text" type="checkbox" checked class="accent-emerald-500"> Texto cod.
+                        </label>
+                    </div>
+                </section>
+
+                <hr class="border-slate-100 dark:border-slate-800">
+
+                <!-- Typography -->
+                <section>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Tipografía</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between text-xs mb-1"><span class="text-slate-500">Tamaño
+                                    Nombre</span><span id="val-name-size"
+                                    class="font-semibold text-emerald-500">14px</span></div>
+                            <input id="name-size" type="range" min="8" max="40" value="14"
+                                class="w-full h-1.5 rounded-full">
+                        </div>
+                        <div class="flex gap-2">
+                            <label class="flex items-center gap-1.5 text-xs cursor-pointer"><input id="name-bold"
+                                    type="checkbox" checked class="accent-emerald-500"> Negrita</label>
+                            <select id="name-align"
+                                class="text-xs border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 bg-white dark:bg-slate-800 outline-none focus:ring-2 focus:ring-emerald-400">
+                                <option value="left">Izq.</option>
+                                <option value="center" selected>Centro</option>
+                                <option value="right">Der.</option>
+                            </select>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs mb-1"><span class="text-slate-500">Tamaño
+                                    Precio</span><span id="val-price-size"
+                                    class="font-semibold text-emerald-500">13px</span></div>
+                            <input id="price-size" type="range" min="8" max="40" value="13"
+                                class="w-full h-1.5 rounded-full">
+                        </div>
+                        <div class="flex gap-2">
+                            <label class="flex items-center gap-1.5 text-xs cursor-pointer"><input id="price-bold"
+                                    type="checkbox" checked class="accent-emerald-500"> Negrita</label>
+                            <select id="price-align"
+                                class="text-xs border border-slate-200 dark:border-slate-700 rounded-lg px-2 py-1 bg-white dark:bg-slate-800 outline-none focus:ring-2 focus:ring-emerald-400">
+                                <option value="left">Izq.</option>
+                                <option value="center" selected>Centro</option>
+                                <option value="right">Der.</option>
+                            </select>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs mb-1"><span class="text-slate-500">Tamaño texto
+                                    cód.</span><span id="val-bc-size" class="font-semibold text-emerald-500">10px</span>
+                            </div>
+                            <input id="bc-text-size" type="range" min="6" max="20" value="10"
+                                class="w-full h-1.5 rounded-full">
+                        </div>
+                    </div>
+                </section>
+
+                <hr class="border-slate-100 dark:border-slate-800">
+
+                <!-- Barcode Dimensions -->
+                <section>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Código</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between text-xs mb-1"><span class="text-slate-500">Grosor
+                                    línea</span><span id="val-bw" class="font-semibold text-emerald-500">1.5</span>
+                            </div>
+                            <input id="bar-width" type="range" min="0.5" max="4" step="0.1" value="1.5"
+                                class="w-full h-1.5 rounded-full">
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs mb-1"><span class="text-slate-500">Alto de
+                                    barras</span><span id="val-bh" class="font-semibold text-emerald-500">40px</span>
+                            </div>
+                            <input id="bar-height" type="range" min="10" max="120" value="40"
+                                class="w-full h-1.5 rounded-full">
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs mb-1"><span class="text-slate-500">Margen
+                                    int.</span><span id="val-margin" class="font-semibold text-emerald-500">4px</span>
+                            </div>
+                            <input id="bar-margin" type="range" min="0" max="30" value="4"
+                                class="w-full h-1.5 rounded-full">
+                        </div>
+                    </div>
+                    <div class="flex gap-2 mt-2">
+                        <label class="flex-1">
+                            <span class="text-xs text-slate-500">Color línea</span>
+                            <input id="bar-color" type="color" value="#000000"
+                                class="w-full h-7 mt-0.5 rounded-lg border-0 cursor-pointer">
+                        </label>
+                        <label class="flex-1">
+                            <span class="text-xs text-slate-500">Fondo</span>
+                            <input id="bg-color" type="color" value="#ffffff"
+                                class="w-full h-7 mt-0.5 rounded-lg border-0 cursor-pointer">
+                        </label>
+                    </div>
+                </section>
+
+                <hr class="border-slate-100 dark:border-slate-800">
+
+                <!-- Spacing -->
+                <section>
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Espaciado</h3>
+                    <div>
+                        <div class="flex justify-between text-xs mb-1"><span class="text-slate-500">Bordes
+                                (Padding)</span><span id="val-pad" class="font-semibold text-emerald-500">6px</span>
+                        </div>
+                        <input id="lbl-pad" type="range" min="0" max="20" value="6" class="w-full h-1.5 rounded-full">
+                    </div>
+                </section>
+
+            </div><!-- /tab-design -->
+
+            <!-- ── TAB: BULK ── -->
+            <div id="tab-bulk" class="tab-content hidden p-4 space-y-4">
+                <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Generación Lotes</h3>
+                <label class="block">
+                    <span class="text-xs text-slate-500">Copias por etiq.</span>
+                    <input id="bulk-copies" type="number" min="1" max="200" value="{{ copies }}"
+                        class="w-full mt-0.5 px-2 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 focus:ring-2 focus:ring-emerald-400 outline-none">
+                </label>
+                <label class="block">
+                    <span class="text-xs text-slate-500">Columnas</span>
+                    <input id="bulk-cols" type="number" min="1" max="10" value="3"
+                        class="w-full mt-0.5 px-2 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 focus:ring-2 focus:ring-emerald-400 outline-none">
+                </label>
+                <label class="block">
+                    <span class="text-xs text-slate-500">Separación (px)</span>
+                    <input id="bulk-gap" type="number" min="0" max="40" value="8"
+                        class="w-full mt-0.5 px-2 py-1.5 text-sm border border-slate-200 dark:border-slate-700 rounded-lg bg-white dark:bg-slate-800 focus:ring-2 focus:ring-emerald-400 outline-none">
+                </label>
+                <button id="btn-bulk-preview"
+                    class="w-full py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold transition">
+                    Vista Previa Lote
+                </button>
+                <button id="btn-bulk-pdf"
+                    class="w-full py-2 rounded-xl bg-rose-500 hover:bg-rose-600 text-white text-sm font-semibold transition">
+                    Exportar Lote a PDF
+                </button>
+                <button id="btn-bulk-print"
+                    class="w-full py-2 rounded-xl bg-slate-700 hover:bg-slate-900 dark:bg-slate-600 dark:hover:bg-slate-500 text-white text-sm font-semibold transition">
+                    Imprimir Lote
+                </button>
+            </div><!-- /tab-bulk -->
+
+            <!-- ── TAB: TEMPLATES ── -->
+            <div id="tab-templates" class="tab-content hidden p-4 space-y-4">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Guardadas</h3>
+                    <button id="btn-save-tpl"
+                        class="text-xs px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition">
+                        + Guardar
+                    </button>
+                </div>
+                <div id="tpl-list" class="space-y-2">
+                    <p class="text-xs text-slate-400 italic">No hay plantillas guardadas.</p>
+                </div>
+            </div><!-- /tab-templates -->
+
+        </aside>
+
+        <!-- ── MAIN PREVIEW AREA ── -->
+        <main class="flex-1 flex flex-col" id="no-print">
+
+            <!-- Preview controls bar -->
+            <div
+                class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-5 py-2 flex items-center gap-3">
+                <span class="text-xs font-semibold text-slate-500">VISTA PREVIA</span>
+                <div class="flex-1"></div>
+                <span class="text-xs text-slate-400">Lupa</span>
+                <input id="zoom-slider" type="range" min="50" max="300" value="120"
+                    class="w-28 h-1.5 rounded-full accent-emerald-500">
+                <span id="zoom-val" class="text-xs font-semibold text-emerald-500 w-10">120%</span>
+            </div>
+
+            <!-- Single-label preview -->
+            <div id="single-preview-area" class="flex-1 p-8 flex flex-col items-center gap-4 overflow-auto">
+                <div id="preview-wrap">
+                    <!-- Label is rendered here dynamically -->
+                    <div id="label-preview" class="label-card"></div>
+                </div>
+                <p class="text-xs text-slate-400">Vista en vivo — Los cambios se aplican al instante</p>
+            </div>
+
+            <!-- Bulk preview (hidden until generated) -->
+            <div id="bulk-preview-area" class="hidden flex-1 p-6 overflow-auto">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-sm font-bold text-slate-700 dark:text-slate-200">Vista Lote</h2>
+                    <button id="btn-close-bulk"
+                        class="text-xs text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 underline">← Volver
+                        a individual</button>
+                </div>
+                <div id="bulk-grid" class="bg-white dark:bg-slate-800 rounded-xl p-6 shadow"></div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════
+     PRINT AREA (hidden on screen, visible when printing)
+═══════════════════════════════════════════════════════ -->
+    <div id="print-area" style="display:none;"></div>
+
+
+    <script>
+        // ══════════════════════════════════════════════════════════════
+        //  STATE
+        // ══════════════════════════════════════════════════════════════
+        const state = {
+            barcodeType: 'CODE128',  // 'CODE128' | 'QR'
+            name: document.getElementById('f-name').value,
+            sku: document.getElementById('f-sku').value,
+            price: document.getElementById('f-price').value,
+            showName: true,
+            showPrice: true,
+            showBcText: true,
+            nameSize: 14,
+            nameBold: true,
+            nameAlign: 'center',
+            priceSize: 13,
+            priceBold: true,
+            priceAlign: 'center',
+            bcTextSize: 10,
+            barWidth: 1.5,
+            barHeight: 40,
+            barMargin: 4,
+            barColor: '#000000',
+            bgColor: '#ffffff',
+            lblW: 90,   // mm
+            lblH: 40,   // mm
+            padding: 6,
+        };
+
+        // Undo/Redo stacks
+        const history = { stack: [structuredClone(state)], idx: 0 };
+
+        function pushHistory() {
+            history.stack = history.stack.slice(0, history.idx + 1);
+            history.stack.push(structuredClone(state));
+            history.idx = history.stack.length - 1;
+            syncUndoRedo();
+        }
+        function undo() {
+            if (history.idx > 0) { history.idx--; Object.assign(state, structuredClone(history.stack[history.idx])); syncAllControls(); render(); syncUndoRedo(); }
+        }
+        function redo() {
+            if (history.idx < history.stack.length - 1) { history.idx++; Object.assign(state, structuredClone(history.stack[history.idx])); syncAllControls(); render(); syncUndoRedo(); }
+        }
+        function syncUndoRedo() {
+            document.getElementById('btn-undo').disabled = history.idx <= 0;
+            document.getElementById('btn-redo').disabled = history.idx >= history.stack.length - 1;
+        }
+
+        // ══════════════════════════════════════════════════════════════
+        //  RENDER LABEL
+        // ══════════════════════════════════════════════════════════════
+        const MM_TO_PX = 3.7795; // 96dpi
+
+        function buildLabelDOM(s, forPrint = false) {
+            const w = Math.round(s.lblW * MM_TO_PX);
+            const h = Math.round(s.lblH * MM_TO_PX);
+
+            const card = document.createElement('div');
+            card.className = 'label-card';
+            card.style.cssText = `
+        width:${w}px; height:${h}px;
+        background:${s.bgColor};
+        padding:${s.padding}px;
+        gap:2px;
+        justify-content:center;
+    `;
+
+            // Name
+            if (s.showName) {
+                const el = document.createElement('div');
+                el.className = 'label-name';
+                el.textContent = s.name;
+                el.style.cssText = `
+            font-size:${s.nameSize}px;
+            line-height:${s.nameSize * 1.35}px;
+            font-weight:${s.nameBold ? '700' : '400'};
+            text-align:${s.nameAlign};
+            color:${s.barColor};
+            padding-top:2px;
+            padding-bottom:2px;
+            display:-webkit-box;
+            -webkit-line-clamp:2;
+            -webkit-box-orient:vertical;
+        `;
+                card.appendChild(el);
+            }
+
+            // Barcode / QR
+            const bcWrap = document.createElement('div');
+            bcWrap.className = 'label-barcode-wrap';
+            bcWrap.style.cssText = 'flex:1; display:flex; align-items:center; justify-content:center; min-height:0; overflow:hidden;';
+
+            if (s.barcodeType === 'QR') {
+                const qrCanvas = document.createElement('canvas');
+                const qrSide = Math.min(w - s.padding * 2, h - s.padding * 2 - 40) || 60;
+                qrCanvas.width = qrSide;
+                qrCanvas.height = qrSide;
+                bcWrap.appendChild(qrCanvas);
+                card.appendChild(bcWrap);
+                // Render QR async after element is in DOM
+                card._qrCanvas = qrCanvas;
+                card._qrValue = s.sku;
+                card._qrSize = qrSide;
+            } else {
+                const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                svg.style.cssText = 'max-width:100%; height:auto;';
+                bcWrap.appendChild(svg);
+                card.appendChild(bcWrap);
+                card._barcodeSVG = svg;
+                card._barcodeValue = s.sku;
+                card._barcodeOpts = {
+                    format: 'CODE128',
+                    width: s.barWidth,
+                    height: s.barHeight,
+                    margin: s.barMargin,
+                    fontSize: s.bcTextSize,
+                    displayValue: s.showBcText,
+                    lineColor: s.barColor,
+                    background: s.bgColor,
+                };
+            }
+
+            // Price
+            if (s.showPrice) {
+                const el = document.createElement('div');
+                el.className = 'label-price';
+                el.textContent = s.price;
+                el.style.cssText = `
+            font-size:${s.priceSize}px;
+            line-height: ${s.priceSize * 1.15}px;
+            font-weight:${s.priceBold ? '700' : '400'};
+            text-align:${s.priceAlign};
+            color:${s.barColor};
+        `;
+                card.appendChild(el);
+            }
+
+            return card;
+        }
+
+        function applyBarcodes(container) {
+            // Apply JsBarcode
+            container.querySelectorAll('[data-bc-pending]').forEach(svg => {
+                // Already handled via _barcodeSVG
+            });
+
+            // Walk all label-cards
+            container.querySelectorAll('.label-card').forEach(card => {
+                if (card._barcodeSVG && card._barcodeValue) {
+                    try {
+                        JsBarcode(card._barcodeSVG, card._barcodeValue, card._barcodeOpts);
+                    } catch (e) {
+                        card._barcodeSVG.setAttribute('width', '10');
+                    }
+                }
+                if (card._qrCanvas) {
+                    QRCode.toCanvas(card._qrCanvas, card._qrValue || '0', { width: card._qrSize, margin: 1 }, () => { });
+                }
+            });
+        }
+
+        let renderTimer = null;
+        function render() {
+            clearTimeout(renderTimer);
+            renderTimer = setTimeout(_doRender, 30);
+        }
+
+        function _doRender() {
+            const zoom = document.getElementById('zoom-slider').value / 100;
+            const wrap = document.getElementById('preview-wrap');
+            const preview = document.getElementById('label-preview');
+
+            // Build fresh label
+            const label = buildLabelDOM(state);
+            label.id = 'label-preview';
+            label.style.transform = `scale(${zoom})`;
+            label.style.transformOrigin = 'top center';
+
+            wrap.replaceChild(label, preview);
+            applyBarcodes(wrap);
+        }
+
+        // ══════════════════════════════════════════════════════════════
+        //  WIRE CONTROLS
+        // ══════════════════════════════════════════════════════════════
+        function bindInput(id, key, transform) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.addEventListener('input', () => {
+                state[key] = transform ? transform(el.value) : el.value;
+                render();
+            });
+            el.addEventListener('change', () => { pushHistory(); });
+        }
+        function bindRange(id, key, displayId, suffix = '') {
+            const el = document.getElementById(id);
+            const disp = document.getElementById(displayId);
+            if (!el) return;
+            el.addEventListener('input', () => {
+                const v = parseFloat(el.value);
+                state[key] = v;
+                if (disp) disp.textContent = v + suffix;
+                render();
+            });
+            el.addEventListener('change', pushHistory);
+        }
+        function bindCheck(id, key) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.addEventListener('change', () => { state[key] = el.checked; render(); pushHistory(); });
+        }
+        function bindSelect(id, key) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.addEventListener('change', () => { state[key] = el.value; render(); pushHistory(); });
+        }
+
+        // Inputs
+        bindInput('f-name', 'name');
+        bindInput('f-sku', 'sku');
+        bindInput('f-price', 'price');
+        bindInput('lbl-w', 'lblW', Number);
+        bindInput('lbl-h', 'lblH', Number);
+
+        // Ranges
+        bindRange('name-size', 'nameSize', 'val-name-size', 'px');
+        bindRange('price-size', 'priceSize', 'val-price-size', 'px');
+        bindRange('bc-text-size', 'bcTextSize', 'val-bc-size', 'px');
+        bindRange('bar-width', 'barWidth', 'val-bw');
+        bindRange('bar-height', 'barHeight', 'val-bh', 'px');
+        bindRange('bar-margin', 'barMargin', 'val-margin', 'px');
+        bindRange('lbl-pad', 'padding', 'val-pad', 'px');
+
+        // Checkboxes
+        bindCheck('show-name', 'showName');
+        bindCheck('show-price', 'showPrice');
+        bindCheck('show-bcode-text', 'showBcText');
+        bindCheck('name-bold', 'nameBold');
+        bindCheck('price-bold', 'priceBold');
+
+        // Selects
+        bindSelect('name-align', 'nameAlign');
+        bindSelect('price-align', 'priceAlign');
+
+        // Color inputs
+        ['bar-color', 'bg-color'].forEach(id => {
+            const el = document.getElementById(id);
+            const key = id === 'bar-color' ? 'barColor' : 'bgColor';
+            el.addEventListener('input', () => { state[key] = el.value; render(); });
+            el.addEventListener('change', pushHistory);
+        });
+
+        // Zoom
+        const zoomEl = document.getElementById('zoom-slider');
+        zoomEl.addEventListener('input', () => {
+            document.getElementById('zoom-val').textContent = zoomEl.value + '%';
+            render();
+        });
+
+        // Label size presets
+        document.querySelectorAll('.size-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                state.lblW = +btn.dataset.w;
+                state.lblH = +btn.dataset.h;
+                document.getElementById('lbl-w').value = state.lblW;
+                document.getElementById('lbl-h').value = state.lblH;
+                render(); pushHistory();
+            });
+        });
+
+        // Barcode type toggle
+        document.querySelectorAll('.type-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                state.barcodeType = btn.dataset.type;
+                document.querySelectorAll('.type-btn').forEach(b => {
+                    b.classList.toggle('border-emerald-400', b === btn);
+                    b.classList.toggle('bg-emerald-50', b === btn);
+                    b.classList.toggle('dark:bg-emerald-900/30', b === btn);
+                    b.classList.toggle('text-emerald-700', b === btn);
+                    b.classList.toggle('dark:text-emerald-300', b === btn);
+                    b.classList.toggle('font-semibold', b === btn);
+                });
+                render(); pushHistory();
+            });
+        });
+
+        // Tabs
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tab = btn.dataset.tab;
+                document.querySelectorAll('.tab-btn').forEach(b => {
+                    b.classList.toggle('active', b === btn);
+                    b.classList.toggle('bg-slate-100', b !== btn);
+                    b.classList.toggle('dark:bg-slate-800', b !== btn);
+                    b.classList.toggle('text-slate-500', b !== btn);
+                });
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+                document.getElementById('tab-' + tab).classList.remove('hidden');
+            });
+        });
+
+        // Undo/Redo buttons
+        document.getElementById('btn-undo').addEventListener('click', undo);
+        document.getElementById('btn-redo').addEventListener('click', redo);
+        document.addEventListener('keydown', e => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'z') { e.preventDefault(); undo(); }
+            if ((e.ctrlKey || e.metaKey) && e.key === 'y') { e.preventDefault(); redo(); }
+        });
+
+        // Dark mode
+        const html = document.documentElement;
+        let dark = localStorage.getItem('bc-dark') === '1';
+        function applyDark() {
+            html.classList.toggle('dark', dark);
+            document.getElementById('icon-sun').classList.toggle('hidden', !dark);
+            document.getElementById('icon-moon').classList.toggle('hidden', dark);
+        }
+        applyDark();
+        document.getElementById('btn-dark').addEventListener('click', () => {
+            dark = !dark;
+            localStorage.setItem('bc-dark', dark ? '1' : '0');
+            applyDark();
+        });
+
+        // ══════════════════════════════════════════════════════════════
+        //  EXPORT: PNG
+        // ══════════════════════════════════════════════════════════════
+        document.getElementById('btn-png').addEventListener('click', async () => {
+            const label = buildLabelDOM(state);
+            label.style.position = 'fixed';
+            label.style.top = '-9999px';
+            document.body.appendChild(label);
+            applyBarcodes(document.body);
+            await new Promise(r => setTimeout(r, 250));
+            const canvas = await html2canvas(label, {
+                scale: 3,
+                backgroundColor: state.bgColor,
+                onclone: (doc) => {
+                    const svgs = doc.querySelectorAll('svg');
+                    svgs.forEach(svg => {
+                        svg.style.maxWidth = 'none';
+                    });
+                }
+            });
+            document.body.removeChild(label);
+            const a = document.createElement('a');
+            a.href = canvas.toDataURL('image/png');
+            a.download = `label_${state.sku}.png`;
+            a.click();
+        });
+
+        // ══════════════════════════════════════════════════════════════
+        //  EXPORT: Single PDF
+        // ══════════════════════════════════════════════════════════════
+        document.getElementById('btn-pdf').addEventListener('click', async () => {
+            const label = buildLabelDOM(state);
+            label.style.position = 'fixed';
+            label.style.top = '-9999px';
+            document.body.appendChild(label);
+            applyBarcodes(document.body);
+            await document.fonts.ready;
+            const canvas = await html2canvas(label, {
+                scale: 3,
+                backgroundColor: state.bgColor,
+                onclone: (doc) => {
+                    const svgs = doc.querySelectorAll('svg');
+                    svgs.forEach(svg => {
+                        svg.style.maxWidth = 'none';
+                        svg.style.height = '100%';
+                    });
+                }
+            });
+            document.body.removeChild(label);
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF({ orientation: state.lblW > state.lblH ? 'l' : 'p', unit: 'mm', format: [state.lblW, state.lblH] });
+            pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 0, 0, state.lblW, state.lblH);
+            pdf.save(`label_${state.sku}.pdf`);
+        });
+
+        // ══════════════════════════════════════════════════════════════
+        //  PRINT: browser print
+        // ══════════════════════════════════════════════════════════════
+        document.getElementById('btn-print').addEventListener('click', () => {
+            buildPrintArea(1, +document.getElementById('bulk-cols').value || 1);
+            window.print();
+        });
+
+        // ══════════════════════════════════════════════════════════════
+        //  BULK
+        // ══════════════════════════════════════════════════════════════
+        function buildBulkGrid(copies, cols, gap, container) {
+            container.innerHTML = '';
+            container.style.cssText = `
+        display:grid;
+        grid-template-columns:repeat(${cols}, max-content);
+        gap:${gap}px;
+        justify-content:center;
+    `;
+            for (let i = 0; i < copies; i++) {
+                const lbl = buildLabelDOM(state);
+                container.appendChild(lbl);
+            }
+            applyBarcodes(container);
+        }
+
+        function buildPrintArea(copies, cols) {
+            const pa = document.getElementById('print-area');
+            pa.style.cssText = `display:grid; grid-template-columns:repeat(${cols},1fr); gap:4mm; padding:6mm; box-sizing:border-box;`;
+            pa.innerHTML = '';
+            for (let i = 0; i < copies; i++) {
+                pa.appendChild(buildLabelDOM(state, true));
+            }
+            applyBarcodes(pa);
+        }
+
+        document.getElementById('btn-bulk-preview').addEventListener('click', () => {
+            const copies = +document.getElementById('bulk-copies').value || 12;
+            const cols = +document.getElementById('bulk-cols').value || 3;
+            const gap = +document.getElementById('bulk-gap').value || 8;
+            buildBulkGrid(copies, cols, gap, document.getElementById('bulk-grid'));
+            document.getElementById('single-preview-area').classList.add('hidden');
+            document.getElementById('bulk-preview-area').classList.remove('hidden');
+        });
+
+        document.getElementById('btn-close-bulk').addEventListener('click', () => {
+            document.getElementById('bulk-preview-area').classList.add('hidden');
+            document.getElementById('single-preview-area').classList.remove('hidden');
+        });
+
+        document.getElementById('btn-bulk-print').addEventListener('click', () => {
+            const copies = +document.getElementById('bulk-copies').value || 12;
+            const cols = +document.getElementById('bulk-cols').value || 3;
+            buildPrintArea(copies, cols);
+            window.print();
+        });
+
+        document.getElementById('btn-bulk-pdf').addEventListener('click', async () => {
+            const copies = +document.getElementById('bulk-copies').value || 12;
+            const cols = +document.getElementById('bulk-cols').value || 3;
+            const gap = +document.getElementById('bulk-gap').value || 8;
+            const container = document.createElement('div');
+            container.style.position = 'fixed';
+            container.style.top = '-9999px';
+            document.body.appendChild(container);
+            buildBulkGrid(copies, cols, gap, container);
+            await new Promise(r => setTimeout(r, 300));
+            const canvas = await html2canvas(container, {
+                scale: 2,
+                backgroundColor: '#ffffff',
+                onclone: (doc) => {
+                    const svgs = doc.querySelectorAll('svg');
+                    svgs.forEach(svg => {
+                        svg.style.maxWidth = 'none';
+                        svg.style.height = '100%';
+                    });
+                }
+            });
+            document.body.removeChild(container);
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'letter' });
+            const pageW = pdf.internal.pageSize.getWidth();
+            const pageH = pdf.internal.pageSize.getHeight();
+            const ratio = canvas.width / canvas.height;
+            const imgW = pageW - 20;
+            const imgH = imgW / ratio;
+            pdf.addImage(canvas.toDataURL('image/png'), 'PNG', 10, 10, imgW, Math.min(imgH, pageH - 20));
+            pdf.save(`bulk_labels_${state.sku}.pdf`);
+        });
+
+        // ══════════════════════════════════════════════════════════════
+        //  TEMPLATES (localStorage)
+        // ══════════════════════════════════════════════════════════════
+        const TPL_KEY = 'bc_templates';
+
+        function loadTemplates() {
+            return JSON.parse(localStorage.getItem(TPL_KEY) || '[]');
+        }
+        function saveTemplates(tpls) {
+            localStorage.setItem(TPL_KEY, JSON.stringify(tpls));
+        }
+        function renderTemplateList() {
+            const list = document.getElementById('tpl-list');
+            const tpls = loadTemplates();
+            if (!tpls.length) {
+                list.innerHTML = '<p class="text-xs text-slate-400 italic">No hay plantillas guardadas.</p>';
+                return;
+            }
+            list.innerHTML = '';
+            tpls.forEach((tpl, i) => {
+                const card = document.createElement('div');
+                card.className = 'tpl-card flex items-center justify-between bg-slate-50 dark:bg-slate-800 rounded-xl px-3 py-2 border border-slate-200 dark:border-slate-700 cursor-pointer';
+                card.innerHTML = `
+            <div class="flex-1 min-w-0">
+                <div class="text-xs font-semibold text-slate-800 dark:text-slate-100 truncate">${tpl.name || 'Plantilla ' + (i + 1)}</div>
+                <div class="text-xs text-slate-400">${tpl.lblW}×${tpl.lblH}mm</div>
+            </div>
+            <div class="flex gap-1 ml-2 shrink-0">
+                <button data-idx="${i}" class="tpl-load text-xs px-2 py-0.5 rounded-lg bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300 font-semibold hover:bg-emerald-200 transition">Cargar</button>
+                <button data-idx="${i}" class="tpl-copy text-xs px-2 py-0.5 rounded-lg bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-semibold hover:bg-slate-300 transition">Dupl.</button>
+                <button data-idx="${i}" class="tpl-del text-xs px-2 py-0.5 rounded-lg bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-400 font-semibold hover:bg-rose-200 transition">✕</button>
+            </div>
+        `;
+                list.appendChild(card);
+            });
+            list.querySelectorAll('.tpl-load').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tpl = loadTemplates()[+btn.dataset.idx];
+                    Object.assign(state, tpl);
+                    syncAllControls();
+                    render();
+                    pushHistory();
+                });
+            });
+            list.querySelectorAll('.tpl-copy').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tpls = loadTemplates();
+                    const clone = { ...tpls[+btn.dataset.idx], name: tpls[+btn.dataset.idx].name + ' (copy)' };
+                    tpls.push(clone);
+                    saveTemplates(tpls);
+                    renderTemplateList();
+                });
+            });
+            list.querySelectorAll('.tpl-del').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const tpls = loadTemplates();
+                    tpls.splice(+btn.dataset.idx, 1);
+                    saveTemplates(tpls);
+                    renderTemplateList();
+                });
+            });
+        }
+
+        document.getElementById('btn-save-tpl').addEventListener('click', () => {
+            const tplName = prompt('Nombre de plantilla:', state.name || 'Mi Plantilla');
+            if (tplName === null) return;
+            const tpls = loadTemplates();
+            tpls.push({ ...structuredClone(state), name: tplName });
+            saveTemplates(tpls);
+            renderTemplateList();
+        });
+
+        // ══════════════════════════════════════════════════════════════
+        //  SYNC CONTROLS → STATE (for undo/redo restore)
+        // ══════════════════════════════════════════════════════════════
+        function syncAllControls() {
+            const s = state;
+            const set = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+            const setChk = (id, v) => { const el = document.getElementById(id); if (el) el.checked = v; };
+
+            set('f-name', s.name); set('f-sku', s.sku); set('f-price', s.price);
+            set('lbl-w', s.lblW); set('lbl-h', s.lblH);
+            set('name-size', s.nameSize); document.getElementById('val-name-size').textContent = s.nameSize + 'px';
+            set('price-size', s.priceSize); document.getElementById('val-price-size').textContent = s.priceSize + 'px';
+            set('bc-text-size', s.bcTextSize); document.getElementById('val-bc-size').textContent = s.bcTextSize + 'px';
+            set('bar-width', s.barWidth); document.getElementById('val-bw').textContent = s.barWidth;
+            set('bar-height', s.barHeight); document.getElementById('val-bh').textContent = s.barHeight + 'px';
+            set('bar-margin', s.barMargin); document.getElementById('val-margin').textContent = s.barMargin + 'px';
+            set('lbl-pad', s.padding); document.getElementById('val-pad').textContent = s.padding + 'px';
+            set('bar-color', s.barColor); set('bg-color', s.bgColor);
+            set('name-align', s.nameAlign); set('price-align', s.priceAlign);
+            setChk('show-name', s.showName); setChk('show-price', s.showPrice); setChk('show-bcode-text', s.showBcText);
+            setChk('name-bold', s.nameBold); setChk('price-bold', s.priceBold);
+        }
+
+        // ══════════════════════════════════════════════════════════════
+        //  INIT
+        // ══════════════════════════════════════════════════════════════
+        renderTemplateList();
+        render();
+    </script>
+</body>
+
+</html>
