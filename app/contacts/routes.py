@@ -11,9 +11,6 @@ from sqlalchemy import exc
 @contacts.route('/<int:company_id>/contacts', methods=['GET'])
 @login_required
 def index(company_id):
-
-
-
     page = request.args.get('page', 1, type=int)
     search = request.args.get('search', '', type=str)
     contact_type_filter = request.args.get('type', '', type=str)
@@ -197,9 +194,6 @@ def edit(company_id, contact_id):
 @login_required
 def delete(company_id, contact_id):
     contact = Contact.query.filter_by(id=contact_id, company_id=company_id).first_or_404()
-    
-                                                                                                                            
-                               
     try:
         contact.is_deleted = True
         contact.deleted_at = datetime.now(UTC)

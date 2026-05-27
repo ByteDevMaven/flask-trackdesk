@@ -12,8 +12,7 @@ def create_purchase_order(company_id, form_data):
         if not supplier_id or not supplier_id.isdigit():
             return {'success': False, 'error': _('Contact is required')}
         
-        last_id = db.session.query(func.max(PurchaseOrder.id))\
-            .filter_by(company_id=company_id).scalar() or 0
+        last_id = db.session.query(func.max(PurchaseOrder.id)).filter_by(company_id=company_id).scalar() or 0
         next_seq = int(last_id) + 1
         order_number = f"PO-{company_id}-{next_seq:06d}"
         
