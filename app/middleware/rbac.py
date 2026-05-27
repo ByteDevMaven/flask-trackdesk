@@ -108,6 +108,15 @@ ROUTE_PERMISSIONS: dict[str, str] = {
     'users.send_password_reset':'users.admin',
     'users.search':             'users.view',
 
+    # ── Accounting ────────────────────────────────────────────────────────
+    'accounting.index':                     'accounting.view',
+    'accounting.ledger':                    'accounting.view',
+    'accounting.chart_of_accounts':         'accounting.view',
+    'accounting.create_expense':            'accounting.manage',
+    'accounting.create_project':            'accounting.manage',
+    'accounting.create_account':            'accounting.manage',
+    'accounting.generate_default_accounts': 'accounting.manage',
+
     # ── Global search ─────────────────────────────────────────────────────
     'search': 'dashboard.view',
 }
@@ -206,6 +215,7 @@ def seed_default_roles_and_permissions(db, Role, Permission):
             'payments.view',   'payments.manage',   'payments.delete',
             'companies.view',  'companies.manage',
             'users.view',
+            'accounting.view', 'accounting.manage',
         ],
 
         'accountant': [
@@ -217,6 +227,7 @@ def seed_default_roles_and_permissions(db, Role, Permission):
             'payments.view',   'payments.manage',
             'companies.view',
             'users.view',
+            'accounting.view', 'accounting.manage',
         ],
 
         'viewer': [
@@ -228,6 +239,7 @@ def seed_default_roles_and_permissions(db, Role, Permission):
             'payments.view',
             'companies.view',
             'users.view',
+            'accounting.view',
         ],
     }
 
