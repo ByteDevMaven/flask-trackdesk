@@ -11,17 +11,20 @@ class DocumentType(enum.Enum):
     quote = 'quote'
     invoice = 'invoice'
 
-class InvoiceType(enum.Enum):
-    sent = 'sent'
+class DocumentStatus(enum.Enum):
     draft = 'draft'
+    sent = 'sent'
     issued = 'issued'
-    cancelled = 'cancelled'
     partial = 'partial'
     paid = 'paid'
     overdue = 'overdue'
     pending = 'pending'
-    credit = 'credit'
+    credit_note = 'credit_note'
     exchange = 'exchange'
+    cancelled = 'cancelled'
+
+# Legacy alias for backward compatibility
+InvoiceType = DocumentStatus
 
 class StockMovementType(enum.Enum):
     incoming = 'incoming'
@@ -38,3 +41,8 @@ class PaymentMethod(enum.Enum):
 class ContactType(enum.Enum):
     customer = 'customer'
     supplier = 'supplier'
+
+class UserStatus(enum.Enum):
+    active = 'active'
+    inactive = 'inactive'
+    suspended = 'suspended'

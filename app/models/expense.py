@@ -8,15 +8,19 @@ class Expense(BaseModel):
     project_id = db.Column(db.Integer, db.ForeignKey('projects.id'), index=True)
     supplier_id = db.Column(db.Integer, db.ForeignKey('contacts.id'), index=True)
     
-    amount = db.Column(db.Float, nullable=False)
-    date = db.Column(db.DateTime, default=lambda: datetime.now(UTC))
-    description = db.Column(db.String)
-    receipt_url = db.Column(db.String)
+    amount = db.Column(db.Numeric(12, 2), nullable=False)
+    date = db.Column(db.DateTime, default=lambda: datetime.now(UTC), index=True)
+    description = db.Column(db.String(1024))
+    receipt_url = db.Column(db.String(512))
     
-    account = db.relationship('Account', backref='expenses')
-    project = db.relationship('Project', backref='expenses')
-    supplier = db.relationship('Contact', backref='expenses')
-    company = db.relationship('Company', backref=db.backref('expenses', lazy='dynamic'))
+    account = db.relationship('Account', backref='expenses', lazy='select')
+    project = db.relationship('Project', backref='expenses', lazy='select')
+    supplier = db.relationship('Contact', backref='expenses', lazy='select')
+    company = db.relationship('Company', backref=db.backref('expenses', lazy='select'), lazy='select')
+    
+    __table_args__ = (
+        db.CheckConstraint("amount > 0", name='check_expense_amount_positive'),
+    )
 
-    def __repr__(self):
-        return f'<Expense {self.id}: {self.amount}>'
+    def __repr__(self) -> str:
+        return f'<Expense {self.id} {self.amount}>'

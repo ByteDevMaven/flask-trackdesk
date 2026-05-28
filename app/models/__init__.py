@@ -1,5 +1,5 @@
 from app.extensions import db, migrate
-from .enums import DocumentType, InvoiceType, StockMovementType, PaymentMethod, AccountType
+from .enums import DocumentType, DocumentStatus, InvoiceType, StockMovementType, PaymentMethod, AccountType, UserStatus, ContactType
 from .associations import role_permissions, user_companies
 from .company import Company
 from .role import Role
@@ -24,12 +24,12 @@ from .audit import AuditLog
 
 __all__ = [
     'db', 'migrate',
-    'DocumentType', 'InvoiceType', 'StockMovementType', 'PaymentMethod',
+    'DocumentType', 'DocumentStatus', 'InvoiceType', 'StockMovementType', 'PaymentMethod', 'AccountType', 'UserStatus', 'ContactType',
     'role_permissions', 'user_companies',
     'Company', 'Role', 'Permission', 'User', 'Contact',
     'InventoryItem', 'PurchaseOrder', 'PurchaseOrderItem',
     'Document', 'DocumentItem', 'Payment', 'Report', 'Notification',
     'StockMovement', 'DocumentSequence',
-    'AccountType', 'Account', 'Project', 'Expense', 'LedgerEntry',
+    'Account', 'Project', 'Expense', 'LedgerEntry',
     'AuditLog'
 ]

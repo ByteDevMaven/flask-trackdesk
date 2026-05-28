@@ -242,13 +242,13 @@
             <td class="px-4 py-3">
               <button type="button"
                       onclick="toggleUserStatus({{ user.id }}, this)"
-                      data-active="{{ 'true' if user.active else 'false' }}"
+                      data-active="{{ 'true' if user.is_active else 'false' }}"
                       {% if user.id == current_user.id %}disabled title="No puedes desactivar tu propia cuenta"{% endif %}
                       class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium transition-all duration-200
-                             {{ 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100' if user.active else 'bg-slate-100 text-slate-500 hover:bg-slate-200' }}
+                             {{ 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100' if user.is_active else 'bg-slate-100 text-slate-500 hover:bg-slate-200' }}
                              {% if user.id == current_user.id %}opacity-75 cursor-not-allowed{% else %}cursor-pointer{% endif %}">
-                <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if user.active else 'bg-slate-400' }} status-dot"></span>
-                <span class="status-text">{{ 'Activo' if user.active else 'Inactivo' }}</span>
+                <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if user.is_active else 'bg-slate-400' }} status-dot"></span>
+                <span class="status-text">{{ 'Activo' if user.is_active else 'Inactivo' }}</span>
               </button>
             </td>
             <td class="px-4 py-3 text-xs text-slate-500">

@@ -1,28 +1,33 @@
 from flask_login import UserMixin
-from datetime import datetime, UTC
 from .base import db, BaseModel
 from .associations import user_companies
+from .enums import UserStatus
+import re
 
 class User(UserMixin, BaseModel):
     __tablename__ = 'users'
-    active = db.Column(db.Boolean, default=True)
-    name = db.Column(db.String, nullable=False, index=True)
-    email = db.Column(db.String, unique=True, nullable=False, index=True)
+    
+    name = db.Column(db.String(255), nullable=False, index=True)
+    email = db.Column(db.String(255), unique=True, nullable=False, index=True)
     password_hash = db.Column(db.String, nullable=False)
+    status = db.Column(db.Enum(UserStatus), default=UserStatus.active, nullable=False)
+    
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), index=True)
-    role = db.relationship('Role', lazy='subquery')
-    companies = db.relationship('Company', secondary=user_companies, backref='users')
-    last_login = db.Column(db.DateTime, default=lambda: datetime.now(UTC))
+    role = db.relationship('Role', lazy='select')
+    companies = db.relationship('Company', secondary=user_companies, backref='users', lazy='select')
+    
+    last_login = db.Column(db.DateTime, nullable=True)
 
-    # ── Flask-Login ────────────────────────────────────────────────────────
+    __table_args__ = (
+        db.CheckConstraint("status IN ('active', 'inactive', 'suspended')", name='check_user_status'),
+    )
+
     @property
     def is_active(self):
-        return self.active
+        return self.status == UserStatus.active
 
-    # ── RBAC helpers ───────────────────────────────────────────────────────
     def has_permission(self, permission_name: str) -> bool:
         """Return True if the user's role carries *permission_name*.
-
         Admins (role name == 'admin') bypass all checks automatically.
         """
         if not self.role:
@@ -36,6 +41,12 @@ class User(UserMixin, BaseModel):
         """Shortcut — True when the user's role is 'admin'."""
         return bool(self.role and self.role.name == 'admin')
 
+    @staticmethod
+    def validate_email(email: str) -> bool:
+        """Validate email format."""
+        pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        return bool(re.match(pattern, email))
+
     def __repr__(self) -> str:
-        return f'<User {self.email}>'
+        return f'<User {self.id} {self.email} ({self.role.name if self.role else "no-role"})'
 

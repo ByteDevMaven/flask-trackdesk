@@ -11,6 +11,7 @@ from sqlalchemy import or_
 
 from app.extensions import bcrypt
 from app.models import db, User, Role, Company
+from app.models.enums import UserStatus
 
 from . import users
 
@@ -101,9 +102,9 @@ def index():
                          
     if status_filter:
         if status_filter == 'active':
-            query = query.filter(User.active == True)
+            query = query.filter(User.status == UserStatus.active)
         elif status_filter == 'inactive':
-            query = query.filter(User.active == False)
+            query = query.filter(User.status != UserStatus.active)
     
                                            
     query = query.order_by(User.created_at.desc())
@@ -188,7 +189,7 @@ def store():
         
                          
         user = User(
-            active=True,
+            status=UserStatus.active,
             name=name,
             email=email,
             password_hash=bcrypt.generate_password_hash(password).decode('utf-8'),
@@ -345,14 +346,14 @@ def toggle_status(id):
     
     try:
                             
-        user.active = not user.active
+        user.status = UserStatus.inactive if user.status == UserStatus.active else UserStatus.active
         db.session.commit()
         
-        status_text = 'activated' if user.active else 'deactivated'
+        status_text = 'activated' if user.is_active else 'deactivated'
         return jsonify({
             'success': True, 
             'message': f'User {user.name} has been {status_text} successfully',
-            'active': user.active
+            'active': user.is_active
         })
         
     except Exception as e:
@@ -412,7 +413,7 @@ def search():
             'email': user.email,
             'role': user.role.name if user.role else 'No Role',
             'companies': [company.name for company in user.companies],
-            'active': user.active
+            'active': user.is_active
         })
     
     return jsonify(results)

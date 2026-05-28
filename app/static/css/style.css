@@ -2154,6 +2154,13 @@
       }
     }
   }
+  .group-hover\:text-emerald-700 {
+    &:is(:where(.group):hover *) {
+      @media (hover: hover) {
+        color: var(--color-emerald-700);
+      }
+    }
+  }
   .group-hover\:text-slate-900 {
     &:is(:where(.group):hover *) {
       @media (hover: hover) {

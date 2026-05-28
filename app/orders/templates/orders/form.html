@@ -14,13 +14,13 @@
     Volver a Órdenes
   </a>
 
-  <div class="bg-violet-600 rounded-xl p-4 text-white shadow-sm">
-    <p class="text-[10px] uppercase font-bold text-violet-200 tracking-wider mb-1">Total de la Orden</p>
+  <div class="bg-emerald-600 rounded-xl p-4 text-white shadow-sm">
+    <p class="text-[10px] uppercase font-bold text-emerald-200 tracking-wider mb-1">Total de la Orden</p>
     <p class="text-3xl font-black tracking-tight">
-      <span class="text-violet-200 text-lg font-bold">{{ session.get('currency','L') }}</span>
+      <span class="text-emerald-200 text-lg font-bold">{{ session.get('currency','L') }}</span>
       <span id="sidebar-total-display">0.00</span>
     </p>
-    <p class="text-[11px] text-violet-200 mt-2" id="sidebar-items-display">0 ítems agregados</p>
+    <p class="text-[11px] text-emerald-200 mt-2" id="sidebar-items-display">0 ítems agregados</p>
   </div>
 
   {% if order %}
@@ -34,9 +34,9 @@
   <div class="bg-slate-50 rounded-xl p-4 border border-slate-200">
     <p class="text-[10px] uppercase font-bold text-slate-400 tracking-wider mb-3">Guía Rápida</p>
     <div class="space-y-2 text-xs text-slate-600">
-      <div class="flex items-start gap-2"><span class="w-4 h-4 rounded-full bg-violet-100 text-violet-600 flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">1</span>Selecciona el proveedor y la fecha</div>
-      <div class="flex items-start gap-2"><span class="w-4 h-4 rounded-full bg-violet-100 text-violet-600 flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">2</span>Busca productos del catálogo</div>
-      <div class="flex items-start gap-2"><span class="w-4 h-4 rounded-full bg-violet-100 text-violet-600 flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">3</span>Ajusta cantidades y precios de compra</div>
+      <div class="flex items-start gap-2"><span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">1</span>Selecciona el proveedor y la fecha</div>
+      <div class="flex items-start gap-2"><span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">2</span>Busca productos del catálogo</div>
+      <div class="flex items-start gap-2"><span class="w-4 h-4 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-[10px] flex-shrink-0 mt-0.5">3</span>Ajusta cantidades y precios de compra</div>
     </div>
   </div>
 
@@ -66,34 +66,70 @@
 
       <div class="lg:col-span-2 space-y-5">
 
+
+        <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-sm">
+          <h3 class="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
+            <span class="w-1 h-3.5 bg-emerald-600 rounded-full"></span>
+            Información del Proveedor
+          </h3>
+
+          <input type="hidden" name="supplier_id" id="selected-supplier-id" required
+            value="{{ order.supplier_id if order else '' }}">
+
+          <div id="supplier-selection-placeholder" class="{% if order %}hidden{% endif %}">
+            <button type="button" id="open-supplier-modal-btn"
+              class="w-full py-8 border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center gap-2 hover:border-emerald-500 hover:bg-emerald-50/20 transition-all text-slate-500 hover:text-emerald-700">
+              <div
+                class="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-500 hover:bg-emerald-100 hover:text-emerald-700 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+              </div>
+              <span class="text-sm font-semibold">Seleccionar Proveedor para la Orden</span>
+              <span class="text-xs text-slate-400">Haga click para buscar entre sus proveedores registrados</span>
+            </button>
+          </div>
+
+          {% set sel_supplier = order.supplier if order else None %}
+          <div id="supplier-selected-card"
+            class="{% if not sel_supplier %}hidden{% endif %} bg-slate-50 border border-slate-150 rounded-xl p-5">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex items-start gap-4">
+                <div id="supplier-avatar-initials"
+                  class="w-12 h-12 rounded-full bg-sky-50 border border-sky-100 flex items-center justify-center text-sky-600 text-lg font-bold flex-shrink-0">
+                  {{ sel_supplier.name[:2]|upper if sel_supplier else 'PR' }}
+                </div>
+                <div>
+                  <p id="supplier-display-name" class="font-bold text-slate-800 text-base">{{ sel_supplier.name if sel_supplier else '' }}</p>
+                  <p id="supplier-display-identifier" class="text-xs text-slate-500 font-medium mt-0.5">{% if sel_supplier and sel_supplier.identifier %}RTN / ID: {{ sel_supplier.identifier }}{% endif %}</p>
+                  <p id="supplier-display-email" class="text-xs text-emerald-600 font-medium mt-0.5">{% if sel_supplier and sel_supplier.email %}{{ sel_supplier.email }}{% endif %}</p>
+                </div>
+              </div>
+
+              <button type="button" id="change-supplier-btn"
+                class="px-3 py-1.5 border border-slate-200 rounded-lg text-xs font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-800 transition-all bg-white shadow-sm">
+                Cambiar Proveedor
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
           <div class="px-5 py-3.5 border-b border-slate-100 bg-slate-50/50">
             <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-              <span class="w-1 h-3.5 bg-violet-600 rounded-full"></span>
+              <span class="w-1 h-3.5 bg-emerald-600 rounded-full"></span>
               Detalles de la Orden
             </h3>
           </div>
-          <div class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <div>
-              <label class="block text-sm font-semibold text-slate-700 mb-1.5">Proveedor <span class="text-rose-500">*</span></label>
-              <div class="relative">
-                <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                <select name="supplier_id" id="supplier-select" required
-                        class="w-full pl-9 pr-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 bg-white transition-colors appearance-none">
-                  <option value="">Seleccionar proveedor...</option>
-                  {% for s in suppliers %}
-                  <option value="{{ s.id }}" {{ 'selected' if order and order.supplier_id == s.id else '' }}>{{ s.name }}</option>
-                  {% endfor %}
-                </select>
-              </div>
-            </div>
+          <div class="p-5">
+
             <div>
               <label class="block text-sm font-semibold text-slate-700 mb-1.5">Fecha de Compra</label>
               <div class="relative">
                 <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
                 <input type="date" name="buy_date"
                        value="{{ order.buy_date.strftime('%Y-%m-%d') if order and order.buy_date else now.strftime('%Y-%m-%d') }}"
-                       class="w-full pl-9 pr-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-violet-500 transition-colors">
+                       class="w-full pl-9 pr-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors">
               </div>
             </div>
           </div>
@@ -102,11 +138,11 @@
         <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
           <div class="px-5 py-3.5 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
             <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-              <span class="w-1 h-3.5 bg-violet-600 rounded-full"></span>
+              <span class="w-1 h-3.5 bg-emerald-600 rounded-full"></span>
               Ítems de la Orden
             </h3>
             <button type="button" id="open-product-modal-btn"
-                    class="flex items-center gap-1.5 text-xs bg-violet-50 border border-violet-100 text-violet-700 px-3 py-1.5 rounded-lg font-bold hover:bg-violet-100 transition-all shadow-sm">
+                    class="flex items-center gap-1.5 text-xs bg-emerald-50 border border-emerald-100 text-emerald-700 px-3 py-1.5 rounded-lg font-bold hover:bg-emerald-100 transition-all shadow-sm">
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
               Buscar Producto
             </button>
@@ -141,15 +177,15 @@
                   </td>
                   <td class="px-4 py-3">
                     <input type="text" name="items[{{ loop.index0 }}][code]" value="{{ oi.item_code or '' }}"
-                           placeholder="SKU..." class="item-code w-full px-2 py-1.5 border border-slate-200 rounded-lg text-xs font-mono focus:outline-none focus:ring-1 focus:ring-violet-500">
+                           placeholder="SKU..." class="item-code w-full px-2 py-1.5 border border-slate-200 rounded-lg text-xs font-mono focus:outline-none focus:ring-1 focus:ring-emerald-500">
                   </td>
                   <td class="px-4 py-3">
                     <input type="number" name="items[{{ loop.index0 }}][quantity]" value="{{ oi.quantity }}" min="1"
-                           class="item-qty w-full px-2 py-1.5 border border-slate-200 rounded-lg text-sm text-right focus:outline-none focus:ring-1 focus:ring-violet-500 font-medium">
+                           class="item-qty w-full px-2 py-1.5 border border-slate-200 rounded-lg text-sm text-right focus:outline-none focus:ring-1 focus:ring-emerald-500 font-medium">
                   </td>
                   <td class="px-4 py-3">
                     <input type="number" name="items[{{ loop.index0 }}][price]" value="{{ oi.price }}" min="0" step="0.01"
-                           class="item-price w-full px-2 py-1.5 border border-slate-200 rounded-lg text-sm text-right focus:outline-none focus:ring-1 focus:ring-violet-500 font-medium">
+                           class="item-price w-full px-2 py-1.5 border border-slate-200 rounded-lg text-sm text-right focus:outline-none focus:ring-1 focus:ring-emerald-500 font-medium">
                   </td>
                   <td class="px-4 py-3 text-sm font-semibold text-slate-800 text-right item-total">
                     {{ ((oi.quantity or 0) * (oi.price or 0)) | format_currency }}
@@ -213,7 +249,7 @@
             </div>
             <div class="pt-4 space-y-2.5">
               <button type="submit"
-                      class="w-full px-5 py-2.5 bg-violet-600 text-white rounded-lg text-sm font-bold hover:bg-violet-700 active:scale-[0.98] transition-all shadow-sm">
+                      class="w-full px-5 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-bold hover:bg-emerald-700 active:scale-[0.98] transition-all shadow-sm">
                 {{ 'Actualizar Orden' if order else 'Crear Orden de Compra' }}
               </button>
               <a href="{{ url_for('orders.index', company_id=company_id) }}"
@@ -227,6 +263,31 @@
 
     </div>
   </form>
+</div>
+
+
+{# ── Supplier Search Modal ── #}
+<div id="supplier-modal"
+     class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm flex items-center justify-center hidden z-50 p-4 transition-all">
+  <div class="bg-white rounded-xl border border-slate-200 w-full max-w-lg shadow-xl flex flex-col max-h-[85vh] overflow-hidden">
+
+    <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
+      <h3 class="text-base font-bold text-slate-900">Buscar Proveedor</h3>
+      <button type="button" id="close-supplier-modal" class="text-slate-400 hover:text-slate-600 transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+
+    <div class="p-4 border-b border-slate-50 bg-slate-50/50">
+      <div class="relative">
+        <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        <input type="text" id="supplier-search-input" placeholder="Escriba nombre o ID para buscar..."
+               class="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-slate-700 font-medium">
+      </div>
+    </div>
+
+    <div class="flex-1 overflow-y-auto divide-y divide-slate-50 p-2 space-y-0.5" id="supplier-list-box"></div>
+  </div>
 </div>
 
 {# ── Product Search Modal ── #}
@@ -245,7 +306,7 @@
       <div class="relative">
         <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
         <input type="text" id="product-search-input" placeholder="Buscar por nombre de producto..."
-               class="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-violet-500 bg-white text-slate-700 font-medium">
+               class="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-slate-700 font-medium">
       </div>
     </div>
 
@@ -259,6 +320,17 @@
 <script id="order-form-data" type="application/json">
 {
   "itemIndex": {{ ((order.items|length) if order else 0)|tojson|safe }},
+  
+  "suppliers": [
+    {% for s in suppliers %}
+    {
+      "id": {{ s.id|tojson|safe }},
+      "name": {{ s.name|tojson|safe }},
+      "identifier": {{ (s.identifier or '')|tojson|safe }},
+      "email": {{ (s.email or '')|tojson|safe }}
+    }{{ "," if not loop.last else "" }}
+    {% endfor %}
+  ],
   "inventoryItems": [
     {% for inv in inventory_items %}
     {
@@ -339,18 +411,18 @@
       </td>
       <td class="px-4 py-3">
         <input type="text" name="items[${idx}][code]" value="${product ? (product.code || '') : ''}"
-               class="item-code w-full px-2 py-1.5 border border-slate-200 rounded-lg text-xs font-mono focus:outline-none focus:ring-1 focus:ring-violet-500" placeholder="SKU...">
+               class="item-code w-full px-2 py-1.5 border border-slate-200 rounded-lg text-xs font-mono focus:outline-none focus:ring-1 focus:ring-emerald-500" placeholder="SKU...">
       </td>
       <td class="px-4 py-3">
         <input type="number" name="items[${idx}][quantity]" value="1" min="1"
-               class="item-qty w-full px-2 py-1.5 border border-slate-200 rounded-lg text-sm text-right focus:outline-none focus:ring-1 focus:ring-violet-500 font-medium">
+               class="item-qty w-full px-2 py-1.5 border border-slate-200 rounded-lg text-sm text-right focus:outline-none focus:ring-1 focus:ring-emerald-500 font-medium">
       </td>
       <td class="px-4 py-3">
-        <input type="number" name="items[${idx}][price]" value="${product ? product.price.toFixed(2) : '0.00'}" min="0" step="0.01"
-               class="item-price w-full px-2 py-1.5 border border-slate-200 rounded-lg text-sm text-right focus:outline-none focus:ring-1 focus:ring-violet-500 font-medium">
+        <input type="number" name="items[${idx}][price]" value="${product ? Number(product.price).toFixed(2) : '0.00'}" min="0" step="0.01"
+               class="item-price w-full px-2 py-1.5 border border-slate-200 rounded-lg text-sm text-right focus:outline-none focus:ring-1 focus:ring-emerald-500 font-medium">
       </td>
       <td class="px-4 py-3 text-sm font-semibold text-slate-800 text-right item-total">
-        ${product ? product.price.toFixed(2) : '0.00'}
+        ${product ? Number(product.price).toFixed(2) : '0.00'}
       </td>
       <td class="px-2 py-3 text-center">
         <button type="button" class="remove-order-item text-slate-400 hover:text-rose-500 transition-colors">
@@ -385,16 +457,16 @@
     filtered.forEach(inv => {
       const el = document.createElement('button');
       el.type = 'button';
-      el.className = 'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-violet-50 text-left transition-colors group';
+      el.className = 'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-emerald-50 text-left transition-colors group';
       el.innerHTML = `
-        <div class="w-9 h-9 rounded-lg bg-violet-100 flex items-center justify-center text-violet-600 text-xs font-bold flex-shrink-0">
+        <div class="w-9 h-9 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-600 text-xs font-bold flex-shrink-0">
           ${inv.name.slice(0,2).toUpperCase()}
         </div>
         <div class="flex-1 min-w-0">
-          <p class="text-sm font-semibold text-slate-800 truncate group-hover:text-violet-700">${inv.name}</p>
+          <p class="text-sm font-semibold text-slate-800 truncate group-hover:text-emerald-700">${inv.name}</p>
           <p class="text-xs text-slate-400 mt-0.5">Stock: ${inv.stock} &nbsp;·&nbsp; Precio: {{ session.get('currency','L') }} ${inv.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
         </div>
-        <span class="text-xs font-semibold text-violet-600 opacity-0 group-hover:opacity-100 transition-opacity">+ Agregar</span>
+        <span class="text-xs font-semibold text-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity">+ Agregar</span>
       `;
       el.addEventListener('click', () => selectProduct(inv));
       listBox.appendChild(el);
@@ -419,7 +491,7 @@
       targetRow.querySelector('.item-product-id').value = inv.id;
       targetRow.querySelector('.item-product-trigger').value = inv.name;
       targetRow.querySelector('.item-code').value = inv.code || '';
-      targetRow.querySelector('.item-price').value = inv.price.toFixed(2);
+      targetRow.querySelector('.item-price').value = Number(inv.price).toFixed(2);
       recalc();
     } else {
       addRow(inv);
@@ -439,15 +511,80 @@
   searchInput.addEventListener('input', () => renderList(searchInput.value));
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-  /* ── Supplier summary ── */
-  if (supplierSel && summarySupp) {
-    const updateSupplier = () => {
-      const opt = supplierSel.selectedOptions[0];
-      summarySupp.textContent = (opt && opt.value) ? opt.textContent.trim() : '—';
-    };
-    supplierSel.addEventListener('change', updateSupplier);
-    updateSupplier();
+  /* ── Supplier Modal Logic ── */
+  const suppliers = raw.suppliers || [];
+  const suppModal = document.getElementById('supplier-modal');
+  const suppSearchInput = document.getElementById('supplier-search-input');
+  const suppListBox = document.getElementById('supplier-list-box');
+  
+  const supplierIdInput = document.getElementById('selected-supplier-id');
+  const supplierPlaceholder = document.getElementById('supplier-selection-placeholder');
+  const supplierCard = document.getElementById('supplier-selected-card');
+  const suppDisplayName = document.getElementById('supplier-display-name');
+  const suppDisplayId = document.getElementById('supplier-display-identifier');
+  const suppDisplayEmail = document.getElementById('supplier-display-email');
+  const suppInitials = document.getElementById('supplier-avatar-initials');
+
+  function renderSupplierList(query) {
+    const q = query.toLowerCase();
+    const filtered = q ? suppliers.filter(s => s.name.toLowerCase().includes(q) || (s.identifier && s.identifier.toLowerCase().includes(q))) : suppliers;
+    suppListBox.innerHTML = '';
+    if (filtered.length === 0) {
+      suppListBox.innerHTML = '<p class="text-sm text-slate-400 text-center py-6">Sin resultados</p>';
+      return;
+    }
+    filtered.forEach(s => {
+      const el = document.createElement('button');
+      el.type = 'button';
+      el.className = 'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-emerald-50 text-left transition-colors group';
+      el.innerHTML = `
+        <div class="w-9 h-9 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-600 text-xs font-bold flex-shrink-0">
+          ${s.name.slice(0,2).toUpperCase()}
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-semibold text-slate-800 truncate group-hover:text-emerald-700">${s.name}</p>
+          <p class="text-xs text-slate-400 mt-0.5">${s.identifier ? 'RTN/ID: ' + s.identifier : ''} ${s.email ? '· ' + s.email : ''}</p>
+        </div>
+      `;
+      el.addEventListener('click', () => {
+        supplierIdInput.value = s.id;
+        suppDisplayName.textContent = s.name;
+        suppDisplayId.textContent = s.identifier ? 'RTN / ID: ' + s.identifier : '';
+        suppDisplayEmail.textContent = s.email || '';
+        suppInitials.textContent = s.name.slice(0,2).toUpperCase();
+        
+        supplierPlaceholder.classList.add('hidden');
+        supplierCard.classList.remove('hidden');
+        if (summarySupp) summarySupp.textContent = s.name;
+        
+        suppModal.classList.add('hidden');
+      });
+      suppListBox.appendChild(el);
+    });
   }
+
+  document.getElementById('open-supplier-modal-btn').addEventListener('click', () => {
+    suppSearchInput.value = '';
+    renderSupplierList('');
+    suppModal.classList.remove('hidden');
+    setTimeout(() => suppSearchInput.focus(), 50);
+  });
+  document.getElementById('change-supplier-btn').addEventListener('click', () => {
+    suppSearchInput.value = '';
+    renderSupplierList('');
+    suppModal.classList.remove('hidden');
+    setTimeout(() => suppSearchInput.focus(), 50);
+  });
+  document.getElementById('close-supplier-modal').addEventListener('click', () => suppModal.classList.add('hidden'));
+  suppModal.addEventListener('click', e => { if (e.target === suppModal) suppModal.classList.add('hidden'); });
+  suppSearchInput.addEventListener('input', () => renderSupplierList(suppSearchInput.value));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') suppModal.classList.add('hidden'); });
+  
+  // Set initial summary text if supplier selected
+  if (supplierIdInput.value) {
+     if (summarySupp) summarySupp.textContent = suppDisplayName.textContent;
+  }
+
 
   recalc();
 })();
