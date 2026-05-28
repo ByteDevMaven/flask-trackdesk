@@ -125,7 +125,10 @@ def create_invoice_or_quote(company_id, form, user_id):
 
         total += qty * price * (1 - discount / 100)
 
-    tax_rate = session.get("tax_rate", 0) / 100
+    try:
+        tax_rate = float(session.get("tax_rate", 0)) / 100
+    except (TypeError, ValueError):
+        tax_rate = 0.0
     document.total_amount = round(total * (1 + tax_rate), 2)
 
     if document.status == "paid":

@@ -78,5 +78,8 @@ def update_invoice_or_quote(document, form):
     if not has_items:
         raise ValueError("At least one item is required")
 
-    tax_rate = session.get("tax_rate", 0) / 100
+    try:
+        tax_rate = float(session.get("tax_rate", 0)) / 100
+    except (TypeError, ValueError):
+        tax_rate = 0.0
     document.total_amount = round(total * (1 + tax_rate), 2)

@@ -64,7 +64,10 @@ def generate_invoice_pdf(document, request):
                                
     tax_param = request.args.get("tax", "1")
     include_tax = tax_param != "0"
-    tax_rate = session.get("tax_rate", 15) / 100
+    try:
+        tax_rate = float(session.get("tax_rate", 15)) / 100
+    except (TypeError, ValueError):
+        tax_rate = 0.15
 
     total_amount = document.total_amount or 0
     subtotal = round(total_amount / (1 + tax_rate), 2)
