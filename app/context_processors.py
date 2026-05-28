@@ -1,4 +1,3 @@
-from app.models.audit import AuditLog
 from flask import Flask, session
 from flask_login import current_user
 from app.extensions import get_locale
