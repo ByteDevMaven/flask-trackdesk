@@ -47,6 +47,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  const userSettingsBtn = document.getElementById('user-settings-btn');
+  const userSettingsMenu = document.getElementById('user-settings-menu');
+
+  if (userSettingsBtn && userSettingsMenu) {
+    userSettingsBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      userSettingsMenu.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!userSettingsBtn.contains(e.target) && !userSettingsMenu.contains(e.target)) {
+        userSettingsMenu.classList.add('hidden');
+      }
+    });
+  }
+
   const toastContainer = document.getElementById('toast-container');
   if (toastContainer) {
     toastContainer.addEventListener('click', (e) => {
