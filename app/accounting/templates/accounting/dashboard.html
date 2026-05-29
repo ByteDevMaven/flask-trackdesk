@@ -27,6 +27,13 @@
     Plan de Cuentas
   </a>
 
+  <a href="{{ url_for('accounting.reports', company_id=company.id) }}"
+    class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'accounting.reports' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+    <span
+      class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if request.endpoint == 'accounting.reports' else 'bg-slate-300' }}"></span>
+    Reportes
+  </a>
+
   <div class="pt-4 pb-1 px-3">
     <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Acciones rápidas</span>
   </div>

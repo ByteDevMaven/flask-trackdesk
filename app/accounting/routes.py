@@ -421,3 +421,148 @@ def chart_of_accounts(company_id):
         accounts=accounts,
         projects=projects
     )
+
+@accounting.route('/<int:company_id>/accounting/reports')
+@login_required
+def reports(company_id):
+    company = Company.query.get_or_404(company_id)
+    
+    start_date = request.args.get('start_date', '').strip()
+    end_date = request.args.get('end_date', '').strip()
+    report_type = request.args.get('report_type', 'income_statement').strip()
+    export = request.args.get('export', '').strip()
+    
+    if not start_date:
+        now = datetime.now(UTC)
+        start_date = now.replace(day=1).strftime('%Y-%m-%d')
+    if not end_date:
+        end_date = datetime.now(UTC).strftime('%Y-%m-%d')
+        
+    try:
+        start_dt = datetime.strptime(start_date, '%Y-%m-%d')
+        end_dt = datetime.strptime(end_date, '%Y-%m-%d').replace(hour=23, minute=59, second=59)
+    except ValueError:
+        flash("Invalid date format.", "error")
+        return redirect(url_for('accounting.index', company_id=company.id))
+
+    # Calculate reports
+    report_data = {}
+    total = 0.0
+
+    if report_type == 'income_statement':
+        query = LedgerEntry.query.join(Account).filter(
+            LedgerEntry.company_id == company.id,
+            LedgerEntry.date >= start_dt,
+            LedgerEntry.date <= end_dt
+        )
+        entries = query.filter(Account.type.in_([AccountType.revenue, AccountType.expense])).all()
+        
+        report_data = {'revenue': {}, 'expense': {}}
+        for entry in entries:
+            acc_type = entry.account.type.value
+            acc_name = entry.account.name
+            net = entry.credit - entry.debit if acc_type == 'revenue' else entry.debit - entry.credit
+            report_data[acc_type][acc_name] = report_data[acc_type].get(acc_name, 0.0) + net
+            
+        total_revenue = sum(report_data['revenue'].values())
+        total_expense = sum(report_data['expense'].values())
+        total = total_revenue - total_expense
+        
+    elif report_type == 'balance_sheet':
+        # Balance sheet is cumulative up to end_dt
+        bs_query = LedgerEntry.query.join(Account).filter(
+            LedgerEntry.company_id == company.id,
+            LedgerEntry.date <= end_dt
+        ).filter(Account.type.in_([AccountType.asset, AccountType.liability, AccountType.equity]))
+        
+        entries = bs_query.all()
+        report_data = {'asset': {}, 'liability': {}, 'equity': {}}
+        for entry in entries:
+            acc_type = entry.account.type.value
+            acc_name = entry.account.name
+            if acc_type == 'asset':
+                net = entry.debit - entry.credit
+            else:
+                net = entry.credit - entry.debit
+            report_data[acc_type][acc_name] = report_data[acc_type].get(acc_name, 0.0) + net
+            
+        total_asset = sum(report_data['asset'].values())
+        total_liability = sum(report_data['liability'].values())
+        total_equity = sum(report_data['equity'].values())
+        
+        # Calculate net income to add to equity
+        ni_query = LedgerEntry.query.join(Account).filter(
+            LedgerEntry.company_id == company.id,
+            LedgerEntry.date <= end_dt
+        ).filter(Account.type.in_([AccountType.revenue, AccountType.expense]))
+        
+        ni_entries = ni_query.all()
+        net_income = 0.0
+        for entry in ni_entries:
+            if entry.account.type.value == 'revenue':
+                net_income += (entry.credit - entry.debit)
+            else:
+                net_income -= (entry.debit - entry.credit)
+                
+        report_data['equity']['Retained Earnings (Calculated)'] = report_data['equity'].get('Retained Earnings (Calculated)', 0.0) + net_income
+        total_equity += net_income
+        
+        total = {
+            'assets': total_asset,
+            'liabilities_and_equity': total_liability + total_equity
+        }
+
+    if export == 'csv':
+        import io
+        import csv
+        from flask import Response
+        from flask_login import current_user
+        from app.models.report import Report
+        
+        si = io.StringIO()
+        cw = csv.writer(si)
+        
+        if report_type == 'income_statement':
+            cw.writerow(['Account Type', 'Account Name', 'Amount'])
+            for acc_name, amount in report_data['revenue'].items():
+                cw.writerow(['Revenue', acc_name, f"{amount:.2f}"])
+            for acc_name, amount in report_data['expense'].items():
+                cw.writerow(['Expense', acc_name, f"{amount:.2f}"])
+            cw.writerow([])
+            cw.writerow(['Net Income', '', f"{total:.2f}"])
+        else:
+            cw.writerow(['Account Type', 'Account Name', 'Amount'])
+            for acc_name, amount in report_data['asset'].items():
+                cw.writerow(['Asset', acc_name, f"{amount:.2f}"])
+            for acc_name, amount in report_data['liability'].items():
+                cw.writerow(['Liability', acc_name, f"{amount:.2f}"])
+            for acc_name, amount in report_data['equity'].items():
+                cw.writerow(['Equity', acc_name, f"{amount:.2f}"])
+            cw.writerow([])
+            cw.writerow(['Total Assets', '', f"{total['assets']:.2f}"])
+            cw.writerow(['Total Liabilities & Equity', '', f"{total['liabilities_and_equity']:.2f}"])
+            
+        rep = Report(
+            company_id=company.id,
+            title=f"{report_type.replace('_', ' ').title()} ({start_date} to {end_date})",
+            report_type=report_type,
+            generated_by=current_user.id
+        )
+        db.session.add(rep)
+        db.session.commit()
+            
+        return Response(
+            si.getvalue(),
+            mimetype="text/csv",
+            headers={"Content-disposition": f"attachment; filename={report_type}_{end_date}.csv"}
+        )
+
+    return render_template(
+        'accounting/reports.html',
+        company=company,
+        start_date=start_date,
+        end_date=end_date,
+        report_type=report_type,
+        report_data=report_data,
+        total=total
+    )

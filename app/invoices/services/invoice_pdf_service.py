@@ -50,18 +50,12 @@ def generate_invoice_pdf(document, request):
         font_name, font_bold = "Arial", "Arial-Bold"
     except Exception:
         font_name, font_bold = "Helvetica", "Helvetica-Bold"
-
-                               
-                
-                               
+                            
     width, height = A4
     items_per_page = 25
     total_pages = math.ceil(len(document_items) / items_per_page) or 1
     output_pdf = PdfWriter()
-
-                               
-            
-                               
+                             
     tax_param = request.args.get("tax", "1")
     include_tax = tax_param != "0"
     try:
@@ -69,7 +63,7 @@ def generate_invoice_pdf(document, request):
     except (TypeError, ValueError):
         tax_rate = 0.15
 
-    total_amount = document.total_amount or 0
+    total_amount = float(document.total_amount or 0)
     subtotal = round(total_amount / (1 + tax_rate), 2)
 
     vta_exenta = subtotal
@@ -85,10 +79,7 @@ def generate_invoice_pdf(document, request):
             round(amount, 2),
             lang=get_locale().language
         )
-
-                               
-               
-                               
+                              
     for page_num in range(total_pages):
         page_items = document_items[
             page_num * items_per_page:(page_num + 1) * items_per_page
@@ -126,10 +117,7 @@ def generate_invoice_pdf(document, request):
         overlay_pdf = PdfReader(overlay_buffer)
         template_page.merge_page(overlay_pdf.pages[0])
         output_pdf.add_page(template_page)
-        overlay_buffer.close()
-
-                               
-            
+        overlay_buffer.close()         
                                
     doc_type = "quo" if document.type == DocumentType.quote else "inv"
     filename = f"{doc_type}_{document.document_number}.pdf"
