@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 
 {% block title %}Plan de Cuentas · {{ company.name }}{% endblock %}
 {% block page_title %}Plan de Cuentas{% endblock %}
@@ -34,6 +34,7 @@
     Reportes
   </a>
 
+
   <div class="pt-4 pb-1 px-3">
     <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Acciones rápidas</span>
   </div>
@@ -50,6 +51,13 @@
     class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">
     <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
     Nuevo Proyecto
+  </button>
+
+  <button data-action="open-drawer" data-url="{{ url_for('accounting.create_tag', company_id=company.id) }}"
+    data-title="Nueva Etiqueta"
+    class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">
+    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+    Nueva Etiqueta
   </button>
 </div>
 {% endblock %}
@@ -128,7 +136,7 @@
 
       {% set ns = namespace(subtotal=0.0) %}
       {% for acc in acc_list %}
-      {% set ns.subtotal = ns.subtotal + (acc.balance or 0.0) %}
+      {% set ns.subtotal = ns.subtotal + (acc.balance or 0.0)|float %}
       {% endfor %}
 
       <div class="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm flex flex-col h-full">
@@ -144,7 +152,7 @@
           <div class="text-right">
             <p class="text-xs font-medium text-slate-400 uppercase tracking-wider mb-0.5">Saldo Total</p>
             <p class="text-sm font-bold {% if ns.subtotal >= 0 %}text-slate-800{% else %}text-rose-600{% endif %}">
-              {{ company.currency }}{{ "%.2f"|format(ns.subtotal) }}
+              {{ company.currency }}{{ "{:,.2f}".format(ns.subtotal) }}
             </p>
           </div>
         </div>
@@ -163,7 +171,7 @@
                 <td class="px-5 py-3.5 text-right">
                   <span
                     class="font-mono font-bold {% if (acc.balance or 0) >= 0 %}text-slate-700{% else %}text-rose-600{% endif %}">
-                    {{ company.currency }}{{ "%.2f"|format(acc.balance or 0.0) }}
+                    {{ company.currency }}{{ "{:,.2f}".format(acc.balance or 0.0) }}
                   </span>
                 </td>
               </tr>

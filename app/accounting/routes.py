@@ -4,7 +4,7 @@ import uuid
 from flask import render_template, request, redirect, url_for, flash, jsonify, current_app
 from flask_login import login_required
 
-from app.models import db, Company, Account, Expense, LedgerEntry, Project
+from app.models import db, Company, Account, Expense, LedgerEntry, Project, Tag
 from app.models.enums import AccountType
 from . import accounting
 
@@ -39,8 +39,9 @@ def index(company_id):
     accounts = Account.query.filter_by(company_id=company.id).all()
     projects = Project.query.filter_by(company_id=company.id).all()
     expenses = Expense.query.filter_by(company_id=company.id).order_by(Expense.date.desc()).limit(10).all()
+    all_expenses = Expense.query.filter_by(company_id=company.id).all()
 
-    total_expenses = db.session.query(db.func.sum(Expense.amount)).filter_by(company_id=company.id).scalar() or 0.0
+    total_expenses = float(db.session.query(db.func.sum(Expense.amount)).filter_by(company_id=company.id).scalar() or 0.0)
     total_projects = len(projects)
     total_accounts = len(accounts)
 
@@ -48,16 +49,29 @@ def index(company_id):
     type_totals = {}
     for acc in accounts:
         key = acc.type.value
-        type_totals[key] = type_totals.get(key, 0.0) + (acc.balance or 0.0)
+        type_totals[key] = type_totals.get(key, 0.0) + float(acc.balance or 0.0)
 
-    # Pre-compute expense count per project in one query to avoid N+1
-    expense_count_rows = (
-        db.session.query(Expense.project_id, db.func.count(Expense.id))
+    # Group expenses by tag
+    tag_totals = {}
+    for e in all_expenses:
+        if not e.tags:
+            tag_totals['Sin Etiqueta'] = tag_totals.get('Sin Etiqueta', 0.0) + float(e.amount)
+        for t in e.tags:
+            tag_totals[t.name] = tag_totals.get(t.name, 0.0) + float(e.amount)
+
+    # Pre-compute expense count AND total spent per project in one query to avoid N+1
+    expense_stats_rows = (
+        db.session.query(
+            Expense.project_id,
+            db.func.count(Expense.id),
+            db.func.sum(Expense.amount)
+        )
         .filter(Expense.company_id == company.id, Expense.project_id.isnot(None))
         .group_by(Expense.project_id)
         .all()
     )
-    expense_counts = {row[0]: row[1] for row in expense_count_rows}
+    expense_counts = {row[0]: row[1] for row in expense_stats_rows}
+    project_spent = {row[0]: float(row[2] or 0.0) for row in expense_stats_rows}
 
     return render_template(
         'accounting/dashboard.html',
@@ -69,7 +83,9 @@ def index(company_id):
         total_projects=total_projects,
         total_accounts=total_accounts,
         type_totals=type_totals,
+        tag_totals=tag_totals,
         expense_counts=expense_counts,
+        project_spent=project_spent,
     )
 
 
@@ -99,6 +115,9 @@ def create_expense(company_id):
             project_id = int(project_id_str) if project_id_str else None
             expense_date = datetime.strptime(date_str, '%Y-%m-%d') if date_str else datetime.now(UTC)
 
+            tag_ids = request.form.getlist('tags[]')
+            selected_tags = Tag.query.filter(Tag.id.in_([int(tid) for tid in tag_ids if tid])).all() if tag_ids else []
+
             # Handle receipt upload
             receipt_url = None
             if 'receipt_file' in request.files:
@@ -112,6 +131,7 @@ def create_expense(company_id):
                 date=expense_date,
                 description=description,
                 receipt_url=receipt_url,
+                tags=selected_tags,
             )
             db.session.add(expense)
             db.session.flush()
@@ -126,12 +146,12 @@ def create_expense(company_id):
             is_revenue = account and account.type.value == 'revenue'
 
             if account:
-                account.balance = (account.balance or 0.0) + amount
+                account.balance = float(account.balance or 0.0) + amount
             if cash_account:
                 if is_revenue:
-                    cash_account.balance = (cash_account.balance or 0.0) + amount
+                    cash_account.balance = float(cash_account.balance or 0.0) + amount
                 else:
-                    cash_account.balance = (cash_account.balance or 0.0) - amount
+                    cash_account.balance = float(cash_account.balance or 0.0) - amount
 
             if cash_account:
                 if is_revenue:
@@ -145,6 +165,7 @@ def create_expense(company_id):
                         credit=0.0,
                         reference_type='Income',
                         reference_id=expense.id,
+                        tags=selected_tags,
                     )
                     credit_entry = LedgerEntry(
                         company_id=company.id,
@@ -156,6 +177,7 @@ def create_expense(company_id):
                         credit=amount,
                         reference_type='Income',
                         reference_id=expense.id,
+                        tags=selected_tags,
                     )
                 else:
                     debit_entry = LedgerEntry(
@@ -168,6 +190,7 @@ def create_expense(company_id):
                         credit=0.0,
                         reference_type='Expense',
                         reference_id=expense.id,
+                        tags=selected_tags,
                     )
                     credit_entry = LedgerEntry(
                         company_id=company.id,
@@ -179,6 +202,7 @@ def create_expense(company_id):
                         credit=amount,
                         reference_type='Expense',
                         reference_id=expense.id,
+                        tags=selected_tags,
                     )
                 db.session.add_all([debit_entry, credit_entry])
 
@@ -200,6 +224,7 @@ def create_expense(company_id):
     # GET — check if this is a drawer/AJAX request
     expense_accounts = Account.query.filter_by(company_id=company.id).all()
     projects = Project.query.filter_by(company_id=company.id).all()
+    tags = Tag.query.filter_by(company_id=company.id).all()
 
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         return render_template(
@@ -207,6 +232,7 @@ def create_expense(company_id):
             company=company,
             accounts=expense_accounts,
             projects=projects,
+            tags=tags,
             now=datetime.now(UTC),
         )
 
@@ -215,6 +241,7 @@ def create_expense(company_id):
         company=company,
         accounts=expense_accounts,
         projects=projects,
+        tags=tags,
         now=datetime.now(UTC),
     )
 
@@ -461,7 +488,7 @@ def reports(company_id):
         for entry in entries:
             acc_type = entry.account.type.value
             acc_name = entry.account.name
-            net = entry.credit - entry.debit if acc_type == 'revenue' else entry.debit - entry.credit
+            net = float(entry.credit - entry.debit) if acc_type == 'revenue' else float(entry.debit - entry.credit)
             report_data[acc_type][acc_name] = report_data[acc_type].get(acc_name, 0.0) + net
             
         total_revenue = sum(report_data['revenue'].values())
@@ -481,9 +508,9 @@ def reports(company_id):
             acc_type = entry.account.type.value
             acc_name = entry.account.name
             if acc_type == 'asset':
-                net = entry.debit - entry.credit
+                net = float(entry.debit - entry.credit)
             else:
-                net = entry.credit - entry.debit
+                net = float(entry.credit - entry.debit)
             report_data[acc_type][acc_name] = report_data[acc_type].get(acc_name, 0.0) + net
             
         total_asset = sum(report_data['asset'].values())
@@ -500,16 +527,16 @@ def reports(company_id):
         net_income = 0.0
         for entry in ni_entries:
             if entry.account.type.value == 'revenue':
-                net_income += (entry.credit - entry.debit)
+                net_income += float(entry.credit - entry.debit)
             else:
-                net_income -= (entry.debit - entry.credit)
+                net_income -= float(entry.debit - entry.credit)
                 
-        report_data['equity']['Retained Earnings (Calculated)'] = report_data['equity'].get('Retained Earnings (Calculated)', 0.0) + net_income
-        total_equity += net_income
+        report_data['equity']['Retained Earnings (Calculated)'] = float(report_data['equity'].get('Retained Earnings (Calculated)', 0.0)) + net_income
+        total_equity = float(total_equity) + net_income
         
         total = {
-            'assets': total_asset,
-            'liabilities_and_equity': total_liability + total_equity
+            'assets': float(total_asset),
+            'liabilities_and_equity': float(total_liability) + float(total_equity)
         }
 
     if export == 'csv':
@@ -566,3 +593,54 @@ def reports(company_id):
         report_data=report_data,
         total=total
     )
+
+@accounting.route('/<int:company_id>/accounting/tags/create', methods=['GET', 'POST'])
+@login_required
+def create_tag(company_id):
+    company = Company.query.get_or_404(company_id)
+    if request.method == 'POST':
+        name = request.form.get('name', '').strip()
+        color_code = request.form.get('color_code', 'bg-slate-100 text-slate-700').strip()
+        is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+        
+        if not name:
+            msg = "El nombre de la etiqueta es requerido"
+            if is_ajax: return jsonify({'success': False, 'message': msg}), 400
+            flash(msg, "error")
+            return redirect(url_for('accounting.index', company_id=company.id))
+            
+        existing = Tag.query.filter_by(company_id=company.id, name=name).first()
+        if existing:
+            msg = "La etiqueta ya existe"
+            if is_ajax: return jsonify({'success': False, 'message': msg}), 400
+            flash(msg, "error")
+        else:
+            tag = Tag(company_id=company.id, name=name, color_code=color_code)
+            db.session.add(tag)
+            db.session.commit()
+            msg = "Etiqueta creada exitosamente"
+            if is_ajax: return jsonify({'success': True, 'message': msg})
+            flash(msg, "success")
+            
+        return redirect(url_for('accounting.index', company_id=company.id))
+        
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        tags = Tag.query.filter_by(company_id=company.id).all()
+        return render_template('accounting/partials/tag_form.html', company=company, tags=tags)
+        
+    return redirect(url_for('accounting.index', company_id=company.id))
+
+@accounting.route('/<int:company_id>/accounting/tags/<int:tag_id>/delete', methods=['POST'])
+@login_required
+def delete_tag(company_id, tag_id):
+    company = Company.query.get_or_404(company_id)
+    tag = Tag.query.filter_by(id=tag_id, company_id=company.id).first_or_404()
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    
+    db.session.delete(tag)
+    db.session.commit()
+    
+    if is_ajax:
+        return jsonify({'success': True, 'message': 'Etiqueta eliminada'})
+    flash("Etiqueta eliminada", "success")
+    return redirect(url_for('accounting.index', company_id=company.id))

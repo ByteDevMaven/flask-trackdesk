@@ -17,6 +17,7 @@ class Expense(BaseModel):
     project = db.relationship('Project', backref='expenses', lazy='select')
     supplier = db.relationship('Contact', backref='expenses', lazy='select')
     company = db.relationship('Company', backref=db.backref('expenses', lazy='select'), lazy='select')
+    tags = db.relationship('Tag', secondary='expense_tags', backref=db.backref('expenses', lazy='select'), lazy='select')
     
     __table_args__ = (
         db.CheckConstraint("amount > 0", name='check_expense_amount_positive'),

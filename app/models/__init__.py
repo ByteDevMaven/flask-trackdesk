@@ -1,6 +1,6 @@
 from app.extensions import db, migrate
 from .enums import DocumentType, DocumentStatus, InvoiceType, StockMovementType, PaymentMethod, AccountType, UserStatus, ContactType
-from .associations import role_permissions, user_companies
+from .associations import role_permissions, user_companies, expense_tags, ledger_entry_tags
 from .company import Company
 from .role import Role
 from .permission import Permission
@@ -22,14 +22,16 @@ from .expense import Expense
 from .ledger_entry import LedgerEntry
 from .audit import AuditLog
 
+from .tag import Tag
+
 __all__ = [
     'db', 'migrate',
     'DocumentType', 'DocumentStatus', 'InvoiceType', 'StockMovementType', 'PaymentMethod', 'AccountType', 'UserStatus', 'ContactType',
-    'role_permissions', 'user_companies',
+    'role_permissions', 'user_companies', 'expense_tags', 'ledger_entry_tags',
     'Company', 'Role', 'Permission', 'User', 'Contact',
     'InventoryItem', 'PurchaseOrder', 'PurchaseOrderItem',
     'Document', 'DocumentItem', 'Payment', 'Report', 'Notification',
     'StockMovement', 'DocumentSequence',
     'Account', 'Project', 'Expense', 'LedgerEntry',
-    'AuditLog'
+    'AuditLog', 'Tag'
 ]

@@ -18,6 +18,7 @@ class LedgerEntry(BaseModel):
     account = db.relationship('Account', backref=db.backref('ledger_entries', lazy='select'), lazy='select')
     project = db.relationship('Project', backref='ledger_entries', lazy='select')
     company = db.relationship('Company', backref=db.backref('ledger_entries', lazy='select'), lazy='select')
+    tags = db.relationship('Tag', secondary='ledger_entry_tags', backref=db.backref('ledger_entries', lazy='select'), lazy='select')
     
     __table_args__ = (
         db.CheckConstraint("debit >= 0 AND credit >= 0 AND (debit > 0 OR credit > 0)", name='check_ledger_entry_amounts'),

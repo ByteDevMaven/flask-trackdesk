@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 
 {% block title %}Reportes · {{ company.name }}{% endblock %}
 {% block page_title %}Reportes Contables{% endblock %}
@@ -29,6 +29,7 @@
     <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if request.endpoint == 'accounting.reports' else 'bg-slate-300' }}"></span>
     Reportes
   </a>
+
 </div>
 {% endblock %}
 
@@ -91,14 +92,14 @@
               {% for name, amount in report_data.get('revenue', {}).items() %}
               <div class="flex justify-between items-center px-2 py-1 hover:bg-slate-50 rounded">
                 <span class="text-slate-600">{{ name }}</span>
-                <span class="font-mono">{{ company.currency }}{{ "%.2f"|format(amount) }}</span>
+                <span class="font-mono">{{ company.currency }}{{ "{:,.2f}".format(amount) }}</span>
               </div>
               {% endfor %}
             </div>
             {% set total_rev = report_data.get('revenue', {}).values()|sum %}
             <div class="flex justify-between items-center px-2 py-2 mt-2 border-t border-slate-100 font-semibold text-slate-800 text-sm">
               <span>Total Ingresos</span>
-              <span class="font-mono">{{ company.currency }}{{ "%.2f"|format(total_rev) }}</span>
+              <span class="font-mono">{{ company.currency }}{{ "{:,.2f}".format(total_rev) }}</span>
             </div>
           </div>
 
@@ -109,14 +110,14 @@
               {% for name, amount in report_data.get('expense', {}).items() %}
               <div class="flex justify-between items-center px-2 py-1 hover:bg-slate-50 rounded">
                 <span class="text-slate-600">{{ name }}</span>
-                <span class="font-mono">{{ company.currency }}{{ "%.2f"|format(amount) }}</span>
+                <span class="font-mono">{{ company.currency }}{{ "{:,.2f}".format(amount) }}</span>
               </div>
               {% endfor %}
             </div>
             {% set total_exp = report_data.get('expense', {}).values()|sum %}
             <div class="flex justify-between items-center px-2 py-2 mt-2 border-t border-slate-100 font-semibold text-slate-800 text-sm">
               <span>Total Gastos</span>
-              <span class="font-mono">{{ company.currency }}{{ "%.2f"|format(total_exp) }}</span>
+              <span class="font-mono">{{ company.currency }}{{ "{:,.2f}".format(total_exp) }}</span>
             </div>
           </div>
 
@@ -124,7 +125,7 @@
           <div class="border-t-2 border-slate-800 pt-4 flex justify-between items-center text-lg font-bold">
             <span class="text-slate-800">Utilidad Neta (Net Income)</span>
             <span class="font-mono {% if total >= 0 %}text-emerald-600{% else %}text-rose-600{% endif %}">
-              {{ company.currency }}{{ "%.2f"|format(total) }}
+              {{ company.currency }}{{ "{:,.2f}".format(total) }}
             </span>
           </div>
         </div>
@@ -137,7 +138,7 @@
               {% for name, amount in report_data.get('asset', {}).items() %}
               <div class="flex justify-between items-center px-2 py-1 hover:bg-slate-50 rounded">
                 <span class="text-slate-600">{{ name }}</span>
-                <span class="font-mono">{{ company.currency }}{{ "%.2f"|format(amount) }}</span>
+                <span class="font-mono">{{ company.currency }}{{ "{:,.2f}".format(amount) }}</span>
               </div>
               {% endfor %}
             </div>
@@ -152,7 +153,7 @@
                 {% for name, amount in report_data.get('liability', {}).items() %}
                 <div class="flex justify-between items-center px-2 py-1 hover:bg-slate-50 rounded">
                   <span class="text-slate-600">{{ name }}</span>
-                  <span class="font-mono">{{ company.currency }}{{ "%.2f"|format(amount) }}</span>
+                  <span class="font-mono">{{ company.currency }}{{ "{:,.2f}".format(amount) }}</span>
                 </div>
                 {% endfor %}
               </div>
@@ -165,7 +166,7 @@
                 {% for name, amount in report_data.get('equity', {}).items() %}
                 <div class="flex justify-between items-center px-2 py-1 hover:bg-slate-50 rounded">
                   <span class="text-slate-600">{{ name }}</span>
-                  <span class="font-mono">{{ company.currency }}{{ "%.2f"|format(amount) }}</span>
+                  <span class="font-mono">{{ company.currency }}{{ "{:,.2f}".format(amount) }}</span>
                 </div>
                 {% endfor %}
               </div>
@@ -176,11 +177,11 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto mt-8 border-t-2 border-slate-800 pt-4">
           <div class="flex justify-between items-center text-lg font-bold text-slate-800">
             <span>Total Activos</span>
-            <span class="font-mono">{{ company.currency }}{{ "%.2f"|format(total['assets']) }}</span>
+            <span class="font-mono">{{ company.currency }}{{ "{:,.2f}".format(total['assets']) }}</span>
           </div>
           <div class="flex justify-between items-center text-lg font-bold text-slate-800">
             <span>Total Pasivos y Patrimonio</span>
-            <span class="font-mono">{{ company.currency }}{{ "%.2f"|format(total['liabilities_and_equity']) }}</span>
+            <span class="font-mono">{{ company.currency }}{{ "{:,.2f}".format(total['liabilities_and_equity']) }}</span>
           </div>
         </div>
       {% endif %}

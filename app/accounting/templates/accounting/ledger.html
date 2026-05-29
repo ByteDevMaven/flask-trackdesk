@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "base.html" %}
 
 {% block title %}Libro Mayor · {{ company.name }}{% endblock %}
 {% block page_title %}Libro Mayor{% endblock %}
@@ -34,6 +34,7 @@
     Reportes
   </a>
 
+
   <div class="pt-4 pb-1 px-3">
     <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Acciones rápidas</span>
   </div>
@@ -50,6 +51,13 @@
     class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">
     <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
     Nuevo Proyecto
+  </button>
+
+  <button data-action="open-drawer" data-url="{{ url_for('accounting.create_tag', company_id=company.id) }}"
+    data-title="Nueva Etiqueta"
+    class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">
+    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+    Nueva Etiqueta
   </button>
 </div>
 {% endblock %}
@@ -136,11 +144,16 @@
                   {{ entry.project.name }}
                 </p>
                 {% endif %}
+                {% for tag in entry.tags %}
+                <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[10px] font-medium {{ tag.color_code }} mt-1 mr-1 border border-slate-200">
+                  {{ tag.name }}
+                </span>
+                {% endfor %}
               </td>
               <td class="px-5 py-3 text-right">
                 {% if entry.debit > 0 %}
                 <span class="font-mono font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded">
-                  {{ company.currency }}{{ "%.2f"|format(entry.debit) }}
+                  {{ company.currency }}{{ "{:,.2f}".format(entry.debit) }}
                 </span>
                 {% else %}
                 <span class="text-slate-300 font-medium">-</span>
@@ -149,7 +162,7 @@
               <td class="px-5 py-3 text-right">
                 {% if entry.credit > 0 %}
                 <span class="font-mono font-bold text-amber-600 bg-amber-50 px-2 py-1 rounded">
-                  {{ company.currency }}{{ "%.2f"|format(entry.credit) }}
+                  {{ company.currency }}{{ "{:,.2f}".format(entry.credit) }}
                 </span>
                 {% else %}
                 <span class="text-slate-300 font-medium">-</span>

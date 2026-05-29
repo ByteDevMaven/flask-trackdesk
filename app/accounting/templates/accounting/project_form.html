@@ -34,6 +34,7 @@
     Reportes
   </a>
 
+
   <div class="pt-4 pb-1 px-3">
     <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Acciones rápidas</span>
   </div>
@@ -50,6 +51,13 @@
     class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">
     <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
     Nuevo Proyecto
+  </button>
+
+  <button data-action="open-drawer" data-url="{{ url_for('accounting.create_tag', company_id=company.id) }}"
+    data-title="Nueva Etiqueta"
+    class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">
+    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+    Nueva Etiqueta
   </button>
 </div>
 {% endblock %}

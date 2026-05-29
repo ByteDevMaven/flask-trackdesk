@@ -1,0 +1,64 @@
+<div class="h-full flex flex-col">
+  <form
+    method="POST"
+    action="{{ url_for('accounting.create_tag', company_id=company.id) }}"
+    data-drawer-form
+    data-success-message="Etiqueta creada exitosamente"
+    class="flex-shrink-0">
+
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+    <div class="p-6 space-y-5 border-b border-slate-200">
+      
+      <div>
+        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Nombre <span class="text-rose-500">*</span></label>
+        <input type="text" name="name" required
+               placeholder="Ej: Comida, Combustible, etc."
+               class="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Color</label>
+        <select name="color_code"
+                class="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white">
+          <option value="bg-slate-100 text-slate-700 border-slate-200">Gris</option>
+          <option value="bg-rose-100 text-rose-700 border-rose-200">Rojo</option>
+          <option value="bg-blue-100 text-blue-700 border-blue-200">Azul</option>
+          <option value="bg-emerald-100 text-emerald-700 border-emerald-200">Verde</option>
+          <option value="bg-amber-100 text-amber-700 border-amber-200">Amarillo</option>
+          <option value="bg-purple-100 text-purple-700 border-purple-200">Morado</option>
+        </select>
+      </div>
+      
+      <button type="submit"
+              class="w-full px-4 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-semibold hover:bg-emerald-700 transition-colors focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+        Crear Etiqueta
+      </button>
+    </div>
+  </form>
+
+  <div class="p-6 flex-1 overflow-y-auto">
+    <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Etiquetas Existentes</h3>
+    <ul class="space-y-3">
+      {% for tag in tags %}
+      <li class="flex items-center justify-between p-3 rounded-lg border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-colors">
+        <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium {{ tag.color_code }} border">
+          {{ tag.name }}
+        </span>
+        <form method="POST" action="{{ url_for('accounting.delete_tag', company_id=company.id, tag_id=tag.id) }}" 
+              data-drawer-form data-success-message="Etiqueta eliminada"
+              onsubmit="return confirm('¿Seguro que deseas eliminar esta etiqueta?');">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button type="submit" class="text-rose-500 hover:text-rose-700 text-xs font-medium px-3 py-1.5 bg-white border border-slate-200 rounded shadow-sm hover:border-rose-200 hover:bg-rose-50 transition-all">
+            Eliminar
+          </button>
+        </form>
+      </li>
+      {% else %}
+      <li class="text-center p-8 bg-slate-50/50 border border-slate-200 border-dashed rounded-lg">
+        <p class="text-sm text-slate-400 font-medium">No se han creado etiquetas.</p>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>

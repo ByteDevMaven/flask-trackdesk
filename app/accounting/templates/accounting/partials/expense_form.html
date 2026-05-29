@@ -58,6 +58,17 @@
       <p class="text-xs text-slate-400 mt-1">Agrupe este gasto bajo un proyecto para fines de reportes.</p>
     </div>
 
+    <div>
+      <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Etiquetas</label>
+      <select name="tags[]" multiple
+              class="w-full px-3 py-2.5 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white" size="3">
+        {% for tag in tags %}
+        <option value="{{ tag.id }}">{{ tag.name }}</option>
+        {% endfor %}
+      </select>
+      <p class="text-xs text-slate-400 mt-1">Seleccione una o más etiquetas (mantenga presionado Ctrl/Cmd para selección múltiple).</p>
+    </div>
+
     {# File upload #}
     <div>
       <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Recibo / Adjunto</label>
