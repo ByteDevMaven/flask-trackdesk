@@ -10,8 +10,9 @@ from app.extensions import limiter
 
 from app.models import db, Document, DocumentItem, Contact, InventoryItem, DocumentType, Payment, PaymentMethod
 
-from app.models.enums import ContactType
-from .services import get_invoice_list, create_invoice_or_quote, update_invoice_or_quote, generate_invoice_pdf
+from app.models.enums import ContactType, DocumentStatus
+from .services import get_invoice_list, create_invoice_or_quote, update_invoice_or_quote, generate_invoice_pdf_from_request
+from .services.invoice_create_service import _generate_document_number
 from . import invoices
 
 
@@ -195,6 +196,14 @@ def add_payment(company_id, id):
         )
 
         db.session.add(payment)
+        db.session.flush()
+
+        paid_amount = document.calculate_paid_amount()
+        if paid_amount >= float(document.total_amount):
+            document.status = DocumentStatus.paid
+        elif paid_amount > 0:
+            document.status = DocumentStatus.partial
+
         db.session.commit()
 
         flash(_('Payment recorded successfully'), 'success')
@@ -273,46 +282,12 @@ def update(company_id, id):
             else DocumentType.quote
         )
 
-        if new_doc_type != document.type or not request.form.get('document_number'):
-            company_id_str = str(company_id)
-            type_letter = 'I' if new_doc_type == DocumentType.invoice else 'Q'
+        submitted_doc_num = request.form.get('document_number')
 
-            try:
-                seq_num = int(document.document_number.split('-')[-1])
-            except Exception:
-                seq_num = None
-
-            if seq_num is not None:
-                new_number = f"{type_letter}-{company_id_str}-{seq_num:06d}"
-                exists = Document.query.filter(
-                    Document.company_id == company_id,
-                    Document.type == new_doc_type,
-                    Document.document_number == new_number,
-                    Document.id != document.id
-                ).first()
-                if exists:
-                    raise ValueError(_("Document number already exists"))
-
-                document.document_number = new_number
-            else:
-                last_doc = Document.query.filter(
-                    Document.company_id == company_id,
-                    Document.type == new_doc_type
-                ).order_by(Document.id.desc()).first()
-
-                last_seq = (
-                    int(last_doc.document_number.split('-')[-1])
-                    if last_doc else 0
-                )
-
-                document.document_number = (
-                    f"{type_letter}-{company_id_str}-{last_seq + 1:06d}"
-                )
-        else:
-            document.document_number = request.form.get(
-                'document_number',
-                document.document_number
-            )
+        if new_doc_type != document.type:
+            document.document_number = _generate_document_number(company_id, new_doc_type)
+        elif submitted_doc_num:
+            document.document_number = submitted_doc_num
 
         document.type = new_doc_type
         document.client_id = (
@@ -405,9 +380,11 @@ def print_invoice(company_id, id):
     ).first_or_404()
 
     try:
-        pdf_bytes, filename = generate_invoice_pdf(
+        pdf_bytes, filename = generate_invoice_pdf_from_request(
             document=document,
-            request=request
+            request=request,
+            session=session,
+            current_user=current_user,
         )
 
         response = make_response(pdf_bytes)
