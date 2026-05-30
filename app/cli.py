@@ -126,3 +126,39 @@ def register_cli(app: Flask):
                     print('[OK] Alembic stamped to head.')
                 except Exception as e:
                     print('[WARN] Could not stamp Alembic head:', e)
+
+    @app.cli.command('update-expired-documents')
+    def update_expired_documents():
+        """Update the status of invoices and quotes that have passed their due date.
+        
+        Run with: flask update-expired-documents
+        """
+        from app.models import Document
+        from app.models.enums import DocumentStatus
+        from datetime import datetime, UTC
+        
+        with app.app_context():
+            now = datetime.now(UTC)
+            
+            # Find documents that are due and not already in a terminal/paid state
+            # Eligible statuses for expiration: draft, sent, issued, partial, pending
+            eligible_statuses = [
+                DocumentStatus.draft,
+                DocumentStatus.sent,
+                DocumentStatus.issued,
+                DocumentStatus.partial,
+                DocumentStatus.pending
+            ]
+            
+            expired_docs = Document.query.filter(
+                Document.due_date < now,
+                Document.status.in_(eligible_statuses)
+            ).all()
+            
+            count = 0
+            for doc in expired_docs:
+                doc.status = DocumentStatus.overdue
+                count += 1
+                
+            db.session.commit()
+            print(f'[OK] Updated {count} expired document(s) to overdue status.')
