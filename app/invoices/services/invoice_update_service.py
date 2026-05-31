@@ -3,14 +3,24 @@ from app.models import db, DocumentItem, InventoryItem, DocumentType, StockMovem
 from datetime import datetime, UTC
 
 def update_invoice_or_quote(document, form):
-    old_items = DocumentItem.query.filter_by(document_id=document.id).all()
-    for old in old_items:
-        if old.inventory_item_id:
-            inv = InventoryItem.query.get(old.inventory_item_id)
-            if inv:
-                inv.quantity += old.quantity
+    # Restore stock from existing movements
+    movements = StockMovement.query.filter_by(
+        company_id=document.company_id,
+        reference=f"INV {document.document_number}",
+        type=StockMovementType.outgoing
+    ).all()
     
-                                           
+    for m in movements:
+        inv = InventoryItem.query.get(m.inventory_item_id)
+        if inv:
+            inv.quantity -= m.quantity # m.quantity is negative, so subtracting adds it back
+            
+        if m.warehouse_id:
+            from app.models import WarehouseItem
+            wh_item = WarehouseItem.query.filter_by(warehouse_id=m.warehouse_id, inventory_item_id=m.inventory_item_id).first()
+            if wh_item:
+                wh_item.quantity -= m.quantity
+
     StockMovement.query.filter_by(
         company_id=document.company_id,
         reference=f"INV {document.document_number}",
@@ -59,10 +69,20 @@ def update_invoice_or_quote(document, form):
                     raise ValueError(f"Not enough stock for: {inv.name}")
                 inv.quantity -= quantity
                 
-                                  
+                warehouse_id = document.warehouse_id
+                if warehouse_id:
+                    from app.models import WarehouseItem
+                    wh_item = WarehouseItem.query.filter_by(warehouse_id=warehouse_id, inventory_item_id=inv_id).first()
+                    if not wh_item:
+                        wh_item = WarehouseItem(warehouse_id=warehouse_id, inventory_item_id=inv_id, quantity=0)
+                        db.session.add(wh_item)
+                    wh_item.quantity -= quantity
+                
+                # Create new stock movement
                 movement = StockMovement(
                     company_id=document.company_id,
                     inventory_item_id=inv_id,
+                    warehouse_id=warehouse_id,
                     user_id=document.user_id,
                     type=StockMovementType.outgoing,
                     quantity=-quantity,

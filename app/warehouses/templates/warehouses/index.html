@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+{% block title %}Almacenes – TrackDesk{% endblock %}
+{% block sidebar_title %}Almacenes{% endblock %}
+
+{% block sidebar_nav %}
+{% set cid = company_id %}
+<div class="px-4 space-y-1">
+  <a href="{{ url_for('warehouses.index', company_id=cid) }}"
+    class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'warehouses.index' else 'text-slate-600 hover:bg-slate-50' }} text-sm">
+    <span
+      class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if request.endpoint == 'warehouses.index' else 'bg-slate-300' }}"></span>
+    Todos los Almacenes
+  </a>
+</div>
+
+<div class="px-4 mt-6">
+  <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-4">
+    <p class="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-1">Total de Almacenes</p>
+    <p class="text-2xl font-black text-emerald-800">{{ pagination.total }}</p>
+    <p class="text-xs text-emerald-600 mt-1">registrados en el sistema</p>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_title %}Almacenes{% endblock %}
+
+{% block content %}
+<div class="flex flex-col h-full overflow-hidden">
+
+  <!-- Top bar -->
+  <header class="bg-white border-b border-slate-200 flex-shrink-0">
+    <div class="px-6 py-3 flex items-center justify-between gap-4">
+      <form method="GET" action="{{ request.path }}" class="relative">
+        <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor"
+          viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        <input name="search" value="{{ search or '' }}" type="text" placeholder="Buscar almacenes..."
+          class="w-72 pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+      </form>
+
+      <button type="button" data-action="open-drawer"
+        data-url="{{ url_for('warehouses.create', company_id=company_id) }}" data-title="Nuevo Almacén"
+        class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors shadow-sm">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+        Nuevo Almacén
+      </button>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <div class="flex-1 overflow-y-auto p-6 bg-slate-50">
+
+    <!-- Stats row -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+      <div class="bg-white rounded-lg border border-slate-200 p-4 shadow-sm flex items-center gap-4">
+        <div class="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+          </svg>
+        </div>
+        <div>
+          <p class="text-xs text-slate-500 font-medium uppercase tracking-wider">Total</p>
+          <p class="text-xl font-bold text-slate-900">{{ pagination.total }}</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg border border-slate-200 p-4 shadow-sm flex items-center gap-4">
+        <div class="w-10 h-10 rounded-lg bg-sky-50 flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div>
+          <p class="text-xs text-slate-500 font-medium uppercase tracking-wider">Activos</p>
+          <p class="text-xl font-bold text-slate-900">{{ warehouses | selectattr('is_active') | list | length }}</p>
+        </div>
+      </div>
+      <div class="bg-white rounded-lg border border-slate-200 p-4 shadow-sm flex items-center gap-4">
+        <div class="w-10 h-10 rounded-lg bg-rose-50 flex items-center justify-center flex-shrink-0">
+          <svg class="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div>
+          <p class="text-xs text-slate-500 font-medium uppercase tracking-wider">Inactivos</p>
+          <p class="text-xl font-bold text-slate-900">{{ warehouses | rejectattr('is_active') | list | length }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table card -->
+    <div class="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm">
+      <div class="px-4 py-3 border-b border-slate-100 bg-slate-50/50 flex items-center justify-between">
+        <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+          <span class="w-1 h-3.5 bg-emerald-600 rounded-full"></span>
+          Listado de Almacenes
+        </h3>
+        <span class="text-xs text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full font-medium">
+          {{ pagination.total }} almacén{{ 'es' if pagination.total != 1 else '' }}
+        </span>
+      </div>
+
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-slate-100 bg-slate-50/30">
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Almacén</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Ubicación</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Productos</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Estado</th>
+            <th class="w-20 px-4 py-3"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-50">
+          {% for warehouse in warehouses %}
+          <tr class="hover:bg-slate-50/80 transition-colors">
+            <td class="px-4 py-3">
+              <div class="flex items-center gap-3">
+                <div
+                  class="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-slate-800">{{ warehouse.name }}</p>
+                  <p class="text-xs text-slate-400 hidden">#{{ warehouse.id }}</p>
+                </div>
+              </div>
+            </td>
+            <td class="px-4 py-3 text-sm text-slate-600">{{ warehouse.location or '—' }}</td>
+            <td class="px-4 py-3">
+              <span class="text-sm font-semibold text-slate-700">{{ warehouse.items.count() }}</span>
+              <span class="text-xs text-slate-400 ml-1">producto{{ 's' if warehouse.items.count() != 1 else '' }}</span>
+            </td>
+            <td class="px-4 py-3">
+              {% if warehouse.is_active %}
+              <span
+                class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                Activo
+              </span>
+              {% else %}
+              <span
+                class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-500 border border-slate-200">
+                <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                Inactivo
+              </span>
+              {% endif %}
+            </td>
+            <td class="px-4 py-3">
+              <div class="flex gap-1 justify-end">
+                <button type="button" data-action="open-drawer"
+                  data-url="{{ url_for('warehouses.edit', company_id=company_id, id=warehouse.id) }}"
+                  data-title="Editar Almacén"
+                  class="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
+                  title="Editar">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="5" class="px-4 py-20 text-center">
+              <div class="flex flex-col items-center gap-3">
+                <div
+                  class="w-14 h-14 bg-slate-50 border border-slate-100 rounded-full flex items-center justify-center text-slate-300">
+                  <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                      d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                </div>
+                <p class="text-sm font-semibold text-slate-400">No hay almacenes registrados</p>
+                <button type="button" data-action="open-drawer"
+                  data-url="{{ url_for('warehouses.create', company_id=company_id) }}" data-title="Nuevo Almacén"
+                  class="text-xs text-emerald-600 font-semibold hover:underline">
+                  Crear el primer almacén →
+                </button>
+              </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      {% if pagination.pages > 1 %}
+      <div class="px-4 py-3 border-t border-slate-100 flex items-center justify-between bg-white">
+        <p class="text-sm text-slate-500 font-medium">
+          Mostrando {{ (pagination.page - 1) * pagination.per_page + 1 }} a
+          {% if pagination.page * pagination.per_page > pagination.total %}{{ pagination.total }}{% else %}{{
+          pagination.page * pagination.per_page }}{% endif %}
+          de {{ pagination.total }} resultados
+        </p>
+        <div class="flex items-center gap-1">
+          {% if pagination.has_prev %}
+          <a href="?page={{ pagination.prev_num }}{% if search %}&search={{ search }}{% endif %}"
+            class="px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded transition-colors">Anterior</a>
+          {% else %}
+          <span class="px-3 py-1.5 text-sm font-medium text-slate-400 rounded cursor-not-allowed">Anterior</span>
+          {% endif %}
+
+          {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+          {% if page_num %}
+          {% if page_num == pagination.page %}
+          <span class="px-3 py-1.5 text-sm font-bold text-white bg-emerald-600 rounded shadow-sm">{{ page_num }}</span>
+          {% else %}
+          <a href="?page={{ page_num }}{% if search %}&search={{ search }}{% endif %}"
+            class="px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded transition-colors">{{
+            page_num }}</a>
+          {% endif %}
+          {% else %}
+          <span class="px-2 text-slate-400 font-medium">...</span>
+          {% endif %}
+          {% endfor %}
+
+          {% if pagination.has_next %}
+          <a href="?page={{ pagination.next_num }}{% if search %}&search={{ search }}{% endif %}"
+            class="px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded transition-colors">Siguiente</a>
+          {% else %}
+          <span class="px-3 py-1.5 text-sm font-medium text-slate-400 rounded cursor-not-allowed">Siguiente</span>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

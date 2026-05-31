@@ -24,6 +24,9 @@ from .audit import AuditLog
 
 from .tag import Tag
 
+from .warehouse import Warehouse
+from .warehouse_item import WarehouseItem
+
 __all__ = [
     'db', 'migrate',
     'DocumentType', 'DocumentStatus', 'InvoiceType', 'StockMovementType', 'PaymentMethod', 'AccountType', 'UserStatus', 'ContactType',
@@ -33,5 +36,6 @@ __all__ = [
     'Document', 'DocumentItem', 'Payment', 'Report', 'Notification',
     'StockMovement', 'DocumentSequence',
     'Account', 'Project', 'Expense', 'LedgerEntry',
-    'AuditLog', 'Tag'
+    'AuditLog', 'Tag',
+    'Warehouse', 'WarehouseItem'
 ]

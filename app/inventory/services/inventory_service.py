@@ -55,28 +55,72 @@ class InventoryService:
         }
 
     @staticmethod
-    def adjust_stock(company_id, item_id, adjustment, reference=None):
+    def adjust_stock(company_id, item_id, warehouse_id, adjustment, reference=None):
         item = InventoryItem.query.filter_by(id=item_id, company_id=company_id).first_or_404()
-        new_quantity = max(0, item.quantity + adjustment)
+        from app.models import WarehouseItem
+        warehouse_item = WarehouseItem.query.filter_by(warehouse_id=warehouse_id, inventory_item_id=item_id).first()
+        if not warehouse_item:
+            warehouse_item = WarehouseItem(warehouse_id=warehouse_id, inventory_item_id=item_id, quantity=0)
+            db.session.add(warehouse_item)
+            
+        new_quantity = max(0, warehouse_item.quantity + adjustment)
         
         movement = StockMovement(
             company_id=company_id,
             inventory_item_id=item_id,
+            warehouse_id=warehouse_id,
             user_id=current_user.id if current_user.is_authenticated else None,
             type=StockMovementType.adjustment,
             quantity=adjustment,
             reference=reference or _('Manual Adjustment'),
-            date=datetime.now()
+            date=datetime.now(UTC)
         )
         db.session.add(movement)
         
-        item.quantity = new_quantity
+        warehouse_item.quantity = new_quantity
+        item.quantity = max(0, item.quantity + adjustment)
+        
         db.session.commit()
         return new_quantity
 
+    @staticmethod
+    def transfer_stock(company_id, item_id, from_warehouse_id, to_warehouse_id, quantity, reference=None):
+        if quantity <= 0:
+            raise ValueError(_("Quantity must be positive"))
+            
+        item = InventoryItem.query.filter_by(id=item_id, company_id=company_id).first_or_404()
+        from app.models import WarehouseItem
+        
+        from_item = WarehouseItem.query.filter_by(warehouse_id=from_warehouse_id, inventory_item_id=item_id).first()
+        if not from_item or from_item.quantity < quantity:
+            raise ValueError(_("Not enough stock in source warehouse"))
+            
+        to_item = WarehouseItem.query.filter_by(warehouse_id=to_warehouse_id, inventory_item_id=item_id).first()
+        if not to_item:
+            to_item = WarehouseItem(warehouse_id=to_warehouse_id, inventory_item_id=item_id, quantity=0)
+            db.session.add(to_item)
+            
+        from_item.quantity -= quantity
+        to_item.quantity += quantity
+        
+        movement = StockMovement(
+            company_id=company_id,
+            inventory_item_id=item_id,
+            warehouse_id=from_warehouse_id,
+            destination_warehouse_id=to_warehouse_id,
+            user_id=current_user.id if current_user.is_authenticated else None,
+            type=StockMovementType.outgoing,
+            quantity=quantity,
+            reference=reference or _('Stock Transfer'),
+            date=datetime.now(UTC)
+        )
+        db.session.add(movement)
+        db.session.commit()
+        return True
+
 
     @staticmethod
-    def create_inventory_item(company_id, name, description=None, quantity=0, price=0.0, cost_price=0.0, discount=0.0, supplier_id=None):
+    def create_inventory_item(company_id, name, description=None, quantity=0, price=0.0, cost_price=0.0, discount=0.0, supplier_id=None, warehouse_id=None):
         if not name:
             raise ValueError(_('Name is required'))
         if quantity < 0:
@@ -99,6 +143,31 @@ class InventoryService:
             supplier_id=int(supplier_id) if supplier_id and str(supplier_id).isdigit() else None
         )
         db.session.add(item)
+        db.session.flush() # flush to get item.id
+        
+        if quantity > 0:
+            if not warehouse_id:
+                from app.models import Warehouse
+                default_warehouse = Warehouse.query.filter_by(company_id=company_id).first()
+                if default_warehouse:
+                    warehouse_id = default_warehouse.id
+            if warehouse_id:
+                from app.models import WarehouseItem
+                wh_item = WarehouseItem(warehouse_id=warehouse_id, inventory_item_id=item.id, quantity=quantity)
+                db.session.add(wh_item)
+                
+                movement = StockMovement(
+                    company_id=company_id,
+                    inventory_item_id=item.id,
+                    warehouse_id=warehouse_id,
+                    user_id=current_user.id if current_user.is_authenticated else None,
+                    type=StockMovementType.incoming,
+                    quantity=quantity,
+                    reference=_('Initial Stock'),
+                    date=datetime.now(UTC)
+                )
+                db.session.add(movement)
+
         db.session.commit()
         return item
 

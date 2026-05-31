@@ -57,10 +57,17 @@ def create_invoice_or_quote(company_id, form, user_id):
     if not document_number:
         document_number = _generate_document_number(company_id, doc_type)
 
+    warehouse_id = form.get("warehouse_id")
+    if warehouse_id:
+        warehouse_id = int(warehouse_id)
+    else:
+        warehouse_id = None
+
     document = Document(
         document_number=document_number,
         type=doc_type,
         client_id=int(form.get("client_id")) if form.get("client_id") else None,
+        warehouse_id=warehouse_id,
         user_id=user_id,
         status=form.get("status", "draft"),
         issued_date=datetime.strptime(form.get("issued_date"), "%Y-%m-%d")
@@ -102,10 +109,19 @@ def create_invoice_or_quote(company_id, form, user_id):
             if inv:
                 inv.quantity = max((inv.quantity or 0) - qty, 0)
                 
-                              
+                if warehouse_id:
+                    from app.models import WarehouseItem
+                    wh_item = WarehouseItem.query.filter_by(warehouse_id=warehouse_id, inventory_item_id=inv_id).first()
+                    if not wh_item:
+                        wh_item = WarehouseItem(warehouse_id=warehouse_id, inventory_item_id=inv_id, quantity=0)
+                        db.session.add(wh_item)
+                    wh_item.quantity = max((wh_item.quantity or 0) - qty, 0)
+                
+                # Create stock movement record
                 movement = StockMovement(
                     company_id=company_id,
                     inventory_item_id=int(inv_id),
+                    warehouse_id=warehouse_id,
                     user_id=user_id,
                     type=StockMovementType.outgoing,
                     quantity=-qty,

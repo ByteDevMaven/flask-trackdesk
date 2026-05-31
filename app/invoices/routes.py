@@ -71,11 +71,13 @@ def item_row():
 @limiter.exempt
 def create(company_id):
                                                   
+    from app.models import Warehouse
     clients = Contact.query.filter_by(company_id=company_id, type=ContactType.customer).all()
     inventory_items = InventoryItem.query.filter(
         InventoryItem.company_id == company_id,
         InventoryItem.quantity > 0
     ).all()
+    warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
 
     selected_client_id = int(request.args.get('client_id', 0))
     selected_type = request.args.get('type', None)
@@ -86,6 +88,7 @@ def create(company_id):
                          invoice=None, 
                          clients=clients, 
                          inventory_items=inventory_items,
+                         warehouses=warehouses,
                          document_items=None)
 
 @invoices.route('/<int:company_id>/invoices/store', methods=['POST'])
@@ -235,9 +238,11 @@ def edit(company_id, id):
     else:
         document.client = None
     
+    from app.models import Warehouse
     clients = Contact.query.filter_by(company_id=company_id, type=ContactType.customer).all()
     inventory_items = InventoryItem.query.filter_by(company_id=company_id).all()
     document_items = DocumentItem.query.filter_by(document_id=document.id).all()
+    warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
     
                                                       
     for item in document_items:
@@ -250,6 +255,7 @@ def edit(company_id, id):
                          invoice=document, 
                          clients=clients, 
                          inventory_items=inventory_items,
+                         warehouses=warehouses,
                          document_items=document_items)
 
 
@@ -293,6 +299,10 @@ def update(company_id, id):
         document.client_id = (
             int(request.form.get('client_id'))
             if request.form.get('client_id') else None
+        )
+        document.warehouse_id = (
+            int(request.form.get('warehouse_id'))
+            if request.form.get('warehouse_id') else None
         )
         document.status = request.form.get('status', document.status)
         document.issued_date = (

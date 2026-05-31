@@ -61,7 +61,9 @@ def index(company_id):
 @limiter.exempt
 def create(company_id):
                                 
+    from app.models import Warehouse
     suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
+    warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
     selected_id = request.args.get('supplier_id', type=int)
     
     if request.method == 'POST':
@@ -74,21 +76,22 @@ def create(company_id):
                 price=float(request.form.get('price', 0.0)),
                 cost_price=float(request.form.get('cost_price', 0.0) or 0.0),
                 discount=float(request.form.get('discount', 0.0) or 0.0),
-                supplier_id=request.form.get('supplier_id')
+                supplier_id=request.form.get('supplier_id'),
+                warehouse_id=request.form.get('warehouse_id')
             )
             flash(_('Inventory item created successfully'), 'success')
             return redirect(url_for('inventory.index', company_id=company_id))
             
         except ValueError as e:
             flash(str(e), 'error')
-            return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, selected_id=selected_id, item=None, form_data=request.form)
+            return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, warehouses=warehouses, selected_id=selected_id, item=None, form_data=request.form)
         except SQLAlchemyError as e:
             db.session.rollback()
             flash(_('An error occurred while creating the inventory item'), 'error')
             current_app.logger.error(f"Database error: {str(e)}")
-            return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, selected_id=selected_id, item=None, form_data=request.form)
+            return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, warehouses=warehouses, selected_id=selected_id, item=None, form_data=request.form)
     
-    return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, selected_id=selected_id, item=None, form_data=None)
+    return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, warehouses=warehouses, selected_id=selected_id, item=None, form_data=None)
 
 @inventory.route('/<int:company_id>/inventory/<int:id>')
 @login_required
@@ -110,16 +113,24 @@ def view(company_id, id):
             'date': m.date,
             'type': m.type.value,  # raw enum value: 'incoming', 'outgoing', 'adjustment'
             'reference': m.reference or '-',
+            'warehouse': m.warehouse.name if m.warehouse else '-',
+            'destination': m.destination_warehouse.name if m.destination_warehouse else '-',
             'qty_change': m.qty_change,  # signed: negative for outgoing
             'notes': m.notes
         })
+    
+    from app.models import Warehouse, WarehouseItem
+    warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
+    warehouse_items = WarehouseItem.query.filter_by(inventory_item_id=id).all()
     
     return render_template('inventory/view.html',
                           company_id=company_id,
                           company=company,
                           item=item,
                           movements=movements,
-                          pagination=pagination)
+                          pagination=pagination,
+                          warehouses=warehouses,
+                          warehouse_items=warehouse_items)
 
 @inventory.route('/<int:company_id>/inventory/movements')
 @login_required
@@ -154,17 +165,21 @@ def movements(company_id):
 @limiter.exempt
 def edit(company_id, id):
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
+    from app.models import Warehouse
     suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
+    warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
     selected_id = request.args.get('supplier_id', type=int)
     
-    return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, selected_id=selected_id, item=item, form_data=None)
+    return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, warehouses=warehouses, selected_id=selected_id, item=item, form_data=None)
 
 @inventory.route('/<int:company_id>/inventory/<int:id>/update_item', methods=['POST'])
 @login_required
 @limiter.exempt
 def update(company_id, id):
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
+    from app.models import Warehouse
     suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
+    warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
     
     try:
         InventoryService.update_inventory_item(
@@ -184,12 +199,12 @@ def update(company_id, id):
         
     except ValueError as e:
         flash(str(e), 'error')
-        return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, item=item, form_data=request.form)
+        return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, warehouses=warehouses, item=item, form_data=request.form)
     except SQLAlchemyError as e:
         db.session.rollback()
         flash(_('An error occurred while updating the inventory item'), 'error')
         current_app.logger.error(f"Database error: {str(e)}")
-        return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, item=item, form_data=request.form)
+        return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, warehouses=warehouses, item=item, form_data=request.form)
 
 @inventory.route('/<int:company_id>/inventory/<int:id>/delete_item', methods=['POST'])
 @login_required
@@ -236,6 +251,40 @@ def export(company_id):
     )
 
             
+@inventory.route('/<int:company_id>/inventory/<int:id>/transfer', methods=['POST'])
+@login_required
+@limiter.exempt
+def transfer(company_id, id):
+    from_warehouse_id = request.form.get('from_warehouse_id', type=int)
+    to_warehouse_id = request.form.get('to_warehouse_id', type=int)
+    quantity = request.form.get('quantity', type=int)
+    
+    if not from_warehouse_id or not to_warehouse_id or not quantity:
+        flash(_('All fields are required for transfer'), 'error')
+        return redirect(url_for('inventory.view', company_id=company_id, id=id))
+        
+    if from_warehouse_id == to_warehouse_id:
+        flash(_('Source and destination warehouses must be different'), 'error')
+        return redirect(url_for('inventory.view', company_id=company_id, id=id))
+        
+    try:
+        InventoryService.transfer_stock(
+            company_id=company_id,
+            item_id=id,
+            from_warehouse_id=from_warehouse_id,
+            to_warehouse_id=to_warehouse_id,
+            quantity=quantity
+        )
+        flash(_('Stock transferred successfully'), 'success')
+    except ValueError as e:
+        flash(str(e), 'error')
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        current_app.logger.error(f"Transfer error: {str(e)}")
+        flash(_('An error occurred during transfer'), 'error')
+        
+    return redirect(url_for('inventory.view', company_id=company_id, id=id))
+
 @inventory.route('/api/<int:company_id>/inventory/items', methods=['GET'])
 @login_required
 @limiter.exempt
@@ -419,11 +468,16 @@ def api_adjust_stock(company_id, id):
     """Adjust stock quantity for an item"""
     data = request.get_json()
     adjustment = int(data.get('adjustment', 0)) if data else 0
+    warehouse_id = data.get('warehouse_id')
     
+    if not warehouse_id:
+        return jsonify({'error': 'Warehouse ID is required'}), 400
+        
     try:
         new_quantity = InventoryService.adjust_stock(
             company_id=company_id,
             item_id=id,
+            warehouse_id=int(warehouse_id),
             adjustment=adjustment
         )
 

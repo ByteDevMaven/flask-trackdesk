@@ -11,6 +11,7 @@ class Document(BaseModel):
     
     client_id = db.Column(db.Integer, db.ForeignKey('contacts.id'), index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), index=True)
+    warehouse_id = db.Column(db.Integer, db.ForeignKey('warehouses.id'), nullable=True, index=True)
     
     status = db.Column(db.Enum(DocumentStatus), nullable=False, default=DocumentStatus.draft)
     total_amount = db.Column(db.Numeric(12, 2), nullable=False, default=0.0)
@@ -23,6 +24,7 @@ class Document(BaseModel):
     tax_cache = db.Column(db.Numeric(12, 2), nullable=True)
 
     client = db.relationship('Contact', backref='documents', lazy='select')
+    warehouse = db.relationship('Warehouse', backref='documents', lazy='select')
     payments = db.relationship('Payment', backref='document', cascade='all, delete-orphan', lazy='dynamic')
     items = db.relationship('DocumentItem', backref='document', cascade='all, delete-orphan', lazy='select')
     

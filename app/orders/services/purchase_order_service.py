@@ -32,9 +32,16 @@ def create_purchase_order(company_id, form_data):
             except ValueError:
                 pass
 
+        warehouse_id = form_data.get('warehouse_id')
+        if warehouse_id:
+            warehouse_id = int(warehouse_id)
+        else:
+            warehouse_id = None
+
         po = PurchaseOrder(company_id=company_id,
                            order_number=order_number,
                            supplier_id=int(supplier_id),
+                           warehouse_id=warehouse_id,
                            total_amount=0.0,
                            buy_date=buy_date or (created_at.date() if created_at else datetime.now(UTC).date()),
                            created_at=created_at or datetime.now(UTC))
@@ -68,10 +75,19 @@ def create_purchase_order(company_id, form_data):
                     inventory_item.quantity = (inventory_item.quantity or 0) + quantity
                     db.session.add(inventory_item)
                     
-                                  
+                    if warehouse_id:
+                        from app.models import WarehouseItem
+                        wh_item = WarehouseItem.query.filter_by(warehouse_id=warehouse_id, inventory_item_id=int(item_id)).first()
+                        if not wh_item:
+                            wh_item = WarehouseItem(warehouse_id=warehouse_id, inventory_item_id=int(item_id), quantity=0)
+                            db.session.add(wh_item)
+                        wh_item.quantity = (wh_item.quantity or 0) + quantity
+                    
+                    # Create stock movement
                     movement = StockMovement(
                         company_id=company_id,
                         inventory_item_id=int(item_id),
+                        warehouse_id=warehouse_id,
                         type=StockMovementType.incoming,
                         quantity=quantity,
                         reference=f"PO {order_number}",
@@ -135,6 +151,36 @@ def update_purchase_order(company_id, order_id, form_data):
             except ValueError:
                 pass
 
+        warehouse_id = form_data.get('warehouse_id')
+        if warehouse_id:
+            purchase_order.warehouse_id = int(warehouse_id)
+        else:
+            purchase_order.warehouse_id = None
+
+        # Restore stock from existing movements
+        movements = StockMovement.query.filter_by(
+            company_id=company_id,
+            reference=f"PO {purchase_order.order_number}",
+            type=StockMovementType.incoming
+        ).all()
+        
+        for m in movements:
+            inv = InventoryItem.query.get(m.inventory_item_id)
+            if inv:
+                inv.quantity -= m.quantity # m.quantity is positive, so subtracting removes it
+                
+            if m.warehouse_id:
+                from app.models import WarehouseItem
+                wh_item = WarehouseItem.query.filter_by(warehouse_id=m.warehouse_id, inventory_item_id=m.inventory_item_id).first()
+                if wh_item:
+                    wh_item.quantity -= m.quantity
+
+        StockMovement.query.filter_by(
+            company_id=company_id,
+            reference=f"PO {purchase_order.order_number}",
+            type=StockMovementType.incoming
+        ).delete()
+
         PurchaseOrderItem.query.filter_by(
             purchase_order_id=purchase_order.id
         ).delete()
@@ -174,6 +220,29 @@ def update_purchase_order(company_id, order_id, form_data):
                 continue
 
             item_total = quantity * price
+
+            inventory_item.quantity = (inventory_item.quantity or 0) + quantity
+            db.session.add(inventory_item)
+            
+            if purchase_order.warehouse_id:
+                from app.models import WarehouseItem
+                wh_item = WarehouseItem.query.filter_by(warehouse_id=purchase_order.warehouse_id, inventory_item_id=int(item_id)).first()
+                if not wh_item:
+                    wh_item = WarehouseItem(warehouse_id=purchase_order.warehouse_id, inventory_item_id=int(item_id), quantity=0)
+                    db.session.add(wh_item)
+                wh_item.quantity = (wh_item.quantity or 0) + quantity
+
+            # Create stock movement
+            movement = StockMovement(
+                company_id=company_id,
+                inventory_item_id=int(item_id),
+                warehouse_id=purchase_order.warehouse_id,
+                type=StockMovementType.incoming,
+                quantity=quantity,
+                reference=f"PO {purchase_order.order_number}",
+                date=purchase_order.created_at or datetime.now(UTC)
+            )
+            db.session.add(movement)
 
             po_item = PurchaseOrderItem(
                 purchase_order_id=purchase_order.id,

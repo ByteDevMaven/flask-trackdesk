@@ -8,10 +8,12 @@ class PurchaseOrder(BaseModel):
     order_document = db.Column(db.String(50), default='document-000000', nullable=False)
     
     supplier_id = db.Column(db.Integer, db.ForeignKey('contacts.id'), nullable=False, index=True)
+    warehouse_id = db.Column(db.Integer, db.ForeignKey('warehouses.id'), nullable=True, index=True)
     total_amount = db.Column(db.Numeric(12, 2), nullable=False, default=0.0)
     buy_date = db.Column(db.Date, index=True)
 
     supplier = db.relationship('Contact', backref='purchase_orders', lazy='select')
+    warehouse = db.relationship('Warehouse', backref='purchase_orders', lazy='select')
     items = db.relationship('PurchaseOrderItem', backref='purchase_order', cascade='all, delete-orphan', lazy='select')
     
     __table_args__ = (

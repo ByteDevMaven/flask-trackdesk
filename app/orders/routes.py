@@ -62,8 +62,10 @@ def index(company_id):
 @orders.route('/<int:company_id>/purchase-orders/create', methods=['GET', 'POST'])
 @login_required
 def create(company_id):
+    from app.models import Warehouse
     suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
     inventory_items = InventoryItem.query.filter_by(company_id=company_id).order_by(InventoryItem.name).all()
+    warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
     
     if request.method == 'POST':
         result = create_purchase_order(company_id, request.form)
@@ -76,6 +78,7 @@ def create(company_id):
                                    company_id=company_id,
                                    suppliers=suppliers,
                                    inventory_items=inventory_items,
+                                   warehouses=warehouses,
                                    order=None,
                                    form_data=request.form,
                                    now=datetime.now(UTC))
@@ -83,6 +86,7 @@ def create(company_id):
                            company_id=company_id,
                            suppliers=suppliers,
                            inventory_items=inventory_items,
+                           warehouses=warehouses,
                            order=None,
                            form_data=None,
                            now=datetime.now(UTC))
@@ -96,14 +100,17 @@ def view(company_id, id):
 @orders.route('/<int:company_id>/purchase-orders/<int:id>/edit', methods=['GET'])
 @login_required
 def edit(company_id, id):
+    from app.models import Warehouse
     purchase_order = PurchaseOrder.query.filter_by(id=id, company_id=company_id).first_or_404()
     suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
     inventory_items = InventoryItem.query.filter_by(company_id=company_id).order_by(InventoryItem.name).all()
+    warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
     
     return render_template('orders/form.html', 
                           company_id=company_id, 
                           suppliers=suppliers,
                           inventory_items=inventory_items,
+                          warehouses=warehouses,
                           order=purchase_order, 
                           form_data=None,
                           now=datetime.now(UTC))
@@ -111,8 +118,10 @@ def edit(company_id, id):
 @orders.route('/<int:company_id>/purchase-orders/<int:id>/update', methods=['POST'])
 @login_required
 def update(company_id, id):
+    from app.models import Warehouse
     suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
     inventory_items = InventoryItem.query.filter_by(company_id=company_id).order_by(InventoryItem.name).all()
+    warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
 
     result = update_purchase_order(company_id, id, request.form)
     
@@ -126,6 +135,7 @@ def update(company_id, id):
                                company_id=company_id,
                                suppliers=suppliers,
                                inventory_items=inventory_items,
+                               warehouses=warehouses,
                                order=purchase_order,
                                form_data=request.form,
                                now=datetime.now(UTC))

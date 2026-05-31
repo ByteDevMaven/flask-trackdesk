@@ -8,6 +8,8 @@ class StockMovement(BaseModel):
     company_id = db.Column(db.Integer, db.ForeignKey('companies.id'), nullable=False, index=True)
     inventory_item_id = db.Column(db.Integer, db.ForeignKey('inventory_items.id'), nullable=False, index=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), index=True)
+    warehouse_id = db.Column(db.Integer, db.ForeignKey('warehouses.id'), nullable=True, index=True)
+    destination_warehouse_id = db.Column(db.Integer, db.ForeignKey('warehouses.id'), nullable=True, index=True)
     
     type = db.Column(db.Enum(StockMovementType), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
@@ -18,6 +20,8 @@ class StockMovement(BaseModel):
     inventory_item = db.relationship('InventoryItem', backref='movements', lazy='select')
     company = db.relationship('Company', backref='stock_movements', lazy='select')
     user = db.relationship('User', backref='stock_movements', lazy='select')
+    warehouse = db.relationship('Warehouse', foreign_keys=[warehouse_id], backref='stock_movements', lazy='select')
+    destination_warehouse = db.relationship('Warehouse', foreign_keys=[destination_warehouse_id], backref='incoming_transfers', lazy='select')
     
     __table_args__ = (
         db.CheckConstraint("quantity > 0", name='check_movement_quantity_positive'),
