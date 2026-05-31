@@ -250,20 +250,40 @@ def export(company_id):
         headers={'Content-Disposition': f'attachment; filename=inventory_{company_id}_{datetime.now(UTC).strftime("%Y%m%d")}.csv'}
     )
 
-            
+@inventory.route('/<int:company_id>/inventory/<int:id>/drawer_adjust', methods=['GET'])
+@login_required
+@limiter.exempt
+def drawer_adjust(company_id, id):
+    item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
+    from app.models import Warehouse
+    warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
+    return render_template('inventory/drawer_adjust.html', company_id=company_id, item=item, warehouses=warehouses)
+
+@inventory.route('/<int:company_id>/inventory/<int:id>/drawer_transfer', methods=['GET'])
+@login_required
+@limiter.exempt
+def drawer_transfer(company_id, id):
+    item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
+    from app.models import Warehouse
+    warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
+    return render_template('inventory/drawer_transfer.html', company_id=company_id, item=item, warehouses=warehouses)
+
 @inventory.route('/<int:company_id>/inventory/<int:id>/transfer', methods=['POST'])
 @login_required
 @limiter.exempt
 def transfer(company_id, id):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
     from_warehouse_id = request.form.get('from_warehouse_id', type=int)
     to_warehouse_id = request.form.get('to_warehouse_id', type=int)
     quantity = request.form.get('quantity', type=int)
     
     if not from_warehouse_id or not to_warehouse_id or not quantity:
+        if is_ajax: return jsonify({'success': False, 'error': _('All fields are required for transfer')})
         flash(_('All fields are required for transfer'), 'error')
         return redirect(url_for('inventory.view', company_id=company_id, id=id))
         
     if from_warehouse_id == to_warehouse_id:
+        if is_ajax: return jsonify({'success': False, 'error': _('Source and destination warehouses must be different')})
         flash(_('Source and destination warehouses must be different'), 'error')
         return redirect(url_for('inventory.view', company_id=company_id, id=id))
         
@@ -275,14 +295,18 @@ def transfer(company_id, id):
             to_warehouse_id=to_warehouse_id,
             quantity=quantity
         )
+        if is_ajax: return jsonify({'success': True, 'message': _('Stock transferred successfully')})
         flash(_('Stock transferred successfully'), 'success')
     except ValueError as e:
+        if is_ajax: return jsonify({'success': False, 'error': str(e)})
         flash(str(e), 'error')
     except SQLAlchemyError as e:
         db.session.rollback()
         current_app.logger.error(f"Transfer error: {str(e)}")
+        if is_ajax: return jsonify({'success': False, 'error': _('An error occurred during transfer')})
         flash(_('An error occurred during transfer'), 'error')
         
+    if is_ajax: return jsonify({'success': False, 'error': _('Unknown error')})
     return redirect(url_for('inventory.view', company_id=company_id, id=id))
 
 @inventory.route('/api/<int:company_id>/inventory/items', methods=['GET'])
