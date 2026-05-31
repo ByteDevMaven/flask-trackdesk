@@ -18,7 +18,8 @@ def create_app():
     Config.init_app(app)
 
     register_extensions(app)
-    register_audit_listeners()
+    with app.app_context():
+        register_audit_listeners()
     register_blueprints(app)
     register_context_processors(app)
     register_request_hooks(app)
