@@ -28,18 +28,28 @@ class User(UserMixin, BaseModel):
 
     def has_permission(self, permission_name: str) -> bool:
         """Return True if the user's role carries *permission_name*.
-        Admins (role name == 'admin') bypass all checks automatically.
+        Superadmins (role name == 'superadmin') bypass all checks automatically.
         """
         if not self.role:
             return False
-        if self.role.name == 'admin':
+        if self.role.name == 'superadmin':
             return True
         return self.role.has_permission(permission_name)
 
     @property
     def is_admin(self) -> bool:
-        """Shortcut — True when the user's role is 'admin'."""
-        return bool(self.role and self.role.name == 'admin')
+        """Shortcut — True when the user's role is 'superadmin' (platform admin)."""
+        return bool(self.role and self.role.name == 'superadmin')
+
+    @property
+    def is_superadmin(self) -> bool:
+        """Alias for is_admin."""
+        return self.is_admin
+
+    @property
+    def is_owner(self) -> bool:
+        """True when the user's role is 'owner' (company-level admin)."""
+        return bool(self.role and self.role.name == 'owner')
 
     @staticmethod
     def validate_email(email: str) -> bool:

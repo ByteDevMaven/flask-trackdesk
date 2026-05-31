@@ -15,6 +15,27 @@ from app.models.enums import UserStatus
 
 from . import users
 
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+
+def _get_visible_company_ids():
+    """Returns IDs of companies the current user can see.
+    Superadmins see all companies; everyone else only sees their own."""
+    if current_user.is_superadmin:
+        from app.models import Company
+        return [c.id for c in Company.query.all()]
+    return [c.id for c in current_user.companies]
+
+
+def _user_is_visible(user):
+    """Returns True if current_user can see/manage *user*."""
+    if current_user.is_superadmin:
+        return True
+    my_company_ids = set(c.id for c in current_user.companies)
+    target_company_ids = set(c.id for c in user.companies)
+    return bool(my_company_ids & target_company_ids)
+
 def is_valid_email(email):
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     return re.match(pattern, email) is not None
@@ -81,6 +102,11 @@ def index():
     status_filter = request.args.get('status', '')
     
     query = User.query
+
+    # ── Company isolation ──────────────────────────────────────────────────
+    if not current_user.is_superadmin:
+        visible_ids = _get_visible_company_ids()
+        query = query.join(User.companies).filter(Company.id.in_(visible_ids)).distinct()
     
                          
     if search:
@@ -133,8 +159,11 @@ def index():
 @users.route('/users/create')
 @login_required
 def create():
-    roles = Role.query.all()
-    companies = Company.query.all()
+    roles = Role.query.filter(Role.name != 'superadmin').all()
+    if current_user.is_superadmin:
+        companies = Company.query.all()
+    else:
+        companies = current_user.companies
     return render_template('users/form.html', 
                          user=None, 
                          roles=roles, 
@@ -217,6 +246,9 @@ def store():
 @login_required
 def view(id):
     user = User.query.get_or_404(id)
+    if not _user_is_visible(user):
+        from flask import abort
+        abort(403)
     now = datetime.now(UTC)
     created_at = user.created_at.replace(tzinfo=UTC)
     days = (now - created_at).days
@@ -226,8 +258,14 @@ def view(id):
 @login_required
 def edit(id):
     user = User.query.get_or_404(id)
-    roles = Role.query.all()
-    companies = Company.query.all()
+    if not _user_is_visible(user):
+        from flask import abort
+        abort(403)
+    roles = Role.query.filter(Role.name != 'superadmin').all()
+    if current_user.is_superadmin:
+        companies = Company.query.all()
+    else:
+        companies = current_user.companies
     return render_template('users/form.html', 
                          user=user, 
                          roles=roles, 
@@ -315,8 +353,13 @@ def update(id):
 @login_required
 def delete(id):
     user = User.query.get_or_404(id)
-    
-                           
+
+    # Isolation check
+    if not _user_is_visible(user):
+        from flask import abort
+        abort(403)
+
+    # Cannot delete yourself
     if user.id == current_user.id:
         flash('You cannot delete your own account', 'error')
         return redirect(url_for('users.index'))
@@ -339,8 +382,12 @@ def delete(id):
 @login_required
 def toggle_status(id):
     user = User.query.get_or_404(id)
-    
-                               
+
+    # Isolation check
+    if not _user_is_visible(user):
+        return jsonify({'success': False, 'message': 'Access denied'})
+
+    # Cannot deactivate yourself
     if user.id == current_user.id:
         return jsonify({'success': False, 'message': 'You cannot deactivate your own account'})
     
@@ -403,7 +450,14 @@ def search():
             User.name.ilike(f'%{query}%'),
             User.email.ilike(f'%{query}%')
         )
-    ).limit(10).all()
+    )
+
+    # Isolation: non-superadmins only see users in shared companies
+    if not current_user.is_superadmin:
+        visible_ids = _get_visible_company_ids()
+        users = users.join(User.companies).filter(Company.id.in_(visible_ids)).distinct()
+
+    users = users.limit(10).all()
     
     results = []
     for user in users:

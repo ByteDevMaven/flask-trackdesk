@@ -208,19 +208,13 @@ def seed_default_roles_and_permissions(db, Role, Permission):
 
     Roles
     -----
-    admin      – full access to everything
-    manager    – manage (create/edit) most resources, no user admin
-    accountant – view + manage invoices/payments, view everything else
-    viewer     – read-only access to all resources
-
-    Call this from a Flask CLI command, for example::
-
-        @app.cli.command('seed-rbac')
-        def seed_rbac():
-            from app.middleware.rbac import seed_default_roles_and_permissions
-            from app.models import db, Role, Permission
-            seed_default_roles_and_permissions(db, Role, Permission)
-            print('Done.')
+    superadmin – Platform-level admin (you / support team). Full access to everything,
+                 all companies. The only role that bypasses has_permission checks.
+    owner      – Company-level admin. Full control within their assigned company/companies.
+                 Can manage users, sequences, accounting, etc. but cannot see other companies.
+    manager    – Can create/edit most resources within their company. View-only accounting.
+    accountant – Can manage invoices/payments/accounting. View-only everything else.
+    viewer     – Read-only access to all resources in their company.
     """
 
     # Collect every unique permission string from the map.
@@ -237,14 +231,15 @@ def seed_default_roles_and_permissions(db, Role, Permission):
 
     db.session.flush()
 
-    def _perms(*names: str) -> list:
-        return [permission_objs[n] for n in names if n in permission_objs]
-
     # ── Role definitions ───────────────────────────────────────────────────
     role_definitions: dict[str, list[str]] = {
-        'admin': list(all_permission_names),        # everything
+        # Platform admin — bypasses has_permission in code, but we still assign all
+        # permissions so the seed is consistent and the role table is complete.
+        'superadmin': list(all_permission_names),
 
-        'manager': [
+        # Company owner — full control within their companies, cannot create new companies
+        # or access system-level user administration.
+        'owner': [
             'dashboard.view',
             'contacts.view',   'contacts.manage',   'contacts.delete',
             'inventory.view',  'inventory.manage',  'inventory.delete',
@@ -252,10 +247,25 @@ def seed_default_roles_and_permissions(db, Role, Permission):
             'invoices.view',   'invoices.manage',   'invoices.delete',
             'payments.view',   'payments.manage',   'payments.delete',
             'companies.view',  'companies.manage',
+            'companies.admin',                       # can delete their own company
+            'users.view',      'users.manage',       # manage users within their company
+            'accounting.view', 'accounting.manage',
+        ],
+
+        # Manager — can create/edit most operational data, view-only accounting.
+        'manager': [
+            'dashboard.view',
+            'contacts.view',   'contacts.manage',   'contacts.delete',
+            'inventory.view',  'inventory.manage',  'inventory.delete',
+            'orders.view',     'orders.manage',     'orders.delete',
+            'invoices.view',   'invoices.manage',   'invoices.delete',
+            'payments.view',   'payments.manage',   'payments.delete',
+            'companies.view',
             'users.view',
             'accounting.view',
         ],
 
+        # Accountant — financial operations, read-only on most else.
         'accountant': [
             'dashboard.view',
             'contacts.view',
@@ -268,6 +278,7 @@ def seed_default_roles_and_permissions(db, Role, Permission):
             'accounting.view', 'accounting.manage',
         ],
 
+        # Viewer — read-only across the board.
         'viewer': [
             'dashboard.view',
             'contacts.view',
