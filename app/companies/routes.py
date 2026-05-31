@@ -1,12 +1,18 @@
 from datetime import datetime, UTC
 
-from flask import render_template, request, redirect, url_for, flash, jsonify
-from flask_login import login_required
+from flask import render_template, request, redirect, url_for, flash, jsonify, abort
+from flask_login import login_required, current_user
 
 from app.models import db, Company, User, Contact, InventoryItem, Document, Payment, Report, DocumentSequence, Account
 from app.models.enums import ContactType, AccountType
 
 from . import companies
+
+def _get_company_for_user(id):
+    company = Company.query.get_or_404(id)
+    if not current_user.is_admin and company not in current_user.companies:
+        abort(403)
+    return company
 
 @companies.route('/companies')
 @login_required
@@ -15,6 +21,8 @@ def index():
     search = request.args.get('search', '')
     
     query = Company.query
+    if not current_user.is_admin:
+        query = query.filter(Company.users.any(id=current_user.id))
     
     if search:
         query = query.filter(Company.name.ilike(f'%{search}%'))
@@ -72,6 +80,9 @@ def store():
         if user_ids:
             users = User.query.filter(User.id.in_(user_ids)).all()
             company.users.extend(users)
+            
+        if not current_user.is_admin and current_user not in company.users:
+            company.users.append(current_user)
         
         db.session.add(company)
         db.session.flush() # Flush to get company.id
@@ -100,7 +111,7 @@ def store():
 @companies.route('/companies/<int:id>')
 @login_required
 def view(id):
-    company = Company.query.get_or_404(id)
+    company = _get_company_for_user(id)
     
     # Get statistics for the company with exact db types
     stats = {
@@ -126,14 +137,14 @@ def view(id):
 @companies.route('/companies/<int:id>/edit')
 @login_required
 def edit(id):
-    company = Company.query.get_or_404(id)
+    company = _get_company_for_user(id)
     users = User.query.all()
     return render_template('companies/form.html', comp=company, users=users)
 
 @companies.route('/companies/<int:id>/update', methods=['POST'])
 @login_required
 def update(id):
-    company = Company.query.get_or_404(id)
+    company = _get_company_for_user(id)
     
     try:
         name = request.form.get('name', '').strip()
@@ -183,7 +194,7 @@ def update(id):
 @companies.route('/companies/<int:id>/delete', methods=['POST'])
 @login_required
 def delete(id):
-    company = Company.query.get_or_404(id)
+    company = _get_company_for_user(id)
     
     try:
                                            
@@ -221,7 +232,11 @@ def search():
     if not query:
         return jsonify([])
     
-    companies = Company.query.filter(
+    query_db = Company.query
+    if not current_user.is_admin:
+        query_db = query_db.filter(Company.users.any(id=current_user.id))
+        
+    companies = query_db.filter(
         Company.name.ilike(f'%{query}%')
     ).limit(10).all()
     
@@ -240,7 +255,7 @@ def search():
 @login_required
 def sequences_index(id):
     """List all document sequences for a company"""
-    company = Company.query.get_or_404(id)
+    company = _get_company_for_user(id)
     sequences = DocumentSequence.query.filter_by(company_id=id).order_by(DocumentSequence.expiration_date.desc()).all()
     return render_template('companies/sequences/index.html', company=company, sequences=sequences, today=datetime.now(UTC).date())
 
@@ -248,14 +263,14 @@ def sequences_index(id):
 @login_required
 def sequence_create(id):
     """Form to create a new document sequence"""
-    company = Company.query.get_or_404(id)
+    company = _get_company_for_user(id)
     return render_template('companies/sequences/form.html', company=company, sequence=None)
 
 @companies.route('/companies/<int:id>/sequences/store', methods=['POST'])
 @login_required
 def sequence_store(id):
     """Store a new document sequence"""
-    company = Company.query.get_or_404(id)
+    company = _get_company_for_user(id)
     try:
         cai = request.form.get('cai', '').strip()
         range_start = int(request.form.get('range_start', 0))
@@ -292,7 +307,7 @@ def sequence_store(id):
 @login_required
 def sequence_edit(id, seq_id):
     """Form to edit an existing document sequence"""
-    company = Company.query.get_or_404(id)
+    company = _get_company_for_user(id)
     sequence = DocumentSequence.query.filter_by(id=seq_id, company_id=id).first_or_404()
     return render_template('companies/sequences/form.html', company=company, sequence=sequence)
 
@@ -300,7 +315,7 @@ def sequence_edit(id, seq_id):
 @login_required
 def sequence_update(id, seq_id):
     """Update an existing document sequence"""
-    company = Company.query.get_or_404(id)
+    company = _get_company_for_user(id)
     sequence = DocumentSequence.query.filter_by(id=seq_id, company_id=id).first_or_404()
     
     try:
@@ -333,7 +348,7 @@ def sequence_update(id, seq_id):
 @companies.route('/companies/<int:id>/sequences/<int:seq_id>/delete', methods=['POST'])
 @login_required
 def sequence_delete(id, seq_id):
-    """Delete a document sequence"""
+    _get_company_for_user(id) # Check permissions
     sequence = DocumentSequence.query.filter_by(id=seq_id, company_id=id).first_or_404()
     
     try:

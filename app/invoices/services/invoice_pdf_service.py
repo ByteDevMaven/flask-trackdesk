@@ -171,10 +171,14 @@ def _generate_html_pdf(document, template, currency, tax_rate, include_tax, sell
         return num2words(round(amount, 2), lang="es")
 
     words = number_to_words(tax_data["total_final"])
+    
+    from app.models.company import Company
+    company = Company.query.get(document.company_id)
 
     # Provide context to the Jinja template
     context = {
         'document': document,
+        'company': company,
         'client': client,
         'items': document_items,
         'tax_data': tax_data,

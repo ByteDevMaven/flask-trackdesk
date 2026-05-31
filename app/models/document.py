@@ -24,6 +24,7 @@ class Document(BaseModel):
     tax_cache = db.Column(db.Numeric(12, 2), nullable=True)
 
     client = db.relationship('Contact', backref='documents', lazy='select')
+    company = db.relationship('Company', backref='documents', lazy='select')
     warehouse = db.relationship('Warehouse', backref='documents', lazy='select')
     payments = db.relationship('Payment', backref='document', cascade='all, delete-orphan', lazy='dynamic')
     items = db.relationship('DocumentItem', backref='document', cascade='all, delete-orphan', lazy='select')

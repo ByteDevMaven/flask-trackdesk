@@ -198,13 +198,19 @@ def delete(company_id, contact_id):
         contact.is_deleted = True
         contact.deleted_at = datetime.now(UTC)
         db.session.commit()
-        return jsonify({'success': True, 'message': _('Contact deleted successfully')})
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return jsonify({'success': True, 'message': _('Contact deleted successfully')})
+        flash(_('Contact deleted successfully'), 'success')
+        return redirect(url_for('contacts.index', company_id=company_id))
     except exc.IntegrityError:
         db.session.rollback()
-        return jsonify({
-            'success': False, 
-            'error': _('Cannot delete contact because it has related records (invoices, items, etc).')
-        })
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return jsonify({
+                'success': False, 
+                'error': _('Cannot delete contact because it has related records (invoices, items, etc).')
+            })
+        flash(_('Cannot delete contact because it has related records (invoices, items, etc).'), 'error')
+        return redirect(url_for('contacts.index', company_id=company_id))
 
 @contacts.route('/<int:company_id>/contacts/api/search', methods=['GET'])
 @login_required

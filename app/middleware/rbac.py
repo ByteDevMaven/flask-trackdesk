@@ -50,6 +50,7 @@ ROUTE_PERMISSIONS: dict[str, str] = {
     'contacts.edit':   'contacts.manage',
     'contacts.update': 'contacts.manage',
     'contacts.delete': 'contacts.delete',
+    'contacts.api_search': 'contacts.view',
 
     # ── Inventory ─────────────────────────────────────────────────────────
     'inventory.index':  'inventory.view',
@@ -59,6 +60,28 @@ ROUTE_PERMISSIONS: dict[str, str] = {
     'inventory.edit':   'inventory.manage',
     'inventory.update': 'inventory.manage',
     'inventory.delete': 'inventory.delete',
+    'inventory.api_adjust_stock': 'inventory.manage',
+    'inventory.api_bulk_delete':  'inventory.delete',
+    'inventory.api_create_item':  'inventory.manage',
+    'inventory.api_delete_item':  'inventory.delete',
+    'inventory.api_get_item':     'inventory.view',
+    'inventory.api_get_items':    'inventory.view',
+    'inventory.api_search':       'inventory.view',
+    'inventory.api_stats':        'inventory.view',
+    'inventory.api_update_item':  'inventory.manage',
+    'inventory.barcode':          'inventory.view',
+    'inventory.drawer_adjust':    'inventory.manage',
+    'inventory.drawer_transfer':  'inventory.manage',
+    'inventory.export':           'inventory.view',
+    'inventory.movements':        'inventory.view',
+    'inventory.transfer':         'inventory.manage',
+
+    # ── Warehouses (using inventory perms) ────────────────────────────────
+    'warehouses.index':  'inventory.view',
+    'warehouses.create': 'inventory.manage',
+    'warehouses.store':  'inventory.manage',
+    'warehouses.edit':   'inventory.manage',
+    'warehouses.update': 'inventory.manage',
 
     # ── Orders ────────────────────────────────────────────────────────────
     'orders.index':  'orders.view',
@@ -68,6 +91,7 @@ ROUTE_PERMISSIONS: dict[str, str] = {
     'orders.edit':   'orders.manage',
     'orders.update': 'orders.manage',
     'orders.delete': 'orders.delete',
+    'orders.export': 'orders.view',
 
     # ── Invoices ──────────────────────────────────────────────────────────
     'invoices.index':  'invoices.view',
@@ -77,6 +101,9 @@ ROUTE_PERMISSIONS: dict[str, str] = {
     'invoices.edit':   'invoices.manage',
     'invoices.update': 'invoices.manage',
     'invoices.delete': 'invoices.delete',
+    'invoices.add_payment':   'invoices.manage',
+    'invoices.item_row':      'invoices.manage',
+    'invoices.print_invoice': 'invoices.view',
 
     # ── Payments ──────────────────────────────────────────────────────────
     'payments.index':  'payments.view',
@@ -86,15 +113,23 @@ ROUTE_PERMISSIONS: dict[str, str] = {
     'payments.edit':   'payments.manage',
     'payments.update': 'payments.manage',
     'payments.delete': 'payments.delete',
+    'payments.search_invoices': 'payments.manage',
 
     # ── Companies ─────────────────────────────────────────────────────────
     'companies.index':  'companies.view',
     'companies.view':   'companies.view',
-    'companies.create': 'companies.manage',
-    'companies.store':  'companies.manage',
+    'companies.create': 'companies.admin',
+    'companies.store':  'companies.admin',
     'companies.edit':   'companies.manage',
     'companies.update': 'companies.manage',
     'companies.delete': 'companies.admin',
+    'companies.search': 'companies.view',
+    'companies.sequences_index':   'companies.manage',
+    'companies.sequence_create':   'companies.manage',
+    'companies.sequence_store':    'companies.manage',
+    'companies.sequence_edit':     'companies.manage',
+    'companies.sequence_update':   'companies.manage',
+    'companies.sequence_delete':   'companies.manage',
 
     # ── Users (admin-only) ────────────────────────────────────────────────
     'users.index':              'users.view',
@@ -112,10 +147,13 @@ ROUTE_PERMISSIONS: dict[str, str] = {
     'accounting.index':                     'accounting.view',
     'accounting.ledger':                    'accounting.view',
     'accounting.chart_of_accounts':         'accounting.view',
+    'accounting.reports':                   'accounting.view',
     'accounting.create_expense':            'accounting.manage',
     'accounting.create_project':            'accounting.manage',
     'accounting.create_account':            'accounting.manage',
     'accounting.generate_default_accounts': 'accounting.manage',
+    'accounting.create_tag':                'accounting.manage',
+    'accounting.delete_tag':                'accounting.manage',
 
     # ── Global search ─────────────────────────────────────────────────────
     'search': 'dashboard.view',
@@ -142,7 +180,7 @@ def init_rbac(app: Flask) -> None:
         endpoint = request.endpoint
 
         # No matched route (404 etc.) or always-public endpoint → skip.
-        if not endpoint or endpoint in PUBLIC_ENDPOINTS:
+        if not endpoint or endpoint in PUBLIC_ENDPOINTS or endpoint.endswith('.static'):
             return
 
         required_permission = ROUTE_PERMISSIONS.get(endpoint)
@@ -215,7 +253,7 @@ def seed_default_roles_and_permissions(db, Role, Permission):
             'payments.view',   'payments.manage',   'payments.delete',
             'companies.view',  'companies.manage',
             'users.view',
-            'accounting.view', 'accounting.manage',
+            'accounting.view',
         ],
 
         'accountant': [
