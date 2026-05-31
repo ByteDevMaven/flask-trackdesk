@@ -26,10 +26,11 @@ from .tag import Tag
 
 from .warehouse import Warehouse
 from .warehouse_item import WarehouseItem
+from .document_template import DocumentTemplate, DocumentTemplateType
 
 __all__ = [
     'db', 'migrate',
-    'DocumentType', 'DocumentStatus', 'InvoiceType', 'StockMovementType', 'PaymentMethod', 'AccountType', 'UserStatus', 'ContactType',
+    'DocumentType', 'DocumentStatus', 'InvoiceType', 'StockMovementType', 'PaymentMethod', 'AccountType', 'UserStatus', 'ContactType', 'DocumentTemplateType',
     'role_permissions', 'user_companies', 'expense_tags', 'ledger_entry_tags',
     'Company', 'Role', 'Permission', 'User', 'Contact',
     'InventoryItem', 'PurchaseOrder', 'PurchaseOrderItem',
@@ -37,5 +38,6 @@ __all__ = [
     'StockMovement', 'DocumentSequence',
     'Account', 'Project', 'Expense', 'LedgerEntry',
     'AuditLog', 'Tag',
-    'Warehouse', 'WarehouseItem'
+    'Warehouse', 'WarehouseItem',
+    'DocumentTemplate'
 ]

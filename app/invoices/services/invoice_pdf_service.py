@@ -1,30 +1,11 @@
 """
 invoice_pdf_service.py
 ======================
-Pure PDF overlay engine — contains zero customer-specific logic.
+Database-driven PDF and HTML engine.
 
-All customer knowledge (template filename, coordinate positions) lives in
-``app/invoices/services/pdf_layouts/``.  Add one file per customer there.
-
-Usage from a script / management command
------------------------------------------
-    from app.invoices.services.invoice_pdf_service import generate_invoice_pdf
-    from app.invoices.services.pdf_layouts import get_layout
-    from app.models import Document
-
-    doc = Document.query.get(42)
-    layout = get_layout(doc.company_id)      # looks up the right customer layout
-
-    pdf_bytes, filename = generate_invoice_pdf(
-        doc,
-        layout=layout,
-        currency="L",
-        tax_rate=0.15,
-        include_tax=True,
-        seller_name="Jane Doe",
-    )
-    with open(filename, "wb") as f:
-        f.write(pdf_bytes)
+Supports two strategies:
+1. PDF Overlay: Uses coordinates stored in the database to overlay text on a base PDF.
+2. HTML Template: Uses xhtml2pdf to render HTML stored in the database into a PDF.
 """
 
 from __future__ import annotations
@@ -35,7 +16,7 @@ import os
 from dataclasses import dataclass, field
 from io import BytesIO
 
-from flask import current_app
+from flask import current_app, render_template_string
 from flask_babel import _, get_locale
 
 from reportlab.lib.pagesizes import A4
@@ -44,6 +25,7 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
 from PyPDF2 import PdfReader, PdfWriter
 from num2words import num2words
+from xhtml2pdf import pisa
 
 from app.models import (
     Contact,
@@ -55,84 +37,63 @@ from app.models import (
 
 
 # ============================================================================
-# Coordinate dataclasses — reusable building blocks for any layout
-# All y values are expressed as offsets FROM THE TOP of the page.
-# ReportLab draws from the bottom, so internally we convert: y = height - offset
+# Coordinate dataclasses — reusable building blocks for PDF overlay
 # ============================================================================
 
 @dataclass
 class HeaderCoords:
-    """Coordinates for the document header block."""
-    # White-out rectangle [x, offset_from_top, width, height]
     whiteout_rect: tuple = (10, 135, 120, 17)
-
     doc_type_x: float = 12
     doc_type_y_from_top: float = 130
-
     doc_number_x: float = 140
     doc_number_y_from_top: float = 130
-
     page_current_x: float = 49
     page_total_x: float = 70
     page_y_from_top: float = 110
-
     issued_date_x: float = 480
     issued_date_y_from_top: float = 165
-
     due_date_x: float = 480
-    due_date_y_from_top: float = 172           # quotes
-    payment_condition_y_from_top: float = 180  # invoices
-
+    due_date_y_from_top: float = 172
+    payment_condition_y_from_top: float = 180
     company_id_x: float = 480
     company_id_y_from_top: float = 196
     seller_x: float = 480
     seller_y_from_top: float = 210
-
     title_font_size: int = 11
     detail_font_size: int = 9
 
-
 @dataclass
 class ClientCoords:
-    """Coordinates for the client information block."""
     block_y_from_top: float = 165
     x: float = 140
     line_gap: float = 15
     fallback_x: float = 100
     font_size: int = 10
 
-
 @dataclass
 class ItemsCoords:
-    """Coordinates for the line-items table."""
     y_start_from_top: float = 260
     row_height: float = 15
     items_per_page: int = 25
-
     col_codigo: float = 30
     col_articulo: float = 110
     col_cantidad: float = 280
     col_precio: float = 350
     col_descuento: float = 430
     col_valor: float = 480
-
     col_cantidad_offset: float = 10
     col_precio_offset: float = 35
     col_descuento_offset: float = 35
     col_valor_offset: float = 65
-
     max_codigo_chars: int = 8
     max_articulo_chars: int = 25
     font_size: int = 8
 
-
 @dataclass
 class TotalsCoords:
-    """Coordinates for the totals section on the last page."""
     x: float = 480
     y_anchor_from_top: float = 650
     right_x_offset: float = 50
-
     row_exenta: float = 27
     row_gravada_15: float = 45
     row_gravada_18: float = 65
@@ -140,25 +101,16 @@ class TotalsCoords:
     row_imp_15: float = 100
     row_imp_18: float = 117
     row_total: float = 140
-
-    words_x_offset: float = -160   # relative to x
-    words_y_offset: float = 180    # subtracted from anchor_y
-
+    words_x_offset: float = -160
+    words_y_offset: float = 180
     font_size: int = 9
     total_font_size: int = 11
     words_font_size: int = 10
     max_words_chars: int = 70
 
-
 @dataclass
 class PdfTemplateLayout:
-    """
-    Complete layout definition for one customer's invoice PDF template.
-
-    Create one instance per customer in ``pdf_layouts/<customer>.py`` and
-    register it in ``pdf_layouts/__init__.py``.
-    """
-    template_name: str                                       # filename in static/templates/
+    template_name: str
     header: HeaderCoords = field(default_factory=HeaderCoords)
     client: ClientCoords = field(default_factory=ClientCoords)
     items: ItemsCoords   = field(default_factory=ItemsCoords)
@@ -166,30 +118,100 @@ class PdfTemplateLayout:
 
 
 # ============================================================================
-# Core engine — no customer names, no defaults beyond Python type hints
+# Core engine
 # ============================================================================
 
 def generate_invoice_pdf(
     document,
     *,
-    layout: PdfTemplateLayout,
+    template,
     currency: str = "L",
     tax_rate: float = 0.15,
     include_tax: bool = True,
     seller_name: str = "ADMIN",
 ):
     """
-    Overlay invoice data on ``layout.template_name`` and return ``(bytes, filename)``.
-
-    Parameters
-    ----------
-    document     : Document ORM instance
-    layout       : PdfTemplateLayout for this customer (required, no default)
-    currency     : Currency symbol printed next to amounts
-    tax_rate     : Decimal rate (0.15 = 15 %)
-    include_tax  : Whether to add tax to the displayed total
-    seller_name  : Name printed in the seller field
+    Generate the PDF based on the document template type.
     """
+    from app.models.document_template import DocumentTemplateType
+    
+    if template.type == DocumentTemplateType.html:
+        return _generate_html_pdf(document, template, currency, tax_rate, include_tax, seller_name)
+    else:
+        return _generate_overlay_pdf(document, template, currency, tax_rate, include_tax, seller_name)
+
+
+def _generate_html_pdf(document, template, currency, tax_rate, include_tax, seller_name):
+    """Generates PDF using xhtml2pdf and Jinja2 based on database html template"""
+    client = Contact.query.get(document.client_id) if document.client_id else None
+
+    document_items = DocumentItem.query.filter_by(document_id=document.id).all()
+    for item in document_items:
+        item.inventory_item = (
+            InventoryItem.query.get(item.inventory_item_id)
+            if item.inventory_item_id else None
+        )
+
+    total_amount = float(document.total_amount or 0)
+    subtotal     = round(total_amount / (1 + tax_rate), 2)
+    imp_15       = round(subtotal * tax_rate, 2) if include_tax else 0.0
+    total_final  = round(total_amount, 2) if include_tax else subtotal
+
+    tax_data = {
+        "vta_exenta":       subtotal,
+        "venta_gravada_15": subtotal,
+        "venta_gravada_18": 0.0,
+        "venta_exonerada":  0.0,
+        "imp_15":           imp_15,
+        "imp_18":           0.0,
+        "total_final":      total_final,
+    }
+
+    def number_to_words(amount: float) -> str:
+        return num2words(round(amount, 2), lang="es")
+
+    words = number_to_words(tax_data["total_final"])
+
+    # Provide context to the Jinja template
+    context = {
+        'document': document,
+        'client': client,
+        'items': document_items,
+        'tax_data': tax_data,
+        'currency': currency,
+        'seller_name': seller_name,
+        'words': words,
+    }
+
+    # Render template stored in database
+    html_out = render_template_string(template.html_content or "<h1>Plantilla Vacía</h1>", **context)
+    
+    # Convert HTML to PDF
+    result_file = BytesIO()
+    pisa_status = pisa.CreatePDF(BytesIO(html_out.encode('utf-8')), dest=result_file)
+    
+    if pisa_status.err:
+        raise Exception("Error generating HTML PDF")
+
+    doc_type = "quo" if document.type == DocumentType.quote else "inv"
+    filename  = f"{doc_type}_{document.document_number}.pdf"
+    
+    return result_file.getvalue(), filename
+
+
+def _generate_overlay_pdf(document, template, currency, tax_rate, include_tax, seller_name):
+    """Generates PDF using ReportLab overlay based on database JSON coordinates"""
+    coords = template.pdf_coordinates or {}
+    h = HeaderCoords(**coords.get('header', {}))
+    cl = ClientCoords(**coords.get('client', {}))
+    it = ItemsCoords(**coords.get('items', {}))
+    tot = TotalsCoords(**coords.get('totals', {}))
+    
+    layout = PdfTemplateLayout(
+        template_name=template.pdf_background_path or "Factura Ferre-lagos.pdf",
+        header=h, client=cl, items=it, totals=tot
+    )
+
     client = Contact.query.get(document.client_id) if document.client_id else None
 
     document_items = DocumentItem.query.filter_by(document_id=document.id).all()
@@ -381,16 +403,39 @@ def _draw_totals(c, tax_data, number_to_words, height, font_name, font_bold, cur
 
 
 # ============================================================================
-# Backward-compat wrapper — keeps routes.py untouched
+# Request wrapper
 # ============================================================================
 
 def generate_invoice_pdf_from_request(document, request, session, current_user):
     """
-    Used by the existing invoice route.  Resolves the layout automatically
-    from the company ID via the layout registry.
-    Script callers should use generate_invoice_pdf() directly.
+    Used by the existing invoice route. Resolves the layout automatically
+    from the database template for the document's company.
     """
-    from app.invoices.services.pdf_layouts import get_layout
+    from app.models.document_template import DocumentTemplate
+    
+    template = DocumentTemplate.query.filter_by(company_id=document.company_id, is_default=True).first()
+    if not template:
+        template = DocumentTemplate.query.filter_by(company_id=document.company_id).first()
+    
+    if not template:
+        # Provide a fallback just in case
+        from app.models.document_template import DocumentTemplateType
+        from .pdf_layouts.ferre_lagos import FERRE_LAGOS_LAYOUT
+        
+        coords = {
+            "header": dataclasses.asdict(FERRE_LAGOS_LAYOUT.header),
+            "client": dataclasses.asdict(FERRE_LAGOS_LAYOUT.client),
+            "items":  dataclasses.asdict(FERRE_LAGOS_LAYOUT.items),
+            "totals": dataclasses.asdict(FERRE_LAGOS_LAYOUT.totals)
+        }
+        
+        template = DocumentTemplate(
+            company_id=document.company_id,
+            name="Fallback",
+            type=DocumentTemplateType.pdf_overlay,
+            pdf_background_path=FERRE_LAGOS_LAYOUT.template_name,
+            pdf_coordinates=coords
+        )
 
     tax_param   = request.args.get("tax", "1")
     include_tax = tax_param != "0"
@@ -401,11 +446,10 @@ def generate_invoice_pdf_from_request(document, request, session, current_user):
 
     currency    = session.get("currency", "L")
     seller      = current_user.name if current_user and current_user.name else "ADMIN"
-    layout      = get_layout(document.company_id)
 
     return generate_invoice_pdf(
         document,
-        layout=layout,
+        template=template,
         currency=currency,
         tax_rate=tax_rate,
         include_tax=include_tax,
