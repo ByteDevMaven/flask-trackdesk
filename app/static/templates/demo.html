@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Factura Comercial</title>
+    <style>
+        @page {
+            size: a4 portrait;
+            margin: 2cm;
+            @frame header_frame {
+                -pdf-frame-content: header_content;
+                left: 50pt; width: 512pt; top: 50pt; height: 40pt;
+            }
+            @frame footer_frame {
+                -pdf-frame-content: footer_content;
+                left: 50pt; width: 512pt; top: 772pt; height: 20pt;
+            }
+        }
+        body {
+            font-family: Helvetica, sans-serif;
+            font-size: 10pt;
+            color: #333333;
+        }
+        h1, h2, h3, h4 { color: #0f172a; margin: 0; padding: 0; }
+        .text-right { text-align: right; }
+        .text-center { text-align: center; }
+        .w-full { width: 100%; }
+        
+        .header-table { width: 100%; margin-bottom: 30px; }
+        .header-table td { vertical-align: top; }
+        .company-name { font-size: 24pt; font-weight: bold; color: #10b981; margin-bottom: 5px; }
+        
+        .info-box {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .items-table th {
+            background-color: #10b981;
+            color: white;
+            padding: 8px;
+            text-align: left;
+            font-weight: bold;
+        }
+        .items-table td {
+            padding: 8px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .items-table .amount { text-align: right; }
+        
+        .totals-table {
+            width: 40%;
+            margin-left: 60%;
+            border-collapse: collapse;
+        }
+        .totals-table td {
+            padding: 5px 8px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .totals-table .label { font-weight: bold; }
+        .totals-table .value { text-align: right; }
+        .totals-table .total-row {
+            background-color: #f1f5f9;
+            font-weight: bold;
+            font-size: 12pt;
+        }
+        
+        .words {
+            margin-top: 30px;
+            font-style: italic;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+    <div id="header_content">
+        <div class="text-right" style="color: #94a3b8; font-size: 8pt;">
+            Generado por TrackDesk - Documento Oficial
+        </div>
+    </div>
+    
+    <div id="footer_content" class="text-center" style="font-size: 8pt; color: #64748b; border-top: 1px solid #e2e8f0; padding-top: 5px;">
+        Página <pdf:pagenumber> de <pdf:pagecount>
+    </div>
+
+    <table class="header-table">
+        <tr>
+            <td style="width: 50%;">
+                <div class="company-name">{{ document.company.name }}</div>
+                <div>RTN: {{ document.company.identifier }}</div>
+                <div>Email: {{ document.company.email }}</div>
+                <div>Tel: {{ document.company.phone }}</div>
+                <div>{{ document.company.address }}</div>
+            </td>
+            <td style="width: 50%;" class="text-right">
+                <h1 style="font-size: 20pt; color: #475569; margin-bottom: 10px;">
+                    {% if document.type.name == 'invoice' %}FACTURA{% else %}COTIZACIÓN{% endif %}
+                </h1>
+                <div style="font-size: 12pt; font-weight: bold; margin-bottom: 10px;"># {{ document.document_number }}</div>
+                <table style="width: 100%; text-align: right;">
+                    <tr>
+                        <td style="color: #64748b;">Fecha Emisión:</td>
+                        <td>{{ document.issued_date.strftime('%d/%m/%Y') if document.issued_date else '' }}</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #64748b;">Vencimiento:</td>
+                        <td>{{ document.due_date.strftime('%d/%m/%Y') if document.due_date else '' }}</td>
+                    </tr>
+                    <tr>
+                        <td style="color: #64748b;">Vendedor:</td>
+                        <td>{{ seller_name }}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <div class="info-box">
+        <h3 style="margin-bottom: 5px; color: #10b981;">Facturar a:</h3>
+        <table style="width: 100%;">
+            <tr>
+                <td style="width: 60%;">
+                    <strong>{{ client.name if client else 'Cliente Final' }}</strong><br>
+                    ID/RTN: {{ client.identifier if client else 'N/A' }}<br>
+                    {{ client.address if client and client.address else '' }}
+                </td>
+                <td style="width: 40%; vertical-align: top;">
+                    Email: {{ client.email if client and client.email else 'N/A' }}<br>
+                    Tel: {{ client.phone if client and client.phone else 'N/A' }}
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <table class="items-table">
+        <thead>
+            <tr>
+                <th style="width: 15%;">Código</th>
+                <th style="width: 40%;">Descripción</th>
+                <th style="width: 10%;" class="amount">Cant.</th>
+                <th style="width: 15%;" class="amount">Precio ({{ currency }})</th>
+                <th style="width: 20%;" class="amount">Total ({{ currency }})</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.inventory_item.id if item.inventory_item else 'N/A' }}</td>
+                <td>{{ item.inventory_item.name if item.inventory_item else item.description }}</td>
+                <td class="amount">{{ item.quantity }}</td>
+                <td class="amount">{{ "{:,.2f}".format(item.unit_price|float) }}</td>
+                <td class="amount">{{ "{:,.2f}".format(item.quantity|float * item.unit_price|float * (1 - (item.discount or 0)|float/100)) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <table class="totals-table">
+        <tr>
+            <td class="label">Subtotal:</td>
+            <td class="value">{{ currency }} {{ "{:,.2f}".format(tax_data.vta_exenta) }}</td>
+        </tr>
+        <tr>
+            <td class="label">Impuesto (15%):</td>
+            <td class="value">{{ currency }} {{ "{:,.2f}".format(tax_data.imp_15) }}</td>
+        </tr>
+        <tr class="total-row">
+            <td class="label">Total:</td>
+            <td class="value">{{ currency }} {{ "{:,.2f}".format(tax_data.total_final) }}</td>
+        </tr>
+    </table>
+
+    <div class="words">
+        <strong>Son:</strong> {{ words|upper }}
+    </div>
+
+    <div style="margin-top: 50px; text-align: center; color: #64748b; font-size: 9pt;">
+        Gracias por su preferencia.<br>
+        Esta factura es un documento válido según la ley tributaria local.
+    </div>
+</body>
+</html>

@@ -7,12 +7,17 @@ class Contact(BaseModel):
     
     company_id = db.Column(db.Integer, db.ForeignKey('companies.id'), nullable=False, index=True)
     name = db.Column(db.String(255), nullable=False, index=True)
+    legal_name = db.Column(db.String(255), nullable=True)
     type = db.Column(db.Enum(ContactType), nullable=False, default=ContactType.customer)
     identifier = db.Column(db.String(50), nullable=False, default='', index=True)
     
     email = db.Column(db.String(255), index=True)
     phone = db.Column(db.String(20), index=True)
     address = db.Column(db.String(512))
+
+    payment_terms_days = db.Column(db.Integer, default=0)
+    credit_limit = db.Column(db.Numeric(12, 2), default=0)
+    notes = db.Column(db.String(1024), nullable=True)
     
     company = db.relationship('Company', backref='contacts', lazy='select')
 

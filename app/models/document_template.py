@@ -17,7 +17,7 @@ class DocumentTemplate(BaseModel):
     pdf_coordinates = db.Column(db.JSON, nullable=True)
     
     # For html type
-    html_content = db.Column(db.Text, nullable=True)
+    html_template_path = db.Column(db.String(255), nullable=True)
     
     is_default = db.Column(db.Boolean, default=False)
 

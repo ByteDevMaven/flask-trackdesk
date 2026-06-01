@@ -187,8 +187,19 @@ def _generate_html_pdf(document, template, currency, tax_rate, include_tax, sell
         'words': words,
     }
 
-    # Render template stored in database
-    html_out = render_template_string(template.html_content or "<h1>Plantilla Vacía</h1>", **context)
+    # Render template from file
+    html_template_path = template.html_template_path
+    if html_template_path:
+        full_path = os.path.join(current_app.static_folder, "templates", html_template_path)
+        try:
+            with open(full_path, "r", encoding="utf-8") as f:
+                html_raw = f.read()
+        except FileNotFoundError:
+            html_raw = f"<h1>Plantilla no encontrada: {html_template_path}</h1>"
+    else:
+        html_raw = "<h1>Plantilla Vacía</h1>"
+        
+    html_out = render_template_string(html_raw, **context)
     
     # Convert HTML to PDF
     result_file = BytesIO()

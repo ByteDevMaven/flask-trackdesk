@@ -41,6 +41,10 @@ class PaymentMethod(enum.Enum):
 class ContactType(enum.Enum):
     customer = 'customer'
     supplier = 'supplier'
+    customer_supplier = "customer_supplier"
+    lead = "lead"
+    employee = "employee"
+    other = "other"
 
 class UserStatus(enum.Enum):
     active = 'active'
