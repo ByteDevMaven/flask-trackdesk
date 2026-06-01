@@ -40,7 +40,8 @@
 
   <div class="bg-slate-50 rounded-lg p-3.5 border border-slate-100 shadow-sm">
     <p class="text-[10px] uppercase font-bold text-slate-500 tracking-wider mb-1">Monto Total</p>
-    <p class="text-xl font-bold text-slate-700">{{ session.get('currency','L') }} {{ (invoice.total_amount or 0) | format_currency }}</p>
+    <p class="text-xl font-bold text-slate-700">{{ session.get('currency','L') }} {{ (invoice.total_amount or 0) |
+      format_currency }}</p>
   </div>
 
   <div class="pt-2">
@@ -160,7 +161,7 @@
               {{ session.get('currency','L') }} {{ (item.unit_price or 0) | format_currency }}
             </td>
             <td class="py-3 px-3 text-sm font-semibold text-slate-909 text-right">
-              {{ session.get('currency','L') }} {{ ((item.quantity or 0) * (item.unit_price or 0)) | format_currency }}
+              {{ session.get('currency','L') }} {{ item.line_total | format_currency }}
             </td>
           </tr>
           {% endfor %}
@@ -173,13 +174,15 @@
         {% if invoice.discount_amount %}
         <div class="flex justify-between text-sm text-slate-600">
           <span class="font-medium">Descuento aplicado</span>
-          <span class="font-semibold text-rose-600">-{{ session.get('currency','L') }} {{ invoice.discount_amount | format_currency }}</span>
+          <span class="font-semibold text-rose-600">-{{ session.get('currency','L') }} {{ invoice.discount_amount |
+            format_currency }}</span>
         </div>
         {% endif %}
         {% if invoice.tax_amount %}
         <div class="flex justify-between text-sm text-slate-600">
           <span class="font-medium">Impuesto (ISV)</span>
-          <span class="font-semibold text-slate-800">{{ session.get('currency','L') }} {{ invoice.tax_amount | format_currency }}</span>
+          <span class="font-semibold text-slate-800">{{ session.get('currency','L') }} {{ invoice.tax_amount |
+            format_currency }}</span>
         </div>
         {% endif %}
         <div class="flex justify-between text-base font-bold text-slate-900 border-t border-slate-150 pt-2.5 mt-1">
@@ -211,15 +214,15 @@
             </td>
             <td class="py-3 px-3 text-sm text-slate-700 font-medium">
               {% if payment.method.name == 'cash' %}
-                Efectivo
+              Efectivo
               {% elif payment.method.name == 'bank_transfer' %}
-                Transferencia Bancaria
+              Transferencia Bancaria
               {% elif payment.method.name == 'credit_card' %}
-                Tarjeta de Crédito / Débito
+              Tarjeta de Crédito / Débito
               {% elif payment.method.name == 'cheque' %}
-                Cheque
+              Cheque
               {% else %}
-                Otro
+              Otro
               {% endif %}
             </td>
             <td class="py-3 px-3 text-sm text-slate-500 italic">

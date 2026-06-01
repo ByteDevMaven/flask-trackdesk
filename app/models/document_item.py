@@ -1,3 +1,4 @@
+from decimal import Decimal
 from .base import db, BaseModel
 
 class DocumentItem(BaseModel):
@@ -16,6 +17,12 @@ class DocumentItem(BaseModel):
         db.CheckConstraint("unit_price >= 0", name='check_unit_price_non_negative'),
         db.CheckConstraint("discount >= 0 AND discount <= 100", name='check_item_discount_range'),
     )
+
+    @property
+    def line_total(self):
+        return self.quantity * self.unit_price * (
+            Decimal("1") - (self.discount / Decimal("100"))
+        )
 
     def __repr__(self) -> str:
         return f'<DocumentItem {self.id} qty={self.quantity} @{self.unit_price}'
