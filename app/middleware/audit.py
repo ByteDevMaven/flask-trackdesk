@@ -29,18 +29,15 @@ class AuditMiddleware:
         Manually log a change. Useful if automated listeners are not enough.
         """
         try:
-            user_id = None
-            company_id = None
+            user_id = getattr(target, 'user_id', None)
+            company_id = getattr(target, 'company_id', None)
             
             if has_request_context():
-                if current_user and current_user.is_authenticated:
+                if not user_id and current_user and current_user.is_authenticated:
                     user_id = current_user.id
                     
-                company_id = request.headers.get('X-Company-Id')
-                if not company_id and current_user and current_user.is_authenticated:
-                    default_company = next((uc for uc in current_user.user_companies if uc.is_default), None)
-                    if default_company:
-                        company_id = default_company.company_id
+                if not company_id:
+                    company_id = request.headers.get('X-Company-Id')
                         
             # Fallback for background tasks or legacy contexts
             try:
