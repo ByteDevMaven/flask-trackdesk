@@ -11,13 +11,15 @@ class ContactService:
     def get_paginated_contacts(company_id, page, per_page, search_term, contact_type_filter):
         query = Contact.query.filter_by(company_id=company_id)
 
-        if contact_type_filter in ['customer', 'supplier']:
+        valid_types = [e.name for e in ContactType]
+        if contact_type_filter in valid_types:
             query = query.filter_by(type=ContactType[contact_type_filter])
 
         if search_term:
             term = f"%{search_term}%"
             query = query.filter(
                 (Contact.name.ilike(term)) |
+                (Contact.legal_name.ilike(term)) |
                 (Contact.email.ilike(term)) |
                 (Contact.identifier.ilike(term)) |
                 (Contact.phone.ilike(term))
@@ -36,16 +38,21 @@ class ContactService:
             raise ValueError("Contact name is required")
 
         contact_type_str = data.get('type', 'customer')
-        contact_type = ContactType[contact_type_str] if contact_type_str in ['customer', 'supplier'] else ContactType.customer
+        valid_types = [e.name for e in ContactType]
+        contact_type = ContactType[contact_type_str] if contact_type_str in valid_types else ContactType.customer
 
         contact = Contact(
             company_id=company_id,
             name=data.get('name'),
+            legal_name=data.get('legal_name', ''),
             type=contact_type,
             identifier=data.get('identifier', ''),
             email=data.get('email', ''),
             phone=data.get('phone', ''),
-            address=data.get('address', '')
+            address=data.get('address', ''),
+            payment_terms_days=int(data.get('payment_terms_days', 0) or 0),
+            credit_limit=float(data.get('credit_limit', 0) or 0),
+            notes=data.get('notes', '')
         )
         
         try:
@@ -65,7 +72,7 @@ class ContactService:
         stats = {}
         items = None
 
-        if contact.type.name == 'customer':
+        if contact.type.name in ['customer', 'customer_supplier', 'lead']:
             items = Document.query.filter_by(client_id=contact.id).order_by(Document.issued_date.desc()).paginate(page=page, per_page=per_page, error_out=False)
             all_docs = Document.query.filter_by(client_id=contact.id).all()
             
@@ -78,7 +85,7 @@ class ContactService:
                 'pending_payments': pending_payments,
                 'total_invoices': total_invoices
             }
-        else:
+        elif contact.type.name == 'supplier':
             items = InventoryItem.query.filter_by(supplier_id=contact.id).order_by(InventoryItem.name).paginate(page=page, per_page=per_page, error_out=False)
             all_items = InventoryItem.query.filter_by(supplier_id=contact.id).all()
             
@@ -104,14 +111,19 @@ class ContactService:
             raise ValueError("Contact name is required")
 
         contact_type_str = data.get('type')
-        if contact_type_str in ['customer', 'supplier']:
+        valid_types = [e.name for e in ContactType]
+        if contact_type_str in valid_types:
             contact.type = ContactType[contact_type_str]
             
         contact.name = data.get('name')
+        contact.legal_name = data.get('legal_name', '')
         contact.identifier = data.get('identifier', '')
         contact.email = data.get('email', '')
         contact.phone = data.get('phone', '')
         contact.address = data.get('address', '')
+        contact.payment_terms_days = int(data.get('payment_terms_days', 0) or 0)
+        contact.credit_limit = float(data.get('credit_limit', 0) or 0)
+        contact.notes = data.get('notes', '')
         
         try:
             db.session.commit()
@@ -138,11 +150,17 @@ class ContactService:
     @staticmethod
     def search_contacts(company_id, search_term, contact_type, limit=10):
         query = Contact.query.filter_by(company_id=company_id)
-        if contact_type in ['customer', 'supplier']:
+        valid_types = [e.name for e in ContactType]
+        if contact_type in valid_types:
             query = query.filter_by(type=ContactType[contact_type])
             
         if search_term:
-            query = query.filter(Contact.name.ilike(f'%{search_term}%'))
+            term = f"%{search_term}%"
+            query = query.filter(
+                (Contact.name.ilike(term)) |
+                (Contact.legal_name.ilike(term)) |
+                (Contact.identifier.ilike(term))
+            )
             
         contacts = query.order_by(Contact.name).limit(limit).all()
         return contacts

@@ -39,13 +39,21 @@
         Nuevo Contacto
       </button>
     </div>
-    <div class="px-6 flex gap-6">
+    <div class="px-6 flex gap-6 overflow-x-auto">
       <a href="{{ url_for('contacts.index', company_id=selected_company_id, search=search) }}"
-        class="pb-3 text-sm font-medium border-b-2 {{ 'border-emerald-600 text-emerald-700' if not contact_type_filter else 'border-transparent text-slate-500 hover:text-slate-700' }}">Todos</a>
+        class="pb-3 text-sm font-medium border-b-2 whitespace-nowrap {{ 'border-emerald-600 text-emerald-700' if not contact_type_filter else 'border-transparent text-slate-500 hover:text-slate-700' }}">Todos</a>
       <a href="{{ url_for('contacts.index', company_id=selected_company_id, type='customer', search=search) }}"
-        class="pb-3 text-sm font-medium border-b-2 {{ 'border-emerald-600 text-emerald-700' if contact_type_filter == 'customer' else 'border-transparent text-slate-500 hover:text-slate-700' }}">Clientes</a>
+        class="pb-3 text-sm font-medium border-b-2 whitespace-nowrap {{ 'border-emerald-600 text-emerald-700' if contact_type_filter == 'customer' else 'border-transparent text-slate-500 hover:text-slate-700' }}">Clientes</a>
       <a href="{{ url_for('contacts.index', company_id=selected_company_id, type='supplier', search=search) }}"
-        class="pb-3 text-sm font-medium border-b-2 {{ 'border-emerald-600 text-emerald-700' if contact_type_filter == 'supplier' else 'border-transparent text-slate-500 hover:text-slate-700' }}">Proveedores</a>
+        class="pb-3 text-sm font-medium border-b-2 whitespace-nowrap {{ 'border-emerald-600 text-emerald-700' if contact_type_filter == 'supplier' else 'border-transparent text-slate-500 hover:text-slate-700' }}">Proveedores</a>
+      <a href="{{ url_for('contacts.index', company_id=selected_company_id, type='customer_supplier', search=search) }}"
+        class="pb-3 text-sm font-medium border-b-2 whitespace-nowrap {{ 'border-emerald-600 text-emerald-700' if contact_type_filter == 'customer_supplier' else 'border-transparent text-slate-500 hover:text-slate-700' }}">Cliente/Proveedor</a>
+      <a href="{{ url_for('contacts.index', company_id=selected_company_id, type='lead', search=search) }}"
+        class="pb-3 text-sm font-medium border-b-2 whitespace-nowrap {{ 'border-emerald-600 text-emerald-700' if contact_type_filter == 'lead' else 'border-transparent text-slate-500 hover:text-slate-700' }}">Potenciales</a>
+      <a href="{{ url_for('contacts.index', company_id=selected_company_id, type='employee', search=search) }}"
+        class="pb-3 text-sm font-medium border-b-2 whitespace-nowrap {{ 'border-emerald-600 text-emerald-700' if contact_type_filter == 'employee' else 'border-transparent text-slate-500 hover:text-slate-700' }}">Empleados</a>
+      <a href="{{ url_for('contacts.index', company_id=selected_company_id, type='other', search=search) }}"
+        class="pb-3 text-sm font-medium border-b-2 whitespace-nowrap {{ 'border-emerald-600 text-emerald-700' if contact_type_filter == 'other' else 'border-transparent text-slate-500 hover:text-slate-700' }}">Otros</a>
     </div>
   </header>
 
@@ -72,8 +80,20 @@
           <tr class="hover:bg-slate-50 transition-colors">
             <td class="px-4 py-3">
               <div class="flex items-center gap-3">
-                {% set name_color = 'bg-sky-100 text-sky-600' if contact.type.name == 'customer' else 'bg-purple-100
-                text-purple-600' %}
+                {% set type_name = contact.type.name %}
+              {% if type_name == 'customer' %}
+                {% set name_color = 'bg-sky-100 text-sky-600' %}
+              {% elif type_name == 'supplier' %}
+                {% set name_color = 'bg-purple-100 text-purple-600' %}
+              {% elif type_name == 'customer_supplier' %}
+                {% set name_color = 'bg-teal-100 text-teal-600' %}
+              {% elif type_name == 'lead' %}
+                {% set name_color = 'bg-amber-100 text-amber-600' %}
+              {% elif type_name == 'employee' %}
+                {% set name_color = 'bg-indigo-100 text-indigo-600' %}
+              {% else %}
+                {% set name_color = 'bg-slate-100 text-slate-600' %}
+              {% endif %}
                 <div
                   class="w-8 h-8 rounded-full {{ name_color }} flex items-center justify-center text-xs font-bold flex-shrink-0">
                   {{ contact.name[:2]|upper }}</div>
@@ -85,19 +105,12 @@
               </div>
             </td>
             <td class="px-4 py-3">
-              {% if contact.type.name == 'customer' %}
-              <span
-                class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700">
-                <span class="w-1 h-1 rounded-full bg-emerald-500"></span>
-                Cliente
+              {% set type_labels = {'customer': ('Cliente', 'bg-emerald-50 text-emerald-700', 'bg-emerald-500'), 'supplier': ('Proveedor', 'bg-purple-50 text-purple-700', 'bg-purple-500'), 'customer_supplier': ('Cliente/Prov.', 'bg-teal-50 text-teal-700', 'bg-teal-500'), 'lead': ('Potencial', 'bg-amber-50 text-amber-700', 'bg-amber-500'), 'employee': ('Empleado', 'bg-indigo-50 text-indigo-700', 'bg-indigo-500'), 'other': ('Otro', 'bg-slate-100 text-slate-600', 'bg-slate-400')} %}
+              {% set tl, tc, td = type_labels.get(contact.type.name, ('—', 'bg-slate-100 text-slate-500', 'bg-slate-300')) %}
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium {{ tc }}">
+                <span class="w-1 h-1 rounded-full {{ td }}"></span>
+                {{ tl }}
               </span>
-              {% else %}
-              <span
-                class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-purple-50 text-purple-700">
-                <span class="w-1 h-1 rounded-full bg-purple-500"></span>
-                Proveedor
-              </span>
-              {% endif %}
             </td>
             <td class="px-4 py-3 text-sm text-slate-600">{{ contact.phone or '—' }}</td>
             <td class="px-4 py-3">

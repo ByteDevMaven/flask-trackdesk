@@ -11,7 +11,7 @@
   </a>
 </div>
 
-{% if contact.type.name == 'customer' %}
+{% if contact.type.name in ['customer', 'customer_supplier', 'lead'] %}
 <div class="px-4 space-y-4">
   <div class="bg-emerald-50 rounded-lg p-3 border border-emerald-100">
     <p class="text-[10px] uppercase font-bold text-emerald-600 tracking-wider mb-1">Total Pagado</p>
@@ -26,7 +26,7 @@
     <p class="text-lg font-bold text-slate-700">{{ stats.total_invoices }}</p>
   </div>
 </div>
-{% else %}
+{% elif contact.type.name == 'supplier' %}
 <div class="px-4 space-y-4">
   <div class="bg-emerald-50 rounded-lg p-3 border border-emerald-100">
     <p class="text-[10px] uppercase font-bold text-emerald-600 tracking-wider mb-1">Valor en Inventario</p>
@@ -51,24 +51,23 @@
   <div class="bg-white rounded-lg border border-slate-200 overflow-hidden mb-6 p-6">
     <div class="flex flex-col sm:flex-row items-start justify-between gap-4">
       <div class="flex items-center gap-4">
-        {% set name_color = 'bg-sky-100 text-sky-600' if contact.type.name == 'customer' else 'bg-purple-100 text-purple-600' %}
+        {% set type_colors = {'customer': 'bg-sky-100 text-sky-600', 'supplier': 'bg-purple-100 text-purple-600', 'customer_supplier': 'bg-teal-100 text-teal-600', 'lead': 'bg-amber-100 text-amber-600', 'employee': 'bg-indigo-100 text-indigo-600', 'other': 'bg-slate-100 text-slate-600'} %}
+        {% set name_color = type_colors.get(contact.type.name, 'bg-slate-100 text-slate-600') %}
         <div class="w-16 h-16 rounded-full {{ name_color }} flex items-center justify-center text-2xl font-bold flex-shrink-0">
           {{ contact.name[:2]|upper }}
         </div>
         <div>
-          <div class="flex items-center gap-3 mb-1">
+        <div class="flex items-center gap-3 mb-1">
             <h2 class="text-xl font-bold text-slate-900">{{ contact.name }}</h2>
-            {% if contact.type.name == 'customer' %}
-            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700">
-              <span class="w-1 h-1 rounded-full bg-emerald-500"></span>
-              Cliente
-            </span>
-            {% else %}
-            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-purple-50 text-purple-700">
-              <span class="w-1 h-1 rounded-full bg-purple-500"></span>
-              Proveedor
-            </span>
+            {% if contact.legal_name %}
+            <span class="text-sm text-slate-400 font-normal">{{ contact.legal_name }}</span>
             {% endif %}
+            {% set type_labels = {'customer': ('Cliente', 'bg-emerald-50 text-emerald-700', 'bg-emerald-500'), 'supplier': ('Proveedor', 'bg-purple-50 text-purple-700', 'bg-purple-500'), 'customer_supplier': ('Cliente/Proveedor', 'bg-teal-50 text-teal-700', 'bg-teal-500'), 'lead': ('Potencial', 'bg-amber-50 text-amber-700', 'bg-amber-500'), 'employee': ('Empleado', 'bg-indigo-50 text-indigo-700', 'bg-indigo-500'), 'other': ('Otro', 'bg-slate-100 text-slate-600', 'bg-slate-400')} %}
+            {% set tl, tc, td = type_labels.get(contact.type.name, ('—', 'bg-slate-100 text-slate-500', 'bg-slate-300')) %}
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium {{ tc }}">
+              <span class="w-1 h-1 rounded-full {{ td }}"></span>
+              {{ tl }}
+            </span>
           </div>
           <div class="flex items-center gap-4 text-sm text-slate-500">
             {% if contact.email %}
@@ -105,9 +104,27 @@
       <p class="text-sm text-slate-600">{{ contact.address }}</p>
     </div>
     {% endif %}
+    {% if contact.payment_terms_days or contact.credit_limit %}
+    <div class="mt-4 pt-4 border-t border-slate-100 grid grid-cols-2 gap-4">
+      <div>
+        <p class="text-xs text-slate-400 uppercase font-semibold tracking-wider mb-0.5">Días de Crédito</p>
+        <p class="text-sm font-semibold text-slate-800">{{ contact.payment_terms_days or 0 }} días</p>
+      </div>
+      <div>
+        <p class="text-xs text-slate-400 uppercase font-semibold tracking-wider mb-0.5">Límite de Crédito</p>
+        <p class="text-sm font-semibold text-slate-800">{{ session.get('currency','L') }} {{ (contact.credit_limit or 0) | format_currency }}</p>
+      </div>
+    </div>
+    {% endif %}
+    {% if contact.notes %}
+    <div class="mt-4 pt-4 border-t border-slate-100">
+      <p class="text-xs text-slate-400 uppercase font-semibold tracking-wider mb-1">Notas</p>
+      <p class="text-sm text-slate-600">{{ contact.notes }}</p>
+    </div>
+    {% endif %}
   </div>
 
-  {% if contact.type.name == 'customer' %}
+  {% if contact.type.name in ['customer', 'customer_supplier', 'lead'] %}
     <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
       <div class="px-4 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
         <h3 class="text-sm font-semibold text-slate-800">Facturas del Cliente</h3>
@@ -181,7 +198,7 @@
       </div>
       {% endif %}
     </div>
-  {% else %}
+  {% elif contact.type.name == 'supplier' %}
     <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
       <div class="px-4 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
         <h3 class="text-sm font-semibold text-slate-800">Productos Suministrados</h3>
