@@ -71,6 +71,17 @@ class Document(BaseModel):
         paid = self.calculate_paid_amount()
         return round(float(self.total_amount or 0) - paid, 2)
 
+    @cached_property
+    def discount_amount(self) -> float:
+        """Calculate total discount amount from document items. Cached."""
+        items = self.items or []
+        total_discount = 0
+        for item in items:
+            item_total = float(item.quantity or 0) * float(item.unit_price or 0)
+            discount = item_total * (float(item.discount or 0) / 100.0)
+            total_discount += discount
+        return round(total_discount, 2)
+
     def refresh_cache(self):
         """Refresh subtotal and tax caches"""
         subtotal = 0
