@@ -281,3 +281,31 @@ class InventoryService:
                 )
             )
         ).limit(limit).all()
+
+    @staticmethod
+    def export_inventory_items_csv(company_id):
+        import csv
+        from io import StringIO
+        from flask_babel import _
+        
+        items = InventoryItem.query.filter_by(company_id=company_id).all()
+        
+        output = StringIO()
+        writer = csv.writer(output)
+        
+        writer.writerow([
+            _('Name'), _('Description'), _('Quantity'), _('Price'), _('Contact')
+        ])
+        
+        for item in items:
+            writer.writerow([
+                item.name,
+                item.description or '',
+                item.quantity,
+                item.price,
+                item.supplier.name if item.supplier else ''
+            ])
+        
+        output.seek(0)
+        filename = f"inventory_{company_id}_{datetime.now(UTC).strftime('%Y%m%d')}.csv"
+        return output.getvalue(), filename

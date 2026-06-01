@@ -1,18 +1,11 @@
 from datetime import datetime, UTC
 
-from flask import render_template, request, redirect, url_for, flash, jsonify, abort
+from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required, current_user
 
-from app.models import db, Company, User, Contact, InventoryItem, Document, Payment, Report, DocumentSequence, Account
-from app.models.enums import ContactType, AccountType
-
+from app.models import User
 from . import companies
-
-def _get_company_for_user(id):
-    company = Company.query.get_or_404(id)
-    if not current_user.is_admin and company not in current_user.companies:
-        abort(403)
-    return company
+from .services import CompanyService
 
 @companies.route('/companies')
 @login_required
@@ -20,16 +13,7 @@ def index():
     page = request.args.get('page', 1, type=int)
     search = request.args.get('search', '')
     
-    query = Company.query
-    if not current_user.is_admin:
-        query = query.filter(Company.users.any(id=current_user.id))
-    
-    if search:
-        query = query.filter(Company.name.ilike(f'%{search}%'))
-    
-    pagination = query.order_by(Company.created_at.desc()).paginate(
-        page=page, per_page=10, error_out=False
-    )
+    pagination = CompanyService.get_paginated_companies(page, 10, search, current_user)
     
     return render_template('companies/index.html', 
                            companies=pagination.items, 
@@ -46,87 +30,20 @@ def create():
 @login_required
 def store():
     try:
-        name = request.form.get('name', '').strip()
-        currency = request.form.get('currency', 'USD')
-        tax_rate = request.form.get('tax_rate', 0.0)
-        address = request.form.get('address', '').strip()
-        phone = request.form.get('phone', '').strip()
-        email = request.form.get('email', '').strip()
-        identifier = request.form.get('identifier', '').strip()
-        user_ids = request.form.getlist('user_ids')
-        
-        if not name:
-            flash('Company name is required.', 'error')
-            return redirect(url_for('companies.create'))
-        
-                                              
-        existing_company = Company.query.filter_by(name=name).first()
-        if existing_company:
-            flash('A company with this name already exists.', 'error')
-            return redirect(url_for('companies.create'))
-        
-        company = Company(
-            name=name,
-            currency=currency,
-            tax_rate=float(tax_rate),
-            address=address,
-            phone=phone,
-            email=email,
-            identifier=identifier,
-            created_at=datetime.now(UTC)
-        )
-        
-                                           
-        if user_ids:
-            users = User.query.filter(User.id.in_(user_ids)).all()
-            company.users.extend(users)
-            
-        if not current_user.is_admin and current_user not in company.users:
-            company.users.append(current_user)
-        
-        db.session.add(company)
-        db.session.flush() # Flush to get company.id
-        
-        # Generate default accounts
-        default_accounts = [
-            Account(company_id=company.id, name='Cash/Bank', type=AccountType.asset, is_default=True),
-            Account(company_id=company.id, name='Accounts Receivable', type=AccountType.asset, is_default=True),
-            Account(company_id=company.id, name='Inventory', type=AccountType.asset, is_default=True),
-            Account(company_id=company.id, name='Accounts Payable', type=AccountType.liability, is_default=True),
-            Account(company_id=company.id, name='Sales Revenue', type=AccountType.revenue, is_default=True),
-            Account(company_id=company.id, name='Cost of Goods Sold (COGS)', type=AccountType.expense, is_default=True),
-            Account(company_id=company.id, name='General Expenses', type=AccountType.expense, is_default=True)
-        ]
-        db.session.add_all(default_accounts)
-        db.session.commit()
-        
+        company = CompanyService.create_company(request.form, current_user)
         flash('Company created successfully!', 'success')
         return redirect(url_for('companies.view', id=company.id))
-        
+    except ValueError as e:
+        flash(str(e), 'error')
+        return redirect(url_for('companies.create'))
     except Exception as e:
-        db.session.rollback()
         flash(f'Error creating company: {str(e)}', 'error')
         return redirect(url_for('companies.create'))
 
 @companies.route('/companies/<int:id>')
 @login_required
 def view(id):
-    company = _get_company_for_user(id)
-    
-    # Get statistics for the company with exact db types
-    stats = {
-        'users_count': len(company.users),
-        'clients_count': Contact.query.filter_by(company_id=company.id, type=ContactType.customer).count(),
-        'suppliers_count': Contact.query.filter_by(company_id=company.id, type=ContactType.supplier).count(),
-        'inventory_count': InventoryItem.query.filter_by(company_id=company.id).count(),
-        'documents_count': Document.query.filter_by(company_id=company.id).count(),
-        'payments_count': Payment.query.filter_by(company_id=company.id).count(),
-        'reports_count': Report.query.filter_by(company_id=company.id).count()
-    }
-    
-    # Get recent activity
-    recent_documents = Document.query.filter_by(company_id=company.id).order_by(Document.issued_date.desc()).limit(5).all()
-    recent_payments = Payment.query.filter_by(company_id=company.id).order_by(Payment.payment_date.desc()).limit(5).all()
+    company, stats, recent_documents, recent_payments = CompanyService.get_company_with_stats(id, current_user)
     
     return render_template('companies/view.html', 
                          company=company, 
@@ -137,90 +54,35 @@ def view(id):
 @companies.route('/companies/<int:id>/edit')
 @login_required
 def edit(id):
-    company = _get_company_for_user(id)
+    company = CompanyService.get_company_for_user(id, current_user)
     users = User.query.all()
     return render_template('companies/form.html', comp=company, users=users)
 
 @companies.route('/companies/<int:id>/update', methods=['POST'])
 @login_required
 def update(id):
-    company = _get_company_for_user(id)
-    
     try:
-        name = request.form.get('name', '').strip()
-        currency = request.form.get('currency', 'USD')
-        tax_rate = request.form.get('tax_rate', 0.0)
-        address = request.form.get('address', '').strip()
-        phone = request.form.get('phone', '').strip()
-        email = request.form.get('email', '').strip()
-        identifier = request.form.get('identifier', '').strip()
-        user_ids = request.form.getlist('user_ids')
-        
-        if not name:
-            flash('Company name is required.', 'error')
-            return redirect(url_for('companies.edit', id=id))
-        
-                                                                          
-        existing_company = Company.query.filter(Company.name == name, Company.id != id).first()
-        if existing_company:
-            flash('A company with this name already exists.', 'error')
-            return redirect(url_for('companies.edit', id=id))
-        
-        company.name = name
-        company.currency = currency
-        company.tax_rate = float(tax_rate)
-        company.address = address
-        company.phone = phone
-        company.email = email
-        company.identifier = identifier
-        company.updated_at = datetime.now(UTC)
-        
-                                  
-        company.users.clear()
-        if user_ids:
-            users = User.query.filter(User.id.in_(user_ids)).all()
-            company.users.extend(users)
-        
-        db.session.commit()
-        
+        company = CompanyService.update_company(id, request.form, current_user)
         flash('Company updated successfully!', 'success')
         return redirect(url_for('companies.view', id=company.id))
-        
+    except ValueError as e:
+        flash(str(e), 'error')
+        return redirect(url_for('companies.edit', id=id))
     except Exception as e:
-        db.session.rollback()
         flash(f'Error updating company: {str(e)}', 'error')
         return redirect(url_for('companies.edit', id=id))
 
 @companies.route('/companies/<int:id>/delete', methods=['POST'])
 @login_required
 def delete(id):
-    company = _get_company_for_user(id)
-    
     try:
-                                           
-        has_clients = Contact.query.filter_by(company_id=company.id).first() is not None
-        has_suppliers = Contact.query.filter_by(company_id=company.id).first() is not None
-        has_inventory = InventoryItem.query.filter_by(company_id=company.id).first() is not None
-        has_documents = Document.query.filter_by(company_id=company.id).first() is not None
-        has_payments = Payment.query.filter_by(company_id=company.id).first() is not None
-        has_reports = Report.query.filter_by(company_id=company.id).first() is not None
-        
-        if any([has_clients, has_suppliers, has_inventory, has_documents, has_payments, has_reports]):
-            flash('Cannot delete company with existing data. Please remove all related clients, suppliers, inventory, documents, payments, and reports first.', 'error')
-            return redirect(url_for('companies.view', id=id))
-        
-                                 
-        company.users.clear()
-        
-        company.is_deleted = True
-        company.deleted_at = datetime.now(UTC)
-        db.session.commit()
-        
+        CompanyService.delete_company(id, current_user)
         flash('Company deleted successfully!', 'success')
         return redirect(url_for('companies.index'))
-        
+    except ValueError as e:
+        flash(str(e), 'error')
+        return redirect(url_for('companies.view', id=id))
     except Exception as e:
-        db.session.rollback()
         flash(f'Error deleting company: {str(e)}', 'error')
         return redirect(url_for('companies.view', id=id))
 
@@ -228,20 +90,10 @@ def delete(id):
 @login_required
 def search():
     query = request.args.get('q', '').strip()
-    
-    if not query:
-        return jsonify([])
-    
-    query_db = Company.query
-    if not current_user.is_admin:
-        query_db = query_db.filter(Company.users.any(id=current_user.id))
-        
-    companies = query_db.filter(
-        Company.name.ilike(f'%{query}%')
-    ).limit(10).all()
+    companies_list = CompanyService.search_companies(query, current_user)
     
     results = []
-    for company in companies:
+    for company in companies_list:
         results.append({
             'id': company.id,
             'name': company.name,
@@ -255,51 +107,30 @@ def search():
 @login_required
 def sequences_index(id):
     """List all document sequences for a company"""
-    company = _get_company_for_user(id)
-    sequences = DocumentSequence.query.filter_by(company_id=id).order_by(DocumentSequence.expiration_date.desc()).all()
+    company = CompanyService.get_company_for_user(id, current_user)
+    sequences = CompanyService.get_sequences(id)
     return render_template('companies/sequences/index.html', company=company, sequences=sequences, today=datetime.now(UTC).date())
 
 @companies.route('/companies/<int:id>/sequences/create')
 @login_required
 def sequence_create(id):
     """Form to create a new document sequence"""
-    company = _get_company_for_user(id)
+    company = CompanyService.get_company_for_user(id, current_user)
     return render_template('companies/sequences/form.html', company=company, sequence=None)
 
 @companies.route('/companies/<int:id>/sequences/store', methods=['POST'])
 @login_required
 def sequence_store(id):
     """Store a new document sequence"""
-    company = _get_company_for_user(id)
+    CompanyService.get_company_for_user(id, current_user)
     try:
-        cai = request.form.get('cai', '').strip()
-        range_start = int(request.form.get('range_start', 0))
-        range_end = int(request.form.get('range_end', 0))
-        expiration_date_str = request.form.get('expiration_date', '')
-        
-        if not all([cai, range_start, range_end, expiration_date_str]):
-            flash('All fields are required.', 'error')
-            return redirect(url_for('companies.sequence_create', id=id))
-        
-        expiration_date = datetime.strptime(expiration_date_str, '%Y-%m-%d').date()
-        
-        sequence = DocumentSequence(
-            company_id=id,
-            cai=cai,
-            range_start=range_start,
-            range_end=range_end,
-            current=range_start - 1,
-            expiration_date=expiration_date
-        )
-        
-        db.session.add(sequence)
-        db.session.commit()
-        
+        CompanyService.create_sequence(id, request.form)
         flash('Document sequence created successfully!', 'success')
         return redirect(url_for('companies.sequences_index', id=id))
-        
+    except ValueError as e:
+        flash(str(e), 'error')
+        return redirect(url_for('companies.sequence_create', id=id))
     except Exception as e:
-        db.session.rollback()
         flash(f'Error creating sequence: {str(e)}', 'error')
         return redirect(url_for('companies.sequence_create', id=id))
 
@@ -307,57 +138,34 @@ def sequence_store(id):
 @login_required
 def sequence_edit(id, seq_id):
     """Form to edit an existing document sequence"""
-    company = _get_company_for_user(id)
-    sequence = DocumentSequence.query.filter_by(id=seq_id, company_id=id).first_or_404()
+    company = CompanyService.get_company_for_user(id, current_user)
+    sequence = CompanyService.get_sequence(id, seq_id)
     return render_template('companies/sequences/form.html', company=company, sequence=sequence)
 
 @companies.route('/companies/<int:id>/sequences/<int:seq_id>/update', methods=['POST'])
 @login_required
 def sequence_update(id, seq_id):
     """Update an existing document sequence"""
-    company = _get_company_for_user(id)
-    sequence = DocumentSequence.query.filter_by(id=seq_id, company_id=id).first_or_404()
-    
+    CompanyService.get_company_for_user(id, current_user)
     try:
-        cai = request.form.get('cai', '').strip()
-        range_start = int(request.form.get('range_start', 0))
-        range_end = int(request.form.get('range_end', 0))
-        current = int(request.form.get('current', sequence.current))
-        expiration_date_str = request.form.get('expiration_date', '')
-        
-        if not all([cai, expiration_date_str]):
-            flash('CAI and Expiration Date are required.', 'error')
-            return redirect(url_for('companies.sequence_edit', id=id, seq_id=seq_id))
-        
-        sequence.cai = cai
-        sequence.range_start = range_start
-        sequence.range_end = range_end
-        sequence.current = current
-        sequence.expiration_date = datetime.strptime(expiration_date_str, '%Y-%m-%d').date()
-        
-        db.session.commit()
-        
+        CompanyService.update_sequence(id, seq_id, request.form)
         flash('Document sequence updated successfully!', 'success')
         return redirect(url_for('companies.sequences_index', id=id))
-        
+    except ValueError as e:
+        flash(str(e), 'error')
+        return redirect(url_for('companies.sequence_edit', id=id, seq_id=seq_id))
     except Exception as e:
-        db.session.rollback()
         flash(f'Error updating sequence: {str(e)}', 'error')
         return redirect(url_for('companies.sequence_edit', id=id, seq_id=seq_id))
 
 @companies.route('/companies/<int:id>/sequences/<int:seq_id>/delete', methods=['POST'])
 @login_required
 def sequence_delete(id, seq_id):
-    _get_company_for_user(id) # Check permissions
-    sequence = DocumentSequence.query.filter_by(id=seq_id, company_id=id).first_or_404()
-    
+    CompanyService.get_company_for_user(id, current_user)
     try:
-        sequence.is_deleted = True
-        sequence.deleted_at = datetime.now(UTC)
-        db.session.commit()
+        CompanyService.delete_sequence(id, seq_id)
         flash('Document sequence deleted successfully!', 'success')
     except Exception as e:
-        db.session.rollback()
         flash(f'Error deleting sequence: {str(e)}', 'error')
         
     return redirect(url_for('companies.sequences_index', id=id))

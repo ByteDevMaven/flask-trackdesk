@@ -222,32 +222,11 @@ def delete(company_id, id):
 @login_required
 @limiter.exempt
 def export(company_id):
-    items = InventoryItem.query.filter_by(company_id=company_id).all()
-    
-    output = StringIO()
-    writer = csv.writer(output)
-    
-                  
-    writer.writerow([
-        _('Name'), _('Description'), _('Quantity'), _('Price'), _('Contact')
-    ])
-    
-                
-    for item in items:
-        writer.writerow([
-            item.name,
-            item.description or '',
-            item.quantity,
-            item.price,
-            item.supplier.name if item.supplier else ''
-        ])
-    
-    output.seek(0)
-
+    csv_content, filename = InventoryService.export_inventory_items_csv(company_id)
     return Response(
-        output.getvalue(),
+        csv_content,
         mimetype='text/csv',
-        headers={'Content-Disposition': f'attachment; filename=inventory_{company_id}_{datetime.now(UTC).strftime("%Y%m%d")}.csv'}
+        headers={'Content-Disposition': f'attachment; filename={filename}'}
     )
 
 @inventory.route('/<int:company_id>/inventory/<int:id>/drawer_adjust', methods=['GET'])
@@ -449,18 +428,15 @@ def api_update_item(company_id, id):
 @limiter.exempt
 def api_delete_item(company_id, id):
     """Delete an inventory item"""
-    item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
-    
     try:
-        item.is_deleted = True
-        item.deleted_at = datetime.now(UTC)
-        db.session.commit()
+        InventoryService.delete_inventory_item(company_id, id)
         return jsonify({'message': 'Item deleted successfully'})
         
     except SQLAlchemyError as e:
-        db.session.rollback()
         current_app.logger.error(f"API delete error: {str(e)}")
         return jsonify({'error': 'Database error occurred'}), 500
+    except Exception as e:
+        return jsonify({'error': str(e)}), 404
 
 @inventory.route('/api/<int:company_id>/inventory/items/bulk-delete', methods=['POST'])
 @login_required

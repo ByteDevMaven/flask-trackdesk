@@ -98,8 +98,58 @@ def update_invoice_or_quote(document, form):
     if not has_items:
         raise ValueError("At least one item is required")
 
-    try:
-        tax_rate = float(session.get("tax_rate", 0)) / 100
-    except (TypeError, ValueError):
-        tax_rate = 0.0
-    document.total_amount = round(total * (1 + tax_rate), 2)
+    subtotal = total
+    tax_rate = float(form.get("tax_rate", 0)) if form.get("tax_rate") else 0
+    tax_amount = subtotal * (tax_rate / 100)
+    total_amount = subtotal + tax_amount
+
+    document.subtotal = subtotal
+    document.tax_rate = tax_rate
+    document.tax_amount = tax_amount
+    document.total_amount = total_amount
+
+def delete_invoice_or_quote(document):
+    """Soft delete an invoice or quote and its items."""
+    items = DocumentItem.query.filter_by(document_id=document.id).all()
+    for item in items:
+        item.is_deleted = True
+        item.deleted_at = datetime.now(UTC)
+    
+    document.is_deleted = True
+    document.deleted_at = datetime.now(UTC)
+    db.session.commit()
+
+def add_invoice_payment(document, form):
+    """Add a payment to an invoice and update its status."""
+    from app.models import Payment, PaymentMethod
+    from app.models.enums import DocumentStatus
+    
+    amount = float(form.get('amount', 0))
+    payment_date_str = form.get('payment_date')
+    payment_method = form.get('payment_method', 'cash')
+    reference = form.get('reference', '')
+
+    if amount <= 0:
+        raise ValueError('Payment amount must be greater than 0')
+
+    payment_date = datetime.strptime(payment_date_str, '%Y-%m-%d') if payment_date_str else datetime.now(UTC)
+
+    payment = Payment(
+        company_id=document.company_id,
+        document_id=document.id,
+        amount=amount,
+        payment_date=payment_date,
+        method=PaymentMethod[payment_method],
+        notes=reference
+    )
+
+    db.session.add(payment)
+    db.session.flush()
+
+    paid_amount = document.calculate_paid_amount()
+    if paid_amount >= float(document.total_amount):
+        document.status = DocumentStatus.paid
+    elif paid_amount > 0:
+        document.status = DocumentStatus.partial
+
+    db.session.commit()

@@ -1,96 +1,9 @@
-from datetime import datetime, UTC
-import re
-import secrets
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-
-from flask import render_template, request, redirect, url_for, flash, jsonify, current_app
+from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required, current_user
-from sqlalchemy import or_
 
-from app.extensions import bcrypt
-from app.models import db, User, Role, Company
-from app.models.enums import UserStatus
-
+from app.models import Role, Company
 from . import users
-
-# ---------------------------------------------------------------------------
-# Helpers
-# ---------------------------------------------------------------------------
-
-def _get_visible_company_ids():
-    """Returns IDs of companies the current user can see.
-    Superadmins see all companies; everyone else only sees their own."""
-    if current_user.is_superadmin:
-        from app.models import Company
-        return [c.id for c in Company.query.all()]
-    return [c.id for c in current_user.companies]
-
-
-def _user_is_visible(user):
-    """Returns True if current_user can see/manage *user*."""
-    if current_user.is_superadmin:
-        return True
-    my_company_ids = set(c.id for c in current_user.companies)
-    target_company_ids = set(c.id for c in user.companies)
-    return bool(my_company_ids & target_company_ids)
-
-def is_valid_email(email):
-    pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
-    return re.match(pattern, email) is not None
-
-def send_password_reset_email(user_email, user_name, reset_token):
-    """Send password reset email using SMTP"""
-    try:
-                                                                       
-        smtp_server = current_app.config.get('SMTP_SERVER', 'smtp.gmail.com')
-        smtp_port = current_app.config.get('SMTP_PORT', 587)
-        smtp_username = current_app.config.get('SMTP_USERNAME', '')
-        smtp_password = current_app.config.get('SMTP_PASSWORD', '')
-        from_email = current_app.config.get('FROM_EMAIL', smtp_username)
-        
-        if not all([smtp_username, smtp_password]):
-            raise Exception("SMTP credentials not configured")
-        
-                        
-        msg = MIMEMultipart()
-        msg['From'] = from_email
-        msg['To'] = user_email
-        msg['Subject'] = "Password Reset Request - Business Management System"
-        
-                    
-        reset_url = url_for('auth.reset_password', token=reset_token, _external=True)
-        body = f"""
-        Hello {user_name},
-
-        You have requested a password reset for your Business Management System account.
-
-        Please click the link below to reset your password:
-        {reset_url}
-
-        This link will expire in 1 hour for security reasons.
-
-        If you did not request this password reset, please ignore this email.
-
-        Best regards,
-        Business Management System Team
-        """
-        
-        msg.attach(MIMEText(body, 'plain'))
-        
-                    
-        server = smtplib.SMTP(smtp_server, smtp_port)
-        server.starttls()
-        server.login(smtp_username, smtp_password)
-        text = msg.as_string()
-        server.sendmail(from_email, user_email, text)
-        server.quit()
-        
-        return True
-    except Exception as e:
-        current_app.logger.error(f"Failed to send password reset email: {str(e)}")
-        return False
+from .services import UserService
 
 @users.route('/users')
 @login_required
@@ -101,53 +14,16 @@ def index():
     company_filter = request.args.get('company', '')
     status_filter = request.args.get('status', '')
     
-    query = User.query
-
-    # ── Company isolation ──────────────────────────────────────────────────
-    if not current_user.is_superadmin:
-        visible_ids = _get_visible_company_ids()
-        query = query.join(User.companies).filter(Company.id.in_(visible_ids)).distinct()
-    
-                         
-    if search:
-        query = query.filter(
-            or_(
-                User.name.ilike(f'%{search}%'),
-                User.email.ilike(f'%{search}%')
-            )
-        )
-    
-                       
-    if role_filter:
-        query = query.filter(User.role_id == role_filter)
-    
-                          
-    if company_filter:
-        query = query.join(User.companies).filter(Company.id == company_filter)
-    
-                         
-    if status_filter:
-        if status_filter == 'active':
-            query = query.filter(User.status == UserStatus.active)
-        elif status_filter == 'inactive':
-            query = query.filter(User.status != UserStatus.active)
-    
-                                           
-    query = query.order_by(User.created_at.desc())
-    
-                      
-    per_page = 20
-    pagination = query.paginate(
-        page=page, per_page=per_page, error_out=False
+    pagination = UserService.get_paginated_users(
+        page, 20, search, role_filter, company_filter, status_filter, current_user
     )
-    users = pagination.items
+    users_list = pagination.items
     
-                        
     roles = Role.query.all()
     companies = Company.query.all()
     
     return render_template('users/index.html', 
-                         users=users, 
+                         users=users_list, 
                          pagination=pagination,
                          roles=roles,
                          companies=companies,
@@ -173,94 +49,27 @@ def create():
 @login_required
 def store():
     try:
-                       
-        name = request.form.get('name', '').strip()
-        email = request.form.get('email', '').strip().lower()
-        password = request.form.get('password', '')
-        confirm_password = request.form.get('confirm_password', '')
-        role_id = request.form.get('role_id')
-        company_ids = request.form.getlist('company_ids')
-        
-                    
-        errors = []
-        
-        if not name:
-            errors.append('Name is required')
-        elif len(name) < 2:
-            errors.append('Name must be at least 2 characters long')
-            
-        if not email:
-            errors.append('Email is required')
-        elif not is_valid_email(email):
-            errors.append('Please enter a valid email address')
-        elif User.query.filter_by(email=email).first():
-            errors.append('Email address is already registered')
-            
-        if not password:
-            errors.append('Password is required')
-        elif len(password) < 6:
-            errors.append('Password must be at least 6 characters long')
-        elif password != confirm_password:
-            errors.append('Passwords do not match')
-            
-        if not role_id:
-            errors.append('Role is required')
-        elif not Role.query.get(role_id):
-            errors.append('Invalid role selected')
-            
-        if not company_ids:
-            errors.append('At least one company must be selected')
-        
-        if errors:
-            for error in errors:
-                flash(error, 'error')
-            return redirect(url_for('users.create'))
-        
-                         
-        user = User(
-            status=UserStatus.active,
-            name=name,
-            email=email,
-            password_hash=bcrypt.generate_password_hash(password).decode('utf-8'),
-            role_id=role_id
-        )
-        
-                       
-        for company_id in company_ids:
-            company = Company.query.get(company_id)
-            if company:
-                user.companies.append(company)
-        
-        db.session.add(user)
-        db.session.commit()
-        
-        flash(f'User {name} has been created successfully!', 'success')
+        user = UserService.create_user(request.form, current_user)
+        flash(f'User {user.name} has been created successfully!', 'success')
         return redirect(url_for('users.index'))
-        
+    except ValueError as e:
+        for error in e.args[0]:
+            flash(error, 'error')
+        return redirect(url_for('users.create'))
     except Exception as e:
-        db.session.rollback()
         flash(f'Error creating user: {str(e)}', 'error')
         return redirect(url_for('users.create'))
 
 @users.route('/users/<int:id>')
 @login_required
 def view(id):
-    user = User.query.get_or_404(id)
-    if not _user_is_visible(user):
-        from flask import abort
-        abort(403)
-    now = datetime.now(UTC)
-    created_at = user.created_at.replace(tzinfo=UTC)
-    days = (now - created_at).days
-    return render_template('users/view.html', user=user, account_age_days=days)
+    user, account_age_days = UserService.get_user_with_age(id, current_user)
+    return render_template('users/view.html', user=user, account_age_days=account_age_days)
 
 @users.route('/users/<int:id>/edit')
 @login_required
 def edit(id):
-    user = User.query.get_or_404(id)
-    if not _user_is_visible(user):
-        from flask import abort
-        abort(403)
+    user = UserService.get_user_for_edit(id, current_user)
     roles = Role.query.filter(Role.name != 'superadmin').all()
     if current_user.is_superadmin:
         companies = Company.query.all()
@@ -274,106 +83,28 @@ def edit(id):
 @users.route('/users/<int:id>/update', methods=['POST'])
 @login_required
 def update(id):
-    user = User.query.get_or_404(id)
-    
     try:
-                       
-        name = request.form.get('name', '').strip()
-        email = request.form.get('email', '').strip().lower()
-        password = request.form.get('password', '')
-        confirm_password = request.form.get('confirm_password', '')
-        role_id = request.form.get('role_id')
-        company_ids = request.form.getlist('company_ids')
-        
-                    
-        errors = []
-        
-        if not name:
-            errors.append('Name is required')
-        elif len(name) < 2:
-            errors.append('Name must be at least 2 characters long')
-            
-        if not email:
-            errors.append('Email is required')
-        elif not is_valid_email(email):
-            errors.append('Please enter a valid email address')
-        else:
-                                                     
-            existing_user = User.query.filter_by(email=email).first()
-            if existing_user and existing_user.id != user.id:
-                errors.append('Email address is already registered')
-                
-                                                            
-        if password:
-            if len(password) < 6:
-                errors.append('Password must be at least 6 characters long')
-            elif password != confirm_password:
-                errors.append('Passwords do not match')
-                
-        if not role_id:
-            errors.append('Role is required')
-        elif not Role.query.get(role_id):
-            errors.append('Invalid role selected')
-            
-        if not company_ids:
-            errors.append('At least one company must be selected')
-        
-        if errors:
-            for error in errors:
-                flash(error, 'error')
-            return redirect(url_for('users.edit', id=id))
-        
-                     
-        user.name = name
-        user.email = email
-        user.role_id = role_id
-        
-                                     
-        if password:
-            user.password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
-        
-                          
-        user.companies.clear()
-        for company_id in company_ids:
-            company = Company.query.get(company_id)
-            if company:
-                user.companies.append(company)
-        
-        db.session.commit()
-        
-        flash(f'User {name} has been updated successfully!', 'success')
+        user = UserService.update_user(id, request.form, current_user)
+        flash(f'User {user.name} has been updated successfully!', 'success')
         return redirect(url_for('users.view', id=id))
-        
+    except ValueError as e:
+        for error in e.args[0]:
+            flash(error, 'error')
+        return redirect(url_for('users.edit', id=id))
     except Exception as e:
-        db.session.rollback()
         flash(f'Error updating user: {str(e)}', 'error')
         return redirect(url_for('users.edit', id=id))
 
 @users.route('/users/<int:id>/delete', methods=['POST'])
 @login_required
 def delete(id):
-    user = User.query.get_or_404(id)
-
-    # Isolation check
-    if not _user_is_visible(user):
-        from flask import abort
-        abort(403)
-
-    # Cannot delete yourself
-    if user.id == current_user.id:
-        flash('You cannot delete your own account', 'error')
-        return redirect(url_for('users.index'))
-    
     try:
-        user_name = user.name
-        user.is_deleted = True
-        user.deleted_at = datetime.now(UTC)
-        db.session.commit()
-        
+        user_name = UserService.delete_user(id, current_user)
         flash(f'User {user_name} has been deleted successfully!', 'success')
-        
+    except ValueError as e:
+        for error in e.args[0]:
+            flash(error, 'error')
     except Exception as e:
-        db.session.rollback()
         flash(f'Error deleting user: {str(e)}', 'error')
     
     return redirect(url_for('users.index'))
@@ -381,59 +112,35 @@ def delete(id):
 @users.route('/users/<int:id>/toggle-status', methods=['POST'])
 @login_required
 def toggle_status(id):
-    user = User.query.get_or_404(id)
-
-    # Isolation check
-    if not _user_is_visible(user):
-        return jsonify({'success': False, 'message': 'Access denied'})
-
-    # Cannot deactivate yourself
-    if user.id == current_user.id:
-        return jsonify({'success': False, 'message': 'You cannot deactivate your own account'})
-    
     try:
-                            
-        user.status = UserStatus.inactive if user.status == UserStatus.active else UserStatus.active
-        db.session.commit()
-        
+        user = UserService.toggle_user_status(id, current_user)
         status_text = 'activated' if user.is_active else 'deactivated'
         return jsonify({
             'success': True, 
             'message': f'User {user.name} has been {status_text} successfully',
             'active': user.is_active
         })
-        
+    except PermissionError as e:
+        return jsonify({'success': False, 'message': str(e)})
+    except ValueError as e:
+        return jsonify({'success': False, 'message': str(e)})
     except Exception as e:
-        db.session.rollback()
         return jsonify({'success': False, 'message': str(e)})
 
 @users.route('/users/<int:id>/send-password-reset', methods=['POST'])
 @login_required
 def send_password_reset(id):
-    user = User.query.get_or_404(id)
-    
     try:
-                              
-        reset_token = secrets.token_urlsafe(32)
-
-        from flask import session
-        session[f'reset_token_{reset_token}'] = {
-            'user_id': user.id,
-            'expires': (datetime.now(UTC) + datetime.timedelta(hours=1)).isoformat()
-        }
-        
-                    
-        if send_password_reset_email(user.email, user.name, reset_token):
-            return jsonify({
-                'success': True,
-                'message': f'Password reset email sent to {user.email}'
-            })
-        else:
-            return jsonify({
-                'success': False,
-                'message': 'Failed to send password reset email. Please check SMTP configuration.'
-            })
-            
+        email = UserService.generate_and_send_password_reset(id)
+        return jsonify({
+            'success': True,
+            'message': f'Password reset email sent to {email}'
+        })
+    except RuntimeError as e:
+        return jsonify({
+            'success': False,
+            'message': str(e)
+        })
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)})
 
@@ -441,26 +148,10 @@ def send_password_reset(id):
 @login_required
 def search():
     query = request.args.get('q', '').strip()
-    
-    if not query or len(query) < 2:
-        return jsonify([])
-    
-    users = User.query.filter(
-        or_(
-            User.name.ilike(f'%{query}%'),
-            User.email.ilike(f'%{query}%')
-        )
-    )
-
-    # Isolation: non-superadmins only see users in shared companies
-    if not current_user.is_superadmin:
-        visible_ids = _get_visible_company_ids()
-        users = users.join(User.companies).filter(Company.id.in_(visible_ids)).distinct()
-
-    users = users.limit(10).all()
+    users_list = UserService.search_users(query, current_user)
     
     results = []
-    for user in users:
+    for user in users_list:
         results.append({
             'id': user.id,
             'name': user.name,

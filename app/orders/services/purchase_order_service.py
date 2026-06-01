@@ -271,3 +271,39 @@ def update_purchase_order(company_id, order_id, form_data):
         db.session.rollback()
         current_app.logger.error(f"Error updating purchase order: {str(e)}")
         return {'success': False, 'error': _('An error occurred while updating the purchase order')}
+
+
+def delete_purchase_order(company_id: int, order_id: int) -> None:
+    """Soft-delete a purchase order."""
+    purchase_order = PurchaseOrder.query.filter_by(id=order_id, company_id=company_id).first_or_404()
+    purchase_order.is_deleted = True
+    purchase_order.deleted_at = datetime.now(UTC)
+    db.session.commit()
+
+
+def export_purchase_orders_csv(company_id: int):
+    """Return (csv_string, filename) tuple for all purchase orders."""
+    import csv
+    from io import StringIO
+    from flask_babel import _
+
+    orders = PurchaseOrder.query.filter_by(company_id=company_id).all()
+
+    output = StringIO()
+    writer = csv.writer(output)
+    writer.writerow([
+        _('Order Number'), _('Contact'), _('Total Amount'), _('Items Count'), _('Created Date')
+    ])
+    for order in orders:
+        writer.writerow([
+            order.order_number,
+            order.supplier.name if order.supplier else '',
+            order.total_amount,
+            len(order.items),
+            order.created_at.strftime('%Y-%m-%d %H:%M')
+        ])
+
+    output.seek(0)
+    filename = f"purchase_orders_{company_id}_{datetime.now(UTC).strftime('%Y%m%d')}.csv"
+    return output.getvalue(), filename
+

@@ -176,48 +176,15 @@ def add_payment(company_id, id):
     ).first_or_404()
 
     try:
-        amount = float(request.form.get('amount', 0))
-        payment_date_str = request.form.get('payment_date')
-        payment_method = request.form.get('payment_method', 'cash')
-        reference = request.form.get('reference', '')
-
-        if amount <= 0:
-            flash(_('Payment amount must be greater than 0'), 'error')
-            return redirect(url_for('invoices.view', company_id=company_id, id=id))
-
-                            
-        payment_date = datetime.strptime(payment_date_str, '%Y-%m-%d') if payment_date_str else datetime.now(UTC)
-
-                               
-        payment = Payment(
-            company_id=company_id,
-            document_id=id,
-            amount=amount,
-            payment_date=payment_date,
-            method=PaymentMethod[payment_method],
-            notes=reference
-        )
-
-        db.session.add(payment)
-        db.session.flush()
-
-        paid_amount = document.calculate_paid_amount()
-        if paid_amount >= float(document.total_amount):
-            document.status = DocumentStatus.paid
-        elif paid_amount > 0:
-            document.status = DocumentStatus.partial
-
-        db.session.commit()
-
+        from .services import add_invoice_payment
+        add_invoice_payment(document, request.form)
         flash(_('Payment recorded successfully'), 'success')
         return redirect(url_for('invoices.view', company_id=company_id, id=id))
 
     except ValueError as e:
-        db.session.rollback()
         flash(_('Invalid payment data: %(error)s', error=str(e)), 'error')
         return redirect(url_for('invoices.view', company_id=company_id, id=id))
     except Exception as e:
-        db.session.rollback()
         flash(_('Error recording payment: %(error)s', error=str(e)), 'error')
         return redirect(url_for('invoices.view', company_id=company_id, id=id))
 
@@ -358,20 +325,11 @@ def delete(company_id, id):
     ).first_or_404()
     
     try:
-                                    
-        items = DocumentItem.query.filter_by(document_id=document.id).all()
-        for item in items:
-            item.is_deleted = True
-            item.deleted_at = datetime.now(UTC)
-        
-        document.is_deleted = True
-        document.deleted_at = datetime.now(UTC)
-        db.session.commit()
-        
+        from .services import delete_invoice_or_quote
+        delete_invoice_or_quote(document)
         doc_type_name = _('Invoice') if document.type == DocumentType.invoice else _('Quote')
         flash(_(f'{doc_type_name} deleted successfully'), 'success')
     except Exception as e:
-        db.session.rollback()
         flash(_('Error deleting document: %(error)s', error=str(e)), 'error')
     
     return redirect(url_for('invoices.index', company_id=company_id))

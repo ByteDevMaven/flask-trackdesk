@@ -1,132 +1,31 @@
 from flask import render_template, session
 from flask_login import login_required
-from sqlalchemy import func
-from datetime import datetime, timedelta, UTC
 from flask_babel import _
 
-from app.models import Contact, Document, DocumentType, InventoryItem, Payment, db
-from app.models.enums import ContactType
-
 from . import dashboard
+from .services import DashboardService
+
 
 @dashboard.route('/')
 @dashboard.route('/<int:company_id>/')
 @dashboard.route('/<int:company_id>/dashboard')
 @login_required
-def index(company_id = None):
-    if company_id == None:
+def index(company_id=None):
+    if company_id is None:
         company_id = session.get('selected_company_id')
 
-    today = datetime.now(UTC)
-    first_day_of_month = datetime(today.year, today.month, 1)
-    first_day_of_last_month = datetime(today.year, today.month - 1, 1) if today.month > 1 else datetime(today.year - 1, 12, 1)
-    last_day_of_last_month = first_day_of_month - timedelta(days=1)
+    data = DashboardService.get_dashboard_data(company_id)
 
-                           
-    client_count = Contact.query.filter_by(company_id=company_id, type=ContactType.customer).count()
-    outstanding_invoice_count = Document.query.filter(
-        Document.company_id == company_id,
-        Document.type == DocumentType.invoice,
-        Document.status != 'paid'
-    ).count()
-    inventory_count = InventoryItem.query.filter_by(company_id=company_id).count()
-    
-                                                                            
-    revenue = db.session.query(func.sum(Payment.amount)).filter(
-        Payment.company_id == company_id,
-        Payment.payment_date >= first_day_of_month
-    ).scalar() or 0
+    return render_template('dashboard/index.html', **data)
 
-                                           
-    last_month_clients = Contact.query.filter(
-        Contact.company_id == company_id,
-        Contact.type == ContactType.customer,
-        Contact.created_at < first_day_of_month
-    ).count()
-    
-    last_month_outstanding = Document.query.filter(
-        Document.company_id == company_id,
-        Document.type == DocumentType.invoice,
-        Document.status != 'paid',
-        Document.issued_date < first_day_of_month
-    ).count()
-    
-    last_month_inventory = InventoryItem.query.filter(
-        InventoryItem.company_id == company_id,
-        InventoryItem.created_at < first_day_of_month
-    ).count()
-    
-    last_month_revenue = db.session.query(func.sum(Payment.amount)).filter(
-        Payment.company_id == company_id,
-        Payment.payment_date >= first_day_of_last_month,
-        Payment.payment_date <= last_day_of_last_month
-    ).scalar() or 0
 
-                                  
-    def calculate_growth(current, previous):
-        if previous == 0:
-            return 100 if current > 0 else 0
-        return round(((current - previous) / previous) * 100, 1)
-
-    client_growth = calculate_growth(client_count, last_month_clients)
-    outstanding_growth = calculate_growth(outstanding_invoice_count, last_month_outstanding)
-    inventory_growth = calculate_growth(inventory_count, last_month_inventory)
-    revenue_growth = calculate_growth(revenue, last_month_revenue)
-
-    recent_invoices = Document.query.filter(
-        Document.company_id == company_id,
-        Document.type == DocumentType.invoice
-    ).order_by(Document.issued_date.desc()).limit(5).all()
-
-    for inv in recent_invoices:
-        inv.client = Contact.query.get(inv.client_id) if inv.client_id else None
-
-    recent_quotes = Document.query.filter(
-        Document.company_id == company_id,
-        Document.type == DocumentType.quote
-    ).order_by(Document.issued_date.desc()).limit(5).all()
-
-    for q in recent_quotes:
-        q.client = Contact.query.get(q.client_id) if q.client_id else None
-    
-                                                        
-    overdue_invoices = Document.query.filter(
-        Document.company_id == company_id,
-        Document.type == DocumentType.invoice,
-        Document.status != 'paid',
-        Document.due_date < today
-    ).all()
-    
-    for invoice in overdue_invoices:
-        if invoice.status != 'overdue':
-            invoice.status = 'overdue'
-    
-                               
-    if overdue_invoices:
-        db.session.commit()
-    
-    return render_template(
-        'dashboard/index.html',
-        client_count=client_count,
-        outstanding_invoice_count=outstanding_invoice_count,
-        inventory_count=inventory_count,
-        revenue=revenue,
-        recent_invoices=recent_invoices,
-        recent_quotes=recent_quotes,
-                        
-        client_growth=client_growth,
-        outstanding_growth=outstanding_growth,
-        inventory_growth=inventory_growth,
-        revenue_growth=revenue_growth
-    )
-
-                         
 @dashboard.app_template_filter('format_currency')
 def format_currency(value):
     """Format a number as currency"""
     if value is None:
         return "0.00"
     return f"{float(value):,.2f}"
+
 
 @dashboard.app_template_filter('format_date')
 def format_date(value):
@@ -135,16 +34,16 @@ def format_date(value):
         return ""
     return value.strftime("%b %d, %Y")
 
+
 @dashboard.app_template_filter('locale_date')
 def locale_date(value):
     """Format date according to the current locale"""
     from flask_babel import format_datetime
-    
+
     if value is None:
         return ""
-    
+
     try:
         return format_datetime(value, format='medium')
-    except:
-                                       
+    except Exception:
         return value.strftime("%b %d, %Y")
