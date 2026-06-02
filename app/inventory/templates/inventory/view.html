@@ -37,6 +37,11 @@
   </div>
 
   <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Precio Venta + (ISV)</p>
+    <p class="text-xl font-bold text-slate-800">{{ session.get('currency','L') }} {{ ((item.price or 0) * (1 + (company.tax_rate or 0) / 100)) | format_currency }}</p>
+  </div>
+
+  <div class="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
     <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Costo</p>
     <p class="text-xl font-bold text-slate-800">{{ session.get('currency','L') }} {{ (item.cost_price or 0) | format_currency }}</p>
   </div>
