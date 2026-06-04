@@ -2,17 +2,74 @@ from datetime import datetime, UTC
 from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required
 
-from app.models import Account, Project, Tag
+from app.models import Account, Project, Tag, Transaction
 from app.models.enums import AccountType
 from . import accounting
 from .services import AccountingService
 
+
+# ─── Sidebar helper ───────────────────────────────────────────────────────────
+
+def _sidebar_ctx(company_id: int) -> dict:
+    return {
+        'company_id': company_id,
+        'AccountType': AccountType,
+    }
+
+
+# ─── Dashboard ────────────────────────────────────────────────────────────────
 
 @accounting.route('/<int:company_id>/accounting/')
 @login_required
 def index(company_id):
     data = AccountingService.get_dashboard_data(company_id)
     return render_template('accounting/dashboard.html', **data)
+
+
+# ─── Expenses ─────────────────────────────────────────────────────────────────
+
+@accounting.route('/<int:company_id>/accounting/expenses')
+@login_required
+def expenses_list(company_id):
+    from app.models import Company
+    company = Company.query.get_or_404(company_id)
+
+    search = request.args.get('search', '').strip()
+    account_id = request.args.get('account_id', '').strip()
+    status = request.args.get('status', '').strip()
+    category = request.args.get('category', '').strip()
+    start_date = request.args.get('start_date', '').strip()
+    end_date = request.args.get('end_date', '').strip()
+    page = request.args.get('page', 1, type=int)
+
+    pagination = AccountingService.get_expenses(
+        company_id,
+        search=search,
+        account_id=int(account_id) if account_id else None,
+        status=status,
+        category=category,
+        start_date=start_date,
+        end_date=end_date,
+        page=page,
+    )
+
+    accounts = Account.query.filter_by(company_id=company_id, is_active=True).order_by(Account.name).all()
+    from app.models.enums import ExpenseStatus
+    return render_template(
+        'accounting/expenses.html',
+        company=company,
+        pagination=pagination,
+        expenses=pagination.items,
+        accounts=accounts,
+        ExpenseStatus=ExpenseStatus,
+        search=search,
+        account_id=account_id,
+        status=status,
+        category=category,
+        start_date=start_date,
+        end_date=end_date,
+        **_sidebar_ctx(company_id),
+    )
 
 
 @accounting.route('/<int:company_id>/accounting/expenses/create', methods=['GET', 'POST'])
@@ -25,77 +82,265 @@ def create_expense(company_id):
         is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
         try:
             AccountingService.create_expense(company_id, request.form, request.files)
-
             if is_ajax:
-                return jsonify({'success': True, 'message': 'Expense recorded successfully.'})
-
-            flash('Expense recorded successfully!', 'success')
-            return redirect(url_for('accounting.index', company_id=company_id))
-
+                return jsonify({'success': True, 'message': 'Gasto registrado exitosamente.'})
+            flash('Gasto registrado exitosamente.', 'success')
+            return redirect(url_for('accounting.expenses_list', company_id=company_id))
         except ValueError as e:
-            msg = str(e)
             if is_ajax:
-                return jsonify({'success': False, 'message': msg}), 400
-            flash(msg, 'error')
+                return jsonify({'success': False, 'message': str(e)}), 400
+            flash(str(e), 'error')
         except Exception as e:
-            msg = f'Error creating expense: {str(e)}'
             if is_ajax:
-                return jsonify({'success': False, 'message': msg}), 500
-            flash(msg, 'error')
+                return jsonify({'success': False, 'message': f'Error: {e}'}), 500
+            flash(f'Error: {e}', 'error')
 
-    # GET
-    expense_accounts = Account.query.filter_by(company_id=company_id).all()
+    expense_accounts = Account.query.filter_by(company_id=company_id, is_active=True).order_by(Account.type, Account.name).all()
     projects = Project.query.filter_by(company_id=company_id).all()
     tags = Tag.query.filter_by(company_id=company_id).all()
+    from app.models.enums import ExpenseStatus
 
-    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        return render_template(
-            'accounting/partials/expense_form.html',
-            company=company,
-            accounts=expense_accounts,
-            projects=projects,
-            tags=tags,
-            now=datetime.now(UTC),
-        )
-
-    return render_template(
-        'accounting/expense_form.html',
+    ctx = dict(
         company=company,
         accounts=expense_accounts,
         projects=projects,
         tags=tags,
+        ExpenseStatus=ExpenseStatus,
         now=datetime.now(UTC),
+        **_sidebar_ctx(company_id),
+    )
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return render_template('accounting/partials/expense_form.html', **ctx)
+    return render_template('accounting/expense_form.html', **ctx)
+
+
+@accounting.route('/<int:company_id>/accounting/expenses/<int:expense_id>/delete', methods=['POST'])
+@login_required
+def delete_expense(company_id, expense_id):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    try:
+        AccountingService.delete_expense(company_id, expense_id)
+        if is_ajax:
+            return jsonify({'success': True, 'message': 'Gasto eliminado.'})
+        flash('Gasto eliminado.', 'success')
+    except Exception as e:
+        if is_ajax:
+            return jsonify({'success': False, 'message': str(e)}), 500
+        flash(str(e), 'error')
+    return redirect(url_for('accounting.expenses_list', company_id=company_id))
+
+
+# ─── Income ───────────────────────────────────────────────────────────────────
+
+@accounting.route('/<int:company_id>/accounting/income')
+@login_required
+def income_list(company_id):
+    from app.models import Company
+    company = Company.query.get_or_404(company_id)
+
+    search = request.args.get('search', '').strip()
+    start_date = request.args.get('start_date', '').strip()
+    end_date = request.args.get('end_date', '').strip()
+    page = request.args.get('page', 1, type=int)
+
+    pagination = AccountingService.get_income_transactions(
+        company_id, search=search, start_date=start_date, end_date=end_date, page=page
+    )
+
+    return render_template(
+        'accounting/income.html',
+        company=company,
+        pagination=pagination,
+        transactions=pagination.items,
+        search=search,
+        start_date=start_date,
+        end_date=end_date,
+        **_sidebar_ctx(company_id),
     )
 
 
-@accounting.route('/<int:company_id>/accounting/projects/create', methods=['GET', 'POST'])
+@accounting.route('/<int:company_id>/accounting/income/create', methods=['GET', 'POST'])
 @login_required
-def create_project(company_id):
+def create_income(company_id):
     from app.models import Company
     company = Company.query.get_or_404(company_id)
 
     if request.method == 'POST':
         is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
         try:
-            AccountingService.create_project(company_id, request.form)
-
+            AccountingService.record_income(company_id, request.form)
             if is_ajax:
-                return jsonify({'success': True, 'message': 'Project created successfully.'})
-
-            flash('Project created successfully.', 'success')
-            return redirect(url_for('accounting.index', company_id=company_id))
-
+                return jsonify({'success': True, 'message': 'Ingreso registrado exitosamente.'})
+            flash('Ingreso registrado exitosamente.', 'success')
+            return redirect(url_for('accounting.income_list', company_id=company_id))
         except ValueError as e:
-            msg = str(e)
             if is_ajax:
-                return jsonify({'success': False, 'message': msg}), 400
-            flash(msg, 'error')
-            return redirect(url_for('accounting.create_project', company_id=company_id))
+                return jsonify({'success': False, 'message': str(e)}), 400
+            flash(str(e), 'error')
+        except Exception as e:
+            if is_ajax:
+                return jsonify({'success': False, 'message': f'Error: {e}'}), 500
+            flash(f'Error: {e}', 'error')
+
+    revenue_accounts = Account.query.filter_by(
+        company_id=company_id, is_active=True, type=AccountType.revenue
+    ).order_by(Account.code, Account.name).all()
+    asset_accounts = Account.query.filter_by(
+        company_id=company_id, is_active=True, type=AccountType.asset
+    ).order_by(Account.code, Account.name).all()
+    projects = Project.query.filter_by(company_id=company_id).all()
+
+    ctx = dict(
+        company=company,
+        revenue_accounts=revenue_accounts,
+        asset_accounts=asset_accounts,
+        projects=projects,
+        now=datetime.now(UTC),
+        **_sidebar_ctx(company_id),
+    )
 
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        return render_template('accounting/partials/project_form.html', company=company)
+        return render_template('accounting/partials/income_form.html', **ctx)
+    return render_template('accounting/income_form.html', **ctx)
 
-    return render_template('accounting/project_form.html', company=company)
+
+# ─── Journal Entries ──────────────────────────────────────────────────────────
+
+@accounting.route('/<int:company_id>/accounting/journal')
+@login_required
+def journal_list(company_id):
+    from app.models import Company
+    company = Company.query.get_or_404(company_id)
+
+    search = request.args.get('search', '').strip()
+    start_date = request.args.get('start_date', '').strip()
+    end_date = request.args.get('end_date', '').strip()
+    page = request.args.get('page', 1, type=int)
+
+    pagination = AccountingService.get_journal_entries(
+        company_id, search=search, start_date=start_date, end_date=end_date, page=page
+    )
+
+    balances = AccountingService.get_account_balances_bulk(company_id)
+
+    return render_template(
+        'accounting/journal.html',
+        company=company,
+        pagination=pagination,
+        transactions=pagination.items,
+        balances=balances,
+        search=search,
+        start_date=start_date,
+        end_date=end_date,
+        **_sidebar_ctx(company_id),
+    )
+
+
+@accounting.route('/<int:company_id>/accounting/journal/create', methods=['GET', 'POST'])
+@login_required
+def create_journal_entry(company_id):
+    from app.models import Company
+    company = Company.query.get_or_404(company_id)
+
+    if request.method == 'POST':
+        is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+        try:
+            AccountingService.create_journal_entry(company_id, request.form)
+            if is_ajax:
+                return jsonify({'success': True, 'message': 'Asiento contable creado.'})
+            flash('Asiento contable creado.', 'success')
+            return redirect(url_for('accounting.journal_list', company_id=company_id))
+        except ValueError as e:
+            if is_ajax:
+                return jsonify({'success': False, 'message': str(e)}), 400
+            flash(str(e), 'error')
+        except Exception as e:
+            if is_ajax:
+                return jsonify({'success': False, 'message': f'Error: {e}'}), 500
+            flash(f'Error: {e}', 'error')
+
+    accounts = Account.query.filter_by(company_id=company_id, is_active=True).order_by(Account.type, Account.code, Account.name).all()
+    ctx = dict(
+        company=company,
+        accounts=accounts,
+        now=datetime.now(UTC),
+        **_sidebar_ctx(company_id),
+    )
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return render_template('accounting/partials/journal_form.html', **ctx)
+    return render_template('accounting/journal_form.html', **ctx)
+
+
+@accounting.route('/<int:company_id>/accounting/journal/<int:txn_id>/void', methods=['POST'])
+@login_required
+def void_transaction(company_id, txn_id):
+    is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+    reason = request.form.get('reason', '').strip()
+    try:
+        AccountingService.void_transaction(company_id, txn_id, reason)
+        if is_ajax:
+            return jsonify({'success': True, 'message': 'Transacción anulada.'})
+        flash('Transacción anulada.', 'success')
+    except (ValueError, Exception) as e:
+        if is_ajax:
+            return jsonify({'success': False, 'message': str(e)}), 400
+        flash(str(e), 'error')
+    return redirect(url_for('accounting.journal_list', company_id=company_id))
+
+
+# ─── Ledger ───────────────────────────────────────────────────────────────────
+
+@accounting.route('/<int:company_id>/accounting/ledger')
+@login_required
+def ledger(company_id):
+    from app.models import Company
+    company = Company.query.get_or_404(company_id)
+
+    search = request.args.get('search', '').strip()
+    start_date = request.args.get('start_date', '').strip()
+    end_date = request.args.get('end_date', '').strip()
+    account_id = request.args.get('account_id', '').strip()
+
+    entries = AccountingService.get_ledger_entries(
+        company_id,
+        search=search,
+        start_date=start_date,
+        end_date=end_date,
+        account_id=int(account_id) if account_id else None,
+    )
+    accounts = Account.query.filter_by(company_id=company_id, is_active=True).order_by(Account.name).all()
+
+    return render_template(
+        'accounting/ledger.html',
+        company=company,
+        entries=entries,
+        accounts=accounts,
+        search=search,
+        start_date=start_date,
+        end_date=end_date,
+        account_id=account_id,
+        **_sidebar_ctx(company_id),
+    )
+
+
+# ─── Chart of Accounts ────────────────────────────────────────────────────────
+
+@accounting.route('/<int:company_id>/accounting/chart-of-accounts')
+@login_required
+def chart_of_accounts(company_id):
+    from app.models import Company
+    company = Company.query.get_or_404(company_id)
+    accounts = Account.query.filter_by(company_id=company_id).order_by(Account.type, Account.code, Account.name).all()
+    balances = AccountingService.get_account_balances_bulk(company_id)
+
+    return render_template(
+        'accounting/chart_of_accounts.html',
+        company=company,
+        accounts=accounts,
+        balances=balances,
+        **_sidebar_ctx(company_id),
+    )
 
 
 @accounting.route('/<int:company_id>/accounting/accounts/create', methods=['GET', 'POST'])
@@ -108,78 +353,76 @@ def create_account(company_id):
         is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
         try:
             AccountingService.create_account(company_id, request.form)
-
             if is_ajax:
                 return jsonify({'success': True, 'message': 'Cuenta creada con éxito.'})
-
             flash('Cuenta creada con éxito.', 'success')
             return redirect(url_for('accounting.chart_of_accounts', company_id=company_id))
-
         except ValueError as e:
-            msg = str(e)
             if is_ajax:
-                return jsonify({'success': False, 'message': msg}), 400
-            flash(msg, 'error')
-            return redirect(url_for('accounting.chart_of_accounts', company_id=company_id))
+                return jsonify({'success': False, 'message': str(e)}), 400
+            flash(str(e), 'error')
 
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         return render_template('accounting/partials/account_form.html', company=company, AccountType=AccountType)
-
     return render_template('accounting/account_form.html', company=company, AccountType=AccountType)
 
 
-@accounting.route('/<int:company_id>/accounting/ledger')
+@accounting.route('/<int:company_id>/accounting/accounts/<int:account_id>/edit', methods=['GET', 'POST'])
 @login_required
-def ledger(company_id):
+def edit_account(company_id, account_id):
     from app.models import Company
     company = Company.query.get_or_404(company_id)
+    account = Account.query.filter_by(id=account_id, company_id=company_id).first_or_404()
 
-    search = request.args.get('search', '').strip()
-    start_date = request.args.get('start_date', '').strip()
-    end_date = request.args.get('end_date', '').strip()
+    if request.method == 'POST':
+        is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+        try:
+            AccountingService.update_account(company_id, account_id, request.form)
+            if is_ajax:
+                return jsonify({'success': True, 'message': 'Cuenta actualizada.'})
+            flash('Cuenta actualizada.', 'success')
+            return redirect(url_for('accounting.chart_of_accounts', company_id=company_id))
+        except ValueError as e:
+            if is_ajax:
+                return jsonify({'success': False, 'message': str(e)}), 400
+            flash(str(e), 'error')
 
-    entries = AccountingService.get_ledger_entries(company_id, search, start_date, end_date)
-    projects = Project.query.filter_by(company_id=company_id).all()
-
-    return render_template(
-        'accounting/ledger.html',
-        company=company,
-        entries=entries,
-        projects=projects,
-        search=search,
-        start_date=start_date,
-        end_date=end_date
-    )
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return render_template('accounting/partials/account_form.html', company=company, account=account, AccountType=AccountType)
+    return render_template('accounting/account_form.html', company=company, account=account, AccountType=AccountType)
 
 
 @accounting.route('/<int:company_id>/accounting/accounts/generate-defaults', methods=['POST'])
 @login_required
 def generate_default_accounts(company_id):
     created_count = AccountingService.generate_default_accounts(company_id)
-
     if created_count > 0:
         flash(f'Se han generado {created_count} cuentas base con éxito.', 'success')
     else:
         flash('Todas las cuentas base ya existen en su catálogo.', 'info')
-
     return redirect(url_for('accounting.chart_of_accounts', company_id=company_id))
 
 
-@accounting.route('/<int:company_id>/accounting/chart-of-accounts')
+# ─── Trial Balance ────────────────────────────────────────────────────────────
+
+@accounting.route('/<int:company_id>/accounting/trial-balance')
 @login_required
-def chart_of_accounts(company_id):
+def trial_balance(company_id):
     from app.models import Company
     company = Company.query.get_or_404(company_id)
-    accounts = Account.query.filter_by(company_id=company_id).order_by(Account.type, Account.name).all()
-    projects = Project.query.filter_by(company_id=company_id).all()
+    as_of_date = request.args.get('as_of', '').strip()
+    data = AccountingService.get_trial_balance(company_id, as_of_date)
 
     return render_template(
-        'accounting/chart_of_accounts.html',
+        'accounting/trial_balance.html',
         company=company,
-        accounts=accounts,
-        projects=projects
+        as_of_date=as_of_date,
+        **data,
+        **_sidebar_ctx(company_id),
     )
 
+
+# ─── Reports ──────────────────────────────────────────────────────────────────
 
 @accounting.route('/<int:company_id>/accounting/reports')
 @login_required
@@ -195,15 +438,14 @@ def reports(company_id):
     try:
         report_data, total = AccountingService.compute_report(company_id, report_type, start_date, end_date)
     except ValueError:
-        flash("Invalid date format.", "error")
+        flash('Formato de fecha inválido.', 'error')
         return redirect(url_for('accounting.index', company_id=company_id))
 
+    # Set defaults for display
     if not start_date:
-        from datetime import datetime, UTC
         now = datetime.now(UTC)
         start_date = now.replace(day=1).strftime('%Y-%m-%d')
     if not end_date:
-        from datetime import datetime, UTC
         end_date = datetime.now(UTC).strftime('%Y-%m-%d')
 
     if export == 'csv':
@@ -216,9 +458,12 @@ def reports(company_id):
         end_date=end_date,
         report_type=report_type,
         report_data=report_data,
-        total=total
+        total=total,
+        **_sidebar_ctx(company_id),
     )
 
+
+# ─── Tags ─────────────────────────────────────────────────────────────────────
 
 @accounting.route('/<int:company_id>/accounting/tags/create', methods=['GET', 'POST'])
 @login_required
@@ -230,22 +475,19 @@ def create_tag(company_id):
         is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
         try:
             AccountingService.create_tag(company_id, request.form)
-            msg = "Etiqueta creada exitosamente"
+            msg = 'Etiqueta creada exitosamente'
             if is_ajax:
                 return jsonify({'success': True, 'message': msg})
-            flash(msg, "success")
+            flash(msg, 'success')
         except ValueError as e:
-            msg = str(e)
             if is_ajax:
-                return jsonify({'success': False, 'message': msg}), 400
-            flash(msg, "error")
-
+                return jsonify({'success': False, 'message': str(e)}), 400
+            flash(str(e), 'error')
         return redirect(url_for('accounting.index', company_id=company_id))
 
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         tags = Tag.query.filter_by(company_id=company_id).all()
         return render_template('accounting/partials/tag_form.html', company=company, tags=tags)
-
     return redirect(url_for('accounting.index', company_id=company_id))
 
 
@@ -253,10 +495,34 @@ def create_tag(company_id):
 @login_required
 def delete_tag(company_id, tag_id):
     is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
-
     AccountingService.delete_tag(company_id, tag_id)
-
     if is_ajax:
         return jsonify({'success': True, 'message': 'Etiqueta eliminada'})
-    flash("Etiqueta eliminada", "success")
+    flash('Etiqueta eliminada', 'success')
     return redirect(url_for('accounting.index', company_id=company_id))
+
+
+# ─── Projects ─────────────────────────────────────────────────────────────────
+
+@accounting.route('/<int:company_id>/accounting/projects/create', methods=['GET', 'POST'])
+@login_required
+def create_project(company_id):
+    from app.models import Company
+    company = Company.query.get_or_404(company_id)
+
+    if request.method == 'POST':
+        is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+        try:
+            AccountingService.create_project(company_id, request.form)
+            if is_ajax:
+                return jsonify({'success': True, 'message': 'Proyecto creado exitosamente.'})
+            flash('Proyecto creado exitosamente.', 'success')
+            return redirect(url_for('accounting.index', company_id=company_id))
+        except ValueError as e:
+            if is_ajax:
+                return jsonify({'success': False, 'message': str(e)}), 400
+            flash(str(e), 'error')
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return render_template('accounting/partials/project_form.html', company=company)
+    return render_template('accounting/project_form.html', company=company)

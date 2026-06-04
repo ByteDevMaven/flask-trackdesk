@@ -1,188 +1,95 @@
-﻿{% extends "base.html" %}
-
+{% extends "base.html" %}
+{% from "accounting/partials/_nav.html" import accounting_nav %}
 {% block title %}Plan de Cuentas · {{ company.name }}{% endblock %}
-{% block page_title %}Plan de Cuentas{% endblock %}
+{% block page_title %}Contabilidad{% endblock %}
 {% block sidebar_title %}Contabilidad{% endblock %}
-
-{% block sidebar_nav %}
-<div class="space-y-0.5">
-  <a href="{{ url_for('accounting.index', company_id=company.id) }}"
-    class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'accounting.index' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
-    <span
-      class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if request.endpoint == 'accounting.index' else 'bg-slate-300' }}"></span>
-    Resumen
-  </a>
-
-  <a href="{{ url_for('accounting.ledger', company_id=company.id) }}"
-    class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'accounting.ledger' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
-    <span
-      class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if request.endpoint == 'accounting.ledger' else 'bg-slate-300' }}"></span>
-    Libro Mayor
-  </a>
-
-  <a href="{{ url_for('accounting.chart_of_accounts', company_id=company.id) }}"
-    class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'accounting.chart_of_accounts' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
-    <span
-      class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if request.endpoint == 'accounting.chart_of_accounts' else 'bg-slate-300' }}"></span>
-    Plan de Cuentas
-  </a>
-
-  <a href="{{ url_for('accounting.reports', company_id=company.id) }}"
-    class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'accounting.reports' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
-    <span
-      class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if request.endpoint == 'accounting.reports' else 'bg-slate-300' }}"></span>
-    Reportes
-  </a>
-
-
-  <div class="pt-4 pb-1 px-3">
-    <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Acciones rápidas</span>
-  </div>
-
-  <button data-action="open-drawer" data-url="{{ url_for('accounting.create_expense', company_id=company.id) }}"
-    data-title="Registrar Gasto"
-    class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">
-    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
-    Registrar Gasto
-  </button>
-
-  <button data-action="open-drawer" data-url="{{ url_for('accounting.create_project', company_id=company.id) }}"
-    data-title="Nuevo Proyecto"
-    class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">
-    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
-    Nuevo Proyecto
-  </button>
-
-  <button data-action="open-drawer" data-url="{{ url_for('accounting.create_tag', company_id=company.id) }}"
-    data-title="Nueva Etiqueta"
-    class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">
-    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
-    Nueva Etiqueta
-  </button>
-</div>
-{% endblock %}
+{% block sidebar_nav %}{{ accounting_nav(company.id, request.endpoint) }}{% endblock %}
 
 {% block content %}
 <div class="flex flex-col h-full overflow-hidden bg-slate-50">
   <header class="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between flex-shrink-0">
-    <div class="flex items-center gap-4">
-      <h1 class="text-lg font-semibold text-slate-800">Plan de Cuentas</h1>
-      <span class="text-xs font-semibold text-slate-400 border-l border-slate-200 pl-4">{{ accounts|length }} Cuentas
-        Totales</span>
-    </div>
+    <h1 class="text-base font-semibold text-slate-800">Plan de Cuentas</h1>
     <div class="flex items-center gap-2">
-      <form action="{{ url_for('accounting.generate_default_accounts', company_id=company.id) }}" method="POST"
-        class="inline">
+      <form method="POST" action="{{ url_for('accounting.generate_default_accounts', company_id=company.id) }}" class="inline">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-        <button type="submit"
-          class="flex items-center gap-2 px-4 py-2 border border-slate-300 text-slate-700 bg-white rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors shadow-sm">
+        <button type="submit" class="px-3 py-2 border border-slate-200 rounded-lg text-sm text-slate-600 hover:bg-slate-50 transition-colors">
           Generar Cuentas Base
         </button>
       </form>
-      <button data-action="open-drawer" data-url="{{ url_for('accounting.create_account', company_id=company.id) }}"
-        data-title="Nueva Cuenta"
+      <button data-action="open-drawer" data-url="{{ url_for('accounting.create_account', company_id=company.id) }}" data-title="Nueva Cuenta"
         class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors shadow-sm">
-        + Nueva Cuenta
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        Nueva Cuenta
       </button>
     </div>
   </header>
 
-  <div class="flex-1 overflow-y-auto p-6 space-y-6">
+  <div class="flex-1 overflow-y-auto">
+    {% set groups = [
+      (AccountType.asset, 'Activos', 'bg-sky-100 text-sky-800 border-sky-200'),
+      (AccountType.liability, 'Pasivos', 'bg-amber-100 text-amber-800 border-amber-200'),
+      (AccountType.equity, 'Patrimonio', 'bg-purple-100 text-purple-800 border-purple-200'),
+      (AccountType.revenue, 'Ingresos', 'bg-emerald-100 text-emerald-800 border-emerald-200'),
+      (AccountType.expense, 'Gastos', 'bg-rose-100 text-rose-800 border-rose-200'),
+    ] %}
 
-    {% if not accounts %}
-    <div class="bg-white rounded-lg border border-slate-200 p-12 text-center shadow-sm max-w-lg mx-auto my-12">
-      <div class="w-12 h-12 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-4">
-        <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10">
-          </path>
-        </svg>
+    {% for acct_type, label, badge_style in groups %}
+    {% set group = accounts | selectattr('type', 'equalto', acct_type) | list %}
+    {% if group %}
+    <div class="border-b border-slate-200">
+      {# Group header #}
+      <div class="px-6 py-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border {{ badge_style }}">{{ label }}</span>
+        {% set group_total = namespace(val=0.0) %}
+        {% for acct in group %}{% set group_total.val = group_total.val + balances.get(acct.id, 0.0) %}{% endfor %}
+        <span class="text-sm font-bold text-slate-700 font-mono">{{ company.currency }}{{ "{:,.2f}".format(group_total.val) }}</span>
       </div>
-      <h3 class="text-base font-bold text-slate-800 mb-1">Empieza con tu Plan de Cuentas</h3>
-      <p class="text-sm text-slate-500 mb-6">No hay cuentas registradas. Puedes empezar cargando un conjunto estándar de
-        cuentas base para tu contabilidad o crearlas de forma manual.</p>
-      <div class="flex items-center justify-center gap-3">
-        <form action="{{ url_for('accounting.generate_default_accounts', company_id=company.id) }}" method="POST">
-          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-          <button type="submit"
-            class="px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-semibold hover:bg-emerald-700 transition-colors shadow-sm">
-            Generar Cuentas Base
-          </button>
-        </form>
-        <button data-action="open-drawer" data-url="{{ url_for('accounting.create_account', company_id=company.id) }}"
-          data-title="Nueva Cuenta"
-          class="px-4 py-2 border border-slate-300 text-slate-700 bg-white rounded-lg text-sm font-semibold hover:bg-slate-50 transition-colors shadow-sm">
-          Crear Manualmente
-        </button>
-      </div>
+      <table class="w-full text-sm">
+        <colgroup><col class="w-20"><col><col class="w-72"><col class="w-36"><col class="w-28"><col class="w-24"></colgroup>
+        <tbody class="divide-y divide-slate-50">
+          {% for acct in group %}
+          {% set bal = balances.get(acct.id, 0.0) %}
+          <tr class="hover:bg-slate-50/80 transition-colors group/row">
+            <td class="px-6 py-3 text-slate-400 font-mono text-xs">{{ acct.code or '—' }}</td>
+            <td class="px-6 py-3 font-medium text-slate-800">{{ acct.name }}</td>
+            <td class="px-6 py-3 text-xs text-slate-500 max-w-xs truncate">{{ acct.description or '' }}</td>
+            <td class="px-6 py-3 text-right font-mono font-bold
+              {% if bal > 0 %}text-emerald-700{% elif bal < 0 %}text-rose-600{% else %}text-slate-400{% endif %}">
+              {{ company.currency }}{{ "{:,.2f}".format(bal) }}
+            </td>
+            <td class="px-6 py-3">
+              {% if not acct.is_active %}
+              <span class="inline-flex px-2 py-0.5 rounded-full bg-slate-100 text-slate-400 text-xs">Inactiva</span>
+              {% endif %}
+            </td>
+            <td class="px-6 py-3">
+              <button data-action="open-drawer"
+                data-url="{{ url_for('accounting.edit_account', company_id=company.id, account_id=acct.id) }}"
+                data-title="Editar Cuenta"
+                class="opacity-0 group-hover/row:opacity-100 transition-opacity p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
     {% endif %}
+    {% endfor %}
 
-    {% set type_labels = {
-    'asset': ('Activos', 'bg-indigo-50 text-indigo-700 border-indigo-100'),
-    'liability': ('Pasivos', 'bg-rose-50 text-rose-700 border-rose-100'),
-    'equity': ('Patrimonio', 'bg-emerald-50 text-emerald-700 border-emerald-100'),
-    'revenue': ('Ingresos', 'bg-sky-50 text-sky-700 border-sky-100'),
-    'expense': ('Gastos', 'bg-amber-50 text-amber-700 border-amber-100')
-    } %}
-
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-      {% for group in accounts|groupby('type.value') %}
-      {% set group_name = group.grouper %}
-      {% set acc_list = group.list %}
-
-      {% set label, style = type_labels.get(group_name, (group_name|capitalize, 'bg-slate-50 text-slate-700
-      border-slate-100')) %}
-
-      {% set ns = namespace(subtotal=0.0) %}
-      {% for acc in acc_list %}
-      {% set ns.subtotal = ns.subtotal + (acc.balance or 0.0)|float %}
-      {% endfor %}
-
-      <div class="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm flex flex-col h-full">
-        <div class="px-5 py-4 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span
-              class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider border {{ style }}">
-              {{ label }}
-            </span>
-            <span class="text-xs font-semibold text-slate-400 bg-slate-100 px-2 py-0.5 rounded-full">{{ acc_list|length
-              }}</span>
-          </div>
-          <div class="text-right">
-            <p class="text-xs font-medium text-slate-400 uppercase tracking-wider mb-0.5">Saldo Total</p>
-            <p class="text-sm font-bold {% if ns.subtotal >= 0 %}text-slate-800{% else %}text-rose-600{% endif %}">
-              {{ company.currency }}{{ "{:,.2f}".format(ns.subtotal) }}
-            </p>
-          </div>
-        </div>
-
-        <div class="overflow-x-auto flex-1">
-          <table class="w-full text-left">
-            <tbody class="divide-y divide-slate-50 text-sm">
-              {% for acc in acc_list %}
-              <tr class="hover:bg-slate-50/80 transition-colors">
-                <td class="px-5 py-3.5">
-                  <span class="font-semibold text-slate-700">{{ acc.name }}</span>
-                  {% if acc.description %}
-                  <p class="text-[10px] text-slate-400 font-medium truncate mt-0.5">{{ acc.description }}</p>
-                  {% endif %}
-                </td>
-                <td class="px-5 py-3.5 text-right">
-                  <span
-                    class="font-mono font-bold {% if (acc.balance or 0) >= 0 %}text-slate-700{% else %}text-rose-600{% endif %}">
-                    {{ company.currency }}{{ "{:,.2f}".format(acc.balance or 0.0) }}
-                  </span>
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      {% endfor %}
+    {% if not accounts %}
+    <div class="flex flex-col items-center justify-center py-24 gap-3">
+      <svg class="w-10 h-10 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+      <p class="text-slate-500 font-medium">No hay cuentas configuradas.</p>
+      <form method="POST" action="{{ url_for('accounting.generate_default_accounts', company_id=company.id) }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
+          Generar Plan de Cuentas Base
+        </button>
+      </form>
     </div>
-
+    {% endif %}
   </div>
 </div>
 {% endblock %}

@@ -76,3 +76,15 @@ class UserStatus(enum.Enum):
     active = 'active'
     inactive = 'inactive'
     suspended = 'suspended'
+
+class ExpenseStatus(enum.Enum):
+    draft = 'draft'
+    approved = 'approved'
+    paid = 'paid'
+
+class TransactionType(enum.Enum):
+    journal = 'journal'
+    expense = 'expense'
+    income = 'income'
+    payment = 'payment'
+    transfer = 'transfer'

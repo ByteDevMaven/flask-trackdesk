@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% from "accounting/partials/_nav.html" import accounting_nav %}
+{% block title %}Balanza de Comprobación · {{ company.name }}{% endblock %}
+{% block page_title %}Contabilidad{% endblock %}
+{% block sidebar_title %}Contabilidad{% endblock %}
+{% block sidebar_nav %}{{ accounting_nav(company.id, request.endpoint) }}{% endblock %}
+
+{% block content %}
+<div class="flex flex-col h-full overflow-hidden bg-slate-50">
+  <header class="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between flex-shrink-0">
+    <div>
+      <h1 class="text-base font-semibold text-slate-800">Balanza de Comprobación</h1>
+      <p class="text-xs text-slate-500 mt-0.5">Al {{ as_of.strftime('%d/%m/%Y') }}</p>
+    </div>
+    <div class="flex items-center gap-2">
+      {% if is_balanced %}
+      <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold border border-emerald-200">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+        Libros Balanceados
+      </span>
+      {% else %}
+      <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-rose-50 text-rose-700 text-xs font-semibold border border-rose-200">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        ¡Descuadre detectado!
+      </span>
+      {% endif %}
+      <form method="GET">
+        <input type="date" name="as_of" value="{{ as_of_date }}"
+          class="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+        <button type="submit" class="ml-2 px-3 py-2 bg-slate-800 text-white rounded-lg text-sm font-medium hover:bg-slate-700 transition-colors">Consultar</button>
+      </form>
+    </div>
+  </header>
+
+  <div class="flex-1 overflow-y-auto">
+    {% set type_groups = [
+      ('asset', 'Activos', 'bg-sky-50 text-sky-700 border-sky-200'),
+      ('liability', 'Pasivos', 'bg-amber-50 text-amber-700 border-amber-200'),
+      ('equity', 'Patrimonio', 'bg-purple-50 text-purple-700 border-purple-200'),
+      ('revenue', 'Ingresos', 'bg-emerald-50 text-emerald-700 border-emerald-200'),
+      ('expense', 'Gastos', 'bg-rose-50 text-rose-700 border-rose-200'),
+    ] %}
+
+    {% for type_key, type_label, type_style in type_groups %}
+    {% set group_rows = rows | selectattr('account.type.value', 'equalto', type_key) | list %}
+    {% if group_rows %}
+    <div class="border-b border-slate-100">
+      <div class="px-6 py-2 bg-slate-50 border-b border-slate-100">
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border {{ type_style }}">{{ type_label }}</span>
+      </div>
+      <table class="w-full text-sm">
+        <tbody class="divide-y divide-slate-50">
+          {% for row in group_rows %}
+          <tr class="hover:bg-slate-50/80 transition-colors">
+            <td class="px-6 py-3 w-24">
+              {% if row.account.code %}
+              <span class="text-xs text-slate-400 font-mono">{{ row.account.code }}</span>
+              {% endif %}
+            </td>
+            <td class="px-6 py-3 font-medium text-slate-800">{{ row.account.name }}</td>
+            <td class="px-6 py-3 text-right font-mono {% if row.debit > 0 %}text-slate-800 font-semibold{% else %}text-slate-300{% endif %}">
+              {{ "{:,.2f}".format(row.debit) if row.debit > 0 else '—' }}
+            </td>
+            <td class="px-6 py-3 text-right font-mono {% if row.credit > 0 %}text-slate-800 font-semibold{% else %}text-slate-300{% endif %}">
+              {{ "{:,.2f}".format(row.credit) if row.credit > 0 else '—' }}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% endif %}
+    {% endfor %}
+
+    {# Totals #}
+    <div class="sticky bottom-0 bg-white border-t-2 border-slate-300 shadow-lg">
+      <div class="px-6 py-3">
+        <table class="w-full text-sm">
+          <colgroup><col class="w-24"><col><col class="w-36"><col class="w-36"></colgroup>
+          <tbody>
+            <tr>
+              <td class="py-2"></td>
+              <td class="py-2 font-bold text-slate-800 text-base">TOTALES</td>
+              <td class="py-2 text-right font-mono font-bold text-slate-900 text-base">{{ "{:,.2f}".format(total_debit) }}</td>
+              <td class="py-2 text-right font-mono font-bold text-slate-900 text-base">{{ "{:,.2f}".format(total_credit) }}</td>
+            </tr>
+            {% if not is_balanced %}
+            <tr>
+              <td colspan="2"></td>
+              <td colspan="2" class="py-1 text-right text-xs text-rose-600 font-semibold">
+                Diferencia: {{ "{:,.2f}".format((total_debit - total_credit)|abs) }}
+              </td>
+            </tr>
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  {# Column headers sticky overlay #}
+</div>
+{% endblock %}

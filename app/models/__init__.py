@@ -1,5 +1,5 @@
 from app.extensions import db, migrate
-from .enums import DocumentType, DocumentStatus, InvoiceType, StockMovementType, PaymentMethod, AccountType, UserStatus, ContactType, EmployeeClass, PayPeriod, LeaveType, LeaveStatus, PTOAccrualPeriod
+from .enums import DocumentType, DocumentStatus, InvoiceType, StockMovementType, PaymentMethod, AccountType, UserStatus, ContactType, EmployeeClass, PayPeriod, LeaveType, LeaveStatus, PTOAccrualPeriod, ExpenseStatus, TransactionType
 from .associations import role_permissions, user_companies, expense_tags, ledger_entry_tags
 from .company import Company
 from .role import Role
@@ -20,6 +20,7 @@ from .account import Account
 from .project import Project
 from .expense import Expense
 from .ledger_entry import LedgerEntry
+from .transaction import Transaction
 from .audit import AuditLog
 
 from .tag import Tag
@@ -35,12 +36,13 @@ __all__ = [
     'db', 'migrate',
     'DocumentType', 'DocumentStatus', 'InvoiceType', 'StockMovementType', 'PaymentMethod', 'AccountType', 'UserStatus', 'ContactType', 'DocumentTemplateType',
     'EmployeeClass', 'PayPeriod', 'LeaveType', 'LeaveStatus', 'PTOAccrualPeriod',
+    'ExpenseStatus', 'TransactionType',
     'role_permissions', 'user_companies', 'expense_tags', 'ledger_entry_tags',
     'Company', 'Role', 'Permission', 'User', 'Contact',
     'InventoryItem', 'PurchaseOrder', 'PurchaseOrderItem',
     'Document', 'DocumentItem', 'Payment', 'Report', 'Notification',
     'StockMovement', 'DocumentSequence',
-    'Account', 'Project', 'Expense', 'LedgerEntry',
+    'Account', 'Project', 'Expense', 'LedgerEntry', 'Transaction',
     'AuditLog', 'Tag',
     'Warehouse', 'WarehouseItem',
     'DocumentTemplate',

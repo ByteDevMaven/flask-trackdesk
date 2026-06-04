@@ -1,16 +1,33 @@
+"""
+AccountingService — complete double-entry bookkeeping service.
+
+Design rules (MUST be maintained):
+  1. Every financial event creates exactly ONE Transaction row.
+  2. Every Transaction contains >= 2 LedgerEntry rows whose
+     total debits == total credits (balanced).
+  3. Account balances are NEVER stored — always computed from LedgerEntry.
+  4. Normal balance: Asset/Expense → debit; Liability/Equity/Revenue → credit.
+"""
+
 import io
 import csv
 import os
 import uuid
 from datetime import datetime, UTC
+from decimal import Decimal
 
 from flask import current_app, Response
 from flask_login import current_user
+from sqlalchemy import func
 
-from app.models import db, Company, Account, Expense, LedgerEntry, Project, Tag
-from app.models.enums import AccountType
+from app.models import db, Company, Account, Expense, LedgerEntry, Project, Tag, Transaction
+from app.models.enums import AccountType, ExpenseStatus, TransactionType
 from app.models.report import Report
 
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Internal helpers
+# ─────────────────────────────────────────────────────────────────────────────
 
 def _allowed_file(filename: str) -> bool:
     allowed = current_app.config.get('ALLOWED_EXTENSIONS', {'pdf', 'png', 'jpg', 'jpeg', 'webp'})
@@ -18,21 +35,176 @@ def _allowed_file(filename: str) -> bool:
 
 
 def _save_receipt(file) -> str | None:
-    """Save uploaded receipt file; returns relative URL path or None."""
+    """Save uploaded receipt; return relative URL or None."""
     if not file or file.filename == '':
         return None
     if not _allowed_file(file.filename):
         return None
-
     ext = file.filename.rsplit('.', 1)[1].lower()
     unique_name = f"{uuid.uuid4().hex}.{ext}"
-
     upload_dir = os.path.join(current_app.config.get('UPLOAD_FOLDER', ''), 'receipts')
     os.makedirs(upload_dir, exist_ok=True)
     file.save(os.path.join(upload_dir, unique_name))
-
     return f"uploads/receipts/{unique_name}"
 
+
+def _parse_date(date_str: str, default_now: bool = True) -> datetime:
+    """Parse YYYY-MM-DD string → naive datetime. Falls back to now(UTC)."""
+    if date_str:
+        try:
+            return datetime.strptime(date_str.strip(), '%Y-%m-%d')
+        except ValueError:
+            pass
+    return datetime.now(UTC).replace(tzinfo=None) if default_now else None
+
+
+def _make_naive(dt: datetime) -> datetime:
+    """Strip timezone info so comparisons work with our stored naive datetimes."""
+    if dt is None:
+        return dt
+    return dt.replace(tzinfo=None) if dt.tzinfo else dt
+
+
+def _get_period_bounds(start_date: str, end_date: str):
+    """Return (start_dt, end_dt) as naive datetimes for the given period."""
+    now = _make_naive(datetime.now(UTC))
+    start_dt = _parse_date(start_date) if start_date else now.replace(day=1, hour=0, minute=0, second=0)
+    raw_end = _parse_date(end_date) if end_date else now
+    end_dt = raw_end.replace(hour=23, minute=59, second=59)
+    return _make_naive(start_dt), _make_naive(end_dt)
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Core balance computation
+# ─────────────────────────────────────────────────────────────────────────────
+
+def _compute_account_balance(account: Account, as_of: datetime = None) -> float:
+    """
+    Compute the current balance of an account from LedgerEntry rows.
+
+    Normal balance rules:
+      - Asset / Expense:         balance = SUM(debit) - SUM(credit)
+      - Liability / Equity / Revenue: balance = SUM(credit) - SUM(debit)
+
+    Returns a positive number when the account has a balance in its normal
+    direction, negative when it's reversed.
+    """
+    q = db.session.query(
+        func.coalesce(func.sum(LedgerEntry.debit), 0).label('total_debit'),
+        func.coalesce(func.sum(LedgerEntry.credit), 0).label('total_credit'),
+    ).filter(
+        LedgerEntry.account_id == account.id,
+        LedgerEntry.company_id == account.company_id,
+    )
+    if as_of:
+        q = q.filter(LedgerEntry.date <= _make_naive(as_of))
+
+    row = q.one()
+    total_debit = float(row.total_debit)
+    total_credit = float(row.total_credit)
+
+    if account.type in (AccountType.asset, AccountType.expense):
+        return round(total_debit - total_credit, 2)
+    else:  # liability, equity, revenue
+        return round(total_credit - total_debit, 2)
+
+
+def _compute_balances_bulk(company_id: int, account_type_filter=None, as_of: datetime = None) -> dict[int, float]:
+    """
+    Compute balances for ALL accounts of a company in one query.
+    Returns {account_id: balance}.
+    """
+    q = (
+        db.session.query(
+            LedgerEntry.account_id,
+            Account.type,
+            func.coalesce(func.sum(LedgerEntry.debit), 0).label('d'),
+            func.coalesce(func.sum(LedgerEntry.credit), 0).label('c'),
+        )
+        .join(Account, LedgerEntry.account_id == Account.id)
+        .filter(LedgerEntry.company_id == company_id)
+    )
+    if account_type_filter:
+        if isinstance(account_type_filter, (list, tuple)):
+            q = q.filter(Account.type.in_(account_type_filter))
+        else:
+            q = q.filter(Account.type == account_type_filter)
+    if as_of:
+        q = q.filter(LedgerEntry.date <= _make_naive(as_of))
+
+    q = q.group_by(LedgerEntry.account_id, Account.type)
+    rows = q.all()
+
+    result: dict[int, float] = {}
+    for account_id, acct_type, d, c in rows:
+        d, c = float(d), float(c)
+        if acct_type in (AccountType.asset, AccountType.expense):
+            result[account_id] = round(d - c, 2)
+        else:
+            result[account_id] = round(c - d, 2)
+    return result
+
+
+def _create_balanced_transaction(
+    company_id: int,
+    date: datetime,
+    memo: str,
+    transaction_type: TransactionType,
+    entries: list[dict],  # [{'account_id', 'debit', 'credit', 'description', 'project_id', 'tags'}]
+    reference: str = None,
+    reference_type: str = None,
+    reference_id: int = None,
+) -> Transaction:
+    """
+    Create a Transaction + LedgerEntry rows atomically.
+    Raises ValueError if entries do not balance (total debit ≠ total credit).
+    """
+    total_debit = round(sum(float(e.get('debit', 0)) for e in entries), 2)
+    total_credit = round(sum(float(e.get('credit', 0)) for e in entries), 2)
+    if total_debit != total_credit:
+        raise ValueError(
+            f"Journal entry is not balanced: total debit {total_debit} ≠ total credit {total_credit}"
+        )
+
+    created_by_id = None
+    try:
+        created_by_id = current_user.id if current_user.is_authenticated else None
+    except Exception:
+        pass
+
+    txn = Transaction(
+        company_id=company_id,
+        date=_make_naive(date),
+        memo=memo,
+        reference=reference,
+        transaction_type=transaction_type,
+        created_by=created_by_id,
+    )
+    db.session.add(txn)
+    db.session.flush()  # get txn.id
+
+    for e in entries:
+        entry = LedgerEntry(
+            company_id=company_id,
+            account_id=e['account_id'],
+            transaction_id=txn.id,
+            project_id=e.get('project_id'),
+            date=_make_naive(date),
+            description=e.get('description', memo),
+            debit=round(float(e.get('debit', 0)), 2),
+            credit=round(float(e.get('credit', 0)), 2),
+            reference_type=reference_type,
+            reference_id=reference_id,
+            tags=e.get('tags', []),
+        )
+        db.session.add(entry)
+
+    return txn
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# AccountingService
+# ─────────────────────────────────────────────────────────────────────────────
 
 class AccountingService:
 
@@ -42,150 +214,797 @@ class AccountingService:
     def get_dashboard_data(company_id: int) -> dict:
         company = Company.query.get_or_404(company_id)
 
-        accounts = Account.query.filter_by(company_id=company.id).all()
-        projects = Project.query.filter_by(company_id=company.id).all()
-        expenses = Expense.query.filter_by(company_id=company.id).order_by(Expense.date.desc()).limit(10).all()
-        all_expenses = Expense.query.filter_by(company_id=company.id).all()
+        accounts = Account.query.filter_by(company_id=company_id, is_active=True).order_by(Account.type, Account.name).all()
+        projects = Project.query.filter_by(company_id=company_id).all()
+        expenses = (
+            Expense.query
+            .filter_by(company_id=company_id)
+            .order_by(Expense.date.desc())
+            .limit(10)
+            .all()
+        )
+        recent_transactions = (
+            Transaction.query
+            .filter_by(company_id=company_id, is_voided=False)
+            .order_by(Transaction.date.desc())
+            .limit(15)
+            .all()
+        )
 
-        total_expenses = float(db.session.query(db.func.sum(Expense.amount)).filter_by(company_id=company.id).scalar() or 0.0)
+        # Compute all balances in one query
+        balances = _compute_balances_bulk(company_id)
 
-        type_totals: dict[str, float] = {}
-        for acc in accounts:
-            key = acc.type.value
-            type_totals[key] = type_totals.get(key, 0.0) + float(acc.balance or 0.0)
+        # KPI aggregations from ledger
+        now = _make_naive(datetime.now(UTC))
+        month_start = now.replace(day=1, hour=0, minute=0, second=0)
 
+        def _period_ledger_sum(acct_types, col, start=None, end=None):
+            q = (
+                db.session.query(func.coalesce(func.sum(col), 0))
+                .join(Account, LedgerEntry.account_id == Account.id)
+                .filter(
+                    LedgerEntry.company_id == company_id,
+                    Account.type.in_(acct_types),
+                )
+            )
+            if start:
+                q = q.filter(LedgerEntry.date >= _make_naive(start))
+            if end:
+                q = q.filter(LedgerEntry.date <= _make_naive(end))
+            return float(q.scalar() or 0)
+
+        # Revenue this month = credits on revenue accounts
+        revenue_month = _period_ledger_sum([AccountType.revenue], LedgerEntry.credit, month_start, now)
+        # Expenses this month = debits on expense accounts
+        expenses_month = _period_ledger_sum([AccountType.expense], LedgerEntry.debit, month_start, now)
+        net_income_month = round(revenue_month - expenses_month, 2)
+
+        # All-time totals
+        total_revenue = _period_ledger_sum([AccountType.revenue], LedgerEntry.credit)
+        total_expenses = _period_ledger_sum([AccountType.expense], LedgerEntry.debit)
+        net_income_all = round(total_revenue - total_expenses, 2)
+
+        # Cash balance = balance of first asset account named 'Caja'/'Bancos'/'Cash'
+        cash_account = Account.query.filter(
+            Account.company_id == company_id,
+            Account.name.ilike('%caja%') | Account.name.ilike('%banco%') | Account.name.ilike('%cash%')
+        ).first()
+        cash_balance = balances.get(cash_account.id, 0.0) if cash_account else 0.0
+
+        # AR / AP
+        ar_account = Account.query.filter(
+            Account.company_id == company_id,
+            Account.name.ilike('%cobrar%') | Account.name.ilike('%receivable%')
+        ).first()
+        ap_account = Account.query.filter(
+            Account.company_id == company_id,
+            Account.name.ilike('%pagar%') | Account.name.ilike('%payable%')
+        ).first()
+        ar_balance = balances.get(ar_account.id, 0.0) if ar_account else 0.0
+        ap_balance = balances.get(ap_account.id, 0.0) if ap_account else 0.0
+
+        # Project spend from expenses
+        expense_stats = (
+            db.session.query(Expense.project_id, func.sum(Expense.amount))
+            .filter(Expense.company_id == company_id, Expense.project_id.isnot(None))
+            .group_by(Expense.project_id)
+            .all()
+        )
+        project_spent = {row[0]: float(row[1] or 0) for row in expense_stats}
+
+        # Tag totals for expenses
         tag_totals: dict[str, float] = {}
-        for e in all_expenses:
+        for e in Expense.query.filter_by(company_id=company_id).all():
             if not e.tags:
                 tag_totals['Sin Etiqueta'] = tag_totals.get('Sin Etiqueta', 0.0) + float(e.amount)
             for t in e.tags:
                 tag_totals[t.name] = tag_totals.get(t.name, 0.0) + float(e.amount)
 
-        expense_stats_rows = (
-            db.session.query(
-                Expense.project_id,
-                db.func.count(Expense.id),
-                db.func.sum(Expense.amount)
-            )
-            .filter(Expense.company_id == company.id, Expense.project_id.isnot(None))
-            .group_by(Expense.project_id)
-            .all()
-        )
-        expense_counts = {row[0]: row[1] for row in expense_stats_rows}
-        project_spent = {row[0]: float(row[2] or 0.0) for row in expense_stats_rows}
-
         return {
             'company': company,
             'accounts': accounts,
             'expenses': expenses,
+            'recent_transactions': recent_transactions,
             'projects': projects,
+            'balances': balances,
+            # KPIs
+            'total_revenue': total_revenue,
             'total_expenses': total_expenses,
-            'total_projects': len(projects),
-            'total_accounts': len(accounts),
-            'type_totals': type_totals,
+            'net_income_all': net_income_all,
+            'revenue_month': revenue_month,
+            'expenses_month': expenses_month,
+            'net_income_month': net_income_month,
+            'cash_balance': cash_balance,
+            'ar_balance': ar_balance,
+            'ap_balance': ap_balance,
+            # Legacy helpers for dashboard template
+            'type_totals': {
+                'revenue': total_revenue,
+                'expense': total_expenses,
+                'asset': sum(v for aid, v in balances.items()
+                             if Account.query.get(aid) and Account.query.get(aid).type == AccountType.asset),
+            },
             'tag_totals': tag_totals,
-            'expense_counts': expense_counts,
             'project_spent': project_spent,
+            'expense_counts': {row[0]: row[1] for row in (
+                db.session.query(Expense.project_id, func.count(Expense.id))
+                .filter(Expense.company_id == company_id, Expense.project_id.isnot(None))
+                .group_by(Expense.project_id)
+                .all()
+            )},
         }
+
+    # ── Account balance ─────────────────────────────────────────────────────
+
+    @staticmethod
+    def get_account_balance(account: Account, as_of: datetime = None) -> float:
+        return _compute_account_balance(account, as_of=as_of)
+
+    @staticmethod
+    def get_account_balances_bulk(company_id: int, as_of: datetime = None) -> dict[int, float]:
+        return _compute_balances_bulk(company_id, as_of=as_of)
 
     # ── Expenses ───────────────────────────────────────────────────────────
 
     @staticmethod
     def create_expense(company_id: int, data, files=None) -> Expense:
+        """
+        Record an expense.
+
+        Double-entry:
+          DR  Expense Account       (amount)
+          CR  Cash / AP Account     (amount)
+        """
         account_id_str = data.get('account_id', '').strip()
         amount_str = data.get('amount', '').strip()
-
         if not account_id_str or not amount_str:
-            raise ValueError('Account and amount are required.')
+            raise ValueError('Cuenta y monto son requeridos.')
 
-        account_id = int(account_id_str)
-        amount = float(amount_str)
+        try:
+            account_id = int(account_id_str)
+            amount = round(float(amount_str), 2)
+        except ValueError:
+            raise ValueError('Valores de cuenta o monto inválidos.')
+
+        if amount <= 0:
+            raise ValueError('El monto debe ser mayor a cero.')
+
+        expense_account = Account.query.filter_by(id=account_id, company_id=company_id).first()
+        if not expense_account:
+            raise ValueError('Cuenta de gasto no encontrada.')
+
         date_str = data.get('date', '').strip()
+        expense_date = _parse_date(date_str)
+
         description = data.get('description', '').strip()
+        vendor_name = data.get('vendor_name', '').strip()
+        category = data.get('category', '').strip()
         project_id_str = data.get('project_id', '').strip()
         project_id = int(project_id_str) if project_id_str else None
-        expense_date = datetime.strptime(date_str, '%Y-%m-%d') if date_str else datetime.now(UTC)
+        supplier_id_str = data.get('supplier_id', '').strip()
+        supplier_id = int(supplier_id_str) if supplier_id_str else None
+        status_str = data.get('status', 'draft').strip()
+        try:
+            status = ExpenseStatus(status_str)
+        except ValueError:
+            status = ExpenseStatus.draft
 
-        tag_ids = data.getlist('tags[]')
-        selected_tags = Tag.query.filter(Tag.id.in_([int(tid) for tid in tag_ids if tid])).all() if tag_ids else []
+        tag_ids = data.getlist('tags[]') if hasattr(data, 'getlist') else []
+        selected_tags = (
+            Tag.query.filter(Tag.id.in_([int(tid) for tid in tag_ids if tid])).all()
+            if tag_ids else []
+        )
 
         receipt_url = None
         if files and 'receipt_file' in files:
             receipt_url = _save_receipt(files['receipt_file'])
 
+        # Resolve the credit (cash/AP) account
+        cash_account = Account.query.filter(
+            Account.company_id == company_id,
+            Account.name.ilike('%caja%') | Account.name.ilike('%banco%') | Account.name.ilike('%cash%')
+        ).first()
+        if not cash_account:
+            cash_account = Account.query.filter_by(company_id=company_id, type=AccountType.asset).first()
+        if not cash_account:
+            raise ValueError(
+                'No se encontró una cuenta de efectivo (Caja/Bancos). '
+                'Por favor genere las cuentas base primero.'
+            )
+
         expense = Expense(
             company_id=company_id,
             account_id=account_id,
             project_id=project_id,
+            supplier_id=supplier_id,
             amount=amount,
             date=expense_date,
             description=description,
+            vendor_name=vendor_name,
+            category=category,
             receipt_url=receipt_url,
+            status=status,
             tags=selected_tags,
         )
         db.session.add(expense)
-        db.session.flush()
+        db.session.flush()  # get expense.id
 
-        # Double-entry ledger
-        cash_account = Account.query.filter_by(company_id=company_id, name='Caja y Bancos').first()
-        if not cash_account:
-            cash_account = Account.query.filter_by(company_id=company_id, type=AccountType.asset).first()
+        # Create balanced journal entry
+        memo = description or f"Gasto — {expense_account.name}"
+        txn = _create_balanced_transaction(
+            company_id=company_id,
+            date=expense_date,
+            memo=memo,
+            transaction_type=TransactionType.expense,
+            entries=[
+                {
+                    'account_id': account_id,           # DR expense
+                    'debit': amount,
+                    'credit': 0.0,
+                    'description': memo,
+                    'project_id': project_id,
+                    'tags': selected_tags,
+                },
+                {
+                    'account_id': cash_account.id,       # CR cash
+                    'debit': 0.0,
+                    'credit': amount,
+                    'description': memo,
+                    'project_id': project_id,
+                    'tags': [],
+                },
+            ],
+            reference_type='Expense',
+            reference_id=expense.id,
+        )
 
-        account = Account.query.get(account_id)
-        is_revenue = account and account.type.value == 'revenue'
-
-        if account:
-            account.balance = float(account.balance or 0.0) + amount
-        if cash_account:
-            if is_revenue:
-                cash_account.balance = float(cash_account.balance or 0.0) + amount
-            else:
-                cash_account.balance = float(cash_account.balance or 0.0) - amount
-
-        if cash_account:
-            if is_revenue:
-                entries = [
-                    LedgerEntry(company_id=company_id, account_id=cash_account.id, project_id=project_id,
-                                date=expense_date, description=f"Cobro: {description}",
-                                debit=amount, credit=0.0, reference_type='Income', reference_id=expense.id, tags=selected_tags),
-                    LedgerEntry(company_id=company_id, account_id=account_id, project_id=project_id,
-                                date=expense_date, description=f"Ingreso: {description}",
-                                debit=0.0, credit=amount, reference_type='Income', reference_id=expense.id, tags=selected_tags),
-                ]
-            else:
-                entries = [
-                    LedgerEntry(company_id=company_id, account_id=account_id, project_id=project_id,
-                                date=expense_date, description=f"Gasto: {description}",
-                                debit=amount, credit=0.0, reference_type='Expense', reference_id=expense.id, tags=selected_tags),
-                    LedgerEntry(company_id=company_id, account_id=cash_account.id, project_id=project_id,
-                                date=expense_date, description=f"Pago por: {description}",
-                                debit=0.0, credit=amount, reference_type='Expense', reference_id=expense.id, tags=selected_tags),
-                ]
-            db.session.add_all(entries)
-
+        expense.transaction_id = txn.id
         db.session.commit()
         return expense
 
-    # ── Projects ───────────────────────────────────────────────────────────
+    @staticmethod
+    def get_expenses(company_id: int, search: str = '', account_id: int = None,
+                     status: str = '', category: str = '',
+                     start_date: str = '', end_date: str = '',
+                     page: int = 1, per_page: int = 30):
+        q = Expense.query.filter_by(company_id=company_id).order_by(Expense.date.desc())
+
+        if search:
+            q = q.filter(
+                Expense.description.ilike(f'%{search}%') |
+                Expense.vendor_name.ilike(f'%{search}%') |
+                Expense.category.ilike(f'%{search}%')
+            )
+        if account_id:
+            q = q.filter(Expense.account_id == account_id)
+        if status:
+            try:
+                q = q.filter(Expense.status == ExpenseStatus(status))
+            except ValueError:
+                pass
+        if category:
+            q = q.filter(Expense.category.ilike(f'%{category}%'))
+        if start_date or end_date:
+            start_dt, end_dt = _get_period_bounds(start_date, end_date)
+            if start_date:
+                q = q.filter(Expense.date >= start_dt)
+            if end_date:
+                q = q.filter(Expense.date <= end_dt)
+
+        return q.paginate(page=page, per_page=per_page, error_out=False)
 
     @staticmethod
-    def create_project(company_id: int, data) -> Project:
-        name = data.get('name', '').strip()
-        description = data.get('description', '').strip()
-        budget_str = data.get('budget', '').strip()
+    def delete_expense(company_id: int, expense_id: int) -> None:
+        expense = Expense.query.filter_by(id=expense_id, company_id=company_id).first_or_404()
 
-        if not name:
-            raise ValueError('Project name is required.')
+        # Void the linked transaction (soft delete the ledger entries conceptually)
+        if expense.transaction_id:
+            txn = Transaction.query.get(expense.transaction_id)
+            if txn:
+                txn.is_voided = True
+                txn.voided_reason = 'Expense deleted'
+
+        db.session.delete(expense)
+        db.session.commit()
+
+    # ── Income ─────────────────────────────────────────────────────────────
+
+    @staticmethod
+    def record_income(company_id: int, data) -> Transaction:
+        """
+        Record an income / revenue event.
+
+        Double-entry:
+          DR  Cash / AR Account     (amount)
+          CR  Revenue Account       (amount)
+        """
+        revenue_account_id_str = data.get('revenue_account_id', '').strip()
+        amount_str = data.get('amount', '').strip()
+        if not revenue_account_id_str or not amount_str:
+            raise ValueError('Cuenta de ingresos y monto son requeridos.')
 
         try:
-            budget = float(budget_str) if budget_str else 0.0
+            revenue_account_id = int(revenue_account_id_str)
+            amount = round(float(amount_str), 2)
         except ValueError:
-            budget = 0.0
+            raise ValueError('Valores inválidos.')
 
-        project = Project(company_id=company_id, name=name, description=description, budget=budget)
-        db.session.add(project)
+        if amount <= 0:
+            raise ValueError('El monto debe ser mayor a cero.')
+
+        revenue_account = Account.query.filter_by(id=revenue_account_id, company_id=company_id).first()
+        if not revenue_account:
+            raise ValueError('Cuenta de ingresos no encontrada.')
+
+        # Validate it's a revenue account
+        if revenue_account.type not in (AccountType.revenue, AccountType.asset):
+            raise ValueError('La cuenta seleccionada no es una cuenta de ingresos.')
+
+        date_str = data.get('date', '').strip()
+        income_date = _parse_date(date_str)
+        description = data.get('description', '').strip()
+        client_name = data.get('client_name', '').strip()
+        project_id_str = data.get('project_id', '').strip()
+        project_id = int(project_id_str) if project_id_str else None
+
+        # Debit side: cash or AR
+        debit_account_id_str = data.get('debit_account_id', '').strip()
+        if debit_account_id_str:
+            debit_account = Account.query.filter_by(id=int(debit_account_id_str), company_id=company_id).first()
+        else:
+            debit_account = Account.query.filter(
+                Account.company_id == company_id,
+                Account.name.ilike('%caja%') | Account.name.ilike('%banco%') | Account.name.ilike('%cash%')
+            ).first()
+
+        if not debit_account:
+            raise ValueError('No se encontró una cuenta de efectivo o por cobrar.')
+
+        memo = description or f"Ingreso — {revenue_account.name}"
+        if client_name:
+            memo = f"{memo} ({client_name})"
+
+        txn = _create_balanced_transaction(
+            company_id=company_id,
+            date=income_date,
+            memo=memo,
+            transaction_type=TransactionType.income,
+            entries=[
+                {
+                    'account_id': debit_account.id,      # DR cash/AR
+                    'debit': amount,
+                    'credit': 0.0,
+                    'description': memo,
+                    'project_id': project_id,
+                    'tags': [],
+                },
+                {
+                    'account_id': revenue_account_id,    # CR revenue
+                    'debit': 0.0,
+                    'credit': amount,
+                    'description': memo,
+                    'project_id': project_id,
+                    'tags': [],
+                },
+            ],
+            reference_type='Income',
+        )
+
         db.session.commit()
-        return project
+        return txn
+
+    @staticmethod
+    def get_income_transactions(company_id: int, search: str = '',
+                                start_date: str = '', end_date: str = '',
+                                page: int = 1, per_page: int = 30):
+        q = (
+            Transaction.query
+            .filter_by(company_id=company_id, transaction_type=TransactionType.income, is_voided=False)
+            .order_by(Transaction.date.desc())
+        )
+        if search:
+            q = q.filter(Transaction.memo.ilike(f'%{search}%'))
+        if start_date or end_date:
+            start_dt, end_dt = _get_period_bounds(start_date, end_date)
+            if start_date:
+                q = q.filter(Transaction.date >= start_dt)
+            if end_date:
+                q = q.filter(Transaction.date <= end_dt)
+        return q.paginate(page=page, per_page=per_page, error_out=False)
+
+    # ── Journal Entries ────────────────────────────────────────────────────
+
+    @staticmethod
+    def create_journal_entry(company_id: int, data) -> Transaction:
+        """
+        Manual multi-line journal entry.
+        Expects form fields: memo, date, reference,
+          lines[0][account_id], lines[0][debit], lines[0][credit], lines[0][description]
+          lines[1][account_id], ... etc.
+        """
+        memo = data.get('memo', '').strip()
+        if not memo:
+            raise ValueError('El memo/descripción es requerido.')
+
+        date_str = data.get('date', '').strip()
+        entry_date = _parse_date(date_str)
+        reference = data.get('reference', '').strip() or None
+
+        # Parse lines — support up to 20 lines
+        entries = []
+        for i in range(20):
+            acc_id_str = data.get(f'lines[{i}][account_id]', '').strip()
+            if not acc_id_str:
+                break
+            debit_str = data.get(f'lines[{i}][debit]', '0').strip() or '0'
+            credit_str = data.get(f'lines[{i}][credit]', '0').strip() or '0'
+            line_desc = data.get(f'lines[{i}][description]', '').strip()
+
+            try:
+                acc_id = int(acc_id_str)
+                debit = round(float(debit_str), 2)
+                credit = round(float(credit_str), 2)
+            except ValueError:
+                raise ValueError(f'Línea {i + 1}: valores inválidos.')
+
+            if debit < 0 or credit < 0:
+                raise ValueError(f'Línea {i + 1}: los montos no pueden ser negativos.')
+            if debit == 0 and credit == 0:
+                raise ValueError(f'Línea {i + 1}: debe tener débito o crédito.')
+            if debit > 0 and credit > 0:
+                raise ValueError(f'Línea {i + 1}: no puede tener débito y crédito en la misma línea.')
+
+            account = Account.query.filter_by(id=acc_id, company_id=company_id).first()
+            if not account:
+                raise ValueError(f'Línea {i + 1}: cuenta no encontrada.')
+
+            entries.append({
+                'account_id': acc_id,
+                'debit': debit,
+                'credit': credit,
+                'description': line_desc or memo,
+                'project_id': None,
+                'tags': [],
+            })
+
+        if len(entries) < 2:
+            raise ValueError('Un asiento contable requiere al menos 2 líneas.')
+
+        txn = _create_balanced_transaction(
+            company_id=company_id,
+            date=entry_date,
+            memo=memo,
+            transaction_type=TransactionType.journal,
+            entries=entries,
+            reference=reference,
+            reference_type='Journal',
+        )
+
+        db.session.commit()
+        return txn
+
+    @staticmethod
+    def get_journal_entries(company_id: int, search: str = '',
+                            start_date: str = '', end_date: str = '',
+                            page: int = 1, per_page: int = 30):
+        q = (
+            Transaction.query
+            .filter_by(company_id=company_id, is_voided=False)
+            .order_by(Transaction.date.desc(), Transaction.id.desc())
+        )
+        if search:
+            q = q.filter(
+                Transaction.memo.ilike(f'%{search}%') |
+                Transaction.reference.ilike(f'%{search}%')
+            )
+        if start_date or end_date:
+            start_dt, end_dt = _get_period_bounds(start_date, end_date)
+            if start_date:
+                q = q.filter(Transaction.date >= start_dt)
+            if end_date:
+                q = q.filter(Transaction.date <= end_dt)
+        return q.paginate(page=page, per_page=per_page, error_out=False)
+
+    @staticmethod
+    def void_transaction(company_id: int, txn_id: int, reason: str = '') -> Transaction:
+        txn = Transaction.query.filter_by(id=txn_id, company_id=company_id).first_or_404()
+        if txn.is_voided:
+            raise ValueError('Esta transacción ya está anulada.')
+        txn.is_voided = True
+        txn.voided_reason = reason or 'Anulado manualmente'
+        db.session.commit()
+        return txn
+
+    # ── Ledger ─────────────────────────────────────────────────────────────
+
+    @staticmethod
+    def get_ledger_entries(company_id: int, search: str = '',
+                           start_date: str = '', end_date: str = '',
+                           account_id: int = None) -> list:
+        q = (
+            LedgerEntry.query
+            .join(Account, LedgerEntry.account_id == Account.id)
+            .filter(LedgerEntry.company_id == company_id)
+        )
+
+        if account_id:
+            q = q.filter(LedgerEntry.account_id == account_id)
+
+        if search:
+            q = q.filter(
+                LedgerEntry.description.ilike(f'%{search}%') |
+                LedgerEntry.reference_type.ilike(f'%{search}%') |
+                Account.name.ilike(f'%{search}%')
+            )
+
+        if start_date or end_date:
+            start_dt, end_dt = _get_period_bounds(start_date, end_date)
+            if start_date:
+                q = q.filter(LedgerEntry.date >= start_dt)
+            if end_date:
+                q = q.filter(LedgerEntry.date <= end_dt)
+
+        return q.order_by(LedgerEntry.date.desc(), LedgerEntry.id.desc()).all()
+
+    # ── Trial Balance ──────────────────────────────────────────────────────
+
+    @staticmethod
+    def get_trial_balance(company_id: int, as_of_date: str = '') -> dict:
+        """
+        Returns a trial balance as of a given date.
+        Also validates that total debits == total credits.
+        """
+        as_of = _parse_date(as_of_date, default_now=True) if as_of_date else None
+
+        accounts = (
+            Account.query
+            .filter_by(company_id=company_id, is_active=True)
+            .order_by(Account.type, Account.code, Account.name)
+            .all()
+        )
+
+        rows = []
+        total_debit = 0.0
+        total_credit = 0.0
+
+        for acct in accounts:
+            bal = _compute_account_balance(acct, as_of=as_of)
+            debit_col = round(bal, 2) if acct.normal_balance == 'debit' and bal >= 0 else 0.0
+            credit_col = round(abs(bal), 2) if acct.normal_balance == 'credit' and bal >= 0 else 0.0
+
+            # Reversed-balance accounts
+            if acct.normal_balance == 'debit' and bal < 0:
+                credit_col = round(abs(bal), 2)
+            elif acct.normal_balance == 'credit' and bal < 0:
+                debit_col = round(abs(bal), 2)
+
+            if debit_col > 0 or credit_col > 0:
+                rows.append({
+                    'account': acct,
+                    'debit': debit_col,
+                    'credit': credit_col,
+                })
+                total_debit += debit_col
+                total_credit += credit_col
+
+        is_balanced = round(total_debit, 2) == round(total_credit, 2)
+        return {
+            'rows': rows,
+            'total_debit': round(total_debit, 2),
+            'total_credit': round(total_credit, 2),
+            'is_balanced': is_balanced,
+            'as_of': as_of or _make_naive(datetime.now(UTC)),
+        }
+
+    # ── Reports ────────────────────────────────────────────────────────────
+
+    @staticmethod
+    def compute_report(company_id: int, report_type: str,
+                       start_date: str, end_date: str) -> tuple[dict, object]:
+        start_dt, end_dt = _get_period_bounds(start_date, end_date)
+
+        report_data: dict = {}
+        total: object = 0.0
+
+        if report_type == 'income_statement':
+            # Income Statement: credits on revenue, debits on expense, for the PERIOD
+            entries = (
+                LedgerEntry.query
+                .join(Account, LedgerEntry.account_id == Account.id)
+                .filter(
+                    LedgerEntry.company_id == company_id,
+                    LedgerEntry.date >= start_dt,
+                    LedgerEntry.date <= end_dt,
+                    Account.type.in_([AccountType.revenue, AccountType.expense])
+                )
+                .all()
+            )
+
+            report_data = {'revenue': {}, 'expense': {}}
+            for entry in entries:
+                acc_type = entry.account.type.value
+                acc_name = entry.account.name
+                # Revenue: normal balance is credit
+                if acc_type == 'revenue':
+                    net = float(entry.credit) - float(entry.debit)
+                else:  # expense: normal balance is debit
+                    net = float(entry.debit) - float(entry.credit)
+                report_data[acc_type][acc_name] = report_data[acc_type].get(acc_name, 0.0) + net
+
+            total_revenue = sum(report_data['revenue'].values())
+            total_expense = sum(report_data['expense'].values())
+            total = round(total_revenue - total_expense, 2)
+
+        elif report_type == 'balance_sheet':
+            # Balance Sheet: cumulative up to end_dt
+            entries = (
+                LedgerEntry.query
+                .join(Account, LedgerEntry.account_id == Account.id)
+                .filter(
+                    LedgerEntry.company_id == company_id,
+                    LedgerEntry.date <= end_dt,
+                    Account.type.in_([AccountType.asset, AccountType.liability, AccountType.equity])
+                )
+                .all()
+            )
+
+            report_data = {'asset': {}, 'liability': {}, 'equity': {}}
+            for entry in entries:
+                acc_type = entry.account.type.value
+                acc_name = entry.account.name
+                if acc_type == 'asset':
+                    net = float(entry.debit) - float(entry.credit)
+                else:  # liability, equity: credit increases
+                    net = float(entry.credit) - float(entry.debit)
+                report_data[acc_type][acc_name] = report_data[acc_type].get(acc_name, 0.0) + net
+
+            # Add net income to retained earnings
+            income_entries = (
+                LedgerEntry.query
+                .join(Account, LedgerEntry.account_id == Account.id)
+                .filter(
+                    LedgerEntry.company_id == company_id,
+                    LedgerEntry.date <= end_dt,
+                    Account.type.in_([AccountType.revenue, AccountType.expense])
+                )
+                .all()
+            )
+            net_income = 0.0
+            for e in income_entries:
+                if e.account.type == AccountType.revenue:
+                    net_income += float(e.credit) - float(e.debit)
+                else:
+                    net_income -= float(e.debit) - float(e.credit)
+
+            retained_key = 'Resultado del Período (Calculado)'
+            report_data['equity'][retained_key] = (
+                report_data['equity'].get(retained_key, 0.0) + net_income
+            )
+
+            total_asset = sum(report_data['asset'].values())
+            total_liability = sum(report_data['liability'].values())
+            total_equity = sum(report_data['equity'].values())
+
+            total = {
+                'assets': round(total_asset, 2),
+                'liabilities': round(total_liability, 2),
+                'equity': round(total_equity, 2),
+                'liabilities_and_equity': round(total_liability + total_equity, 2),
+            }
+
+        elif report_type == 'cash_flow':
+            # Simplified indirect cash flow
+            # Operating: net income + change in AR/AP
+            income_entries = (
+                LedgerEntry.query
+                .join(Account)
+                .filter(
+                    LedgerEntry.company_id == company_id,
+                    LedgerEntry.date >= start_dt,
+                    LedgerEntry.date <= end_dt,
+                    Account.type.in_([AccountType.revenue, AccountType.expense])
+                )
+                .all()
+            )
+            net_income = 0.0
+            for e in income_entries:
+                if e.account.type == AccountType.revenue:
+                    net_income += float(e.credit) - float(e.debit)
+                else:
+                    net_income -= float(e.debit) - float(e.credit)
+
+            # Investing / Financing: changes in asset/liability accounts (excluding cash)
+            cash_like = ['caja', 'banco', 'cash']
+            non_cash_asset_entries = (
+                LedgerEntry.query
+                .join(Account)
+                .filter(
+                    LedgerEntry.company_id == company_id,
+                    LedgerEntry.date >= start_dt,
+                    LedgerEntry.date <= end_dt,
+                    Account.type == AccountType.asset,
+                    ~db.or_(*[Account.name.ilike(f'%{k}%') for k in cash_like])
+                )
+                .all()
+            )
+            investing_change = sum(
+                float(e.debit) - float(e.credit) for e in non_cash_asset_entries
+            )
+
+            liability_entries = (
+                LedgerEntry.query
+                .join(Account)
+                .filter(
+                    LedgerEntry.company_id == company_id,
+                    LedgerEntry.date >= start_dt,
+                    LedgerEntry.date <= end_dt,
+                    Account.type.in_([AccountType.liability, AccountType.equity])
+                )
+                .all()
+            )
+            financing_change = sum(
+                float(e.credit) - float(e.debit) for e in liability_entries
+            )
+
+            report_data = {
+                'operating': {'Resultado neto del período': round(net_income, 2)},
+                'investing': {'Cambio en activos no corrientes': round(-investing_change, 2)},
+                'financing': {'Cambio en pasivos y patrimonio': round(financing_change, 2)},
+            }
+            total = round(net_income - investing_change + financing_change, 2)
+
+        return report_data, total
+
+    @staticmethod
+    def export_report_csv(company_id: int, report_type: str,
+                          report_data: dict, total,
+                          start_date: str, end_date: str) -> Response:
+        si = io.StringIO()
+        cw = csv.writer(si)
+
+        if report_type == 'income_statement':
+            cw.writerow(['Tipo', 'Cuenta', 'Monto'])
+            for acc_name, amount in report_data.get('revenue', {}).items():
+                cw.writerow(['Ingreso', acc_name, f"{amount:.2f}"])
+            for acc_name, amount in report_data.get('expense', {}).items():
+                cw.writerow(['Gasto', acc_name, f"{amount:.2f}"])
+            cw.writerow([])
+            cw.writerow(['Resultado Neto', '', f"{total:.2f}"])
+
+        elif report_type == 'balance_sheet':
+            cw.writerow(['Tipo', 'Cuenta', 'Monto'])
+            for acc_name, amount in report_data.get('asset', {}).items():
+                cw.writerow(['Activo', acc_name, f"{amount:.2f}"])
+            for acc_name, amount in report_data.get('liability', {}).items():
+                cw.writerow(['Pasivo', acc_name, f"{amount:.2f}"])
+            for acc_name, amount in report_data.get('equity', {}).items():
+                cw.writerow(['Patrimonio', acc_name, f"{amount:.2f}"])
+            cw.writerow([])
+            cw.writerow(['Total Activos', '', f"{total['assets']:.2f}"])
+            cw.writerow(['Total Pasivos + Patrimonio', '', f"{total['liabilities_and_equity']:.2f}"])
+
+        elif report_type == 'cash_flow':
+            cw.writerow(['Sección', 'Concepto', 'Monto'])
+            for sec, items in report_data.items():
+                for concept, amount in items.items():
+                    cw.writerow([sec.title(), concept, f"{amount:.2f}"])
+            cw.writerow([])
+            cw.writerow(['Flujo Neto', '', f"{total:.2f}"])
+
+        rep = Report(
+            company_id=company_id,
+            title=f"{report_type.replace('_', ' ').title()} ({start_date} to {end_date})",
+            report_type=report_type,
+            generated_by=current_user.id,
+        )
+        db.session.add(rep)
+        db.session.commit()
+
+        return Response(
+            si.getvalue(),
+            mimetype='text/csv',
+            headers={'Content-disposition': f'attachment; filename={report_type}_{end_date}.csv'},
+        )
 
     # ── Accounts ───────────────────────────────────────────────────────────
 
@@ -194,213 +1013,105 @@ class AccountingService:
         name = data.get('name', '').strip()
         account_type = data.get('type', '').strip()
         description = data.get('description', '').strip()
-        balance_str = data.get('balance', '0.0').strip()
+        code = data.get('code', '').strip() or None
 
         if not name or not account_type:
             raise ValueError('El nombre y el tipo de cuenta son requeridos.')
-
         try:
-            balance = float(balance_str) if balance_str else 0.0
             act_type_enum = AccountType(account_type)
         except ValueError:
-            raise ValueError('Valores inválidos.')
+            raise ValueError('Tipo de cuenta inválido.')
 
         account = Account(
             company_id=company_id,
+            code=code,
             name=name,
             type=act_type_enum,
             description=description,
-            balance=balance
         )
         db.session.add(account)
         db.session.commit()
         return account
 
     @staticmethod
-    def generate_default_accounts(company_id: int) -> int:
-        company = Company.query.get_or_404(company_id)
+    def update_account(company_id: int, account_id: int, data) -> Account:
+        account = Account.query.filter_by(id=account_id, company_id=company_id).first_or_404()
+        name = data.get('name', '').strip()
+        account_type = data.get('type', '').strip()
+        if not name or not account_type:
+            raise ValueError('Nombre y tipo son requeridos.')
+        try:
+            account.type = AccountType(account_type)
+        except ValueError:
+            raise ValueError('Tipo de cuenta inválido.')
+        account.name = name
+        account.code = data.get('code', '').strip() or account.code
+        account.description = data.get('description', '').strip()
+        account.is_active = data.get('is_active', 'true').lower() == 'true'
+        db.session.commit()
+        return account
 
+    @staticmethod
+    def generate_default_accounts(company_id: int) -> int:
         default_accounts = [
-            {'name': 'Caja y Bancos', 'type': AccountType.asset, 'description': 'Cuenta principal de efectivo y saldos bancarios.'},
-            {'name': 'Cuentas por Cobrar', 'type': AccountType.asset, 'description': 'Derechos de cobro a clientes por ventas a crédito.'},
-            {'name': 'Inventario', 'type': AccountType.asset, 'description': 'Valor de las mercancías disponibles para la venta.'},
-            {'name': 'Cuentas por Pagar', 'type': AccountType.liability, 'description': 'Obligaciones de pago con proveedores.'},
-            {'name': 'Obligaciones Fiscales', 'type': AccountType.liability, 'description': 'Impuestos pendientes de pago.'},
-            {'name': 'Capital Social', 'type': AccountType.equity, 'description': 'Aportaciones de los socios o propietarios.'},
-            {'name': 'Resultados Acumulados', 'type': AccountType.equity, 'description': 'Ganancias o pérdidas acumuladas de ejercicios anteriores.'},
-            {'name': 'Ventas de Servicios', 'type': AccountType.revenue, 'description': 'Ingresos generados por la prestación de servicios.'},
-            {'name': 'Ventas de Productos', 'type': AccountType.revenue, 'description': 'Ingresos generados por la comercialización de bienes.'},
-            {'name': 'Gastos de Alquiler', 'type': AccountType.expense, 'description': 'Pagos por arrendamiento de locales u oficinas.'},
-            {'name': 'Servicios Públicos', 'type': AccountType.expense, 'description': 'Electricidad, agua, internet, telefonía, etc.'},
-            {'name': 'Nóminas y Salarios', 'type': AccountType.expense, 'description': 'Remuneraciones al personal de la empresa.'},
-            {'name': 'Gastos de Marketing', 'type': AccountType.expense, 'description': 'Publicidad, promoción y mercadeo.'},
-            {'name': 'Otros Gastos', 'type': AccountType.expense, 'description': 'Gastos diversos no clasificados en otras cuentas.'},
+            {'code': '1100', 'name': 'Caja y Bancos',          'type': AccountType.asset,     'description': 'Efectivo y saldos bancarios.'},
+            {'code': '1200', 'name': 'Cuentas por Cobrar',     'type': AccountType.asset,     'description': 'Derechos de cobro a clientes.'},
+            {'code': '1300', 'name': 'Inventario',             'type': AccountType.asset,     'description': 'Mercancías para la venta.'},
+            {'code': '1400', 'name': 'Activos Fijos',          'type': AccountType.asset,     'description': 'Maquinaria, equipos y mobiliario.'},
+            {'code': '2100', 'name': 'Cuentas por Pagar',      'type': AccountType.liability, 'description': 'Obligaciones con proveedores.'},
+            {'code': '2200', 'name': 'Obligaciones Fiscales',  'type': AccountType.liability, 'description': 'Impuestos pendientes.'},
+            {'code': '2300', 'name': 'Préstamos por Pagar',    'type': AccountType.liability, 'description': 'Deudas bancarias a corto y largo plazo.'},
+            {'code': '3100', 'name': 'Capital Social',         'type': AccountType.equity,    'description': 'Aportaciones de socios.'},
+            {'code': '3200', 'name': 'Resultados Acumulados',  'type': AccountType.equity,    'description': 'Utilidades/pérdidas de ejercicios anteriores.'},
+            {'code': '4100', 'name': 'Ventas de Servicios',    'type': AccountType.revenue,   'description': 'Ingresos por servicios.'},
+            {'code': '4200', 'name': 'Ventas de Productos',    'type': AccountType.revenue,   'description': 'Ingresos por ventas de bienes.'},
+            {'code': '5100', 'name': 'Costo de Ventas',        'type': AccountType.expense,   'description': 'Costo directo de bienes vendidos.'},
+            {'code': '5200', 'name': 'Nóminas y Salarios',     'type': AccountType.expense,   'description': 'Remuneraciones al personal.'},
+            {'code': '5300', 'name': 'Gastos de Alquiler',     'type': AccountType.expense,   'description': 'Arrendamiento de locales.'},
+            {'code': '5400', 'name': 'Servicios Públicos',     'type': AccountType.expense,   'description': 'Electricidad, agua, internet.'},
+            {'code': '5500', 'name': 'Gastos de Marketing',    'type': AccountType.expense,   'description': 'Publicidad y promoción.'},
+            {'code': '5600', 'name': 'Gastos Financieros',     'type': AccountType.expense,   'description': 'Intereses y comisiones bancarias.'},
+            {'code': '5900', 'name': 'Otros Gastos',           'type': AccountType.expense,   'description': 'Gastos diversos no clasificados.'},
         ]
 
         created_count = 0
         for def_acc in default_accounts:
-            exists = Account.query.filter_by(company_id=company.id, name=def_acc['name'], type=def_acc['type']).first()
+            exists = Account.query.filter_by(
+                company_id=company_id, name=def_acc['name'], type=def_acc['type']
+            ).first()
             if not exists:
-                account = Account(
-                    company_id=company.id,
+                db.session.add(Account(
+                    company_id=company_id,
+                    code=def_acc['code'],
                     name=def_acc['name'],
                     type=def_acc['type'],
                     description=def_acc['description'],
-                    balance=0.0,
-                    is_default=True
-                )
-                db.session.add(account)
+                    is_default=True,
+                    is_active=True,
+                ))
                 created_count += 1
 
         if created_count > 0:
             db.session.commit()
-
         return created_count
 
-    # ── Ledger ─────────────────────────────────────────────────────────────
+    # ── Projects ───────────────────────────────────────────────────────────
 
     @staticmethod
-    def get_ledger_entries(company_id: int, search: str, start_date: str, end_date: str) -> list:
-        query = LedgerEntry.query.filter_by(company_id=company_id)
-
-        if search:
-            query = query.join(Account).filter(
-                db.or_(
-                    LedgerEntry.description.ilike(f'%{search}%'),
-                    LedgerEntry.reference_type.ilike(f'%{search}%'),
-                    Account.name.ilike(f'%{search}%')
-                )
-            )
-
-        if start_date:
-            try:
-                start_dt = datetime.strptime(start_date, '%Y-%m-%d')
-                query = query.filter(LedgerEntry.date >= start_dt)
-            except ValueError:
-                pass
-
-        if end_date:
-            try:
-                end_dt = datetime.strptime(end_date, '%Y-%m-%d')
-                query = query.filter(LedgerEntry.date <= end_dt)
-            except ValueError:
-                pass
-
-        return query.order_by(LedgerEntry.date.desc(), LedgerEntry.id.desc()).all()
-
-    # ── Reports ────────────────────────────────────────────────────────────
-
-    @staticmethod
-    def compute_report(company_id: int, report_type: str, start_date: str, end_date: str) -> tuple[dict, object]:
-        if not start_date:
-            now = datetime.now(UTC)
-            start_date = now.replace(day=1).strftime('%Y-%m-%d')
-        if not end_date:
-            end_date = datetime.now(UTC).strftime('%Y-%m-%d')
-
-        start_dt = datetime.strptime(start_date, '%Y-%m-%d')
-        end_dt = datetime.strptime(end_date, '%Y-%m-%d').replace(hour=23, minute=59, second=59)
-
-        report_data = {}
-        total: object = 0.0
-
-        if report_type == 'income_statement':
-            entries = LedgerEntry.query.join(Account).filter(
-                LedgerEntry.company_id == company_id,
-                LedgerEntry.date >= start_dt,
-                LedgerEntry.date <= end_dt,
-                Account.type.in_([AccountType.revenue, AccountType.expense])
-            ).all()
-
-            report_data = {'revenue': {}, 'expense': {}}
-            for entry in entries:
-                acc_type = entry.account.type.value
-                acc_name = entry.account.name
-                net = float(entry.credit - entry.debit) if acc_type == 'revenue' else float(entry.debit - entry.credit)
-                report_data[acc_type][acc_name] = report_data[acc_type].get(acc_name, 0.0) + net
-
-            total_revenue = sum(report_data['revenue'].values())
-            total_expense = sum(report_data['expense'].values())
-            total = total_revenue - total_expense
-
-        elif report_type == 'balance_sheet':
-            entries = LedgerEntry.query.join(Account).filter(
-                LedgerEntry.company_id == company_id,
-                LedgerEntry.date <= end_dt,
-                Account.type.in_([AccountType.asset, AccountType.liability, AccountType.equity])
-            ).all()
-
-            report_data = {'asset': {}, 'liability': {}, 'equity': {}}
-            for entry in entries:
-                acc_type = entry.account.type.value
-                acc_name = entry.account.name
-                net = float(entry.debit - entry.credit) if acc_type == 'asset' else float(entry.credit - entry.debit)
-                report_data[acc_type][acc_name] = report_data[acc_type].get(acc_name, 0.0) + net
-
-            # Calculate net income for retained earnings
-            ni_entries = LedgerEntry.query.join(Account).filter(
-                LedgerEntry.company_id == company_id,
-                LedgerEntry.date <= end_dt,
-                Account.type.in_([AccountType.revenue, AccountType.expense])
-            ).all()
-            net_income = 0.0
-            for entry in ni_entries:
-                if entry.account.type.value == 'revenue':
-                    net_income += float(entry.credit - entry.debit)
-                else:
-                    net_income -= float(entry.debit - entry.credit)
-
-            report_data['equity']['Retained Earnings (Calculated)'] = float(report_data['equity'].get('Retained Earnings (Calculated)', 0.0)) + net_income
-            total_equity = sum(report_data['equity'].values())
-            total_liability = sum(report_data['liability'].values())
-            total_asset = sum(report_data['asset'].values())
-
-            total = {
-                'assets': float(total_asset),
-                'liabilities_and_equity': float(total_liability) + float(total_equity)
-            }
-
-        return report_data, total
-
-    @staticmethod
-    def export_report_csv(company_id: int, report_type: str, report_data: dict, total, start_date: str, end_date: str) -> Response:
-        si = io.StringIO()
-        cw = csv.writer(si)
-
-        if report_type == 'income_statement':
-            cw.writerow(['Account Type', 'Account Name', 'Amount'])
-            for acc_name, amount in report_data['revenue'].items():
-                cw.writerow(['Revenue', acc_name, f"{amount:.2f}"])
-            for acc_name, amount in report_data['expense'].items():
-                cw.writerow(['Expense', acc_name, f"{amount:.2f}"])
-            cw.writerow([])
-            cw.writerow(['Net Income', '', f"{total:.2f}"])
-        else:
-            cw.writerow(['Account Type', 'Account Name', 'Amount'])
-            for acc_name, amount in report_data['asset'].items():
-                cw.writerow(['Asset', acc_name, f"{amount:.2f}"])
-            for acc_name, amount in report_data['liability'].items():
-                cw.writerow(['Liability', acc_name, f"{amount:.2f}"])
-            for acc_name, amount in report_data['equity'].items():
-                cw.writerow(['Equity', acc_name, f"{amount:.2f}"])
-            cw.writerow([])
-            cw.writerow(['Total Assets', '', f"{total['assets']:.2f}"])
-            cw.writerow(['Total Liabilities & Equity', '', f"{total['liabilities_and_equity']:.2f}"])
-
-        rep = Report(
-            company_id=company_id,
-            title=f"{report_type.replace('_', ' ').title()} ({start_date} to {end_date})",
-            report_type=report_type,
-            generated_by=current_user.id
-        )
-        db.session.add(rep)
+    def create_project(company_id: int, data) -> Project:
+        name = data.get('name', '').strip()
+        if not name:
+            raise ValueError('El nombre del proyecto es requerido.')
+        description = data.get('description', '').strip()
+        budget_str = data.get('budget', '').strip()
+        try:
+            budget = float(budget_str) if budget_str else 0.0
+        except ValueError:
+            budget = 0.0
+        project = Project(company_id=company_id, name=name, description=description, budget=budget)
+        db.session.add(project)
         db.session.commit()
-
-        return Response(
-            si.getvalue(),
-            mimetype="text/csv",
-            headers={"Content-disposition": f"attachment; filename={report_type}_{end_date}.csv"}
-        )
+        return project
 
     # ── Tags ───────────────────────────────────────────────────────────────
 
@@ -408,14 +1119,10 @@ class AccountingService:
     def create_tag(company_id: int, data) -> Tag:
         name = data.get('name', '').strip()
         color_code = data.get('color_code', 'bg-slate-100 text-slate-700').strip()
-
         if not name:
-            raise ValueError("El nombre de la etiqueta es requerido")
-
-        existing = Tag.query.filter_by(company_id=company_id, name=name).first()
-        if existing:
-            raise ValueError("La etiqueta ya existe")
-
+            raise ValueError('El nombre de la etiqueta es requerido.')
+        if Tag.query.filter_by(company_id=company_id, name=name).first():
+            raise ValueError('La etiqueta ya existe.')
         tag = Tag(company_id=company_id, name=name, color_code=color_code)
         db.session.add(tag)
         db.session.commit()

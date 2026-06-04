@@ -1,81 +1,45 @@
-<div class="flex flex-col h-full bg-white">
-  <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50">
-    <div>
-      <h3 class="text-lg font-semibold text-slate-800">Nueva Cuenta Contable</h3>
-      <p class="text-sm text-slate-500 mt-1">Añade una cuenta al plan de cuentas de la empresa.</p>
-    </div>
-    <button type="button" data-action="close-drawer"
-      class="hidden text-slate-400 hover:text-slate-600 transition-colors">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-      </svg>
-    </button>
-  </div>
-
-  <form data-drawer-form action="{{ url_for('accounting.create_account', company_id=company.id) }}" method="POST"
-    class="flex flex-col flex-1 overflow-hidden">
-    <div class="flex-1 overflow-y-auto p-6 space-y-5">
-
+<form method="POST"
+  action="{{ url_for('accounting.edit_account', company_id=company.id, account_id=account.id) if account else url_for('accounting.create_account', company_id=company.id) }}"
+  data-drawer-form data-success-message="{{ 'Cuenta actualizada.' if account else 'Cuenta creada.' }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="p-6 space-y-4">
+    <div class="grid grid-cols-2 gap-4">
       <div>
-        <label for="name" class="block text-sm font-semibold text-slate-700 mb-1.5">
-          Nombre de la Cuenta <span class="text-rose-500">*</span>
-        </label>
-        <input type="text" id="name" name="name" required
-          class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white"
-          placeholder="Ej: Caja Chica, Préstamos Bancarios">
+        <label class="block text-sm font-medium text-slate-700 mb-1">Código de cuenta</label>
+        <input type="text" name="code" value="{{ account.code if account else '' }}" placeholder="Ej: 1100"
+          class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
       </div>
-
       <div>
-        <label for="type" class="block text-sm font-semibold text-slate-700 mb-1.5">
-          Tipo de Cuenta <span class="text-rose-500">*</span>
-        </label>
-        <select id="type" name="type" required
-          class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
-          <option value="" disabled selected>Selecciona un tipo...</option>
-          <option value="asset">Activo (Asset)</option>
-          <option value="liability">Pasivo (Liability)</option>
-          <option value="equity">Patrimonio (Equity)</option>
-          <option value="revenue">Ingreso (Revenue)</option>
-          <option value="expense">Gasto (Expense)</option>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Tipo de cuenta <span class="text-rose-500">*</span></label>
+        <select name="type" required class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+          {% for t in AccountType %}
+          {% set labels = {'asset': 'Activo', 'liability': 'Pasivo', 'equity': 'Patrimonio', 'revenue': 'Ingreso', 'expense': 'Gasto'} %}
+          <option value="{{ t.value }}" {{ 'selected' if account and account.type == t }}>{{ labels.get(t.value, t.value) }}</option>
+          {% endfor %}
         </select>
-        <p class="text-[11px] text-slate-500 mt-1">El tipo de cuenta determinará dónde aparece en los reportes
-          financieros.</p>
       </div>
-
-      <div>
-        <label for="balance" class="block text-sm font-semibold text-slate-700 mb-1.5">
-          Saldo Inicial
-        </label>
-        <div class="relative">
-          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <span class="text-slate-500 sm:text-sm">$</span>
-          </div>
-          <input type="number" step="0.01" id="balance" name="balance" value="0.00"
-            class="w-full pl-7 pr-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
-        </div>
-        <p class="text-[11px] text-slate-500 mt-1">Opcional. Saldo de apertura al crear la cuenta.</p>
-      </div>
-
-      <div>
-        <label for="description" class="block text-sm font-semibold text-slate-700 mb-1.5">
-          Descripción
-        </label>
-        <textarea id="description" name="description" rows="3"
-          class="w-full px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white"
-          placeholder="Detalles sobre el uso de esta cuenta..."></textarea>
-      </div>
-
     </div>
-
-    <div class="px-6 py-4 border-t border-slate-100 bg-slate-50 flex justify-end gap-3">
-      <button type="button" data-action="close-drawer"
-        class="px-4 py-2 text-sm font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">
-        Cancelar
-      </button>
-      <button type="submit"
-        class="px-4 py-2 text-sm font-medium text-white bg-emerald-600 border border-transparent rounded-lg hover:bg-emerald-700 transition-colors">
-        Guardar Cuenta
+    <div>
+      <label class="block text-sm font-medium text-slate-700 mb-1">Nombre de la cuenta <span class="text-rose-500">*</span></label>
+      <input type="text" name="name" value="{{ account.name if account else '' }}" required placeholder="Ej: Caja y Bancos"
+        class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+    </div>
+    <div>
+      <label class="block text-sm font-medium text-slate-700 mb-1">Descripción</label>
+      <textarea name="description" rows="2" placeholder="Descripción opcional..."
+        class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none">{{ account.description if account else '' }}</textarea>
+    </div>
+    {% if account %}
+    <div class="flex items-center gap-3">
+      <input type="checkbox" name="is_active" id="is_active" value="true" {{ 'checked' if account.is_active }}
+        class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
+      <label for="is_active" class="text-sm text-slate-700">Cuenta activa</label>
+    </div>
+    {% endif %}
+    <div class="border-t border-slate-200 pt-4">
+      <button type="submit" class="w-full px-4 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
+        {{ 'Actualizar Cuenta' if account else 'Crear Cuenta' }}
       </button>
     </div>
-  </form>
-</div>
+  </div>
+</form>
