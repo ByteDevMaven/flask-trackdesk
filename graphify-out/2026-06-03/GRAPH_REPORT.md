@@ -1,13 +1,18 @@
-# Graph Report - .  (2026-06-03)
+# Graph Report - flask-trackdesk  (2026-06-03)
 
 ## Corpus Check
-- 197 files · ~94,805 words
+- 134 files · ~93,787 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 693 nodes · 1359 edges · 43 communities (42 shown, 1 thin omitted)
-- Extraction: 87% EXTRACTED · 13% INFERRED · 0% AMBIGUOUS · INFERRED: 175 edges (avg confidence: 0.5)
+- 696 nodes · 1354 edges · 44 communities
+- Extraction: 88% EXTRACTED · 12% INFERRED · 0% AMBIGUOUS · INFERRED: 165 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
+
+## Graph Freshness
+- Built from commit: `7c6b8960`
+- Run `git rev-parse HEAD` and compare to check if the graph is stale.
+- Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - [[_COMMUNITY_Core Models|Core Models]]
@@ -31,6 +36,7 @@
 - [[_COMMUNITY_Migrations Core|Migrations Core]]
 - [[_COMMUNITY_Drawer UI JS|Drawer UI JS]]
 - [[_COMMUNITY_Consolidate Schema Migration|Consolidate Schema Migration]]
+- [[_COMMUNITY_Community 43|Community 43]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `BaseModel` - 95 edges
@@ -52,11 +58,12 @@
 - `str` --uses--> `BaseModel`  [INFERRED]
   app/models/document_item.py → app/models/base.py
 - `str` --uses--> `BaseModel`  [INFERRED]
-  app/models/document_sequence.py → app/models/base.py
-- `str` --uses--> `BaseModel`  [INFERRED]
   app/models/document_template.py → app/models/base.py
+- `str` --uses--> `BaseModel`  [INFERRED]
+  app/models/inventory_item.py → app/models/base.py
 
 ## Import Cycles
+- 1-file cycle: `app/hr/__init__.py -> app/hr/__init__.py`
 - 1-file cycle: `app.py -> app.py`
 - 1-file cycle: `app/blueprints.py -> app/blueprints.py`
 - 1-file cycle: `app/cli.py -> app/cli.py`
@@ -68,7 +75,6 @@
 - 1-file cycle: `app/companies/__init__.py -> app/companies/__init__.py`
 - 1-file cycle: `app/contacts/__init__.py -> app/contacts/__init__.py`
 - 1-file cycle: `app/dashboard/__init__.py -> app/dashboard/__init__.py`
-- 1-file cycle: `app/hr/__init__.py -> app/hr/__init__.py`
 - 1-file cycle: `app/inventory/__init__.py -> app/inventory/__init__.py`
 - 1-file cycle: `app/invoices/__init__.py -> app/invoices/__init__.py`
 - 1-file cycle: `app/middleware/rbac.py -> app/middleware/rbac.py`
@@ -77,23 +83,23 @@
 - 1-file cycle: `app/users/__init__.py -> app/users/__init__.py`
 - 1-file cycle: `app/warehouses/__init__.py -> app/warehouses/__init__.py`
 
-## Communities (43 total, 1 thin omitted)
+## Communities (44 total, 0 thin omitted)
 
 ### Community 0 - "Core Models"
 Cohesion: 0.07
 Nodes (26): str, str, str, str, str, str, str, str (+18 more)
 
 ### Community 1 - "App Init & Middleware"
-Cohesion: 0.07
-Nodes (30): Flask, register_blueprints(), Flask, register_cli(), Flask, register_context_processors(), get_locale(), register_extensions() (+22 more)
+Cohesion: 0.09
+Nodes (29): Flask, register_blueprints(), Flask, register_cli(), Flask, register_context_processors(), get_locale(), register_extensions() (+21 more)
 
 ### Community 2 - "Inventory & Orders Service"
-Cohesion: 0.06
-Nodes (28): str, str, str, int, str, str, int, StockMovementType (+20 more)
+Cohesion: 0.12
+Nodes (5): str, str, InventoryItem, WarehouseItem, InventoryService
 
 ### Community 3 - "Invoices Service"
-Cohesion: 0.08
-Nodes (29): str, float, str, str, add_payment(), delete(), index(), store() (+21 more)
+Cohesion: 0.14
+Nodes (16): str, add_payment(), delete(), index(), print_invoice(), store(), update(), DocumentItem (+8 more)
 
 ### Community 4 - "Accounting Module"
 Cohesion: 0.10
@@ -104,12 +110,12 @@ Cohesion: 0.07
 Nodes (16): float, int, bool, str, format_currency(), format_date(), locale_date(), Format a number as currency (+8 more)
 
 ### Community 6 - "HR Module"
-Cohesion: 0.12
-Nodes (29): bool, str, bool, float, str, int, str, _allowed_file() (+21 more)
+Cohesion: 0.06
+Nodes (44): float, str, bool, float, str, int, str, str (+36 more)
 
 ### Community 7 - "PDF Generators"
 Cohesion: 0.13
-Nodes (30): bool, float, str, int, str, str, print_invoice(), Company (+22 more)
+Nodes (29): bool, float, str, int, str, str, Company, DocumentTemplate (+21 more)
 
 ### Community 8 - "Inventory Routes"
 Cohesion: 0.06
@@ -132,16 +138,20 @@ Cohesion: 0.09
 Nodes (4): int, PaymentService, Recalculate and update the status of the invoice based on total payments., _recalculate_invoice_status()
 
 ### Community 13 - "Companies Routes"
-Cohesion: 0.10
-Nodes (10): List all document sequences for a company, Form to create a new document sequence, Store a new document sequence, Form to edit an existing document sequence, Update an existing document sequence, sequence_create(), sequence_edit(), sequence_store() (+2 more)
+Cohesion: 0.07
+Nodes (11): List all document sequences for a company, Form to create a new document sequence, Store a new document sequence, Form to edit an existing document sequence, Update an existing document sequence, sequence_create(), sequence_edit(), sequence_store() (+3 more)
 
 ### Community 14 - "Companies Service"
-Cohesion: 0.16
-Nodes (3): str, DocumentSequence, CompanyService
+Cohesion: 0.17
+Nodes (12): int, create(), delete(), export(), index(), update(), get_purchase_orders(), delete_purchase_order() (+4 more)
 
 ### Community 15 - "NPM Config"
 Cohesion: 0.12
 Nodes (16): dependencies, tailwindcss, @tailwindcss/cli, devDependencies, concurrently, scripts, build, dev (+8 more)
+
+### Community 16 - "Warehouses Service"
+Cohesion: 0.08
+Nodes (4): str, Warehouse, WarehouseService, WarehouseServiceTestCase
 
 ### Community 17 - "Invoice Form JS"
 Cohesion: 0.26
@@ -159,19 +169,22 @@ Nodes (3): attachDrawerFormSubmit(), loadDrawerContent(), openDrawer()
 Cohesion: 0.47
 Nodes (3): _index_exists(), _table_exists(), upgrade()
 
+### Community 43 - "Community 43"
+Cohesion: 0.19
+Nodes (11): str, str, int, str, StockMovementType, PurchaseOrderItem, PurchaseOrder, Return signed quantity: negative for outgoing, positive for incoming/adjustment. (+3 more)
+
 ## Knowledge Gaps
-- **20 isolated node(s):** `bool`, `state`, `STATE_KEYS`, `history`, `zoomEl` (+15 more)
+- **21 isolated node(s):** `bool`, `bool`, `state`, `STATE_KEYS`, `history` (+16 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **1 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `BaseModel` connect `Core Models` to `App Init & Middleware`, `Inventory & Orders Service`, `Invoices Service`, `Accounting Module`, `Dashboard & Contacts`, `HR Module`, `PDF Generators`, `Auth Module`, `Companies Service`?**
+- **Why does `BaseModel` connect `Core Models` to `App Init & Middleware`, `Inventory & Orders Service`, `Invoices Service`, `Accounting Module`, `Dashboard & Contacts`, `HR Module`, `PDF Generators`, `Auth Module`, `Community 43`, `Warehouses Service`?**
   _High betweenness centrality (0.162) - this node is a cross-community bridge._
-- **Why does `Company` connect `PDF Generators` to `Core Models`, `App Init & Middleware`, `Invoices Service`, `Accounting Module`, `Inventory Routes`, `Users Service`, `Companies Service`?**
+- **Why does `Company` connect `PDF Generators` to `Core Models`, `App Init & Middleware`, `Accounting Module`, `HR Module`, `Inventory Routes`, `Users Service`, `Companies Routes`, `Warehouses Service`?**
   _High betweenness centrality (0.096) - this node is a cross-community bridge._
-- **Why does `ContactType` connect `Dashboard & Contacts` to `Core Models`, `Inventory & Orders Service`, `Invoices Service`, `Inventory Routes`, `Companies Service`?**
+- **Why does `ContactType` connect `Dashboard & Contacts` to `Core Models`, `Invoices Service`, `HR Module`, `Inventory Routes`, `Companies Routes`, `Companies Service`?**
   _High betweenness centrality (0.078) - this node is a cross-community bridge._
 - **Are the 66 inferred relationships involving `BaseModel` (e.g. with `str` and `str`) actually correct?**
   _`BaseModel` has 66 INFERRED edges - model-reasoned connections that need verification._
