@@ -1,0 +1,108 @@
+<div class="p-6">
+  <div class="mb-6 flex items-center justify-between">
+    <div>
+      <h2 class="text-lg font-bold text-slate-800">Solicitud de Permiso</h2>
+      <p class="text-sm text-slate-500">{{ leave.employee.full_name }}</p>
+    </div>
+    <div class="flex items-center gap-2">
+      {% set type_colors = {
+        'pto': 'bg-sky-50 text-sky-700',
+        'sick': 'bg-amber-50 text-amber-700',
+        'maternity': 'bg-pink-50 text-pink-700'
+      } %}
+      <span class="inline-flex px-3 py-1 rounded-full text-xs font-semibold {{ type_colors.get(leave.leave_type.value, 'bg-slate-100 text-slate-600') }}">
+        {{ leave.leave_type.value.title() }}
+      </span>
+      {% if leave.status.value == 'pending' %}
+      <button type="button" onclick="loadDrawerContent('{{ url_for('hr.edit_leave', company_id=company_id, leave_id=leave.id) }}', 'Editar Solicitud')"
+        class="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors" title="Editar Solicitud">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
+      </button>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4 mb-6 bg-slate-50 p-4 rounded-lg border border-slate-100">
+    <div>
+      <p class="text-xs text-slate-500 font-medium mb-1">Fecha de Inicio</p>
+      <p class="text-sm font-medium text-slate-800">{{ leave.start_date.strftime('%d %b, %Y') }}</p>
+    </div>
+    <div>
+      <p class="text-xs text-slate-500 font-medium mb-1">Fecha de Fin</p>
+      <p class="text-sm font-medium text-slate-800">{{ leave.end_date.strftime('%d %b, %Y') }}</p>
+    </div>
+    <div>
+      <p class="text-xs text-slate-500 font-medium mb-1">Días Solicitados</p>
+      <p class="text-sm font-medium text-slate-800">{{ leave.total_days }} días</p>
+    </div>
+    <div>
+      <p class="text-xs text-slate-500 font-medium mb-1">Estado</p>
+      {% if leave.status.value == 'pending' %}
+      <span class="inline-flex items-center gap-1 text-xs font-medium text-amber-700">
+        <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>Pendiente
+      </span>
+      {% elif leave.status.value == 'approved' %}
+      <span class="inline-flex items-center gap-1 text-xs font-medium text-emerald-700">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>Aprobada
+      </span>
+      {% else %}
+      <span class="inline-flex items-center gap-1 text-xs font-medium text-rose-700">
+        <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>Rechazada
+      </span>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if leave.reason %}
+  <div class="mb-6">
+    <h3 class="text-sm font-medium text-slate-800 mb-2">Motivo</h3>
+    <p class="text-sm text-slate-600 bg-white border border-slate-200 rounded-lg p-3">{{ leave.reason }}</p>
+  </div>
+  {% endif %}
+
+  {% if leave.attachment_path %}
+  <div class="mb-6">
+    <h3 class="text-sm font-medium text-slate-800 mb-2">Archivo Adjunto</h3>
+    <div class="border border-slate-200 rounded-lg overflow-hidden bg-slate-50 relative group">
+      {% set file_url = url_for('static', filename='uploads/' + leave.attachment_path) %}
+      {% if leave.attachment_path.endswith('.pdf') %}
+        <iframe src="{{ file_url }}" class="w-full h-96 border-0" title="PDF viewer"></iframe>
+      {% else %}
+        <img src="{{ file_url }}" alt="Archivo adjunto" class="w-full h-auto object-contain max-h-96">
+      {% endif %}
+      <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
+        <a href="{{ file_url }}" target="_blank" class="px-4 py-2 bg-white text-slate-800 rounded-lg text-sm font-medium shadow-sm hover:bg-slate-50 transition-colors">
+          Abrir en nueva pestaña
+        </a>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+  {% if leave.status.value == 'pending' %}
+  <div class="border-t border-slate-200 pt-6 mt-6">
+    <h3 class="text-sm font-medium text-slate-800 mb-4">Acciones de Revisión</h3>
+    <div class="flex gap-3">
+      <form method="POST" action="{{ url_for('hr.review_leave', company_id=company_id, leave_id=leave.id) }}" 
+        class="flex-1" data-drawer-form="true" data-success-message="Solicitud aprobada" data-reload-target="#leaves-table-container">
+        <input type="hidden" name="action" value="approve">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="w-full flex justify-center items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          Aprobar Solicitud
+        </button>
+      </form>
+      <form method="POST" action="{{ url_for('hr.review_leave', company_id=company_id, leave_id=leave.id) }}" 
+        class="flex-1" data-drawer-form="true" data-success-message="Solicitud rechazada" data-reload-target="#leaves-table-container">
+        <input type="hidden" name="action" value="reject">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="w-full flex justify-center items-center gap-2 px-4 py-2 bg-white border border-rose-200 text-rose-600 rounded-lg text-sm font-medium hover:bg-rose-50 transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          Rechazar
+        </button>
+      </form>
+    </div>
+  </div>
+  {% endif %}
+
+</div>

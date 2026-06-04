@@ -62,7 +62,7 @@
     </div>
   </header>
 
-  <div class="flex-1 overflow-y-auto p-6 bg-slate-50">
+  <div class="flex-1 overflow-y-auto p-6 bg-slate-50" id="leaves-table-container">
     <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
       <div class="px-4 py-3 border-b border-slate-100 bg-slate-50 flex justify-end">
         <span class="text-sm text-slate-500">{{ leaves.total }} solicitud{{ 'es' if leaves.total != 1 else '' }}</span>
@@ -121,40 +121,25 @@
             </td>
             <td class="px-4 py-3">
               {% if req.attachment_path %}
-              <a href="{{ url_for('static', filename='uploads/' + req.attachment_path) }}" target="_blank"
-                class="inline-flex items-center gap-1 text-xs font-medium text-emerald-600 hover:text-emerald-700 bg-emerald-50 px-2 py-1 rounded">
+              <span class="inline-flex items-center gap-1 text-xs font-medium text-slate-500 bg-slate-100 px-2 py-1 rounded">
                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                 </svg>
-                Ver
-              </a>
+                Adjunto
+              </span>
               {% else %}
               <span class="text-xs text-slate-400">—</span>
               {% endif %}
             </td>
             <td class="px-4 py-3">
-              {% if req.status.value == 'pending' %}
-              <div class="flex gap-1 justify-end">
-                <form method="POST" action="{{ url_for('hr.review_leave', company_id=company_id, leave_id=req.id) }}"
-                  onsubmit="return confirm('¿Aprobar esta solicitud de permiso?{% if req.leave_type.value == 'pto' %}\nEsto deducirá {{ req.total_days }} días del saldo de PTO del empleado.{% endif %}')">
-                  <input type="hidden" name="action" value="approve">
-                  <button type="submit" title="Aprobar" class="p-1.5 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-                    </svg>
-                  </button>
-                </form>
-                <form method="POST" action="{{ url_for('hr.review_leave', company_id=company_id, leave_id=req.id) }}"
-                  onsubmit="return confirm('¿Rechazar esta solicitud de permiso?')">
-                  <input type="hidden" name="action" value="reject">
-                  <button type="submit" title="Rechazar" class="p-1.5 text-rose-600 hover:bg-rose-50 rounded-lg transition-colors">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </form>
+              <div class="flex justify-end">
+                <button type="button" data-action="open-drawer"
+                  data-url="{{ url_for('hr.view_leave', company_id=company_id, leave_id=req.id) }}"
+                  data-title="Solicitud de Permiso"
+                  class="text-sm font-medium text-emerald-600 hover:text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-lg transition-colors">
+                  Detalles
+                </button>
               </div>
-              {% endif %}
             </td>
           </tr>
           {% else %}

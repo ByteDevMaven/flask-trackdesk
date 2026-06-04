@@ -14,7 +14,10 @@ import json
 
 class AlchemyEncoder(json.JSONEncoder):
     def default(self, obj):
+        from datetime import datetime, date
         if isinstance(obj, datetime):
+            return obj.isoformat()
+        if isinstance(obj, date):
             return obj.isoformat()
         if isinstance(obj, decimal.Decimal):
             return str(obj)

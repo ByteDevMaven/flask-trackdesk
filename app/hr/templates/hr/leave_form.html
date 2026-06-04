@@ -3,7 +3,7 @@
 {% else %}
 {% extends "base.html" %}
 {% endif %}
-{% block title %}Nueva Solicitud de Permiso – Recursos Humanos{% endblock %}
+{% block title %}{{ 'Editar Solicitud de Permiso' if leave else 'Nueva Solicitud de Permiso' }} – Recursos Humanos{% endblock %}
 {% block sidebar_title %}Recursos Humanos{% endblock %}
 {% block sidebar_nav %}
 {% set cid = company_id %}
@@ -17,14 +17,14 @@
   <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>Horarios de Trabajo
 </a>
 {% endblock %}
-{% block page_title %}Nueva Solicitud de Permiso{% endblock %}
+{% block page_title %}{{ 'Editar Solicitud de Permiso' if leave else 'Nueva Solicitud de Permiso' }}{% endblock %}
 
 {% block content %}
 {% set fd = form_data %}
 <form method="POST" enctype="multipart/form-data"
-  action="{{ url_for('hr.create_leave', company_id=company_id) }}"
+  action="{{ url_for('hr.edit_leave', company_id=company_id, leave_id=leave.id) if leave else url_for('hr.create_leave', company_id=company_id) }}"
   data-drawer-form
-  data-success-message="Solicitud enviada">
+  data-success-message="{{ 'Solicitud actualizada' if leave else 'Solicitud enviada' }}">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
   <div class="p-6 space-y-4">

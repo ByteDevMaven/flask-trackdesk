@@ -86,8 +86,9 @@ async function loadDrawerContent(url, title) {
       newScript.remove();
     });
 
-    const form = body.querySelector('form[data-drawer-form]');
-    if (form) attachDrawerFormSubmit(form);
+    body.querySelectorAll('form[data-drawer-form]').forEach(form => {
+      attachDrawerFormSubmit(form);
+    });
 
   } catch (err) {
     // Clear body safely
@@ -136,8 +137,10 @@ function attachDrawerFormSubmit(form) {
 
     try {
       const formData = new FormData(form);
-      const res = await fetch(form.action, {
-        method: form.method || 'POST',
+      const actionUrl = form.getAttribute('action') || form.action;
+      const method = form.getAttribute('method') || form.method || 'POST';
+      const res = await fetch(actionUrl, {
+        method: method,
         body: formData,
         headers: { 'X-Requested-With': 'XMLHttpRequest' }
       });

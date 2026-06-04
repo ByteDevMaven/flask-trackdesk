@@ -84,6 +84,25 @@ document.addEventListener('DOMContentLoaded', function() {
       } else {
         info.el.title = info.event.title;
       }
+    },
+    eventClick: function(info) {
+      var eventId = info.event.id;
+      var url = null;
+      var title = '';
+
+      if (info.event.extendedProps.type === 'leave') {
+        var leaveId = eventId.split('_')[1];
+        url = '/' + {{ company_id }} + '/hr/leaves/' + leaveId + '/view';
+        title = 'Solicitud de Permiso';
+      } else if (info.event.extendedProps.type === 'deviation') {
+        var devId = eventId.split('_')[1];
+        url = '/' + {{ company_id }} + '/hr/schedules/deviation/' + devId + '/view';
+        title = 'Desviación de Horario';
+      }
+
+      if (url && typeof loadDrawerContent !== 'undefined') {
+        loadDrawerContent(url, title);
+      }
     }
   });
   calendar.render();
