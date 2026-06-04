@@ -43,8 +43,34 @@ class ContactType(enum.Enum):
     supplier = 'supplier'
     customer_supplier = "customer_supplier"
     lead = "lead"
-    employee = "employee"
     other = "other"
+
+class EmployeeClass(enum.Enum):
+    full_time = 'full_time'
+    part_time = 'part_time'
+    per_project = 'per_project'
+    seasonal_full_time = 'seasonal_full_time'
+    seasonal_part_time = 'seasonal_part_time'
+
+class PayPeriod(enum.Enum):
+    hour = 'hour'
+    day = 'day'
+    month = 'month'
+
+class LeaveType(enum.Enum):
+    pto = 'pto'
+    sick = 'sick'
+    maternity = 'maternity'
+
+class LeaveStatus(enum.Enum):
+    pending = 'pending'
+    approved = 'approved'
+    rejected = 'rejected'
+
+class PTOAccrualPeriod(enum.Enum):
+    day = 'day'
+    month = 'month'
+    year = 'year'
 
 class UserStatus(enum.Enum):
     active = 'active'

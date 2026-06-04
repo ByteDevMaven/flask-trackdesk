@@ -11,6 +11,7 @@ from app.users import users as users_bp
 from app.companies import companies as companies_bp
 from app.accounting import accounting as accounting_bp
 from app.warehouses import warehouses as warehouses_bp
+from app.hr import hr as hr_bp
 
 def register_blueprints(app: Flask):
     app.register_blueprint(auth_bp)
@@ -24,3 +25,4 @@ def register_blueprints(app: Flask):
     app.register_blueprint(companies_bp)
     app.register_blueprint(accounting_bp)
     app.register_blueprint(warehouses_bp)
+    app.register_blueprint(hr_bp)

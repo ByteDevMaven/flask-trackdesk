@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}Horarios de Trabajo – Recursos Humanos{% endblock %}
+{% block sidebar_title %}Recursos Humanos{% endblock %}
+{% block sidebar_nav %}
+{% set cid = company_id %}
+<a href="{{ url_for('hr.employees', company_id=cid) }}"
+  class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if 'employees' in request.endpoint else 'text-slate-600 hover:bg-slate-50' }} text-sm">
+  <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if 'employees' in request.endpoint else 'bg-slate-300' }}"></span>
+  Empleados
+</a>
+<a href="{{ url_for('hr.leaves', company_id=cid) }}"
+  class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if 'leaves' in request.endpoint else 'text-slate-600 hover:bg-slate-50' }} text-sm">
+  <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if 'leaves' in request.endpoint else 'bg-slate-300' }}"></span>
+  Solicitudes de Permiso
+</a>
+<a href="{{ url_for('hr.schedules', company_id=cid) }}"
+  class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if 'schedules' in request.endpoint else 'text-slate-600 hover:bg-slate-50' }} text-sm">
+  <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if 'schedules' in request.endpoint else 'bg-slate-300' }}"></span>
+  Horarios de Trabajo
+</a>
+{% endblock %}
+{% block page_title %}Horarios de Trabajo{% endblock %}
+
+{% block content %}
+<div class="flex flex-col h-full overflow-hidden relative">
+  <header class="bg-white border-b border-slate-200 flex-shrink-0 z-10">
+    <div class="px-6 py-3 flex items-center justify-between gap-4 flex-wrap">
+      <div></div>
+      <button type="button" data-action="open-drawer"
+        data-url="{{ url_for('hr.create_schedule', company_id=company_id) }}"
+        data-title="Agregar Desviación"
+        class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors shadow-sm">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+        Agregar Desviación
+      </button>
+    </div>
+  </header>
+
+  <div class="flex-1 overflow-hidden bg-white p-6" id="calendar-container">
+    <div id="calendar" class="h-full"></div>
+  </div>
+</div>
+
+<style>
+/* FullCalendar overrides for better aesthetics */
+.fc-theme-standard .fc-scrollgrid { border-color: #e2e8f0; border-radius: 0.5rem; overflow: hidden; }
+.fc-theme-standard td, .fc-theme-standard th { border-color: #e2e8f0; }
+.fc .fc-toolbar-title { font-size: 1.25rem; font-weight: 600; color: #1e293b; text-transform: capitalize; }
+.fc .fc-button-primary { background-color: #fff; border-color: #cbd5e1; color: #475569; text-transform: capitalize; font-weight: 500; }
+.fc .fc-button-primary:not(:disabled):active, .fc .fc-button-primary:not(:disabled).fc-button-active { background-color: #f1f5f9; border-color: #cbd5e1; color: #0f172a; }
+.fc .fc-button-primary:hover { background-color: #f8fafc; border-color: #cbd5e1; color: #0f172a; }
+.fc-event { border: none; border-radius: 4px; padding: 2px 4px; font-size: 0.75rem; font-weight: 500; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); }
+.fc-daygrid-event-harness { margin-top: 2px; margin-bottom: 2px; }
+.fc-day-today { background-color: #f8fafc !important; }
+.fc-col-header-cell-cushion { padding: 8px 4px !important; color: #64748b; font-weight: 500; text-transform: uppercase; font-size: 0.75rem; }
+.fc-daygrid-day-number { color: #334155; font-size: 0.875rem; font-weight: 500; padding: 4px 8px !important; }
+</style>
+
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.10/locales/es.global.min.js'></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var calendarEl = document.getElementById('calendar');
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    locale: 'es',
+    initialView: 'timeGridWeek',
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay'
+    },
+    slotMinTime: '06:00:00',
+    slotMaxTime: '22:00:00',
+    allDaySlot: true,
+    height: '100%',
+    events: '{{ url_for("hr.schedule_events", company_id=company_id) }}',
+    eventDidMount: function(info) {
+      if (info.event.extendedProps.type === 'leave') {
+        info.el.title = info.event.title + (info.event.extendedProps.reason ? ' - ' + info.event.extendedProps.reason : '');
+      } else if (info.event.extendedProps.type === 'deviation') {
+        info.el.title = info.event.title + (info.event.extendedProps.notes ? ' - ' + info.event.extendedProps.notes : '');
+      } else {
+        info.el.title = info.event.title;
+      }
+    }
+  });
+  calendar.render();
+
+  // Listen for drawer success to refetch events
+  document.addEventListener('drawer-success', function() {
+    calendar.refetchEvents();
+  });
+});
+</script>
+{% endblock %}

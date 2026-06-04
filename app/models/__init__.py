@@ -1,5 +1,5 @@
 from app.extensions import db, migrate
-from .enums import DocumentType, DocumentStatus, InvoiceType, StockMovementType, PaymentMethod, AccountType, UserStatus, ContactType
+from .enums import DocumentType, DocumentStatus, InvoiceType, StockMovementType, PaymentMethod, AccountType, UserStatus, ContactType, EmployeeClass, PayPeriod, LeaveType, LeaveStatus, PTOAccrualPeriod
 from .associations import role_permissions, user_companies, expense_tags, ledger_entry_tags
 from .company import Company
 from .role import Role
@@ -27,10 +27,14 @@ from .tag import Tag
 from .warehouse import Warehouse
 from .warehouse_item import WarehouseItem
 from .document_template import DocumentTemplate, DocumentTemplateType
+from .employee import Employee
+from .leave_request import LeaveRequest
+from .work_schedule import WorkSchedule
 
 __all__ = [
     'db', 'migrate',
     'DocumentType', 'DocumentStatus', 'InvoiceType', 'StockMovementType', 'PaymentMethod', 'AccountType', 'UserStatus', 'ContactType', 'DocumentTemplateType',
+    'EmployeeClass', 'PayPeriod', 'LeaveType', 'LeaveStatus', 'PTOAccrualPeriod',
     'role_permissions', 'user_companies', 'expense_tags', 'ledger_entry_tags',
     'Company', 'Role', 'Permission', 'User', 'Contact',
     'InventoryItem', 'PurchaseOrder', 'PurchaseOrderItem',
@@ -39,5 +43,6 @@ __all__ = [
     'Account', 'Project', 'Expense', 'LedgerEntry',
     'AuditLog', 'Tag',
     'Warehouse', 'WarehouseItem',
-    'DocumentTemplate'
+    'DocumentTemplate',
+    'Employee', 'LeaveRequest', 'WorkSchedule',
 ]

@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+{% block title %}Recursos Humanos – Solicitudes de Permiso – TrackDesk{% endblock %}
+{% block sidebar_title %}Recursos Humanos{% endblock %}
+{% block sidebar_nav %}
+{% set cid = company_id %}
+<a href="{{ url_for('hr.employees', company_id=cid) }}"
+  class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if 'employees' in request.endpoint else 'text-slate-600 hover:bg-slate-50' }} text-sm">
+  <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if 'employees' in request.endpoint else 'bg-slate-300' }}"></span>
+  Empleados
+</a>
+<a href="{{ url_for('hr.leaves', company_id=cid) }}"
+  class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if 'leaves' in request.endpoint else 'text-slate-600 hover:bg-slate-50' }} text-sm">
+  <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if 'leaves' in request.endpoint else 'bg-slate-300' }}"></span>
+  Solicitudes de Permiso
+</a>
+<a href="{{ url_for('hr.schedules', company_id=cid) }}"
+  class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if 'schedules' in request.endpoint else 'text-slate-600 hover:bg-slate-50' }} text-sm">
+  <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if 'schedules' in request.endpoint else 'bg-slate-300' }}"></span>
+  Horarios de Trabajo
+</a>
+{% endblock %}
+{% block page_title %}Solicitudes de Permiso{% endblock %}
+
+{% block content %}
+<div class="flex flex-col h-full overflow-hidden">
+  <header class="bg-white border-b border-slate-200 flex-shrink-0">
+    <div class="px-6 py-3 flex items-center justify-between gap-4 flex-wrap">
+      <form method="GET" action="{{ request.path }}" class="flex items-center gap-3 flex-wrap">
+        <select name="status" onchange="this.form.submit()"
+          class="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+          <option value="">Todos los Estados</option>
+          {% for st in LeaveStatus %}
+          <option value="{{ st.value }}" {{ 'selected' if status_filter == st.value }}>
+            {{ 'Pendiente' if st.value == 'pending' else 'Aprobada' if st.value == 'approved' else 'Rechazada' if st.value == 'rejected' else st.value.title() }}
+          </option>
+          {% endfor %}
+        </select>
+        <select name="type" onchange="this.form.submit()"
+          class="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+          <option value="">Todos los Tipos</option>
+          {% for lt in LeaveType %}
+          <option value="{{ lt.value }}" {{ 'selected' if type_filter == lt.value }}>{{ lt.value.title() }}</option>
+          {% endfor %}
+        </select>
+        <select name="employee_id" onchange="this.form.submit()"
+          class="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+          <option value="">Todos los Empleados</option>
+          {% for emp in all_employees %}
+          <option value="{{ emp.id }}" {{ 'selected' if emp_filter == emp.id|string }}>{{ emp.full_name }}</option>
+          {% endfor %}
+        </select>
+      </form>
+      <button type="button" data-action="open-drawer"
+        data-url="{{ url_for('hr.create_leave', company_id=company_id) }}"
+        data-title="Nueva Solicitud de Permiso"
+        class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+        Nueva Solicitud
+      </button>
+    </div>
+  </header>
+
+  <div class="flex-1 overflow-y-auto p-6 bg-slate-50">
+    <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
+      <div class="px-4 py-3 border-b border-slate-100 bg-slate-50 flex justify-end">
+        <span class="text-sm text-slate-500">{{ leaves.total }} solicitud{{ 'es' if leaves.total != 1 else '' }}</span>
+      </div>
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-slate-100">
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Empleado</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Tipo</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Fechas</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Días</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Estado</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Archivo</th>
+            <th class="w-24 px-4 py-3"></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-50">
+          {% for req in leaves.items %}
+          <tr class="hover:bg-slate-50 transition-colors">
+            <td class="px-4 py-3">
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-bold">
+                  {{ (req.employee.first_name[0] + req.employee.last_name[0])|upper }}
+                </div>
+                <span class="text-sm font-medium text-slate-800">{{ req.employee.full_name }}</span>
+              </div>
+            </td>
+            <td class="px-4 py-3">
+              {% set type_colors = {
+                'pto': 'bg-sky-50 text-sky-700',
+                'sick': 'bg-amber-50 text-amber-700',
+                'maternity': 'bg-pink-50 text-pink-700'
+              } %}
+              <span class="inline-flex px-2 py-0.5 rounded-full text-xs font-medium {{ type_colors.get(req.leave_type.value, 'bg-slate-100 text-slate-600') }}">
+                {{ req.leave_type.value.title() }}
+              </span>
+            </td>
+            <td class="px-4 py-3 text-sm text-slate-600">
+              {{ req.start_date.strftime('%b %d') }} – {{ req.end_date.strftime('%b %d, %Y') }}
+            </td>
+            <td class="px-4 py-3 text-sm font-medium text-slate-800">{{ req.total_days }}</td>
+            <td class="px-4 py-3">
+              {% if req.status.value == 'pending' %}
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-amber-50 text-amber-700">
+                <span class="w-1 h-1 rounded-full bg-amber-500"></span>Pendiente
+              </span>
+              {% elif req.status.value == 'approved' %}
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700">
+                <span class="w-1 h-1 rounded-full bg-emerald-500"></span>Aprobada
+              </span>
+              {% else %}
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-rose-50 text-rose-700">
+                <span class="w-1 h-1 rounded-full bg-rose-500"></span>Rechazada
+              </span>
+              {% endif %}
+            </td>
+            <td class="px-4 py-3">
+              {% if req.attachment_path %}
+              <a href="{{ url_for('static', filename='uploads/' + req.attachment_path) }}" target="_blank"
+                class="inline-flex items-center gap-1 text-xs font-medium text-emerald-600 hover:text-emerald-700 bg-emerald-50 px-2 py-1 rounded">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                </svg>
+                Ver
+              </a>
+              {% else %}
+              <span class="text-xs text-slate-400">—</span>
+              {% endif %}
+            </td>
+            <td class="px-4 py-3">
+              {% if req.status.value == 'pending' %}
+              <div class="flex gap-1 justify-end">
+                <form method="POST" action="{{ url_for('hr.review_leave', company_id=company_id, leave_id=req.id) }}"
+                  onsubmit="return confirm('¿Aprobar esta solicitud de permiso?{% if req.leave_type.value == 'pto' %}\nEsto deducirá {{ req.total_days }} días del saldo de PTO del empleado.{% endif %}')">
+                  <input type="hidden" name="action" value="approve">
+                  <button type="submit" title="Aprobar" class="p-1.5 text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </button>
+                </form>
+                <form method="POST" action="{{ url_for('hr.review_leave', company_id=company_id, leave_id=req.id) }}"
+                  onsubmit="return confirm('¿Rechazar esta solicitud de permiso?')">
+                  <input type="hidden" name="action" value="reject">
+                  <button type="submit" title="Rechazar" class="p-1.5 text-rose-600 hover:bg-rose-50 rounded-lg transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </form>
+              </div>
+              {% endif %}
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="7" class="px-4 py-16 text-center text-sm text-slate-400">No se encontraron solicitudes de permiso</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      {% if leaves.pages > 1 %}
+      <div class="px-4 py-3 border-t border-slate-100 flex items-center justify-between">
+        <p class="text-sm text-slate-500">
+          Mostrando {{ (leaves.page-1)*leaves.per_page+1 }} – {{ [leaves.page*leaves.per_page, leaves.total]|min }} de {{ leaves.total }}
+        </p>
+        <div class="flex gap-1">
+          {% if leaves.has_prev %}<a href="?page={{ leaves.prev_num }}&status={{ status_filter }}&type={{ type_filter }}&employee_id={{ emp_filter }}" class="px-3 py-1.5 text-sm hover:bg-slate-100 rounded">Anterior</a>{% endif %}
+          {% if leaves.has_next %}<a href="?page={{ leaves.next_num }}&status={{ status_filter }}&type={{ type_filter }}&employee_id={{ emp_filter }}" class="px-3 py-1.5 text-sm hover:bg-slate-100 rounded">Siguiente</a>{% endif %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

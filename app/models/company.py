@@ -8,6 +8,7 @@ class Company(BaseModel):
     email = db.Column(db.String(255), index=True)
     phone = db.Column(db.String(20), index=True)
     address = db.Column(db.String(512))
+    #TODO: Timezone
     
     currency = db.Column(db.String(3), default='USD', nullable=False)
     tax_rate = db.Column(db.Numeric(5, 2), default=0.0, nullable=False)

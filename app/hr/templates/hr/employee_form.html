@@ -1,0 +1,232 @@
+{% if request.headers.get('X-Requested-With') == 'XMLHttpRequest' %}
+{% extends "blank.html" %}
+{% else %}
+{% extends "base.html" %}
+{% endif %}
+{% block title %}{{ 'Editar' if employee else 'Nuevo' }} Empleado – TrackDesk{% endblock %}
+{% block sidebar_title %}Recursos Humanos{% endblock %}
+{% block sidebar_nav %}
+{% set cid = company_id %}
+<a href="{{ url_for('hr.employees', company_id=cid) }}" class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm">
+  <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>Empleados
+</a>
+<a href="{{ url_for('hr.leaves', company_id=cid) }}" class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm">
+  <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>Solicitudes de Permiso
+</a>
+<a href="{{ url_for('hr.schedules', company_id=cid) }}" class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm">
+  <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>Horarios de Trabajo
+</a>
+{% endblock %}
+{% block page_title %}{{ 'Editar Empleado' if employee else 'Nuevo Empleado' }}{% endblock %}
+
+{% block content %}
+{% set fd = form_data %}
+{% set e = employee %}
+
+<form method="POST"
+  action="{{ url_for('hr.edit_employee', company_id=company_id, emp_id=e.id) if e else url_for('hr.create_employee', company_id=company_id) }}"
+  data-drawer-form
+  data-success-message="{{ 'Empleado actualizado' if e else 'Empleado creado' }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+  <div class="p-6 space-y-5">
+
+    <!-- Personal Information -->
+    <div>
+      <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Información Personal</h3>
+      <div class="space-y-3">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1.5">Nombre <span class="text-rose-500">*</span></label>
+            <input type="text" name="first_name" required value="{{ fd.get('first_name', e.first_name if e else '') }}"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1.5">Apellido <span class="text-rose-500">*</span></label>
+            <input type="text" name="last_name" required value="{{ fd.get('last_name', e.last_name if e else '') }}"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1.5">Correo Electrónico</label>
+          <input type="email" name="email" value="{{ fd.get('email', e.email if e else '') }}"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1.5">Teléfono</label>
+            <input type="text" name="phone" value="{{ fd.get('phone', e.phone if e else '') }}"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1.5">Dirección</label>
+            <input type="text" name="address" value="{{ fd.get('address', e.address if e else '') }}"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1.5">Cuenta de Usuario Vinculada <span class="text-slate-400 font-normal">(opcional)</span></label>
+          <select name="user_id"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white">
+            <option value="">— Sin usuario vinculado —</option>
+            {% for u in users %}
+            <option value="{{ u.id }}" {{ 'selected' if (fd.get('user_id')|int == u.id) or (e and e.user_id == u.id) }}>
+              {{ u.name }} ({{ u.email }})
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Employment Details -->
+    <div>
+      <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Empleo</h3>
+      <div class="space-y-3">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1.5">Clase de Empleado <span class="text-rose-500">*</span></label>
+            <select name="employee_class" required
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white">
+              {% for ec in EmployeeClass %}
+              <option value="{{ ec.value }}" {{ 'selected' if fd.get('employee_class', e.employee_class.value if e else '') == ec.value }}>
+                {{ ec.value.replace('_', ' ').title() }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+          {% if e %}
+          <div class="flex items-center gap-2 pt-6">
+            <input type="checkbox" id="is_active" name="is_active" {{ 'checked' if e.is_active else '' }}
+              class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300">
+            <label for="is_active" class="text-sm text-slate-700">Empleado Activo</label>
+          </div>
+          {% endif %}
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1.5">Fecha de Contratación <span class="text-rose-500">*</span></label>
+            <input type="date" name="hire_date" required
+              value="{{ fd.get('hire_date', e.hire_date.isoformat() if e and e.hire_date else '') }}"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1.5">Fecha de Terminación</label>
+            <input type="date" name="termination_date"
+              value="{{ fd.get('termination_date', e.termination_date.isoformat() if e and e.termination_date else '') }}"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1.5">Hora de Entrada (Por defecto)</label>
+            <input type="time" name="standard_start_time"
+              value="{{ fd.get('standard_start_time', e.standard_start_time.strftime('%H:%M') if e and e.standard_start_time else '09:00') }}"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-slate-700 mb-1.5">Hora de Salida (Por defecto)</label>
+            <input type="time" name="standard_end_time"
+              value="{{ fd.get('standard_end_time', e.standard_end_time.strftime('%H:%M') if e and e.standard_end_time else '17:00') }}"
+              class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1.5">Días Laborables</label>
+          {% set default_wd = '0,1,2,3,4' %}
+          {% set wd = fd.get('working_days', e.working_days if e else default_wd) %}
+          {% set wd_list = wd.split(',') if wd else [] %}
+          <div class="flex flex-wrap gap-3 mt-1">
+            {% for day_val, day_name in [('0','Lun'), ('1','Mar'), ('2','Mié'), ('3','Jue'), ('4','Vie'), ('5','Sáb'), ('6','Dom')] %}
+            <label class="inline-flex items-center gap-1.5 cursor-pointer">
+              <input type="checkbox" name="working_days" value="{{ day_val }}" {{ 'checked' if day_val in wd_list else '' }}
+                class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300">
+              <span class="text-sm text-slate-700">{{ day_name }}</span>
+            </label>
+            {% endfor %}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Compensation -->
+    <div>
+      <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Compensación</h3>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1.5">Sueldo <span class="text-rose-500">*</span></label>
+          <div class="relative">
+            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">$</span>
+            <input type="number" name="pay_rate" step="0.01" min="0" required
+              value="{{ fd.get('pay_rate', e.pay_rate if e else '0.00') }}"
+              class="w-full pl-7 px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+          </div>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1.5">Período de Pago <span class="text-rose-500">*</span></label>
+          <select name="pay_period" required
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white">
+            {% for pp in PayPeriod %}
+            <option value="{{ pp.value }}" {{ 'selected' if fd.get('pay_period', e.pay_period.value if e else 'month') == pp.value }}>
+              Por {{ pp.value.title() }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- PTO Configuration -->
+    <div>
+      <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Configuración de PTO</h3>
+      <div class="grid grid-cols-3 gap-3">
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1.5">Saldo (días)</label>
+          <input type="number" name="pto_balance" step="0.01" min="0"
+            value="{{ fd.get('pto_balance', e.pto_balance if e else '0') }}"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1.5">Tasa de Acumulación</label>
+          <input type="number" name="pto_accrual_rate" step="0.01" min="0"
+            value="{{ fd.get('pto_accrual_rate', e.pto_accrual_rate if e else '') }}"
+            placeholder="ej. 1.5"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-slate-700 mb-1.5">Por Período</label>
+          <select name="pto_accrual_period"
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white">
+            <option value="">— Ninguno —</option>
+            {% for ap in PTOAccrualPeriod %}
+            <option value="{{ ap.value }}" {{ 'selected' if fd.get('pto_accrual_period', e.pto_accrual_period.value if e and e.pto_accrual_period else '') == ap.value }}>
+              {{ ap.value.title() }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <p class="text-xs text-slate-400 mt-2">ej. Tasa = 1.25 / Mes → el empleado gana 1.25 días de PTO cada mes.</p>
+    </div>
+
+    <!-- Notes -->
+    <div>
+      <label class="block text-sm font-medium text-slate-700 mb-1.5">Notas</label>
+      <textarea name="notes" rows="2" placeholder="Notas internas…"
+        class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none">{{ fd.get('notes', e.notes if e else '') }}</textarea>
+    </div>
+
+  </div>
+
+  <div class="flex gap-3 p-4 border-t border-slate-100 bg-slate-50/70">
+    <button type="button" onclick="closeDrawer()"
+      class="flex-1 px-4 py-2 border border-slate-300 rounded-lg text-sm font-medium text-slate-700 hover:bg-white transition-colors">Cancelar</button>
+    <button type="submit"
+      class="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
+      {{ 'Guardar Cambios' if e else 'Crear Empleado' }}
+    </button>
+  </div>
+</form>
+{% endblock %}
