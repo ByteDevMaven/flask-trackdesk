@@ -222,12 +222,31 @@ class InventoryService:
         return True
 
     @staticmethod
-    def get_stock_movements(company_id, item_id=None, movement_type=None, period='all', search='', page=1, per_page=20):
+    def get_stock_movements(company_id, item_id=None, movement_type=None, period='all', search='', client_id=None, supplier_id=None, page=1, per_page=20):
         query = StockMovement.query.filter_by(company_id=company_id)
         
         if item_id:
             query = query.filter_by(inventory_item_id=item_id)
             
+        if client_id or supplier_id:
+            from app.models import PurchaseOrder, Document
+            # Use outer join to allow filtering by contact_id based on reference
+            query = query.outerjoin(
+                PurchaseOrder,
+                StockMovement.reference == ("PO " + PurchaseOrder.order_number)
+            ).outerjoin(
+                Document,
+                StockMovement.reference == ("INV " + Document.document_number)
+            )
+            
+            conditions = []
+            if supplier_id:
+                conditions.append(PurchaseOrder.supplier_id == supplier_id)
+            if client_id:
+                conditions.append(Document.client_id == client_id)
+            
+            query = query.filter(or_(*conditions) if len(conditions) > 1 else conditions[0])
+
         if search:
             query = query.join(InventoryItem).filter(
                 or_(
@@ -283,29 +302,96 @@ class InventoryService:
         ).limit(limit).all()
 
     @staticmethod
-    def export_inventory_items_csv(company_id):
-        import csv
-        from io import StringIO
+    def export_inventory_items_xlsx(company_id, search='', supplier_id=None):
+        from openpyxl import Workbook
+        from openpyxl.styles import Font, Alignment
         from flask_babel import _
         
-        items = InventoryItem.query.filter_by(company_id=company_id).all()
+        pagination = InventoryService.get_inventory_items(
+            company_id=company_id,
+            page=1,
+            per_page=1000000,
+            search=search,
+            supplier_id=supplier_id
+        )
+        items = pagination.items
         
-        output = StringIO()
-        writer = csv.writer(output)
+        wb = Workbook()
+        ws = wb.active
+        ws.title = _('Inventario')
         
-        writer.writerow([
-            _('Name'), _('Description'), _('Quantity'), _('Price'), _('Contact')
-        ])
+        headers = [_('Nombre'), _('Descripción'), _('Cantidad'), _('Precio'), _('Costo'), _('Proveedor')]
+        ws.append(headers)
+        
+        for col in range(1, len(headers) + 1):
+            cell = ws.cell(row=1, column=col)
+            cell.font = Font(bold=True)
+            cell.alignment = Alignment(horizontal='center')
         
         for item in items:
-            writer.writerow([
+            ws.append([
                 item.name,
                 item.description or '',
                 item.quantity,
-                item.price,
+                float(item.price),
+                float(item.cost_price),
                 item.supplier.name if item.supplier else ''
             ])
+            
+        filename = f"inventario_{company_id}_{datetime.now(UTC).strftime('%Y%m%d')}.xlsx"
+        return wb, filename
+
+    @staticmethod
+    def export_stock_movements_xlsx(company_id, movement_type=None, period='all', search='', client_id=None, supplier_id=None):
+        from openpyxl import Workbook
+        from openpyxl.styles import Font, Alignment
+        from flask_babel import _
         
-        output.seek(0)
-        filename = f"inventory_{company_id}_{datetime.now(UTC).strftime('%Y%m%d')}.csv"
-        return output.getvalue(), filename
+        # Get all movements without pagination
+        pagination = InventoryService.get_stock_movements(
+            company_id=company_id,
+            movement_type=movement_type,
+            period=period,
+            search=search,
+            client_id=client_id,
+            supplier_id=supplier_id,
+            page=1,
+            per_page=1000000
+        )
+        movements = pagination.items
+        
+        wb = Workbook()
+        ws = wb.active
+        ws.title = _('Movimientos de Inventario')
+        
+        headers = [_('Fecha'), _('Tipo'), _('Producto'), _('Referencia'), _('Cantidad'), _('Notas')]
+        ws.append(headers)
+        
+        for col in range(1, len(headers) + 1):
+            cell = ws.cell(row=1, column=col)
+            cell.font = Font(bold=True)
+            cell.alignment = Alignment(horizontal='center')
+        
+        for m in movements:
+            type_str = ''
+            if m.type == StockMovementType.incoming:
+                type_str = _('Entrada')
+            elif m.type == StockMovementType.outgoing:
+                type_str = _('Salida')
+            else:
+                type_str = _('Ajuste')
+                
+            date_str = m.date.strftime('%Y-%m-%d %H:%M') if m.date else ''
+            prod_name = m.inventory_item.name if m.inventory_item else ''
+            
+            ws.append([
+                date_str,
+                type_str,
+                prod_name,
+                m.reference or '',
+                m.qty_change,
+                m.notes or ''
+            ])
+            
+        filename = f"movimientos_inventario_{company_id}_{datetime.now(UTC).strftime('%Y%m%d')}.xlsx"
+        return wb, filename

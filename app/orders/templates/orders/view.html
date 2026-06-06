@@ -23,7 +23,7 @@
     <div>
       <p class="text-xs text-slate-400 mb-0.5">Total</p>
       <p class="text-xl font-bold text-slate-800">{{ session.get('currency','L') }} {{ (order.total_amount or 0) |
-        format_currency }}</p>
+        format_currency(4) }}</p>
     </div>
     <div>
       <p class="text-xs text-slate-400 mb-0.5">Ítems</p>
@@ -118,7 +118,7 @@
         <div class="px-6 py-4">
           <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Total de la Orden</p>
           <p class="text-2xl font-black text-slate-900">{{ session.get('currency','L') }} {{ (order.total_amount or 0) |
-            format_currency }}</p>
+            format_currency(4) }}</p>
           <p class="text-xs text-slate-500 mt-1">{{ order.items | length }} ítem{{ 's' if order.items | length != 1 else
             '' }}</p>
         </div>
@@ -156,9 +156,9 @@
             </td>
             <td class="px-5 py-3 text-sm font-medium text-slate-700 text-right">{{ item.quantity }}</td>
             <td class="px-5 py-3 text-sm text-slate-600 text-right">{{ session.get('currency','L') }} {{ (item.price or
-              0) | format_currency }}</td>
+              0) | format_currency(4) }}</td>
             <td class="px-5 py-3 text-sm font-semibold text-slate-800 text-right">{{ session.get('currency','L') }} {{
-              (item.total or 0) | format_currency }}</td>
+              (item.total or 0) | format_currency(4) }}</td>
           </tr>
           {% else %}
           <tr>
@@ -171,7 +171,7 @@
         <div class="w-64 space-y-2">
           <div class="flex justify-between font-bold text-slate-900 text-base">
             <span>Total</span>
-            <span>{{ session.get('currency','L') }} {{ (order.total_amount or 0) | format_currency }}</span>
+            <span>{{ session.get('currency','L') }} {{ (order.total_amount or 0) | format_currency(4) }}</span>
           </div>
         </div>
       </div>

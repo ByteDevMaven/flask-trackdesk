@@ -9,8 +9,8 @@ class PurchaseOrderItem(BaseModel):
     item_code = db.Column(db.String(100), nullable=False, default='', index=True)
     name = db.Column(db.String(255), nullable=False, default='')
     quantity = db.Column(db.Integer, nullable=False, default=0)
-    price = db.Column(db.Numeric(12, 2), nullable=False, default=0.00)
-    total = db.Column(db.Numeric(12, 2), nullable=False, default=0.00)
+    price = db.Column(db.Numeric(12, 4), nullable=False, default=0.00)
+    total = db.Column(db.Numeric(12, 4), nullable=False, default=0.00)
 
     inventory_item = db.relationship('InventoryItem', backref='purchase_order_items', lazy='select')
     

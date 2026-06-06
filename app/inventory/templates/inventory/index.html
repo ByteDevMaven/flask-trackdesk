@@ -40,7 +40,7 @@
     </form>
 
     <div class="flex items-center gap-2">
-      <a href="{{ url_for('inventory.export', company_id=company_id) }}"
+      <a href="{{ url_for('inventory.export', company_id=company_id, search=search, supplier_id=supplier_id) }}"
         class="flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors shadow-sm bg-white">
         <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

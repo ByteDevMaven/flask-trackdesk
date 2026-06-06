@@ -20,11 +20,11 @@ def index(company_id=None):
 
 
 @dashboard.app_template_filter('format_currency')
-def format_currency(value):
+def format_currency(value, decimals=2):
     """Format a number as currency"""
     if value is None:
-        return "0.00"
-    return f"{float(value):,.2f}"
+        return f"0.{'0' * decimals}"
+    return f"{float(value):,.{decimals}f}"
 
 
 @dashboard.app_template_filter('format_date')

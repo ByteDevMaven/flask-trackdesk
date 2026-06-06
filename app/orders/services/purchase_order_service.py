@@ -325,29 +325,43 @@ def delete_purchase_order(company_id: int, order_id: int) -> None:
     db.session.commit()
 
 
-def export_purchase_orders_csv(company_id: int):
-    """Return (csv_string, filename) tuple for all purchase orders."""
-    import csv
-    from io import StringIO
+def export_purchase_orders_xlsx(company_id: int, search: str = None, supplier_id: str = None):
+    """Return (workbook, filename) tuple for all purchase orders matching criteria."""
+    from openpyxl import Workbook
+    from openpyxl.styles import Font, Alignment
     from flask_babel import _
+    from app.orders.services.purchase_order_query_service import get_purchase_orders
 
-    orders = PurchaseOrder.query.filter_by(company_id=company_id).all()
+    pagination = get_purchase_orders(
+        company_id=company_id,
+        page=1,
+        per_page=1000000,
+        search=search,
+        supplier_id=supplier_id
+    )
+    orders = pagination.items
 
-    output = StringIO()
-    writer = csv.writer(output)
-    writer.writerow([
-        _('Order Number'), _('Contact'), _('Total Amount'), _('Items Count'), _('Created Date')
-    ])
+    wb = Workbook()
+    ws = wb.active
+    ws.title = _('Ordenes de Compra')
+
+    headers = [_('Número de Orden'), _('Proveedor'), _('Monto Total'), _('Cantidad de Productos'), _('Fecha de Creación')]
+    ws.append(headers)
+
+    for col in range(1, len(headers) + 1):
+        cell = ws.cell(row=1, column=col)
+        cell.font = Font(bold=True)
+        cell.alignment = Alignment(horizontal='center')
+
     for order in orders:
-        writer.writerow([
+        ws.append([
             order.order_number,
             order.supplier.name if order.supplier else '',
-            order.total_amount,
+            float(order.total_amount),
             len(order.items),
             order.created_at.strftime('%Y-%m-%d %H:%M')
         ])
 
-    output.seek(0)
-    filename = f"purchase_orders_{company_id}_{datetime.now(UTC).strftime('%Y%m%d')}.csv"
-    return output.getvalue(), filename
+    filename = f"ordenes_de_compra_{company_id}_{datetime.now(UTC).strftime('%Y%m%d')}.xlsx"
+    return wb, filename
 

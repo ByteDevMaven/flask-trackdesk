@@ -9,7 +9,7 @@ class PurchaseOrder(BaseModel):
     
     supplier_id = db.Column(db.Integer, db.ForeignKey('contacts.id'), nullable=False, index=True)
     warehouse_id = db.Column(db.Integer, db.ForeignKey('warehouses.id'), nullable=True, index=True)
-    total_amount = db.Column(db.Numeric(12, 2), nullable=False, default=0.0)
+    total_amount = db.Column(db.Numeric(12, 4), nullable=False, default=0.0)
     buy_date = db.Column(db.Date, index=True)
 
     supplier = db.relationship('Contact', backref='purchase_orders', lazy='select')

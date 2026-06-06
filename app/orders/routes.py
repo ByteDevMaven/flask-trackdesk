@@ -10,7 +10,7 @@ from app.models.enums import ContactType
 
 from .services import (
     create_purchase_order, update_purchase_order,
-    delete_purchase_order, export_purchase_orders_csv,
+    delete_purchase_order, export_purchase_orders_xlsx,
     get_purchase_orders, get_purchase_order_stats
 )
 from . import orders
@@ -164,9 +164,25 @@ def delete(company_id, id):
 @orders.route('/<int:company_id>/purchase-orders/export')
 @login_required
 def export(company_id):
-    csv_content, filename = export_purchase_orders_csv(company_id)
-    return Response(
-        csv_content,
-        mimetype='text/csv',
-        headers={'Content-Disposition': f'attachment; filename={filename}'}
+    import io
+    from flask import send_file
+
+    search = request.args.get('search', '')
+    supplier_id = request.args.get('supplier_id', '')
+
+    wb, filename = export_purchase_orders_xlsx(
+        company_id=company_id,
+        search=search,
+        supplier_id=supplier_id
+    )
+    
+    out = io.BytesIO()
+    wb.save(out)
+    out.seek(0)
+    
+    return send_file(
+        out,
+        mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        as_attachment=True,
+        download_name=filename
     )

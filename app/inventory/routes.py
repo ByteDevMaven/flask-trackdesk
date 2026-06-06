@@ -1,8 +1,5 @@
-import csv
-from io import StringIO
-from datetime import datetime, UTC
-
-from flask import render_template, request, redirect, session, url_for, flash, current_app, jsonify, Response
+import io
+from flask import render_template, request, redirect, session, url_for, flash, current_app, jsonify, Response, send_file
 from flask_login import login_required
 from sqlalchemy.exc import SQLAlchemyError
 from flask_babel import _
@@ -141,16 +138,25 @@ def movements(company_id):
     search = request.args.get('search', '')
     movement_type = request.args.get('type')
     period = request.args.get('period', 'all')
+    client_id = request.args.get('client_id', type=int)
+    supplier_id = request.args.get('supplier_id', type=int)
     
     pagination = InventoryService.get_stock_movements(
         company_id=company_id,
         movement_type=movement_type,
         period=period,
         search=search,
+        client_id=client_id,
+        supplier_id=supplier_id,
         page=page,
         per_page=per_page
     )
     movements = pagination.items
+    
+    from app.models import Contact
+    from app.models.enums import ContactType
+    clients = Contact.query.filter_by(company_id=company_id, type=ContactType.customer).order_by(Contact.name).all()
+    suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
     
     return render_template('inventory/movements.html',
                           company_id=company_id,
@@ -158,7 +164,11 @@ def movements(company_id):
                           pagination=pagination,
                           search=search,
                           movement_type=movement_type,
-                          period=period)
+                          period=period,
+                          clients=clients,
+                          suppliers=suppliers,
+                          client_id=client_id,
+                          supplier_id=supplier_id)
 
 @inventory.route('/<int:company_id>/inventory/<int:id>/edit_item', methods=['GET'])
 @login_required
@@ -222,11 +232,57 @@ def delete(company_id, id):
 @login_required
 @limiter.exempt
 def export(company_id):
-    csv_content, filename = InventoryService.export_inventory_items_csv(company_id)
-    return Response(
-        csv_content,
-        mimetype='text/csv',
-        headers={'Content-Disposition': f'attachment; filename={filename}'}
+    import io
+    from flask import send_file
+    
+    search = request.args.get('search', '')
+    supplier_id = request.args.get('supplier_id', type=int)
+    
+    wb, filename = InventoryService.export_inventory_items_xlsx(
+        company_id=company_id,
+        search=search,
+        supplier_id=supplier_id
+    )
+    
+    out = io.BytesIO()
+    wb.save(out)
+    out.seek(0)
+    
+    return send_file(
+        out,
+        mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        as_attachment=True,
+        download_name=filename
+    )
+
+@inventory.route('/<int:company_id>/inventory/movements/export')
+@login_required
+@limiter.exempt
+def export_movements(company_id):
+    search = request.args.get('search', '')
+    movement_type = request.args.get('type')
+    period = request.args.get('period', 'all')
+    client_id = request.args.get('client_id', type=int)
+    supplier_id = request.args.get('supplier_id', type=int)
+    
+    wb, filename = InventoryService.export_stock_movements_xlsx(
+        company_id=company_id,
+        movement_type=movement_type,
+        period=period,
+        search=search,
+        client_id=client_id,
+        supplier_id=supplier_id
+    )
+    
+    out = io.BytesIO()
+    wb.save(out)
+    out.seek(0)
+    
+    return send_file(
+        out,
+        mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        as_attachment=True,
+        download_name=filename
     )
 
 @inventory.route('/<int:company_id>/inventory/<int:id>/drawer_adjust', methods=['GET'])
