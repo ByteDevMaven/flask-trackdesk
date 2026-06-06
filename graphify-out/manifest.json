@@ -925,9 +925,9 @@
     "semantic_hash": "3f0b0208c05057a76e7621d69676cffb"
   },
   "requirements.txt": {
-    "mtime": 1780251204.6986754,
-    "ast_hash": "1a6ec2d2644aed8d1faba1beb32670b2",
-    "semantic_hash": "1a6ec2d2644aed8d1faba1beb32670b2"
+    "mtime": 1780712848.8038025,
+    "ast_hash": "fe80913ff891aaee8cbbfbdcb08adbb8",
+    "semantic_hash": ""
   },
   "app/static/templates/Factura Ferre-lagos.pdf": {
     "mtime": 1775019005.6316662,
