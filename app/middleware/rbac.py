@@ -148,12 +148,46 @@ ROUTE_PERMISSIONS: dict[str, str] = {
     'accounting.ledger':                    'accounting.view',
     'accounting.chart_of_accounts':         'accounting.view',
     'accounting.reports':                   'accounting.view',
+    'accounting.trial_balance':             'accounting.view',
+    'accounting.journal_list':              'accounting.view',
+    'accounting.expenses_list':             'accounting.view',
+    'accounting.income_list':               'accounting.view',
+    'accounting.projects_list':             'accounting.view',
+    'accounting.project_detail':            'accounting.view',
     'accounting.create_expense':            'accounting.manage',
+    'accounting.edit_expense':              'accounting.manage',
+    'accounting.delete_expense':            'accounting.delete',
+    'accounting.create_income':             'accounting.manage',
+    'accounting.edit_income':               'accounting.manage',
+    'accounting.delete_income':             'accounting.delete',
+    'accounting.create_journal_entry':      'accounting.manage',
+    'accounting.edit_journal_entry':        'accounting.manage',
+    'accounting.void_transaction':          'accounting.manage',
     'accounting.create_project':            'accounting.manage',
+    'accounting.edit_project':              'accounting.manage',
+    'accounting.delete_project':            'accounting.delete',
     'accounting.create_account':            'accounting.manage',
+    'accounting.edit_account':              'accounting.manage',
+    'accounting.delete_account':            'accounting.delete',
     'accounting.generate_default_accounts': 'accounting.manage',
     'accounting.create_tag':                'accounting.manage',
     'accounting.delete_tag':                'accounting.manage',
+
+    # ── HR ────────────────────────────────────────────────────────────────
+    'hr.employees':                       'hr.view',
+    'hr.create_employee':                 'hr.manage',
+    'hr.edit_employee':                   'hr.manage',
+    'hr.delete_employee':                 'hr.delete',
+    'hr.leaves':                          'hr.view',
+    'hr.create_leave':                    'hr.manage',
+    'hr.edit_leave':                      'hr.manage',
+    'hr.review_leave':                    'hr.manage',
+    'hr.view_leave':                      'hr.view',
+    'hr.schedules':                       'hr.view',
+    'hr.schedule_events':                 'hr.view',
+    'hr.create_schedule':                 'hr.manage',
+    'hr.delete_schedule':                 'hr.delete',
+    'hr.view_deviation':                  'hr.view',
 
     # ── Global search ─────────────────────────────────────────────────────
     'search': 'dashboard.view',
@@ -237,8 +271,7 @@ def seed_default_roles_and_permissions(db, Role, Permission):
         # permissions so the seed is consistent and the role table is complete.
         'superadmin': list(all_permission_names),
 
-        # Company owner — full control within their companies, cannot create new companies
-        # or access system-level user administration.
+        # Company owner — full control within their companies
         'owner': [
             'dashboard.view',
             'contacts.view',   'contacts.manage',   'contacts.delete',
@@ -250,9 +283,10 @@ def seed_default_roles_and_permissions(db, Role, Permission):
             'companies.admin',                       # can delete their own company
             'users.view',      'users.manage',       # manage users within their company
             'accounting.view', 'accounting.manage',
+            'hr.view',         'hr.manage',         'hr.delete',
         ],
 
-        # Manager — can create/edit most operational data, view-only accounting.
+        # General Manager — oversees operations, read-only on accounting.
         'manager': [
             'dashboard.view',
             'contacts.view',   'contacts.manage',   'contacts.delete',
@@ -265,7 +299,7 @@ def seed_default_roles_and_permissions(db, Role, Permission):
             'accounting.view',
         ],
 
-        # Accountant — financial operations, read-only on most else.
+        # Accountant — financial operations and billing.
         'accountant': [
             'dashboard.view',
             'contacts.view',
@@ -278,17 +312,48 @@ def seed_default_roles_and_permissions(db, Role, Permission):
             'accounting.view', 'accounting.manage',
         ],
 
-        # Viewer — read-only across the board.
+        # HR Manager — manages Human Resources and users, view-only basic company info.
+        'hr_manager': [
+            'dashboard.view',
+            'companies.view',
+            'users.view',      'users.manage',
+            'hr.view',         'hr.manage',         'hr.delete',
+        ],
+
+        # Inventory Manager — controls inventory, warehouses, and purchasing orders.
+        'inventory_manager': [
+            'dashboard.view',
+            'contacts.view',   'contacts.manage',
+            'inventory.view',  'inventory.manage',  'inventory.delete',
+            'orders.view',     'orders.manage',     'orders.delete',
+            'companies.view',
+        ],
+
+        # Sales Manager — controls clients, orders, and billing.
+        'sales_manager': [
+            'dashboard.view',
+            'contacts.view',   'contacts.manage',   'contacts.delete',
+            'inventory.view',
+            'orders.view',     'orders.manage',     'orders.delete',
+            'invoices.view',   'invoices.manage',   'invoices.delete',
+            'companies.view',
+        ],
+
+        # Staff — base employee operational access (view inventory, contacts, dashboard).
+        'staff': [
+            'dashboard.view',
+            'contacts.view',
+            'inventory.view',
+        ],
+
+        # Viewer — strictly read-only across operational modules (no HR, no accounting).
         'viewer': [
             'dashboard.view',
             'contacts.view',
             'inventory.view',
             'orders.view',
             'invoices.view',
-            'payments.view',
             'companies.view',
-            'users.view',
-            'accounting.view',
         ],
     }
 

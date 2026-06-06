@@ -6,8 +6,8 @@
     Resumen
   </a>
   <a href="{{ url_for('accounting.expenses_list', company_id=company_id) }}"
-    class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if 'expenses' in endpoint else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
-    <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if 'expenses' in endpoint else 'bg-slate-300' }}"></span>
+    class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if 'expense' in endpoint else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+    <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if 'expense' in endpoint else 'bg-slate-300' }}"></span>
     Gastos
   </a>
   <a href="{{ url_for('accounting.income_list', company_id=company_id) }}"
@@ -40,28 +40,38 @@
     <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if endpoint == 'accounting.reports' else 'bg-slate-300' }}"></span>
     Reportes
   </a>
+  <a href="{{ url_for('accounting.projects_list', company_id=company_id) }}"
+    class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if 'project' in endpoint else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+    <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if 'project' in endpoint else 'bg-slate-300' }}"></span>
+    Proyectos
+  </a>
 
   <div class="pt-4 pb-1 px-3">
     <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Acciones rápidas</span>
   </div>
   <button data-action="open-drawer" data-url="{{ url_for('accounting.create_expense', company_id=company_id) }}" data-title="Registrar Gasto"
     class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">
-    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+    <span class="w-1.5 h-1.5 rounded-full bg-rose-300"></span>
     Registrar Gasto
   </button>
   <button data-action="open-drawer" data-url="{{ url_for('accounting.create_income', company_id=company_id) }}" data-title="Registrar Ingreso"
     class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">
-    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+    <span class="w-1.5 h-1.5 rounded-full bg-emerald-300"></span>
     Registrar Ingreso
   </button>
   <button data-action="open-drawer" data-url="{{ url_for('accounting.create_journal_entry', company_id=company_id) }}" data-title="Nuevo Asiento"
     class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">
-    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+    <span class="w-1.5 h-1.5 rounded-full bg-violet-300"></span>
     Asiento Manual
+  </button>
+  <button data-action="open-drawer" data-url="{{ url_for('accounting.create_account', company_id=company_id) }}" data-title="Nueva Cuenta"
+    class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">
+    <span class="w-1.5 h-1.5 rounded-full bg-sky-300"></span>
+    Nueva Cuenta
   </button>
   <button data-action="open-drawer" data-url="{{ url_for('accounting.create_project', company_id=company_id) }}" data-title="Nuevo Proyecto"
     class="w-full text-left flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">
-    <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+    <span class="w-1.5 h-1.5 rounded-full bg-amber-300"></span>
     Nuevo Proyecto
   </button>
 </div>

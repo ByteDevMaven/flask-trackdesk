@@ -684,6 +684,82 @@ class AccountingService:
         return txn
 
     @staticmethod
+    def update_journal_entry(company_id: int, txn_id: int, data) -> Transaction:
+        """
+        Void old manual multi-line journal entry and create a new one with updated data.
+        """
+        old_txn = Transaction.query.filter_by(
+            id=txn_id, company_id=company_id, transaction_type=TransactionType.journal
+        ).first_or_404()
+
+        if old_txn.is_voided:
+            raise ValueError('No se puede editar una transacción que ya está anulada.')
+
+        memo = data.get('memo', '').strip()
+        if not memo:
+            raise ValueError('El memo/descripción es requerido.')
+
+        date_str = data.get('date', '').strip()
+        entry_date = _parse_date(date_str)
+        reference = data.get('reference', '').strip() or None
+
+        # Parse lines — support up to 20 lines
+        entries = []
+        for i in range(20):
+            acc_id_str = data.get(f'lines[{i}][account_id]', '').strip()
+            if not acc_id_str:
+                break
+            debit_str = data.get(f'lines[{i}][debit]', '0').strip() or '0'
+            credit_str = data.get(f'lines[{i}][credit]', '0').strip() or '0'
+            line_desc = data.get(f'lines[{i}][description]', '').strip()
+
+            try:
+                acc_id = int(acc_id_str)
+                debit = round(float(debit_str), 2)
+                credit = round(float(credit_str), 2)
+            except ValueError:
+                raise ValueError(f'Línea {i + 1}: valores inválidos.')
+
+            if debit < 0 or credit < 0:
+                raise ValueError(f'Línea {i + 1}: los montos no pueden ser negativos.')
+            if debit == 0 and credit == 0:
+                raise ValueError(f'Línea {i + 1}: debe tener débito o crédito.')
+            if debit > 0 and credit > 0:
+                raise ValueError(f'Línea {i + 1}: no puede tener débito y crédito en la misma línea.')
+
+            account = Account.query.filter_by(id=acc_id, company_id=company_id).first()
+            if not account:
+                raise ValueError(f'Línea {i + 1}: cuenta no encontrada.')
+
+            entries.append({
+                'account_id': acc_id,
+                'debit': debit,
+                'credit': credit,
+                'description': line_desc or memo,
+                'project_id': None,
+                'tags': [],
+            })
+
+        if len(entries) < 2:
+            raise ValueError('Un asiento contable requiere al menos 2 líneas.')
+
+        # Void old transaction
+        old_txn.is_voided = True
+        old_txn.voided_reason = 'Replaced by edit'
+
+        txn = _create_balanced_transaction(
+            company_id=company_id,
+            date=entry_date,
+            memo=f"[EDIT] {memo}",
+            transaction_type=TransactionType.journal,
+            entries=entries,
+            reference=reference,
+            reference_type='Journal',
+        )
+        db.session.commit()
+        return txn
+
+    @staticmethod
     def get_journal_entries(company_id: int, search: str = '',
                             start_date: str = '', end_date: str = '',
                             page: int = 1, per_page: int = 30):
@@ -1133,3 +1209,422 @@ class AccountingService:
         tag = Tag.query.filter_by(id=tag_id, company_id=company_id).first_or_404()
         db.session.delete(tag)
         db.session.commit()
+
+    # ── Ledger (paginated, with balances) ──────────────────────────────────
+
+    @staticmethod
+    def get_ledger_page(company_id: int, account_id: int = None,
+                        start_date: str = '', end_date: str = '',
+                        page: int = 1, per_page: int = 40):
+        """
+        Return a dict with:
+          account, all_accounts, opening_balance, ending_balance, pagination
+        ready to pass directly to the ledger template.
+        """
+        all_accounts = (
+            Account.query
+            .filter_by(company_id=company_id, is_active=True)
+            .order_by(Account.type, Account.code, Account.name)
+            .all()
+        )
+
+        if not account_id:
+            return {
+                'account': None,
+                'all_accounts': all_accounts,
+                'opening_balance': 0.0,
+                'ending_balance': 0.0,
+                'pagination': None,
+                'start_date': start_date,
+                'end_date': end_date,
+            }
+
+        account = Account.query.filter_by(id=account_id, company_id=company_id).first_or_404()
+
+        # Period bounds
+        now = _make_naive(datetime.now(UTC))
+        if start_date:
+            start_dt = _make_naive(_parse_date(start_date))
+        else:
+            start_dt = now.replace(month=1, day=1, hour=0, minute=0, second=0, microsecond=0)
+        if end_date:
+            end_dt = _make_naive(_parse_date(end_date)).replace(hour=23, minute=59, second=59)
+        else:
+            end_dt = now.replace(hour=23, minute=59, second=59)
+
+        # Opening balance = balance of the account BEFORE start_dt
+        open_q = db.session.query(
+            func.coalesce(func.sum(LedgerEntry.debit), 0),
+            func.coalesce(func.sum(LedgerEntry.credit), 0),
+        ).filter(
+            LedgerEntry.account_id == account_id,
+            LedgerEntry.company_id == company_id,
+            LedgerEntry.date < start_dt,
+        ).one()
+        open_d, open_c = float(open_q[0]), float(open_q[1])
+        if account.type in (AccountType.asset, AccountType.expense):
+            opening_balance = round(open_d - open_c, 2)
+        else:
+            opening_balance = round(open_c - open_d, 2)
+
+        # Paginated entries for the period
+        q = (
+            LedgerEntry.query
+            .filter(
+                LedgerEntry.account_id == account_id,
+                LedgerEntry.company_id == company_id,
+                LedgerEntry.date >= start_dt,
+                LedgerEntry.date <= end_dt,
+            )
+            .order_by(LedgerEntry.date.asc(), LedgerEntry.id.asc())
+        )
+        pagination = q.paginate(page=page, per_page=per_page, error_out=False)
+
+        # Ending balance = opening + net of ALL period entries (not just current page)
+        period_all_q = db.session.query(
+            func.coalesce(func.sum(LedgerEntry.debit), 0),
+            func.coalesce(func.sum(LedgerEntry.credit), 0),
+        ).filter(
+            LedgerEntry.account_id == account_id,
+            LedgerEntry.company_id == company_id,
+            LedgerEntry.date >= start_dt,
+            LedgerEntry.date <= end_dt,
+        ).one()
+        per_d, per_c = float(period_all_q[0]), float(period_all_q[1])
+        if account.type in (AccountType.asset, AccountType.expense):
+            ending_balance = round(opening_balance + per_d - per_c, 2)
+        else:
+            ending_balance = round(opening_balance + per_c - per_d, 2)
+
+        return {
+            'account': account,
+            'all_accounts': all_accounts,
+            'opening_balance': opening_balance,
+            'ending_balance': ending_balance,
+            'pagination': pagination,
+            'entries': pagination.items,
+            'start_date': start_date or start_dt.strftime('%Y-%m-%d'),
+            'end_date': end_date or end_dt.strftime('%Y-%m-%d'),
+        }
+
+    # ── Edit Expense ────────────────────────────────────────────────────────
+
+    @staticmethod
+    def update_expense(company_id: int, expense_id: int, data, files=None) -> 'Expense':
+        """
+        Edit an existing expense.
+        Strategy: void the original transaction and create a new balanced one.
+        """
+        expense = Expense.query.filter_by(id=expense_id, company_id=company_id).first_or_404()
+
+        account_id_str = data.get('account_id', '').strip()
+        amount_str = data.get('amount', '').strip()
+        if not account_id_str or not amount_str:
+            raise ValueError('Cuenta y monto son requeridos.')
+        try:
+            account_id = int(account_id_str)
+            amount = round(float(amount_str), 2)
+        except ValueError:
+            raise ValueError('Valores inválidos.')
+        if amount <= 0:
+            raise ValueError('El monto debe ser mayor a cero.')
+
+        expense_account = Account.query.filter_by(id=account_id, company_id=company_id).first()
+        if not expense_account:
+            raise ValueError('Cuenta de gasto no encontrada.')
+
+        date_str = data.get('date', '').strip()
+        expense_date = _parse_date(date_str)
+        description = data.get('description', '').strip()
+        vendor_name = data.get('vendor_name', '').strip()
+        category = data.get('category', '').strip()
+        project_id_str = data.get('project_id', '').strip()
+        project_id = int(project_id_str) if project_id_str else None
+        status_str = data.get('status', 'draft').strip()
+        try:
+            status = ExpenseStatus(status_str)
+        except ValueError:
+            status = ExpenseStatus.draft
+
+        tag_ids = data.getlist('tags[]') if hasattr(data, 'getlist') else []
+        selected_tags = (
+            Tag.query.filter(Tag.id.in_([int(tid) for tid in tag_ids if tid])).all()
+            if tag_ids else []
+        )
+
+        # Void old transaction
+        if expense.transaction_id:
+            old_txn = Transaction.query.get(expense.transaction_id)
+            if old_txn and not old_txn.is_voided:
+                old_txn.is_voided = True
+                old_txn.voided_reason = f'Replaced by edit of Expense #{expense_id}'
+
+        # Update receipt if new file
+        if files and 'receipt_file' in files and files['receipt_file'].filename:
+            new_receipt = _save_receipt(files['receipt_file'])
+            if new_receipt:
+                expense.receipt_url = new_receipt
+
+        # Resolve cash account
+        cash_account = Account.query.filter(
+            Account.company_id == company_id,
+            Account.name.ilike('%caja%') | Account.name.ilike('%banco%') | Account.name.ilike('%cash%')
+        ).first()
+        if not cash_account:
+            cash_account = Account.query.filter_by(company_id=company_id, type=AccountType.asset).first()
+        if not cash_account:
+            raise ValueError('No se encontró una cuenta de efectivo. Genere las cuentas base primero.')
+
+        # Update expense fields
+        expense.account_id = account_id
+        expense.amount = amount
+        expense.date = expense_date
+        expense.description = description
+        expense.vendor_name = vendor_name
+        expense.category = category
+        expense.project_id = project_id
+        expense.status = status
+        expense.tags = selected_tags
+
+        memo = description or f"Gasto — {expense_account.name}"
+        txn = _create_balanced_transaction(
+            company_id=company_id,
+            date=expense_date,
+            memo=f"[EDIT] {memo}",
+            transaction_type=TransactionType.expense,
+            entries=[
+                {'account_id': account_id, 'debit': amount, 'credit': 0.0,
+                 'description': memo, 'project_id': project_id, 'tags': selected_tags},
+                {'account_id': cash_account.id, 'debit': 0.0, 'credit': amount,
+                 'description': memo, 'project_id': project_id, 'tags': []},
+            ],
+            reference_type='Expense',
+            reference_id=expense.id,
+        )
+        expense.transaction_id = txn.id
+        db.session.commit()
+        return expense
+
+    # ── Edit / Delete Income ────────────────────────────────────────────────
+
+    @staticmethod
+    def update_income(company_id: int, txn_id: int, data) -> 'Transaction':
+        """Void old income transaction and create a corrected one."""
+        old_txn = Transaction.query.filter_by(
+            id=txn_id, company_id=company_id, transaction_type=TransactionType.income
+        ).first_or_404()
+
+        revenue_account_id_str = data.get('revenue_account_id', '').strip()
+        amount_str = data.get('amount', '').strip()
+        if not revenue_account_id_str or not amount_str:
+            raise ValueError('Cuenta de ingresos y monto son requeridos.')
+        try:
+            revenue_account_id = int(revenue_account_id_str)
+            amount = round(float(amount_str), 2)
+        except ValueError:
+            raise ValueError('Valores inválidos.')
+        if amount <= 0:
+            raise ValueError('El monto debe ser mayor a cero.')
+
+        revenue_account = Account.query.filter_by(id=revenue_account_id, company_id=company_id).first()
+        if not revenue_account:
+            raise ValueError('Cuenta de ingresos no encontrada.')
+
+        date_str = data.get('date', '').strip()
+        income_date = _parse_date(date_str)
+        description = data.get('description', '').strip()
+        client_name = data.get('client_name', '').strip()
+        project_id_str = data.get('project_id', '').strip()
+        project_id = int(project_id_str) if project_id_str else None
+
+        debit_account_id_str = data.get('debit_account_id', '').strip()
+        if debit_account_id_str:
+            debit_account = Account.query.filter_by(id=int(debit_account_id_str), company_id=company_id).first()
+        else:
+            debit_account = Account.query.filter(
+                Account.company_id == company_id,
+                Account.name.ilike('%caja%') | Account.name.ilike('%banco%') | Account.name.ilike('%cash%')
+            ).first()
+        if not debit_account:
+            raise ValueError('No se encontró una cuenta de efectivo o por cobrar.')
+
+        # Void old
+        old_txn.is_voided = True
+        old_txn.voided_reason = f'Replaced by edit'
+
+        memo = description or f"Ingreso — {revenue_account.name}"
+        if client_name:
+            memo = f"{memo} ({client_name})"
+
+        new_txn = _create_balanced_transaction(
+            company_id=company_id,
+            date=income_date,
+            memo=f"[EDIT] {memo}",
+            transaction_type=TransactionType.income,
+            entries=[
+                {'account_id': debit_account.id, 'debit': amount, 'credit': 0.0,
+                 'description': memo, 'project_id': project_id, 'tags': []},
+                {'account_id': revenue_account_id, 'debit': 0.0, 'credit': amount,
+                 'description': memo, 'project_id': project_id, 'tags': []},
+            ],
+            reference_type='Income',
+        )
+        db.session.commit()
+        return new_txn
+
+    @staticmethod
+    def delete_income_txn(company_id: int, txn_id: int) -> None:
+        """Void an income transaction (soft delete)."""
+        txn = Transaction.query.filter_by(
+            id=txn_id, company_id=company_id, transaction_type=TransactionType.income
+        ).first_or_404()
+        if txn.is_voided:
+            raise ValueError('Esta transacción ya está anulada.')
+        txn.is_voided = True
+        txn.voided_reason = 'Eliminado por el usuario'
+        db.session.commit()
+
+    # ── Delete Account ──────────────────────────────────────────────────────
+
+    @staticmethod
+    def delete_account_safe(company_id: int, account_id: int) -> None:
+        """
+        Soft-delete an account (set is_active=False, is_deleted=True).
+        Raises ValueError if the account has any ledger entries.
+        """
+        account = Account.query.filter_by(id=account_id, company_id=company_id).first_or_404()
+        entry_count = LedgerEntry.query.filter_by(
+            account_id=account_id, company_id=company_id
+        ).count()
+        if entry_count > 0:
+            raise ValueError(
+                f'Esta cuenta tiene {entry_count} movimiento(s) contables y no puede eliminarse. '
+                'Puede desactivarla en su lugar.'
+            )
+        db.session.delete(account)
+        db.session.commit()
+
+    # ── Projects ────────────────────────────────────────────────────────────
+
+    @staticmethod
+    def update_project(company_id: int, project_id: int, data) -> 'Project':
+        project = Project.query.filter_by(id=project_id, company_id=company_id).first_or_404()
+        name = data.get('name', '').strip()
+        if not name:
+            raise ValueError('El nombre del proyecto es requerido.')
+        project.name = name
+        project.description = data.get('description', '').strip()
+        budget_str = data.get('budget', '').strip()
+        try:
+            project.budget = float(budget_str) if budget_str else 0.0
+        except ValueError:
+            project.budget = 0.0
+        status = data.get('status', 'active').strip()
+        if status in ('active', 'completed', 'on_hold', 'cancelled'):
+            project.status = status
+        db.session.commit()
+        return project
+
+    @staticmethod
+    def delete_project_safe(company_id: int, project_id: int) -> None:
+        project = Project.query.filter_by(id=project_id, company_id=company_id).first_or_404()
+        # Unlink expenses from this project
+        Expense.query.filter_by(project_id=project_id, company_id=company_id).update({'project_id': None})
+        # Unlink ledger entries
+        LedgerEntry.query.filter_by(project_id=project_id, company_id=company_id).update({'project_id': None})
+        db.session.delete(project)
+        db.session.commit()
+
+    @staticmethod
+    def get_project_detail(company_id: int, project_id: int) -> dict:
+        """Return full P&L breakdown for a project."""
+        project = Project.query.filter_by(id=project_id, company_id=company_id).first_or_404()
+
+        expenses = (
+            Expense.query
+            .filter_by(project_id=project_id, company_id=company_id)
+            .order_by(Expense.date.desc())
+            .all()
+        )
+
+        # Income entries linked to this project (via ledger_entries on revenue accounts)
+        income_entries = (
+            LedgerEntry.query
+            .join(Account, LedgerEntry.account_id == Account.id)
+            .filter(
+                LedgerEntry.company_id == company_id,
+                LedgerEntry.project_id == project_id,
+                Account.type == AccountType.revenue,
+            )
+            .order_by(LedgerEntry.date.desc())
+            .all()
+        )
+
+        total_expenses = round(sum(float(e.amount) for e in expenses), 2)
+        total_income = round(sum(float(e.credit) for e in income_entries), 2)
+        net = round(total_income - total_expenses, 2)
+        budget = float(project.budget or 0)
+        budget_remaining = round(budget - total_expenses, 2)
+
+        # Monthly breakdown for chart
+        monthly: dict = {}
+        for e in expenses:
+            key = e.date.strftime('%Y-%m') if e.date else 'N/A'
+            monthly.setdefault(key, {'expense': 0.0, 'income': 0.0})
+            monthly[key]['expense'] = round(monthly[key]['expense'] + float(e.amount), 2)
+        for e in income_entries:
+            key = e.date.strftime('%Y-%m') if e.date else 'N/A'
+            monthly.setdefault(key, {'expense': 0.0, 'income': 0.0})
+            monthly[key]['income'] = round(monthly[key]['income'] + float(e.credit), 2)
+
+        # All ledger entries for the project
+        all_ledger = (
+            LedgerEntry.query
+            .filter_by(project_id=project_id, company_id=company_id)
+            .order_by(LedgerEntry.date.desc())
+            .limit(100)
+            .all()
+        )
+
+        return {
+            'project': project,
+            'expenses': expenses,
+            'income_entries': income_entries,
+            'all_ledger': all_ledger,
+            'total_expenses': total_expenses,
+            'total_income': total_income,
+            'net': net,
+            'budget': budget,
+            'budget_remaining': budget_remaining,
+            'monthly': monthly,
+        }
+
+    @staticmethod
+    def get_projects_list(company_id: int) -> list:
+        projects = Project.query.filter_by(company_id=company_id).order_by(Project.name).all()
+        balances = _compute_balances_bulk(company_id)
+
+        result = []
+        for p in projects:
+            expense_total = round(
+                float(db.session.query(func.coalesce(func.sum(Expense.amount), 0))
+                      .filter_by(project_id=p.id, company_id=company_id).scalar() or 0), 2
+            )
+            income_total = round(
+                float(db.session.query(func.coalesce(func.sum(LedgerEntry.credit), 0))
+                      .join(Account, LedgerEntry.account_id == Account.id)
+                      .filter(
+                          LedgerEntry.project_id == p.id,
+                          LedgerEntry.company_id == company_id,
+                          Account.type == AccountType.revenue,
+                      ).scalar() or 0), 2
+            )
+            result.append({
+                'project': p,
+                'expense_total': expense_total,
+                'income_total': income_total,
+                'net': round(income_total - expense_total, 2),
+                'budget_used_pct': round((expense_total / float(p.budget) * 100), 1) if p.budget and float(p.budget) > 0 else 0,
+            })
+        return result
+

@@ -1,11 +1,15 @@
-<form method="POST" action="{{ url_for('accounting.create_expense', company_id=company.id) }}"
-  data-drawer-form data-success-message="Gasto registrado exitosamente">
+<form method="POST"
+  action="{{ url_for('accounting.edit_expense', company_id=company.id, expense_id=expense.id) if expense else url_for('accounting.create_expense', company_id=company.id) }}"
+  enctype="multipart/form-data"
+  data-drawer-form
+  data-success-message="{{ 'Gasto actualizado exitosamente' if expense else 'Gasto registrado exitosamente' }}">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
   <div class="p-6 space-y-4">
     <div>
       <label class="block text-sm font-medium text-slate-700 mb-1">Fecha <span class="text-rose-500">*</span></label>
-      <input type="date" name="date" value="{{ now.strftime('%Y-%m-%d') }}" required
-        class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+      <input type="date" name="date"
+        value="{{ expense.date.strftime('%Y-%m-%d') if expense and expense.date else now.strftime('%Y-%m-%d') }}"
+        required class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
     </div>
     <div>
       <label class="block text-sm font-medium text-slate-700 mb-1">Cuenta de Gasto <span class="text-rose-500">*</span></label>
@@ -13,7 +17,7 @@
         <option value="">Seleccionar cuenta...</option>
         {% for acct in accounts %}
         {% set type_label = {'asset': 'Activo', 'liability': 'Pasivo', 'equity': 'Patrimonio', 'revenue': 'Ingreso', 'expense': 'Gasto'} %}
-        <option value="{{ acct.id }}" {% if acct.type.value == 'expense' %}class="font-semibold"{% endif %}>
+        <option value="{{ acct.id }}" {{ 'selected' if expense and expense.account_id == acct.id }}>
           {% if acct.code %}[{{ acct.code }}] {% endif %}{{ acct.name }} ({{ type_label.get(acct.type.value, acct.type.value) }})
         </option>
         {% endfor %}
@@ -26,32 +30,36 @@
         <div class="relative">
           <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm font-medium">{{ company.currency }}</span>
           <input type="number" name="amount" step="0.01" min="0.01" required placeholder="0.00"
+            value="{{ '%.2f'|format(expense.amount|float) if expense else '' }}"
             class="w-full pl-8 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
         </div>
       </div>
       <div>
         <label class="block text-sm font-medium text-slate-700 mb-1">Estado</label>
         <select name="status" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
-          <option value="draft">Borrador</option>
-          <option value="approved">Aprobado</option>
-          <option value="paid">Pagado</option>
+          <option value="draft" {{ 'selected' if not expense or expense.status.value == 'draft' }}>Borrador</option>
+          <option value="approved" {{ 'selected' if expense and expense.status.value == 'approved' }}>Aprobado</option>
+          <option value="paid" {{ 'selected' if expense and expense.status.value == 'paid' }}>Pagado</option>
         </select>
       </div>
     </div>
     <div>
       <label class="block text-sm font-medium text-slate-700 mb-1">Descripción</label>
       <input type="text" name="description" placeholder="Ej: Pago de alquiler junio"
+        value="{{ expense.description or '' if expense else '' }}"
         class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
     </div>
     <div class="grid grid-cols-2 gap-4">
       <div>
         <label class="block text-sm font-medium text-slate-700 mb-1">Proveedor / Vendedor</label>
         <input type="text" name="vendor_name" placeholder="Nombre del proveedor"
+          value="{{ expense.vendor_name or '' if expense else '' }}"
           class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
       </div>
       <div>
         <label class="block text-sm font-medium text-slate-700 mb-1">Categoría</label>
         <input type="text" name="category" placeholder="Ej: Operativo, Marketing"
+          value="{{ expense.category or '' if expense else '' }}"
           class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
       </div>
     </div>
@@ -60,7 +68,9 @@
       <label class="block text-sm font-medium text-slate-700 mb-1">Proyecto (Centro de Costos)</label>
       <select name="project_id" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
         <option value="">Sin proyecto</option>
-        {% for p in projects %}<option value="{{ p.id }}">{{ p.name }}</option>{% endfor %}
+        {% for p in projects %}
+        <option value="{{ p.id }}" {{ 'selected' if expense and expense.project_id == p.id }}>{{ p.name }}</option>
+        {% endfor %}
       </select>
     </div>
     {% endif %}
@@ -68,9 +78,12 @@
     <div>
       <label class="block text-sm font-medium text-slate-700 mb-1">Etiquetas</label>
       <div class="flex flex-wrap gap-2">
+        {% set expense_tag_ids = expense.tags | map(attribute='id') | list if expense else [] %}
         {% for tag in tags %}
         <label class="inline-flex items-center gap-1.5 cursor-pointer">
-          <input type="checkbox" name="tags[]" value="{{ tag.id }}" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
+          <input type="checkbox" name="tags[]" value="{{ tag.id }}"
+            {{ 'checked' if tag.id in expense_tag_ids }}
+            class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
           <span class="text-xs px-2 py-0.5 rounded-full {{ tag.color_code }}">{{ tag.name }}</span>
         </label>
         {% endfor %}
@@ -79,6 +92,9 @@
     {% endif %}
     <div>
       <label class="block text-sm font-medium text-slate-700 mb-1">Comprobante / Recibo</label>
+      {% if expense and expense.receipt_url %}
+      <p class="text-xs text-emerald-600 mb-1">Archivo actual guardado. Sube uno nuevo para reemplazarlo.</p>
+      {% endif %}
       <input type="file" name="receipt_file" accept=".pdf,.png,.jpg,.jpeg,.webp"
         class="w-full text-sm text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-medium file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
     </div>
@@ -86,10 +102,10 @@
     <div class="border-t border-slate-200 pt-4 mt-2">
       <p class="text-xs text-slate-500 mb-3 bg-slate-50 p-2 rounded-lg border border-slate-200">
         <span class="font-semibold">Asiento automático:</span>
-        DR {{ '→ Cuenta de Gasto seleccionada' }} | CR → Caja y Bancos
+        DR → Cuenta de Gasto seleccionada | CR → Caja y Bancos
       </p>
       <button type="submit" class="w-full flex justify-center items-center gap-2 px-4 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
-        Registrar Gasto
+        {{ 'Actualizar Gasto' if expense else 'Registrar Gasto' }}
       </button>
     </div>
   </div>

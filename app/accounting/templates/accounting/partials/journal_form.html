@@ -1,21 +1,21 @@
-<form method="POST" action="{{ url_for('accounting.create_journal_entry', company_id=company.id) }}"
-  data-drawer-form data-success-message="Asiento contable creado exitosamente">
+<form method="POST" action="{{ url_for('accounting.edit_journal_entry', company_id=company.id, txn_id=transaction.id) if transaction else url_for('accounting.create_journal_entry', company_id=company.id) }}"
+  data-drawer-form data-success-message="{{ 'Asiento contable actualizado' if transaction else 'Asiento contable creado' }} exitosamente">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
   <div class="p-6 space-y-4">
     <div>
       <label class="block text-sm font-medium text-slate-700 mb-1">Fecha <span class="text-rose-500">*</span></label>
-      <input type="date" name="date" value="{{ now.strftime('%Y-%m-%d') }}" required
+      <input type="date" name="date" value="{{ transaction.date.strftime('%Y-%m-%d') if transaction else now.strftime('%Y-%m-%d') }}" required
         class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
     </div>
     <div class="grid grid-cols-2 gap-4">
       <div>
         <label class="block text-sm font-medium text-slate-700 mb-1">Memo / Descripción <span class="text-rose-500">*</span></label>
-        <input type="text" name="memo" required placeholder="Descripción del asiento"
+        <input type="text" name="memo" value="{{ transaction.memo if transaction else '' }}" required placeholder="Descripción del asiento"
           class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
       </div>
       <div>
         <label class="block text-sm font-medium text-slate-700 mb-1">Referencia</label>
-        <input type="text" name="reference" placeholder="No. Documento"
+        <input type="text" name="reference" value="{{ transaction.reference if transaction else '' }}" placeholder="No. Documento"
           class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
       </div>
     </div>
@@ -40,40 +40,61 @@
           <span class="w-8"></span>
         </div>
         <div id="journal-lines" class="divide-y divide-slate-100">
-          {# Line 0 — debit #}
-          <div class="journal-line grid grid-cols-[1fr_auto_auto_auto] gap-0 p-2" data-line="0">
-            <select name="lines[0][account_id]" required
-              class="border-0 bg-transparent text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500 rounded px-2 py-1 text-slate-800">
-              <option value="">Seleccionar cuenta...</option>
-              {% for acct in accounts %}
-              <option value="{{ acct.id }}">{% if acct.code %}{{ acct.code }} - {% endif %}{{ acct.name }}</option>
-              {% endfor %}
-            </select>
-            <input type="number" name="lines[0][debit]" step="0.01" min="0" value="0" placeholder="0.00"
-              class="w-28 border-0 bg-transparent text-sm text-right focus:outline-none focus:ring-1 focus:ring-emerald-500 rounded px-2 py-1 font-mono debit-input">
-            <input type="number" name="lines[0][credit]" step="0.01" min="0" value="0" placeholder="0.00"
-              class="w-28 border-0 bg-transparent text-sm text-right focus:outline-none focus:ring-1 focus:ring-emerald-500 rounded px-2 py-1 font-mono credit-input">
-            <button type="button" class="remove-line w-8 text-slate-300 hover:text-rose-400 transition-colors flex items-center justify-center" style="display:none">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-            </button>
-          </div>
-          {# Line 1 — credit #}
-          <div class="journal-line grid grid-cols-[1fr_auto_auto_auto] gap-0 p-2" data-line="1">
-            <select name="lines[1][account_id]" required
-              class="border-0 bg-transparent text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500 rounded px-2 py-1 text-slate-800">
-              <option value="">Seleccionar cuenta...</option>
-              {% for acct in accounts %}
-              <option value="{{ acct.id }}">{% if acct.code %}{{ acct.code }} - {% endif %}{{ acct.name }}</option>
-              {% endfor %}
-            </select>
-            <input type="number" name="lines[1][debit]" step="0.01" min="0" value="0" placeholder="0.00"
-              class="w-28 border-0 bg-transparent text-sm text-right focus:outline-none focus:ring-1 focus:ring-emerald-500 rounded px-2 py-1 font-mono debit-input">
-            <input type="number" name="lines[1][credit]" step="0.01" min="0" value="0" placeholder="0.00"
-              class="w-28 border-0 bg-transparent text-sm text-right focus:outline-none focus:ring-1 focus:ring-emerald-500 rounded px-2 py-1 font-mono credit-input">
-            <button type="button" class="remove-line w-8 text-slate-300 hover:text-rose-400 transition-colors flex items-center justify-center" style="display:none">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-            </button>
-          </div>
+          {% if transaction and transaction.entries %}
+            {% for entry in transaction.entries %}
+            <div class="journal-line grid grid-cols-[1fr_auto_auto_auto] gap-0 p-2" data-line="{{ loop.index0 }}">
+              <select name="lines[{{ loop.index0 }}][account_id]" required
+                class="border-0 bg-transparent text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500 rounded px-2 py-1 text-slate-800">
+                <option value="">Seleccionar cuenta...</option>
+                {% for acct in accounts %}
+                <option value="{{ acct.id }}" {{ 'selected' if acct.id == entry.account_id else '' }}>{% if acct.code %}{{ acct.code }} - {% endif %}{{ acct.name }}</option>
+                {% endfor %}
+              </select>
+              <input type="number" name="lines[{{ loop.index0 }}][debit]" step="0.01" min="0" value="{{ entry.debit }}" placeholder="0.00"
+                class="w-28 border-0 bg-transparent text-sm text-right focus:outline-none focus:ring-1 focus:ring-emerald-500 rounded px-2 py-1 font-mono debit-input">
+              <input type="number" name="lines[{{ loop.index0 }}][credit]" step="0.01" min="0" value="{{ entry.credit }}" placeholder="0.00"
+                class="w-28 border-0 bg-transparent text-sm text-right focus:outline-none focus:ring-1 focus:ring-emerald-500 rounded px-2 py-1 font-mono credit-input">
+              <button type="button" class="remove-line w-8 text-slate-300 hover:text-rose-400 transition-colors flex items-center justify-center" {{ 'style="display:none"' if loop.index0 < 2 else '' }}>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </div>
+            {% endfor %}
+          {% else %}
+            {# Line 0 — debit #}
+            <div class="journal-line grid grid-cols-[1fr_auto_auto_auto] gap-0 p-2" data-line="0">
+              <select name="lines[0][account_id]" required
+                class="border-0 bg-transparent text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500 rounded px-2 py-1 text-slate-800">
+                <option value="">Seleccionar cuenta...</option>
+                {% for acct in accounts %}
+                <option value="{{ acct.id }}">{% if acct.code %}{{ acct.code }} - {% endif %}{{ acct.name }}</option>
+                {% endfor %}
+              </select>
+              <input type="number" name="lines[0][debit]" step="0.01" min="0" value="0" placeholder="0.00"
+                class="w-28 border-0 bg-transparent text-sm text-right focus:outline-none focus:ring-1 focus:ring-emerald-500 rounded px-2 py-1 font-mono debit-input">
+              <input type="number" name="lines[0][credit]" step="0.01" min="0" value="0" placeholder="0.00"
+                class="w-28 border-0 bg-transparent text-sm text-right focus:outline-none focus:ring-1 focus:ring-emerald-500 rounded px-2 py-1 font-mono credit-input">
+              <button type="button" class="remove-line w-8 text-slate-300 hover:text-rose-400 transition-colors flex items-center justify-center" style="display:none">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </div>
+            {# Line 1 — credit #}
+            <div class="journal-line grid grid-cols-[1fr_auto_auto_auto] gap-0 p-2" data-line="1">
+              <select name="lines[1][account_id]" required
+                class="border-0 bg-transparent text-sm focus:outline-none focus:ring-1 focus:ring-emerald-500 rounded px-2 py-1 text-slate-800">
+                <option value="">Seleccionar cuenta...</option>
+                {% for acct in accounts %}
+                <option value="{{ acct.id }}">{% if acct.code %}{{ acct.code }} - {% endif %}{{ acct.name }}</option>
+                {% endfor %}
+              </select>
+              <input type="number" name="lines[1][debit]" step="0.01" min="0" value="0" placeholder="0.00"
+                class="w-28 border-0 bg-transparent text-sm text-right focus:outline-none focus:ring-1 focus:ring-emerald-500 rounded px-2 py-1 font-mono debit-input">
+              <input type="number" name="lines[1][credit]" step="0.01" min="0" value="0" placeholder="0.00"
+                class="w-28 border-0 bg-transparent text-sm text-right focus:outline-none focus:ring-1 focus:ring-emerald-500 rounded px-2 py-1 font-mono credit-input">
+              <button type="button" class="remove-line w-8 text-slate-300 hover:text-rose-400 transition-colors flex items-center justify-center" style="display:none">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </div>
+          {% endif %}
         </div>
         {# Totals row #}
         <div class="grid grid-cols-[1fr_auto_auto_auto] gap-0 px-3 py-2 bg-slate-100 border-t border-slate-200 text-xs font-bold text-slate-700">
@@ -87,7 +108,7 @@
 
     <div class="border-t border-slate-200 pt-4">
       <button type="submit" class="w-full flex justify-center items-center gap-2 px-4 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
-        Crear Asiento
+        {{ 'Actualizar Asiento' if transaction else 'Crear Asiento' }}
       </button>
     </div>
   </div>
@@ -95,7 +116,7 @@
 
 <script>
 (function() {
-  let lineCount = 2;
+  let lineCount = document.querySelectorAll('.journal-line').length;
   const accountOptions = `{% for acct in accounts %}<option value="{{ acct.id }}">{% if acct.code %}{{ acct.code }} - {% endif %}{{ acct.name }}</option>{% endfor %}`;
 
   function updateTotals() {
@@ -114,6 +135,13 @@
 
   document.addEventListener('input', function(e) {
     if (e.target.matches('.debit-input, .credit-input')) updateTotals();
+  });
+
+  document.querySelectorAll('.remove-line').forEach(btn => {
+    btn.addEventListener('click', function() {
+      this.closest('.journal-line').remove();
+      updateTotals();
+    });
   });
 
   document.getElementById('add-line-btn').addEventListener('click', function() {

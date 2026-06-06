@@ -24,7 +24,7 @@
         </div>
         <div class="min-w-0">
           <p class="text-xs font-bold text-slate-800 truncate">{{ user.name }}</p>
-          <p class="text-[11px] text-slate-500 truncate">{{ user.role.name|title if user.role else 'Sin rol' }}</p>
+          <p class="text-[11px] text-slate-500 truncate">{{ user.role.name|role_name_es if user.role else 'Sin rol' }}</p>
         </div>
       </div>
       {% if user.is_active %}
@@ -153,7 +153,7 @@
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
               </svg>
-              {{ user.role.name|title }}
+              {{ user.role.name|role_name_es }}
             </span>
             {% endif %}
             {% if account_age_days is defined %}
@@ -247,12 +247,12 @@
                 {% if 'admin' in role_name %}
                 <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-violet-50 text-violet-700 border border-violet-100">
                   <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                  {{ user.role.name|title }}
+                  {{ user.role.name|role_name_es }}
                 </span>
                 {% else %}
                 <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600">
                   <span class="w-1 h-1 rounded-full bg-slate-400"></span>
-                  {{ user.role.name|title }}
+                  {{ user.role.name|role_name_es }}
                 </span>
                 {% endif %}
                 {% else %}
@@ -394,7 +394,7 @@
                 </div>
                 <span class="text-sm text-slate-600">Rol</span>
               </div>
-              <span class="text-sm font-bold text-slate-900">{{ user.role.name|title if user.role else '—' }}</span>
+              <span class="text-sm font-bold text-slate-900">{{ user.role.name|role_name_es if user.role else '—' }}</span>
             </div>
 
             <div class="flex items-center justify-between">

@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% from "accounting/partials/_nav.html" import accounting_nav %}
+{% block title %}Proyectos · {{ company.name }}{% endblock %}
+{% block page_title %}Contabilidad{% endblock %}
+{% block sidebar_title %}Contabilidad{% endblock %}
+{% block sidebar_nav %}{{ accounting_nav(company.id, request.endpoint) }}{% endblock %}
+
+{% block content %}
+<div class="flex flex-col h-full overflow-hidden bg-slate-50">
+  <header class="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between flex-shrink-0">
+    <div>
+      <h1 class="text-base font-semibold text-slate-800">Proyectos</h1>
+      <p class="text-xs text-slate-500 mt-0.5">Gestión de centros de costo y rentabilidad</p>
+    </div>
+    <button data-action="open-drawer" data-url="{{ url_for('accounting.create_project', company_id=company.id) }}" data-title="Nuevo Proyecto"
+      class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors shadow-sm">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+      Nuevo Proyecto
+    </button>
+  </header>
+
+  <div class="flex-1 overflow-y-auto p-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for item in projects_data %}
+      {% set p = item.project %}
+      <div class="bg-white border border-slate-200 rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col h-full overflow-hidden group">
+        <div class="p-5 flex-1">
+          <div class="flex justify-between items-start mb-3">
+            <h3 class="font-bold text-slate-800 text-lg truncate pr-2"><a href="{{ url_for('accounting.project_detail', company_id=company.id, project_id=p.id) }}" class="hover:text-emerald-600">{{ p.name }}</a></h3>
+            {% set s_map = {'active': ('bg-emerald-50 text-emerald-700 border-emerald-200', 'Activo'), 'on_hold': ('bg-amber-50 text-amber-700 border-amber-200', 'En pausa'), 'completed': ('bg-slate-100 text-slate-600 border-slate-200', 'Completado'), 'cancelled': ('bg-rose-50 text-rose-700 border-rose-200', 'Cancelado')} %}
+            {% set s_style, s_label = s_map.get(p.status, ('bg-slate-100 text-slate-600 border-slate-200', p.status)) %}
+            <span class="inline-flex px-2 py-0.5 rounded-full text-xs font-semibold border {{ s_style }}">{{ s_label }}</span>
+          </div>
+          {% if p.description %}
+          <p class="text-sm text-slate-500 line-clamp-2 mb-4">{{ p.description }}</p>
+          {% else %}
+          <div class="h-10 mb-4"></div>
+          {% endif %}
+
+          <div class="space-y-3 mt-auto">
+            <div class="flex justify-between items-end">
+              <div>
+                <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold mb-0.5">Ingresos</p>
+                <p class="font-mono font-bold text-emerald-600">{{ company.currency }}{{ "{:,.2f}".format(item.income_total) }}</p>
+              </div>
+              <div class="text-right">
+                <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold mb-0.5">Gastos</p>
+                <p class="font-mono font-bold text-rose-600">{{ company.currency }}{{ "{:,.2f}".format(item.expense_total) }}</p>
+              </div>
+            </div>
+            
+            <div class="pt-3 border-t border-slate-100 flex justify-between items-center">
+              <span class="text-xs font-semibold text-slate-500">Rentabilidad (Neto)</span>
+              <span class="font-mono font-bold {{ 'text-emerald-600' if item.net > 0 else 'text-rose-600' if item.net < 0 else 'text-slate-400' }}">
+                {{ company.currency }}{{ "{:,.2f}".format(item.net) }}
+              </span>
+            </div>
+            
+            {% if p.budget and p.budget > 0 %}
+            <div class="pt-3 border-t border-slate-100">
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-xs font-semibold text-slate-500">Presupuesto</span>
+                <span class="text-xs font-mono font-bold text-slate-700">{{ company.currency }}{{ "{:,.2f}".format(p.budget) }}</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+                <div class="{{ 'bg-rose-500' if item.budget_used_pct > 100 else 'bg-amber-500' if item.budget_used_pct > 80 else 'bg-emerald-500' }} h-1.5 rounded-full" style="width: {{ [item.budget_used_pct, 100]|min }}%"></div>
+              </div>
+              <p class="text-[10px] text-right mt-1 text-slate-400 font-medium">{{ item.budget_used_pct }}% consumido</p>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        <div class="bg-slate-50 border-t border-slate-200 p-3 flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity">
+          <a href="{{ url_for('accounting.project_detail', company_id=company.id, project_id=p.id) }}" class="text-xs font-medium text-emerald-600 hover:text-emerald-700">Ver detalles →</a>
+          <div class="flex gap-2">
+            <button data-action="open-drawer" data-url="{{ url_for('accounting.edit_project', company_id=company.id, project_id=p.id) }}" data-title="Editar Proyecto"
+              class="text-slate-400 hover:text-sky-600 transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></button>
+            <form method="POST" action="{{ url_for('accounting.delete_project', company_id=company.id, project_id=p.id) }}" onsubmit="return confirm('¿Eliminar este proyecto? Los gastos asociados se desvincularán pero no se eliminarán.')" class="inline">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <button type="submit" class="text-slate-400 hover:text-rose-600 transition-colors"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg></button>
+            </form>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="col-span-full py-20 text-center">
+        <div class="flex flex-col items-center gap-3">
+          <div class="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center text-slate-300">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+          </div>
+          <div>
+            <h3 class="text-lg font-semibold text-slate-800">No hay proyectos</h3>
+            <p class="text-sm text-slate-500 mt-1 max-w-md mx-auto">Cree proyectos para agrupar ingresos y gastos, y medir la rentabilidad por unidad de negocio o centro de costo.</p>
+          </div>
+          <button data-action="open-drawer" data-url="{{ url_for('accounting.create_project', company_id=company.id) }}" data-title="Nuevo Proyecto"
+            class="mt-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">Crear el primer proyecto</button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
