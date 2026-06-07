@@ -755,9 +755,9 @@
     "semantic_hash": "33e90bf4ed5d5a7b7661f1d582437e98"
   },
   "app/contacts/templates/contacts/index.html": {
-    "mtime": 1780323176.526288,
-    "ast_hash": "9e7ac5742b12d09bed5e0d33fdf54e80",
-    "semantic_hash": "9e7ac5742b12d09bed5e0d33fdf54e80"
+    "mtime": 1780714162.16864,
+    "ast_hash": "f778de996ea356ef313c1a9f1c637dd1",
+    "semantic_hash": ""
   },
   "app/contacts/templates/contacts/view.html": {
     "mtime": 1780323231.813155,

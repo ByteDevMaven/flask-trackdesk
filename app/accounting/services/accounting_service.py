@@ -497,14 +497,16 @@ class AccountingService:
     def delete_expense(company_id: int, expense_id: int) -> None:
         expense = Expense.query.filter_by(id=expense_id, company_id=company_id).first_or_404()
 
-        # Void the linked transaction (soft delete the ledger entries conceptually)
+        # Void the linked transaction so it no longer affects balances
         if expense.transaction_id:
             txn = Transaction.query.get(expense.transaction_id)
-            if txn:
+            if txn and not txn.is_voided:
                 txn.is_voided = True
-                txn.voided_reason = 'Expense deleted'
+                txn.voided_reason = 'Gasto eliminado'
 
-        db.session.delete(expense)
+        # Soft-delete: mark as deleted instead of removing the row
+        expense.is_deleted = True
+        expense.deleted_at = datetime.now(UTC)
         db.session.commit()
 
     # ── Income ─────────────────────────────────────────────────────────────
@@ -1206,8 +1208,10 @@ class AccountingService:
 
     @staticmethod
     def delete_tag(company_id: int, tag_id: int) -> None:
+        """Soft-delete a tag."""
         tag = Tag.query.filter_by(id=tag_id, company_id=company_id).first_or_404()
-        db.session.delete(tag)
+        tag.is_deleted = True
+        tag.deleted_at = datetime.now(UTC)
         db.session.commit()
 
     # ── Ledger (paginated, with balances) ──────────────────────────────────
@@ -1489,8 +1493,9 @@ class AccountingService:
     @staticmethod
     def delete_account_safe(company_id: int, account_id: int) -> None:
         """
-        Soft-delete an account (set is_active=False, is_deleted=True).
-        Raises ValueError if the account has any ledger entries.
+        Soft-delete an account (set is_active=False, is_deleted=True, deleted_at=now).
+        Raises ValueError if the account has any non-voided ledger entries to prevent
+        orphaning historical accounting data.
         """
         account = Account.query.filter_by(id=account_id, company_id=company_id).first_or_404()
         entry_count = LedgerEntry.query.filter_by(
@@ -1501,7 +1506,9 @@ class AccountingService:
                 f'Esta cuenta tiene {entry_count} movimiento(s) contables y no puede eliminarse. '
                 'Puede desactivarla en su lugar.'
             )
-        db.session.delete(account)
+        account.is_active = False
+        account.is_deleted = True
+        account.deleted_at = datetime.now(UTC)
         db.session.commit()
 
     # ── Projects ────────────────────────────────────────────────────────────
@@ -1528,11 +1535,14 @@ class AccountingService:
     @staticmethod
     def delete_project_safe(company_id: int, project_id: int) -> None:
         project = Project.query.filter_by(id=project_id, company_id=company_id).first_or_404()
-        # Unlink expenses from this project
+        # Unlink expenses from this project so they aren't orphaned
         Expense.query.filter_by(project_id=project_id, company_id=company_id).update({'project_id': None})
-        # Unlink ledger entries
+        # Unlink ledger entries from this project
         LedgerEntry.query.filter_by(project_id=project_id, company_id=company_id).update({'project_id': None})
-        db.session.delete(project)
+        # Soft-delete: mark the project as deleted instead of removing the row
+        project.is_deleted = True
+        project.deleted_at = datetime.now(UTC)
+        project.status = 'cancelled'
         db.session.commit()
 
     @staticmethod
