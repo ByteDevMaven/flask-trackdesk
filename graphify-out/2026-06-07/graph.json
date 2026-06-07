@@ -4,724 +4,823 @@
   "graph": {},
   "nodes": [
     {
+      "label": "routes.py",
+      "file_type": "code",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L1",
+      "id": "invoices_routes",
+      "community": 5,
+      "norm_label": "routes.py"
+    },
+    {
+      "label": "index()",
+      "file_type": "code",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L22",
+      "id": "invoices_routes_index",
+      "community": 5,
+      "norm_label": "index()"
+    },
+    {
+      "label": "item_row()",
+      "file_type": "code",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L51",
+      "id": "invoices_routes_item_row",
+      "community": 5,
+      "norm_label": "item_row()"
+    },
+    {
+      "label": "create()",
+      "file_type": "code",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L72",
+      "id": "invoices_routes_create",
+      "community": 5,
+      "norm_label": "create()"
+    },
+    {
+      "label": "store()",
+      "file_type": "code",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L97",
+      "id": "invoices_routes_store",
+      "community": 5,
+      "norm_label": "store()"
+    },
+    {
+      "label": "view()",
+      "file_type": "code",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L131",
+      "id": "invoices_routes_view",
+      "community": 5,
+      "norm_label": "view()"
+    },
+    {
+      "label": "add_payment()",
+      "file_type": "code",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L171",
+      "id": "invoices_routes_add_payment",
+      "community": 5,
+      "norm_label": "add_payment()"
+    },
+    {
+      "label": "edit()",
+      "file_type": "code",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L202",
+      "id": "invoices_routes_edit",
+      "community": 5,
+      "norm_label": "edit()"
+    },
+    {
+      "label": "update()",
+      "file_type": "code",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L239",
+      "id": "invoices_routes_update",
+      "community": 5,
+      "norm_label": "update()"
+    },
+    {
+      "label": "delete()",
+      "file_type": "code",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L319",
+      "id": "invoices_routes_delete",
+      "community": 5,
+      "norm_label": "delete()"
+    },
+    {
+      "label": "print_invoice()",
+      "file_type": "code",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L347",
+      "id": "invoices_routes_print_invoice",
+      "community": 7,
+      "norm_label": "print_invoice()"
+    },
+    {
       "label": "accounting_service.py",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1",
-      "id": "services_accounting_service",
       "community": 4,
-      "norm_label": "accounting_service.py"
+      "norm_label": "accounting_service.py",
+      "id": "services_accounting_service"
     },
     {
       "label": "_allowed_file()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L32",
-      "id": "services_accounting_service_allowed_file",
       "community": 4,
-      "norm_label": "_allowed_file()"
+      "norm_label": "_allowed_file()",
+      "id": "services_accounting_service_allowed_file"
     },
     {
       "label": "str",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L32",
-      "id": "str",
       "community": 4,
-      "norm_label": "str"
+      "norm_label": "str",
+      "id": "str"
     },
     {
       "label": "bool",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L32",
-      "id": "bool",
       "community": 4,
-      "norm_label": "bool"
+      "norm_label": "bool",
+      "id": "bool"
     },
     {
       "label": "_save_receipt()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L37",
-      "id": "services_accounting_service_save_receipt",
       "community": 4,
-      "norm_label": "_save_receipt()"
+      "norm_label": "_save_receipt()",
+      "id": "services_accounting_service_save_receipt"
     },
     {
       "label": "_parse_date()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L51",
-      "id": "services_accounting_service_parse_date",
       "community": 4,
-      "norm_label": "_parse_date()"
+      "norm_label": "_parse_date()",
+      "id": "services_accounting_service_parse_date"
     },
     {
       "label": "datetime",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L51",
-      "id": "datetime",
       "community": 4,
-      "norm_label": "datetime"
+      "norm_label": "datetime",
+      "id": "datetime"
     },
     {
       "label": "_make_naive()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L61",
-      "id": "services_accounting_service_make_naive",
       "community": 4,
-      "norm_label": "_make_naive()"
+      "norm_label": "_make_naive()",
+      "id": "services_accounting_service_make_naive"
     },
     {
       "label": "_get_period_bounds()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L68",
-      "id": "services_accounting_service_get_period_bounds",
       "community": 4,
-      "norm_label": "_get_period_bounds()"
+      "norm_label": "_get_period_bounds()",
+      "id": "services_accounting_service_get_period_bounds"
     },
     {
       "label": "_compute_account_balance()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L81",
-      "id": "services_accounting_service_compute_account_balance",
       "community": 4,
-      "norm_label": "_compute_account_balance()"
+      "norm_label": "_compute_account_balance()",
+      "id": "services_accounting_service_compute_account_balance"
     },
     {
       "label": "Account",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L81",
-      "id": "account",
       "community": 4,
-      "norm_label": "account"
+      "norm_label": "account",
+      "id": "account"
     },
     {
       "label": "float",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L81",
-      "id": "float",
       "community": 4,
-      "norm_label": "float"
+      "norm_label": "float",
+      "id": "float"
     },
     {
       "label": "_compute_balances_bulk()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L112",
-      "id": "services_accounting_service_compute_balances_bulk",
       "community": 4,
-      "norm_label": "_compute_balances_bulk()"
+      "norm_label": "_compute_balances_bulk()",
+      "id": "services_accounting_service_compute_balances_bulk"
     },
     {
       "label": "int",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L112",
-      "id": "int",
       "community": 4,
-      "norm_label": "int"
+      "norm_label": "int",
+      "id": "int"
     },
     {
       "label": "_create_balanced_transaction()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L148",
-      "id": "services_accounting_service_create_balanced_transaction",
       "community": 4,
-      "norm_label": "_create_balanced_transaction()"
+      "norm_label": "_create_balanced_transaction()",
+      "id": "services_accounting_service_create_balanced_transaction"
     },
     {
       "label": "TransactionType",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L148",
-      "id": "transactiontype",
       "community": 4,
-      "norm_label": "transactiontype"
+      "norm_label": "transactiontype",
+      "id": "transactiontype"
     },
     {
       "label": "Transaction",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L148",
-      "id": "transaction",
       "community": 4,
-      "norm_label": "transaction"
+      "norm_label": "transaction",
+      "id": "transaction"
     },
     {
       "label": "AccountingService",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L209",
-      "id": "services_accounting_service_accountingservice",
       "community": 4,
-      "norm_label": "accountingservice"
+      "norm_label": "accountingservice",
+      "id": "services_accounting_service_accountingservice"
     },
     {
       "label": ".get_dashboard_data()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L214",
-      "id": "services_accounting_service_accountingservice_get_dashboard_data",
       "community": 4,
-      "norm_label": ".get_dashboard_data()"
+      "norm_label": ".get_dashboard_data()",
+      "id": "services_accounting_service_accountingservice_get_dashboard_data"
     },
     {
       "label": ".get_account_balance()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L340",
-      "id": "services_accounting_service_accountingservice_get_account_balance",
       "community": 4,
-      "norm_label": ".get_account_balance()"
+      "norm_label": ".get_account_balance()",
+      "id": "services_accounting_service_accountingservice_get_account_balance"
     },
     {
       "label": ".get_account_balances_bulk()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L344",
-      "id": "services_accounting_service_accountingservice_get_account_balances_bulk",
       "community": 4,
-      "norm_label": ".get_account_balances_bulk()"
+      "norm_label": ".get_account_balances_bulk()",
+      "id": "services_accounting_service_accountingservice_get_account_balances_bulk"
     },
     {
       "label": ".create_expense()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L350",
-      "id": "services_accounting_service_accountingservice_create_expense",
       "community": 4,
-      "norm_label": ".create_expense()"
+      "norm_label": ".create_expense()",
+      "id": "services_accounting_service_accountingservice_create_expense"
     },
     {
       "label": "Expense",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L350",
-      "id": "expense",
       "community": 4,
-      "norm_label": "expense"
+      "norm_label": "expense",
+      "id": "expense"
     },
     {
       "label": ".get_expenses()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L466",
-      "id": "services_accounting_service_accountingservice_get_expenses",
       "community": 4,
-      "norm_label": ".get_expenses()"
+      "norm_label": ".get_expenses()",
+      "id": "services_accounting_service_accountingservice_get_expenses"
     },
     {
       "label": ".delete_expense()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L497",
-      "id": "services_accounting_service_accountingservice_delete_expense",
       "community": 4,
-      "norm_label": ".delete_expense()"
+      "norm_label": ".delete_expense()",
+      "id": "services_accounting_service_accountingservice_delete_expense"
     },
     {
       "label": ".record_income()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L515",
-      "id": "services_accounting_service_accountingservice_record_income",
       "community": 4,
-      "norm_label": ".record_income()"
+      "norm_label": ".record_income()",
+      "id": "services_accounting_service_accountingservice_record_income"
     },
     {
       "label": ".get_income_transactions()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L599",
-      "id": "services_accounting_service_accountingservice_get_income_transactions",
       "community": 4,
-      "norm_label": ".get_income_transactions()"
+      "norm_label": ".get_income_transactions()",
+      "id": "services_accounting_service_accountingservice_get_income_transactions"
     },
     {
       "label": ".create_journal_entry()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L620",
-      "id": "services_accounting_service_accountingservice_create_journal_entry",
       "community": 4,
-      "norm_label": ".create_journal_entry()"
+      "norm_label": ".create_journal_entry()",
+      "id": "services_accounting_service_accountingservice_create_journal_entry"
     },
     {
       "label": ".update_journal_entry()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L689",
-      "id": "services_accounting_service_accountingservice_update_journal_entry",
       "community": 4,
-      "norm_label": ".update_journal_entry()"
+      "norm_label": ".update_journal_entry()",
+      "id": "services_accounting_service_accountingservice_update_journal_entry"
     },
     {
       "label": ".get_journal_entries()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L765",
-      "id": "services_accounting_service_accountingservice_get_journal_entries",
       "community": 4,
-      "norm_label": ".get_journal_entries()"
+      "norm_label": ".get_journal_entries()",
+      "id": "services_accounting_service_accountingservice_get_journal_entries"
     },
     {
       "label": ".void_transaction()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L787",
-      "id": "services_accounting_service_accountingservice_void_transaction",
       "community": 4,
-      "norm_label": ".void_transaction()"
+      "norm_label": ".void_transaction()",
+      "id": "services_accounting_service_accountingservice_void_transaction"
     },
     {
       "label": ".get_ledger_entries()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L799",
-      "id": "services_accounting_service_accountingservice_get_ledger_entries",
       "community": 4,
-      "norm_label": ".get_ledger_entries()"
+      "norm_label": ".get_ledger_entries()",
+      "id": "services_accounting_service_accountingservice_get_ledger_entries"
     },
     {
       "label": ".get_trial_balance()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L830",
-      "id": "services_accounting_service_accountingservice_get_trial_balance",
       "community": 4,
-      "norm_label": ".get_trial_balance()"
+      "norm_label": ".get_trial_balance()",
+      "id": "services_accounting_service_accountingservice_get_trial_balance"
     },
     {
       "label": ".compute_report()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L880",
-      "id": "services_accounting_service_accountingservice_compute_report",
       "community": 4,
-      "norm_label": ".compute_report()"
+      "norm_label": ".compute_report()",
+      "id": "services_accounting_service_accountingservice_compute_report"
     },
     {
       "label": "object",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L880",
-      "id": "object",
       "community": 4,
-      "norm_label": "object"
+      "norm_label": "object",
+      "id": "object"
     },
     {
       "label": ".export_report_csv()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1037",
-      "id": "services_accounting_service_accountingservice_export_report_csv",
       "community": 4,
-      "norm_label": ".export_report_csv()"
+      "norm_label": ".export_report_csv()",
+      "id": "services_accounting_service_accountingservice_export_report_csv"
     },
     {
       "label": "Response",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1037",
-      "id": "response",
       "community": 4,
-      "norm_label": "response"
+      "norm_label": "response",
+      "id": "response"
     },
     {
       "label": ".create_account()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1090",
-      "id": "services_accounting_service_accountingservice_create_account",
       "community": 4,
-      "norm_label": ".create_account()"
+      "norm_label": ".create_account()",
+      "id": "services_accounting_service_accountingservice_create_account"
     },
     {
       "label": ".update_account()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1115",
-      "id": "services_accounting_service_accountingservice_update_account",
       "community": 4,
-      "norm_label": ".update_account()"
+      "norm_label": ".update_account()",
+      "id": "services_accounting_service_accountingservice_update_account"
     },
     {
       "label": ".generate_default_accounts()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1133",
-      "id": "services_accounting_service_accountingservice_generate_default_accounts",
       "community": 4,
-      "norm_label": ".generate_default_accounts()"
+      "norm_label": ".generate_default_accounts()",
+      "id": "services_accounting_service_accountingservice_generate_default_accounts"
     },
     {
       "label": ".create_project()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1179",
-      "id": "services_accounting_service_accountingservice_create_project",
       "community": 4,
-      "norm_label": ".create_project()"
+      "norm_label": ".create_project()",
+      "id": "services_accounting_service_accountingservice_create_project"
     },
     {
       "label": "Project",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1179",
-      "id": "project",
       "community": 4,
-      "norm_label": "project"
+      "norm_label": "project",
+      "id": "project"
     },
     {
       "label": ".create_tag()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1197",
-      "id": "services_accounting_service_accountingservice_create_tag",
       "community": 4,
-      "norm_label": ".create_tag()"
+      "norm_label": ".create_tag()",
+      "id": "services_accounting_service_accountingservice_create_tag"
     },
     {
       "label": "Tag",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1197",
-      "id": "tag",
       "community": 4,
-      "norm_label": "tag"
+      "norm_label": "tag",
+      "id": "tag"
     },
     {
       "label": ".delete_tag()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1210",
-      "id": "services_accounting_service_accountingservice_delete_tag",
       "community": 4,
-      "norm_label": ".delete_tag()"
+      "norm_label": ".delete_tag()",
+      "id": "services_accounting_service_accountingservice_delete_tag"
     },
     {
       "label": ".get_ledger_page()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1220",
-      "id": "services_accounting_service_accountingservice_get_ledger_page",
       "community": 4,
-      "norm_label": ".get_ledger_page()"
+      "norm_label": ".get_ledger_page()",
+      "id": "services_accounting_service_accountingservice_get_ledger_page"
     },
     {
       "label": ".update_expense()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1317",
-      "id": "services_accounting_service_accountingservice_update_expense",
       "community": 4,
-      "norm_label": ".update_expense()"
+      "norm_label": ".update_expense()",
+      "id": "services_accounting_service_accountingservice_update_expense"
     },
     {
       "label": ".update_income()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1415",
-      "id": "services_accounting_service_accountingservice_update_income",
       "community": 4,
-      "norm_label": ".update_income()"
+      "norm_label": ".update_income()",
+      "id": "services_accounting_service_accountingservice_update_income"
     },
     {
       "label": ".delete_income_txn()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1480",
-      "id": "services_accounting_service_accountingservice_delete_income_txn",
       "community": 4,
-      "norm_label": ".delete_income_txn()"
+      "norm_label": ".delete_income_txn()",
+      "id": "services_accounting_service_accountingservice_delete_income_txn"
     },
     {
       "label": ".delete_account_safe()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1494",
-      "id": "services_accounting_service_accountingservice_delete_account_safe",
       "community": 4,
-      "norm_label": ".delete_account_safe()"
+      "norm_label": ".delete_account_safe()",
+      "id": "services_accounting_service_accountingservice_delete_account_safe"
     },
     {
       "label": ".update_project()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1517",
-      "id": "services_accounting_service_accountingservice_update_project",
       "community": 4,
-      "norm_label": ".update_project()"
+      "norm_label": ".update_project()",
+      "id": "services_accounting_service_accountingservice_update_project"
     },
     {
       "label": ".delete_project_safe()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1536",
-      "id": "services_accounting_service_accountingservice_delete_project_safe",
       "community": 4,
-      "norm_label": ".delete_project_safe()"
+      "norm_label": ".delete_project_safe()",
+      "id": "services_accounting_service_accountingservice_delete_project_safe"
     },
     {
       "label": ".get_project_detail()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1549",
-      "id": "services_accounting_service_accountingservice_get_project_detail",
       "community": 4,
-      "norm_label": ".get_project_detail()"
+      "norm_label": ".get_project_detail()",
+      "id": "services_accounting_service_accountingservice_get_project_detail"
     },
     {
       "label": ".get_projects_list()",
       "file_type": "code",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1613",
-      "id": "services_accounting_service_accountingservice_get_projects_list",
       "community": 4,
-      "norm_label": ".get_projects_list()"
+      "norm_label": ".get_projects_list()",
+      "id": "services_accounting_service_accountingservice_get_projects_list"
     },
     {
       "label": "AccountingService \u2014 complete double-entry bookkeeping service.  Design rules (MU",
       "file_type": "rationale",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1",
-      "id": "services_accounting_service_rationale_1",
       "community": 4,
-      "norm_label": "accountingservice \u2014 complete double-entry bookkeeping service.  design rules (mu"
+      "norm_label": "accountingservice \u2014 complete double-entry bookkeeping service.  design rules (mu",
+      "id": "services_accounting_service_rationale_1"
     },
     {
       "label": "Save uploaded receipt; return relative URL or None.",
       "file_type": "rationale",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L38",
-      "id": "services_accounting_service_rationale_38",
       "community": 4,
-      "norm_label": "save uploaded receipt; return relative url or none."
+      "norm_label": "save uploaded receipt; return relative url or none.",
+      "id": "services_accounting_service_rationale_38"
     },
     {
       "label": "Parse YYYY-MM-DD string \u2192 naive datetime. Falls back to now(UTC).",
       "file_type": "rationale",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L52",
-      "id": "services_accounting_service_rationale_52",
       "community": 4,
-      "norm_label": "parse yyyy-mm-dd string \u2192 naive datetime. falls back to now(utc)."
+      "norm_label": "parse yyyy-mm-dd string \u2192 naive datetime. falls back to now(utc).",
+      "id": "services_accounting_service_rationale_52"
     },
     {
       "label": "Strip timezone info so comparisons work with our stored naive datetimes.",
       "file_type": "rationale",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L62",
-      "id": "services_accounting_service_rationale_62",
       "community": 4,
-      "norm_label": "strip timezone info so comparisons work with our stored naive datetimes."
+      "norm_label": "strip timezone info so comparisons work with our stored naive datetimes.",
+      "id": "services_accounting_service_rationale_62"
     },
     {
       "label": "Return (start_dt, end_dt) as naive datetimes for the given period.",
       "file_type": "rationale",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L69",
-      "id": "services_accounting_service_rationale_69",
       "community": 4,
-      "norm_label": "return (start_dt, end_dt) as naive datetimes for the given period."
+      "norm_label": "return (start_dt, end_dt) as naive datetimes for the given period.",
+      "id": "services_accounting_service_rationale_69"
     },
     {
       "label": "Compute the current balance of an account from LedgerEntry rows.      Normal bal",
       "file_type": "rationale",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L82",
-      "id": "services_accounting_service_rationale_82",
       "community": 4,
-      "norm_label": "compute the current balance of an account from ledgerentry rows.      normal bal"
+      "norm_label": "compute the current balance of an account from ledgerentry rows.      normal bal",
+      "id": "services_accounting_service_rationale_82"
     },
     {
       "label": "Compute balances for ALL accounts of a company in one query.     Returns {accoun",
       "file_type": "rationale",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L113",
-      "id": "services_accounting_service_rationale_113",
       "community": 4,
-      "norm_label": "compute balances for all accounts of a company in one query.     returns {accoun"
+      "norm_label": "compute balances for all accounts of a company in one query.     returns {accoun",
+      "id": "services_accounting_service_rationale_113"
     },
     {
       "label": "Create a Transaction + LedgerEntry rows atomically.     Raises ValueError if ent",
       "file_type": "rationale",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L158",
-      "id": "services_accounting_service_rationale_158",
       "community": 4,
-      "norm_label": "create a transaction + ledgerentry rows atomically.     raises valueerror if ent"
+      "norm_label": "create a transaction + ledgerentry rows atomically.     raises valueerror if ent",
+      "id": "services_accounting_service_rationale_158"
     },
     {
       "label": "Record an expense.          Double-entry:           DR  Expense Account       (a",
       "file_type": "rationale",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L351",
-      "id": "services_accounting_service_rationale_351",
       "community": 4,
-      "norm_label": "record an expense.          double-entry:           dr  expense account       (a"
+      "norm_label": "record an expense.          double-entry:           dr  expense account       (a",
+      "id": "services_accounting_service_rationale_351"
     },
     {
       "label": "Record an income / revenue event.          Double-entry:           DR  Cash / AR",
       "file_type": "rationale",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L516",
-      "id": "services_accounting_service_rationale_516",
       "community": 4,
-      "norm_label": "record an income / revenue event.          double-entry:           dr  cash / ar"
+      "norm_label": "record an income / revenue event.          double-entry:           dr  cash / ar",
+      "id": "services_accounting_service_rationale_516"
     },
     {
       "label": "Manual multi-line journal entry.         Expects form fields: memo, date, refere",
       "file_type": "rationale",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L621",
-      "id": "services_accounting_service_rationale_621",
       "community": 4,
-      "norm_label": "manual multi-line journal entry.         expects form fields: memo, date, refere"
+      "norm_label": "manual multi-line journal entry.         expects form fields: memo, date, refere",
+      "id": "services_accounting_service_rationale_621"
     },
     {
       "label": "Void old manual multi-line journal entry and create a new one with updated data.",
       "file_type": "rationale",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L690",
-      "id": "services_accounting_service_rationale_690",
       "community": 4,
-      "norm_label": "void old manual multi-line journal entry and create a new one with updated data."
+      "norm_label": "void old manual multi-line journal entry and create a new one with updated data.",
+      "id": "services_accounting_service_rationale_690"
     },
     {
       "label": "Returns a trial balance as of a given date.         Also validates that total de",
       "file_type": "rationale",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L831",
-      "id": "services_accounting_service_rationale_831",
       "community": 4,
-      "norm_label": "returns a trial balance as of a given date.         also validates that total de"
+      "norm_label": "returns a trial balance as of a given date.         also validates that total de",
+      "id": "services_accounting_service_rationale_831"
     },
     {
       "label": "Return a dict with:           account, all_accounts, opening_balance, ending_bal",
       "file_type": "rationale",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1223",
-      "id": "services_accounting_service_rationale_1223",
       "community": 4,
-      "norm_label": "return a dict with:           account, all_accounts, opening_balance, ending_bal"
+      "norm_label": "return a dict with:           account, all_accounts, opening_balance, ending_bal",
+      "id": "services_accounting_service_rationale_1223"
     },
     {
       "label": "Edit an existing expense.         Strategy: void the original transaction and cr",
       "file_type": "rationale",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1318",
-      "id": "services_accounting_service_rationale_1318",
       "community": 4,
-      "norm_label": "edit an existing expense.         strategy: void the original transaction and cr"
+      "norm_label": "edit an existing expense.         strategy: void the original transaction and cr",
+      "id": "services_accounting_service_rationale_1318"
     },
     {
       "label": "Void old income transaction and create a corrected one.",
       "file_type": "rationale",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1416",
-      "id": "services_accounting_service_rationale_1416",
       "community": 4,
-      "norm_label": "void old income transaction and create a corrected one."
+      "norm_label": "void old income transaction and create a corrected one.",
+      "id": "services_accounting_service_rationale_1416"
     },
     {
       "label": "Void an income transaction (soft delete).",
       "file_type": "rationale",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1481",
-      "id": "services_accounting_service_rationale_1481",
       "community": 4,
-      "norm_label": "void an income transaction (soft delete)."
+      "norm_label": "void an income transaction (soft delete).",
+      "id": "services_accounting_service_rationale_1481"
     },
     {
       "label": "Soft-delete an account (set is_active=False, is_deleted=True, deleted_at=now).",
       "file_type": "rationale",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1495",
-      "id": "services_accounting_service_rationale_1495",
       "community": 4,
-      "norm_label": "soft-delete an account (set is_active=false, is_deleted=true, deleted_at=now)."
+      "norm_label": "soft-delete an account (set is_active=false, is_deleted=true, deleted_at=now).",
+      "id": "services_accounting_service_rationale_1495"
     },
     {
       "label": "Return full P&L breakdown for a project.",
       "file_type": "rationale",
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1550",
-      "id": "services_accounting_service_rationale_1550",
       "community": 4,
-      "norm_label": "return full p&l breakdown for a project."
+      "norm_label": "return full p&l breakdown for a project.",
+      "id": "services_accounting_service_rationale_1550"
     },
     {
       "label": "rbac.py",
       "file_type": "code",
       "source_file": "app/middleware/rbac.py",
       "source_location": "L1",
-      "id": "middleware_rbac",
       "community": 1,
-      "norm_label": "rbac.py"
+      "norm_label": "rbac.py",
+      "id": "middleware_rbac"
     },
     {
       "label": "init_rbac()",
       "file_type": "code",
       "source_file": "app/middleware/rbac.py",
       "source_location": "L209",
-      "id": "middleware_rbac_init_rbac",
       "community": 1,
-      "norm_label": "init_rbac()"
+      "norm_label": "init_rbac()",
+      "id": "middleware_rbac_init_rbac"
     },
     {
       "label": "Flask",
       "file_type": "code",
       "source_file": "app/middleware/rbac.py",
       "source_location": "L209",
-      "id": "flask",
       "community": 1,
-      "norm_label": "flask"
+      "norm_label": "flask",
+      "id": "flask"
     },
     {
       "label": "seed_default_roles_and_permissions()",
       "file_type": "code",
       "source_file": "app/middleware/rbac.py",
       "source_location": "L239",
-      "id": "middleware_rbac_seed_default_roles_and_permissions",
       "community": 1,
-      "norm_label": "seed_default_roles_and_permissions()"
+      "norm_label": "seed_default_roles_and_permissions()",
+      "id": "middleware_rbac_seed_default_roles_and_permissions"
     },
     {
       "label": "RBAC Middleware =============== Plugged into the app via ``init_rbac(app)`` in `",
       "file_type": "rationale",
       "source_file": "app/middleware/rbac.py",
       "source_location": "L1",
-      "id": "middleware_rbac_rationale_1",
       "community": 1,
-      "norm_label": "rbac middleware =============== plugged into the app via ``init_rbac(app)`` in `"
+      "norm_label": "rbac middleware =============== plugged into the app via ``init_rbac(app)`` in `",
+      "id": "middleware_rbac_rationale_1"
     },
     {
       "label": "Register the RBAC ``before_request`` hook on *app*.",
       "file_type": "rationale",
       "source_file": "app/middleware/rbac.py",
       "source_location": "L210",
-      "id": "middleware_rbac_rationale_210",
       "community": 1,
-      "norm_label": "register the rbac ``before_request`` hook on *app*."
+      "norm_label": "register the rbac ``before_request`` hook on *app*.",
+      "id": "middleware_rbac_rationale_210"
     },
     {
       "label": "Seed the database with default roles and their permissions.      Roles     -----",
       "file_type": "rationale",
       "source_file": "app/middleware/rbac.py",
       "source_location": "L240",
-      "id": "middleware_rbac_rationale_240",
       "community": 1,
-      "norm_label": "seed the database with default roles and their permissions.      roles     -----"
+      "norm_label": "seed the database with default roles and their permissions.      roles     -----",
+      "id": "middleware_rbac_rationale_240"
     },
     {
       "label": "routes.py",
@@ -1232,7 +1331,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 44,
       "norm_label": "purchase_order.py",
       "id": "models_purchase_order"
     },
@@ -1241,7 +1340,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order.py",
       "source_location": "L3",
-      "community": 0,
+      "community": 44,
       "norm_label": "purchaseorder",
       "id": "models_purchase_order_purchaseorder"
     },
@@ -1250,7 +1349,7 @@
       "file_type": "code",
       "source_file": "",
       "source_location": "",
-      "community": 0,
+      "community": 44,
       "norm_label": "basemodel",
       "id": "basemodel"
     },
@@ -1259,7 +1358,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order.py",
       "source_location": "L24",
-      "community": 0,
+      "community": 44,
       "norm_label": ".__repr__()",
       "id": "models_purchase_order_purchaseorder_repr"
     },
@@ -1268,7 +1367,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order.py",
       "source_location": "L24",
-      "community": 0,
+      "community": 44,
       "norm_label": "str",
       "id": "app_models_purchase_order_py_str"
     },
@@ -1844,7 +1943,7 @@
       "file_type": "code",
       "source_file": "app/models/__init__.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 43,
       "norm_label": "__init__.py",
       "id": "models_init"
     },
@@ -1853,7 +1952,7 @@
       "file_type": "code",
       "source_file": "app/models/account.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 43,
       "norm_label": "account.py",
       "id": "models_account"
     },
@@ -1862,7 +1961,7 @@
       "file_type": "code",
       "source_file": "app/models/account.py",
       "source_location": "L5",
-      "community": 0,
+      "community": 44,
       "norm_label": "account",
       "id": "models_account_account"
     },
@@ -1871,7 +1970,7 @@
       "file_type": "code",
       "source_file": "app/models/account.py",
       "source_location": "L31",
-      "community": 0,
+      "community": 44,
       "norm_label": ".normal_balance()",
       "id": "models_account_account_normal_balance"
     },
@@ -1880,7 +1979,7 @@
       "file_type": "code",
       "source_file": "app/models/account.py",
       "source_location": "L31",
-      "community": 0,
+      "community": 44,
       "norm_label": "str",
       "id": "app_models_account_py_str"
     },
@@ -1889,7 +1988,7 @@
       "file_type": "code",
       "source_file": "app/models/account.py",
       "source_location": "L37",
-      "community": 0,
+      "community": 44,
       "norm_label": ".__repr__()",
       "id": "models_account_account_repr"
     },
@@ -1898,7 +1997,7 @@
       "file_type": "rationale",
       "source_file": "app/models/account.py",
       "source_location": "L6",
-      "community": 0,
+      "community": 44,
       "norm_label": "chart of accounts entry.      important: balance is not stored here \u2014 it is alwa",
       "id": "models_account_rationale_6"
     },
@@ -1907,7 +2006,7 @@
       "file_type": "rationale",
       "source_file": "app/models/account.py",
       "source_location": "L32",
-      "community": 0,
+      "community": 44,
       "norm_label": "accounts that normally carry a debit balance vs credit balance.",
       "id": "models_account_rationale_32"
     },
@@ -1916,7 +2015,7 @@
       "file_type": "code",
       "source_file": "app/models/enums.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 43,
       "norm_label": "enums.py",
       "id": "models_enums"
     },
@@ -1997,7 +2096,7 @@
       "file_type": "code",
       "source_file": "app/models/enums.py",
       "source_location": "L60",
-      "community": 6,
+      "community": 45,
       "norm_label": "leavetype",
       "id": "models_enums_leavetype"
     },
@@ -2006,7 +2105,7 @@
       "file_type": "code",
       "source_file": "app/models/enums.py",
       "source_location": "L65",
-      "community": 6,
+      "community": 45,
       "norm_label": "leavestatus",
       "id": "models_enums_leavestatus"
     },
@@ -2024,7 +2123,7 @@
       "file_type": "code",
       "source_file": "app/models/enums.py",
       "source_location": "L75",
-      "community": 0,
+      "community": 43,
       "norm_label": "userstatus",
       "id": "models_enums_userstatus"
     },
@@ -2051,7 +2150,7 @@
       "file_type": "code",
       "source_file": "app/models/expense.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 50,
       "norm_label": "expense.py",
       "id": "models_expense"
     },
@@ -2060,7 +2159,7 @@
       "file_type": "code",
       "source_file": "app/models/expense.py",
       "source_location": "L6",
-      "community": 0,
+      "community": 50,
       "norm_label": "expense",
       "id": "models_expense_expense"
     },
@@ -2069,7 +2168,7 @@
       "file_type": "code",
       "source_file": "app/models/expense.py",
       "source_location": "L58",
-      "community": 0,
+      "community": 50,
       "norm_label": ".vendor_display()",
       "id": "models_expense_expense_vendor_display"
     },
@@ -2078,7 +2177,7 @@
       "file_type": "code",
       "source_file": "app/models/expense.py",
       "source_location": "L58",
-      "community": 0,
+      "community": 50,
       "norm_label": "str",
       "id": "app_models_expense_py_str"
     },
@@ -2087,7 +2186,7 @@
       "file_type": "code",
       "source_file": "app/models/expense.py",
       "source_location": "L64",
-      "community": 0,
+      "community": 50,
       "norm_label": ".__repr__()",
       "id": "models_expense_expense_repr"
     },
@@ -2096,7 +2195,7 @@
       "file_type": "rationale",
       "source_file": "app/models/expense.py",
       "source_location": "L7",
-      "community": 0,
+      "community": 50,
       "norm_label": "represents a business expense (outflow of money).      income / revenue is recor",
       "id": "models_expense_rationale_7"
     },
@@ -2105,7 +2204,7 @@
       "file_type": "rationale",
       "source_file": "app/models/expense.py",
       "source_location": "L59",
-      "community": 0,
+      "community": 50,
       "norm_label": "resolve vendor name from supplier relation or vendor_name field.",
       "id": "models_expense_rationale_59"
     },
@@ -2114,7 +2213,7 @@
       "file_type": "code",
       "source_file": "app/models/ledger_entry.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 48,
       "norm_label": "ledger_entry.py",
       "id": "models_ledger_entry"
     },
@@ -2123,7 +2222,7 @@
       "file_type": "code",
       "source_file": "app/models/ledger_entry.py",
       "source_location": "L5",
-      "community": 0,
+      "community": 48,
       "norm_label": "ledgerentry",
       "id": "models_ledger_entry_ledgerentry"
     },
@@ -2132,7 +2231,7 @@
       "file_type": "code",
       "source_file": "app/models/ledger_entry.py",
       "source_location": "L48",
-      "community": 0,
+      "community": 48,
       "norm_label": ".net_effect()",
       "id": "models_ledger_entry_ledgerentry_net_effect"
     },
@@ -2141,7 +2240,7 @@
       "file_type": "code",
       "source_file": "app/models/ledger_entry.py",
       "source_location": "L48",
-      "community": 0,
+      "community": 48,
       "norm_label": "float",
       "id": "app_models_ledger_entry_py_float"
     },
@@ -2150,7 +2249,7 @@
       "file_type": "code",
       "source_file": "app/models/ledger_entry.py",
       "source_location": "L52",
-      "community": 0,
+      "community": 48,
       "norm_label": ".__repr__()",
       "id": "models_ledger_entry_ledgerentry_repr"
     },
@@ -2159,7 +2258,7 @@
       "file_type": "code",
       "source_file": "app/models/ledger_entry.py",
       "source_location": "L52",
-      "community": 0,
+      "community": 48,
       "norm_label": "str",
       "id": "app_models_ledger_entry_py_str"
     },
@@ -2168,7 +2267,7 @@
       "file_type": "rationale",
       "source_file": "app/models/ledger_entry.py",
       "source_location": "L6",
-      "community": 0,
+      "community": 48,
       "norm_label": "a single line in the accounting ledger.  every entry must belong to a     transa",
       "id": "models_ledger_entry_rationale_6"
     },
@@ -2177,7 +2276,7 @@
       "file_type": "rationale",
       "source_file": "app/models/ledger_entry.py",
       "source_location": "L49",
-      "community": 0,
+      "community": 48,
       "norm_label": "positive = debit effect, negative = credit effect.",
       "id": "models_ledger_entry_rationale_49"
     },
@@ -2384,7 +2483,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L272",
-      "community": 6,
+      "community": 45,
       "norm_label": "leaves()",
       "id": "hr_routes_leaves"
     },
@@ -2501,7 +2600,7 @@
       "file_type": "code",
       "source_file": "app/middleware/audit.py",
       "source_location": "L28",
-      "community": 0,
+      "community": 49,
       "norm_label": "auditmiddleware",
       "id": "middleware_audit_auditmiddleware"
     },
@@ -2510,7 +2609,7 @@
       "file_type": "code",
       "source_file": "app/middleware/audit.py",
       "source_location": "L30",
-      "community": 0,
+      "community": 49,
       "norm_label": ".log_change()",
       "id": "middleware_audit_auditmiddleware_log_change"
     },
@@ -2537,7 +2636,7 @@
       "file_type": "rationale",
       "source_file": "app/middleware/audit.py",
       "source_location": "L31",
-      "community": 0,
+      "community": 49,
       "norm_label": "manually log a change. useful if automated listeners are not enough.",
       "id": "middleware_audit_rationale_31"
     },
@@ -3703,105 +3802,6 @@
       "id": "invoices_init"
     },
     {
-      "label": "routes.py",
-      "file_type": "code",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L1",
-      "community": 5,
-      "norm_label": "routes.py",
-      "id": "invoices_routes"
-    },
-    {
-      "label": "index()",
-      "file_type": "code",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L22",
-      "community": 5,
-      "norm_label": "index()",
-      "id": "invoices_routes_index"
-    },
-    {
-      "label": "item_row()",
-      "file_type": "code",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L51",
-      "community": 5,
-      "norm_label": "item_row()",
-      "id": "invoices_routes_item_row"
-    },
-    {
-      "label": "create()",
-      "file_type": "code",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L72",
-      "community": 5,
-      "norm_label": "create()",
-      "id": "invoices_routes_create"
-    },
-    {
-      "label": "store()",
-      "file_type": "code",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L97",
-      "community": 5,
-      "norm_label": "store()",
-      "id": "invoices_routes_store"
-    },
-    {
-      "label": "view()",
-      "file_type": "code",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L131",
-      "community": 5,
-      "norm_label": "view()",
-      "id": "invoices_routes_view"
-    },
-    {
-      "label": "add_payment()",
-      "file_type": "code",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L164",
-      "community": 5,
-      "norm_label": "add_payment()",
-      "id": "invoices_routes_add_payment"
-    },
-    {
-      "label": "edit()",
-      "file_type": "code",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L195",
-      "community": 5,
-      "norm_label": "edit()",
-      "id": "invoices_routes_edit"
-    },
-    {
-      "label": "update()",
-      "file_type": "code",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L232",
-      "community": 5,
-      "norm_label": "update()",
-      "id": "invoices_routes_update"
-    },
-    {
-      "label": "delete()",
-      "file_type": "code",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L312",
-      "community": 5,
-      "norm_label": "delete()",
-      "id": "invoices_routes_delete"
-    },
-    {
-      "label": "print_invoice()",
-      "file_type": "code",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L340",
-      "community": 7,
-      "norm_label": "print_invoice()",
-      "id": "invoices_routes_print_invoice"
-    },
-    {
       "label": "__init__.py",
       "file_type": "code",
       "source_file": "app/invoices/services/__init__.py",
@@ -4274,7 +4274,7 @@
       "file_type": "code",
       "source_file": "app/models/associations.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 43,
       "norm_label": "associations.py",
       "id": "models_associations"
     },
@@ -4283,7 +4283,7 @@
       "file_type": "code",
       "source_file": "app/models/audit.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 49,
       "norm_label": "audit.py",
       "id": "models_audit"
     },
@@ -4292,7 +4292,7 @@
       "file_type": "code",
       "source_file": "app/models/audit.py",
       "source_location": "L4",
-      "community": 0,
+      "community": 49,
       "norm_label": "auditlog",
       "id": "models_audit_auditlog"
     },
@@ -4301,7 +4301,7 @@
       "file_type": "code",
       "source_file": "app/models/audit.py",
       "source_location": "L20",
-      "community": 0,
+      "community": 49,
       "norm_label": ".__repr__()",
       "id": "models_audit_auditlog_repr"
     },
@@ -4310,7 +4310,7 @@
       "file_type": "code",
       "source_file": "app/models/audit.py",
       "source_location": "L20",
-      "community": 0,
+      "community": 49,
       "norm_label": "str",
       "id": "app_models_audit_py_str"
     },
@@ -4382,7 +4382,7 @@
       "file_type": "code",
       "source_file": "app/models/contact.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 43,
       "norm_label": "contact.py",
       "id": "models_contact"
     },
@@ -4877,7 +4877,7 @@
       "file_type": "code",
       "source_file": "app/models/leave_request.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 45,
       "norm_label": "leave_request.py",
       "id": "models_leave_request"
     },
@@ -4886,7 +4886,7 @@
       "file_type": "code",
       "source_file": "app/models/leave_request.py",
       "source_location": "L6",
-      "community": 6,
+      "community": 45,
       "norm_label": "leaverequest",
       "id": "models_leave_request_leaverequest"
     },
@@ -4895,7 +4895,7 @@
       "file_type": "code",
       "source_file": "app/models/leave_request.py",
       "source_location": "L31",
-      "community": 6,
+      "community": 45,
       "norm_label": ".total_days()",
       "id": "models_leave_request_leaverequest_total_days"
     },
@@ -4904,7 +4904,7 @@
       "file_type": "code",
       "source_file": "app/models/leave_request.py",
       "source_location": "L31",
-      "community": 6,
+      "community": 45,
       "norm_label": "int",
       "id": "app_models_leave_request_py_int"
     },
@@ -4913,7 +4913,7 @@
       "file_type": "code",
       "source_file": "app/models/leave_request.py",
       "source_location": "L38",
-      "community": 6,
+      "community": 45,
       "norm_label": ".attachment_filename()",
       "id": "models_leave_request_leaverequest_attachment_filename"
     },
@@ -4922,7 +4922,7 @@
       "file_type": "code",
       "source_file": "app/models/leave_request.py",
       "source_location": "L38",
-      "community": 6,
+      "community": 45,
       "norm_label": "str",
       "id": "app_models_leave_request_py_str"
     },
@@ -4931,7 +4931,7 @@
       "file_type": "code",
       "source_file": "app/models/leave_request.py",
       "source_location": "L43",
-      "community": 6,
+      "community": 45,
       "norm_label": ".__repr__()",
       "id": "models_leave_request_leaverequest_repr"
     },
@@ -4940,7 +4940,7 @@
       "file_type": "rationale",
       "source_file": "app/models/leave_request.py",
       "source_location": "L32",
-      "community": 6,
+      "community": 45,
       "norm_label": "calendar days of the leave (inclusive).",
       "id": "models_leave_request_rationale_32"
     },
@@ -4985,7 +4985,7 @@
       "file_type": "code",
       "source_file": "app/models/payment.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 43,
       "norm_label": "payment.py",
       "id": "models_payment"
     },
@@ -5021,7 +5021,7 @@
       "file_type": "code",
       "source_file": "app/models/permission.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 43,
       "norm_label": "permission.py",
       "id": "models_permission"
     },
@@ -5030,7 +5030,7 @@
       "file_type": "code",
       "source_file": "app/models/permission.py",
       "source_location": "L4",
-      "community": 0,
+      "community": 43,
       "norm_label": "permission",
       "id": "models_permission_permission"
     },
@@ -5039,7 +5039,7 @@
       "file_type": "code",
       "source_file": "app/models/permission.py",
       "source_location": "L13",
-      "community": 0,
+      "community": 43,
       "norm_label": ".__repr__()",
       "id": "models_permission_permission_repr"
     },
@@ -5048,7 +5048,7 @@
       "file_type": "code",
       "source_file": "app/models/permission.py",
       "source_location": "L13",
-      "community": 0,
+      "community": 43,
       "norm_label": "str",
       "id": "app_models_permission_py_str"
     },
@@ -5129,7 +5129,7 @@
       "file_type": "code",
       "source_file": "app/models/role.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 43,
       "norm_label": "role.py",
       "id": "models_role"
     },
@@ -5192,7 +5192,7 @@
       "file_type": "code",
       "source_file": "app/models/stock_movement.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 43,
       "norm_label": "stock_movement.py",
       "id": "models_stock_movement"
     },
@@ -5255,7 +5255,7 @@
       "file_type": "code",
       "source_file": "app/models/tag.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 53,
       "norm_label": "tag.py",
       "id": "models_tag"
     },
@@ -5264,7 +5264,7 @@
       "file_type": "code",
       "source_file": "app/models/tag.py",
       "source_location": "L3",
-      "community": 0,
+      "community": 53,
       "norm_label": "tag",
       "id": "models_tag_tag"
     },
@@ -5273,7 +5273,7 @@
       "file_type": "code",
       "source_file": "app/models/tag.py",
       "source_location": "L15",
-      "community": 0,
+      "community": 53,
       "norm_label": ".__repr__()",
       "id": "models_tag_tag_repr"
     },
@@ -5282,7 +5282,7 @@
       "file_type": "code",
       "source_file": "app/models/tag.py",
       "source_location": "L15",
-      "community": 0,
+      "community": 53,
       "norm_label": "str",
       "id": "app_models_tag_py_str"
     },
@@ -5291,7 +5291,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 43,
       "norm_label": "user.py",
       "id": "models_user"
     },
@@ -5435,7 +5435,7 @@
       "file_type": "code",
       "source_file": "app/models/warehouse.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 54,
       "norm_label": "warehouse.py",
       "id": "models_warehouse"
     },
@@ -5444,7 +5444,7 @@
       "file_type": "code",
       "source_file": "app/models/warehouse.py",
       "source_location": "L3",
-      "community": 0,
+      "community": 54,
       "norm_label": "warehouse",
       "id": "models_warehouse_warehouse"
     },
@@ -5453,7 +5453,7 @@
       "file_type": "code",
       "source_file": "app/models/warehouse.py",
       "source_location": "L17",
-      "community": 0,
+      "community": 54,
       "norm_label": ".__repr__()",
       "id": "models_warehouse_warehouse_repr"
     },
@@ -5462,7 +5462,7 @@
       "file_type": "code",
       "source_file": "app/models/warehouse.py",
       "source_location": "L17",
-      "community": 0,
+      "community": 54,
       "norm_label": "str",
       "id": "app_models_warehouse_py_str"
     },
@@ -5516,7 +5516,7 @@
       "file_type": "code",
       "source_file": "app/models/work_schedule.py",
       "source_location": "L4",
-      "community": 0,
+      "community": 52,
       "norm_label": "workschedule",
       "id": "models_work_schedule_workschedule"
     },
@@ -5525,7 +5525,7 @@
       "file_type": "code",
       "source_file": "app/models/work_schedule.py",
       "source_location": "L22",
-      "community": 0,
+      "community": 52,
       "norm_label": ".hours_worked()",
       "id": "models_work_schedule_workschedule_hours_worked"
     },
@@ -5534,7 +5534,7 @@
       "file_type": "code",
       "source_file": "app/models/work_schedule.py",
       "source_location": "L22",
-      "community": 0,
+      "community": 52,
       "norm_label": "float",
       "id": "app_models_work_schedule_py_float"
     },
@@ -5543,7 +5543,7 @@
       "file_type": "code",
       "source_file": "app/models/work_schedule.py",
       "source_location": "L32",
-      "community": 0,
+      "community": 52,
       "norm_label": ".__repr__()",
       "id": "models_work_schedule_workschedule_repr"
     },
@@ -5552,7 +5552,7 @@
       "file_type": "code",
       "source_file": "app/models/work_schedule.py",
       "source_location": "L32",
-      "community": 0,
+      "community": 52,
       "norm_label": "str",
       "id": "app_models_work_schedule_py_str"
     },
@@ -5561,7 +5561,7 @@
       "file_type": "rationale",
       "source_file": "app/models/work_schedule.py",
       "source_location": "L23",
-      "community": 0,
+      "community": 52,
       "norm_label": "total hours for this schedule entry.",
       "id": "models_work_schedule_rationale_23"
     },
@@ -7206,6 +7206,425 @@
   ],
   "links": [
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "app_extensions"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "invoices_routes",
+      "target": "datetime",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "invoices_routes",
+      "target": "flask",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "invoices_init"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L164",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "invoices_routes_add_payment"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L72",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "invoices_routes_create"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L312",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "invoices_routes_delete"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L195",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "invoices_routes_edit"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L22",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "invoices_routes_index"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L51",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "invoices_routes_item_row"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L340",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "invoices_routes_print_invoice"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L97",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "invoices_routes_store"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L232",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "invoices_routes_update"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L131",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "invoices_routes_view"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "models_contact_contact"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "models_document_document"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "models_document_item_documentitem"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "models_enums_contacttype"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "models_enums_documentstatus"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "models_enums_documenttype"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "models_enums_paymentmethod"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "models_inventory_item_inventoryitem"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "models_payment_payment"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L74",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "models_warehouse_warehouse"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "services_invoice_create_service"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "services_invoice_create_service_create_invoice_or_quote"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "services_invoice_create_service_generate_document_number"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "services_invoice_pdf_service_generate_invoice_pdf_from_request"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "services_invoice_query_service_get_invoice_list"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L179",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "services_invoice_update_service_add_invoice_payment"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L328",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "services_invoice_update_service_delete_invoice_or_quote"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "services_invoice_update_service_update_invoice_or_quote"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "invoices_routes_index",
+      "target": "services_invoice_query_service_get_invoice_list"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L107",
+      "weight": 1.0,
+      "source": "invoices_routes_store",
+      "target": "services_invoice_create_service_create_invoice_or_quote"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L180",
+      "weight": 1.0,
+      "source": "invoices_routes_add_payment",
+      "target": "services_invoice_update_service_add_invoice_payment"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L261",
+      "weight": 1.0,
+      "source": "invoices_routes_update",
+      "target": "services_invoice_create_service_generate_document_number"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L284",
+      "weight": 1.0,
+      "source": "invoices_routes_update",
+      "target": "services_invoice_update_service_update_invoice_or_quote"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L329",
+      "weight": 1.0,
+      "source": "invoices_routes_delete",
+      "target": "services_invoice_update_service_delete_invoice_or_quote"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L351",
+      "weight": 1.0,
+      "source": "invoices_routes_print_invoice",
+      "target": "services_invoice_pdf_service_generate_invoice_pdf_from_request"
+    },
+    {
       "relation": "re_exports",
       "context": "export",
       "confidence": "EXTRACTED",
@@ -7234,9 +7653,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service",
-      "target": "flask",
-      "confidence_score": 1.0
+      "target": "flask"
     },
     {
       "relation": "imports",
@@ -7466,9 +7885,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_allowed_file",
-      "target": "bool",
-      "confidence_score": 1.0
+      "target": "bool"
     },
     {
       "relation": "references",
@@ -7675,9 +8094,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L51",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_parse_date",
-      "target": "bool",
-      "confidence_score": 1.0
+      "target": "bool"
     },
     {
       "relation": "calls",
@@ -8367,9 +8786,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L112",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_compute_balances_bulk",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "rationale_for",
@@ -8388,9 +8807,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L880",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_compute_report",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8399,9 +8818,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1090",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_create_account",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8410,9 +8829,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L350",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_create_expense",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8421,9 +8840,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L620",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_create_journal_entry",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8432,9 +8851,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1179",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_create_project",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8443,9 +8862,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1197",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_create_tag",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8454,9 +8873,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1494",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_delete_account_safe",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8465,9 +8884,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L497",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_delete_expense",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8476,9 +8895,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1480",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_delete_income_txn",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8487,9 +8906,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1536",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_delete_project_safe",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8498,9 +8917,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1210",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_delete_tag",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8509,9 +8928,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1037",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_export_report_csv",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8520,9 +8939,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1133",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_generate_default_accounts",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8531,9 +8950,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L344",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_get_account_balances_bulk",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8542,9 +8961,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L214",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_get_dashboard_data",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8553,9 +8972,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L466",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_get_expenses",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8564,9 +8983,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L599",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_get_income_transactions",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8575,9 +8994,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L765",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_get_journal_entries",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8586,9 +9005,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L799",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_get_ledger_entries",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8597,9 +9016,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1220",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_get_ledger_page",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8608,9 +9027,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1549",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_get_project_detail",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8619,9 +9038,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1613",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_get_projects_list",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8630,9 +9049,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L830",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_get_trial_balance",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8641,9 +9060,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L515",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_record_income",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8652,9 +9071,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1115",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_update_account",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8663,9 +9082,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1317",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_update_expense",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8674,9 +9093,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1415",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_update_income",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8685,9 +9104,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L689",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_update_journal_entry",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8696,9 +9115,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1517",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_update_project",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8707,9 +9126,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L787",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_accountingservice_void_transaction",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -8718,9 +9137,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L148",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_create_balanced_transaction",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "references",
@@ -9440,9 +9859,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L516",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_rationale_516",
-      "target": "services_accounting_service_accountingservice_record_income",
-      "confidence_score": 1.0
+      "target": "services_accounting_service_accountingservice_record_income"
     },
     {
       "relation": "rationale_for",
@@ -9450,9 +9869,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L621",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_rationale_621",
-      "target": "services_accounting_service_accountingservice_create_journal_entry",
-      "confidence_score": 1.0
+      "target": "services_accounting_service_accountingservice_create_journal_entry"
     },
     {
       "relation": "rationale_for",
@@ -9460,9 +9879,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L690",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_rationale_690",
-      "target": "services_accounting_service_accountingservice_update_journal_entry",
-      "confidence_score": 1.0
+      "target": "services_accounting_service_accountingservice_update_journal_entry"
     },
     {
       "relation": "rationale_for",
@@ -9470,9 +9889,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L831",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_rationale_831",
-      "target": "services_accounting_service_accountingservice_get_trial_balance",
-      "confidence_score": 1.0
+      "target": "services_accounting_service_accountingservice_get_trial_balance"
     },
     {
       "relation": "references",
@@ -9717,9 +10136,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1223",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_rationale_1223",
-      "target": "services_accounting_service_accountingservice_get_ledger_page",
-      "confidence_score": 1.0
+      "target": "services_accounting_service_accountingservice_get_ledger_page"
     },
     {
       "relation": "rationale_for",
@@ -9727,9 +10146,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1318",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_rationale_1318",
-      "target": "services_accounting_service_accountingservice_update_expense",
-      "confidence_score": 1.0
+      "target": "services_accounting_service_accountingservice_update_expense"
     },
     {
       "relation": "rationale_for",
@@ -9737,9 +10156,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1416",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_rationale_1416",
-      "target": "services_accounting_service_accountingservice_update_income",
-      "confidence_score": 1.0
+      "target": "services_accounting_service_accountingservice_update_income"
     },
     {
       "relation": "rationale_for",
@@ -9747,9 +10166,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1481",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_rationale_1481",
-      "target": "services_accounting_service_accountingservice_delete_income_txn",
-      "confidence_score": 1.0
+      "target": "services_accounting_service_accountingservice_delete_income_txn"
     },
     {
       "relation": "rationale_for",
@@ -9757,9 +10176,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1495",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_rationale_1495",
-      "target": "services_accounting_service_accountingservice_delete_account_safe",
-      "confidence_score": 1.0
+      "target": "services_accounting_service_accountingservice_delete_account_safe"
     },
     {
       "relation": "rationale_for",
@@ -9767,9 +10186,9 @@
       "source_file": "app/accounting/services/accounting_service.py",
       "source_location": "L1550",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_accounting_service_rationale_1550",
-      "target": "services_accounting_service_accountingservice_get_project_detail",
-      "confidence_score": 1.0
+      "target": "services_accounting_service_accountingservice_get_project_detail"
     },
     {
       "relation": "re_exports",
@@ -9789,9 +10208,9 @@
       "source_file": "app/middleware/rbac.py",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "middleware_rbac",
-      "target": "flask",
-      "confidence_score": 1.0
+      "target": "flask"
     },
     {
       "relation": "contains",
@@ -9863,9 +10282,9 @@
       "source_file": "app/middleware/rbac.py",
       "source_location": "L209",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "middleware_rbac_init_rbac",
-      "target": "flask",
-      "confidence_score": 1.0
+      "target": "flask"
     },
     {
       "relation": "rationale_for",
@@ -13781,17 +14200,6 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "models_enums_documenttype"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "app/models/document.py",
       "source_location": "L2",
       "weight": 1.0,
@@ -13931,17 +14339,6 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "models_enums_documentstatus"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "app/models/document.py",
       "source_location": "L2",
       "weight": 1.0,
@@ -14041,17 +14438,6 @@
       "weight": 0.8,
       "confidence_score": 0.5,
       "source": "app_models_payment_py_str",
-      "target": "models_enums_paymentmethod"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
       "target": "models_enums_paymentmethod"
     },
     {
@@ -14168,17 +14554,6 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "contacts_routes",
-      "target": "models_enums_contacttype"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
       "target": "models_enums_contacttype"
     },
     {
@@ -17445,17 +17820,6 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "app_extensions"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "app/models/base.py",
       "source_location": "L2",
       "weight": 1.0,
@@ -17966,348 +18330,6 @@
       "confidence_score": 1.0,
       "source": "invoices_init",
       "target": "invoices_init"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L16",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "invoices_init"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L164",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "invoices_routes_add_payment"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L72",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "invoices_routes_create"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L312",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "invoices_routes_delete"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L195",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "invoices_routes_edit"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L22",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "invoices_routes_index"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L51",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "invoices_routes_item_row"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L340",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "invoices_routes_print_invoice"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L97",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "invoices_routes_store"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L232",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "invoices_routes_update"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L131",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "invoices_routes_view"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "models_contact_contact"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "models_document_document"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "models_document_item_documentitem"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "models_inventory_item_inventoryitem"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "models_payment_payment"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L74",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "models_warehouse_warehouse"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L15",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "services_invoice_create_service"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "services_invoice_create_service_create_invoice_or_quote"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L15",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "services_invoice_create_service_generate_document_number"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "services_invoice_pdf_service_generate_invoice_pdf_from_request"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "services_invoice_query_service_get_invoice_list"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L179",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "services_invoice_update_service_add_invoice_payment"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L328",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "services_invoice_update_service_delete_invoice_or_quote"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "services_invoice_update_service_update_invoice_or_quote"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L23",
-      "weight": 1.0,
-      "source": "invoices_routes_index",
-      "target": "services_invoice_query_service_get_invoice_list"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L107",
-      "weight": 1.0,
-      "source": "invoices_routes_store",
-      "target": "services_invoice_create_service_create_invoice_or_quote"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L180",
-      "weight": 1.0,
-      "source": "invoices_routes_add_payment",
-      "target": "services_invoice_update_service_add_invoice_payment"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L261",
-      "weight": 1.0,
-      "source": "invoices_routes_update",
-      "target": "services_invoice_create_service_generate_document_number"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L284",
-      "weight": 1.0,
-      "source": "invoices_routes_update",
-      "target": "services_invoice_update_service_update_invoice_or_quote"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L329",
-      "weight": 1.0,
-      "source": "invoices_routes_delete",
-      "target": "services_invoice_update_service_delete_invoice_or_quote"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L351",
-      "weight": 1.0,
-      "source": "invoices_routes_print_invoice",
-      "target": "services_invoice_pdf_service_generate_invoice_pdf_from_request"
     },
     {
       "relation": "re_exports",
@@ -24342,5 +24364,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "102940e01757d9bb4d72005fe90430190b111033"
+  "built_at_commit": "6641bdd6552fc63e89661d2b8b9977a58d4b09df"
 }
