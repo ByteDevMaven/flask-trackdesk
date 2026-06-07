@@ -50,7 +50,7 @@
         {% for txn in transactions %}
         {# Find the credit (revenue) entry to get amount #}
         {% set amount = txn.total_amount() %}
-        <tr class="hover:bg-slate-50/80 transition-colors">
+        <tr class="hover:bg-slate-50/80 transition-colors group">
           <td class="px-6 py-3 text-slate-500 whitespace-nowrap">{{ txn.date.strftime('%d/%m/%Y') }}</td>
           <td class="px-6 py-3">
             <p class="font-semibold text-slate-800 truncate max-w-[300px]">{{ txn.memo }}</p>
