@@ -26,6 +26,10 @@ class User(UserMixin, BaseModel):
     def is_active(self):
         return self.status == UserStatus.active
 
+    @property
+    def full_name(self):
+        return self.name
+
     def has_permission(self, permission_name: str) -> bool:
         """Return True if the user's role carries *permission_name*.
         Superadmins (role name == 'superadmin') bypass all checks automatically.
