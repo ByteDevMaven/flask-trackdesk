@@ -25,8 +25,8 @@
     "semantic_hash": "06a79a348fc6371a64b29f70f6b16f83"
   },
   "app/accounting/services/accounting_service.py": {
-    "mtime": 1780707273.7879581,
-    "ast_hash": "6c2e9d028c9e17a7fb38e1ec5b7d8dd3",
+    "mtime": 1780864454.668955,
+    "ast_hash": "20d196daec1441684d884a18dffe96db",
     "semantic_hash": ""
   },
   "app/auth/__init__.py": {
@@ -230,8 +230,8 @@
     "semantic_hash": ""
   },
   "app/middleware/rbac.py": {
-    "mtime": 1780707289.247691,
-    "ast_hash": "8abecc941b13b44d8e6a859d38a9c861",
+    "mtime": 1780863723.0549474,
+    "ast_hash": "5e60db9d1ab6285ccca7272dd576756d",
     "semantic_hash": ""
   },
   "app/models/__init__.py": {

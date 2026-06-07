@@ -175,9 +175,9 @@
     "semantic_hash": "3eb0159e2b400a5e34e6b92c5da8d806"
   },
   "app/invoices/routes.py": {
-    "mtime": 1780295632.3608286,
-    "ast_hash": "ae1a6b3ff24a3e991066a84d153834a0",
-    "semantic_hash": "ae1a6b3ff24a3e991066a84d153834a0"
+    "mtime": 1780865162.0181,
+    "ast_hash": "7ee682f5eadd93ab3f8ca705cf6d6a81",
+    "semantic_hash": ""
   },
   "app/invoices/services/__init__.py": {
     "mtime": 1780281587.2221286,
@@ -845,9 +845,9 @@
     "semantic_hash": "e7f34244ed619ae7069801423d8e2641"
   },
   "app/invoices/templates/invoices/view.html": {
-    "mtime": 1780296467.2414346,
-    "ast_hash": "980942c2bbde6988bcdadb1089966b0b",
-    "semantic_hash": "980942c2bbde6988bcdadb1089966b0b"
+    "mtime": 1780865684.7444255,
+    "ast_hash": "d159dba3f33c7619be2df229e10d8b43",
+    "semantic_hash": ""
   },
   "app/orders/templates/orders/form.html": {
     "mtime": 1780712182.0398169,
