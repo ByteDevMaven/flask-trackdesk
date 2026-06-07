@@ -151,10 +151,17 @@ def view(company_id, id):
     
     payments = Payment.query.filter_by(document_id=document.id).order_by(Payment.payment_date.desc()).all()
     
+    from app.models.audit import AuditLog
+    audit_logs = AuditLog.query.filter_by(
+        table_name='documents',
+        record_id=document.id
+    ).order_by(AuditLog.created_at.desc()).all()
+    
     return render_template('invoices/view.html', 
                          invoice=document, 
                          document_items=document_items,
                          payments=payments,
+                         audit_logs=audit_logs,
                          now=datetime.now(UTC))
 
 

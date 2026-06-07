@@ -310,5 +310,92 @@
     </form>
   </div>
   {% endif %}
+
+  {% if audit_logs %}
+  <div class="bg-white rounded-lg border border-slate-200 overflow-hidden mb-6 p-6 shadow-sm">
+    <h3 class="text-sm font-bold text-slate-900 mb-4">Registro de Auditoría</h3>
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-slate-150 bg-slate-50/20 text-slate-500">
+            <th class="text-left text-xs font-semibold py-2 px-3">Fecha y Hora</th>
+            <th class="text-left text-xs font-semibold py-2 px-3">Usuario</th>
+            <th class="text-left text-xs font-semibold py-2 px-3">Acción</th>
+            <th class="text-right text-xs font-semibold py-2 px-3">Detalles</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          {% for log in audit_logs %}
+          <tr class="hover:bg-slate-50/50 transition-colors">
+            <td class="py-3 px-3 text-sm text-slate-600 whitespace-nowrap">
+              {{ log.created_at.strftime('%d/%m/%Y %H:%M') }}
+            </td>
+            <td class="py-3 px-3 text-sm text-slate-700 font-medium">
+              {{ log.user.full_name if log.user else 'Sistema' }}
+            </td>
+            <td class="py-3 px-3 text-sm text-slate-600">
+              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-700">
+                {{ log.action }}
+              </span>
+            </td>
+            <td class="py-3 px-3 text-sm text-slate-600 text-right">
+              <button onclick="showAuditDetails({{ (log.old_data or {}) | tojson | forceescape }}, {{ (log.new_data or {}) | tojson | forceescape }})" class="text-emerald-600 hover:text-emerald-700 font-medium text-xs">
+                Ver Detalles
+              </button>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Audit Details Modal -->
+  <div id="audit-modal" class="fixed inset-0 z-50 hidden">
+    <div class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm" onclick="closeAuditModal()"></div>
+    <div class="relative flex items-center justify-center min-h-screen p-4 pointer-events-none">
+      <div class="bg-white rounded-xl shadow-xl w-full max-w-2xl p-6 pointer-events-auto max-h-[90vh] flex flex-col">
+        <div class="flex justify-between items-center mb-4">
+          <h4 class="text-base font-semibold text-slate-800">Detalles de la Auditoría</h4>
+          <button onclick="closeAuditModal()" class="text-slate-400 hover:text-slate-600">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
+        </div>
+        <div class="flex-1 overflow-y-auto">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <h5 class="text-xs font-bold uppercase text-slate-500 mb-2">Datos Anteriores</h5>
+              <pre id="audit-old-data" class="bg-slate-50 p-3 rounded-lg text-xs font-mono text-slate-700 whitespace-pre-wrap overflow-x-auto border border-slate-200 min-h-[100px]"></pre>
+            </div>
+            <div>
+              <h5 class="text-xs font-bold uppercase text-slate-500 mb-2">Nuevos Datos</h5>
+              <pre id="audit-new-data" class="bg-slate-50 p-3 rounded-lg text-xs font-mono text-slate-700 whitespace-pre-wrap overflow-x-auto border border-slate-200 min-h-[100px]"></pre>
+            </div>
+          </div>
+        </div>
+        <div class="mt-6 flex justify-end">
+          <button onclick="closeAuditModal()" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-200 transition-colors">
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  function showAuditDetails(oldData, newData) {
+    document.getElementById('audit-old-data').textContent = oldData && Object.keys(oldData).length ? JSON.stringify(oldData, null, 2) : 'Ninguno';
+    document.getElementById('audit-new-data').textContent = newData && Object.keys(newData).length ? JSON.stringify(newData, null, 2) : 'Ninguno';
+    document.getElementById('audit-modal').classList.remove('hidden');
+  }
+
+  function closeAuditModal() {
+    document.getElementById('audit-modal').classList.add('hidden');
+  }
+</script>
 {% endblock %}
