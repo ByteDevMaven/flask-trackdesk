@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `2c557270`
+- Built from commit: `d3610db9`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -67,9 +67,9 @@
   app/models/document_template.py → app/models/base.py
 
 ## Import Cycles
-- 1-file cycle: `app/accounting/__init__.py -> app/accounting/__init__.py`
 - 1-file cycle: `app/accounting/services/accounting_service.py -> app/accounting/services/accounting_service.py`
 - 1-file cycle: `app/cli.py -> app/cli.py`
+- 1-file cycle: `app/accounting/__init__.py -> app/accounting/__init__.py`
 - 1-file cycle: `app/contacts/__init__.py -> app/contacts/__init__.py`
 - 1-file cycle: `app/context_processors.py -> app/context_processors.py`
 - 1-file cycle: `app/dashboard/__init__.py -> app/dashboard/__init__.py`
@@ -206,5 +206,5 @@ _Questions this graph is uniquely positioned to answer:_
   _`AccountingService` has 4 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 6 inferred relationships involving `str` (e.g. with `EmployeeClass` and `LeaveStatus`) actually correct?**
   _`str` has 6 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `bool`, `Find a company by its URL slug and check access permissions.`, `Format a number as currency` to the rest of the system?**
+- **What connects `Authenticate a user by email and password.         Returns (user, error_message)`, `Determine safe redirect URL after login.`, `Generate and send a password reset token if user exists.` to the rest of the system?**
   _109 weakly-connected nodes found - possible documentation gaps or missing edges._
