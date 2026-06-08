@@ -33,7 +33,7 @@
 
     <aside id="primary-sidebar" class="w-16 bg-slate-800 flex flex-col items-center py-4 flex-shrink-0 z-30">
 
-      <a href="{{ url_for('dashboard.index') }}"
+      <a href="{{ url_for('dashboard.index', company_id=session.get('selected_company_id')) }}"
         class="w-10 h-10 bg-emerald-500 rounded-lg flex items-center justify-center mb-8 hover:bg-emerald-600 transition-colors">
         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -43,7 +43,7 @@
       <nav class="flex-1 flex flex-col items-center gap-1">
         {% set active_company_id = session.get('selected_company_id') %}
 
-        <a href="{{ url_for('dashboard.index') }}"
+        <a href="{{ url_for('dashboard.index', company_id=session.get('selected_company_id')) }}"
           class="w-10 h-10 rounded-lg flex items-center justify-center transition-colors {% if request.endpoint and 'dashboard' in request.endpoint %}bg-slate-700 text-white{% else %}text-slate-400 hover:bg-slate-700 hover:text-white{% endif %}"
           title="Dashboard">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
