@@ -27,10 +27,6 @@ def login():
 
         user, error = AuthService.authenticate_user(email, password, remember)
 
-        if error == 'inactive':
-            flash(_("Your account is inactive. Please contact support."), 'warning')
-            return redirect(url_for('auth.login'))
-
         if user:
             next_page = request.args.get('next')
             return redirect(AuthService.get_redirect_url(next_page, current_user))
