@@ -45,7 +45,7 @@ class AuthService:
         # Check if next_page is safe: must be relative, not absolute
         if not next_page or urlparse(next_page).netloc != '' or next_page.startswith(('\\\\', '//')):
             if current_user.companies:
-                return url_for('dashboard.index', company_id=current_user.companies[0].id)
+                return url_for('dashboard.index', company_id=current_user.companies[0].slug)
             return url_for('companies.index')
         return next_page
 
