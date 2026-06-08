@@ -150,8 +150,8 @@
     "semantic_hash": "b6bc215a7a633d7c4529f241b8046022"
   },
   "app/inventory/routes.py": {
-    "mtime": 1780710511.9531446,
-    "ast_hash": "4436a2449f0a36bfc1cc779e8e7e156a",
+    "mtime": 1780888018.10088,
+    "ast_hash": "826adafdf6d17f7d2d413d811ac5919f",
     "semantic_hash": ""
   },
   "app/inventory/services/__init__.py": {
@@ -160,8 +160,8 @@
     "semantic_hash": "198ff05abd2b118b8e27426034273585"
   },
   "app/inventory/services/inventory_service.py": {
-    "mtime": 1780710509.91633,
-    "ast_hash": "8dfa7f9f3ad524296eb4fd3c255abf11",
+    "mtime": 1780887946.6979535,
+    "ast_hash": "2a239e6b4b52469cc06b24682113ab4f",
     "semantic_hash": ""
   },
   "app/inventory/static/js/barcode.js": {
@@ -305,9 +305,9 @@
     "semantic_hash": ""
   },
   "app/models/inventory_item.py": {
-    "mtime": 1779946972.8143172,
-    "ast_hash": "e7f8cfffa27b58c206d72d8f6138a9ea",
-    "semantic_hash": "e7f8cfffa27b58c206d72d8f6138a9ea"
+    "mtime": 1780887916.1201413,
+    "ast_hash": "687b1fa7304d7153d1a32d91056e1c29",
+    "semantic_hash": ""
   },
   "app/models/leave_request.py": {
     "mtime": 1780450442.9427404,
@@ -810,18 +810,18 @@
     "semantic_hash": "270f3e289cd03bc9ce4c48f2488aa8bd"
   },
   "app/inventory/templates/inventory/drawer_transfer.html": {
-    "mtime": 1780201577.3099763,
-    "ast_hash": "d42e4c7cbe789c030c24677b2e4a6ff3",
-    "semantic_hash": "d42e4c7cbe789c030c24677b2e4a6ff3"
+    "mtime": 1780888167.549835,
+    "ast_hash": "5e124556664e6c0fab2ff35f2f8ff227",
+    "semantic_hash": ""
   },
   "app/inventory/templates/inventory/form.html": {
-    "mtime": 1780198243.2356844,
-    "ast_hash": "7b475ba54dc02984667f9747e4301c3a",
-    "semantic_hash": "7b475ba54dc02984667f9747e4301c3a"
+    "mtime": 1780888131.0940442,
+    "ast_hash": "dadba917f01a76cdca5cb92be3950c8f",
+    "semantic_hash": ""
   },
   "app/inventory/templates/inventory/index.html": {
-    "mtime": 1780710518.2694597,
-    "ast_hash": "ba67733e55934323c14560ed93c6e743",
+    "mtime": 1780888143.9028292,
+    "ast_hash": "0178e599e0e11fd329e4444d484e55b1",
     "semantic_hash": ""
   },
   "app/inventory/templates/inventory/movements.html": {
@@ -830,9 +830,9 @@
     "semantic_hash": ""
   },
   "app/inventory/templates/inventory/view.html": {
-    "mtime": 1780374007.05745,
-    "ast_hash": "b541fd9243b9696f98729c4759bf913d",
-    "semantic_hash": "b541fd9243b9696f98729c4759bf913d"
+    "mtime": 1780888156.7677617,
+    "ast_hash": "c1b44e0fed0ecbcfcfc612864ef97b07",
+    "semantic_hash": ""
   },
   "app/invoices/templates/invoices/form.html": {
     "mtime": 1780198351.4253154,
@@ -1062,6 +1062,11 @@
   "app/services/email_service.py": {
     "mtime": 1780885169.4958122,
     "ast_hash": "b6133a156fcfbb7096bf20650df07cbf",
+    "semantic_hash": ""
+  },
+  "migrations/versions/ddacfaf54248_add_sku_to_inventory_items.py": {
+    "mtime": 1780888193.9881325,
+    "ast_hash": "dc2ce088c79006e56e25b0958e2f594a",
     "semantic_hash": ""
   }
 }
