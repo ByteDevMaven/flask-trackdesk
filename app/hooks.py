@@ -6,15 +6,19 @@ def register_request_hooks(app: Flask):
     @app.before_request
     def ensure_company_selected():
         from app.models import user_companies
-        if current_user.is_authenticated and 'selected_company_id' not in session:
-            user_company = db.session.query(user_companies).filter_by(user_id=current_user.id).first()
-            if user_company:
-                session['selected_company_id'] = user_company.company_id
+        if current_user.is_authenticated:
+            if 'selected_company_id' not in session:
+                user_company = db.session.query(user_companies).filter_by(user_id=current_user.id).first()
+                if user_company:
+                    session['selected_company_id'] = user_company.company_id
+                    
+            if 'selected_company_id' in session and 'selected_company_slug' not in session:
                 matched_company = next(
-                    (c for c in current_user.companies if c.id == user_company.company_id),
+                    (c for c in current_user.companies if c.id == session['selected_company_id']),
                     None
                 )
                 if matched_company:
+                    session['selected_company_slug'] = matched_company.slug
                     session['currency'] = matched_company.currency
-                    session['tax_rate'] = matched_company.tax_rate
+                    session['tax_rate'] = float(matched_company.tax_rate) if matched_company.tax_rate else 0.0
                     app.logger.info(f"Tax rate: {session.get('tax_rate', 0)}%")

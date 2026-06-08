@@ -3,7 +3,7 @@
 {% block sidebar_title %}Inventario{% endblock %}
 
 {% block sidebar_nav %}
-{% set cid = company_id or session.get('selected_company_id') %}
+{% set cid = company_id or session.get('selected_company_slug') %}
 <a href="{{ url_for('inventory.index', company_id=cid) }}"
   class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'inventory.index' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
   <span

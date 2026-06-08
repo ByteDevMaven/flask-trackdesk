@@ -11,7 +11,7 @@ def register_context_processors(app: Flask):
             AVAILABLE_LANGUAGES=Config.LANGUAGES,
             CURRENT_LANGUAGE=get_locale(),
             now=datetime.now(UTC),
-            company_id=session.get('selected_company_id'),
+            company_id=session.get('selected_company_slug'),
             current_user=current_user
         )
 

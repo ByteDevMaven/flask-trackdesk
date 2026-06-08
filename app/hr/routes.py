@@ -1,3 +1,4 @@
+from app.utils import resolve_company
 import os
 import uuid
 from datetime import datetime, UTC, date
@@ -40,9 +41,11 @@ def _save_attachment(file) -> str | None:
 #  EMPLOYEES
 # ─────────────────────────────────────────────────────────────────────────────
 
-@hr.route('/<int:company_id>/hr/employees')
+@hr.route('/<string:company_id>/hr/employees')
 @login_required
 def employees(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     search = request.args.get('search', '')
     status_filter = request.args.get('status', 'active')
     class_filter = request.args.get('class', '')
@@ -79,9 +82,11 @@ def employees(company_id):
     )
 
 
-@hr.route('/<int:company_id>/hr/employees/create', methods=['GET', 'POST'])
+@hr.route('/<string:company_id>/hr/employees/create', methods=['GET', 'POST'])
 @login_required
 def create_employee(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     users_without_profile = (
         User.query
         .filter(~User.id.in_(
@@ -161,9 +166,11 @@ def create_employee(company_id):
     )
 
 
-@hr.route('/<int:company_id>/hr/employees/<int:emp_id>/edit', methods=['GET', 'POST'])
+@hr.route('/<string:company_id>/hr/employees/<int:emp_id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_employee(company_id, emp_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     emp = Employee.query.filter_by(id=emp_id, company_id=company_id).first_or_404()
 
     users_available = (
@@ -244,9 +251,11 @@ def edit_employee(company_id, emp_id):
     )
 
 
-@hr.route('/<int:company_id>/hr/employees/<int:emp_id>/delete', methods=['POST'])
+@hr.route('/<string:company_id>/hr/employees/<int:emp_id>/delete', methods=['POST'])
 @login_required
 def delete_employee(company_id, emp_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     emp = Employee.query.filter_by(id=emp_id, company_id=company_id).first_or_404()
     try:
         emp.is_deleted = True
@@ -267,9 +276,11 @@ def delete_employee(company_id, emp_id):
 #  LEAVE REQUESTS
 # ─────────────────────────────────────────────────────────────────────────────
 
-@hr.route('/<int:company_id>/hr/leaves')
+@hr.route('/<string:company_id>/hr/leaves')
 @login_required
 def leaves(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     page = request.args.get('page', 1, type=int)
     per_page = int(current_app.config.get('ITEMS_PER_PAGE', 15))
     status_filter = request.args.get('status', '')
@@ -306,9 +317,11 @@ def leaves(company_id):
     )
 
 
-@hr.route('/<int:company_id>/hr/leaves/create', methods=['GET', 'POST'])
+@hr.route('/<string:company_id>/hr/leaves/create', methods=['GET', 'POST'])
 @login_required
 def create_leave(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     all_employees = Employee.query.filter_by(company_id=company_id, is_active=True).order_by(Employee.last_name).all()
 
     if request.method == 'POST':
@@ -359,9 +372,11 @@ def create_leave(company_id):
     )
 
 
-@hr.route('/<int:company_id>/hr/leaves/<int:leave_id>/edit', methods=['GET', 'POST'])
+@hr.route('/<string:company_id>/hr/leaves/<int:leave_id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_leave(company_id, leave_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     leave = LeaveRequest.query.filter_by(id=leave_id, company_id=company_id).first_or_404()
     all_employees = Employee.query.filter_by(company_id=company_id, is_active=True).order_by(Employee.last_name).all()
 
@@ -417,9 +432,11 @@ def edit_leave(company_id, leave_id):
     )
 
 
-@hr.route('/<int:company_id>/hr/leaves/<int:leave_id>/review', methods=['POST'])
+@hr.route('/<string:company_id>/hr/leaves/<int:leave_id>/review', methods=['POST'])
 @login_required
 def review_leave(company_id, leave_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     leave = LeaveRequest.query.filter_by(id=leave_id, company_id=company_id).first_or_404()
     action = request.form.get('action')
 
@@ -459,9 +476,11 @@ def review_leave(company_id, leave_id):
     return redirect(url_for('hr.leaves', company_id=company_id))
 
 
-@hr.route('/<int:company_id>/hr/leaves/<int:leave_id>/view')
+@hr.route('/<string:company_id>/hr/leaves/<int:leave_id>/view')
 @login_required
 def view_leave(company_id, leave_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     leave = LeaveRequest.query.filter_by(id=leave_id, company_id=company_id).first_or_404()
     return render_template(
         'hr/leave_view.html',
@@ -470,9 +489,11 @@ def view_leave(company_id, leave_id):
     )
 
 
-@hr.route('/<int:company_id>/hr/leaves/<int:leave_id>/delete', methods=['POST'])
+@hr.route('/<string:company_id>/hr/leaves/<int:leave_id>/delete', methods=['POST'])
 @login_required
 def delete_leave(company_id, leave_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     leave = LeaveRequest.query.filter_by(id=leave_id, company_id=company_id).first_or_404()
     
     try:
@@ -495,9 +516,11 @@ def delete_leave(company_id, leave_id):
 #  WORK SCHEDULES
 # ─────────────────────────────────────────────────────────────────────────────
 
-@hr.route('/<int:company_id>/hr/schedules')
+@hr.route('/<string:company_id>/hr/schedules')
 @login_required
 def schedules(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     return render_template(
         'hr/schedules.html',
         company_id=company_id
@@ -505,9 +528,11 @@ def schedules(company_id):
 
 from datetime import timedelta
 
-@hr.route('/<int:company_id>/hr/api/schedules/events')
+@hr.route('/<string:company_id>/hr/api/schedules/events')
 @login_required
 def schedule_events(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     start_str = request.args.get('start')
     end_str = request.args.get('end')
     
@@ -603,9 +628,11 @@ def schedule_events(company_id):
     return jsonify(events)
 
 
-@hr.route('/<int:company_id>/hr/schedules/create', methods=['GET', 'POST'])
+@hr.route('/<string:company_id>/hr/schedules/create', methods=['GET', 'POST'])
 @login_required
 def create_schedule(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     all_employees = Employee.query.filter_by(company_id=company_id, is_active=True).order_by(Employee.last_name).all()
 
     if request.method == 'POST':
@@ -648,9 +675,11 @@ def create_schedule(company_id):
     )
 
 
-@hr.route('/<int:company_id>/hr/schedules/<int:sched_id>/edit', methods=['GET', 'POST'])
+@hr.route('/<string:company_id>/hr/schedules/<int:sched_id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_schedule(company_id, sched_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     sched = WorkSchedule.query.filter_by(id=sched_id, company_id=company_id).first_or_404()
     all_employees = Employee.query.filter_by(company_id=company_id, is_active=True).order_by(Employee.last_name).all()
 
@@ -700,9 +729,11 @@ def edit_schedule(company_id, sched_id):
     )
 
 
-@hr.route('/<int:company_id>/hr/schedules/<int:sched_id>/delete', methods=['POST'])
+@hr.route('/<string:company_id>/hr/schedules/<int:sched_id>/delete', methods=['POST'])
 @login_required
 def delete_schedule(company_id, sched_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     sched = WorkSchedule.query.filter_by(id=sched_id, company_id=company_id).first_or_404()
     try:
         sched.is_deleted = True
@@ -719,9 +750,11 @@ def delete_schedule(company_id, sched_id):
     return redirect(url_for('hr.schedules', company_id=company_id))
 
 
-@hr.route('/<int:company_id>/hr/schedules/deviation/<int:sched_id>/view')
+@hr.route('/<string:company_id>/hr/schedules/deviation/<int:sched_id>/view')
 @login_required
 def view_deviation(company_id, sched_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     sched = WorkSchedule.query.filter_by(id=sched_id, company_id=company_id).first_or_404()
     return render_template(
         'hr/deviation_view.html',

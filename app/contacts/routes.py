@@ -1,3 +1,4 @@
+from app.utils import resolve_company
 import math
 from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required
@@ -8,9 +9,11 @@ from sqlalchemy import exc
 
 from .services import ContactService
 
-@contacts.route('/<int:company_id>/contacts', methods=['GET'])
+@contacts.route('/<string:company_id>/contacts', methods=['GET'])
 @login_required
 def index(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     page = request.args.get('page', 1, type=int)
     search = request.args.get('search', '', type=str)
     contact_type_filter = request.args.get('type', '', type=str)
@@ -33,9 +36,11 @@ def index(company_id):
         ContactType=ContactType
     )
 
-@contacts.route('/<int:company_id>/contacts/create', methods=['GET', 'POST'])
+@contacts.route('/<string:company_id>/contacts/create', methods=['GET', 'POST'])
 @login_required
 def create(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     if request.method == 'POST':
         try:
             contact = ContactService.create_contact(company_id, request.form)
@@ -69,9 +74,11 @@ def create(company_id):
         ContactType=ContactType
     )
 
-@contacts.route('/<int:company_id>/contacts/<int:contact_id>', methods=['GET'])
+@contacts.route('/<string:company_id>/contacts/<int:contact_id>', methods=['GET'])
 @login_required
 def view(company_id, contact_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     page = request.args.get('page', 1, type=int)
     per_page = 15
     
@@ -86,9 +93,11 @@ def view(company_id, contact_id):
         stats=stats
     )
 
-@contacts.route('/<int:company_id>/contacts/<int:contact_id>/edit', methods=['GET', 'POST'])
+@contacts.route('/<string:company_id>/contacts/<int:contact_id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit(company_id, contact_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     # Fetch contact details to populate form for GET request
     contact, _, _ = ContactService.get_contact_with_stats(company_id, contact_id, 1, 1)
 
@@ -117,9 +126,11 @@ def edit(company_id, contact_id):
         ContactType=ContactType
     )
 
-@contacts.route('/<int:company_id>/contacts/<int:contact_id>/delete', methods=['POST'])
+@contacts.route('/<string:company_id>/contacts/<int:contact_id>/delete', methods=['POST'])
 @login_required
 def delete(company_id, contact_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     try:
         ContactService.delete_contact(company_id, contact_id)
         if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
@@ -135,9 +146,11 @@ def delete(company_id, contact_id):
         flash(_('Cannot delete contact because it has related records (invoices, items, etc).'), 'error')
         return redirect(url_for('contacts.index', company_id=company_id))
 
-@contacts.route('/<int:company_id>/contacts/api/search', methods=['GET'])
+@contacts.route('/<string:company_id>/contacts/api/search', methods=['GET'])
 @login_required
 def api_search(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     search_term = request.args.get('q', '')
     contact_type = request.args.get('type', '')
     

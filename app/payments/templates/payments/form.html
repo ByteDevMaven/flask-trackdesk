@@ -3,7 +3,7 @@
 {% block sidebar_title %}Pagos{% endblock %}
 
 {% block sidebar_nav %}
-{% set cid = session.get('selected_company_id') %}
+{% set cid = session.get('selected_company_slug') %}
 <div class="px-3 py-2 space-y-4">
 
   <a href="{{ url_for('payments.index', company_id=cid) }}"
@@ -62,7 +62,7 @@
 {% block page_title %}{{ 'Editar Pago' if payment else 'Registrar Pago' }}{% endblock %}
 
 {% block content %}
-{% set cid = session.get('selected_company_id') %}
+{% set cid = session.get('selected_company_slug') %}
 <div class="flex-1 overflow-y-auto bg-slate-50">
 
   <div class="px-6 pt-5 pb-2">

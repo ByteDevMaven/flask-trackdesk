@@ -1,3 +1,4 @@
+from app.utils import resolve_company
 from datetime import datetime, UTC
 
 from flask import render_template, request, redirect, url_for, flash, current_app, Response
@@ -16,9 +17,11 @@ from .services import (
 from . import orders
 
 
-@orders.route('/<int:company_id>/purchase-orders')
+@orders.route('/<string:company_id>/purchase-orders')
 @login_required
 def index(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     page = request.args.get('page', 1, type=int)
     per_page = int(current_app.config.get('ITEMS_PER_PAGE', 15))
 
@@ -63,9 +66,11 @@ def index(company_id):
     )
 
 
-@orders.route('/<int:company_id>/purchase-orders/create', methods=['GET', 'POST'])
+@orders.route('/<string:company_id>/purchase-orders/create', methods=['GET', 'POST'])
 @login_required
 def create(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Warehouse
     suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
     inventory_items = InventoryItem.query.filter_by(company_id=company_id).order_by(InventoryItem.name).all()
@@ -96,16 +101,20 @@ def create(company_id):
                            now=datetime.now(UTC))
 
 
-@orders.route('/<int:company_id>/purchase-orders/<int:id>')
+@orders.route('/<string:company_id>/purchase-orders/<int:id>')
 @login_required
 def view(company_id, id):
+    company = resolve_company(company_id)
+    company_id = company.id
     purchase_order = PurchaseOrder.query.filter_by(id=id, company_id=company_id).first_or_404()
     return render_template('orders/view.html', company_id=company_id, order=purchase_order)
 
 
-@orders.route('/<int:company_id>/purchase-orders/<int:id>/edit', methods=['GET'])
+@orders.route('/<string:company_id>/purchase-orders/<int:id>/edit', methods=['GET'])
 @login_required
 def edit(company_id, id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Warehouse
     purchase_order = PurchaseOrder.query.filter_by(id=id, company_id=company_id).first_or_404()
     suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
@@ -122,9 +131,11 @@ def edit(company_id, id):
                           now=datetime.now(UTC))
 
 
-@orders.route('/<int:company_id>/purchase-orders/<int:id>/update', methods=['POST'])
+@orders.route('/<string:company_id>/purchase-orders/<int:id>/update', methods=['POST'])
 @login_required
 def update(company_id, id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Warehouse
     suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
     inventory_items = InventoryItem.query.filter_by(company_id=company_id).order_by(InventoryItem.name).all()
@@ -148,9 +159,11 @@ def update(company_id, id):
                                now=datetime.now(UTC))
 
 
-@orders.route('/<int:company_id>/purchase-orders/<int:id>/delete', methods=['POST'])
+@orders.route('/<string:company_id>/purchase-orders/<int:id>/delete', methods=['POST'])
 @login_required
 def delete(company_id, id):
+    company = resolve_company(company_id)
+    company_id = company.id
     try:
         delete_purchase_order(company_id, id)
         flash(_('Purchase order deleted successfully'), 'success')
@@ -161,9 +174,11 @@ def delete(company_id, id):
     return redirect(url_for('orders.index', company_id=company_id))
 
 
-@orders.route('/<int:company_id>/purchase-orders/export')
+@orders.route('/<string:company_id>/purchase-orders/export')
 @login_required
 def export(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     import io
     from flask import send_file
 

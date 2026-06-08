@@ -6,7 +6,7 @@
 {% block title %}{{ 'Nuevo' if not contact else 'Editar' }} Contacto – TrackDesk{% endblock %}
 {% block sidebar_title %}Nuevo Contacto{% endblock %}
 {% block sidebar_nav %}
-{% set cid = selected_company_id or session.get('selected_company_id') %}
+{% set cid = selected_company_id or session.get('selected_company_slug') %}
 <a href="{{ url_for('contacts.index', company_id=cid) }}"
   class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'contacts.index' else 'text-slate-600 hover:bg-slate-50' }} text-sm"><span
     class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if request.endpoint == 'contacts.index' else 'bg-slate-300' }}"></span>Todos

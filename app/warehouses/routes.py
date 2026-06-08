@@ -1,3 +1,4 @@
+from app.utils import resolve_company
 from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required
 from flask_wtf.csrf import validate_csrf
@@ -8,23 +9,29 @@ from . import warehouses
 from app.extensions import limiter
 from .services import WarehouseService
 
-@warehouses.route('/<int:company_id>/warehouses/create', methods=['GET'])
+@warehouses.route('/<string:company_id>/warehouses/create', methods=['GET'])
 @login_required
 @limiter.exempt
 def create(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     return render_template('warehouses/form.html', warehouse=None, company_id=company_id)
 
-@warehouses.route('/<int:company_id>/warehouses/<int:id>/edit', methods=['GET'])
+@warehouses.route('/<string:company_id>/warehouses/<int:id>/edit', methods=['GET'])
 @login_required
 @limiter.exempt
 def edit(company_id, id):
+    company = resolve_company(company_id)
+    company_id = company.id
     warehouse = WarehouseService.get_warehouse(company_id, id)
     return render_template('warehouses/form.html', warehouse=warehouse, company_id=company_id)
 
-@warehouses.route('/<int:company_id>/warehouses')
+@warehouses.route('/<string:company_id>/warehouses')
 @login_required
 @limiter.exempt
 def index(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     page = request.args.get('page', 1, type=int)
     search = request.args.get('search', '')
     
@@ -36,9 +43,11 @@ def index(company_id):
                            pagination=pagination,
                            search=search)
 
-@warehouses.route('/<int:company_id>/warehouses/store', methods=['POST'])
+@warehouses.route('/<string:company_id>/warehouses/store', methods=['POST'])
 @login_required
 def store(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     csrf_token = request.form.get("csrf_token")
     try:
         validate_csrf(csrf_token)
@@ -65,9 +74,11 @@ def store(company_id):
         flash(str(e), 'error')
         return redirect(url_for('warehouses.index', company_id=company_id))
 
-@warehouses.route('/<int:company_id>/warehouses/<int:id>/update', methods=['POST'])
+@warehouses.route('/<string:company_id>/warehouses/<int:id>/update', methods=['POST'])
 @login_required
 def update(company_id, id):
+    company = resolve_company(company_id)
+    company_id = company.id
     csrf_token = request.form.get("csrf_token")
     try:
         validate_csrf(csrf_token)

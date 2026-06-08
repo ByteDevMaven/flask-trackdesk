@@ -8,8 +8,8 @@ def register_routes(app: Flask):
     @app.route('/')
     def index():
         if current_user.is_authenticated:
-            # Safely get the company_id; if none, it'll redirect to the first company's dashboard usually via dashboard routes
-            return redirect(url_for('dashboard.index', company_id=session.get('selected_company_id')))
+            # Safely get the company_slug; if none, it'll redirect to the first company's dashboard usually via dashboard routes
+            return redirect(url_for('dashboard.index', company_id=session.get('selected_company_slug')))
         return render_template('public/landing.html')
 
     @app.route('/set-company/<int:id>')
@@ -19,11 +19,12 @@ def register_routes(app: Flask):
         for company in current_user.companies:
             if company.id == id:
                 session['selected_company_id'] = id
+                session['selected_company_slug'] = company.slug
                 session['currency'] = company.currency
-                session['tax_rate'] = company.tax_rate
+                session['tax_rate'] = float(company.tax_rate) if company.tax_rate else 0.0
                 app.logger.info(f"Tax rate: {session.get('tax_rate', 0)}%")
                 break
-        return redirect(url_for('dashboard.index', company_id=session.get('selected_company_id')))
+        return redirect(url_for('dashboard.index', company_id=session.get('selected_company_slug')))
 
     @app.route('/set-language/<language>')
     def set_language(language):
@@ -35,7 +36,7 @@ def register_routes(app: Flask):
     @login_required
     def search():
         query_text = request.args.get('q', '').strip()
-        company_id = session.get('selected_company_id')
+        company_id=session.get('selected_company_slug')
         results = {
             'contacts': [],
             'documents': [],

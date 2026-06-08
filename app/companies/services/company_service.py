@@ -13,6 +13,14 @@ class CompanyService:
         return company
 
     @staticmethod
+    def get_company_by_slug(slug, current_user):
+        """Find a company by its URL slug and check access permissions."""
+        company = Company.query.filter_by(slug=slug).first_or_404()
+        if not current_user.is_admin and company not in current_user.companies:
+            abort(403)
+        return company
+
+    @staticmethod
     def get_paginated_companies(page, per_page, search, current_user):
         query = Company.query
         if not current_user.is_admin:
@@ -45,6 +53,23 @@ class CompanyService:
             identifier=data.get('identifier', '').strip(),
             created_at=datetime.now(UTC)
         )
+        
+        # Handle slug
+        input_slug = data.get('slug', '').strip()
+        if input_slug:
+            candidate_slug = input_slug.lower()
+            if Company.query.filter_by(slug=candidate_slug).first():
+                raise ValueError("This URL alias (slug) is already in use by another company.")
+            company.slug = candidate_slug
+        else:
+            # Auto-generate
+            base_slug = Company.build_slug(name)
+            candidate = base_slug
+            counter = 1
+            while Company.query.filter_by(slug=candidate).first():
+                candidate = f"{base_slug}{counter}"
+                counter += 1
+            company.slug = candidate
 
         user_ids = data.getlist('user_ids')
         if user_ids:
@@ -109,6 +134,23 @@ class CompanyService:
         company.email = data.get('email', '').strip()
         company.identifier = data.get('identifier', '').strip()
         company.updated_at = datetime.now(UTC)
+        
+        # Handle slug update
+        input_slug = data.get('slug', '').strip()
+        if input_slug:
+            candidate_slug = input_slug.lower()
+            if Company.query.filter(Company.slug == candidate_slug, Company.id != company_id).first():
+                raise ValueError("This URL alias (slug) is already in use by another company.")
+            company.slug = candidate_slug
+        elif not company.slug:
+            # Generate one if it somehow doesn't have one
+            base_slug = Company.build_slug(name)
+            candidate = base_slug
+            counter = 1
+            while Company.query.filter(Company.slug == candidate, Company.id != company_id).first():
+                candidate = f"{base_slug}{counter}"
+                counter += 1
+            company.slug = candidate
 
         company.users.clear()
         user_ids = data.getlist('user_ids')

@@ -5,7 +5,7 @@
 {% block sidebar_title %}Dashboard{% endblock %}
 
 {% block sidebar_nav %}
-{% set cid = session.get('selected_company_id') %}
+{% set cid = session.get('selected_company_slug') %}
 {% macro nav_link(label, endpoint, active_ep=none) %}
 {% set is_active = request.endpoint == active_ep or request.endpoint == endpoint %}
 <a href="{{ url_for(endpoint, company_id=cid) if cid else '#' }}"
@@ -132,8 +132,8 @@
     <div class="xl:col-span-2 bg-white rounded-lg border border-slate-200">
       <div class="flex items-center justify-between p-4 border-b border-slate-100">
         <h3 class="text-sm font-semibold text-slate-900">Facturas Recientes</h3>
-        {% if session.get('selected_company_id') %}
-        <a href="{{ url_for('invoices.index', company_id=session.get('selected_company_id')) }}"
+        {% if session.get('selected_company_slug') %}
+        <a href="{{ url_for('invoices.index', company_id=session.get('selected_company_slug')) }}"
           class="text-xs font-medium text-emerald-600 hover:text-emerald-700">Ver todas →</a>
         {% endif %}
       </div>
@@ -164,8 +164,8 @@
           text-slate-500', 'bg-slate-300')) %}
           <tr class="border-b border-slate-50 hover:bg-slate-50 transition-colors">
             <td class="px-4 py-3">
-              {% if session.get('selected_company_id') %}
-              <a href="{{ url_for('invoices.view', company_id=session.get('selected_company_id'), id=invoice.id) }}"
+              {% if session.get('selected_company_slug') %}
+              <a href="{{ url_for('invoices.view', company_id=session.get('selected_company_slug'), id=invoice.id) }}"
                 class="text-sm font-medium text-emerald-600 hover:text-emerald-700">
                 {{ invoice.document_number }}
               </a>

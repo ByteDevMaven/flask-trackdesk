@@ -2,7 +2,7 @@
 {% block title %}Pago #{{ payment.id if payment else '' }} – TrackDesk{% endblock %}
 {% block sidebar_title %}Pagos{% endblock %}
 {% block sidebar_nav %}
-  {% set cid = session.get('selected_company_id') %}
+  {% set cid = session.get('selected_company_slug') %}
   <div class="px-2 py-1 space-y-1">
     <a href="{{ url_for('payments.index', company_id=cid) }}"
        class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">

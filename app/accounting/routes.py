@@ -1,3 +1,4 @@
+from app.utils import resolve_company
 from datetime import datetime, UTC
 from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required
@@ -23,18 +24,22 @@ def _is_ajax() -> bool:
 
 # ─── Dashboard ────────────────────────────────────────────────────────────────
 
-@accounting.route('/<int:company_id>/accounting/')
+@accounting.route('/<string:company_id>/accounting/')
 @login_required
 def index(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     data = AccountingService.get_dashboard_data(company_id)
     return render_template('accounting/dashboard.html', **data)
 
 
 # ─── Expenses ─────────────────────────────────────────────────────────────────
 
-@accounting.route('/<int:company_id>/accounting/expenses')
+@accounting.route('/<string:company_id>/accounting/expenses')
 @login_required
 def expenses_list(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Company
     company = Company.query.get_or_404(company_id)
 
@@ -78,9 +83,11 @@ def expenses_list(company_id):
     )
 
 
-@accounting.route('/<int:company_id>/accounting/expenses/create', methods=['GET', 'POST'])
+@accounting.route('/<string:company_id>/accounting/expenses/create', methods=['GET', 'POST'])
 @login_required
 def create_expense(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Company
     company = Company.query.get_or_404(company_id)
 
@@ -122,9 +129,11 @@ def create_expense(company_id):
     return render_template('accounting/expense_form.html', **ctx)
 
 
-@accounting.route('/<int:company_id>/accounting/expenses/<int:expense_id>/edit', methods=['GET', 'POST'])
+@accounting.route('/<string:company_id>/accounting/expenses/<int:expense_id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_expense(company_id, expense_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Company, Expense
     company = Company.query.get_or_404(company_id)
     expense = Expense.query.filter_by(id=expense_id, company_id=company_id).first_or_404()
@@ -167,9 +176,11 @@ def edit_expense(company_id, expense_id):
     return render_template('accounting/expense_form.html', **ctx)
 
 
-@accounting.route('/<int:company_id>/accounting/expenses/<int:expense_id>/delete', methods=['POST'])
+@accounting.route('/<string:company_id>/accounting/expenses/<int:expense_id>/delete', methods=['POST'])
 @login_required
 def delete_expense(company_id, expense_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     is_ajax = _is_ajax()
     try:
         AccountingService.delete_expense(company_id, expense_id)
@@ -185,9 +196,11 @@ def delete_expense(company_id, expense_id):
 
 # ─── Income ───────────────────────────────────────────────────────────────────
 
-@accounting.route('/<int:company_id>/accounting/income')
+@accounting.route('/<string:company_id>/accounting/income')
 @login_required
 def income_list(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Company
     company = Company.query.get_or_404(company_id)
 
@@ -212,9 +225,11 @@ def income_list(company_id):
     )
 
 
-@accounting.route('/<int:company_id>/accounting/income/create', methods=['GET', 'POST'])
+@accounting.route('/<string:company_id>/accounting/income/create', methods=['GET', 'POST'])
 @login_required
 def create_income(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Company
     company = Company.query.get_or_404(company_id)
 
@@ -258,9 +273,11 @@ def create_income(company_id):
     return render_template('accounting/income_form.html', **ctx)
 
 
-@accounting.route('/<int:company_id>/accounting/income/<int:txn_id>/edit', methods=['GET', 'POST'])
+@accounting.route('/<string:company_id>/accounting/income/<int:txn_id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_income(company_id, txn_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Company
     company = Company.query.get_or_404(company_id)
     transaction = Transaction.query.filter_by(id=txn_id, company_id=company_id).first_or_404()
@@ -311,9 +328,11 @@ def edit_income(company_id, txn_id):
     return render_template('accounting/income_form.html', **ctx)
 
 
-@accounting.route('/<int:company_id>/accounting/income/<int:txn_id>/delete', methods=['POST'])
+@accounting.route('/<string:company_id>/accounting/income/<int:txn_id>/delete', methods=['POST'])
 @login_required
 def delete_income(company_id, txn_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     is_ajax = _is_ajax()
     try:
         AccountingService.delete_income_txn(company_id, txn_id)
@@ -333,9 +352,11 @@ def delete_income(company_id, txn_id):
 
 # ─── Journal Entries ──────────────────────────────────────────────────────────
 
-@accounting.route('/<int:company_id>/accounting/journal')
+@accounting.route('/<string:company_id>/accounting/journal')
 @login_required
 def journal_list(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Company
     company = Company.query.get_or_404(company_id)
 
@@ -363,9 +384,11 @@ def journal_list(company_id):
     )
 
 
-@accounting.route('/<int:company_id>/accounting/journal/create', methods=['GET', 'POST'])
+@accounting.route('/<string:company_id>/accounting/journal/create', methods=['GET', 'POST'])
 @login_required
 def create_journal_entry(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Company
     company = Company.query.get_or_404(company_id)
 
@@ -398,9 +421,11 @@ def create_journal_entry(company_id):
     return render_template('accounting/journal_form.html', **ctx)
 
 
-@accounting.route('/<int:company_id>/accounting/journal/<int:txn_id>/edit', methods=['GET', 'POST'])
+@accounting.route('/<string:company_id>/accounting/journal/<int:txn_id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_journal_entry(company_id, txn_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Company, Transaction
     company = Company.query.get_or_404(company_id)
     transaction = Transaction.query.filter_by(id=txn_id, company_id=company_id).first_or_404()
@@ -435,9 +460,11 @@ def edit_journal_entry(company_id, txn_id):
     return render_template('accounting/journal_form.html', **ctx)
 
 
-@accounting.route('/<int:company_id>/accounting/journal/<int:txn_id>/void', methods=['POST'])
+@accounting.route('/<string:company_id>/accounting/journal/<int:txn_id>/void', methods=['POST'])
 @login_required
 def void_transaction(company_id, txn_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     is_ajax = _is_ajax()
     reason = request.form.get('reason', '').strip()
     try:
@@ -454,9 +481,11 @@ def void_transaction(company_id, txn_id):
 
 # ─── Ledger ───────────────────────────────────────────────────────────────────
 
-@accounting.route('/<int:company_id>/accounting/ledger')
+@accounting.route('/<string:company_id>/accounting/ledger')
 @login_required
 def ledger(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Company
     company = Company.query.get_or_404(company_id)
 
@@ -483,9 +512,11 @@ def ledger(company_id):
 
 # ─── Chart of Accounts ────────────────────────────────────────────────────────
 
-@accounting.route('/<int:company_id>/accounting/chart-of-accounts')
+@accounting.route('/<string:company_id>/accounting/chart-of-accounts')
 @login_required
 def chart_of_accounts(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Company
     company = Company.query.get_or_404(company_id)
     accounts = Account.query.filter_by(company_id=company_id).order_by(Account.type, Account.code, Account.name).all()
@@ -500,9 +531,11 @@ def chart_of_accounts(company_id):
     )
 
 
-@accounting.route('/<int:company_id>/accounting/accounts/create', methods=['GET', 'POST'])
+@accounting.route('/<string:company_id>/accounting/accounts/create', methods=['GET', 'POST'])
 @login_required
 def create_account(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Company
     company = Company.query.get_or_404(company_id)
 
@@ -524,9 +557,11 @@ def create_account(company_id):
     return render_template('accounting/account_form.html', company=company, account=None, AccountType=AccountType)
 
 
-@accounting.route('/<int:company_id>/accounting/accounts/<int:account_id>/edit', methods=['GET', 'POST'])
+@accounting.route('/<string:company_id>/accounting/accounts/<int:account_id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_account(company_id, account_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Company
     company = Company.query.get_or_404(company_id)
     account = Account.query.filter_by(id=account_id, company_id=company_id).first_or_404()
@@ -549,9 +584,11 @@ def edit_account(company_id, account_id):
     return render_template('accounting/account_form.html', company=company, account=account, AccountType=AccountType)
 
 
-@accounting.route('/<int:company_id>/accounting/accounts/<int:account_id>/delete', methods=['POST'])
+@accounting.route('/<string:company_id>/accounting/accounts/<int:account_id>/delete', methods=['POST'])
 @login_required
 def delete_account(company_id, account_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     is_ajax = _is_ajax()
     try:
         AccountingService.delete_account_safe(company_id, account_id)
@@ -569,9 +606,11 @@ def delete_account(company_id, account_id):
     return redirect(url_for('accounting.chart_of_accounts', company_id=company_id))
 
 
-@accounting.route('/<int:company_id>/accounting/accounts/generate-defaults', methods=['POST'])
+@accounting.route('/<string:company_id>/accounting/accounts/generate-defaults', methods=['POST'])
 @login_required
 def generate_default_accounts(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     created_count = AccountingService.generate_default_accounts(company_id)
     if created_count > 0:
         flash(f'Se han generado {created_count} cuentas base con éxito.', 'success')
@@ -582,9 +621,11 @@ def generate_default_accounts(company_id):
 
 # ─── Trial Balance ────────────────────────────────────────────────────────────
 
-@accounting.route('/<int:company_id>/accounting/trial-balance')
+@accounting.route('/<string:company_id>/accounting/trial-balance')
 @login_required
 def trial_balance(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Company
     company = Company.query.get_or_404(company_id)
     as_of_date = request.args.get('as_of', '').strip()
@@ -601,9 +642,11 @@ def trial_balance(company_id):
 
 # ─── Reports ──────────────────────────────────────────────────────────────────
 
-@accounting.route('/<int:company_id>/accounting/reports')
+@accounting.route('/<string:company_id>/accounting/reports')
 @login_required
 def reports(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Company
     company = Company.query.get_or_404(company_id)
 
@@ -641,9 +684,11 @@ def reports(company_id):
 
 # ─── Tags ─────────────────────────────────────────────────────────────────────
 
-@accounting.route('/<int:company_id>/accounting/tags/create', methods=['GET', 'POST'])
+@accounting.route('/<string:company_id>/accounting/tags/create', methods=['GET', 'POST'])
 @login_required
 def create_tag(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Company
     company = Company.query.get_or_404(company_id)
 
@@ -667,9 +712,11 @@ def create_tag(company_id):
     return redirect(url_for('accounting.index', company_id=company_id))
 
 
-@accounting.route('/<int:company_id>/accounting/tags/<int:tag_id>/delete', methods=['POST'])
+@accounting.route('/<string:company_id>/accounting/tags/<int:tag_id>/delete', methods=['POST'])
 @login_required
 def delete_tag(company_id, tag_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     is_ajax = _is_ajax()
     AccountingService.delete_tag(company_id, tag_id)
     if is_ajax:
@@ -680,9 +727,11 @@ def delete_tag(company_id, tag_id):
 
 # ─── Projects ─────────────────────────────────────────────────────────────────
 
-@accounting.route('/<int:company_id>/accounting/projects')
+@accounting.route('/<string:company_id>/accounting/projects')
 @login_required
 def projects_list(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Company
     company = Company.query.get_or_404(company_id)
     projects_data = AccountingService.get_projects_list(company_id)
@@ -694,9 +743,11 @@ def projects_list(company_id):
     )
 
 
-@accounting.route('/<int:company_id>/accounting/projects/<int:project_id>')
+@accounting.route('/<string:company_id>/accounting/projects/<int:project_id>')
 @login_required
 def project_detail(company_id, project_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Company
     company = Company.query.get_or_404(company_id)
     data = AccountingService.get_project_detail(company_id, project_id)
@@ -708,9 +759,11 @@ def project_detail(company_id, project_id):
     )
 
 
-@accounting.route('/<int:company_id>/accounting/projects/create', methods=['GET', 'POST'])
+@accounting.route('/<string:company_id>/accounting/projects/create', methods=['GET', 'POST'])
 @login_required
 def create_project(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Company
     company = Company.query.get_or_404(company_id)
 
@@ -732,9 +785,11 @@ def create_project(company_id):
     return render_template('accounting/project_form.html', company=company, project=None)
 
 
-@accounting.route('/<int:company_id>/accounting/projects/<int:project_id>/edit', methods=['GET', 'POST'])
+@accounting.route('/<string:company_id>/accounting/projects/<int:project_id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_project(company_id, project_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Company
     company = Company.query.get_or_404(company_id)
     project = Project.query.filter_by(id=project_id, company_id=company_id).first_or_404()
@@ -757,9 +812,11 @@ def edit_project(company_id, project_id):
     return render_template('accounting/project_form.html', company=company, project=project)
 
 
-@accounting.route('/<int:company_id>/accounting/projects/<int:project_id>/delete', methods=['POST'])
+@accounting.route('/<string:company_id>/accounting/projects/<int:project_id>/delete', methods=['POST'])
 @login_required
 def delete_project(company_id, project_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     is_ajax = _is_ajax()
     try:
         AccountingService.delete_project_safe(company_id, project_id)

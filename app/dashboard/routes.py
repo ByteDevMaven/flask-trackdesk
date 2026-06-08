@@ -1,3 +1,4 @@
+from app.utils import resolve_company
 from flask import render_template, session
 from flask_login import login_required
 from flask_babel import _
@@ -6,12 +7,15 @@ from . import dashboard
 from .services import DashboardService
 
 
-@dashboard.route('/<int:company_id>/')
-@dashboard.route('/<int:company_id>/dashboard')
+@dashboard.route('/<string:company_id>/')
+@dashboard.route('/<string:company_id>/dashboard')
 @login_required
 def index(company_id=None):
     if company_id is None:
-        company_id = session.get('selected_company_id')
+        company_id = session.get('selected_company_slug')
+        
+    company = resolve_company(company_id)
+    company_id = company.id
 
     data = DashboardService.get_dashboard_data(company_id)
 

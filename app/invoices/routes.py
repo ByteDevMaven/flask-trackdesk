@@ -1,3 +1,4 @@
+from app.utils import resolve_company
 from flask import render_template, request, redirect, session, url_for, flash, make_response
 from flask_login import login_required, current_user
 from flask_wtf.csrf import validate_csrf
@@ -16,10 +17,12 @@ from .services.invoice_create_service import _generate_document_number
 from . import invoices
 
 
-@invoices.route('/<int:company_id>/invoices')
+@invoices.route('/<string:company_id>/invoices')
 @login_required
 @limiter.exempt
 def index(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     pagination = get_invoice_list(company_id, request.args)
 
     for doc in pagination.items:
@@ -66,10 +69,12 @@ def item_row():
     return render_template('invoices/item_row.html', index=index, inventory_items=inventory_items, item=None)
 
 
-@invoices.route('/<int:company_id>/invoices/create')
+@invoices.route('/<string:company_id>/invoices/create')
 @login_required
 @limiter.exempt
 def create(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
                                                   
     from app.models import Warehouse
     clients = Contact.query.filter_by(company_id=company_id, type=ContactType.customer).all()
@@ -91,10 +96,12 @@ def create(company_id):
                          warehouses=warehouses,
                          document_items=None)
 
-@invoices.route('/<int:company_id>/invoices/store', methods=['POST'])
+@invoices.route('/<string:company_id>/invoices/store', methods=['POST'])
 @login_required
 @limiter.exempt
 def store(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     csrf_token = request.form.get("csrf_token")
 
     try:
@@ -125,10 +132,12 @@ def store(company_id):
         return redirect(url_for('invoices.create', company_id=company_id))
 
 
-@invoices.route('/<int:company_id>/invoices/<int:id>')
+@invoices.route('/<string:company_id>/invoices/<int:id>')
 @login_required
 @limiter.exempt
 def view(company_id, id):
+    company = resolve_company(company_id)
+    company_id = company.id
     document = Document.query.filter(
         Document.id == id,
         Document.company_id == company_id,
@@ -166,10 +175,12 @@ def view(company_id, id):
                          now=datetime.now(UTC))
 
 
-@invoices.route('/<int:company_id>/invoices/<int:id>/add-payment', methods=['POST'])
+@invoices.route('/<string:company_id>/invoices/<int:id>/add-payment', methods=['POST'])
 @login_required
 @limiter.exempt
 def add_payment(company_id, id):
+    company = resolve_company(company_id)
+    company_id = company.id
     csrf_token = request.form.get("csrf_token")
 
     try:
@@ -197,10 +208,12 @@ def add_payment(company_id, id):
         return redirect(url_for('invoices.view', company_id=company_id, id=id))
 
 
-@invoices.route('/<int:company_id>/invoices/<int:id>/edit')
+@invoices.route('/<string:company_id>/invoices/<int:id>/edit')
 @login_required
 @limiter.exempt
 def edit(company_id, id):
+    company = resolve_company(company_id)
+    company_id = company.id
     document = Document.query.filter(
         Document.id == id,
         Document.company_id == company_id,
@@ -234,10 +247,12 @@ def edit(company_id, id):
                          document_items=document_items)
 
 
-@invoices.route('/<int:company_id>/invoices/<int:id>/update', methods=['POST'])
+@invoices.route('/<string:company_id>/invoices/<int:id>/update', methods=['POST'])
 @login_required
 @limiter.exempt
 def update(company_id, id):
+    company = resolve_company(company_id)
+    company_id = company.id
     csrf_token = request.form.get("csrf_token")
 
     try:
@@ -315,9 +330,11 @@ def update(company_id, id):
         )
 
 
-@invoices.route('/<int:company_id>/invoices/<int:id>/delete', methods=['POST'])
+@invoices.route('/<string:company_id>/invoices/<int:id>/delete', methods=['POST'])
 @login_required
 def delete(company_id, id):
+    company = resolve_company(company_id)
+    company_id = company.id
     csrf_token = request.form.get("csrf_token") 
 
     try:
@@ -343,9 +360,11 @@ def delete(company_id, id):
     return redirect(url_for('invoices.index', company_id=company_id))
 
 
-@invoices.route('/<int:company_id>/invoices/<int:id>/print')
+@invoices.route('/<string:company_id>/invoices/<int:id>/print')
 @login_required
 def print_invoice(company_id, id):
+    company = resolve_company(company_id)
+    company_id = company.id
     document = Document.query.filter(
         Document.id == id,
         Document.company_id == company_id,

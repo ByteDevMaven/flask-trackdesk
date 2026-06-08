@@ -4,7 +4,7 @@ TrackDesk{% endblock %}
 {% block sidebar_title %}Facturas{% endblock %}
 
 {% block sidebar_nav %}
-{% set cid = session.get('selected_company_id') %}
+{% set cid = session.get('selected_company_slug') %}
 <div class="px-3 py-2 space-y-5">
   <a href="{{ url_for('invoices.index', company_id=cid) }}"
     class="flex items-center gap-3 text-slate-600 hover:text-emerald-700 text-sm font-medium transition-colors mb-2">
@@ -45,7 +45,7 @@ TrackDesk{% endblock %}
 {% block page_title %}{{ 'Nueva Cotización' if doc_type == 'quote' else 'Nueva Factura' }}{% endblock %}
 
 {% block content %}
-{% set cid = session.get('selected_company_id') %}
+{% set cid = session.get('selected_company_slug') %}
 <div class="flex-1 overflow-y-auto p-6 bg-slate-50">
 
   <form method="POST"

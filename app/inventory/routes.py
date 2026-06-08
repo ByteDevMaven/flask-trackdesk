@@ -1,3 +1,4 @@
+from app.utils import resolve_company
 import io
 from flask import render_template, request, redirect, session, url_for, flash, current_app, jsonify, Response, send_file
 from flask_login import login_required
@@ -11,10 +12,12 @@ from . import inventory
 from app.models.enums import ContactType
 from .services import InventoryService
 
-@inventory.route('/<int:company_id>/inventory')
+@inventory.route('/<string:company_id>/inventory')
 @login_required
 @limiter.exempt
 def index(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     page = request.args.get('page', 1, type=int)
     per_page = int(current_app.config.get('ITEMS_PER_PAGE', 15))
     
@@ -53,10 +56,12 @@ def index(company_id):
                           sort_by=sort_by,
                           sort_order=sort_order)
 
-@inventory.route('/<int:company_id>/inventory/create_item', methods=['GET', 'POST'])
+@inventory.route('/<string:company_id>/inventory/create_item', methods=['GET', 'POST'])
 @login_required
 @limiter.exempt
 def create(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Warehouse
     suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
     warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
@@ -90,10 +95,12 @@ def create(company_id):
     
     return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, warehouses=warehouses, selected_id=selected_id, item=None, form_data=None)
 
-@inventory.route('/<int:company_id>/inventory/<string:sku>')
+@inventory.route('/<string:company_id>/inventory/<string:sku>')
 @login_required
 @limiter.exempt
 def view(company_id, sku):
+    company = resolve_company(company_id)
+    company_id = company.id
     from app.models import Company
     item = InventoryService.get_item_by_sku(company_id, sku)
     if not item:
@@ -132,10 +139,12 @@ def view(company_id, sku):
                           warehouses=warehouses,
                           warehouse_items=warehouse_items)
 
-@inventory.route('/<int:company_id>/inventory/movements')
+@inventory.route('/<string:company_id>/inventory/movements')
 @login_required
 @limiter.exempt
 def movements(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     page = request.args.get('page', 1, type=int)
     per_page = int(current_app.config.get('ITEMS_PER_PAGE', 20))
     search = request.args.get('search', '')
@@ -173,10 +182,12 @@ def movements(company_id):
                           client_id=client_id,
                           supplier_id=supplier_id)
 
-@inventory.route('/<int:company_id>/inventory/<string:sku>/edit_item', methods=['GET'])
+@inventory.route('/<string:company_id>/inventory/<string:sku>/edit_item', methods=['GET'])
 @login_required
 @limiter.exempt
 def edit(company_id, sku):
+    company = resolve_company(company_id)
+    company_id = company.id
     item = InventoryService.get_item_by_sku(company_id, sku)
     if not item:
         from flask import abort; abort(404)
@@ -187,10 +198,12 @@ def edit(company_id, sku):
     
     return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, warehouses=warehouses, selected_id=selected_id, item=item, form_data=None)
 
-@inventory.route('/<int:company_id>/inventory/<string:sku>/update_item', methods=['POST'])
+@inventory.route('/<string:company_id>/inventory/<string:sku>/update_item', methods=['POST'])
 @login_required
 @limiter.exempt
 def update(company_id, sku):
+    company = resolve_company(company_id)
+    company_id = company.id
     item = InventoryService.get_item_by_sku(company_id, sku)
     if not item:
         from flask import abort; abort(404)
@@ -226,9 +239,11 @@ def update(company_id, sku):
         current_app.logger.error(f"Database error: {str(e)}")
         return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, warehouses=warehouses, item=item, form_data=request.form)
 
-@inventory.route('/<int:company_id>/inventory/<string:sku>/delete_item', methods=['POST'])
+@inventory.route('/<string:company_id>/inventory/<string:sku>/delete_item', methods=['POST'])
 @login_required
 def delete(company_id, sku):
+    company = resolve_company(company_id)
+    company_id = company.id
     item = InventoryService.get_item_by_sku(company_id, sku)
     if not item:
         from flask import abort; abort(404)
@@ -241,10 +256,12 @@ def delete(company_id, sku):
     
     return redirect(url_for('inventory.index', company_id=company_id))
 
-@inventory.route('/<int:company_id>/inventory/export')
+@inventory.route('/<string:company_id>/inventory/export')
 @login_required
 @limiter.exempt
 def export(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     import io
     from flask import send_file
     
@@ -268,10 +285,12 @@ def export(company_id):
         download_name=filename
     )
 
-@inventory.route('/<int:company_id>/inventory/movements/export')
+@inventory.route('/<string:company_id>/inventory/movements/export')
 @login_required
 @limiter.exempt
 def export_movements(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     search = request.args.get('search', '')
     movement_type = request.args.get('type')
     period = request.args.get('period', 'all')
@@ -298,10 +317,12 @@ def export_movements(company_id):
         download_name=filename
     )
 
-@inventory.route('/<int:company_id>/inventory/<string:sku>/drawer_adjust', methods=['GET'])
+@inventory.route('/<string:company_id>/inventory/<string:sku>/drawer_adjust', methods=['GET'])
 @login_required
 @limiter.exempt
 def drawer_adjust(company_id, sku):
+    company = resolve_company(company_id)
+    company_id = company.id
     item = InventoryService.get_item_by_sku(company_id, sku)
     if not item:
         from flask import abort; abort(404)
@@ -309,10 +330,12 @@ def drawer_adjust(company_id, sku):
     warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
     return render_template('inventory/drawer_adjust.html', company_id=company_id, item=item, warehouses=warehouses)
 
-@inventory.route('/<int:company_id>/inventory/<string:sku>/drawer_transfer', methods=['GET'])
+@inventory.route('/<string:company_id>/inventory/<string:sku>/drawer_transfer', methods=['GET'])
 @login_required
 @limiter.exempt
 def drawer_transfer(company_id, sku):
+    company = resolve_company(company_id)
+    company_id = company.id
     item = InventoryService.get_item_by_sku(company_id, sku)
     if not item:
         from flask import abort; abort(404)
@@ -320,10 +343,12 @@ def drawer_transfer(company_id, sku):
     warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
     return render_template('inventory/drawer_transfer.html', company_id=company_id, item=item, warehouses=warehouses)
 
-@inventory.route('/<int:company_id>/inventory/<string:sku>/transfer', methods=['POST'])
+@inventory.route('/<string:company_id>/inventory/<string:sku>/transfer', methods=['POST'])
 @login_required
 @limiter.exempt
 def transfer(company_id, sku):
+    company = resolve_company(company_id)
+    company_id = company.id
     item = InventoryService.get_item_by_sku(company_id, sku)
     if not item:
         from flask import abort; abort(404)
@@ -364,10 +389,12 @@ def transfer(company_id, sku):
     if is_ajax: return jsonify({'success': False, 'error': _('Unknown error')})
     return redirect(url_for('inventory.view', company_id=company_id, sku=sku))
 
-@inventory.route('/api/<int:company_id>/inventory/items', methods=['GET'])
+@inventory.route('/api/<string:company_id>/inventory/items', methods=['GET'])
 @login_required
 @limiter.exempt
 def api_get_items(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     """Get all inventory items with optional filtering"""
     page = request.args.get('page', 1, type=int)
     per_page = min(request.args.get('per_page', 20, type=int), 100)
@@ -403,10 +430,12 @@ def api_get_items(company_id):
         }
     })
 
-@inventory.route('/api/<int:company_id>/inventory/items/<int:id>', methods=['GET'])
+@inventory.route('/api/<string:company_id>/inventory/items/<int:id>', methods=['GET'])
 @login_required
 @limiter.exempt
 def api_get_item(company_id, id):
+    company = resolve_company(company_id)
+    company_id = company.id
     """Get a specific inventory item"""
     item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
     
@@ -420,10 +449,12 @@ def api_get_item(company_id, id):
         'supplier_name': item.supplier.name if item.supplier else None
     })
 
-@inventory.route('/api/<int:company_id>/inventory/items', methods=['POST'])
+@inventory.route('/api/<string:company_id>/inventory/items', methods=['POST'])
 @login_required
 @limiter.exempt
 def api_create_item(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     """Create a new inventory item"""
     data = request.get_json()
     if not data:
@@ -459,10 +490,12 @@ def api_create_item(company_id):
         current_app.logger.error(f"API create error: {str(e)}")
         return jsonify({'error': 'Database error occurred'}), 500
 
-@inventory.route('/api/<int:company_id>/inventory/items/<int:id>', methods=['PUT'])
+@inventory.route('/api/<string:company_id>/inventory/items/<int:id>', methods=['PUT'])
 @login_required
 @limiter.exempt
 def api_update_item(company_id, id):
+    company = resolve_company(company_id)
+    company_id = company.id
     """Update an inventory item"""
     data = request.get_json()
     if not data:
@@ -499,10 +532,12 @@ def api_update_item(company_id, id):
         current_app.logger.error(f"API update error: {str(e)}")
         return jsonify({'error': 'Database error occurred'}), 500
 
-@inventory.route('/api/<int:company_id>/inventory/items/<int:id>', methods=['DELETE'])
+@inventory.route('/api/<string:company_id>/inventory/items/<int:id>', methods=['DELETE'])
 @login_required
 @limiter.exempt
 def api_delete_item(company_id, id):
+    company = resolve_company(company_id)
+    company_id = company.id
     """Delete an inventory item"""
     try:
         InventoryService.delete_inventory_item(company_id, id)
@@ -514,10 +549,12 @@ def api_delete_item(company_id, id):
     except Exception as e:
         return jsonify({'error': str(e)}), 404
 
-@inventory.route('/api/<int:company_id>/inventory/items/bulk-delete', methods=['POST'])
+@inventory.route('/api/<string:company_id>/inventory/items/bulk-delete', methods=['POST'])
 @login_required
 @limiter.exempt
 def api_bulk_delete(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     """Bulk delete inventory items"""
     data = request.get_json()
     item_ids = data.get('item_ids', []) if data else []
@@ -537,10 +574,12 @@ def api_bulk_delete(company_id):
         current_app.logger.error(f"Bulk delete error: {str(e)}")
         return jsonify({'error': 'Database error occurred'}), 500
 
-@inventory.route('/api/<int:company_id>/inventory/items/<int:id>/adjust-stock', methods=['POST'])
+@inventory.route('/api/<string:company_id>/inventory/items/<int:id>/adjust-stock', methods=['POST'])
 @login_required
 @limiter.exempt
 def api_adjust_stock(company_id, id):
+    company = resolve_company(company_id)
+    company_id = company.id
     """Adjust stock quantity for an item"""
     data = request.get_json()
     adjustment = int(data.get('adjustment', 0)) if data else 0
@@ -570,10 +609,12 @@ def api_adjust_stock(company_id, id):
         current_app.logger.error(f"Stock adjustment error: {str(e)}")
         return jsonify({'error': 'Database error occurred'}), 500
 
-@inventory.route('/api/<int:company_id>/inventory/search', methods=['GET'])
+@inventory.route('/api/<string:company_id>/inventory/search', methods=['GET'])
 @login_required
 @limiter.exempt
 def api_search(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     """Search inventory items"""
     query = request.args.get('q', '').strip()
     items = InventoryService.search_inventory_items(company_id, query)
@@ -590,18 +631,22 @@ def api_search(company_id):
     
     return jsonify(results)
 
-@inventory.route('/api/<int:company_id>/inventory/stats', methods=['GET'])
+@inventory.route('/api/<string:company_id>/inventory/stats', methods=['GET'])
 @login_required
 @limiter.exempt
 def api_stats(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
     """Get inventory statistics"""
     stats = InventoryService.get_inventory_stats(company_id)
     return jsonify(stats)
 
-@inventory.route('/<int:company_id>/inventory/<string:sku>/barcode')
+@inventory.route('/<string:company_id>/inventory/<string:sku>/barcode')
 @login_required
 @limiter.exempt
 def barcode(company_id, sku):
+    company = resolve_company(company_id)
+    company_id = company.id
     """Barcode label for an inventory item"""
     item = InventoryService.get_item_by_sku(company_id, sku)
     if not item:

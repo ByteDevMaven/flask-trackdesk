@@ -2,7 +2,7 @@
 {% block title %}{{ contact.name }} – Contacto TrackDesk{% endblock %}
 {% block sidebar_title %}Contactos{% endblock %}
 {% block sidebar_nav %}
-{% set cid = company_id or session.get('selected_company_id') %}
+{% set cid = company_id or session.get('selected_company_slug') %}
 <div class="px-3 py-2 mb-4">
   <a href="{{ url_for('contacts.index', company_id=cid) }}"
     class="flex items-center gap-3 text-slate-600 hover:text-emerald-700 text-sm font-medium transition-colors">
