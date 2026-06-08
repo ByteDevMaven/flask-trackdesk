@@ -36,7 +36,7 @@
 <div class="flex-1 overflow-y-auto bg-slate-50">
 
   <!-- Breadcrumbs & Header -->
-  <div class="px-6 pt-5 pb-2 flex items-center justify-between">
+  <div class="px-4 md:px-6 pt-5 pb-2 flex items-center justify-between">
     <nav class="flex items-center gap-2 text-sm text-slate-500">
       <a href="{{ url_for('companies.index') }}" class="hover:text-slate-700 transition-colors">Empresas</a>
       <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
@@ -69,10 +69,10 @@
   </div>
 
   <!-- Main View Grid -->
-  <div class="p-6 space-y-6">
+  <div class="p-4 md:p-6 space-y-6">
 
     <!-- KPI Summary Row -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 md:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm flex items-center gap-4">
         <div class="w-10 h-10 rounded-lg bg-sky-100 flex items-center justify-center text-sky-600 flex-shrink-0">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
@@ -115,7 +115,7 @@
     </div>
 
     <!-- Two Column Dashboard Layout -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-1 md:grid-cols-3 gap-6">
 
       <!-- Left 2 Columns: Details & Tables -->
       <div class="lg:col-span-2 space-y-6">
@@ -136,7 +136,7 @@
             </div>
           </div>
 
-          <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-sm">
+          <div class="p-4 md:p-6 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 text-sm">
             <div>
               <p class="text-xs text-slate-400 font-semibold uppercase tracking-wider mb-1">Moneda Comercial</p>
               <p class="font-bold text-slate-800">{{ company.currency }}</p>

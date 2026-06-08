@@ -7,7 +7,7 @@
 
 {% block content %}
 <div class="flex flex-col h-full overflow-hidden bg-slate-50">
-  <header class="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between flex-shrink-0">
+  <header class="bg-white border-b border-slate-200 px-4 md:px-6 py-3 flex items-center justify-between flex-shrink-0">
     <h1 class="text-base font-semibold text-slate-800">Reportes Financieros</h1>
     <a href="{{ url_for('accounting.reports', company_id=company.id, report_type=report_type, start_date=start_date, end_date=end_date, export='csv') }}"
       class="flex items-center gap-2 px-3 py-2 border border-slate-200 bg-white rounded-lg text-sm text-slate-600 hover:bg-slate-50 transition-colors shadow-sm">
@@ -17,7 +17,7 @@
   </header>
 
   {# Filters + report selector #}
-  <div class="bg-white border-b border-slate-200 px-6 py-3 flex-shrink-0">
+  <div class="bg-white border-b border-slate-200 px-4 md:px-6 py-3 flex-shrink-0">
     <form method="GET" class="flex flex-wrap items-center gap-3">
       <select name="report_type" onchange="this.form.submit()"
         class="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white font-medium">
@@ -34,142 +34,148 @@
     </form>
   </div>
 
-  <div class="flex-1 overflow-y-auto p-6">
+  <div class="flex-1 overflow-y-auto p-4 md:p-6">
 
     {# ── Income Statement ──────────────────────────────────────────────── #}
     {% if report_type == 'income_statement' %}
     <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden max-w-2xl mx-auto">
-      <div class="px-6 py-4 border-b border-slate-100 bg-slate-50">
+      <div class="px-4 md:px-6 py-4 border-b border-slate-100 bg-slate-50">
         <h2 class="text-base font-bold text-slate-800">Estado de Resultados</h2>
         <p class="text-xs text-slate-500 mt-0.5">{{ start_date }} al {{ end_date }}</p>
       </div>
-      <table class="w-full text-sm">
+      <div class="w-full overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+<table class="w-full text-sm">
         <tbody>
-          <tr class="border-b border-slate-100"><td colspan="2" class="px-6 py-2 text-xs font-bold text-slate-500 uppercase tracking-wider bg-emerald-50">Ingresos</td></tr>
+          <tr class="border-b border-slate-100"><td colspan="2" class="px-4 md:px-6 py-2 text-xs font-bold text-slate-500 uppercase tracking-wider bg-emerald-50">Ingresos</td></tr>
           {% set total_revenue = namespace(val=0.0) %}
           {% for name, amount in report_data.get('revenue', {}).items() %}
           {% set total_revenue.val = total_revenue.val + amount %}
           <tr class="hover:bg-slate-50/60">
-            <td class="px-6 py-2 pl-10 text-slate-700">{{ name }}</td>
-            <td class="px-6 py-2 text-right font-mono text-emerald-700 font-medium">{{ company.currency }}{{ "{:,.2f}".format(amount) }}</td>
+            <td class="px-4 md:px-6 py-2 pl-10 text-slate-700">{{ name }}</td>
+            <td class="px-4 md:px-6 py-2 text-right font-mono text-emerald-700 font-medium">{{ company.currency }}{{ "{:,.2f}".format(amount) }}</td>
           </tr>
           {% endfor %}
           <tr class="border-t border-slate-200 bg-emerald-50/50">
-            <td class="px-6 py-2 font-bold text-slate-800">Total Ingresos</td>
-            <td class="px-6 py-2 text-right font-mono font-bold text-emerald-700">{{ company.currency }}{{ "{:,.2f}".format(total_revenue.val) }}</td>
+            <td class="px-4 md:px-6 py-2 font-bold text-slate-800">Total Ingresos</td>
+            <td class="px-4 md:px-6 py-2 text-right font-mono font-bold text-emerald-700">{{ company.currency }}{{ "{:,.2f}".format(total_revenue.val) }}</td>
           </tr>
 
-          <tr class="border-t border-slate-200"><td colspan="2" class="px-6 py-2 text-xs font-bold text-slate-500 uppercase tracking-wider bg-rose-50">Gastos</td></tr>
+          <tr class="border-t border-slate-200"><td colspan="2" class="px-4 md:px-6 py-2 text-xs font-bold text-slate-500 uppercase tracking-wider bg-rose-50">Gastos</td></tr>
           {% set total_expense = namespace(val=0.0) %}
           {% for name, amount in report_data.get('expense', {}).items() %}
           {% set total_expense.val = total_expense.val + amount %}
           <tr class="hover:bg-slate-50/60">
-            <td class="px-6 py-2 pl-10 text-slate-700">{{ name }}</td>
-            <td class="px-6 py-2 text-right font-mono text-rose-600 font-medium">{{ company.currency }}{{ "{:,.2f}".format(amount) }}</td>
+            <td class="px-4 md:px-6 py-2 pl-10 text-slate-700">{{ name }}</td>
+            <td class="px-4 md:px-6 py-2 text-right font-mono text-rose-600 font-medium">{{ company.currency }}{{ "{:,.2f}".format(amount) }}</td>
           </tr>
           {% endfor %}
           <tr class="border-t border-slate-200 bg-rose-50/50">
-            <td class="px-6 py-2 font-bold text-slate-800">Total Gastos</td>
-            <td class="px-6 py-2 text-right font-mono font-bold text-rose-600">{{ company.currency }}{{ "{:,.2f}".format(total_expense.val) }}</td>
+            <td class="px-4 md:px-6 py-2 font-bold text-slate-800">Total Gastos</td>
+            <td class="px-4 md:px-6 py-2 text-right font-mono font-bold text-rose-600">{{ company.currency }}{{ "{:,.2f}".format(total_expense.val) }}</td>
           </tr>
 
           <tr class="border-t-2 border-slate-300 {{ 'bg-emerald-50' if total >= 0 else 'bg-rose-50' }}">
-            <td class="px-6 py-3 font-black text-slate-900 text-base">Utilidad / Pérdida Neta</td>
-            <td class="px-6 py-3 text-right font-mono font-black text-lg {{ 'text-emerald-700' if total >= 0 else 'text-rose-700' }}">
+            <td class="px-4 md:px-6 py-3 font-black text-slate-900 text-base">Utilidad / Pérdida Neta</td>
+            <td class="px-4 md:px-6 py-3 text-right font-mono font-black text-lg {{ 'text-emerald-700' if total >= 0 else 'text-rose-700' }}">
               {{ company.currency }}{{ "{:,.2f}".format(total) }}
             </td>
           </tr>
         </tbody>
       </table>
+</div>
     </div>
 
     {# ── Balance Sheet ─────────────────────────────────────────────────── #}
     {% elif report_type == 'balance_sheet' %}
     <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden max-w-2xl mx-auto">
-      <div class="px-6 py-4 border-b border-slate-100 bg-slate-50">
+      <div class="px-4 md:px-6 py-4 border-b border-slate-100 bg-slate-50">
         <h2 class="text-base font-bold text-slate-800">Balance General</h2>
         <p class="text-xs text-slate-500 mt-0.5">Al {{ end_date }}</p>
       </div>
-      <table class="w-full text-sm">
+      <div class="w-full overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+<table class="w-full text-sm">
         <tbody>
-          <tr><td colspan="2" class="px-6 py-2 text-xs font-bold text-slate-500 uppercase tracking-wider bg-sky-50">Activos</td></tr>
+          <tr><td colspan="2" class="px-4 md:px-6 py-2 text-xs font-bold text-slate-500 uppercase tracking-wider bg-sky-50">Activos</td></tr>
           {% set t_asset = namespace(val=0.0) %}
           {% for name, amount in report_data.get('asset', {}).items() %}
           {% set t_asset.val = t_asset.val + amount %}
           <tr class="hover:bg-slate-50/60">
-            <td class="px-6 py-2 pl-10 text-slate-700">{{ name }}</td>
-            <td class="px-6 py-2 text-right font-mono text-slate-800">{{ company.currency }}{{ "{:,.2f}".format(amount) }}</td>
+            <td class="px-4 md:px-6 py-2 pl-10 text-slate-700">{{ name }}</td>
+            <td class="px-4 md:px-6 py-2 text-right font-mono text-slate-800">{{ company.currency }}{{ "{:,.2f}".format(amount) }}</td>
           </tr>
           {% endfor %}
           <tr class="border-t border-slate-200 bg-sky-50/50">
-            <td class="px-6 py-2 font-bold text-slate-800">Total Activos</td>
-            <td class="px-6 py-2 text-right font-mono font-bold text-sky-700">{{ company.currency }}{{ "{:,.2f}".format(total.assets if total is mapping else 0) }}</td>
+            <td class="px-4 md:px-6 py-2 font-bold text-slate-800">Total Activos</td>
+            <td class="px-4 md:px-6 py-2 text-right font-mono font-bold text-sky-700">{{ company.currency }}{{ "{:,.2f}".format(total.assets if total is mapping else 0) }}</td>
           </tr>
 
-          <tr class="border-t border-slate-200"><td colspan="2" class="px-6 py-2 text-xs font-bold text-slate-500 uppercase tracking-wider bg-amber-50">Pasivos</td></tr>
+          <tr class="border-t border-slate-200"><td colspan="2" class="px-4 md:px-6 py-2 text-xs font-bold text-slate-500 uppercase tracking-wider bg-amber-50">Pasivos</td></tr>
           {% for name, amount in report_data.get('liability', {}).items() %}
           <tr class="hover:bg-slate-50/60">
-            <td class="px-6 py-2 pl-10 text-slate-700">{{ name }}</td>
-            <td class="px-6 py-2 text-right font-mono text-slate-800">{{ company.currency }}{{ "{:,.2f}".format(amount) }}</td>
+            <td class="px-4 md:px-6 py-2 pl-10 text-slate-700">{{ name }}</td>
+            <td class="px-4 md:px-6 py-2 text-right font-mono text-slate-800">{{ company.currency }}{{ "{:,.2f}".format(amount) }}</td>
           </tr>
           {% endfor %}
-          <tr><td colspan="2" class="px-6 py-2 text-xs font-bold text-slate-500 uppercase tracking-wider bg-purple-50">Patrimonio</td></tr>
+          <tr><td colspan="2" class="px-4 md:px-6 py-2 text-xs font-bold text-slate-500 uppercase tracking-wider bg-purple-50">Patrimonio</td></tr>
           {% for name, amount in report_data.get('equity', {}).items() %}
           <tr class="hover:bg-slate-50/60">
-            <td class="px-6 py-2 pl-10 text-slate-700">{{ name }}</td>
-            <td class="px-6 py-2 text-right font-mono text-slate-800">{{ company.currency }}{{ "{:,.2f}".format(amount) }}</td>
+            <td class="px-4 md:px-6 py-2 pl-10 text-slate-700">{{ name }}</td>
+            <td class="px-4 md:px-6 py-2 text-right font-mono text-slate-800">{{ company.currency }}{{ "{:,.2f}".format(amount) }}</td>
           </tr>
           {% endfor %}
           <tr class="border-t border-slate-200 bg-purple-50/50">
-            <td class="px-6 py-2 font-bold text-slate-800">Total Pasivos + Patrimonio</td>
-            <td class="px-6 py-2 text-right font-mono font-bold text-purple-700">{{ company.currency }}{{ "{:,.2f}".format(total.liabilities_and_equity if total is mapping else 0) }}</td>
+            <td class="px-4 md:px-6 py-2 font-bold text-slate-800">Total Pasivos + Patrimonio</td>
+            <td class="px-4 md:px-6 py-2 text-right font-mono font-bold text-purple-700">{{ company.currency }}{{ "{:,.2f}".format(total.liabilities_and_equity if total is mapping else 0) }}</td>
           </tr>
 
           {% if total is mapping %}
           {% set diff = total.assets - total.liabilities_and_equity %}
           {% if diff|abs > 0.01 %}
           <tr class="bg-rose-50 border-t border-rose-200">
-            <td class="px-6 py-2 font-bold text-rose-700">⚠ Descuadre</td>
-            <td class="px-6 py-2 text-right font-mono font-bold text-rose-700">{{ company.currency }}{{ "{:,.2f}".format(diff|abs) }}</td>
+            <td class="px-4 md:px-6 py-2 font-bold text-rose-700">⚠ Descuadre</td>
+            <td class="px-4 md:px-6 py-2 text-right font-mono font-bold text-rose-700">{{ company.currency }}{{ "{:,.2f}".format(diff|abs) }}</td>
           </tr>
           {% endif %}
           {% endif %}
         </tbody>
       </table>
+</div>
     </div>
 
     {# ── Cash Flow ─────────────────────────────────────────────────────── #}
     {% elif report_type == 'cash_flow' %}
     <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden max-w-2xl mx-auto">
-      <div class="px-6 py-4 border-b border-slate-100 bg-slate-50">
+      <div class="px-4 md:px-6 py-4 border-b border-slate-100 bg-slate-50">
         <h2 class="text-base font-bold text-slate-800">Estado de Flujo de Efectivo</h2>
         <p class="text-xs text-slate-500 mt-0.5">{{ start_date }} al {{ end_date }}</p>
       </div>
-      <table class="w-full text-sm">
+      <div class="w-full overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+<table class="w-full text-sm">
         <tbody>
           {% set section_styles = {'operating': ('Actividades Operativas', 'bg-emerald-50 text-emerald-700'), 'investing': ('Actividades de Inversión', 'bg-sky-50 text-sky-700'), 'financing': ('Actividades de Financiamiento', 'bg-indigo-50 text-indigo-700')} %}
           {% for section_key, items in report_data.items() %}
           {% set label, s_style = section_styles.get(section_key, (section_key.title(), 'bg-slate-50 text-slate-700')) %}
-          <tr><td colspan="2" class="px-6 py-2 text-xs font-bold uppercase tracking-wider {{ s_style }}">{{ label }}</td></tr>
+          <tr><td colspan="2" class="px-4 md:px-6 py-2 text-xs font-bold uppercase tracking-wider {{ s_style }}">{{ label }}</td></tr>
           {% set section_total = namespace(val=0.0) %}
           {% for concept, amount in items.items() %}
           {% set section_total.val = section_total.val + amount %}
           <tr class="hover:bg-slate-50/60">
-            <td class="px-6 py-2 pl-10 text-slate-700">{{ concept }}</td>
-            <td class="px-6 py-2 text-right font-mono {{ 'text-emerald-700' if amount >= 0 else 'text-rose-600' }}">
+            <td class="px-4 md:px-6 py-2 pl-10 text-slate-700">{{ concept }}</td>
+            <td class="px-4 md:px-6 py-2 text-right font-mono {{ 'text-emerald-700' if amount >= 0 else 'text-rose-600' }}">
               {{ '+' if amount >= 0 else '' }}{{ company.currency }}{{ "{:,.2f}".format(amount) }}
             </td>
           </tr>
           {% endfor %}
           {% endfor %}
           <tr class="border-t-2 border-slate-300 {{ 'bg-emerald-50' if total >= 0 else 'bg-rose-50' }}">
-            <td class="px-6 py-3 font-black text-slate-900">Flujo Neto de Efectivo</td>
-            <td class="px-6 py-3 text-right font-mono font-black text-lg {{ 'text-emerald-700' if total >= 0 else 'text-rose-700' }}">
+            <td class="px-4 md:px-6 py-3 font-black text-slate-900">Flujo Neto de Efectivo</td>
+            <td class="px-4 md:px-6 py-3 text-right font-mono font-black text-lg {{ 'text-emerald-700' if total >= 0 else 'text-rose-700' }}">
               {{ '+' if total >= 0 else '' }}{{ company.currency }}{{ "{:,.2f}".format(total) }}
             </td>
           </tr>
         </tbody>
       </table>
+</div>
     </div>
     {% endif %}
 

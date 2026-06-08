@@ -4,7 +4,7 @@
   data-drawer-form
   data-success-message="{{ 'Gasto actualizado exitosamente' if expense else 'Gasto registrado exitosamente' }}">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-  <div class="p-6 space-y-4">
+  <div class="p-4 md:p-6 space-y-4">
     <div>
       <label class="block text-sm font-medium text-slate-700 mb-1">Fecha <span class="text-rose-500">*</span></label>
       <input type="date" name="date"
@@ -24,7 +24,7 @@
       </select>
       <p class="text-xs text-slate-400 mt-1">Selecciona la cuenta de gasto que corresponde al débito.</p>
     </div>
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
         <label class="block text-sm font-medium text-slate-700 mb-1">Monto <span class="text-rose-500">*</span></label>
         <div class="relative">
@@ -49,7 +49,7 @@
         value="{{ expense.description or '' if expense else '' }}"
         class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
     </div>
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
         <label class="block text-sm font-medium text-slate-700 mb-1">Proveedor / Vendedor</label>
         <input type="text" name="vendor_name" placeholder="Nombre del proveedor"

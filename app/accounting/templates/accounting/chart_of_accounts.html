@@ -7,7 +7,7 @@
 
 {% block content %}
 <div class="flex flex-col h-full overflow-hidden bg-slate-50">
-  <header class="bg-white border-b border-slate-200 px-6 py-3 flex items-center justify-between flex-shrink-0">
+  <header class="bg-white border-b border-slate-200 px-4 md:px-6 py-3 flex items-center justify-between flex-shrink-0">
     <h1 class="text-base font-semibold text-slate-800">Plan de Cuentas</h1>
     <div class="flex items-center gap-2">
       <form method="POST" action="{{ url_for('accounting.generate_default_accounts', company_id=company.id) }}" class="inline">
@@ -38,31 +38,32 @@
     {% if group %}
     <div class="border-b border-slate-200">
       {# Group header #}
-      <div class="px-6 py-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
+      <div class="px-4 md:px-6 py-3 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
         <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold border {{ badge_style }}">{{ label }}</span>
         {% set group_total = namespace(val=0.0) %}
         {% for acct in group %}{% set group_total.val = group_total.val + balances.get(acct.id, 0.0) %}{% endfor %}
         <span class="text-sm font-bold text-slate-700 font-mono">{{ company.currency }}{{ "{:,.2f}".format(group_total.val) }}</span>
       </div>
-      <table class="w-full text-sm">
+      <div class="w-full overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+<table class="w-full text-sm">
         <colgroup><col class="w-20"><col><col class="w-72"><col class="w-36"><col class="w-28"><col class="w-24"></colgroup>
         <tbody class="divide-y divide-slate-50">
           {% for acct in group %}
           {% set bal = balances.get(acct.id, 0.0) %}
           <tr class="hover:bg-slate-50/80 transition-colors group/row">
-            <td class="px-6 py-3 text-slate-400 font-mono text-xs">{{ acct.code or '—' }}</td>
-            <td class="px-6 py-3 font-medium text-slate-800">{{ acct.name }}</td>
-            <td class="px-6 py-3 text-xs text-slate-500 max-w-xs truncate">{{ acct.description or '' }}</td>
-            <td class="px-6 py-3 text-right font-mono font-bold
+            <td class="px-4 md:px-6 py-3 text-slate-400 font-mono text-xs">{{ acct.code or '—' }}</td>
+            <td class="px-4 md:px-6 py-3 font-medium text-slate-800">{{ acct.name }}</td>
+            <td class="px-4 md:px-6 py-3 text-xs text-slate-500 max-w-xs truncate">{{ acct.description or '' }}</td>
+            <td class="px-4 md:px-6 py-3 text-right font-mono font-bold
               {% if bal > 0 %}text-emerald-700{% elif bal < 0 %}text-rose-600{% else %}text-slate-400{% endif %}">
               {{ company.currency }}{{ "{:,.2f}".format(bal) }}
             </td>
-            <td class="px-6 py-3">
+            <td class="px-4 md:px-6 py-3">
               {% if not acct.is_active %}
               <span class="inline-flex px-2 py-0.5 rounded-full bg-slate-100 text-slate-400 text-xs">Inactiva</span>
               {% endif %}
             </td>
-            <td class="px-6 py-3">
+            <td class="px-4 md:px-6 py-3">
               <div class="flex items-center justify-end gap-1 opacity-0 group-hover/row:opacity-100 transition-opacity">
                 <button data-action="open-drawer"
                   data-url="{{ url_for('accounting.edit_account', company_id=company.id, account_id=acct.id) }}"
@@ -83,6 +84,7 @@
           {% endfor %}
         </tbody>
       </table>
+</div>
     </div>
     {% endif %}
     {% endfor %}

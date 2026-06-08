@@ -108,7 +108,7 @@
   <div class="bg-white border-b border-slate-200 flex-shrink-0">
 
     <!-- Breadcrumb -->
-    <div class="px-6 pt-3 flex items-center gap-2 text-xs text-slate-500">
+    <div class="px-4 md:px-6 pt-3 flex items-center gap-2 text-xs text-slate-500">
       <a href="{{ url_for('users.index') }}" class="hover:text-slate-700 transition-colors">Usuarios</a>
       <svg class="w-3 h-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -117,7 +117,7 @@
     </div>
 
     <!-- Profile hero row -->
-    <div class="px-6 py-4 flex items-center justify-between">
+    <div class="px-4 md:px-6 py-4 flex items-center justify-between">
       <div class="flex items-center gap-5">
         <!-- Large avatar -->
         <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center text-white text-2xl font-bold shadow-md flex-shrink-0">
@@ -199,7 +199,7 @@
     </div>
 
     <!-- Tab bar -->
-    <div class="px-6 flex gap-6 border-t border-slate-100">
+    <div class="px-4 md:px-6 flex gap-6 border-t border-slate-100">
       <button class="pb-3 pt-1 text-sm font-semibold border-b-2 border-emerald-600 text-emerald-700">
         Información
       </button>
@@ -207,7 +207,7 @@
   </div>
 
   <!-- Main content scrollable area -->
-  <div class="flex-1 overflow-y-auto p-6">
+  <div class="flex-1 overflow-y-auto p-4 md:p-6">
     <div class="grid grid-cols-12 gap-6">
 
       <!-- Left column: Account Details -->
@@ -215,7 +215,7 @@
 
         <!-- Account Info Card -->
         <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-          <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+          <div class="flex items-center justify-between px-4 md:px-6 py-4 border-b border-slate-100">
             <h3 class="text-sm font-semibold text-slate-900">Información de la Cuenta</h3>
             <button type="button"
                     data-action="open-drawer"
@@ -229,18 +229,18 @@
             </button>
           </div>
           <div class="divide-y divide-slate-50">
-            <div class="grid grid-cols-2 divide-x divide-slate-50">
-              <div class="px-6 py-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 divide-x divide-slate-50">
+              <div class="px-4 md:px-6 py-4">
                 <p class="text-xs font-medium text-slate-400 uppercase tracking-wide mb-1">Nombre completo</p>
                 <p class="text-sm font-semibold text-slate-800">{{ user.name }}</p>
               </div>
-              <div class="px-6 py-4">
+              <div class="px-4 md:px-6 py-4">
                 <p class="text-xs font-medium text-slate-400 uppercase tracking-wide mb-1">Correo electrónico</p>
                 <a href="mailto:{{ user.email }}" class="text-sm text-emerald-600 hover:text-emerald-700 transition-colors font-medium">{{ user.email }}</a>
               </div>
             </div>
-            <div class="grid grid-cols-2 divide-x divide-slate-50">
-              <div class="px-6 py-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 divide-x divide-slate-50">
+              <div class="px-4 md:px-6 py-4">
                 <p class="text-xs font-medium text-slate-400 uppercase tracking-wide mb-1">Rol</p>
                 {% if user.role %}
                 {% set role_name = user.role.name|lower %}
@@ -259,7 +259,7 @@
                 <span class="text-sm text-slate-400 italic">Sin rol asignado</span>
                 {% endif %}
               </div>
-              <div class="px-6 py-4">
+              <div class="px-4 md:px-6 py-4">
                 <p class="text-xs font-medium text-slate-400 uppercase tracking-wide mb-1">Estado</p>
                 {% if user.is_active %}
                 <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
@@ -274,12 +274,12 @@
                 {% endif %}
               </div>
             </div>
-            <div class="grid grid-cols-2 divide-x divide-slate-50">
-              <div class="px-6 py-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 divide-x divide-slate-50">
+              <div class="px-4 md:px-6 py-4">
                 <p class="text-xs font-medium text-slate-400 uppercase tracking-wide mb-1">ID de usuario</p>
                 <span class="text-sm font-mono text-slate-600 bg-slate-50 px-2 py-0.5 rounded border border-slate-100">#{{ user.id }}</span>
               </div>
-              <div class="px-6 py-4">
+              <div class="px-4 md:px-6 py-4">
                 <p class="text-xs font-medium text-slate-400 uppercase tracking-wide mb-1">Miembro desde</p>
                 <p class="text-sm text-slate-700">{{ user.created_at.strftime('%d de %B de %Y') if user.created_at else '—' }}</p>
               </div>
@@ -289,7 +289,7 @@
 
         <!-- Companies Card -->
         <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-          <div class="flex items-center justify-between px-6 py-4 border-b border-slate-100">
+          <div class="flex items-center justify-between px-4 md:px-6 py-4 border-b border-slate-100">
             <div class="flex items-center gap-2">
               <h3 class="text-sm font-semibold text-slate-900">Empresas Asignadas</h3>
               <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">{{ user.companies|length }}</span>
@@ -308,7 +308,7 @@
           {% if user.companies %}
           <div class="divide-y divide-slate-50">
             {% for company in user.companies %}
-            <div class="flex items-center justify-between px-6 py-4 hover:bg-slate-50/50 transition-colors">
+            <div class="flex items-center justify-between px-4 md:px-6 py-4 hover:bg-slate-50/50 transition-colors">
               <div class="flex items-center gap-4">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center text-slate-700 font-bold text-sm flex-shrink-0">
                   {{ company.name[:2]|upper }}
@@ -344,7 +344,7 @@
             {% endfor %}
           </div>
           {% else %}
-          <div class="px-6 py-12 text-center">
+          <div class="px-4 md:px-6 py-12 text-center">
             <div class="w-12 h-12 bg-slate-50 border border-slate-100 rounded-full flex items-center justify-center text-slate-400 mx-auto mb-3">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>

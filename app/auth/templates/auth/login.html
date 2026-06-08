@@ -37,7 +37,7 @@
       <p class="text-slate-500 mt-1 text-sm">Inicia sesión en tu cuenta de TrackDesk</p>
     </div>
 
-    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-8">
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 md:p-8">
       <form method="POST" action="{{ url_for('auth.login') }}">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 

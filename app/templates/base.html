@@ -30,17 +30,21 @@
   {% endwith %}
 
   <div class="flex h-screen overflow-hidden">
+    <!-- Mobile Backdrop -->
+    <div id="mobile-backdrop" class="fixed inset-0 bg-slate-900/50 z-40 hidden md:hidden transition-opacity duration-300 opacity-0"></div>
 
-    <aside id="primary-sidebar" class="w-16 bg-slate-800 flex flex-col items-center py-4 flex-shrink-0 z-30">
+    <!-- Sidebar Wrapper -->
+    <div id="sidebar-wrapper" class="fixed inset-y-0 left-0 z-50 flex flex-col md:flex-row transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 ease-in-out shadow-2xl md:shadow-none w-64 md:w-auto bg-white">
+      <aside id="primary-sidebar" class="w-full md:w-16 h-16 md:h-auto bg-slate-800 flex flex-row md:flex-col items-center justify-between md:justify-start px-2 py-0 md:py-4 md:px-0 flex-shrink-0 z-30 overflow-x-auto md:overflow-visible">
 
       <a href="{{ url_for('dashboard.index', company_id=session.get('selected_company_slug')) }}"
-        class="w-10 h-10 bg-emerald-500 rounded-lg flex items-center justify-center mb-8 hover:bg-emerald-600 transition-colors">
+        class="w-10 h-10 bg-emerald-500 rounded-lg flex items-center justify-center md:mb-8 hover:bg-emerald-600 transition-colors flex-shrink-0">
         <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
         </svg>
       </a>
 
-      <nav class="flex-1 flex flex-col items-center gap-1">
+      <nav class="flex-1 flex flex-row md:flex-col items-center gap-2 md:gap-1 px-2 md:px-0 overflow-x-auto md:overflow-visible">
         {% set active_company_id=session.get('selected_company_slug') %}
 
         <a href="{{ url_for('dashboard.index', company_id=session.get('selected_company_slug')) }}"
@@ -125,7 +129,7 @@
         </a>
         {% endif %}
 
-        <div class="w-8 h-px bg-slate-700 my-2"></div>
+        <div class="w-px h-8 md:w-8 md:h-px bg-slate-700 my-0 mx-1 md:my-2 md:mx-0 flex-shrink-0"></div>
 
         <a href="{{ url_for('users.index') }}"
           class="w-10 h-10 rounded-lg flex items-center justify-center transition-colors {% if request.endpoint and 'users' in request.endpoint %}bg-slate-700 text-white{% else %}text-slate-400 hover:bg-slate-700 hover:text-white{% endif %}"
@@ -147,7 +151,7 @@
       </nav>
 
       {% if current_user.is_authenticated %}
-      <div class="relative mt-auto mb-2" id="user-settings-wrapper">
+      <div class="relative mt-0 md:mt-auto mb-0 md:mb-2 ml-2 md:ml-0 flex-shrink-0" id="user-settings-wrapper">
         <button id="user-settings-btn"
           class="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center text-white text-sm font-semibold cursor-pointer hover:bg-emerald-700 transition-colors focus:outline-none"
           title="{{ current_user.name }}">
@@ -183,7 +187,7 @@
     </aside>
 
     <aside id="secondary-sidebar"
-      class="w-56 bg-white border-r border-slate-200 flex flex-col flex-shrink-0 transition-all duration-300 overflow-hidden z-20">
+      class="w-full md:w-56 bg-white border-r border-slate-200 flex flex-col flex-1 transition-all duration-300 overflow-hidden z-20">
       <div class="p-4 border-b border-slate-100 flex items-center justify-between">
         <h2 class="text-sm font-semibold text-slate-900">{% block sidebar_title %}Menú{% endblock %}</h2>
         <button id="collapse-sidebar-btn"
@@ -219,17 +223,23 @@
     </aside>
 
     <button id="expand-sidebar-btn"
-      class="hidden w-6 bg-white border-r border-slate-200 flex-shrink-0 items-center justify-center hover:bg-slate-50 transition-colors z-20">
+      class="hidden md:hidden w-6 bg-white border-r border-slate-200 flex-shrink-0 items-center justify-center hover:bg-slate-50 transition-colors z-20">
       <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
       </svg>
     </button>
+    </div> <!-- End Sidebar Wrapper -->
 
     <div class="flex-1 flex flex-col overflow-hidden">
 
-      <header class="h-14 bg-white border-b border-slate-200 flex items-center justify-between px-6 flex-shrink-0 z-10">
-        <div class="flex items-center gap-4">
-          <h1 class="text-base font-semibold text-slate-900">{% block page_title %}{% endblock %}</h1>
+      <header class="h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 md:px-6 flex-shrink-0 z-10 w-full">
+        <div class="flex items-center gap-3 md:gap-4">
+          <button id="mobile-menu-btn" class="md:hidden p-1.5 -ml-1.5 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+          <h1 class="text-base font-semibold text-slate-900 truncate">{% block page_title %}{% endblock %}</h1>
         </div>
 
         <div class="flex items-center gap-2">
@@ -301,10 +311,10 @@
     </div>
   </div>
 
-  <div id="confirm-modal" class="fixed inset-0 z-50 hidden">
+  <div id="confirm-modal" class="fixed inset-0 z-[90] hidden">
     <div id="confirm-modal-backdrop" class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm"></div>
     <div class="relative flex items-center justify-center min-h-screen p-4">
-      <div class="bg-white rounded-xl shadow-xl max-w-sm w-full p-6">
+      <div class="bg-white rounded-xl shadow-xl max-w-sm w-full p-4 md:p-6">
         <div id="confirm-modal-icon"
           class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
           <svg class="w-6 h-6 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -329,9 +339,9 @@
     </div>
   </div>
 
-  <div id="drawer-overlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 hidden transition-opacity"></div>
+  <div id="drawer-overlay" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-[60] hidden transition-opacity"></div>
   <aside id="side-drawer"
-    class="fixed right-0 top-0 h-full w-full max-w-lg bg-white shadow-2xl z-50 flex flex-col transform translate-x-full transition-transform duration-300">
+    class="fixed right-0 top-0 h-full w-full max-w-lg bg-white shadow-2xl z-[70] flex flex-col transform translate-x-full transition-transform duration-300">
     <div class="flex items-center justify-between p-4 border-b border-slate-200 flex-shrink-0">
       <h3 id="drawer-title" class="text-base font-semibold text-slate-800"></h3>
       <button id="drawer-close-btn"
@@ -344,12 +354,40 @@
     <div id="drawer-body" class="flex-1 overflow-y-auto"></div>
   </aside>
 
-  <div id="toast-container" class="fixed top-4 right-4 z-[60] flex flex-col gap-2 w-80 pointer-events-none">
+  <div id="toast-container" class="fixed top-4 right-4 z-[80] flex flex-col gap-2 w-80 pointer-events-none">
   </div>
 
   <script src="{{ url_for('static', filename='js/modals.js') }}"></script>
   <script src="{{ url_for('static', filename='js/drawer.js') }}"></script>
   <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const sidebarWrapper = document.getElementById('sidebar-wrapper');
+      const mobileBackdrop = document.getElementById('mobile-backdrop');
+
+      function toggleMobileMenu() {
+        const isClosed = sidebarWrapper.classList.contains('-translate-x-full');
+        if (isClosed) {
+          sidebarWrapper.classList.remove('-translate-x-full');
+          mobileBackdrop.classList.remove('hidden');
+          // small delay to allow display block to apply before opacity transition
+          setTimeout(() => mobileBackdrop.classList.remove('opacity-0'), 10);
+        } else {
+          sidebarWrapper.classList.add('-translate-x-full');
+          mobileBackdrop.classList.add('opacity-0');
+          setTimeout(() => mobileBackdrop.classList.add('hidden'), 300);
+        }
+      }
+
+      if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+      }
+      if (mobileBackdrop) {
+        mobileBackdrop.addEventListener('click', toggleMobileMenu);
+      }
+    });
+  </script>
   {% block scripts %}{% endblock %}
 </body>
 

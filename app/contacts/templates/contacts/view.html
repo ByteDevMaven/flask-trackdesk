@@ -46,9 +46,9 @@
 {% block page_title %}Detalles del Contacto{% endblock %}
 
 {% block content %}
-<div class="flex-1 overflow-y-auto p-6 bg-slate-50">
+<div class="flex-1 overflow-y-auto p-4 md:p-6 bg-slate-50">
   
-  <div class="bg-white rounded-lg border border-slate-200 overflow-hidden mb-6 p-6">
+  <div class="bg-white rounded-lg border border-slate-200 overflow-hidden mb-6 p-4 md:p-6">
     <div class="flex flex-col sm:flex-row items-start justify-between gap-4">
       <div class="flex items-center gap-4">
         {% set type_colors = {'customer': 'bg-sky-100 text-sky-600', 'supplier': 'bg-purple-100 text-purple-600', 'customer_supplier': 'bg-teal-100 text-teal-600', 'lead': 'bg-amber-100 text-amber-600', 'employee': 'bg-indigo-100 text-indigo-600', 'other': 'bg-slate-100 text-slate-600'} %}
@@ -105,7 +105,7 @@
     </div>
     {% endif %}
     {% if contact.payment_terms_days or contact.credit_limit %}
-    <div class="mt-4 pt-4 border-t border-slate-100 grid grid-cols-2 gap-4">
+    <div class="mt-4 pt-4 border-t border-slate-100 grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
         <p class="text-xs text-slate-400 uppercase font-semibold tracking-wider mb-0.5">Días de Crédito</p>
         <p class="text-sm font-semibold text-slate-800">{{ contact.payment_terms_days or 0 }} días</p>
@@ -131,7 +131,8 @@
         <span class="text-xs bg-emerald-100 text-emerald-700 font-medium px-2 py-0.5 rounded-full">{{ items.total }}</span>
       </div>
       
-      <table class="w-full">
+      <div class="w-full overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+<table class="w-full">
         <thead>
           <tr class="border-b border-slate-100">
             <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Documento</th>
@@ -162,6 +163,7 @@
           {% endfor %}
         </tbody>
       </table>
+</div>
       
       {% if items.pages > 1 %}
       <div class="px-4 py-3 border-t border-slate-100 flex items-center justify-between bg-white">
@@ -204,7 +206,8 @@
         <h3 class="text-sm font-semibold text-slate-800">Productos Suministrados</h3>
         <span class="text-xs bg-purple-100 text-purple-700 font-medium px-2 py-0.5 rounded-full">{{ items.total }}</span>
       </div>
-      <table class="w-full">
+      <div class="w-full overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+<table class="w-full">
         <thead>
           <tr class="border-b border-slate-100">
             <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Producto</th>
@@ -224,6 +227,7 @@
           {% endfor %}
         </tbody>
       </table>
+</div>
       
       {% if items.pages > 1 %}
       <div class="px-4 py-3 border-t border-slate-100 flex items-center justify-between bg-white">

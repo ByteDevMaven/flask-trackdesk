@@ -48,9 +48,9 @@
 {% block page_title %}Resumen General{% endblock %}
 
 {% block content %}
-<div class="p-6">
+<div class="p-4 md:p-6">
 
-  <div class="grid grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
 
     <div class="bg-white rounded-lg border border-slate-200 p-5">
       <div class="flex items-center justify-between">
@@ -137,7 +137,8 @@
           class="text-xs font-medium text-emerald-600 hover:text-emerald-700">Ver todas →</a>
         {% endif %}
       </div>
-      <table class="w-full">
+      <div class="w-full overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+<table class="w-full">
         <thead>
           <tr class="border-b border-slate-100">
             <th class="text-left text-xs font-semibold text-slate-500 px-4 py-3">Documento</th>
@@ -203,6 +204,7 @@
           {% endfor %}
         </tbody>
       </table>
+</div>
     </div>
 
     <div class="bg-white rounded-lg border border-slate-200">

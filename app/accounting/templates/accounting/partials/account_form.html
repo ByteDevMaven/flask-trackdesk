@@ -2,8 +2,8 @@
   action="{{ url_for('accounting.edit_account', company_id=company.id, account_id=account.id) if account else url_for('accounting.create_account', company_id=company.id) }}"
   data-drawer-form data-success-message="{{ 'Cuenta actualizada.' if account else 'Cuenta creada.' }}">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-  <div class="p-6 space-y-4">
-    <div class="grid grid-cols-2 gap-4">
+  <div class="p-4 md:p-6 space-y-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
         <label class="block text-sm font-medium text-slate-700 mb-1">Código de cuenta</label>
         <input type="text" name="code" value="{{ account.code if account else '' }}" placeholder="Ej: 1100"

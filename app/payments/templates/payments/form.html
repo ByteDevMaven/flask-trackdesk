@@ -65,7 +65,7 @@
 {% set cid = session.get('selected_company_slug') %}
 <div class="flex-1 overflow-y-auto bg-slate-50">
 
-  <div class="px-6 pt-5 pb-2">
+  <div class="px-4 md:px-6 pt-5 pb-2">
     <nav class="flex items-center gap-2 text-sm text-slate-500">
       <a href="{{ url_for('payments.index', company_id=cid) }}" class="hover:text-slate-700 transition-colors">Pagos</a>
       <svg class="w-4 h-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
@@ -76,7 +76,7 @@
   <form method="POST"
         action="{{ url_for('payments.update', company_id=cid, id=payment.id) if payment else url_for('payments.store', company_id=cid) }}"
         id="payment-form"
-        class="p-6 space-y-5 max-w-5xl">
+        class="p-4 md:p-6 space-y-5 max-w-5xl">
 
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
@@ -84,7 +84,7 @@
     <input type="hidden" name="document_id" value="{{ selected_invoice.id }}">
     {% endif %}
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+    <div class="grid grid-cols-1 lg:grid-cols-1 md:grid-cols-3 gap-5">
 
       <div class="lg:col-span-2 space-y-5">
 
@@ -119,7 +119,7 @@
               Datos del Pago
             </h3>
           </div>
-          <div class="p-5 grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div class="p-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-5">
 
             <div>
               <label class="block text-sm font-semibold text-slate-700 mb-1.5">
@@ -157,7 +157,7 @@
           </div>
           <div class="p-5">
             {% set cur_method = payment.method.value if payment and payment.method else 'cash' %}
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3" id="method-selector">
+            <div class="grid grid-cols-1 md:grid-cols-2 sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" id="method-selector">
               {% for val, label, color, dot, icon_path in [
                 ('cash',     'Efectivo',       'hover:border-emerald-400 hover:bg-emerald-50', 'bg-emerald-500', 'M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z'),
                 ('card',     'Tarjeta',        'hover:border-sky-400 hover:bg-sky-50',         'bg-sky-500',     'M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z'),

@@ -68,7 +68,7 @@
 
   <!-- Top Header -->
   <header class="bg-white border-b border-slate-200 flex-shrink-0">
-    <div class="px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <div class="px-4 md:px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
       <div class="flex items-center gap-4">
         <div class="w-12 h-12 rounded-xl bg-violet-50 border border-violet-100 flex items-center justify-center flex-shrink-0 shadow-sm">
           <svg class="w-6 h-6 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -113,7 +113,7 @@
   </header>
 
   <!-- Content -->
-  <div class="flex-1 overflow-y-auto p-6 bg-slate-50/50">
+  <div class="flex-1 overflow-y-auto p-4 md:p-6 bg-slate-50/50">
 
     {% if item.description %}
     <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm mb-6">
@@ -141,7 +141,7 @@
         </div>
       </div>
       <div class="p-5">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 md:grid-cols-1 md:grid-cols-3 gap-4">
           {% for wi in warehouse_items %}
           <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 flex items-center justify-between">
             <div>

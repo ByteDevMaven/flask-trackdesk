@@ -1,13 +1,13 @@
 <form method="POST" action="{{ url_for('accounting.edit_journal_entry', company_id=company.id, txn_id=transaction.id) if transaction else url_for('accounting.create_journal_entry', company_id=company.id) }}"
   data-drawer-form data-success-message="{{ 'Asiento contable actualizado' if transaction else 'Asiento contable creado' }} exitosamente">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-  <div class="p-6 space-y-4">
+  <div class="p-4 md:p-6 space-y-4">
     <div>
       <label class="block text-sm font-medium text-slate-700 mb-1">Fecha <span class="text-rose-500">*</span></label>
       <input type="date" name="date" value="{{ transaction.date.strftime('%Y-%m-%d') if transaction else now.strftime('%Y-%m-%d') }}" required
         class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
     </div>
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
         <label class="block text-sm font-medium text-slate-700 mb-1">Memo / Descripción <span class="text-rose-500">*</span></label>
         <input type="text" name="memo" value="{{ transaction.memo if transaction else '' }}" required placeholder="Descripción del asiento"

@@ -46,7 +46,7 @@ TrackDesk{% endblock %}
 
 {% block content %}
 {% set cid = session.get('selected_company_slug') %}
-<div class="flex-1 overflow-y-auto p-6 bg-slate-50">
+<div class="flex-1 overflow-y-auto p-4 md:p-6 bg-slate-50">
 
   <form method="POST"
     action="{{ url_for('invoices.update', company_id=cid, id=invoice.id) if invoice else url_for('invoices.store', company_id=cid) }}"
@@ -54,7 +54,7 @@ TrackDesk{% endblock %}
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
     <input type="hidden" name="type" value="{{ doc_type or 'invoice' }}">
 
-    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-sm">
+    <div class="bg-white rounded-lg border border-slate-200 p-4 md:p-6 shadow-sm">
       <h3 class="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
         <span class="w-1 h-3.5 bg-emerald-600 rounded-full"></span>
         Información del Cliente
@@ -114,13 +114,13 @@ TrackDesk{% endblock %}
       </div>
     </div>
 
-    <div class="bg-white rounded-lg border border-slate-200 p-6 shadow-sm">
+    <div class="bg-white rounded-lg border border-slate-200 p-4 md:p-6 shadow-sm">
       <h3 class="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
         <span class="w-1 h-3.5 bg-emerald-600 rounded-full"></span>
         Detalles de Emisión
       </h3>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 md:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <div>
           <label class="block text-sm font-semibold text-slate-700 mb-1.5">Almacén (Origen de Stock)</label>
           <select name="warehouse_id" required

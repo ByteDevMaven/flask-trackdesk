@@ -3,7 +3,7 @@
   data-drawer-form
   data-success-message="{{ 'Proyecto actualizado exitosamente' if project else 'Proyecto creado exitosamente' }}">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-  <div class="p-6 space-y-4">
+  <div class="p-4 md:p-6 space-y-4">
     <div>
       <label class="block text-sm font-medium text-slate-700 mb-1">Nombre del Proyecto <span class="text-rose-500">*</span></label>
       <input type="text" name="name" required placeholder="Ej: Rediseño Web Q3 2026"
@@ -15,7 +15,7 @@
       <textarea name="description" rows="3" placeholder="Descripción del proyecto..."
         class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none">{{ project.description or '' if project else '' }}</textarea>
     </div>
-    <div class="grid grid-cols-2 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
         <label class="block text-sm font-medium text-slate-700 mb-1">Presupuesto</label>
         <div class="relative">

@@ -8,7 +8,7 @@
 
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-    <div class="p-6 space-y-5 border-b border-slate-200">
+    <div class="p-4 md:p-6 space-y-5 border-b border-slate-200">
       
       <div>
         <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1.5">Nombre <span class="text-rose-500">*</span></label>
@@ -37,7 +37,7 @@
     </div>
   </form>
 
-  <div class="p-6 flex-1 overflow-y-auto">
+  <div class="p-4 md:p-6 flex-1 overflow-y-auto">
     <h3 class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-4">Etiquetas Existentes</h3>
     <ul class="space-y-3">
       {% for tag in tags %}
@@ -55,7 +55,7 @@
         </form>
       </li>
       {% else %}
-      <li class="text-center p-8 bg-slate-50/50 border border-slate-200 border-dashed rounded-lg">
+      <li class="text-center p-4 md:p-8 bg-slate-50/50 border border-slate-200 border-dashed rounded-lg">
         <p class="text-sm text-slate-400 font-medium">No se han creado etiquetas.</p>
       </li>
       {% endfor %}

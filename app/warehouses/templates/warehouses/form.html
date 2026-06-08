@@ -20,7 +20,7 @@
   action="{{ url_for('warehouses.update', company_id=company_id, id=warehouse.id) if warehouse else url_for('warehouses.store', company_id=company_id) }}"
   data-drawer-form data-success-message="{{ 'Almacén creado exitosamente' if not warehouse else 'Almacén actualizado exitosamente' }}">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-  <div class="p-6 space-y-4">
+  <div class="p-4 md:p-6 space-y-4">
 
     <div>
       <label class="block text-sm font-medium text-slate-700 mb-1.5">Nombre del Almacén <span class="text-rose-500">*</span></label>
