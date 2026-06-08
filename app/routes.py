@@ -5,6 +5,13 @@ from config import Config
 from app.models import Contact, Document, InventoryItem, PurchaseOrder, Company
 
 def register_routes(app: Flask):
+    @app.route('/')
+    def index():
+        if current_user.is_authenticated:
+            # Safely get the company_id; if none, it'll redirect to the first company's dashboard usually via dashboard routes
+            return redirect(url_for('dashboard.index', company_id=session.get('selected_company_id')))
+        return render_template('public/landing.html')
+
     @app.route('/set-company/<int:id>')
     def set_company(id):
         if not current_user.is_authenticated:

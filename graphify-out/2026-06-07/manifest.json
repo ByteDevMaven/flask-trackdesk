@@ -345,8 +345,8 @@
     "semantic_hash": ""
   },
   "app/models/purchase_order_item.py": {
-    "mtime": 1780712375.907727,
-    "ast_hash": "33f8ae487005d4ec9cadc1bcf203fb5f",
+    "mtime": 1780868554.3284369,
+    "ast_hash": "6d8aac02312e8ecad2e9dc06228275a7",
     "semantic_hash": ""
   },
   "app/models/report.py": {
@@ -850,8 +850,8 @@
     "semantic_hash": ""
   },
   "app/orders/templates/orders/form.html": {
-    "mtime": 1780712182.0398169,
-    "ast_hash": "5ba2ffd324571ffaf4ffb728507727dc",
+    "mtime": 1780868583.7455595,
+    "ast_hash": "b989b8a7cd76a08726f5d777a58459af",
     "semantic_hash": ""
   },
   "app/orders/templates/orders/index.html": {
@@ -860,8 +860,8 @@
     "semantic_hash": ""
   },
   "app/orders/templates/orders/view.html": {
-    "mtime": 1780712184.0702567,
-    "ast_hash": "87aec7eb8554328105c8c3b5d09a6add",
+    "mtime": 1780868562.2354927,
+    "ast_hash": "2019df563de4cbce2a8f661faada3086",
     "semantic_hash": ""
   },
   "app/payments/templates/payments/form.html": {
@@ -990,8 +990,8 @@
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/income.html": {
-    "mtime": 1780696778.1607506,
-    "ast_hash": "f44232e4b1c79b134f1f5e1fc2dc0192",
+    "mtime": 1780867984.3077297,
+    "ast_hash": "1f5bc23b7a696626333aaa809ed63e97",
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/journal.html": {
@@ -1037,6 +1037,11 @@
   "migrations/versions/e635f316840c_update_po_models_to_4_decimal_places.py": {
     "mtime": 1780712393.0705214,
     "ast_hash": "906ea7cb056db98291d356987e012a6f",
+    "semantic_hash": ""
+  },
+  "migrations/versions/c5fdf769a3df_increase_po_item_price_and_total_to_5_.py": {
+    "mtime": 1780868703.0470233,
+    "ast_hash": "33cdebd8544d37f9dff616ea2c868edf",
     "semantic_hash": ""
   }
 }

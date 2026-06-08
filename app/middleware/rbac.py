@@ -183,9 +183,11 @@ ROUTE_PERMISSIONS: dict[str, str] = {
     'hr.edit_leave':                      'hr.manage',
     'hr.review_leave':                    'hr.manage',
     'hr.view_leave':                      'hr.view',
+    'hr.delete_leave':                    'hr.delete',
     'hr.schedules':                       'hr.view',
     'hr.schedule_events':                 'hr.view',
     'hr.create_schedule':                 'hr.manage',
+    'hr.edit_schedule':                   'hr.manage',
     'hr.delete_schedule':                 'hr.delete',
     'hr.view_deviation':                  'hr.view',
 
@@ -195,6 +197,7 @@ ROUTE_PERMISSIONS: dict[str, str] = {
 
 # Endpoints that are always public (no login / permission required).
 PUBLIC_ENDPOINTS: frozenset[str] = frozenset({
+    'index',
     'auth.login',
     'auth.logout',
     'auth.register',

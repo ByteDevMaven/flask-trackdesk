@@ -6,7 +6,6 @@ from . import dashboard
 from .services import DashboardService
 
 
-@dashboard.route('/')
 @dashboard.route('/<int:company_id>/')
 @dashboard.route('/<int:company_id>/dashboard')
 @login_required
