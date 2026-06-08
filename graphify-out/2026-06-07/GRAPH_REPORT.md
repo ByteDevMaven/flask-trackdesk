@@ -1,16 +1,16 @@
 # Graph Report - flask-trackdesk  (2026-06-07)
 
 ## Corpus Check
-- 139 files · ~107,121 words
+- 139 files · ~108,539 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 809 nodes · 1654 edges · 59 communities (54 shown, 5 thin omitted)
+- 809 nodes · 1651 edges · 63 communities (57 shown, 6 thin omitted)
 - Extraction: 88% EXTRACTED · 12% INFERRED · 0% AMBIGUOUS · INFERRED: 195 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `cf4a5874`
+- Built from commit: `128f9723`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -46,6 +46,10 @@
 - [[_COMMUNITY_Community 53|Community 53]]
 - [[_COMMUNITY_Community 54|Community 54]]
 - [[_COMMUNITY_Community 55|Community 55]]
+- [[_COMMUNITY_Community 57|Community 57]]
+- [[_COMMUNITY_Community 58|Community 58]]
+- [[_COMMUNITY_Community 59|Community 59]]
+- [[_COMMUNITY_Community 60|Community 60]]
 - [[_COMMUNITY_Community 61|Community 61]]
 
 ## God Nodes (most connected - your core abstractions)
@@ -61,6 +65,8 @@
 10. `datetime` - 20 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `Flask` --uses--> `Config`  [INFERRED]
+  app/routes.py → config.py
 - `bool` --uses--> `TransactionType`  [INFERRED]
   app/models/transaction.py → app/models/enums.py
 - `float` --uses--> `TransactionType`  [INFERRED]
@@ -69,15 +75,14 @@
   app/models/transaction.py → app/models/enums.py
 - `str` --uses--> `BaseModel`  [INFERRED]
   app/models/purchase_order.py → app/models/base.py
-- `Flask` --uses--> `Config`  [INFERRED]
-  app/context_processors.py → config.py
 
 ## Import Cycles
-- 1-file cycle: `app/accounting/services/accounting_service.py -> app/accounting/services/accounting_service.py`
+- 1-file cycle: `app/dashboard/__init__.py -> app/dashboard/__init__.py`
 - 1-file cycle: `app/middleware/rbac.py -> app/middleware/rbac.py`
+- 1-file cycle: `app/routes.py -> app/routes.py`
+- 1-file cycle: `app/accounting/services/accounting_service.py -> app/accounting/services/accounting_service.py`
 - 1-file cycle: `app/hr/__init__.py -> app/hr/__init__.py`
 - 1-file cycle: `app/invoices/__init__.py -> app/invoices/__init__.py`
-- 1-file cycle: `app/dashboard/__init__.py -> app/dashboard/__init__.py`
 - 1-file cycle: `app/inventory/__init__.py -> app/inventory/__init__.py`
 - 1-file cycle: `app/orders/__init__.py -> app/orders/__init__.py`
 - 1-file cycle: `app/accounting/__init__.py -> app/accounting/__init__.py`
@@ -86,7 +91,6 @@
 - 1-file cycle: `app/blueprints.py -> app/blueprints.py`
 - 1-file cycle: `app/cli.py -> app/cli.py`
 - 1-file cycle: `app/hooks.py -> app/hooks.py`
-- 1-file cycle: `app/routes.py -> app/routes.py`
 - 1-file cycle: `app/auth/__init__.py -> app/auth/__init__.py`
 - 1-file cycle: `app/companies/__init__.py -> app/companies/__init__.py`
 - 1-file cycle: `app/contacts/__init__.py -> app/contacts/__init__.py`
@@ -94,15 +98,15 @@
 - 1-file cycle: `app/users/__init__.py -> app/users/__init__.py`
 - 1-file cycle: `app/warehouses/__init__.py -> app/warehouses/__init__.py`
 
-## Communities (59 total, 5 thin omitted)
+## Communities (63 total, 6 thin omitted)
 
 ### Community 0 - "Core Models"
-Cohesion: 0.17
-Nodes (5): str, str, BaseModel, DocumentSequence, Warehouse
+Cohesion: 0.14
+Nodes (7): str, str, str, BaseModel, DocumentSequence, Tag, Warehouse
 
 ### Community 1 - "App Init & Middleware"
 Cohesion: 0.07
-Nodes (30): Flask, register_blueprints(), Flask, register_cli(), Flask, register_context_processors(), get_locale(), register_extensions() (+22 more)
+Nodes (27): Flask, register_blueprints(), Flask, register_cli(), Flask, register_context_processors(), get_locale(), register_extensions() (+19 more)
 
 ### Community 2 - "Inventory & Orders Service"
 Cohesion: 0.12
@@ -117,24 +121,24 @@ Cohesion: 0.16
 Nodes (5): bool, str, AuthService, Authenticate a user by email and password.         Returns (user, error_message), Determine safe redirect URL after login.
 
 ### Community 5 - "Dashboard & Contacts"
-Cohesion: 0.33
+Cohesion: 0.40
 Nodes (4): str, Expense, Resolve vendor name from supplier relation or vendor_name field., Represents a business expense (outflow of money).      Income / revenue is recor
 
 ### Community 6 - "HR Module"
-Cohesion: 0.09
-Nodes (31): bool, float, str, int, str, bool, _allowed_file(), create_employee() (+23 more)
+Cohesion: 0.06
+Nodes (37): bool, float, str, int, str, bool, _allowed_file(), create_employee() (+29 more)
 
 ### Community 7 - "PDF Generators"
 Cohesion: 0.13
 Nodes (30): bool, float, str, int, str, str, print_invoice(), Company (+22 more)
 
 ### Community 8 - "Inventory Routes"
-Cohesion: 0.07
-Nodes (20): api_adjust_stock(), api_bulk_delete(), api_create_item(), api_delete_item(), api_get_item(), api_get_items(), api_search(), api_stats() (+12 more)
+Cohesion: 0.05
+Nodes (21): api_adjust_stock(), api_bulk_delete(), api_create_item(), api_delete_item(), api_get_item(), api_get_items(), api_search(), api_stats() (+13 more)
 
 ### Community 10 - "Users Service"
-Cohesion: 0.06
-Nodes (9): Return True if the user's role carries *permission_name*.         Superadmins (r, Shortcut — True when the user's role is 'superadmin' (platform admin)., True when the user's role is 'owner' (company-level admin)., Validate email format., User, Returns IDs of companies the current user can see., Returns True if current_user can see/manage *user*., UserService (+1 more)
+Cohesion: 0.09
+Nodes (3): Returns IDs of companies the current user can see., Returns True if current_user can see/manage *user*., UserService
 
 ### Community 11 - "Barcode JS"
 Cohesion: 0.14
@@ -149,8 +153,8 @@ Cohesion: 0.07
 Nodes (11): List all document sequences for a company, Form to create a new document sequence, Store a new document sequence, Form to edit an existing document sequence, Update an existing document sequence, sequence_create(), sequence_edit(), sequence_store() (+3 more)
 
 ### Community 14 - "Companies Service"
-Cohesion: 0.07
-Nodes (20): str, str, PurchaseOrderItem, Return signed quantity: negative for outgoing, positive for incoming/adjustment., StockMovement, WarehouseItem, create(), delete() (+12 more)
+Cohesion: 0.14
+Nodes (15): str, PurchaseOrderItem, create(), delete(), export(), index(), update(), get_purchase_orders() (+7 more)
 
 ### Community 15 - "NPM Config"
 Cohesion: 0.12
@@ -173,16 +177,12 @@ Cohesion: 0.47
 Nodes (3): _index_exists(), _table_exists(), upgrade()
 
 ### Community 43 - "Community 43"
-Cohesion: 0.05
-Nodes (41): float, int, bool, str, str, float, str, str (+33 more)
+Cohesion: 0.14
+Nodes (13): str, float, str, Document, DocumentItem, Calculate subtotal from document items (before tax). Cached., Calculate tax amount based on subtotal and company tax rate. Cached., Calculate total amount paid via payments (+5 more)
 
 ### Community 44 - "Community 44"
-Cohesion: 0.33
-Nodes (4): str, AuditMiddleware, Manually log a change. Useful if automated listeners are not enough., AuditLog
-
-### Community 45 - "Community 45"
-Cohesion: 0.23
-Nodes (4): int, str, StockMovementType, UserStatus
+Cohesion: 0.18
+Nodes (7): str, AlchemyEncoder, AuditMiddleware, get_model_changes(), Manually log a change. Useful if automated listeners are not enough., Helper to detect changed attributes and their values., AuditLog
 
 ### Community 46 - "Community 46"
 Cohesion: 0.07
@@ -193,12 +193,28 @@ Cohesion: 0.33
 Nodes (4): float, str, Total hours for this schedule entry., WorkSchedule
 
 ### Community 52 - "Community 52"
-Cohesion: 0.22
+Cohesion: 0.20
 Nodes (7): str, str, BaseModel, Account, Accounts that normally carry a debit balance vs credit balance., Chart of Accounts entry.      IMPORTANT: Balance is NOT stored here — it is alwa, PurchaseOrder
 
 ### Community 53 - "Community 53"
 Cohesion: 0.20
 Nodes (7): bool, float, str, Return True if total debits == total credits across all entries., Return the transaction amount (sum of debit side)., Groups one or more paired LedgerEntry rows into an atomic double-entry     journ, Transaction
+
+### Community 55 - "Community 55"
+Cohesion: 0.16
+Nodes (12): add_payment(), delete(), index(), store(), update(), create_invoice_or_quote(), _generate_document_number(), get_invoice_list() (+4 more)
+
+### Community 57 - "Community 57"
+Cohesion: 0.18
+Nodes (10): str, int, str, str, StockMovementType, InventoryItem, Return signed quantity: negative for outgoing, positive for incoming/adjustment., StockMovement (+2 more)
+
+### Community 58 - "Community 58"
+Cohesion: 0.21
+Nodes (9): float, int, bool, str, Contact, Validate email format., Validate phone format (basic: digits, +, -, spaces)., ContactType (+1 more)
+
+### Community 60 - "Community 60"
+Cohesion: 0.67
+Nodes (3): str, PaymentMethod, Payment
 
 ### Community 61 - "Community 61"
 Cohesion: 0.25
@@ -207,16 +223,16 @@ Nodes (5): float, str, LedgerEntry, Positive = debit effect, negative = credit e
 ## Knowledge Gaps
 - **23 isolated node(s):** `str`, `bool`, `float`, `bool`, `state` (+18 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `BaseModel` connect `Core Models` to `App Init & Middleware`, `Dashboard & Contacts`, `HR Module`, `PDF Generators`, `Users Service`, `Community 43`, `Community 44`, `Community 45`, `Community 46`, `Companies Service`, `Community 48`, `Community 49`, `Community 50`, `Community 52`, `Community 54`, `Community 55`, `Community 61`?**
-  _High betweenness centrality (0.128) - this node is a cross-community bridge._
-- **Why does `Company` connect `PDF Generators` to `Core Models`, `App Init & Middleware`, `Inventory & Orders Service`, `Inventory Routes`, `Users Service`, `Community 43`, `Community 45`, `Community 46`, `Companies Routes`?**
-  _High betweenness centrality (0.103) - this node is a cross-community bridge._
-- **Why does `User` connect `Users Service` to `Core Models`, `App Init & Middleware`, `Accounting Module`, `HR Module`, `Community 43`, `Community 45`, `Companies Routes`, `Community 52`?**
+- **Why does `BaseModel` connect `Core Models` to `App Init & Middleware`, `Dashboard & Contacts`, `HR Module`, `PDF Generators`, `Community 43`, `Community 44`, `Community 45`, `Community 46`, `Companies Service`, `Community 48`, `Community 49`, `Community 50`, `Community 52`, `Community 54`, `Community 57`, `Community 58`, `Community 60`, `Community 61`?**
+  _High betweenness centrality (0.130) - this node is a cross-community bridge._
+- **Why does `Company` connect `PDF Generators` to `Core Models`, `App Init & Middleware`, `Inventory & Orders Service`, `Inventory Routes`, `Users Service`, `Community 43`, `Community 45`, `Community 46`, `Companies Routes`, `Community 58`?**
+  _High betweenness centrality (0.104) - this node is a cross-community bridge._
+- **Why does `User` connect `HR Module` to `Core Models`, `App Init & Middleware`, `Accounting Module`, `Users Service`, `Community 45`, `Companies Routes`, `Community 52`, `Community 58`?**
   _High betweenness centrality (0.068) - this node is a cross-community bridge._
 - **Are the 63 inferred relationships involving `BaseModel` (e.g. with `str` and `str`) actually correct?**
   _`BaseModel` has 63 INFERRED edges - model-reasoned connections that need verification._
