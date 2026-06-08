@@ -120,7 +120,7 @@ class InventoryService:
 
 
     @staticmethod
-    def create_inventory_item(company_id, name, description=None, quantity=0, price=0.0, cost_price=0.0, discount=0.0, supplier_id=None, warehouse_id=None):
+    def create_inventory_item(company_id, name, description=None, quantity=0, price=0.0, cost_price=0.0, discount=0.0, supplier_id=None, warehouse_id=None, sku=None):
         if not name:
             raise ValueError(_('Name is required'))
         if quantity < 0:
@@ -144,6 +144,16 @@ class InventoryService:
         )
         db.session.add(item)
         db.session.flush() # flush to get item.id
+
+        # Generate or validate SKU
+        if sku and sku.strip():
+            candidate = sku.strip().upper()
+            existing = InventoryItem.query.filter_by(company_id=company_id, sku=candidate).first()
+            if existing and existing.id != item.id:
+                raise ValueError(_('A product with this SKU already exists'))
+            item.sku = candidate
+        else:
+            item.sku = InventoryItem.build_sku(name, item.id)
         
         if quantity > 0:
             if not warehouse_id:
@@ -176,7 +186,12 @@ class InventoryService:
         return InventoryItem.query.filter_by(id=item_id, company_id=company_id).first()
 
     @staticmethod
-    def update_inventory_item(company_id, item_id, name=None, description=None, quantity=None, price=None, cost_price=None, discount=None, supplier_id=None):
+    def get_item_by_sku(company_id, sku):
+        """Fetch an item by its SKU within a company."""
+        return InventoryItem.query.filter_by(company_id=company_id, sku=sku).first()
+
+    @staticmethod
+    def update_inventory_item(company_id, item_id, name=None, description=None, quantity=None, price=None, cost_price=None, discount=None, supplier_id=None, sku=None):
         item = InventoryItem.query.filter_by(id=item_id, company_id=company_id).first_or_404()
         
         if name is not None:
@@ -209,6 +224,13 @@ class InventoryService:
             
         if supplier_id is not None:
             item.supplier_id = int(supplier_id) if str(supplier_id).isdigit() else None
+
+        if sku is not None:
+            candidate = sku.strip().upper() if sku.strip() else InventoryItem.build_sku(item.name, item.id)
+            existing = InventoryItem.query.filter_by(company_id=company_id, sku=candidate).first()
+            if existing and existing.id != item.id:
+                raise ValueError(_('A product with this SKU already exists'))
+            item.sku = candidate
             
         db.session.commit()
         return item

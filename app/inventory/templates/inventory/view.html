@@ -93,7 +93,7 @@
       </div>
 
       <div class="flex flex-wrap items-center gap-2">
-        <a href="{{ url_for('inventory.barcode', company_id=company_id, id=item.id) }}"
+        <a href="{{ url_for('inventory.barcode', company_id=company_id, sku=item.sku) }}"
           class="flex items-center gap-2 px-4 py-2 bg-white border border-slate-200 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors shadow-sm">
           <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
@@ -101,7 +101,7 @@
           Etiqueta
         </a>
         <button type="button" data-action="open-drawer"
-          data-url="{{ url_for('inventory.edit', company_id=company_id, id=item.id) }}" data-title="Editar Producto"
+          data-url="{{ url_for('inventory.edit', company_id=company_id, sku=item.sku) }}" data-title="Editar Producto"
           class="flex items-center gap-2 px-4 py-2 bg-emerald-600 border border-transparent text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors shadow-sm">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -130,11 +130,11 @@
           Distribución de Stock
         </h3>
         <div class="flex gap-2">
-          <button type="button" data-action="open-drawer" data-url="{{ url_for('inventory.drawer_adjust', company_id=company_id, id=item.id) }}"
+          <button type="button" data-action="open-drawer" data-url="{{ url_for('inventory.drawer_adjust', company_id=company_id, sku=item.sku) }}"
             class="px-3 py-1.5 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-md border border-emerald-100 hover:bg-emerald-100 transition-colors shadow-sm">
             Ajustar
           </button>
-          <button type="button" data-action="open-drawer" data-url="{{ url_for('inventory.drawer_transfer', company_id=company_id, id=item.id) }}"
+          <button type="button" data-action="open-drawer" data-url="{{ url_for('inventory.drawer_transfer', company_id=company_id, sku=item.sku) }}"
             class="px-3 py-1.5 bg-blue-50 text-blue-700 text-xs font-bold rounded-md border border-blue-100 hover:bg-blue-100 transition-colors shadow-sm">
             Transferir
           </button>

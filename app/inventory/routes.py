@@ -57,7 +57,6 @@ def index(company_id):
 @login_required
 @limiter.exempt
 def create(company_id):
-                                
     from app.models import Warehouse
     suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
     warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
@@ -65,7 +64,7 @@ def create(company_id):
     
     if request.method == 'POST':
         try:
-            InventoryService.create_inventory_item(
+            item = InventoryService.create_inventory_item(
                 company_id=company_id,
                 name=request.form.get('name', '').strip(),
                 description=request.form.get('description', '').strip(),
@@ -74,10 +73,11 @@ def create(company_id):
                 cost_price=float(request.form.get('cost_price', 0.0) or 0.0),
                 discount=float(request.form.get('discount', 0.0) or 0.0),
                 supplier_id=request.form.get('supplier_id'),
-                warehouse_id=request.form.get('warehouse_id')
+                warehouse_id=request.form.get('warehouse_id'),
+                sku=request.form.get('sku', '').strip() or None
             )
             flash(_('Inventory item created successfully'), 'success')
-            return redirect(url_for('inventory.index', company_id=company_id))
+            return redirect(url_for('inventory.view', company_id=company_id, sku=item.sku))
             
         except ValueError as e:
             flash(str(e), 'error')
@@ -90,35 +90,38 @@ def create(company_id):
     
     return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, warehouses=warehouses, selected_id=selected_id, item=None, form_data=None)
 
-@inventory.route('/<int:company_id>/inventory/<int:id>')
+@inventory.route('/<int:company_id>/inventory/<string:sku>')
 @login_required
 @limiter.exempt
-def view(company_id, id):
+def view(company_id, sku):
     from app.models import Company
-    item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
+    item = InventoryService.get_item_by_sku(company_id, sku)
+    if not item:
+        from flask import abort
+        abort(404)
     company = Company.query.get_or_404(company_id)
     
     page = request.args.get('page', 1, type=int)
     per_page = 10
     
-    pagination = InventoryService.get_stock_movements(company_id, item_id=id, page=page, per_page=per_page)
+    pagination = InventoryService.get_stock_movements(company_id, item_id=item.id, page=page, per_page=per_page)
     db_movements = pagination.items
     
     movements = []
     for m in db_movements:
         movements.append({
             'date': m.date,
-            'type': m.type.value,  # raw enum value: 'incoming', 'outgoing', 'adjustment'
+            'type': m.type.value,
             'reference': m.reference or '-',
             'warehouse': m.warehouse.name if m.warehouse else '-',
             'destination': m.destination_warehouse.name if m.destination_warehouse else '-',
-            'qty_change': m.qty_change,  # signed: negative for outgoing
+            'qty_change': m.qty_change,
             'notes': m.notes
         })
     
     from app.models import Warehouse, WarehouseItem
     warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
-    warehouse_items = WarehouseItem.query.filter_by(inventory_item_id=id).all()
+    warehouse_items = WarehouseItem.query.filter_by(inventory_item_id=item.id).all()
     
     return render_template('inventory/view.html',
                           company_id=company_id,
@@ -170,11 +173,13 @@ def movements(company_id):
                           client_id=client_id,
                           supplier_id=supplier_id)
 
-@inventory.route('/<int:company_id>/inventory/<int:id>/edit_item', methods=['GET'])
+@inventory.route('/<int:company_id>/inventory/<string:sku>/edit_item', methods=['GET'])
 @login_required
 @limiter.exempt
-def edit(company_id, id):
-    item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
+def edit(company_id, sku):
+    item = InventoryService.get_item_by_sku(company_id, sku)
+    if not item:
+        from flask import abort; abort(404)
     from app.models import Warehouse
     suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
     warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
@@ -182,11 +187,13 @@ def edit(company_id, id):
     
     return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, warehouses=warehouses, selected_id=selected_id, item=item, form_data=None)
 
-@inventory.route('/<int:company_id>/inventory/<int:id>/update_item', methods=['POST'])
+@inventory.route('/<int:company_id>/inventory/<string:sku>/update_item', methods=['POST'])
 @login_required
 @limiter.exempt
-def update(company_id, id):
-    item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
+def update(company_id, sku):
+    item = InventoryService.get_item_by_sku(company_id, sku)
+    if not item:
+        from flask import abort; abort(404)
     from app.models import Warehouse
     suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
     warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
@@ -194,18 +201,21 @@ def update(company_id, id):
     try:
         InventoryService.update_inventory_item(
             company_id=company_id,
-            item_id=id,
+            item_id=item.id,
             name=request.form.get('name', '').strip(),
             description=request.form.get('description', '').strip(),
             quantity=int(request.form.get('quantity', 0)),
             price=float(request.form.get('price', 0.0)),
             cost_price=float(request.form.get('cost_price', 0.0) or 0.0),
             discount=float(request.form.get('discount', 0.0) or 0.0),
-            supplier_id=request.form.get('supplier_id')
+            supplier_id=request.form.get('supplier_id'),
+            sku=request.form.get('sku', '').strip() or None
         )
         
+        # Reload item to get potentially updated SKU
+        item = InventoryItem.query.get(item.id)
         flash(_('Inventory item updated successfully'), 'success')
-        return redirect(url_for('inventory.index', company_id=company_id))
+        return redirect(url_for('inventory.view', company_id=company_id, sku=item.sku))
         
     except ValueError as e:
         flash(str(e), 'error')
@@ -216,11 +226,14 @@ def update(company_id, id):
         current_app.logger.error(f"Database error: {str(e)}")
         return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, warehouses=warehouses, item=item, form_data=request.form)
 
-@inventory.route('/<int:company_id>/inventory/<int:id>/delete_item', methods=['POST'])
+@inventory.route('/<int:company_id>/inventory/<string:sku>/delete_item', methods=['POST'])
 @login_required
-def delete(company_id, id):
+def delete(company_id, sku):
+    item = InventoryService.get_item_by_sku(company_id, sku)
+    if not item:
+        from flask import abort; abort(404)
     try:
-        InventoryService.delete_inventory_item(company_id, id)
+        InventoryService.delete_inventory_item(company_id, item.id)
         flash(_('Inventory item deleted successfully'), 'success')
     except Exception as e:
         flash(_('An error occurred while deleting the inventory item'), 'error')
@@ -285,28 +298,35 @@ def export_movements(company_id):
         download_name=filename
     )
 
-@inventory.route('/<int:company_id>/inventory/<int:id>/drawer_adjust', methods=['GET'])
+@inventory.route('/<int:company_id>/inventory/<string:sku>/drawer_adjust', methods=['GET'])
 @login_required
 @limiter.exempt
-def drawer_adjust(company_id, id):
-    item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
+def drawer_adjust(company_id, sku):
+    item = InventoryService.get_item_by_sku(company_id, sku)
+    if not item:
+        from flask import abort; abort(404)
     from app.models import Warehouse
     warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
     return render_template('inventory/drawer_adjust.html', company_id=company_id, item=item, warehouses=warehouses)
 
-@inventory.route('/<int:company_id>/inventory/<int:id>/drawer_transfer', methods=['GET'])
+@inventory.route('/<int:company_id>/inventory/<string:sku>/drawer_transfer', methods=['GET'])
 @login_required
 @limiter.exempt
-def drawer_transfer(company_id, id):
-    item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
+def drawer_transfer(company_id, sku):
+    item = InventoryService.get_item_by_sku(company_id, sku)
+    if not item:
+        from flask import abort; abort(404)
     from app.models import Warehouse
     warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
     return render_template('inventory/drawer_transfer.html', company_id=company_id, item=item, warehouses=warehouses)
 
-@inventory.route('/<int:company_id>/inventory/<int:id>/transfer', methods=['POST'])
+@inventory.route('/<int:company_id>/inventory/<string:sku>/transfer', methods=['POST'])
 @login_required
 @limiter.exempt
-def transfer(company_id, id):
+def transfer(company_id, sku):
+    item = InventoryService.get_item_by_sku(company_id, sku)
+    if not item:
+        from flask import abort; abort(404)
     is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
     from_warehouse_id = request.form.get('from_warehouse_id', type=int)
     to_warehouse_id = request.form.get('to_warehouse_id', type=int)
@@ -315,17 +335,17 @@ def transfer(company_id, id):
     if not from_warehouse_id or not to_warehouse_id or not quantity:
         if is_ajax: return jsonify({'success': False, 'error': _('All fields are required for transfer')})
         flash(_('All fields are required for transfer'), 'error')
-        return redirect(url_for('inventory.view', company_id=company_id, id=id))
+        return redirect(url_for('inventory.view', company_id=company_id, sku=sku))
         
     if from_warehouse_id == to_warehouse_id:
         if is_ajax: return jsonify({'success': False, 'error': _('Source and destination warehouses must be different')})
         flash(_('Source and destination warehouses must be different'), 'error')
-        return redirect(url_for('inventory.view', company_id=company_id, id=id))
+        return redirect(url_for('inventory.view', company_id=company_id, sku=sku))
         
     try:
         InventoryService.transfer_stock(
             company_id=company_id,
-            item_id=id,
+            item_id=item.id,
             from_warehouse_id=from_warehouse_id,
             to_warehouse_id=to_warehouse_id,
             quantity=quantity
@@ -342,7 +362,7 @@ def transfer(company_id, id):
         flash(_('An error occurred during transfer'), 'error')
         
     if is_ajax: return jsonify({'success': False, 'error': _('Unknown error')})
-    return redirect(url_for('inventory.view', company_id=company_id, id=id))
+    return redirect(url_for('inventory.view', company_id=company_id, sku=sku))
 
 @inventory.route('/api/<int:company_id>/inventory/items', methods=['GET'])
 @login_required
@@ -578,12 +598,14 @@ def api_stats(company_id):
     stats = InventoryService.get_inventory_stats(company_id)
     return jsonify(stats)
 
-@inventory.route('/<int:company_id>/inventory/<int:id>/barcode')
+@inventory.route('/<int:company_id>/inventory/<string:sku>/barcode')
 @login_required
 @limiter.exempt
-def barcode(company_id, id):
+def barcode(company_id, sku):
     """Barcode label for an inventory item"""
-    item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
+    item = InventoryService.get_item_by_sku(company_id, sku)
+    if not item:
+        from flask import abort; abort(404)
     copies = request.args.get('copies', 12, type=int)
     currency_symbol = session.get('currency', '$')
     barcode_value = f"{company_id}{item.id:06d}"

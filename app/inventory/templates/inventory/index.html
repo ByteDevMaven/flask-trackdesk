@@ -135,7 +135,7 @@
                   </svg>
                 </div>
                 <div>
-                  <a href="{{ url_for('inventory.view', company_id=company_id, id=item.id) }}"
+                  <a href="{{ url_for('inventory.view', company_id=company_id, sku=item.sku) }}"
                     class="text-sm font-semibold text-slate-800 hover:text-emerald-700 transition-colors block">
                     {{ item.name }}
                   </a>
@@ -168,7 +168,7 @@
             <td class="px-4 py-3">
               <div class="flex items-center gap-1 justify-end">
                 <button type="button" data-action="open-drawer"
-                  data-url="{{ url_for('inventory.edit', company_id=company_id, id=item.id) }}"
+                  data-url="{{ url_for('inventory.edit', company_id=company_id, sku=item.sku) }}"
                   data-title="Editar Producto"
                   class="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
                   title="Editar">
@@ -178,7 +178,7 @@
                   </svg>
                 </button>
                 <button type="button" data-action="confirm-delete"
-                  data-url="{{ url_for('inventory.delete', company_id=company_id, id=item.id) }}"
+                  data-url="{{ url_for('inventory.delete', company_id=company_id, sku=item.sku) }}"
                   data-name="{{ item.name }}"
                   class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
                   title="Eliminar">

@@ -76,7 +76,7 @@ function submitTransfer(e) {
   formData.append('to_warehouse_id', toWarehouse);
   formData.append('quantity', qty);
 
-  fetch(`{{ url_for('inventory.transfer', company_id=company_id, id=item.id) }}`, {
+  fetch(`{{ url_for('inventory.transfer', company_id=company_id, sku=item.sku) }}`, {
     method: 'POST',
     headers: {
       'X-Requested-With': 'XMLHttpRequest'
