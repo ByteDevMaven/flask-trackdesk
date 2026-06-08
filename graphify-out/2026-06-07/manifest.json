@@ -55,9 +55,9 @@
     "semantic_hash": "969fadc3096eaa080c2b58e94aae742e"
   },
   "app/cli.py": {
-    "mtime": 1780121041.693081,
-    "ast_hash": "933956ef817ed585cc3d1fd9c59cfd8d",
-    "semantic_hash": "933956ef817ed585cc3d1fd9c59cfd8d"
+    "mtime": 1780882826.499958,
+    "ast_hash": "9c9e610ade12a59ce138edea27833ac5",
+    "semantic_hash": ""
   },
   "app/companies/__init__.py": {
     "mtime": 1779222751.156821,

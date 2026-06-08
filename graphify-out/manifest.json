@@ -35,8 +35,8 @@
     "semantic_hash": "f8cee64ca8894edd8c6a62a484b655fe"
   },
   "app/auth/routes.py": {
-    "mtime": 1780881992.328814,
-    "ast_hash": "7adaf7981427d9cf2ab47d3a4e358521",
+    "mtime": 1780886009.084948,
+    "ast_hash": "399abff0a4b1c9bd1abdfacf163dcb7a",
     "semantic_hash": ""
   },
   "app/auth/services/__init__.py": {
@@ -45,8 +45,8 @@
     "semantic_hash": "86d4a9435d6c98da81cd4ac51b0c808a"
   },
   "app/auth/services/auth_service.py": {
-    "mtime": 1780881738.526203,
-    "ast_hash": "cacb3a0d8f87d49d4c07ebc4200d7e35",
+    "mtime": 1780886668.625193,
+    "ast_hash": "d504abd5ebc77f038c6c6317cba14453",
     "semantic_hash": ""
   },
   "app/blueprints.py": {
@@ -125,9 +125,9 @@
     "semantic_hash": "b63519bf200c7415d0bc05b135a8e386"
   },
   "app/extensions.py": {
-    "mtime": 1779665160.5373333,
-    "ast_hash": "eb473e6c94a293000cfb30de6b6c5552",
-    "semantic_hash": "eb473e6c94a293000cfb30de6b6c5552"
+    "mtime": 1780883361.7441647,
+    "ast_hash": "f805dea88a1504f4e8281567c7c895b1",
+    "semantic_hash": ""
   },
   "app/hooks.py": {
     "mtime": 1779665123.578339,
@@ -235,8 +235,8 @@
     "semantic_hash": ""
   },
   "app/models/__init__.py": {
-    "mtime": 1780539266.4174197,
-    "ast_hash": "1b0a1432ec68b298ac04329ee8bc94ea",
+    "mtime": 1780885936.293555,
+    "ast_hash": "e20e21a9df5546f1ce104257cd0ac19c",
     "semantic_hash": ""
   },
   "app/models/account.py": {
@@ -510,9 +510,9 @@
     "semantic_hash": "2eea571313cf1f2b73a56f3c38bae588"
   },
   "config.py": {
-    "mtime": 1779668831.7884212,
-    "ast_hash": "2d15e5cec7e9c993ac7e664a146b01fe",
-    "semantic_hash": "2d15e5cec7e9c993ac7e664a146b01fe"
+    "mtime": 1780885494.1630054,
+    "ast_hash": "8b883617176000258d58d1d07ec04a20",
+    "semantic_hash": ""
   },
   "expire_documents.py": {
     "mtime": 1780296882.7082705,
@@ -720,9 +720,9 @@
     "semantic_hash": ""
   },
   "app/auth/templates/auth/login.html": {
-    "mtime": 1779222808.438634,
-    "ast_hash": "39bb50df880fbf3fbf8d6481a260369b",
-    "semantic_hash": "39bb50df880fbf3fbf8d6481a260369b"
+    "mtime": 1780886827.9265,
+    "ast_hash": "46bc216f2006cfdd4d09196956c73fb7",
+    "semantic_hash": ""
   },
   "app/companies/templates/companies/form.html": {
     "mtime": 1779246594.5751755,
@@ -1050,13 +1050,18 @@
     "semantic_hash": ""
   },
   "app/middleware/error_handler.py": {
-    "mtime": 1780882073.3881907,
-    "ast_hash": "5a3f8f99a21fa4e7dc8795ae93c0cfd2",
+    "mtime": 1780885188.6904314,
+    "ast_hash": "18c9349b721150c1194630676cb42db6",
     "semantic_hash": ""
   },
   "app/templates/errors/error.html": {
     "mtime": 1780882084.7315176,
     "ast_hash": "ede15366a2a1d13c73d9209305215172",
+    "semantic_hash": ""
+  },
+  "app/services/email_service.py": {
+    "mtime": 1780885169.4958122,
+    "ast_hash": "b6133a156fcfbb7096bf20650df07cbf",
     "semantic_hash": ""
   }
 }
