@@ -31,7 +31,7 @@
           <option value="">Todos los Estados</option>
           {% for st in LeaveStatus %}
           <option value="{{ st.value }}" {{ 'selected' if status_filter == st.value }}>
-            {{ 'Pendiente' if st.value == 'pending' else 'Aprobada' if st.value == 'approved' else 'Rechazada' if st.value == 'rejected' else st.value.title() }}
+            {{ st.label_es }}
           </option>
           {% endfor %}
         </select>
@@ -39,7 +39,7 @@
           class="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
           <option value="">Todos los Tipos</option>
           {% for lt in LeaveType %}
-          <option value="{{ lt.value }}" {{ 'selected' if type_filter == lt.value }}>{{ lt.value.title() }}</option>
+          <option value="{{ lt.value }}" {{ 'selected' if type_filter == lt.value }}>{{ lt.label_es }}</option>
           {% endfor %}
         </select>
         <select name="employee_id" onchange="this.form.submit()"
@@ -97,7 +97,7 @@
                 'maternity': 'bg-pink-50 text-pink-700'
               } %}
               <span class="inline-flex px-2 py-0.5 rounded-full text-xs font-medium {{ type_colors.get(req.leave_type.value, 'bg-slate-100 text-slate-600') }}">
-                {{ req.leave_type.value.title() }}
+                {{ req.leave_type.label_es }}
               </span>
             </td>
             <td class="px-4 py-3 text-sm text-slate-600">
@@ -132,12 +132,20 @@
               {% endif %}
             </td>
             <td class="px-4 py-3">
-              <div class="flex justify-end">
+              <div class="flex items-center gap-2 justify-end">
                 <button type="button" data-action="open-drawer"
                   data-url="{{ url_for('hr.view_leave', company_id=company_id, leave_id=req.id) }}"
                   data-title="Solicitud de Permiso"
                   class="text-sm font-medium text-emerald-600 hover:text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-lg transition-colors">
                   Detalles
+                </button>
+                <button type="button" data-action="confirm-delete"
+                  data-url="{{ url_for('hr.delete_leave', company_id=company_id, leave_id=req.id) }}"
+                  data-name="esta solicitud de permiso"
+                  class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors" title="Eliminar">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
                 </button>
               </div>
             </td>

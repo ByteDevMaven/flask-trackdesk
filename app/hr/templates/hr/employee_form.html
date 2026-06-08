@@ -90,7 +90,7 @@
               class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white">
               {% for ec in EmployeeClass %}
               <option value="{{ ec.value }}" {{ 'selected' if fd.get('employee_class', e.employee_class.value if e else '') == ec.value }}>
-                {{ ec.value.replace('_', ' ').title() }}
+                {{ ec.label_es }}
               </option>
               {% endfor %}
             </select>
@@ -170,7 +170,7 @@
             class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white">
             {% for pp in PayPeriod %}
             <option value="{{ pp.value }}" {{ 'selected' if fd.get('pay_period', e.pay_period.value if e else 'month') == pp.value }}>
-              Por {{ pp.value.title() }}
+              Por {{ pp.label_es }}
             </option>
             {% endfor %}
           </select>
@@ -202,7 +202,7 @@
             <option value="">— Ninguno —</option>
             {% for ap in PTOAccrualPeriod %}
             <option value="{{ ap.value }}" {{ 'selected' if fd.get('pto_accrual_period', e.pto_accrual_period.value if e and e.pto_accrual_period else '') == ap.value }}>
-              {{ ap.value.title() }}
+              {{ ap.label_es }}
             </option>
             {% endfor %}
           </select>

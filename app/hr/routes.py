@@ -470,6 +470,27 @@ def view_leave(company_id, leave_id):
     )
 
 
+@hr.route('/<int:company_id>/hr/leaves/<int:leave_id>/delete', methods=['POST'])
+@login_required
+def delete_leave(company_id, leave_id):
+    leave = LeaveRequest.query.filter_by(id=leave_id, company_id=company_id).first_or_404()
+    
+    try:
+        leave.is_deleted = True
+        db.session.commit()
+        if _is_ajax():
+            return jsonify({'success': True, 'message': 'Solicitud de permiso eliminada'})
+        flash('Solicitud de permiso eliminada', 'success')
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        current_app.logger.error(str(e))
+        if _is_ajax():
+            return jsonify({'success': False, 'message': 'Error al eliminar la solicitud'})
+        flash('Error al eliminar la solicitud', 'error')
+
+    return redirect(url_for('hr.leaves', company_id=company_id))
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 #  WORK SCHEDULES
 # ─────────────────────────────────────────────────────────────────────────────
@@ -624,6 +645,58 @@ def create_schedule(company_id):
         employees=all_employees,
         today=date.today().isoformat(),
         form_data=request.form if request.method == 'POST' else {},
+    )
+
+
+@hr.route('/<int:company_id>/hr/schedules/<int:sched_id>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_schedule(company_id, sched_id):
+    sched = WorkSchedule.query.filter_by(id=sched_id, company_id=company_id).first_or_404()
+    all_employees = Employee.query.filter_by(company_id=company_id, is_active=True).order_by(Employee.last_name).all()
+
+    if request.method == 'POST':
+        try:
+            start_t = datetime.strptime(request.form['start_time'], '%H:%M').time()
+            end_t = datetime.strptime(request.form['end_time'], '%H:%M').time()
+            
+            sched.employee_id = int(request.form['employee_id'])
+            sched.date = datetime.strptime(request.form['date'], '%Y-%m-%d').date()
+            sched.start_time = start_t
+            sched.end_time = end_t
+            sched.notes = request.form.get('notes', '').strip() or None
+            
+            db.session.commit()
+            if _is_ajax():
+                return jsonify({'success': True, 'message': 'Desviación actualizada'})
+            flash('Desviación actualizada', 'success')
+            return redirect(url_for('hr.schedules', company_id=company_id))
+        except (ValueError, KeyError) as e:
+            db.session.rollback()
+            if _is_ajax():
+                return jsonify({'success': False, 'message': str(e)}), 400
+            flash(str(e), 'error')
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            current_app.logger.error(str(e))
+            if _is_ajax():
+                return jsonify({'success': False, 'message': 'Ocurrió un error en la base de datos'}), 500
+            flash('Ocurrió un error en la base de datos', 'error')
+
+    form_data = request.form if request.method == 'POST' else {
+        'employee_id': sched.employee_id,
+        'date': sched.date.strftime('%Y-%m-%d'),
+        'start_time': sched.start_time.strftime('%H:%M'),
+        'end_time': sched.end_time.strftime('%H:%M'),
+        'notes': sched.notes
+    }
+
+    return render_template(
+        'hr/schedule_form.html',
+        company_id=company_id,
+        schedule=sched,
+        employees=all_employees,
+        today=date.today().isoformat(),
+        form_data=form_data,
     )
 
 

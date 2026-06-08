@@ -52,30 +52,80 @@ class EmployeeClass(enum.Enum):
     seasonal_full_time = 'seasonal_full_time'
     seasonal_part_time = 'seasonal_part_time'
 
+    @property
+    def label_es(self):
+        return {
+            'full_time': 'Tiempo Completo',
+            'part_time': 'Medio Tiempo',
+            'per_project': 'Por Proyecto',
+            'seasonal_full_time': 'Estacional (Tiempo Completo)',
+            'seasonal_part_time': 'Estacional (Medio Tiempo)'
+        }.get(self.value, self.value)
+
 class PayPeriod(enum.Enum):
     hour = 'hour'
     day = 'day'
     month = 'month'
+
+    @property
+    def label_es(self):
+        return {
+            'hour': 'Hora',
+            'day': 'Día',
+            'month': 'Mes'
+        }.get(self.value, self.value)
 
 class LeaveType(enum.Enum):
     pto = 'pto'
     sick = 'sick'
     maternity = 'maternity'
 
+    @property
+    def label_es(self):
+        return {
+            'pto': 'PTO / Vacaciones',
+            'sick': 'Enfermedad',
+            'maternity': 'Maternidad/Paternidad'
+        }.get(self.value, self.value)
+
 class LeaveStatus(enum.Enum):
     pending = 'pending'
     approved = 'approved'
     rejected = 'rejected'
+
+    @property
+    def label_es(self):
+        return {
+            'pending': 'Pendiente',
+            'approved': 'Aprobado',
+            'rejected': 'Rechazado'
+        }.get(self.value, self.value)
 
 class PTOAccrualPeriod(enum.Enum):
     day = 'day'
     month = 'month'
     year = 'year'
 
+    @property
+    def label_es(self):
+        return {
+            'day': 'Día',
+            'month': 'Mes',
+            'year': 'Año'
+        }.get(self.value, self.value)
+
 class UserStatus(enum.Enum):
     active = 'active'
     inactive = 'inactive'
     suspended = 'suspended'
+
+    @property
+    def label_es(self):
+        return {
+            'active': 'Activo',
+            'inactive': 'Inactivo',
+            'suspended': 'Suspendido'
+        }.get(self.value, self.value)
 
 class ExpenseStatus(enum.Enum):
     draft = 'draft'

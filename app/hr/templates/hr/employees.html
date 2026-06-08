@@ -43,7 +43,7 @@
           class="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
           <option value="">Todas las Clases</option>
           {% for ec in EmployeeClass %}
-          <option value="{{ ec.value }}" {{ 'selected' if class_filter == ec.value }}>{{ ec.value.replace('_', ' ').title() }}</option>
+          <option value="{{ ec.value }}" {{ 'selected' if class_filter == ec.value }}>{{ ec.label_es }}</option>
           {% endfor %}
         </select>
       </form>
@@ -100,18 +100,18 @@
             </td>
             <td class="px-4 py-3">
               <span class="inline-flex px-2 py-0.5 rounded-full text-xs font-medium {{ class_colors.get(emp.employee_class.value, 'bg-slate-100 text-slate-600') }}">
-                {{ emp.employee_class.value.replace('_', ' ').title() }}
+                {{ emp.employee_class.label_es }}
               </span>
             </td>
             <td class="px-4 py-3 text-sm text-slate-700">
-              ${{ '%.2f'|format(emp.pay_rate|float) }}<span class="text-xs text-slate-400"> / {{ emp.pay_period.value }}</span>
+              ${{ '%.2f'|format(emp.pay_rate|float) }}<span class="text-xs text-slate-400"> / {{ emp.pay_period.label_es }}</span>
             </td>
             <td class="px-4 py-3">
               <span class="text-sm font-medium {{ 'text-rose-600' if emp.pto_balance|float < 1 else 'text-slate-800' }}">
                 {{ '%.1f'|format(emp.pto_balance|float) }}d
               </span>
               {% if emp.pto_accrual_rate %}
-              <span class="text-xs text-slate-400 block">+{{ emp.pto_accrual_rate }}/{{ emp.pto_accrual_period.value }}</span>
+              <span class="text-xs text-slate-400 block">+{{ emp.pto_accrual_rate }}/{{ emp.pto_accrual_period.label_es }}</span>
               {% endif %}
             </td>
             <td class="px-4 py-3 text-sm text-slate-600">{{ emp.hire_date.strftime('%b %d, %Y') if emp.hire_date else '—' }}</td>

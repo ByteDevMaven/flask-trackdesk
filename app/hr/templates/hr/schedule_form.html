@@ -3,7 +3,7 @@
 {% else %}
 {% extends "base.html" %}
 {% endif %}
-{% block title %}Agregar Desviación – Recursos Humanos{% endblock %}
+{% block title %}{{ 'Editar' if schedule else 'Agregar' }} Desviación – Recursos Humanos{% endblock %}
 {% block sidebar_title %}Recursos Humanos{% endblock %}
 {% block sidebar_nav %}
 {% set cid = company_id %}
@@ -17,13 +17,13 @@
   <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>Horarios de Trabajo
 </a>
 {% endblock %}
-{% block page_title %}Agregar Desviación de Horario{% endblock %}
+{% block page_title %}{{ 'Editar' if schedule else 'Agregar' }} Desviación de Horario{% endblock %}
 
 {% block content %}
 {% set fd = form_data %}
-<form method="POST" action="{{ url_for('hr.create_schedule', company_id=company_id) }}"
+<form method="POST" action="{{ url_for('hr.edit_schedule', company_id=company_id, sched_id=schedule.id) if schedule else url_for('hr.create_schedule', company_id=company_id) }}"
   data-drawer-form
-  data-success-message="Desviación agregada">
+  data-success-message="{{ 'Desviación actualizada' if schedule else 'Desviación agregada' }}">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
   <div class="p-6 space-y-4">
@@ -69,7 +69,7 @@
       class="flex-1 px-4 py-2 border border-slate-300 text-slate-700 rounded-lg text-sm font-medium hover:bg-white transition-colors">Cancelar</button>
     <button type="submit"
       class="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
-      Agregar Desviación
+      {{ 'Actualizar' if schedule else 'Agregar' }} Desviación
     </button>
   </div>
 </form>

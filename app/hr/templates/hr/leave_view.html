@@ -11,7 +11,7 @@
         'maternity': 'bg-pink-50 text-pink-700'
       } %}
       <span class="inline-flex px-3 py-1 rounded-full text-xs font-semibold {{ type_colors.get(leave.leave_type.value, 'bg-slate-100 text-slate-600') }}">
-        {{ leave.leave_type.value.title() }}
+        {{ leave.leave_type.label_es }}
       </span>
       {% if leave.status.value == 'pending' %}
       <button type="button" onclick="loadDrawerContent('{{ url_for('hr.edit_leave', company_id=company_id, leave_id=leave.id) }}', 'Editar Solicitud')"
