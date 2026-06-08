@@ -31,6 +31,7 @@ from .document_template import DocumentTemplate, DocumentTemplateType
 from .employee import Employee
 from .leave_request import LeaveRequest
 from .work_schedule import WorkSchedule
+from .token import Token
 
 __all__ = [
     'db', 'migrate',
@@ -46,5 +47,5 @@ __all__ = [
     'AuditLog', 'Tag',
     'Warehouse', 'WarehouseItem',
     'DocumentTemplate',
-    'Employee', 'LeaveRequest', 'WorkSchedule',
+    'Employee', 'LeaveRequest', 'WorkSchedule', 'Token',
 ]

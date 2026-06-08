@@ -7,6 +7,7 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_babel import Babel
 from flask_cors import CORS
+from flask_mail import Mail
 from flask import session, request
 from config import Config
 
@@ -22,6 +23,7 @@ migrate = Migrate()
 login_manager = LoginManager()
 babel = Babel()
 cors = CORS()
+mail = Mail()
 
 def get_locale():
     if 'language' in session:
@@ -37,6 +39,7 @@ def register_extensions(app):
     csrf.init_app(app)
     babel.init_app(app, locale_selector=get_locale)
     cors.init_app(app)
+    mail.init_app(app)
 
     login_manager.login_view = 'auth.login'
     login_manager.login_message = "Please log in to access this page."

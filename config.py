@@ -23,6 +23,16 @@ class Config:
     BABEL_DEFAULT_LOCALE = os.getenv("BABEL_DEFAULT_LOCALE", 'en')
     BABEL_DEFAULT_TIMEZONE = os.getenv("BABEL_DEFAULT_TIMEZONE", 'UTC')
     BABEL_TRANSLATION_DIRECTORIES = os.getenv("BABEL_TRANSLATION_DIRECTORIES", 'translations')
+
+    # Flask-Mail config
+    MAIL_SERVER = os.getenv("MAIL_SERVER", "smtp.googlemail.com")
+    MAIL_PORT = int(os.getenv("MAIL_PORT", 587))
+    MAIL_USE_TLS = os.getenv("MAIL_USE_TLS", "true").lower() in ["true", "on", "1"]
+    MAIL_USERNAME = os.getenv("MAIL_USERNAME")
+    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
+    TRACKDESK_MAIL_SUBJECT_PREFIX = '[TrackDesk]'
+    TRACKDESK_MAIL_SENDER = os.getenv("TRACKDESK_MAIL_SENDER", "TrackDesk Admin <admin@trackdesk.local>")
+    TRACKDESK_ADMIN = os.getenv("TRACKDESK_ADMIN", "vrsanchesu@gmail.com")
     
                          
     LANGUAGES = {}
