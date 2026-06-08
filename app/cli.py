@@ -16,15 +16,30 @@ def register_cli(app: Flask):
         print('[OK] RBAC roles and permissions seeded successfully.')
 
     @app.cli.command('clear-role')
-    @click.argument('role_name')
-    def clear_role(role_name):
+    @click.argument('role_name', required=False)
+    @click.option('--all', 'clear_all', is_flag=True, help='Clear all roles and their permissions')
+    def clear_role(role_name, clear_all):
         """Clear a role and its permissions from the database.
 
         Example usage:
           flask clear-role admin
+          flask clear-role --all
         """
         from app.models import Role
         with app.app_context():
+            if clear_all:
+                roles = Role.query.all()
+                for role in roles:
+                    role.permissions.clear()
+                    db.session.delete(role)
+                db.session.commit()
+                print(f'[OK] Cleared ALL roles ({len(roles)}) and their permissions.')
+                return
+
+            if not role_name:
+                print('[ERROR] Please provide a role_name or use the --all flag.')
+                return
+
             role = Role.query.filter_by(name=role_name).first()
             if not role:
                 print(f'[ERROR] No role found with name: {role_name}')
