@@ -175,8 +175,8 @@
     "semantic_hash": "3eb0159e2b400a5e34e6b92c5da8d806"
   },
   "app/invoices/routes.py": {
-    "mtime": 1780890076.4097743,
-    "ast_hash": "eed1e6fdd9d92fae221ba0517c6986a0",
+    "mtime": 1780968409.839365,
+    "ast_hash": "ef22b111a12ee245b1f812b53bd3d1aa",
     "semantic_hash": ""
   },
   "app/invoices/services/__init__.py": {
@@ -185,9 +185,9 @@
     "semantic_hash": "15b19ce7d0f946f8b36e564ca36b9085"
   },
   "app/invoices/services/invoice_create_service.py": {
-    "mtime": 1780295635.2960904,
-    "ast_hash": "112edf9409472a6d43567d1372ea53e2",
-    "semantic_hash": "112edf9409472a6d43567d1372ea53e2"
+    "mtime": 1780968382.563648,
+    "ast_hash": "e562c326351456ae2d809675d216e069",
+    "semantic_hash": ""
   },
   "app/invoices/services/invoice_pdf_service.py": {
     "mtime": 1780322044.7400074,
@@ -200,9 +200,9 @@
     "semantic_hash": "27d9ad9a9d0bc60bb5fcf2d340123d7a"
   },
   "app/invoices/services/invoice_update_service.py": {
-    "mtime": 1780296228.4725602,
-    "ast_hash": "800cbfbd4f0acd359c955ed7342b65f0",
-    "semantic_hash": "800cbfbd4f0acd359c955ed7342b65f0"
+    "mtime": 1780968391.1585574,
+    "ast_hash": "2f6a9e887970944fff8267ba04d526ca",
+    "semantic_hash": ""
   },
   "app/invoices/services/pdf_layouts/__init__.py": {
     "mtime": 1780034325.7680454,
@@ -215,9 +215,9 @@
     "semantic_hash": "8dfadbe8809897e30f7ea2bc8137dcf4"
   },
   "app/invoices/static/js/invoice-form.js": {
-    "mtime": 1779658330.502024,
-    "ast_hash": "6dccc029ff24836e73eecf58ebf5e00f",
-    "semantic_hash": "6dccc029ff24836e73eecf58ebf5e00f"
+    "mtime": 1780969590.9357572,
+    "ast_hash": "074a4c66c302e8bda49d2d248bbd139e",
+    "semantic_hash": ""
   },
   "app/middleware/__init__.py": {
     "mtime": 1780882093.8323169,
@@ -270,9 +270,9 @@
     "semantic_hash": "1fb1b1d3066059c8ff4a0b17bb94b7d1"
   },
   "app/models/document.py": {
-    "mtime": 1780296455.2456021,
-    "ast_hash": "b056bc09fe077c062964d3cb2478b029",
-    "semantic_hash": "b056bc09fe077c062964d3cb2478b029"
+    "mtime": 1780968335.1144714,
+    "ast_hash": "767dce836756f6785081dfe1dab70475",
+    "semantic_hash": ""
   },
   "app/models/document_item.py": {
     "mtime": 1780290469.5393803,
@@ -835,8 +835,8 @@
     "semantic_hash": ""
   },
   "app/invoices/templates/invoices/form.html": {
-    "mtime": 1780891625.4877656,
-    "ast_hash": "dc9c403869e281917a2280f54d30e0d9",
+    "mtime": 1780969590.9357572,
+    "ast_hash": "93e2d4475d609ce38e7a9fdf2b16a0d8",
     "semantic_hash": ""
   },
   "app/invoices/templates/invoices/index.html": {
@@ -845,8 +845,8 @@
     "semantic_hash": ""
   },
   "app/invoices/templates/invoices/view.html": {
-    "mtime": 1780891625.4943533,
-    "ast_hash": "b312f76dd0ec4502c93bc403cb80a2c9",
+    "mtime": 1780968457.9771075,
+    "ast_hash": "4e12bdeee0030ce3ef6073d54201d1b7",
     "semantic_hash": ""
   },
   "app/orders/templates/orders/form.html": {
@@ -1077,6 +1077,11 @@
   "migrations/versions/50c607698792_add_slug_to_company.py": {
     "mtime": 1780890225.7127411,
     "ast_hash": "2256f477078529e3088842725e8c0107",
+    "semantic_hash": ""
+  },
+  "migrations/versions/6af85a17e660_add_project_id_to_document.py": {
+    "mtime": 1780968364.4489372,
+    "ast_hash": "9292f2a033a717d20f76d7ad34d585b1",
     "semantic_hash": ""
   }
 }

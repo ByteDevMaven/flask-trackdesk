@@ -230,8 +230,8 @@
     "semantic_hash": ""
   },
   "app/middleware/rbac.py": {
-    "mtime": 1780966137.7202387,
-    "ast_hash": "bbb519b163ac9d52374baafe96cd1f85",
+    "mtime": 1780967673.6614873,
+    "ast_hash": "664f5a8e8944670c75fa54808e8ef1f0",
     "semantic_hash": ""
   },
   "app/models/__init__.py": {
@@ -475,9 +475,9 @@
     "semantic_hash": "3cc22faa685273fb894af80c88ab4447"
   },
   "app/users/routes.py": {
-    "mtime": 1780276744.8160293,
-    "ast_hash": "991d12cedc414645da6b35af24833231",
-    "semantic_hash": "991d12cedc414645da6b35af24833231"
+    "mtime": 1780967714.1740136,
+    "ast_hash": "51f87ef7b9560253edc1b0a097d21220",
+    "semantic_hash": ""
   },
   "app/users/services/__init__.py": {
     "mtime": 1780276705.9395607,
@@ -485,9 +485,9 @@
     "semantic_hash": "5d682d068dab6ab56f90b9a759b5d510"
   },
   "app/users/services/user_service.py": {
-    "mtime": 1780276706.7211952,
-    "ast_hash": "444ff804c845c910eee423bc275c28c3",
-    "semantic_hash": "444ff804c845c910eee423bc275c28c3"
+    "mtime": 1780967699.3487601,
+    "ast_hash": "3a047a92672f5e8c5a2643544e5a2c35",
+    "semantic_hash": ""
   },
   "app/warehouses/__init__.py": {
     "mtime": 1780199315.4396286,
@@ -900,18 +900,18 @@
     "semantic_hash": ""
   },
   "app/users/templates/users/form.html": {
-    "mtime": 1780891625.5385554,
-    "ast_hash": "4379a23bbefd75357266fbdbd8897e76",
+    "mtime": 1780967793.259997,
+    "ast_hash": "0b8450e34fa213cf437ccfdbff2477c7",
     "semantic_hash": ""
   },
   "app/users/templates/users/index.html": {
-    "mtime": 1780891663.729297,
-    "ast_hash": "56024931011750b8ed1a4db921b42938",
+    "mtime": 1780967743.8005202,
+    "ast_hash": "7f73577f54e3286e0b560280086f0fed",
     "semantic_hash": ""
   },
   "app/users/templates/users/view.html": {
-    "mtime": 1780891625.5488367,
-    "ast_hash": "9523316fe9a6448f9a6fa0b171bf8dc4",
+    "mtime": 1780967769.0519538,
+    "ast_hash": "a1e9f814d857748beeec6428f224623e",
     "semantic_hash": ""
   },
   "app/warehouses/templates/warehouses/form.html": {

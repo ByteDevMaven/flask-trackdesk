@@ -20,7 +20,7 @@
   </header>
 
   <div class="flex-1 overflow-y-auto p-4 md:p-6">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 lg:grid-cols-1 md:grid-cols-3 gap-6">
       {% for item in projects_data %}
       {% set p = item.project %}
       <div class="bg-white border border-slate-200 rounded-xl shadow-sm hover:shadow-md transition-shadow flex flex-col h-full overflow-hidden group">
@@ -54,6 +54,44 @@
               <span class="font-mono font-bold {{ 'text-emerald-600' if item.net > 0 else 'text-rose-600' if item.net < 0 else 'text-slate-400' }}">
                 {{ company.currency }}{{ "{:,.2f}".format(item.net) }}
               </span>
+            </div>
+
+            <div class="pt-3 border-t border-slate-100">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs font-semibold text-slate-500">Facturas Asociadas</span>
+                <span class="text-xs font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded">{{ item.total_invoices }}</span>
+              </div>
+              {% if item.invoices_by_status %}
+              <div class="flex flex-wrap gap-1">
+                {% for status_key, count in item.invoices_by_status.items() %}
+                {% set status_colors = {
+                  'draft': 'bg-slate-100 text-slate-600',
+                  'pending': 'bg-amber-50 text-amber-600',
+                  'issued': 'bg-blue-50 text-blue-600',
+                  'sent': 'bg-sky-50 text-sky-600',
+                  'partial': 'bg-purple-50 text-purple-600',
+                  'paid': 'bg-emerald-50 text-emerald-600',
+                  'overdue': 'bg-rose-50 text-rose-600',
+                  'cancelled': 'bg-slate-50 text-slate-500',
+                  'credit': 'bg-slate-50 text-slate-500'
+                } %}
+                {% set status_labels = {
+                  'draft': 'Borrador',
+                  'pending': 'Pendiente',
+                  'issued': 'Emitida',
+                  'sent': 'Enviada',
+                  'partial': 'Pago Parcial',
+                  'paid': 'Pagada',
+                  'overdue': 'Vencida',
+                  'cancelled': 'Cancelada',
+                  'credit': 'Nota Crédito'
+                } %}
+                <span class="text-[10px] font-semibold px-1.5 py-0.5 rounded {{ status_colors.get(status_key, 'bg-slate-100 text-slate-600') }}">
+                  {{ status_labels.get(status_key, status_key) }}: {{ count }}
+                </span>
+                {% endfor %}
+              </div>
+              {% endif %}
             </div>
             
             {% if p.budget and p.budget > 0 %}

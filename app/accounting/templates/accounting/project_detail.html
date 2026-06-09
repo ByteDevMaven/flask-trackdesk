@@ -114,6 +114,75 @@
         </div>
       </div>
     </div>
+
+    {# Invoices Table #}
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+      <div class="px-5 py-3 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
+        <div>
+          <h2 class="font-semibold text-slate-800 text-sm">Facturas Asociadas</h2>
+          <p class="text-xs text-slate-500 mt-0.5">{{ total_invoices }} factura{{ 's' if total_invoices != 1 else '' }}</p>
+        </div>
+        <a href="{{ url_for('invoices.create', company_id=company.id, project_id=project.id) }}" class="text-xs font-medium text-emerald-600 hover:text-emerald-700">+ Nueva Factura</a>
+      </div>
+      <div class="flex-1 overflow-y-auto">
+        {% if invoices %}
+        <div class="w-full overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead>
+              <tr class="bg-slate-50 border-b border-slate-100 text-xs font-semibold text-slate-600 uppercase">
+                <th class="px-5 py-3">Número</th>
+                <th class="px-5 py-3">Cliente</th>
+                <th class="px-5 py-3">Fecha</th>
+                <th class="px-5 py-3">Estado</th>
+                <th class="px-5 py-3 text-right">Monto</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              {% for inv in invoices[:15] %}
+              <tr class="hover:bg-slate-50">
+                <td class="px-5 py-3">
+                  <a href="{{ url_for('invoices.edit', company_id=company.id, id=inv.id) }}" class="text-emerald-600 hover:text-emerald-700 font-medium">{{ inv.document_number }}</a>
+                </td>
+                <td class="px-5 py-3 text-slate-700">{{ inv.client.name if inv.client else '—' }}</td>
+                <td class="px-5 py-3 text-slate-500">{{ inv.issued_date.strftime('%d/%m/%Y') if inv.issued_date else '—' }}</td>
+                <td class="px-5 py-3">
+                  {% set status_colors = {
+                    'draft': 'bg-slate-100 text-slate-600',
+                    'pending': 'bg-amber-50 text-amber-600',
+                    'issued': 'bg-blue-50 text-blue-600',
+                    'sent': 'bg-sky-50 text-sky-600',
+                    'partial': 'bg-purple-50 text-purple-600',
+                    'paid': 'bg-emerald-50 text-emerald-600',
+                    'overdue': 'bg-rose-50 text-rose-600',
+                    'cancelled': 'bg-slate-50 text-slate-500',
+                    'credit': 'bg-slate-50 text-slate-500'
+                  } %}
+                  {% set status_labels = {
+                    'draft': 'Borrador',
+                    'pending': 'Pendiente',
+                    'issued': 'Emitida',
+                    'sent': 'Enviada',
+                    'partial': 'Pago Parcial',
+                    'paid': 'Pagada',
+                    'overdue': 'Vencida',
+                    'cancelled': 'Cancelada',
+                    'credit': 'Nota Crédito'
+                  } %}
+                  <span class="text-[10px] font-semibold px-2 py-1 rounded {{ status_colors.get(inv.status.value, 'bg-slate-100 text-slate-600') }}">
+                    {{ status_labels.get(inv.status.value, inv.status.value) }}
+                  </span>
+                </td>
+                <td class="px-5 py-3 text-right font-mono font-bold text-slate-800">{{ company.currency }}{{ "{:,.2f}".format(inv.total_amount) }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <div class="py-8 text-center text-slate-400 text-sm">No hay facturas asociadas a este proyecto.</div>
+        {% endif %}
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}

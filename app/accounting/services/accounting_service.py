@@ -21,7 +21,8 @@ from flask_login import current_user
 from sqlalchemy import func
 
 from app.models import db, Company, Account, Expense, LedgerEntry, Project, Tag, Transaction
-from app.models.enums import AccountType, ExpenseStatus, TransactionType
+from app.models.enums import AccountType, ExpenseStatus, TransactionType, DocumentType, DocumentStatus
+from app.models.document import Document
 from app.models.report import Report
 
 
@@ -1596,11 +1597,35 @@ class AccountingService:
             .all()
         )
 
+        # Invoices associated with the project
+        invoices = (
+            Document.query
+            .filter_by(project_id=project_id, company_id=company_id, type=DocumentType.invoice)
+            .order_by(Document.issued_date.desc())
+            .all()
+        )
+
+        # Count invoices by status
+        invoice_counts = db.session.query(
+            Document.status,
+            func.count(Document.id)
+        ).filter(
+            Document.project_id == project_id,
+            Document.company_id == company_id,
+            Document.type == DocumentType.invoice
+        ).group_by(Document.status).all()
+
+        invoices_by_status = {status.value: count for status, count in invoice_counts}
+        total_invoices = sum(invoices_by_status.values())
+
         return {
             'project': project,
             'expenses': expenses,
             'income_entries': income_entries,
             'all_ledger': all_ledger,
+            'invoices': invoices,
+            'invoices_by_status': invoices_by_status,
+            'total_invoices': total_invoices,
             'total_expenses': total_expenses,
             'total_income': total_income,
             'net': net,
@@ -1629,12 +1654,28 @@ class AccountingService:
                           Account.type == AccountType.revenue,
                       ).scalar() or 0), 2
             )
+            
+            # Count invoices by status
+            invoice_counts = db.session.query(
+                Document.status,
+                func.count(Document.id)
+            ).filter(
+                Document.project_id == p.id,
+                Document.company_id == company_id,
+                Document.type == DocumentType.invoice
+            ).group_by(Document.status).all()
+            
+            invoices_by_status = {status.value: count for status, count in invoice_counts}
+            total_invoices = sum(invoices_by_status.values())
+            
             result.append({
                 'project': p,
                 'expense_total': expense_total,
                 'income_total': income_total,
                 'net': round(income_total - expense_total, 2),
                 'budget_used_pct': round((expense_total / float(p.budget) * 100), 1) if p.budget and float(p.budget) > 0 else 0,
+                'total_invoices': total_invoices,
+                'invoices_by_status': invoices_by_status,
             })
         return result
 
