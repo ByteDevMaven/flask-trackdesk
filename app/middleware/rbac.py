@@ -285,38 +285,65 @@ def seed_default_roles_and_permissions(db, Role, Permission):
             'companies.view',  'companies.manage',
             'companies.admin',                       # can delete their own company
             'users.view',      'users.manage',       # manage users within their company
-            'accounting.view', 'accounting.manage',
+            'accounting.view', 'accounting.manage', 'accounting.delete',
             'hr.view',         'hr.manage',         'hr.delete',
         ],
 
-        # General Manager — oversees operations, read-only on accounting.
-        'manager': [
+        # Senior Manager — oversees operations, full access except deleting company
+        'sr_manager': [
             'dashboard.view',
             'contacts.view',   'contacts.manage',   'contacts.delete',
             'inventory.view',  'inventory.manage',  'inventory.delete',
+            'orders.view',     'orders.manage',     'orders.delete',
+            'invoices.view',   'invoices.manage',   'invoices.delete',
+            'payments.view',   'payments.manage',   'payments.delete',
+            'companies.view',  'companies.manage',
+            'users.view',      'users.manage',
+            'accounting.view', 'accounting.manage', 'accounting.delete',
+            'hr.view',         'hr.manage',         'hr.delete',
+        ],
+
+        # General Manager — oversees operations, no destructive actions.
+        'manager': [
+            'dashboard.view',
+            'contacts.view',   'contacts.manage',
+            'inventory.view',  'inventory.manage',
             'orders.view',     'orders.manage',
             'invoices.view',   'invoices.manage',
-            'payments.view',   'payments.manage',   'payments.delete',
+            'payments.view',   'payments.manage',
             'companies.view',
             'users.view',
             'accounting.view',
+            'hr.view',
         ],
 
-        # Accountant — financial operations and billing.
-        'accountant': [
+        # Senior Accountant — full financial operations including destructive actions.
+        'sr_accountant': [
             'dashboard.view',
             'contacts.view',
             'inventory.view',
-            'orders.view',
             'orders.view',     'orders.manage',     'orders.delete',
             'invoices.view',   'invoices.manage',   'invoices.delete',
             'payments.view',   'payments.manage',   'payments.delete',
             'companies.view',
             'users.view',
+            'accounting.view', 'accounting.manage', 'accounting.delete',
+        ],
+
+        # Accountant — financial operations and billing, no destructive actions.
+        'accountant': [
+            'dashboard.view',
+            'contacts.view',
+            'inventory.view',
+            'orders.view',     'orders.manage',
+            'invoices.view',   'invoices.manage',
+            'payments.view',   'payments.manage',
+            'companies.view',
+            'users.view',
             'accounting.view', 'accounting.manage',
         ],
 
-        # HR Manager — manages Human Resources and users, view-only basic company info.
+        # HR Manager — manages Human Resources and users, full control including delete.
         'hr_manager': [
             'dashboard.view',
             'companies.view',
@@ -324,24 +351,55 @@ def seed_default_roles_and_permissions(db, Role, Permission):
             'hr.view',         'hr.manage',         'hr.delete',
         ],
 
-        # Inventory Manager — controls inventory, warehouses, and purchasing orders.
+        # HR Staff — manages HR data and users, no destructive actions.
+        'hr_staff': [
+            'dashboard.view',
+            'companies.view',
+            'users.view',      'users.manage',
+            'hr.view',         'hr.manage',
+        ],
+
+        # Inventory Manager — full control of inventory, warehouses, purchasing orders.
         'inventory_manager': [
             'dashboard.view',
             'contacts.view',   'contacts.manage',
             'inventory.view',  'inventory.manage',  'inventory.delete',
-            'orders.view',     'orders.manage',
+            'orders.view',     'orders.manage',     'orders.delete',
             'invoices.view',   'invoices.manage',
             'payments.view',   'payments.manage',
             'companies.view',
         ],
 
-        # Sales Manager — controls clients, orders, and billing.
+        # Inventory Staff — manages inventory data, no destructive actions.
+        'inventory_staff': [
+            'dashboard.view',
+            'contacts.view',   'contacts.manage',
+            'inventory.view',  'inventory.manage',
+            'orders.view',     'orders.manage',
+            'invoices.view',
+            'payments.view',
+            'companies.view',
+        ],
+
+        # Sales Manager — controls clients, orders, billing with delete permissions.
         'sales_manager': [
             'dashboard.view',
             'contacts.view',   'contacts.manage',   'contacts.delete',
             'inventory.view',
             'orders.view',     'orders.manage',     'orders.delete',
             'invoices.view',   'invoices.manage',   'invoices.delete',
+            'payments.view',   'payments.manage',
+            'companies.view',
+        ],
+
+        # Sales Rep — manages clients and billing, no destructive actions.
+        'sales_rep': [
+            'dashboard.view',
+            'contacts.view',   'contacts.manage',
+            'inventory.view',
+            'orders.view',     'orders.manage',
+            'invoices.view',   'invoices.manage',
+            'payments.view',   'payments.manage',
             'companies.view',
         ],
 
