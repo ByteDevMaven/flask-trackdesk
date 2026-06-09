@@ -1,16 +1,16 @@
 # Graph Report - flask-trackdesk  (2026-06-08)
 
 ## Corpus Check
-- 145 files · ~113,568 words
+- 145 files · ~114,055 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 835 nodes · 1833 edges · 72 communities (63 shown, 9 thin omitted)
+- 835 nodes · 1834 edges · 72 communities (63 shown, 9 thin omitted)
 - Extraction: 90% EXTRACTED · 10% INFERRED · 0% AMBIGUOUS · INFERRED: 184 edges (avg confidence: 0.5)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `aede84c7`
+- Built from commit: `c2054344`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -65,10 +65,10 @@
 3. `AccountingService` - 38 edges
 4. `int` - 36 edges
 5. `str` - 33 edges
-6. `Company` - 27 edges
-7. `Document` - 26 edges
-8. `Flask` - 26 edges
-9. `datetime` - 26 edges
+6. `Flask` - 27 edges
+7. `Company` - 27 edges
+8. `datetime` - 26 edges
+9. `Document` - 26 edges
 10. `User` - 22 edges
 
 ## Surprising Connections (you probably didn't know these)
@@ -252,14 +252,14 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `BaseModel` connect `Core Models` to `Invoices Service`, `HR Module`, `PDF Generators`, `Auth Module`, `Community 43`, `Community 44`, `Community 46`, `Community 50`, `Community 54`, `Community 55`, `Community 57`, `Community 58`, `Community 64`, `Community 65`, `Community 66`, `Community 67`, `Community 68`, `Community 69`, `Community 70`?**
   _High betweenness centrality (0.107) - this node is a cross-community bridge._
 - **Why does `resolve_company()` connect `Inventory Routes` to `Inventory & Orders Service`, `Invoices Service`, `Community 5`, `HR Module`, `PDF Generators`, `Community 43`, `Companies Service`, `Warehouses Service`, `Community 53`, `Community 61`?**
-  _High betweenness centrality (0.096) - this node is a cross-community bridge._
+  _High betweenness centrality (0.095) - this node is a cross-community bridge._
 - **Why does `Company` connect `PDF Generators` to `Core Models`, `Inventory & Orders Service`, `Inventory Routes`, `Auth Module`, `Users Service`, `Community 44`, `Companies Routes`, `Community 46`, `Community 48`, `Community 49`, `Community 54`?**
-  _High betweenness centrality (0.075) - this node is a cross-community bridge._
+  _High betweenness centrality (0.073) - this node is a cross-community bridge._
 - **Are the 60 inferred relationships involving `BaseModel` (e.g. with `str` and `str`) actually correct?**
   _`BaseModel` has 60 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 4 inferred relationships involving `AccountingService` (e.g. with `AccountType` and `ExpenseStatus`) actually correct?**
   _`AccountingService` has 4 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 6 inferred relationships involving `str` (e.g. with `EmployeeClass` and `LeaveStatus`) actually correct?**
   _`str` has 6 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `Soft delete an invoice or quote and its items.`, `Add a payment to an invoice and update its status.`, `Calculate subtotal from document items (before tax). Cached.` to the rest of the system?**
+- **What connects `AccountingService — complete double-entry bookkeeping service.  Design rules (MU`, `Save uploaded receipt; return relative URL or None.`, `Parse YYYY-MM-DD string → naive datetime. Falls back to now(UTC).` to the rest of the system?**
   _110 weakly-connected nodes found - possible documentation gaps or missing edges._

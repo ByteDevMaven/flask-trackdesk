@@ -25,8 +25,8 @@
     "semantic_hash": "06a79a348fc6371a64b29f70f6b16f83"
   },
   "app/accounting/services/accounting_service.py": {
-    "mtime": 1780864454.668955,
-    "ast_hash": "20d196daec1441684d884a18dffe96db",
+    "mtime": 1780971057.6183329,
+    "ast_hash": "f4e19363a74aa19671e0fd9cfad88402",
     "semantic_hash": ""
   },
   "app/auth/__init__.py": {
@@ -1025,13 +1025,13 @@
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/project_detail.html": {
-    "mtime": 1780891663.6932242,
-    "ast_hash": "d63e638191eb1d92ed6711dd260f1e0a",
+    "mtime": 1780971057.6183329,
+    "ast_hash": "3a212ebacfb3308bbc9c0c0c4c290738",
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/projects.html": {
-    "mtime": 1780891625.3909554,
-    "ast_hash": "f1f766d08d3d56573cee8557c3d3bf68",
+    "mtime": 1780970706.5793693,
+    "ast_hash": "1deebf68f1424374b0ea65b7bc61ebb2",
     "semantic_hash": ""
   },
   "migrations/versions/e635f316840c_update_po_models_to_4_decimal_places.py": {
