@@ -78,6 +78,12 @@
             class="inline-flex px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider {{ 'bg-emerald-50 text-emerald-700 border border-emerald-100' if invoice.type and invoice.type.value == 'invoice' else 'bg-sky-50 text-sky-700 border border-sky-100' }}">
             {{ 'Factura' if invoice.type and invoice.type.value == 'invoice' else 'Cotización' }}
           </span>
+          {% if invoice.project %}
+          <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-semibold bg-violet-50 text-violet-700 border border-violet-100">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+            {{ invoice.project.name }}
+          </span>
+          {% endif %}
         </div>
         <p class="text-sm text-slate-500">
           Emitida: {{ invoice.issued_date.strftime('%d/%m/%Y') if invoice.issued_date else '—' }}

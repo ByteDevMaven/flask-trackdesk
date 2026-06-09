@@ -143,6 +143,10 @@ def update_invoice_or_quote(document, form):
     document.tax_cache = tax_amount
     document.total_amount = total_amount
 
+    # Update project association
+    project_id_raw = form.get("project_id")
+    document.project_id = int(project_id_raw) if project_id_raw else None
+
 def delete_invoice_or_quote(document):
     """Soft delete an invoice or quote and its items."""
     items = DocumentItem.query.filter_by(document_id=document.id).all()

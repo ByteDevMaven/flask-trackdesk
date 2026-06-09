@@ -9,7 +9,7 @@ from wtforms import ValidationError
 
 from app.extensions import limiter
 
-from app.models import db, Document, DocumentItem, Contact, InventoryItem, DocumentType, Payment, PaymentMethod
+from app.models import db, Document, DocumentItem, Contact, InventoryItem, DocumentType, Payment, PaymentMethod, Project
 
 from app.models.enums import ContactType, DocumentStatus
 from .services import get_invoice_list, create_invoice_or_quote, update_invoice_or_quote, generate_invoice_pdf_from_request
@@ -83,6 +83,7 @@ def create(company_id):
         InventoryItem.quantity > 0
     ).all()
     warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
+    projects = Project.query.filter_by(company_id=company_id, status='active').order_by(Project.name).all()
 
     selected_client_id = int(request.args.get('client_id', 0))
     selected_type = request.args.get('type', None)
@@ -94,6 +95,7 @@ def create(company_id):
                          clients=clients, 
                          inventory_items=inventory_items,
                          warehouses=warehouses,
+                         projects=projects,
                          document_items=None)
 
 @invoices.route('/<string:company_id>/invoices/store', methods=['POST'])
@@ -231,6 +233,13 @@ def edit(company_id, id):
     inventory_items = InventoryItem.query.filter_by(company_id=company_id).all()
     document_items = DocumentItem.query.filter_by(document_id=document.id).all()
     warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
+    projects = Project.query.filter_by(company_id=company_id, status='active').order_by(Project.name).all()
+    
+    # Include a currently assigned project even if it's inactive
+    if document.project_id:
+        assigned = Project.query.get(document.project_id)
+        if assigned and assigned not in projects:
+            projects = [assigned] + projects
     
                                                       
     for item in document_items:
@@ -244,6 +253,7 @@ def edit(company_id, id):
                          clients=clients, 
                          inventory_items=inventory_items,
                          warehouses=warehouses,
+                         projects=projects,
                          document_items=document_items)
 
 

@@ -40,6 +40,17 @@
   const productSearchInput = document.getElementById('product-search-input');
   const productListBox = document.getElementById('product-list-box');
 
+  const projectModal = document.getElementById('project-modal');
+  const openProjectModalBtn = document.getElementById('open-project-modal-btn');
+  const closeProjectModal = document.getElementById('close-project-modal');
+  const projectSearchInput = document.getElementById('project-search-input');
+  const projectListBox = document.getElementById('project-list-box');
+  const projectHiddenInput = document.getElementById('selected-project-id');
+  const projectDisplayName = document.getElementById('project-display-name');
+  const clearProjectBtn = document.getElementById('clear-project-btn');
+
+  const projects = Array.isArray(formData.projects) ? formData.projects : [];
+
   function openCustomerSearch() {
     customerModal?.classList.remove('hidden');
     if (customerSearchInput) {
@@ -121,6 +132,77 @@
   function closeProductSearch() {
     productModal?.classList.add('hidden');
     activeProductTargetRow = null;
+  }
+
+  function openProjectSearch() {
+    projectModal?.classList.remove('hidden');
+    if (projectSearchInput) {
+      projectSearchInput.value = '';
+      projectSearchInput.focus();
+    }
+    renderProjects('');
+  }
+
+  function closeProjectSearch() {
+    projectModal?.classList.add('hidden');
+  }
+
+  function renderProjects(searchQuery) {
+    if (!projectListBox) return;
+
+    projectListBox.innerHTML = '';
+    const q = String(searchQuery || '').toLowerCase();
+    const filtered = projects.filter(project => {
+      const name = String(project.name || '').toLowerCase();
+      const description = String(project.description || '').toLowerCase();
+      return name.includes(q) || description.includes(q);
+    });
+
+    if (filtered.length === 0) {
+      projectListBox.innerHTML = `
+        <div class="py-8 text-center text-sm text-slate-400">
+          Ningún proyecto coincide con la búsqueda
+        </div>`;
+      return;
+    }
+
+    filtered.forEach(project => {
+      const div = document.createElement('div');
+      div.className = 'p-3 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors border border-transparent hover:border-slate-200';
+      div.innerHTML = `
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <p class="text-sm font-semibold text-slate-800">${project.name || ''}</p>
+            <p class="text-xs text-slate-500 mt-1">${project.description || 'Sin descripción'}</p>
+          </div>
+          <span class="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">${project.status || 'Sin estado'}</span>
+        </div>`;
+
+      div.addEventListener('click', () => selectProject(project));
+      projectListBox.appendChild(div);
+    });
+  }
+
+  function selectProject(project) {
+    if (!projectHiddenInput) return;
+
+    projectHiddenInput.value = project.id;
+    if (projectDisplayName) projectDisplayName.textContent = project.name || '';
+    if (projectDisplayName) projectDisplayName.classList.remove('text-slate-400');
+    if (clearProjectBtn) clearProjectBtn.classList.remove('hidden');
+
+    closeProjectSearch();
+  }
+
+  function clearSelectedProject() {
+    if (!projectHiddenInput) return;
+
+    projectHiddenInput.value = '';
+    if (projectDisplayName) {
+      projectDisplayName.textContent = 'Sin proyecto asignado...';
+      projectDisplayName.classList.add('text-slate-400');
+    }
+    if (clearProjectBtn) clearProjectBtn.classList.add('hidden');
   }
 
   function renderProducts(searchQuery) {
@@ -284,6 +366,14 @@
   if (customerSearchInput) customerSearchInput.addEventListener('input', () => renderCustomers(customerSearchInput.value));
   if (closeProductModal) closeProductModal.addEventListener('click', closeProductSearch);
   if (productSearchInput) productSearchInput.addEventListener('input', () => renderProducts(productSearchInput.value));
+
+  if (openProjectModalBtn) openProjectModalBtn.addEventListener('click', openProjectSearch);
+  if (closeProjectModal) closeProjectModal.addEventListener('click', closeProjectSearch);
+  if (projectSearchInput) projectSearchInput.addEventListener('input', () => renderProjects(projectSearchInput.value));
+  if (clearProjectBtn) clearProjectBtn.addEventListener('click', (event) => {
+    event.stopPropagation();
+    clearSelectedProject();
+  });
 
   document.getElementById('add-item-btn')?.addEventListener('click', () => {
     const temp = document.createElement('tbody');

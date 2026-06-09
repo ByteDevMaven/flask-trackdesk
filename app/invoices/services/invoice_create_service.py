@@ -63,11 +63,18 @@ def create_invoice_or_quote(company_id, form, user_id):
     else:
         warehouse_id = None
 
+    project_id = form.get("project_id")
+    if project_id:
+        project_id = int(project_id)
+    else:
+        project_id = None
+
     document = Document(
         document_number=document_number,
         type=doc_type,
         client_id=int(form.get("client_id")) if form.get("client_id") else None,
         warehouse_id=warehouse_id,
+        project_id=project_id,
         user_id=user_id,
         status=form.get("status", "draft"),
         issued_date=datetime.strptime(form.get("issued_date"), "%Y-%m-%d")
