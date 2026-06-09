@@ -44,6 +44,10 @@
       <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Acciones</span>
     </div>
 
+    {% set is_protected = user.role and user.role.name == 'superadmin' and not current_user.is_superadmin %}
+
+    {% if not is_protected or current_user.id == user.id %}
+
     <button type="button"
             data-action="open-drawer"
             data-url="{{ url_for('users.edit', id=user.id) }}"
@@ -54,8 +58,9 @@
       </svg>
       Editar Datos
     </button>
+    {% endif %}
 
-    {% if user.id != current_user.id %}
+    {% if user.id != current_user.id and not is_protected %}
     <button type="button"
             onclick="toggleStatusAndReload({{ user.id }})"
             class="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors text-left
@@ -82,11 +87,11 @@
     </button>
     {% endif %}
 
-    {% if user.companies %}
+    {% if visible_companies %}
     <div class="mt-3 mb-1 px-3">
       <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Empresas</span>
     </div>
-    {% for company in user.companies %}
+    {% for company in visible_companies %}
     <a href="{{ url_for('companies.view', id=company.id) }}"
        class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">
       <div class="w-5 h-5 rounded bg-slate-200 flex items-center justify-center text-slate-600 text-[10px] font-bold flex-shrink-0">
@@ -102,6 +107,7 @@
 {% block page_title %}Perfil de Usuario{% endblock %}
 
 {% block content %}
+{% set is_protected = user.role and user.role.name == 'superadmin' and not current_user.is_superadmin %}
 <div class="flex flex-col h-full overflow-hidden bg-slate-50">
 
   <!-- Profile Banner Header -->
@@ -170,7 +176,7 @@
 
       <!-- Action buttons -->
       <div class="flex items-center gap-2 flex-shrink-0">
-        {% if user.id != current_user.id %}
+        {% if user.id != current_user.id and not is_protected %}
         <button type="button"
                 onclick="toggleStatusAndReload({{ user.id }})"
                 class="flex items-center gap-2 px-3 py-2 border rounded-lg text-sm font-medium transition-colors
@@ -185,6 +191,7 @@
           {{ 'Desactivar' if user.is_active else 'Activar' }}
         </button>
         {% endif %}
+        {% if not is_protected or current_user.id == user.id %}
         <button type="button"
                 data-action="open-drawer"
                 data-url="{{ url_for('users.edit', id=user.id) }}"
@@ -195,6 +202,7 @@
           </svg>
           Editar
         </button>
+        {% endif %}
       </div>
     </div>
 
@@ -217,6 +225,7 @@
         <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
           <div class="flex items-center justify-between px-4 md:px-6 py-4 border-b border-slate-100">
             <h3 class="text-sm font-semibold text-slate-900">Información de la Cuenta</h3>
+            {% if not is_protected or current_user.id == user.id %}
             <button type="button"
                     data-action="open-drawer"
                     data-url="{{ url_for('users.edit', id=user.id) }}"
@@ -227,6 +236,7 @@
               </svg>
               Editar
             </button>
+            {% endif %}
           </div>
           <div class="divide-y divide-slate-50">
             <div class="grid grid-cols-1 md:grid-cols-2 divide-x divide-slate-50">
@@ -292,8 +302,9 @@
           <div class="flex items-center justify-between px-4 md:px-6 py-4 border-b border-slate-100">
             <div class="flex items-center gap-2">
               <h3 class="text-sm font-semibold text-slate-900">Empresas Asignadas</h3>
-              <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">{{ user.companies|length }}</span>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">{{ visible_companies|length }}</span>
             </div>
+            {% if not is_protected or current_user.id == user.id %}
             <button type="button"
                     data-action="open-drawer"
                     data-url="{{ url_for('users.edit', id=user.id) }}"
@@ -304,10 +315,11 @@
               </svg>
               Administrar
             </button>
+            {% endif %}
           </div>
-          {% if user.companies %}
+          {% if visible_companies %}
           <div class="divide-y divide-slate-50">
-            {% for company in user.companies %}
+            {% for company in visible_companies %}
             <div class="flex items-center justify-between px-4 md:px-6 py-4 hover:bg-slate-50/50 transition-colors">
               <div class="flex items-center gap-4">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center text-slate-700 font-bold text-sm flex-shrink-0">
@@ -350,7 +362,8 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
               </svg>
             </div>
-            <p class="text-sm text-slate-500 font-medium">Sin empresas asignadas</p>
+            <p class="text-sm text-slate-500 font-medium">Sin empresas asignadas o visibles</p>
+            {% if not is_protected or current_user.id == user.id %}
             <button type="button"
                     data-action="open-drawer"
                     data-url="{{ url_for('users.edit', id=user.id) }}"
@@ -358,6 +371,7 @@
                     class="mt-2 text-sm text-emerald-600 hover:text-emerald-700 font-medium">
               Asignar empresa →
             </button>
+            {% endif %}
           </div>
           {% endif %}
         </div>
@@ -382,7 +396,7 @@
                 </div>
                 <span class="text-sm text-slate-600">Empresas asignadas</span>
               </div>
-              <span class="text-sm font-bold text-slate-900">{{ user.companies|length }}</span>
+              <span class="text-sm font-bold text-slate-900">{{ visible_companies|length }}</span>
             </div>
 
             <div class="flex items-center justify-between">
@@ -438,7 +452,7 @@
         </div>
 
         <!-- Danger Zone -->
-        {% if user.id != current_user.id %}
+        {% if user.id != current_user.id and not is_protected %}
         <div class="bg-white rounded-xl border border-rose-200 shadow-sm overflow-hidden">
           <div class="px-5 py-4 border-b border-rose-100 bg-rose-50/50">
             <h3 class="text-sm font-semibold text-rose-700 flex items-center gap-2">

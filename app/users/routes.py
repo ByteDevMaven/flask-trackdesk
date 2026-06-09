@@ -19,6 +19,10 @@ def index():
     )
     users_list = pagination.items
     
+    visible_companies_map = {}
+    for u in users_list:
+        visible_companies_map[u.id] = UserService.get_visible_companies_for_user(u, current_user)
+    
     roles = Role.query.all()
     companies = Company.query.all()
     
@@ -30,7 +34,8 @@ def index():
                          search=search,
                          role_filter=role_filter,
                          company_filter=company_filter,
-                         status_filter=status_filter)
+                         status_filter=status_filter,
+                         visible_companies_map=visible_companies_map)
 
 @users.route('/users/create')
 @login_required
@@ -64,7 +69,8 @@ def store():
 @login_required
 def view(id):
     user, account_age_days = UserService.get_user_with_age(id, current_user)
-    return render_template('users/view.html', user=user, account_age_days=account_age_days)
+    visible_companies = UserService.get_visible_companies_for_user(user, current_user)
+    return render_template('users/view.html', user=user, account_age_days=account_age_days, visible_companies=visible_companies)
 
 @users.route('/users/<int:id>/edit')
 @login_required
@@ -75,10 +81,14 @@ def edit(id):
         companies = Company.query.all()
     else:
         companies = current_user.companies
+        
+    visible_companies = UserService.get_visible_companies_for_user(user, current_user)
+    
     return render_template('users/form.html', 
                          user=user, 
                          roles=roles, 
-                         companies=companies)
+                         companies=companies,
+                         visible_companies=visible_companies)
 
 @users.route('/users/<int:id>/update', methods=['POST'])
 @login_required
@@ -152,12 +162,13 @@ def search():
     
     results = []
     for user in users_list:
+        visible_companies = UserService.get_visible_companies_for_user(user, current_user)
         results.append({
             'id': user.id,
             'name': user.name,
             'email': user.email,
             'role': user.role.name if user.role else 'No Role',
-            'companies': [company.name for company in user.companies],
+            'companies': [company.name for company in visible_companies],
             'active': user.is_active
         })
     

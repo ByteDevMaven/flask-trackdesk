@@ -225,15 +225,16 @@
               {% endif %}
             </td>
             <td class="px-4 py-3">
-              {% if user.companies %}
+              {% set visible_companies = visible_companies_map.get(user.id, []) %}
+              {% if visible_companies %}
               <div class="flex items-center gap-1 flex-wrap">
-                {% for company in user.companies[:2] %}
+                {% for company in visible_companies[:2] %}
                 <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-slate-100 text-slate-600">
                   {{ company.name[:16] }}{% if company.name|length > 16 %}…{% endif %}
                 </span>
                 {% endfor %}
-                {% if user.companies|length > 2 %}
-                <span class="text-xs text-slate-400 font-medium">+{{ user.companies|length - 2 }}</span>
+                {% if visible_companies|length > 2 %}
+                <span class="text-xs text-slate-400 font-medium">+{{ visible_companies|length - 2 }}</span>
                 {% endif %}
               </div>
               {% else %}
@@ -241,13 +242,14 @@
               {% endif %}
             </td>
             <td class="px-4 py-3">
+              {% set is_protected = user.role and user.role.name == 'superadmin' and not current_user.is_superadmin %}
               <button type="button"
-                      onclick="toggleUserStatus({{ user.id }}, this)"
+                      {% if not is_protected %}onclick="toggleUserStatus({{ user.id }}, this)"{% endif %}
                       data-active="{{ 'true' if user.is_active else 'false' }}"
-                      {% if user.id == current_user.id %}disabled title="No puedes desactivar tu propia cuenta"{% endif %}
+                      {% if user.id == current_user.id %}disabled title="No puedes desactivar tu propia cuenta"{% elif is_protected %}disabled title="No puedes modificar a un superadministrador"{% endif %}
                       class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium transition-all duration-200
                              {{ 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100' if user.is_active else 'bg-slate-100 text-slate-500 hover:bg-slate-200' }}
-                             {% if user.id == current_user.id %}opacity-75 cursor-not-allowed{% else %}cursor-pointer{% endif %}">
+                             {% if user.id == current_user.id or is_protected %}opacity-75 cursor-not-allowed{% else %}cursor-pointer{% endif %}">
                 <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if user.is_active else 'bg-slate-400' }} status-dot"></span>
                 <span class="status-text">{{ 'Activo' if user.is_active else 'Inactivo' }}</span>
               </button>
@@ -265,6 +267,8 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                   </svg>
                 </a>
+                {% set is_protected = user.role and user.role.name == 'superadmin' and not current_user.is_superadmin %}
+                {% if not is_protected %}
                 <button type="button"
                         data-action="open-drawer"
                         data-url="{{ url_for('users.edit', id=user.id) }}"
@@ -275,7 +279,8 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                   </svg>
                 </button>
-                {% if user.id != current_user.id %}
+                {% endif %}
+                {% if user.id != current_user.id and not is_protected %}
                 <button type="button"
                         data-action="confirm-delete"
                         data-url="{{ url_for('users.delete', id=user.id) }}"

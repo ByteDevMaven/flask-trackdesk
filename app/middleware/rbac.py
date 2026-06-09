@@ -231,6 +231,12 @@ def init_rbac(app: Flask) -> None:
         if not current_user.is_authenticated:
             return
 
+        # Allow users to edit their own profile even without 'users.manage' permission
+        if endpoint in ['users.edit', 'users.update']:
+            user_id = request.view_args.get('id')
+            if user_id and str(user_id) == str(current_user.id):
+                return
+
         if not current_user.has_permission(required_permission):
             abort(403)
 

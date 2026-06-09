@@ -30,6 +30,14 @@ class UserService:
         return bool(my_company_ids & target_company_ids)
 
     @staticmethod
+    def get_visible_companies_for_user(target_user, current_user):
+        """Returns the companies of target_user that current_user is allowed to see."""
+        if current_user.is_superadmin:
+            return target_user.companies
+        visible_ids = set(UserService._get_visible_company_ids(current_user))
+        return [c for c in target_user.companies if c.id in visible_ids]
+
+    @staticmethod
     def is_valid_email(email):
         pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         return re.match(pattern, email) is not None
@@ -175,6 +183,8 @@ class UserService:
         user = User.query.get_or_404(user_id)
         if not UserService._user_is_visible(user, current_user):
             abort(403)
+        if user.is_superadmin and not current_user.is_superadmin:
+            abort(403)
         return user
 
     @staticmethod
@@ -183,12 +193,18 @@ class UserService:
         if not UserService._user_is_visible(user, current_user):
             abort(403)
             
+        if user.is_superadmin and not current_user.is_superadmin:
+            abort(403)
+            
+        has_manage = current_user.has_permission('users.manage')
+            
         name = data.get('name', '').strip()
         email = data.get('email', '').strip().lower()
         password = data.get('password', '')
         confirm_password = data.get('confirm_password', '')
-        role_id = data.get('role_id')
-        company_ids = data.getlist('company_ids')
+        
+        role_id = data.get('role_id') if has_manage else None
+        company_ids = data.getlist('company_ids') if has_manage else []
         
         errors = []
         if not name: errors.append('Name is required')
@@ -205,26 +221,37 @@ class UserService:
             if len(password) < 6: errors.append('Password must be at least 6 characters long')
             elif password != confirm_password: errors.append('Passwords do not match')
                 
-        if not role_id: errors.append('Role is required')
-        elif not Role.query.get(role_id): errors.append('Invalid role selected')
-            
-        if not company_ids: errors.append('At least one company must be selected')
+        if has_manage:
+            if not role_id: errors.append('Role is required')
+            elif not Role.query.get(role_id): errors.append('Invalid role selected')
+                
+            if not company_ids: errors.append('At least one company must be selected')
         
         if errors:
             raise ValueError(errors)
         
         user.name = name
         user.email = email
-        user.role_id = role_id
+        
+        if has_manage:
+            user.role_id = role_id
         
         if password:
             user.password_hash = bcrypt.generate_password_hash(password).decode('utf-8')
         
-        user.companies.clear()
-        for company_id in company_ids:
-            company = Company.query.get(company_id)
-            if company:
-                user.companies.append(company)
+        if has_manage:
+            visible_company_ids = set(UserService._get_visible_company_ids(current_user))
+            unseen_companies = [c for c in user.companies if c.id not in visible_company_ids]
+            
+            user.companies.clear()
+            for c in unseen_companies:
+                user.companies.append(c)
+                
+            for company_id in company_ids:
+                if int(company_id) in visible_company_ids:
+                    company = Company.query.get(company_id)
+                    if company:
+                        user.companies.append(company)
         
         db.session.commit()
         return user
@@ -233,6 +260,9 @@ class UserService:
     def delete_user(user_id, current_user):
         user = User.query.get_or_404(user_id)
         if not UserService._user_is_visible(user, current_user):
+            abort(403)
+            
+        if user.is_superadmin and not current_user.is_superadmin:
             abort(403)
 
         if user.id == current_user.id:
@@ -249,6 +279,9 @@ class UserService:
         user = User.query.get_or_404(user_id)
         if not UserService._user_is_visible(user, current_user):
             raise PermissionError("Access denied")
+            
+        if user.is_superadmin and not current_user.is_superadmin:
+            raise PermissionError("Cannot modify a superadmin")
 
         if user.id == current_user.id:
             raise ValueError("You cannot deactivate your own account")

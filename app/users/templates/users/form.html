@@ -42,29 +42,45 @@
              class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500">
     </div>
 
+    {% if current_user.has_permission('users.manage') %}
     <div>
       <label class="block text-sm font-medium text-slate-700 mb-1.5">Rol <span class="text-rose-500">*</span></label>
-      <select name="role_id" required class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+      <select name="role_id" required class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white mb-2">
         <option value="">Seleccionar rol...</option>
         {% for role in roles %}
         <option value="{{ role.id }}" {{ 'selected' if user and user.role_id == role.id else '' }}>{{ role.name|role_name_es }}</option>
         {% endfor %}
       </select>
+      
+      <!-- Role Guide -->
+      <div class="bg-slate-50 border border-slate-200 rounded-lg p-3 text-xs text-slate-600">
+        <p class="font-semibold text-slate-700 mb-1.5 flex items-center gap-1.5">
+          <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          Guía de Roles
+        </p>
+        <ul class="space-y-1.5 ml-1">
+          <li><strong class="text-slate-700">Propietario:</strong> Acceso total dentro de la empresa.</li>
+          <li><strong class="text-slate-700">Gerente Sr:</strong> Acceso completo incluyendo reportes y eliminación.</li>
+          <li><strong class="text-slate-700">Personal Sr (Contador/RH/Inv/Ventas):</strong> Acceso completo a su área (puede eliminar).</li>
+          <li><strong class="text-slate-700">Personal Estándar:</strong> Crear, leer y editar en su área (sin eliminación).</li>
+        </ul>
+      </div>
     </div>
 
     <div>
       <label class="block text-sm font-medium text-slate-700 mb-2">Empresas asignadas <span class="text-rose-500">*</span></label>
-      <div class="space-y-2 max-h-40 overflow-y-auto border border-slate-200 rounded-lg p-3">
+      <div class="space-y-1 max-h-40 overflow-y-auto border border-slate-200 rounded-lg p-2">
         {% for company in companies %}
-        <label class="flex items-center gap-2">
+        <label class="flex items-center gap-2 hover:bg-slate-50 p-1.5 rounded transition-colors cursor-pointer">
           <input type="checkbox" name="company_ids" value="{{ company.id }}"
                  {{ 'checked' if user and company in user.companies else '' }}
-                 class="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500">
-          <span class="text-sm text-slate-700">{{ company.name }}</span>
+                 class="w-4 h-4 text-emerald-600 border-slate-300 rounded focus:ring-emerald-500 cursor-pointer">
+          <span class="text-sm text-slate-700 select-none">{{ company.name }}</span>
         </label>
         {% endfor %}
       </div>
     </div>
+    {% endif %}
   </div>
 
   <div class="flex gap-3 p-4 border-t border-slate-100 bg-slate-50/70">
