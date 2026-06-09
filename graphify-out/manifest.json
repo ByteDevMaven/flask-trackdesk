@@ -100,8 +100,8 @@
     "semantic_hash": "046f05c8913958b2a682ba0b509ceba8"
   },
   "app/context_processors.py": {
-    "mtime": 1780890349.6921792,
-    "ast_hash": "d06b4ebc3dd2c972c8f1429514357216",
+    "mtime": 1780966305.6913683,
+    "ast_hash": "46c92af8b636029c7b71a9f5783b4bb1",
     "semantic_hash": ""
   },
   "app/dashboard/__init__.py": {

@@ -230,8 +230,8 @@
     "semantic_hash": ""
   },
   "app/middleware/rbac.py": {
-    "mtime": 1780879486.776178,
-    "ast_hash": "c64ff811beb6e87005562618575d64d4",
+    "mtime": 1780966137.7202387,
+    "ast_hash": "bbb519b163ac9d52374baafe96cd1f85",
     "semantic_hash": ""
   },
   "app/models/__init__.py": {
