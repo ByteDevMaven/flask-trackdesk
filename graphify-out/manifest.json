@@ -25,8 +25,8 @@
     "semantic_hash": "06a79a348fc6371a64b29f70f6b16f83"
   },
   "app/accounting/services/accounting_service.py": {
-    "mtime": 1781053375.7216806,
-    "ast_hash": "0acca05d8ed1b9dec8d6ac0b61396623",
+    "mtime": 1781054599.553798,
+    "ast_hash": "16ba6bd228dccce7ad14fae3051f9dce",
     "semantic_hash": ""
   },
   "app/auth/__init__.py": {
@@ -685,8 +685,8 @@
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/ledger.html": {
-    "mtime": 1781053884.7713368,
-    "ast_hash": "96e868badab6540738b2ab2925649c76",
+    "mtime": 1781054001.1805615,
+    "ast_hash": "5fb916ab8f10cdf0e1de6393236930d7",
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/partials/account_form.html": {
@@ -985,8 +985,8 @@
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/expenses.html": {
-    "mtime": 1781053381.5778434,
-    "ast_hash": "bdcb450ad728cc4fb9e0aaad648de2df",
+    "mtime": 1781054599.8583753,
+    "ast_hash": "1a58cf72d5484ea274faadc799a24bc5",
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/income.html": {

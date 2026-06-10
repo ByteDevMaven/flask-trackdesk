@@ -15,8 +15,8 @@
     "semantic_hash": "575eea8e049486e005f9383dd12f3b9f"
   },
   "app/accounting/routes.py": {
-    "mtime": 1780890076.3854883,
-    "ast_hash": "2acbdd95783fc6661d09c2f973dcd0f8",
+    "mtime": 1781053380.9503198,
+    "ast_hash": "065e458a03166edf1354cff3c6fd4233",
     "semantic_hash": ""
   },
   "app/accounting/services/__init__.py": {
@@ -25,8 +25,8 @@
     "semantic_hash": "06a79a348fc6371a64b29f70f6b16f83"
   },
   "app/accounting/services/accounting_service.py": {
-    "mtime": 1780971057.6183329,
-    "ast_hash": "f4e19363a74aa19671e0fd9cfad88402",
+    "mtime": 1781053375.7216806,
+    "ast_hash": "0acca05d8ed1b9dec8d6ac0b61396623",
     "semantic_hash": ""
   },
   "app/auth/__init__.py": {
@@ -675,8 +675,8 @@
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/dashboard.html": {
-    "mtime": 1780891625.3759542,
-    "ast_hash": "6cee1b036117954422d87dbb99f6f717",
+    "mtime": 1781053385.165212,
+    "ast_hash": "6bf2ec5116ee7902c534438c3cc7c4cd",
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/expense_form.html": {
@@ -685,8 +685,8 @@
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/ledger.html": {
-    "mtime": 1780891663.6921172,
-    "ast_hash": "5fb916ab8f10cdf0e1de6393236930d7",
+    "mtime": 1781053884.7713368,
+    "ast_hash": "96e868badab6540738b2ab2925649c76",
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/partials/account_form.html": {
@@ -695,8 +695,8 @@
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/partials/expense_form.html": {
-    "mtime": 1780891625.4020793,
-    "ast_hash": "7bc4e1a399ae3e7e100958d383be1cb7",
+    "mtime": 1781053405.5420866,
+    "ast_hash": "f148a07ec60db2e052fe3c40e6cc8139",
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/partials/project_form.html": {
@@ -985,8 +985,8 @@
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/expenses.html": {
-    "mtime": 1780891663.6900313,
-    "ast_hash": "d99f15756e3453f62308881d595e2b91",
+    "mtime": 1781053381.5778434,
+    "ast_hash": "bdcb450ad728cc4fb9e0aaad648de2df",
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/income.html": {
