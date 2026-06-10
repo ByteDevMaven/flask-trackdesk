@@ -685,8 +685,8 @@
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/ledger.html": {
-    "mtime": 1780891663.6921172,
-    "ast_hash": "5fb916ab8f10cdf0e1de6393236930d7",
+    "mtime": 1781053884.7713368,
+    "ast_hash": "96e868badab6540738b2ab2925649c76",
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/partials/account_form.html": {

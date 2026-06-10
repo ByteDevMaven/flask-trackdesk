@@ -88,6 +88,131 @@ def _active_ledger_conditions():
     )
 
 
+def _active_expense_conditions():
+    """Expense rows count only when unlinked or tied to a non-voided transaction."""
+    return or_(
+        Expense.transaction_id.is_(None),
+        Transaction.is_voided.is_(False),
+    )
+
+
+def _ledger_revenue_by_account(
+    company_id: int,
+    start_dt: datetime = None,
+    end_dt: datetime = None,
+    project_id: int = None,
+) -> dict[str, float]:
+    q = (
+        LedgerEntry.query
+        .join(Account, LedgerEntry.account_id == Account.id)
+        .outerjoin(Transaction, LedgerEntry.transaction_id == Transaction.id)
+        .filter(
+            LedgerEntry.company_id == company_id,
+            Account.type == AccountType.revenue,
+            _active_ledger_conditions(),
+        )
+    )
+    if project_id is not None:
+        q = q.filter(LedgerEntry.project_id == project_id)
+    if start_dt is not None:
+        q = q.filter(LedgerEntry.date >= _make_naive(start_dt))
+    if end_dt is not None:
+        q = q.filter(LedgerEntry.date <= _make_naive(end_dt))
+
+    result: dict[str, float] = {}
+    for entry in q.all():
+        acc_name = entry.account.name
+        net = float(entry.credit) - float(entry.debit)
+        result[acc_name] = round(result.get(acc_name, 0.0) + net, 2)
+    return result
+
+
+def _expenses_by_account(
+    company_id: int,
+    start_dt: datetime = None,
+    end_dt: datetime = None,
+    project_id: int = None,
+) -> dict[str, float]:
+    account_label = func.coalesce(Account.name, 'Sin cuenta')
+    q = (
+        db.session.query(
+            account_label,
+            func.coalesce(func.sum(Expense.amount), 0),
+        )
+        .select_from(Expense)
+        .outerjoin(Account, Expense.account_id == Account.id)
+        .outerjoin(Transaction, Expense.transaction_id == Transaction.id)
+        .filter(
+            Expense.company_id == company_id,
+            _active_expense_conditions(),
+        )
+    )
+    if project_id is not None:
+        q = q.filter(Expense.project_id == project_id)
+    if start_dt is not None:
+        q = q.filter(Expense.date >= _make_naive(start_dt))
+    if end_dt is not None:
+        q = q.filter(Expense.date <= _make_naive(end_dt))
+
+    return {
+        name: round(float(amount), 2)
+        for name, amount in q.group_by(account_label).all()
+        if float(amount) > 0
+    }
+
+
+def _period_expense_total(
+    company_id: int,
+    start_dt: datetime = None,
+    end_dt: datetime = None,
+    project_id: int = None,
+) -> float:
+    q = (
+        db.session.query(func.coalesce(func.sum(Expense.amount), 0))
+        .select_from(Expense)
+        .outerjoin(Transaction, Expense.transaction_id == Transaction.id)
+        .filter(Expense.company_id == company_id, _active_expense_conditions())
+    )
+    if project_id is not None:
+        q = q.filter(Expense.project_id == project_id)
+    if start_dt is not None:
+        q = q.filter(Expense.date >= _make_naive(start_dt))
+    if end_dt is not None:
+        q = q.filter(Expense.date <= _make_naive(end_dt))
+    return round(float(q.scalar() or 0), 2)
+
+
+def _period_revenue_total(
+    company_id: int,
+    start_dt: datetime = None,
+    end_dt: datetime = None,
+    project_id: int = None,
+) -> float:
+    return round(
+        sum(_ledger_revenue_by_account(company_id, start_dt, end_dt, project_id).values()),
+        2,
+    )
+
+
+def _recent_active_expenses(company_id: int, limit: int = 10) -> list[Expense]:
+    return (
+        db.session.execute(
+            select(Expense)
+            .options(joinedload(Expense.account))
+            .outerjoin(Transaction, Expense.transaction_id == Transaction.id)
+            .where(
+                Expense.company_id == company_id,
+                _active_expense_conditions(),
+            )
+            .order_by(Expense.date.desc())
+            .limit(limit)
+        )
+        .unique()
+        .scalars()
+        .all()
+    )
+
+
 def _compute_account_balance(account: Account, as_of: datetime = None) -> float:
     """
     Compute the current balance of an account from LedgerEntry rows.
@@ -237,13 +362,7 @@ class AccountingService:
 
         accounts = Account.query.filter_by(company_id=company_id, is_active=True).order_by(Account.type, Account.name).all()
         projects = Project.query.filter_by(company_id=company_id).all()
-        expenses = (
-            Expense.query
-            .filter_by(company_id=company_id)
-            .order_by(Expense.date.desc())
-            .limit(10)
-            .all()
-        )
+        expenses = _recent_active_expenses(company_id, limit=10)
         recent_transactions = (
             Transaction.query
             .filter_by(company_id=company_id, is_voided=False)
@@ -259,42 +378,15 @@ class AccountingService:
         now = _make_naive(datetime.now(UTC))
         month_start = now.replace(day=1, hour=0, minute=0, second=0)
 
-        def _period_ledger_sum(acct_types, col, start=None, end=None):
-            q = (
-                db.session.query(func.coalesce(func.sum(col), 0))
-                .select_from(LedgerEntry)
-                .join(Account, LedgerEntry.account_id == Account.id)
-                .outerjoin(Transaction, LedgerEntry.transaction_id == Transaction.id)
-                .filter(
-                    LedgerEntry.company_id == company_id,
-                    Account.type.in_(acct_types),
-                    _active_ledger_conditions(),
-                )
-            )
-            if start:
-                q = q.filter(LedgerEntry.date >= _make_naive(start))
-            if end:
-                q = q.filter(LedgerEntry.date <= _make_naive(end))
-            return float(q.scalar() or 0)
-
         def _period_expense_sum(start=None, end=None):
-            q = db.session.query(func.coalesce(func.sum(Expense.amount), 0)).filter(
-                Expense.company_id == company_id,
-            )
-            if start:
-                q = q.filter(Expense.date >= _make_naive(start))
-            if end:
-                q = q.filter(Expense.date <= _make_naive(end))
-            return float(q.scalar() or 0)
+            return _period_expense_total(company_id, start_dt=start, end_dt=end)
 
-        # Revenue this month = credits on revenue accounts (ledger)
-        revenue_month = _period_ledger_sum([AccountType.revenue], LedgerEntry.credit, month_start, now)
-        # Expenses this month = registered Expense records (matches Gastos list)
+        # Revenue = net credits on revenue accounts (matches reports)
+        revenue_month = _period_revenue_total(company_id, month_start, now)
         expenses_month = _period_expense_sum(month_start, now)
         net_income_month = round(revenue_month - expenses_month, 2)
 
-        # All-time totals
-        total_revenue = _period_ledger_sum([AccountType.revenue], LedgerEntry.credit)
+        total_revenue = _period_revenue_total(company_id)
         total_expenses = _period_expense_sum()
         net_income_all = round(total_revenue - total_expenses, 2)
 
@@ -317,18 +409,37 @@ class AccountingService:
         ar_balance = balances.get(ar_account.id, 0.0) if ar_account else 0.0
         ap_balance = balances.get(ap_account.id, 0.0) if ap_account else 0.0
 
-        # Project spend from expenses
+        # Project spend from active expenses only
         expense_stats = (
             db.session.query(Expense.project_id, func.sum(Expense.amount))
-            .filter(Expense.company_id == company_id, Expense.project_id.isnot(None))
+            .outerjoin(Transaction, Expense.transaction_id == Transaction.id)
+            .filter(
+                Expense.company_id == company_id,
+                Expense.project_id.isnot(None),
+                _active_expense_conditions(),
+            )
             .group_by(Expense.project_id)
             .all()
         )
         project_spent = {row[0]: float(row[1] or 0) for row in expense_stats}
 
-        # Tag totals for expenses
+        # Tag totals for active expenses
         tag_totals: dict[str, float] = {}
-        for e in Expense.query.filter_by(company_id=company_id).all():
+        active_expense_rows = (
+            db.session.execute(
+                select(Expense)
+                .options(joinedload(Expense.tags))
+                .outerjoin(Transaction, Expense.transaction_id == Transaction.id)
+                .where(
+                    Expense.company_id == company_id,
+                    _active_expense_conditions(),
+                )
+            )
+            .unique()
+            .scalars()
+            .all()
+        )
+        for e in active_expense_rows:
             if not e.tags:
                 tag_totals['Sin Etiqueta'] = tag_totals.get('Sin Etiqueta', 0.0) + float(e.amount)
             for t in e.tags:
@@ -362,7 +473,12 @@ class AccountingService:
             'project_spent': project_spent,
             'expense_counts': {row[0]: row[1] for row in (
                 db.session.query(Expense.project_id, func.count(Expense.id))
-                .filter(Expense.company_id == company_id, Expense.project_id.isnot(None))
+                .outerjoin(Transaction, Expense.transaction_id == Transaction.id)
+                .filter(
+                    Expense.company_id == company_id,
+                    Expense.project_id.isnot(None),
+                    _active_expense_conditions(),
+                )
                 .group_by(Expense.project_id)
                 .all()
             )},
@@ -509,10 +625,7 @@ class AccountingService:
             .outerjoin(Transaction, Expense.transaction_id == Transaction.id)
             .where(
                 Expense.company_id == company_id,
-                or_(
-                    Expense.transaction_id.is_(None),
-                    Transaction.is_voided.is_(False),
-                ),
+                _active_expense_conditions(),
             )
             .order_by(Expense.date.desc())
         )
@@ -585,10 +698,8 @@ class AccountingService:
         revenue_account = Account.query.filter_by(id=revenue_account_id, company_id=company_id).first()
         if not revenue_account:
             raise ValueError('Cuenta de ingresos no encontrada.')
-
-        # Validate it's a revenue account
-        if revenue_account.type not in (AccountType.revenue, AccountType.asset):
-            raise ValueError('La cuenta seleccionada no es una cuenta de ingresos.')
+        if revenue_account.type != AccountType.revenue:
+            raise ValueError('La cuenta seleccionada debe ser una cuenta de ingresos.')
 
         date_str = data.get('date', '').strip()
         income_date = _parse_date(date_str)
@@ -609,6 +720,8 @@ class AccountingService:
 
         if not debit_account:
             raise ValueError('No se encontró una cuenta de efectivo o por cobrar.')
+        if debit_account.type != AccountType.asset:
+            raise ValueError('La cuenta de débito debe ser un activo (caja, banco o por cobrar).')
 
         memo = description or f"Ingreso — {revenue_account.name}"
         if client_name:
@@ -937,32 +1050,10 @@ class AccountingService:
         total: object = 0.0
 
         if report_type == 'income_statement':
-            # Income Statement: credits on revenue, debits on expense, for the PERIOD
-            entries = (
-                LedgerEntry.query
-                .join(Account, LedgerEntry.account_id == Account.id)
-                .outerjoin(Transaction, LedgerEntry.transaction_id == Transaction.id)
-                .filter(
-                    LedgerEntry.company_id == company_id,
-                    LedgerEntry.date >= start_dt,
-                    LedgerEntry.date <= end_dt,
-                    Account.type.in_([AccountType.revenue, AccountType.expense]),
-                    _active_ledger_conditions(),
-                )
-                .all()
-            )
-
-            report_data = {'revenue': {}, 'expense': {}}
-            for entry in entries:
-                acc_type = entry.account.type.value
-                acc_name = entry.account.name
-                # Revenue: normal balance is credit
-                if acc_type == 'revenue':
-                    net = float(entry.credit) - float(entry.debit)
-                else:  # expense: normal balance is debit
-                    net = float(entry.debit) - float(entry.credit)
-                report_data[acc_type][acc_name] = report_data[acc_type].get(acc_name, 0.0) + net
-
+            report_data = {
+                'revenue': _ledger_revenue_by_account(company_id, start_dt, end_dt),
+                'expense': _expenses_by_account(company_id, start_dt, end_dt),
+            }
             total_revenue = sum(report_data['revenue'].values())
             total_expense = sum(report_data['expense'].values())
             total = round(total_revenue - total_expense, 2)
@@ -992,25 +1083,12 @@ class AccountingService:
                     net = float(entry.credit) - float(entry.debit)
                 report_data[acc_type][acc_name] = report_data[acc_type].get(acc_name, 0.0) + net
 
-            # Add net income to retained earnings
-            income_entries = (
-                LedgerEntry.query
-                .join(Account, LedgerEntry.account_id == Account.id)
-                .outerjoin(Transaction, LedgerEntry.transaction_id == Transaction.id)
-                .filter(
-                    LedgerEntry.company_id == company_id,
-                    LedgerEntry.date <= end_dt,
-                    Account.type.in_([AccountType.revenue, AccountType.expense]),
-                    _active_ledger_conditions(),
-                )
-                .all()
+            # Add net income to retained earnings (revenue ledger − registered expenses)
+            net_income = round(
+                _period_revenue_total(company_id, end_dt=end_dt)
+                - _period_expense_total(company_id, end_dt=end_dt),
+                2,
             )
-            net_income = 0.0
-            for e in income_entries:
-                if e.account.type == AccountType.revenue:
-                    net_income += float(e.credit) - float(e.debit)
-                else:
-                    net_income -= float(e.debit) - float(e.credit)
 
             retained_key = 'Resultado del Período (Calculado)'
             report_data['equity'][retained_key] = (
@@ -1030,26 +1108,11 @@ class AccountingService:
 
         elif report_type == 'cash_flow':
             # Simplified indirect cash flow
-            # Operating: net income + change in AR/AP
-            income_entries = (
-                LedgerEntry.query
-                .join(Account)
-                .outerjoin(Transaction, LedgerEntry.transaction_id == Transaction.id)
-                .filter(
-                    LedgerEntry.company_id == company_id,
-                    LedgerEntry.date >= start_dt,
-                    LedgerEntry.date <= end_dt,
-                    Account.type.in_([AccountType.revenue, AccountType.expense]),
-                    _active_ledger_conditions(),
-                )
-                .all()
+            net_income = round(
+                _period_revenue_total(company_id, start_dt, end_dt)
+                - _period_expense_total(company_id, start_dt, end_dt),
+                2,
             )
-            net_income = 0.0
-            for e in income_entries:
-                if e.account.type == AccountType.revenue:
-                    net_income += float(e.credit) - float(e.debit)
-                else:
-                    net_income -= float(e.debit) - float(e.credit)
 
             # Investing / Financing: changes in asset/liability accounts (excluding cash)
             cash_like = ['caja', 'banco', 'cash']
@@ -1380,6 +1443,11 @@ class AccountingService:
         else:
             ending_balance = round(opening_balance + per_c - per_d, 2)
 
+        # Convert Decimal values to float for template arithmetic
+        for entry in pagination.items:
+            entry.debit = float(entry.debit)
+            entry.credit = float(entry.credit)
+
         return {
             'account': account,
             'all_accounts': all_accounts,
@@ -1515,6 +1583,8 @@ class AccountingService:
         revenue_account = Account.query.filter_by(id=revenue_account_id, company_id=company_id).first()
         if not revenue_account:
             raise ValueError('Cuenta de ingresos no encontrada.')
+        if revenue_account.type != AccountType.revenue:
+            raise ValueError('La cuenta seleccionada debe ser una cuenta de ingresos.')
 
         date_str = data.get('date', '').strip()
         income_date = _parse_date(date_str)
@@ -1533,6 +1603,8 @@ class AccountingService:
             ).first()
         if not debit_account:
             raise ValueError('No se encontró una cuenta de efectivo o por cobrar.')
+        if debit_account.type != AccountType.asset:
+            raise ValueError('La cuenta de débito debe ser un activo (caja, banco o por cobrar).')
 
         # Void old
         old_txn.is_voided = True
@@ -1580,9 +1652,16 @@ class AccountingService:
         orphaning historical accounting data.
         """
         account = Account.query.filter_by(id=account_id, company_id=company_id).first_or_404()
-        entry_count = LedgerEntry.query.filter_by(
-            account_id=account_id, company_id=company_id
-        ).count()
+        entry_count = (
+            LedgerEntry.query
+            .outerjoin(Transaction, LedgerEntry.transaction_id == Transaction.id)
+            .filter(
+                LedgerEntry.account_id == account_id,
+                LedgerEntry.company_id == company_id,
+                _active_ledger_conditions(),
+            )
+            .count()
+        )
         if entry_count > 0:
             raise ValueError(
                 f'Esta cuenta tiene {entry_count} movimiento(s) contables y no puede eliminarse. '
@@ -1633,27 +1712,41 @@ class AccountingService:
         project = Project.query.filter_by(id=project_id, company_id=company_id).first_or_404()
 
         expenses = (
-            Expense.query
-            .filter_by(project_id=project_id, company_id=company_id)
-            .order_by(Expense.date.desc())
+            db.session.execute(
+                select(Expense)
+                .options(joinedload(Expense.account))
+                .outerjoin(Transaction, Expense.transaction_id == Transaction.id)
+                .where(
+                    Expense.company_id == company_id,
+                    Expense.project_id == project_id,
+                    _active_expense_conditions(),
+                )
+                .order_by(Expense.date.desc())
+            )
+            .unique()
+            .scalars()
             .all()
         )
 
-        # Income entries linked to this project (via ledger_entries on revenue accounts)
         income_entries = (
             LedgerEntry.query
             .join(Account, LedgerEntry.account_id == Account.id)
+            .outerjoin(Transaction, LedgerEntry.transaction_id == Transaction.id)
             .filter(
                 LedgerEntry.company_id == company_id,
                 LedgerEntry.project_id == project_id,
                 Account.type == AccountType.revenue,
+                _active_ledger_conditions(),
             )
             .order_by(LedgerEntry.date.desc())
             .all()
         )
 
         total_expenses = round(sum(float(e.amount) for e in expenses), 2)
-        total_income = round(sum(float(e.credit) for e in income_entries), 2)
+        total_income = round(
+            sum(float(e.credit) - float(e.debit) for e in income_entries),
+            2,
+        )
         net = round(total_income - total_expenses, 2)
         budget = float(project.budget or 0)
         budget_remaining = round(budget - total_expenses, 2)
@@ -1667,12 +1760,19 @@ class AccountingService:
         for e in income_entries:
             key = e.date.strftime('%Y-%m') if e.date else 'N/A'
             monthly.setdefault(key, {'expense': 0.0, 'income': 0.0})
-            monthly[key]['income'] = round(monthly[key]['income'] + float(e.credit), 2)
+            monthly[key]['income'] = round(
+                monthly[key]['income'] + float(e.credit) - float(e.debit), 2
+            )
 
-        # All ledger entries for the project
+        # Active ledger entries for the project
         all_ledger = (
             LedgerEntry.query
-            .filter_by(project_id=project_id, company_id=company_id)
+            .outerjoin(Transaction, LedgerEntry.transaction_id == Transaction.id)
+            .filter(
+                LedgerEntry.project_id == project_id,
+                LedgerEntry.company_id == company_id,
+                _active_ledger_conditions(),
+            )
             .order_by(LedgerEntry.date.desc())
             .limit(100)
             .all()
@@ -1722,19 +1822,8 @@ class AccountingService:
 
         result = []
         for p in projects:
-            expense_total = round(
-                float(db.session.query(func.coalesce(func.sum(Expense.amount), 0))
-                      .filter_by(project_id=p.id, company_id=company_id).scalar() or 0), 2
-            )
-            income_total = round(
-                float(db.session.query(func.coalesce(func.sum(LedgerEntry.credit), 0))
-                      .join(Account, LedgerEntry.account_id == Account.id)
-                      .filter(
-                          LedgerEntry.project_id == p.id,
-                          LedgerEntry.company_id == company_id,
-                          Account.type == AccountType.revenue,
-                      ).scalar() or 0), 2
-            )
+            expense_total = _period_expense_total(company_id, project_id=p.id)
+            income_total = _period_revenue_total(company_id, project_id=p.id)
             
             # Count invoices by status
             invoice_counts = db.session.query(

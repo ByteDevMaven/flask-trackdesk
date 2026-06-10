@@ -74,9 +74,9 @@
           {% for entry in entries %}
           {# Compute new balance depending on account type normally debits increase assets/expenses, credits increase liability/equity/revenue #}
           {% if account.type.value in ['asset', 'expense'] %}
-            {% set running.balance = running.balance + float(entry.debit) - float(entry.credit) %}
+            {% set running.balance = running.balance + entry.debit - entry.credit %}
           {% else %}
-            {% set running.balance = running.balance - float(entry.debit) + float(entry.credit) %}
+            {% set running.balance = running.balance - entry.debit + entry.credit %}
           {% endif %}
           <tr class="hover:bg-slate-50/80 transition-colors">
             <td class="px-4 md:px-6 py-3 text-slate-500">{{ entry.date.strftime('%d/%m/%Y') }}</td>
