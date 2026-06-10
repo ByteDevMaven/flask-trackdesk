@@ -62,7 +62,12 @@ def expenses_list(company_id):
         page=page,
     )
 
-    accounts = Account.query.filter_by(company_id=company_id, is_active=True).order_by(Account.name).all()
+    accounts = (
+        Account.query
+        .filter_by(company_id=company_id, is_active=True, type=AccountType.expense)
+        .order_by(Account.code, Account.name)
+        .all()
+    )
     projects = Project.query.filter_by(company_id=company_id).all()
     from app.models.enums import ExpenseStatus
     return render_template(
@@ -108,7 +113,12 @@ def create_expense(company_id):
                 return jsonify({'success': False, 'message': f'Error: {e}'}), 500
             flash(f'Error: {e}', 'error')
 
-    expense_accounts = Account.query.filter_by(company_id=company_id, is_active=True).order_by(Account.type, Account.name).all()
+    expense_accounts = (
+        Account.query
+        .filter_by(company_id=company_id, is_active=True, type=AccountType.expense)
+        .order_by(Account.code, Account.name)
+        .all()
+    )
     projects = Project.query.filter_by(company_id=company_id).all()
     tags = Tag.query.filter_by(company_id=company_id).all()
     from app.models.enums import ExpenseStatus
@@ -155,7 +165,12 @@ def edit_expense(company_id, expense_id):
                 return jsonify({'success': False, 'message': f'Error: {e}'}), 500
             flash(f'Error: {e}', 'error')
 
-    expense_accounts = Account.query.filter_by(company_id=company_id, is_active=True).order_by(Account.type, Account.name).all()
+    expense_accounts = (
+        Account.query
+        .filter_by(company_id=company_id, is_active=True, type=AccountType.expense)
+        .order_by(Account.code, Account.name)
+        .all()
+    )
     projects = Project.query.filter_by(company_id=company_id).all()
     tags = Tag.query.filter_by(company_id=company_id).all()
     from app.models.enums import ExpenseStatus

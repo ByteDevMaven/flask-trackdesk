@@ -78,7 +78,7 @@
             <a href="{{ url_for('static', filename=exp.receipt_url) }}" target="_blank" class="text-[10px] text-sky-600 hover:underline">📎 Ver comprobante</a>
             {% endif %}
           </td>
-          <td class="px-4 md:px-6 py-3 text-slate-600 text-xs">{{ exp.account.name }}</td>
+          <td class="px-4 md:px-6 py-3 text-slate-600 text-xs">{{ exp.account.name if exp.account else '—' }}</td>
           <td class="px-4 md:px-6 py-3">
             {% if exp.category %}<span class="inline-flex px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 text-xs font-medium">{{ exp.category }}</span>
             {% else %}<span class="text-slate-400 text-xs">—</span>{% endif %}

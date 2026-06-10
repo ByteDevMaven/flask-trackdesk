@@ -18,7 +18,8 @@ from decimal import Decimal
 
 from flask import current_app, Response
 from flask_login import current_user
-from sqlalchemy import func
+from sqlalchemy import func, or_, select
+from sqlalchemy.orm import joinedload
 
 from app.models import db, Company, Account, Expense, LedgerEntry, Project, Tag, Transaction
 from app.models.enums import AccountType, ExpenseStatus, TransactionType, DocumentType, DocumentStatus
@@ -79,6 +80,14 @@ def _get_period_bounds(start_date: str, end_date: str):
 # Core balance computation
 # ─────────────────────────────────────────────────────────────────────────────
 
+def _active_ledger_conditions():
+    """Ledger rows count only when unlinked or tied to a non-voided transaction."""
+    return or_(
+        LedgerEntry.transaction_id.is_(None),
+        Transaction.is_voided.is_(False),
+    )
+
+
 def _compute_account_balance(account: Account, as_of: datetime = None) -> float:
     """
     Compute the current balance of an account from LedgerEntry rows.
@@ -90,12 +99,18 @@ def _compute_account_balance(account: Account, as_of: datetime = None) -> float:
     Returns a positive number when the account has a balance in its normal
     direction, negative when it's reversed.
     """
-    q = db.session.query(
-        func.coalesce(func.sum(LedgerEntry.debit), 0).label('total_debit'),
-        func.coalesce(func.sum(LedgerEntry.credit), 0).label('total_credit'),
-    ).filter(
-        LedgerEntry.account_id == account.id,
-        LedgerEntry.company_id == account.company_id,
+    q = (
+        db.session.query(
+            func.coalesce(func.sum(LedgerEntry.debit), 0).label('total_debit'),
+            func.coalesce(func.sum(LedgerEntry.credit), 0).label('total_credit'),
+        )
+        .select_from(LedgerEntry)
+        .outerjoin(Transaction, LedgerEntry.transaction_id == Transaction.id)
+        .filter(
+            LedgerEntry.account_id == account.id,
+            LedgerEntry.company_id == account.company_id,
+            _active_ledger_conditions(),
+        )
     )
     if as_of:
         q = q.filter(LedgerEntry.date <= _make_naive(as_of))
@@ -122,8 +137,13 @@ def _compute_balances_bulk(company_id: int, account_type_filter=None, as_of: dat
             func.coalesce(func.sum(LedgerEntry.debit), 0).label('d'),
             func.coalesce(func.sum(LedgerEntry.credit), 0).label('c'),
         )
+        .select_from(LedgerEntry)
         .join(Account, LedgerEntry.account_id == Account.id)
-        .filter(LedgerEntry.company_id == company_id)
+        .outerjoin(Transaction, LedgerEntry.transaction_id == Transaction.id)
+        .filter(
+            LedgerEntry.company_id == company_id,
+            _active_ledger_conditions(),
+        )
     )
     if account_type_filter:
         if isinstance(account_type_filter, (list, tuple)):
@@ -242,10 +262,13 @@ class AccountingService:
         def _period_ledger_sum(acct_types, col, start=None, end=None):
             q = (
                 db.session.query(func.coalesce(func.sum(col), 0))
+                .select_from(LedgerEntry)
                 .join(Account, LedgerEntry.account_id == Account.id)
+                .outerjoin(Transaction, LedgerEntry.transaction_id == Transaction.id)
                 .filter(
                     LedgerEntry.company_id == company_id,
                     Account.type.in_(acct_types),
+                    _active_ledger_conditions(),
                 )
             )
             if start:
@@ -254,15 +277,25 @@ class AccountingService:
                 q = q.filter(LedgerEntry.date <= _make_naive(end))
             return float(q.scalar() or 0)
 
-        # Revenue this month = credits on revenue accounts
+        def _period_expense_sum(start=None, end=None):
+            q = db.session.query(func.coalesce(func.sum(Expense.amount), 0)).filter(
+                Expense.company_id == company_id,
+            )
+            if start:
+                q = q.filter(Expense.date >= _make_naive(start))
+            if end:
+                q = q.filter(Expense.date <= _make_naive(end))
+            return float(q.scalar() or 0)
+
+        # Revenue this month = credits on revenue accounts (ledger)
         revenue_month = _period_ledger_sum([AccountType.revenue], LedgerEntry.credit, month_start, now)
-        # Expenses this month = debits on expense accounts
-        expenses_month = _period_ledger_sum([AccountType.expense], LedgerEntry.debit, month_start, now)
+        # Expenses this month = registered Expense records (matches Gastos list)
+        expenses_month = _period_expense_sum(month_start, now)
         net_income_month = round(revenue_month - expenses_month, 2)
 
         # All-time totals
         total_revenue = _period_ledger_sum([AccountType.revenue], LedgerEntry.credit)
-        total_expenses = _period_ledger_sum([AccountType.expense], LedgerEntry.debit)
+        total_expenses = _period_expense_sum()
         net_income_all = round(total_revenue - total_expenses, 2)
 
         # Cash balance = balance of first asset account named 'Caja'/'Bancos'/'Cash'
@@ -373,6 +406,8 @@ class AccountingService:
         expense_account = Account.query.filter_by(id=account_id, company_id=company_id).first()
         if not expense_account:
             raise ValueError('Cuenta de gasto no encontrada.')
+        if expense_account.type != AccountType.expense:
+            raise ValueError('La cuenta seleccionada debe ser una cuenta de gasto.')
 
         date_str = data.get('date', '').strip()
         expense_date = _parse_date(date_str)
@@ -468,31 +503,43 @@ class AccountingService:
                      status: str = '', category: str = '',
                      start_date: str = '', end_date: str = '',
                      page: int = 1, per_page: int = 30):
-        q = Expense.query.filter_by(company_id=company_id).order_by(Expense.date.desc())
+        stmt = (
+            select(Expense)
+            .options(joinedload(Expense.account))
+            .outerjoin(Transaction, Expense.transaction_id == Transaction.id)
+            .where(
+                Expense.company_id == company_id,
+                or_(
+                    Expense.transaction_id.is_(None),
+                    Transaction.is_voided.is_(False),
+                ),
+            )
+            .order_by(Expense.date.desc())
+        )
 
         if search:
-            q = q.filter(
+            stmt = stmt.where(
                 Expense.description.ilike(f'%{search}%') |
                 Expense.vendor_name.ilike(f'%{search}%') |
                 Expense.category.ilike(f'%{search}%')
             )
         if account_id:
-            q = q.filter(Expense.account_id == account_id)
+            stmt = stmt.where(Expense.account_id == account_id)
         if status:
             try:
-                q = q.filter(Expense.status == ExpenseStatus(status))
+                stmt = stmt.where(Expense.status == ExpenseStatus(status))
             except ValueError:
                 pass
         if category:
-            q = q.filter(Expense.category.ilike(f'%{category}%'))
+            stmt = stmt.where(Expense.category.ilike(f'%{category}%'))
         if start_date or end_date:
             start_dt, end_dt = _get_period_bounds(start_date, end_date)
             if start_date:
-                q = q.filter(Expense.date >= start_dt)
+                stmt = stmt.where(Expense.date >= start_dt)
             if end_date:
-                q = q.filter(Expense.date <= end_dt)
+                stmt = stmt.where(Expense.date <= end_dt)
 
-        return q.paginate(page=page, per_page=per_page, error_out=False)
+        return db.paginate(stmt, page=page, per_page=per_page, error_out=False)
 
     @staticmethod
     def delete_expense(company_id: int, expense_id: int) -> None:
@@ -803,7 +850,11 @@ class AccountingService:
         q = (
             LedgerEntry.query
             .join(Account, LedgerEntry.account_id == Account.id)
-            .filter(LedgerEntry.company_id == company_id)
+            .outerjoin(Transaction, LedgerEntry.transaction_id == Transaction.id)
+            .filter(
+                LedgerEntry.company_id == company_id,
+                _active_ledger_conditions(),
+            )
         )
 
         if account_id:
@@ -890,11 +941,13 @@ class AccountingService:
             entries = (
                 LedgerEntry.query
                 .join(Account, LedgerEntry.account_id == Account.id)
+                .outerjoin(Transaction, LedgerEntry.transaction_id == Transaction.id)
                 .filter(
                     LedgerEntry.company_id == company_id,
                     LedgerEntry.date >= start_dt,
                     LedgerEntry.date <= end_dt,
-                    Account.type.in_([AccountType.revenue, AccountType.expense])
+                    Account.type.in_([AccountType.revenue, AccountType.expense]),
+                    _active_ledger_conditions(),
                 )
                 .all()
             )
@@ -919,10 +972,12 @@ class AccountingService:
             entries = (
                 LedgerEntry.query
                 .join(Account, LedgerEntry.account_id == Account.id)
+                .outerjoin(Transaction, LedgerEntry.transaction_id == Transaction.id)
                 .filter(
                     LedgerEntry.company_id == company_id,
                     LedgerEntry.date <= end_dt,
-                    Account.type.in_([AccountType.asset, AccountType.liability, AccountType.equity])
+                    Account.type.in_([AccountType.asset, AccountType.liability, AccountType.equity]),
+                    _active_ledger_conditions(),
                 )
                 .all()
             )
@@ -941,10 +996,12 @@ class AccountingService:
             income_entries = (
                 LedgerEntry.query
                 .join(Account, LedgerEntry.account_id == Account.id)
+                .outerjoin(Transaction, LedgerEntry.transaction_id == Transaction.id)
                 .filter(
                     LedgerEntry.company_id == company_id,
                     LedgerEntry.date <= end_dt,
-                    Account.type.in_([AccountType.revenue, AccountType.expense])
+                    Account.type.in_([AccountType.revenue, AccountType.expense]),
+                    _active_ledger_conditions(),
                 )
                 .all()
             )
@@ -977,11 +1034,13 @@ class AccountingService:
             income_entries = (
                 LedgerEntry.query
                 .join(Account)
+                .outerjoin(Transaction, LedgerEntry.transaction_id == Transaction.id)
                 .filter(
                     LedgerEntry.company_id == company_id,
                     LedgerEntry.date >= start_dt,
                     LedgerEntry.date <= end_dt,
-                    Account.type.in_([AccountType.revenue, AccountType.expense])
+                    Account.type.in_([AccountType.revenue, AccountType.expense]),
+                    _active_ledger_conditions(),
                 )
                 .all()
             )
@@ -997,12 +1056,14 @@ class AccountingService:
             non_cash_asset_entries = (
                 LedgerEntry.query
                 .join(Account)
+                .outerjoin(Transaction, LedgerEntry.transaction_id == Transaction.id)
                 .filter(
                     LedgerEntry.company_id == company_id,
                     LedgerEntry.date >= start_dt,
                     LedgerEntry.date <= end_dt,
                     Account.type == AccountType.asset,
-                    ~db.or_(*[Account.name.ilike(f'%{k}%') for k in cash_like])
+                    ~db.or_(*[Account.name.ilike(f'%{k}%') for k in cash_like]),
+                    _active_ledger_conditions(),
                 )
                 .all()
             )
@@ -1013,11 +1074,13 @@ class AccountingService:
             liability_entries = (
                 LedgerEntry.query
                 .join(Account)
+                .outerjoin(Transaction, LedgerEntry.transaction_id == Transaction.id)
                 .filter(
                     LedgerEntry.company_id == company_id,
                     LedgerEntry.date >= start_dt,
                     LedgerEntry.date <= end_dt,
-                    Account.type.in_([AccountType.liability, AccountType.equity])
+                    Account.type.in_([AccountType.liability, AccountType.equity]),
+                    _active_ledger_conditions(),
                 )
                 .all()
             )
@@ -1258,14 +1321,21 @@ class AccountingService:
             end_dt = now.replace(hour=23, minute=59, second=59)
 
         # Opening balance = balance of the account BEFORE start_dt
-        open_q = db.session.query(
-            func.coalesce(func.sum(LedgerEntry.debit), 0),
-            func.coalesce(func.sum(LedgerEntry.credit), 0),
-        ).filter(
-            LedgerEntry.account_id == account_id,
-            LedgerEntry.company_id == company_id,
-            LedgerEntry.date < start_dt,
-        ).one()
+        open_q = (
+            db.session.query(
+                func.coalesce(func.sum(LedgerEntry.debit), 0),
+                func.coalesce(func.sum(LedgerEntry.credit), 0),
+            )
+            .select_from(LedgerEntry)
+            .outerjoin(Transaction, LedgerEntry.transaction_id == Transaction.id)
+            .filter(
+                LedgerEntry.account_id == account_id,
+                LedgerEntry.company_id == company_id,
+                LedgerEntry.date < start_dt,
+                _active_ledger_conditions(),
+            )
+            .one()
+        )
         open_d, open_c = float(open_q[0]), float(open_q[1])
         if account.type in (AccountType.asset, AccountType.expense):
             opening_balance = round(open_d - open_c, 2)
@@ -1275,26 +1345,35 @@ class AccountingService:
         # Paginated entries for the period
         q = (
             LedgerEntry.query
+            .outerjoin(Transaction, LedgerEntry.transaction_id == Transaction.id)
             .filter(
                 LedgerEntry.account_id == account_id,
                 LedgerEntry.company_id == company_id,
                 LedgerEntry.date >= start_dt,
                 LedgerEntry.date <= end_dt,
+                _active_ledger_conditions(),
             )
             .order_by(LedgerEntry.date.asc(), LedgerEntry.id.asc())
         )
         pagination = q.paginate(page=page, per_page=per_page, error_out=False)
 
         # Ending balance = opening + net of ALL period entries (not just current page)
-        period_all_q = db.session.query(
-            func.coalesce(func.sum(LedgerEntry.debit), 0),
-            func.coalesce(func.sum(LedgerEntry.credit), 0),
-        ).filter(
-            LedgerEntry.account_id == account_id,
-            LedgerEntry.company_id == company_id,
-            LedgerEntry.date >= start_dt,
-            LedgerEntry.date <= end_dt,
-        ).one()
+        period_all_q = (
+            db.session.query(
+                func.coalesce(func.sum(LedgerEntry.debit), 0),
+                func.coalesce(func.sum(LedgerEntry.credit), 0),
+            )
+            .select_from(LedgerEntry)
+            .outerjoin(Transaction, LedgerEntry.transaction_id == Transaction.id)
+            .filter(
+                LedgerEntry.account_id == account_id,
+                LedgerEntry.company_id == company_id,
+                LedgerEntry.date >= start_dt,
+                LedgerEntry.date <= end_dt,
+                _active_ledger_conditions(),
+            )
+            .one()
+        )
         per_d, per_c = float(period_all_q[0]), float(period_all_q[1])
         if account.type in (AccountType.asset, AccountType.expense):
             ending_balance = round(opening_balance + per_d - per_c, 2)
@@ -1337,6 +1416,8 @@ class AccountingService:
         expense_account = Account.query.filter_by(id=account_id, company_id=company_id).first()
         if not expense_account:
             raise ValueError('Cuenta de gasto no encontrada.')
+        if expense_account.type != AccountType.expense:
+            raise ValueError('La cuenta seleccionada debe ser una cuenta de gasto.')
 
         date_str = data.get('date', '').strip()
         expense_date = _parse_date(date_str)
