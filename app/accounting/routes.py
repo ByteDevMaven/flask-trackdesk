@@ -494,6 +494,24 @@ def void_transaction(company_id, txn_id):
     return redirect(url_for('accounting.journal_list', company_id=company_id))
 
 
+@accounting.route('/<string:company_id>/accounting/journal/<int:txn_id>/delete', methods=['POST'])
+@login_required
+def delete_journal_entry(company_id, txn_id):
+    company = resolve_company(company_id)
+    company_id = company.id
+    is_ajax = _is_ajax()
+    try:
+        AccountingService.delete_journal_entry(company_id, txn_id)
+        if is_ajax:
+            return jsonify({'success': True, 'message': 'Asiento contable eliminado.'})
+        flash('Asiento contable eliminado.', 'success')
+    except (ValueError, Exception) as e:
+        if is_ajax:
+            return jsonify({'success': False, 'message': str(e)}), 400
+        flash(str(e), 'error')
+    return redirect(url_for('accounting.journal_list', company_id=company_id))
+
+
 # ─── Ledger ───────────────────────────────────────────────────────────────────
 
 @accounting.route('/<string:company_id>/accounting/ledger')

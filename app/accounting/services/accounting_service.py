@@ -442,24 +442,24 @@ class AccountingService:
         total_expenses = _period_expense_sum()
         net_income_all = round(total_revenue - total_expenses, 2)
 
-        # Cash balance = balance of first asset account named 'Caja'/'Bancos'/'Cash'
-        cash_account = Account.query.filter(
-            Account.company_id == company_id,
-            Account.name.ilike('%caja%') | Account.name.ilike('%banco%') | Account.name.ilike('%cash%')
-        ).first()
-        cash_balance = balances.get(cash_account.id, 0.0) if cash_account else 0.0
+        # Pre-compute an account map to avoid N+1 queries later
+        account_map = {acc.id: acc for acc in accounts}
+
+        # Cash balance = sum of all asset accounts named 'Caja'/'Bancos'/'Cash'
+        cash_balance = sum(
+            balances.get(acc.id, 0.0) for acc in accounts
+            if 'caja' in acc.name.lower() or 'banco' in acc.name.lower() or 'cash' in acc.name.lower()
+        )
 
         # AR / AP
-        ar_account = Account.query.filter(
-            Account.company_id == company_id,
-            Account.name.ilike('%cobrar%') | Account.name.ilike('%receivable%')
-        ).first()
-        ap_account = Account.query.filter(
-            Account.company_id == company_id,
-            Account.name.ilike('%pagar%') | Account.name.ilike('%payable%')
-        ).first()
-        ar_balance = balances.get(ar_account.id, 0.0) if ar_account else 0.0
-        ap_balance = balances.get(ap_account.id, 0.0) if ap_account else 0.0
+        ar_balance = sum(
+            balances.get(acc.id, 0.0) for acc in accounts
+            if 'cobrar' in acc.name.lower() or 'receivable' in acc.name.lower()
+        )
+        ap_balance = sum(
+            balances.get(acc.id, 0.0) for acc in accounts
+            if 'pagar' in acc.name.lower() or 'payable' in acc.name.lower()
+        )
 
         # Project spend from active expenses only
         expense_stats = (
@@ -519,7 +519,7 @@ class AccountingService:
                 'revenue': total_revenue,
                 'expense': total_expenses,
                 'asset': sum(v for aid, v in balances.items()
-                             if Account.query.get(aid) and Account.query.get(aid).type == AccountType.asset),
+                             if aid in account_map and account_map[aid].type == AccountType.asset),
             },
             'tag_totals': tag_totals,
             'project_spent': project_spent,
@@ -633,36 +633,36 @@ class AccountingService:
         db.session.add(expense)
         db.session.flush()  # get expense.id
 
-        # Create balanced journal entry
-        memo = description or f"Gasto — {expense_account.name}"
-        txn = _create_balanced_transaction(
-            company_id=company_id,
-            date=expense_date,
-            memo=memo,
-            transaction_type=TransactionType.expense,
-            entries=[
-                {
-                    'account_id': account_id,           # DR expense
-                    'debit': amount,
-                    'credit': 0.0,
-                    'description': memo,
-                    'project_id': project_id,
-                    'tags': selected_tags,
-                },
-                {
-                    'account_id': cash_account.id,       # CR cash
-                    'debit': 0.0,
-                    'credit': amount,
-                    'description': memo,
-                    'project_id': project_id,
-                    'tags': [],
-                },
-            ],
-            reference_type='Expense',
-            reference_id=expense.id,
-        )
-
-        expense.transaction_id = txn.id
+        if status != ExpenseStatus.draft:
+            # Create balanced journal entry
+            memo = description or f"Gasto — {expense_account.name}"
+            txn = _create_balanced_transaction(
+                company_id=company_id,
+                date=expense_date,
+                memo=memo,
+                transaction_type=TransactionType.expense,
+                entries=[
+                    {
+                        'account_id': account_id,           # DR expense
+                        'debit': amount,
+                        'credit': 0.0,
+                        'description': memo,
+                        'project_id': project_id,
+                        'tags': selected_tags,
+                    },
+                    {
+                        'account_id': cash_account.id,       # CR cash
+                        'debit': 0.0,
+                        'credit': amount,
+                        'description': memo,
+                        'project_id': project_id,
+                        'tags': [],
+                    },
+                ],
+                reference_type='Expense',
+                reference_id=expense.id,
+            )
+            expense.transaction_id = txn.id
         db.session.commit()
         return expense
 
@@ -1005,6 +1005,22 @@ class AccountingService:
         txn.voided_reason = reason or 'Anulado manualmente'
         db.session.commit()
         return txn
+
+    @staticmethod
+    def delete_journal_entry(company_id: int, txn_id: int) -> None:
+        """Soft-deletes a manual journal transaction completely."""
+        txn = Transaction.query.filter_by(
+            id=txn_id, company_id=company_id, transaction_type=TransactionType.journal
+        ).first_or_404()
+        
+        # Mark as voided so it's ignored by balance calculations
+        txn.is_voided = True
+        txn.voided_reason = 'Eliminado'
+        
+        # Soft-delete the transaction
+        txn.is_deleted = True
+        txn.deleted_at = datetime.now(UTC)
+        db.session.commit()
 
     # ── Ledger ─────────────────────────────────────────────────────────────
 
@@ -1592,22 +1608,25 @@ class AccountingService:
         expense.status = status
         expense.tags = selected_tags
 
-        memo = description or f"Gasto — {expense_account.name}"
-        txn = _create_balanced_transaction(
-            company_id=company_id,
-            date=expense_date,
-            memo=f"[EDIT] {memo}",
-            transaction_type=TransactionType.expense,
-            entries=[
-                {'account_id': account_id, 'debit': amount, 'credit': 0.0,
-                 'description': memo, 'project_id': project_id, 'tags': selected_tags},
-                {'account_id': cash_account.id, 'debit': 0.0, 'credit': amount,
-                 'description': memo, 'project_id': project_id, 'tags': []},
-            ],
-            reference_type='Expense',
-            reference_id=expense.id,
-        )
-        expense.transaction_id = txn.id
+        if status != ExpenseStatus.draft:
+            memo = description or f"Gasto — {expense_account.name}"
+            txn = _create_balanced_transaction(
+                company_id=company_id,
+                date=expense_date,
+                memo=f"[EDIT] {memo}",
+                transaction_type=TransactionType.expense,
+                entries=[
+                    {'account_id': account_id, 'debit': amount, 'credit': 0.0,
+                     'description': memo, 'project_id': project_id, 'tags': selected_tags},
+                    {'account_id': cash_account.id, 'debit': 0.0, 'credit': amount,
+                     'description': memo, 'project_id': project_id, 'tags': []},
+                ],
+                reference_type='Expense',
+                reference_id=expense.id,
+            )
+            expense.transaction_id = txn.id
+        else:
+            expense.transaction_id = None
         db.session.commit()
         return expense
 
