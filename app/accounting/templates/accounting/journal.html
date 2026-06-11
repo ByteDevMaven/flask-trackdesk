@@ -73,7 +73,7 @@
             {% if loop.first %}
             <td class="px-4 py-3 whitespace-nowrap align-top bg-white" rowspan="{{ rowspan }}">
               <div class="text-slate-500 font-medium">{{ txn.date.strftime('%d/%m/%Y') }}</div>
-              <span class="inline-flex px-2 py-0.5 mt-1 rounded-full text-[10px] font-semibold {{ badge_style }}">{{ txn.transaction_type.value.title() }}</span>
+              <span class="inline-flex px-2 py-0.5 mt-1 rounded-full text-[10px] font-semibold {{ badge_style }}">{{ txn.transaction_type.label_es }}</span>
               {% if txn.is_voided %}
               <div class="mt-1"><span class="inline-flex px-2 py-0.5 rounded-full bg-rose-100 text-rose-600 text-[10px] font-semibold">Anulado</span></div>
               {% endif %}

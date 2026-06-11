@@ -435,7 +435,7 @@ def journal_list(company_id):
             for entry in txn.entries:
                 rows.append([
                     txn.date.strftime('%Y-%m-%d') if txn.date else '',
-                    txn.transaction_type.value.title(),
+                    txn.transaction_type.label_es,
                     txn.memo,
                     txn.reference or '',
                     entry.account.name if entry.account else '',
@@ -645,7 +645,7 @@ def chart_of_accounts(company_id):
             rows.append([
                 acc.code or '',
                 acc.name,
-                acc.type.value.title(),
+                acc.type.label_es,
                 'Activa' if acc.is_active else 'Inactiva',
                 balances.get(acc.id, 0.0)
             ])

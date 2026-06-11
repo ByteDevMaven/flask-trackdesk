@@ -7,6 +7,16 @@ class AccountType(enum.Enum):
     revenue = 'revenue'
     expense = 'expense'
 
+    @property
+    def label_es(self):
+        return {
+            'asset': 'Activo',
+            'liability': 'Pasivo',
+            'equity': 'Patrimonio',
+            'revenue': 'Ingreso',
+            'expense': 'Gasto'
+        }.get(self.value, self.value.title())
+
 class DocumentType(enum.Enum):
     quote = 'quote'
     invoice = 'invoice'
@@ -132,9 +142,27 @@ class ExpenseStatus(enum.Enum):
     approved = 'approved'
     paid = 'paid'
 
+    @property
+    def label_es(self):
+        return {
+            'draft': 'Borrador',
+            'approved': 'Aprobado',
+            'paid': 'Pagado'
+        }.get(self.value, self.value.title())
+
 class TransactionType(enum.Enum):
     journal = 'journal'
     expense = 'expense'
     income = 'income'
     payment = 'payment'
     transfer = 'transfer'
+
+    @property
+    def label_es(self):
+        return {
+            'journal': 'Diario',
+            'expense': 'Gasto',
+            'income': 'Ingreso',
+            'payment': 'Pago',
+            'transfer': 'Transferencia'
+        }.get(self.value, self.value.title())
