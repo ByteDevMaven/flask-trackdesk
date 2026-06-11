@@ -765,11 +765,11 @@ def trial_balance(company_id):
     if export == 'excel':
         headers = ['Cuenta', 'Débito', 'Crédito']
         rows = []
-        for line in data['trial_balance']:
+        for line in data['rows']:
             rows.append([
-                line['account_name'],
+                line['account'].name,
                 line['debit'],
-                line['credit']
+                line['credit'],
             ])
         rows.append(['Total', data['total_debit'], data['total_credit']])
         from app.utils import export_excel_response
@@ -811,18 +811,8 @@ def reports(company_id):
     if not end_date:
         end_date = datetime.now(UTC).strftime('%Y-%m-%d')
 
-    if export == 'csv':
-        return AccountingService.export_report_csv(company_id, report_type, report_data, total, start_date, end_date)
-
     if export == 'excel':
-        headers = ['Categoría', 'Cuenta', 'Total']
-        rows = []
-        for category, accounts in report_data.items():
-            for acc in accounts:
-                rows.append([category, acc['name'], acc['balance']])
-        rows.append(['Total General', '', total])
-        from app.utils import export_excel_response
-        return export_excel_response(f'Reporte_{report_type}_{company.name}', headers, rows)
+        return AccountingService.export_report_excel(company_id, report_type, report_data, total, start_date, end_date)
 
     return render_template(
         'accounting/reports.html',
@@ -898,10 +888,10 @@ def projects_list(company_id):
             p = pdata['project']
             rows.append([
                 p.name,
-                p.status.value.title(),
-                pdata['revenue'],
-                pdata['expenses'],
-                pdata['net']
+                p.status.title() if isinstance(p.status, str) else p.status.value.title(),
+                pdata['income_total'],
+                pdata['expense_total'],
+                pdata['net'],
             ])
         from app.utils import export_excel_response
         return export_excel_response(f'Proyectos_{company.name}', headers, rows)

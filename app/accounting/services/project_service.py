@@ -1,9 +1,7 @@
 """Project CRUD, tagging, and reporting service."""
-import csv
-import io
+
 from datetime import UTC, datetime
 
-from flask import Response
 from flask_login import current_user
 from sqlalchemy import func, select
 from sqlalchemy.orm import joinedload
@@ -351,40 +349,41 @@ class ProjectService:
         return report_data, total
 
     @staticmethod
-    def export_report_csv(company_id: int, report_type: str,
-                          report_data: dict, total,
-                          start_date: str, end_date: str) -> Response:
-        si = io.StringIO()
-        cw = csv.writer(si)
+    def export_report_excel(company_id: int, report_type: str,
+                            report_data: dict, total,
+                            start_date: str, end_date: str):
+        
+        headers = []
+        rows = []
 
         if report_type == 'income_statement':
-            cw.writerow(['Tipo', 'Cuenta', 'Monto'])
+            headers = ['Tipo', 'Cuenta', 'Monto']
             for acc_name, amount in report_data.get('revenue', {}).items():
-                cw.writerow(['Ingreso', acc_name, f"{amount:.2f}"])
+                rows.append(['Ingreso', acc_name, amount])
             for acc_name, amount in report_data.get('expense', {}).items():
-                cw.writerow(['Gasto', acc_name, f"{amount:.2f}"])
-            cw.writerow([])
-            cw.writerow(['Resultado Neto', '', f"{total:.2f}"])
+                rows.append(['Gasto', acc_name, amount])
+            rows.append([])
+            rows.append(['Resultado Neto', '', total])
 
         elif report_type == 'balance_sheet':
-            cw.writerow(['Tipo', 'Cuenta', 'Monto'])
+            headers = ['Tipo', 'Cuenta', 'Monto']
             for acc_name, amount in report_data.get('asset', {}).items():
-                cw.writerow(['Activo', acc_name, f"{amount:.2f}"])
+                rows.append(['Activo', acc_name, amount])
             for acc_name, amount in report_data.get('liability', {}).items():
-                cw.writerow(['Pasivo', acc_name, f"{amount:.2f}"])
+                rows.append(['Pasivo', acc_name, amount])
             for acc_name, amount in report_data.get('equity', {}).items():
-                cw.writerow(['Patrimonio', acc_name, f"{amount:.2f}"])
-            cw.writerow([])
-            cw.writerow(['Total Activos', '', f"{total['assets']:.2f}"])
-            cw.writerow(['Total Pasivos + Patrimonio', '', f"{total['liabilities_and_equity']:.2f}"])
+                rows.append(['Patrimonio', acc_name, amount])
+            rows.append([])
+            rows.append(['Total Activos', '', total['assets']])
+            rows.append(['Total Pasivos + Patrimonio', '', total['liabilities_and_equity']])
 
         elif report_type == 'cash_flow':
-            cw.writerow(['Sección', 'Concepto', 'Monto'])
+            headers = ['Sección', 'Concepto', 'Monto']
             for sec, items in report_data.items():
                 for concept, amount in items.items():
-                    cw.writerow([sec.title(), concept, f"{amount:.2f}"])
-            cw.writerow([])
-            cw.writerow(['Flujo Neto', '', f"{total:.2f}"])
+                    rows.append([sec.title(), concept, amount])
+            rows.append([])
+            rows.append(['Flujo Neto', '', total])
 
         rep = Report(
             company_id=company_id,
@@ -395,8 +394,5 @@ class ProjectService:
         db.session.add(rep)
         db.session.commit()
 
-        return Response(
-            si.getvalue(),
-            mimetype='text/csv',
-            headers={'Content-disposition': f'attachment; filename={report_type}_{end_date}.csv'},
-        )
+        from app.utils import export_excel_response
+        return export_excel_response(f'{report_type}_{end_date}', headers, rows)
