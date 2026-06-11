@@ -62,6 +62,27 @@ def expenses_list(company_id):
         page=page,
     )
 
+    export = request.args.get('export', '').strip()
+    if export == 'excel':
+        export_pagination = AccountingService.get_expenses(
+            company_id, search=search, account_id=int(account_id) if account_id else None,
+            status=status, category=category, start_date=start_date, end_date=end_date, page=1, per_page=100000
+        )
+        headers = ['Fecha', 'Descripción', 'Vendedor', 'Cuenta', 'Categoría', 'Estado', 'Monto']
+        rows = [
+            [
+                exp.date.strftime('%Y-%m-%d') if exp.date else '',
+                exp.description,
+                exp.vendor_display,
+                exp.account.name if exp.account else '',
+                exp.category or '',
+                exp.status.value,
+                exp.amount
+            ] for exp in export_pagination.items
+        ]
+        from app.utils import export_excel_response
+        return export_excel_response(f'Gastos_{company.name}', headers, rows)
+
     accounts = (
         Account.query
         .filter_by(company_id=company_id, is_active=True, type=AccountType.expense)
@@ -228,6 +249,25 @@ def income_list(company_id):
         company_id, search=search, start_date=start_date, end_date=end_date, page=page
     )
 
+    export = request.args.get('export', '').strip()
+    if export == 'excel':
+        export_pagination = AccountingService.get_income_transactions(
+            company_id, search=search, start_date=start_date, end_date=end_date, page=1, per_page=100000
+        )
+        headers = ['Fecha', 'Descripción', 'Cliente', 'Cuenta Ingreso', 'Referencia', 'Monto']
+        rows = [
+            [
+                txn.date.strftime('%Y-%m-%d') if txn.date else '',
+                txn.memo,
+                txn.client_name or '',
+                txn.entries[1].account.name if len(txn.entries) > 1 and txn.entries[1].account else '',
+                txn.reference or '',
+                txn.total_amount()
+            ] for txn in export_pagination.items
+        ]
+        from app.utils import export_excel_response
+        return export_excel_response(f'Ingresos_{company.name}', headers, rows)
+
     return render_template(
         'accounting/income.html',
         company=company,
@@ -384,6 +424,27 @@ def journal_list(company_id):
         company_id, search=search, start_date=start_date, end_date=end_date, page=page
     )
 
+    export = request.args.get('export', '').strip()
+    if export == 'excel':
+        export_pagination = AccountingService.get_journal_entries(
+            company_id, search=search, start_date=start_date, end_date=end_date, page=1, per_page=100000
+        )
+        headers = ['Fecha', 'Tipo', 'Descripción', 'Referencia', 'Cuenta', 'Débito', 'Crédito']
+        rows = []
+        for txn in export_pagination.items:
+            for entry in txn.entries:
+                rows.append([
+                    txn.date.strftime('%Y-%m-%d') if txn.date else '',
+                    txn.transaction_type.value.title(),
+                    txn.memo,
+                    txn.reference or '',
+                    entry.account.name if entry.account else '',
+                    entry.debit,
+                    entry.credit
+                ])
+        from app.utils import export_excel_response
+        return export_excel_response(f'Libro_Diario_{company.name}', headers, rows)
+
     balances = AccountingService.get_account_balances_bulk(company_id)
 
     return render_template(
@@ -535,6 +596,27 @@ def ledger(company_id):
         page=page,
     )
 
+    export = request.args.get('export', '').strip()
+    if export == 'excel':
+        export_data = AccountingService.get_ledger_page(
+            company_id, account_id=int(account_id_str) if account_id_str else None,
+            start_date=start_date, end_date=end_date, page=1, per_page=100000
+        )
+        headers = ['Fecha', 'Cuenta', 'Transacción', 'Referencia', 'Débito', 'Crédito', 'Saldo Móvil']
+        rows = []
+        for entry in export_data['pagination'].items:
+            rows.append([
+                entry.transaction.date.strftime('%Y-%m-%d') if entry.transaction and entry.transaction.date else '',
+                entry.account.name if entry.account else '',
+                entry.transaction.memo if entry.transaction else '',
+                entry.transaction.reference if entry.transaction else '',
+                entry.debit,
+                entry.credit,
+                entry.running_balance
+            ])
+        from app.utils import export_excel_response
+        return export_excel_response(f'Libro_Mayor_{company.name}', headers, rows)
+
     return render_template(
         'accounting/ledger.html',
         company=company,
@@ -554,6 +636,21 @@ def chart_of_accounts(company_id):
     company = Company.query.get_or_404(company_id)
     accounts = Account.query.filter_by(company_id=company_id).order_by(Account.type, Account.code, Account.name).all()
     balances = AccountingService.get_account_balances_bulk(company_id)
+
+    export = request.args.get('export', '').strip()
+    if export == 'excel':
+        headers = ['Código', 'Nombre', 'Tipo', 'Estado', 'Saldo']
+        rows = []
+        for acc in accounts:
+            rows.append([
+                acc.code or '',
+                acc.name,
+                acc.type.value.title(),
+                'Activa' if acc.is_active else 'Inactiva',
+                balances.get(acc.id, 0.0)
+            ])
+        from app.utils import export_excel_response
+        return export_excel_response(f'Catalogo_Cuentas_{company.name}', headers, rows)
 
     return render_template(
         'accounting/chart_of_accounts.html',
@@ -664,6 +761,20 @@ def trial_balance(company_id):
     as_of_date = request.args.get('as_of', '').strip()
     data = AccountingService.get_trial_balance(company_id, as_of_date)
 
+    export = request.args.get('export', '').strip()
+    if export == 'excel':
+        headers = ['Cuenta', 'Débito', 'Crédito']
+        rows = []
+        for line in data['trial_balance']:
+            rows.append([
+                line['account_name'],
+                line['debit'],
+                line['credit']
+            ])
+        rows.append(['Total', data['total_debit'], data['total_credit']])
+        from app.utils import export_excel_response
+        return export_excel_response(f'Balanza_de_Comprobacion_{company.name}', headers, rows)
+
     return render_template(
         'accounting/trial_balance.html',
         company=company,
@@ -702,6 +813,16 @@ def reports(company_id):
 
     if export == 'csv':
         return AccountingService.export_report_csv(company_id, report_type, report_data, total, start_date, end_date)
+
+    if export == 'excel':
+        headers = ['Categoría', 'Cuenta', 'Total']
+        rows = []
+        for category, accounts in report_data.items():
+            for acc in accounts:
+                rows.append([category, acc['name'], acc['balance']])
+        rows.append(['Total General', '', total])
+        from app.utils import export_excel_response
+        return export_excel_response(f'Reporte_{report_type}_{company.name}', headers, rows)
 
     return render_template(
         'accounting/reports.html',
@@ -768,6 +889,22 @@ def projects_list(company_id):
     from app.models import Company
     company = Company.query.get_or_404(company_id)
     projects_data = AccountingService.get_projects_list(company_id)
+
+    export = request.args.get('export', '').strip()
+    if export == 'excel':
+        headers = ['Nombre', 'Estado', 'Ingresos', 'Gastos', 'Rentabilidad']
+        rows = []
+        for pdata in projects_data:
+            p = pdata['project']
+            rows.append([
+                p.name,
+                p.status.value.title(),
+                pdata['revenue'],
+                pdata['expenses'],
+                pdata['net']
+            ])
+        from app.utils import export_excel_response
+        return export_excel_response(f'Proyectos_{company.name}', headers, rows)
     return render_template(
         'accounting/projects.html',
         company=company,

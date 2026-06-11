@@ -10,6 +10,11 @@
   <header class="bg-white border-b border-slate-200 px-4 md:px-6 py-3 flex items-center justify-between flex-shrink-0">
     <h1 class="text-base font-semibold text-slate-800">Plan de Cuentas</h1>
     <div class="flex items-center gap-2">
+      <a href="{{ url_for('accounting.chart_of_accounts', company_id=company.id, export='excel') }}"
+        class="flex items-center gap-2 px-4 py-2 border border-slate-200 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors shadow-sm">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        Exportar a Excel
+      </a>
       <form method="POST" action="{{ url_for('accounting.generate_default_accounts', company_id=company.id) }}" class="inline">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <button type="submit" class="px-3 py-2 border border-slate-200 rounded-lg text-sm text-slate-600 hover:bg-slate-50 transition-colors">
@@ -51,19 +56,19 @@
           {% for acct in group %}
           {% set bal = balances.get(acct.id, 0.0) %}
           <tr class="hover:bg-slate-50/80 transition-colors group/row">
-            <td class="px-4 md:px-6 py-3 text-slate-400 font-mono text-xs">{{ acct.code or '—' }}</td>
-            <td class="px-4 md:px-6 py-3 font-medium text-slate-800">{{ acct.name }}</td>
-            <td class="px-4 md:px-6 py-3 text-xs text-slate-500 max-w-xs truncate">{{ acct.description or '' }}</td>
-            <td class="px-4 md:px-6 py-3 text-right font-mono font-bold
+            <td class="px-4 py-3 text-slate-400 font-mono text-xs">{{ acct.code or '—' }}</td>
+            <td class="px-4 py-3 font-medium text-slate-800">{{ acct.name }}</td>
+            <td class="px-4 py-3 text-xs text-slate-500 max-w-xs truncate">{{ acct.description or '' }}</td>
+            <td class="px-4 py-3 text-right font-mono font-bold
               {% if bal > 0 %}text-emerald-700{% elif bal < 0 %}text-rose-600{% else %}text-slate-400{% endif %}">
               {{ company.currency }}{{ "{:,.2f}".format(bal) }}
             </td>
-            <td class="px-4 md:px-6 py-3">
+            <td class="px-4 py-3">
               {% if not acct.is_active %}
               <span class="inline-flex px-2 py-0.5 rounded-full bg-slate-100 text-slate-400 text-xs">Inactiva</span>
               {% endif %}
             </td>
-            <td class="px-4 md:px-6 py-3">
+            <td class="px-4 py-3">
               <div class="flex items-center justify-end gap-1 opacity-0 group-hover/row:opacity-100 transition-opacity">
                 <button data-action="open-drawer"
                   data-url="{{ url_for('accounting.edit_account', company_id=company.id, account_id=acct.id) }}"

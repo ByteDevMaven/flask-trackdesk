@@ -12,3 +12,34 @@ def resolve_company(company_id_or_slug):
         return CompanyService.get_company_for_user(int(company_id_or_slug), current_user)
     else:
         return CompanyService.get_company_by_slug(company_id_or_slug, current_user)
+
+def export_excel_response(filename: str, headers: list[str], rows: list[list]):
+    """
+    Generates an Excel file response.
+    """
+    import openpyxl
+    from io import BytesIO
+    from flask import Response
+    from openpyxl.styles import Font
+
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    
+    # Write headers
+    ws.append(headers)
+    for cell in ws[1]:
+        cell.font = Font(bold=True)
+        
+    # Write rows
+    for row in rows:
+        ws.append(row)
+        
+    out = BytesIO()
+    wb.save(out)
+    out.seek(0)
+    
+    return Response(
+        out.getvalue(),
+        mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        headers={'Content-disposition': f'attachment; filename={filename}.xlsx'}
+    )

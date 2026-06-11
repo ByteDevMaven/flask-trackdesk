@@ -9,10 +9,10 @@
 <div class="flex flex-col h-full overflow-hidden bg-slate-50">
   <header class="bg-white border-b border-slate-200 px-4 md:px-6 py-3 flex items-center justify-between flex-shrink-0">
     <h1 class="text-base font-semibold text-slate-800">Reportes Financieros</h1>
-    <a href="{{ url_for('accounting.reports', company_id=company.id, report_type=report_type, start_date=start_date, end_date=end_date, export='csv') }}"
-      class="flex items-center gap-2 px-3 py-2 border border-slate-200 bg-white rounded-lg text-sm text-slate-600 hover:bg-slate-50 transition-colors shadow-sm">
+    <a href="{{ url_for('accounting.reports', company_id=company.id, report_type=report_type, start_date=start_date, end_date=end_date, export='excel', **request.args) }}"
+      class="flex items-center gap-2 px-4 py-2 border border-slate-200 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors shadow-sm">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-      Exportar CSV
+      Exportar a Excel
     </a>
   </header>
 
