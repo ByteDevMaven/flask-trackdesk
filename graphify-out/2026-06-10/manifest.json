@@ -15,8 +15,8 @@
     "semantic_hash": "575eea8e049486e005f9383dd12f3b9f"
   },
   "app/accounting/routes.py": {
-    "mtime": 1781140546.985574,
-    "ast_hash": "32f2fa18268e4a5b06725aca18a9ab96",
+    "mtime": 1781147621.233781,
+    "ast_hash": "cfd5b0c08c9636bdc37beac0e0bccffe",
     "semantic_hash": ""
   },
   "app/accounting/services/__init__.py": {
@@ -295,8 +295,8 @@
     "semantic_hash": "e5a7414b5820a2e6546c0cb98dad9a3c"
   },
   "app/models/enums.py": {
-    "mtime": 1780870120.0317607,
-    "ast_hash": "57323f25d01cd0c920d2819bd945d16d",
+    "mtime": 1781147584.331258,
+    "ast_hash": "0acb092ef4118171a17f9df89203e23c",
     "semantic_hash": ""
   },
   "app/models/expense.py": {
@@ -675,8 +675,8 @@
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/dashboard.html": {
-    "mtime": 1781053385.165212,
-    "ast_hash": "6bf2ec5116ee7902c534438c3cc7c4cd",
+    "mtime": 1781147636.5033512,
+    "ast_hash": "d9e9e388ad9d20f3310de32c158624af",
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/expense_form.html": {
@@ -685,8 +685,8 @@
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/ledger.html": {
-    "mtime": 1781146959.86897,
-    "ast_hash": "65e90a71ceec641c764625ff7a78a95f",
+    "mtime": 1781147668.106119,
+    "ast_hash": "2279014e6e1d5b8ffaa31deb8402512c",
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/partials/account_form.html": {
@@ -995,8 +995,8 @@
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/journal.html": {
-    "mtime": 1781146971.1974366,
-    "ast_hash": "4ca0e6fca60049918be51e206bc35904",
+    "mtime": 1781147637.33409,
+    "ast_hash": "efb792536a4b210a2c24e0f35035b731",
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/partials/_nav.html": {

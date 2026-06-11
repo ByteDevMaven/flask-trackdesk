@@ -25,8 +25,8 @@
     "semantic_hash": "06a79a348fc6371a64b29f70f6b16f83"
   },
   "app/accounting/services/accounting_service.py": {
-    "mtime": 1781139523.790783,
-    "ast_hash": "50bbca323676d24b2cd9063ba2264b2a",
+    "mtime": 1781148452.9718122,
+    "ast_hash": "7b603ec1d1b832cb280d0c8db5f7554f",
     "semantic_hash": ""
   },
   "app/auth/__init__.py": {
@@ -1082,6 +1082,46 @@
   "migrations/versions/6af85a17e660_add_project_id_to_document.py": {
     "mtime": 1780968364.4489372,
     "ast_hash": "9292f2a033a717d20f76d7ad34d585b1",
+    "semantic_hash": ""
+  },
+  "app/accounting/services/_balance.py": {
+    "mtime": 1781148250.4653869,
+    "ast_hash": "9836d999a60d1acd1695e76ec0d6b52b",
+    "semantic_hash": ""
+  },
+  "app/accounting/services/_helpers.py": {
+    "mtime": 1781148206.8808446,
+    "ast_hash": "3f053b7148bd4ba7c3171a8be1548889",
+    "semantic_hash": ""
+  },
+  "app/accounting/services/account_service.py": {
+    "mtime": 1781148439.1605835,
+    "ast_hash": "d5103585727067eae7d8a583275f1891",
+    "semantic_hash": ""
+  },
+  "app/accounting/services/dashboard_service.py": {
+    "mtime": 1781148271.3510437,
+    "ast_hash": "4f671fc478e61cb112d31f813dd2fc5e",
+    "semantic_hash": ""
+  },
+  "app/accounting/services/expense_service.py": {
+    "mtime": 1781148308.956571,
+    "ast_hash": "f61eb7873d81829f6e0a0d67d454364e",
+    "semantic_hash": ""
+  },
+  "app/accounting/services/income_service.py": {
+    "mtime": 1781148334.6442392,
+    "ast_hash": "1887e6ea272fd33a87a1b7a04082fca1",
+    "semantic_hash": ""
+  },
+  "app/accounting/services/journal_service.py": {
+    "mtime": 1781148380.993162,
+    "ast_hash": "fed23ff3805fb46856ad2ad71be57ce7",
+    "semantic_hash": ""
+  },
+  "app/accounting/services/project_service.py": {
+    "mtime": 1781148441.1829927,
+    "ast_hash": "c907652a47371788db2f47813c711f3b",
     "semantic_hash": ""
   }
 }
