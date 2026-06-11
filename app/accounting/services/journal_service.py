@@ -93,9 +93,12 @@ class JournalService:
     @staticmethod
     def update_journal_entry(company_id: int, txn_id: int, data) -> Transaction:
         """Void old entry and post a corrected replacement."""
-        old_txn = Transaction.query.filter_by(
-            id=txn_id, company_id=company_id, transaction_type=TransactionType.journal
-        ).first_or_404()
+        old_txn = Transaction.query.filter_by(id=txn_id, company_id=company_id).first_or_404()
+        if old_txn.transaction_type != TransactionType.journal:
+            raise ValueError(
+                'Solo se pueden editar asientos manuales desde el Libro Diario. '
+                'Los gastos e ingresos deben editarse en sus secciones correspondientes.'
+            )
         if old_txn.is_voided:
             raise ValueError('No se puede editar una transacción que ya está anulada.')
 
@@ -161,9 +164,12 @@ class JournalService:
     @staticmethod
     def delete_journal_entry(company_id: int, txn_id: int) -> None:
         """Soft-delete a manual journal transaction."""
-        txn = Transaction.query.filter_by(
-            id=txn_id, company_id=company_id, transaction_type=TransactionType.journal
-        ).first_or_404()
+        txn = Transaction.query.filter_by(id=txn_id, company_id=company_id).first_or_404()
+        if txn.transaction_type != TransactionType.journal:
+            raise ValueError(
+                'Solo se pueden eliminar asientos manuales desde el Libro Diario. '
+                'Anule o edite gastos e ingresos desde sus secciones correspondientes.'
+            )
         txn.is_voided = True
         txn.voided_reason = 'Eliminado'
         txn.is_deleted = True

@@ -1,5 +1,6 @@
-<form method="POST" action="{{ url_for('accounting.edit_journal_entry', company_id=company.id, txn_id=transaction.id) if transaction else url_for('accounting.create_journal_entry', company_id=company.id) }}"
-  data-drawer-form data-success-message="{{ 'Asiento contable actualizado' if transaction else 'Asiento contable creado' }} exitosamente">
+<form method="POST" action="{{ url_for('accounting.edit_journal_entry', company_id=company_url_id|default(company.id), txn_id=transaction.id) if transaction else url_for('accounting.create_journal_entry', company_id=company_url_id|default(company.id)) }}"
+  data-drawer-form data-success-message="{{ 'Asiento contable actualizado' if transaction else 'Asiento contable creado' }} exitosamente"
+  onsubmit="return reindexJournalLines()">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
   <div class="p-4 md:p-6 space-y-4">
     <div>
@@ -115,6 +116,27 @@
 </form>
 
 <script>
+function reindexJournalLines() {
+  try {
+    // Reindex all journal lines to ensure sequential indices starting from 0
+    const lines = document.querySelectorAll('.journal-line');
+    lines.forEach((line, idx) => {
+      line.querySelectorAll('[name]').forEach(field => {
+        const name = field.getAttribute('name');
+        if (name && name.startsWith('lines[')) {
+          // Replace the index in the field name (e.g., lines[5][debit] -> lines[0][debit])
+          const newName = name.replace(/lines\[\d+\]/, `lines[${idx}]`);
+          field.setAttribute('name', newName);
+        }
+      });
+    });
+    return true;
+  } catch (error) {
+    console.error('Error reindexing journal lines:', error);
+    return true; // Allow submission even if reindexing fails
+  }
+}
+
 (function() {
   let lineCount = document.querySelectorAll('.journal-line').length;
   const accountOptions = `{% for acct in accounts %}<option value="{{ acct.id }}">{% if acct.code %}{{ acct.code }} - {% endif %}{{ acct.name }}</option>{% endfor %}`;

@@ -4,7 +4,7 @@ from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required
 
 from app.models import Account, Project, Tag, Transaction
-from app.models.enums import AccountType
+from app.models.enums import AccountType, TransactionType
 from . import accounting
 from .services import AccountingService
 
@@ -16,6 +16,11 @@ def _sidebar_ctx(company_id: int) -> dict:
         'company_id': company_id,
         'AccountType': AccountType,
     }
+
+
+def _company_url_id(company) -> str:
+    """URL segment for company-scoped routes (slug preferred, else numeric id)."""
+    return company.slug if company.slug else str(company.id)
 
 
 def _is_ajax() -> bool:
@@ -447,11 +452,22 @@ def journal_list(company_id):
 
     balances = AccountingService.get_account_balances_bulk(company_id)
 
+    from app.models import Expense
+    expense_id_by_txn = {
+        e.transaction_id: e.id
+        for e in Expense.query.filter(
+            Expense.company_id == company_id,
+            Expense.transaction_id.isnot(None),
+        ).all()
+    }
+
     return render_template(
         'accounting/journal.html',
         company=company,
+        company_url_id=_company_url_id(company),
         pagination=pagination,
         transactions=pagination.items,
+        expense_id_by_txn=expense_id_by_txn,
         balances=balances,
         search=search,
         start_date=start_date,
@@ -467,6 +483,7 @@ def create_journal_entry(company_id):
     company_id = company.id
     from app.models import Company
     company = Company.query.get_or_404(company_id)
+    company_url_id = _company_url_id(company)
 
     if request.method == 'POST':
         is_ajax = _is_ajax()
@@ -475,7 +492,7 @@ def create_journal_entry(company_id):
             if is_ajax:
                 return jsonify({'success': True, 'message': 'Asiento contable creado.'})
             flash('Asiento contable creado.', 'success')
-            return redirect(url_for('accounting.journal_list', company_id=company_id))
+            return redirect(url_for('accounting.journal_list', company_id=company_url_id))
         except ValueError as e:
             if is_ajax:
                 return jsonify({'success': False, 'message': str(e)}), 400
@@ -488,6 +505,7 @@ def create_journal_entry(company_id):
     accounts = Account.query.filter_by(company_id=company_id, is_active=True).order_by(Account.type, Account.code, Account.name).all()
     ctx = dict(
         company=company,
+        company_url_id=company_url_id,
         accounts=accounts,
         now=datetime.now(UTC),
         **_sidebar_ctx(company_id),
@@ -504,28 +522,41 @@ def edit_journal_entry(company_id, txn_id):
     company_id = company.id
     from app.models import Company, Transaction
     company = Company.query.get_or_404(company_id)
+    company_url_id = _company_url_id(company)
     transaction = Transaction.query.filter_by(id=txn_id, company_id=company_id).first_or_404()
+
+    if transaction.transaction_type != TransactionType.journal:
+        msg = (
+            'Solo se pueden editar asientos manuales aquí. '
+            'Edite gastos e ingresos desde Gastos o Ingresos.'
+        )
+        if _is_ajax():
+            return jsonify({'success': False, 'message': msg}), 400
+        flash(msg, 'error')
+        return redirect(url_for('accounting.journal_list', company_id=company_url_id))
 
     if request.method == 'POST':
         is_ajax = _is_ajax()
         try:
-            AccountingService.update_journal_entry(company_id, txn_id, request.form)
+            updated_txn = AccountingService.update_journal_entry(company_id, txn_id, request.form)
             if is_ajax:
                 return jsonify({'success': True, 'message': 'Asiento contable actualizado.'})
             flash('Asiento contable actualizado.', 'success')
-            return redirect(url_for('accounting.journal_list', company_id=company_id))
+            return redirect(url_for('accounting.journal_list', company_id=company_url_id))
         except ValueError as e:
             if is_ajax:
                 return jsonify({'success': False, 'message': str(e)}), 400
             flash(str(e), 'error')
         except Exception as e:
             if is_ajax:
-                return jsonify({'success': False, 'message': f'Error: {e}'}), 500
-            flash(f'Error: {e}', 'error')
-
+                return jsonify({'success': False, 'message': f'Error al actualizar: {str(e)}'}), 500
+            flash(f'Error al actualizar el asiento: {str(e)}', 'error')
+    
+    # GET request or error recovery - render form with existing data
     accounts = Account.query.filter_by(company_id=company_id, is_active=True).order_by(Account.type, Account.code, Account.name).all()
     ctx = dict(
         company=company,
+        company_url_id=company_url_id,
         accounts=accounts,
         transaction=transaction,
         now=datetime.now(UTC),
