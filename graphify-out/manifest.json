@@ -815,19 +815,19 @@
     "semantic_hash": "ff9b7809e1e029721b30423542b6eef6"
   },
   "app/inventory/templates/inventory/form.html": {
-    "mtime": 1780891625.4721684,
-    "ast_hash": "f4e9e80d4558ef697d9beb0c9905cf3c",
-    "semantic_hash": "f4e9e80d4558ef697d9beb0c9905cf3c"
+    "mtime": 1781247095.2060366,
+    "ast_hash": "b59829bc098c3acd867d542bbc13692b",
+    "semantic_hash": ""
   },
   "app/inventory/templates/inventory/index.html": {
-    "mtime": 1780891663.7113721,
-    "ast_hash": "6fe2b6a3cce5efddac3a74e02850afab",
-    "semantic_hash": "6fe2b6a3cce5efddac3a74e02850afab"
+    "mtime": 1781246948.735392,
+    "ast_hash": "131011c798d7883d4b9787822a9b96a7",
+    "semantic_hash": ""
   },
   "app/inventory/templates/inventory/movements.html": {
-    "mtime": 1780891663.7123716,
-    "ast_hash": "c802f1997eb5ab300934dc4cd7e2a030",
-    "semantic_hash": "c802f1997eb5ab300934dc4cd7e2a030"
+    "mtime": 1781247031.6568246,
+    "ast_hash": "436d0e202313dc982a7a121bf83e231d",
+    "semantic_hash": ""
   },
   "app/inventory/templates/inventory/view.html": {
     "mtime": 1780891625.4810784,
@@ -885,9 +885,9 @@
     "semantic_hash": "2baa6c504f7d59476b7e01e517ded6a7"
   },
   "app/templates/base.html": {
-    "mtime": 1780892228.934493,
-    "ast_hash": "6889c4d5a0f8256e962db38c34c85ed4",
-    "semantic_hash": "6889c4d5a0f8256e962db38c34c85ed4"
+    "mtime": 1781247798.3321705,
+    "ast_hash": "5f70215298a08e6a22bb73c68986e0bd",
+    "semantic_hash": ""
   },
   "app/templates/blank.html": {
     "mtime": 1779222808.4773867,
@@ -920,9 +920,9 @@
     "semantic_hash": "57bd1c7e3f12262beb5652d3f79c2556"
   },
   "app/warehouses/templates/warehouses/index.html": {
-    "mtime": 1780891663.730771,
-    "ast_hash": "80f332787ed52da1cdc2f0f3a51e1a7c",
-    "semantic_hash": "80f332787ed52da1cdc2f0f3a51e1a7c"
+    "mtime": 1781247745.160091,
+    "ast_hash": "893606a0f2b6b27a1bdada624ca205b4",
+    "semantic_hash": ""
   },
   "requirements.txt": {
     "mtime": 1780887050.968993,
@@ -1128,5 +1128,10 @@
     "mtime": 1781237560.3981605,
     "ast_hash": "0f9acc193c0f427c07aeae10277a845d",
     "semantic_hash": "0f9acc193c0f427c07aeae10277a845d"
+  },
+  "app/inventory/templates/inventory/partials/_nav.html": {
+    "mtime": 1781247563.9413238,
+    "ast_hash": "179b7d801d684b96f7513dcc9bb89411",
+    "semantic_hash": ""
   }
 }
