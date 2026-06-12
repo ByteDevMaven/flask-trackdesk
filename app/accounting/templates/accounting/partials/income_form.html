@@ -22,17 +22,10 @@
       </select>
     </div>
     <div>
-      <label class="block text-sm font-medium text-slate-700 mb-1">Cuenta Destino (Débito) <span class="text-rose-500">*</span></label>
-      <select name="debit_account_id" required class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
-        <option value="">Seleccionar cuenta destino...</option>
-        {% for acct in asset_accounts %}
-        <option value="{{ acct.id }}"
-          {{ 'selected' if (debit_entry and debit_entry.account_id == acct.id) or (not debit_entry and ('caja' in acct.name.lower() or 'banco' in acct.name.lower() or 'cash' in acct.name.lower())) }}>
-          {% if acct.code %}[{{ acct.code }}] {% endif %}{{ acct.name }}
-        </option>
-        {% endfor %}
-      </select>
-      <p class="text-xs text-slate-400 mt-1">Cuenta donde se recibe el dinero (Caja, Bancos, AR).</p>
+      <p class="text-xs text-slate-500 bg-emerald-50 p-2 rounded-lg border border-emerald-200">
+        <span class="font-semibold">Cuenta destino automática:</span>
+        el ingreso se registra contra la cuenta de efectivo Caja/Bancos configurada para la empresa.
+      </p>
     </div>
     <div>
       <label class="block text-sm font-medium text-slate-700 mb-1">Monto <span class="text-rose-500">*</span></label>
@@ -78,7 +71,7 @@
     <div class="border-t border-slate-200 pt-4 mt-2">
       <p class="text-xs text-slate-500 mb-3 bg-emerald-50 p-2 rounded-lg border border-emerald-200">
         <span class="font-semibold">Asiento automático:</span>
-        DR → Cuenta Destino | CR → Cuenta de Ingresos seleccionada
+        DR → Caja/Bancos | CR → Cuenta de Ingresos seleccionada
       </p>
       <button type="submit" class="w-full flex justify-center items-center gap-2 px-4 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
         {{ 'Actualizar Ingreso' if transaction else 'Registrar Ingreso' }}
