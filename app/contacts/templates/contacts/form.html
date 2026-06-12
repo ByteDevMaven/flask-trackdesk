@@ -36,7 +36,6 @@
           %}>Cliente/Proveedor</option>
         <option value="lead" {% if contact and contact.type.name=='lead' %}selected{% endif %}>Cliente Potencial
         </option>
-        <option value="employee" {% if contact and contact.type.name=='employee' %}selected{% endif %}>Empleado</option>
         <option value="other" {% if contact and contact.type.name=='other' %}selected{% endif %}>Otro</option>
       </select>
     </div>
