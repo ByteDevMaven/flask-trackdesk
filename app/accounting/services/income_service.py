@@ -14,8 +14,8 @@ class IncomeService:
         Record an income / revenue event.
 
         Double-entry:
-          DR  Cash / AR Account  (amount)
-          CR  Revenue Account    (amount)
+          DR  Cash / Bank Account  (amount)
+          CR  Revenue Account      (amount)
         """
         revenue_account_id_str = data.get('revenue_account_id', '').strip()
         amount_str = data.get('amount', '').strip()
@@ -38,9 +38,10 @@ class IncomeService:
         income_date = _parse_date(data.get('date', '').strip())
         description = data.get('description', '').strip()
         client_name = data.get('client_name', '').strip()
+        reference = data.get('reference', '').strip() or None
         project_id = int(p) if (p := data.get('project_id', '').strip()) else None
 
-        debit_account = _resolve_debit_account(company_id, data.get('debit_account_id', '').strip())
+        cash_account = _resolve_cash_account(company_id)
 
         memo = description or f"Ingreso — {revenue_account.name}"
         if client_name:
@@ -52,11 +53,12 @@ class IncomeService:
             memo=memo,
             transaction_type=TransactionType.income,
             entries=[
-                {'account_id': debit_account.id, 'debit': amount, 'credit': 0.0,
+                {'account_id': cash_account.id, 'debit': amount, 'credit': 0.0,
                  'description': memo, 'project_id': project_id, 'tags': []},
                 {'account_id': revenue_account_id, 'debit': 0.0, 'credit': amount,
                  'description': memo, 'project_id': project_id, 'tags': []},
             ],
+            reference=reference,
             reference_type='Income',
         )
         db.session.commit()
@@ -109,9 +111,10 @@ class IncomeService:
         income_date = _parse_date(data.get('date', '').strip())
         description = data.get('description', '').strip()
         client_name = data.get('client_name', '').strip()
+        reference = data.get('reference', '').strip() or None
         project_id = int(p) if (p := data.get('project_id', '').strip()) else None
 
-        debit_account = _resolve_debit_account(company_id, data.get('debit_account_id', '').strip())
+        cash_account = _resolve_cash_account(company_id)
 
         old_txn.is_voided = True
         old_txn.voided_reason = 'Replaced by edit'
@@ -126,11 +129,12 @@ class IncomeService:
             memo=f"[EDIT] {memo}",
             transaction_type=TransactionType.income,
             entries=[
-                {'account_id': debit_account.id, 'debit': amount, 'credit': 0.0,
+                {'account_id': cash_account.id, 'debit': amount, 'credit': 0.0,
                  'description': memo, 'project_id': project_id, 'tags': []},
                 {'account_id': revenue_account_id, 'debit': 0.0, 'credit': amount,
                  'description': memo, 'project_id': project_id, 'tags': []},
             ],
+            reference=reference,
             reference_type='Income',
         )
         db.session.commit()
@@ -151,18 +155,20 @@ class IncomeService:
 
 # ── Internal helper ────────────────────────────────────────────────────────
 
-def _resolve_debit_account(company_id: int, debit_account_id_str: str) -> Account:
-    if debit_account_id_str:
-        account = Account.query.filter_by(
-            id=int(debit_account_id_str), company_id=company_id
-        ).first()
-    else:
-        account = Account.query.filter(
-            Account.company_id == company_id,
-            Account.name.ilike('%caja%') | Account.name.ilike('%banco%') | Account.name.ilike('%cash%')
-        ).first()
+def _resolve_cash_account(company_id: int) -> Account:
+    account = Account.query.filter(
+        Account.company_id == company_id,
+        Account.is_active.is_(True),
+        Account.type == AccountType.asset,
+        Account.name.ilike('%caja%') | Account.name.ilike('%banco%') | Account.name.ilike('%cash%')
+    ).order_by(Account.is_default.desc(), Account.code, Account.name).first()
     if not account:
-        raise ValueError('No se encontró una cuenta de efectivo o por cobrar.')
-    if account.type != AccountType.asset:
-        raise ValueError('La cuenta de débito debe ser un activo (caja, banco o por cobrar).')
+        account = Account.query.filter_by(
+            company_id=company_id, is_active=True, type=AccountType.asset
+        ).order_by(Account.is_default.desc(), Account.code, Account.name).first()
+    if not account:
+        raise ValueError(
+            'No se encontró una cuenta de efectivo (Caja/Bancos). '
+            'Por favor genere las cuentas base primero.'
+        )
     return account
