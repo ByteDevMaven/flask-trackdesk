@@ -157,15 +157,18 @@ class PaymentService:
         )
 
         db.session.add(payment)
+        db.session.flush()
 
-        # Update invoice status after adding payment
+        # Update invoice status and post accounting entry after adding payment
         if payment.document_id:
             invoice = Document.query.get(payment.document_id)
             if invoice:
+                from app.invoices.services.accounting_integration import post_invoice_payment_income
+                post_invoice_payment_income(payment, invoice)
+
                 total_paid = db.session.query(db.func.sum(Payment.amount)).filter(
                     Payment.document_id == invoice.id
                 ).scalar() or 0
-                total_paid += payment.amount
 
                 if total_paid >= (invoice.total_amount or 0):
                     invoice.status = 'paid'
