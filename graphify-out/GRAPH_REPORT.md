@@ -1,16 +1,16 @@
 # Graph Report - flask-trackdesk  (2026-06-12)
 
 ## Corpus Check
-- 154 files · ~116,385 words
+- 154 files · ~116,386 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1028 nodes · 2284 edges · 85 communities (74 shown, 11 thin omitted)
+- 1027 nodes · 2284 edges · 84 communities (74 shown, 10 thin omitted)
 - Extraction: 86% EXTRACTED · 14% INFERRED · 0% AMBIGUOUS · INFERRED: 326 edges (avg confidence: 0.52)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `264055fa`
+- Built from commit: `92c2cde6`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -56,7 +56,6 @@
 - [[_COMMUNITY_Flash UI JS|Flash UI JS]]
 - [[_COMMUNITY_Index UI JS|Index UI JS]]
 - [[_COMMUNITY_Setup Script|Setup Script]]
-- [[_COMMUNITY_Community 43|Community 43]]
 - [[_COMMUNITY_Community 44|Community 44]]
 - [[_COMMUNITY_Community 45|Community 45]]
 - [[_COMMUNITY_Community 46|Community 46]]
@@ -120,7 +119,7 @@
 - **Shared Drawer Form Flow** — templates_base_shared_drawer, form_user_user_form_drawer, form_warehouse_warehouse_form_drawer, chunk_shared_drawer_form_pattern [EXTRACTED 1.00]
 - **Operational Index Browse Flow** — index_invoice_document_list_screen, index_order_purchase_order_list_screen, index_payment_payment_list_screen, index_user_user_admin_list_screen, index_warehouse_warehouse_list_screen, chunk_shared_list_filter_pagination_pattern [EXTRACTED 1.00]
 
-## Communities (85 total, 11 thin omitted)
+## Communities (84 total, 10 thin omitted)
 
 ### Community 0 - "Core Models"
 Cohesion: 0.06
@@ -311,9 +310,9 @@ Cohesion: 0.60
 Nodes (5): Schedule Deviation Detail, Leave Request Queue, Leave Review Panel, Schedule Deviation Form, Work Schedule Calendar
 
 ## Knowledge Gaps
-- **96 isolated node(s):** `state`, `STATE_KEYS`, `history`, `zoomEl`, `int` (+91 more)
+- **95 isolated node(s):** `state`, `STATE_KEYS`, `history`, `zoomEl`, `int` (+90 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **11 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **10 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
@@ -321,7 +320,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `Flask` connect `Core Models` to `Budget Migration`, `Inventory & Orders Service`, `Login Migration`, `HR Module`, `PDF Generators`, `Inventory Routes`, `Auth Module`, `Users Service`, `Barcode JS`, `Companies Routes`, `Companies Service`, `NPM Config`, `Community 48`, `Drawer UI JS`, `Consolidate Schema Migration`, `Unify Contacts Migration`, `Models Update Migration`, `Roles Migration`?**
   _High betweenness centrality (0.117) - this node is a cross-community bridge._
 - **Why does `BaseModel` connect `Invoices Service` to `Core Models`, `App Init & Middleware`, `Inventory & Orders Service`, `HR Module`, `PDF Generators`, `Inventory Routes`, `Auth Module`, `Users Service`, `Payments Module`, `Companies Service`, `NPM Config`, `Initial Migration`, `Auto Migration 2`, `Doc Templates Migration`, `Audit Columns Migration`, `Login Migration`, `Setup Script`, `Community 47`, `Community 48`?**
-  _High betweenness centrality (0.097) - this node is a cross-community bridge._
+  _High betweenness centrality (0.096) - this node is a cross-community bridge._
 - **Why does `resolve_company()` connect `Companies Routes` to `Budget Migration`, `App Init & Middleware`, `Login Migration`, `HR Module`, `PDF Generators`, `Companies Service`, `Community 48`, `Drawer UI JS`, `Unify Contacts Migration`, `Auto Migration 2`?**
   _High betweenness centrality (0.061) - this node is a cross-community bridge._
 - **Are the 71 inferred relationships involving `BaseModel` (e.g. with `str` and `str`) actually correct?**
@@ -331,4 +330,4 @@ _Questions this graph is uniquely positioned to answer:_
 - **Are the 35 inferred relationships involving `TransactionType` (e.g. with `int` and `str`) actually correct?**
   _`TransactionType` has 35 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `URL segment for company-scoped routes (slug preferred, else numeric id).`, `Core double-entry balance computation and transaction factory.  Design rules:`, `Ledger rows count only when unlinked or tied to a non-voided transaction.` to the rest of the system?**
-  _205 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _204 weakly-connected nodes found - possible documentation gaps or missing edges._

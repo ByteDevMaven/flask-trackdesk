@@ -9795,20 +9795,6 @@
       "id": "view_user_danger_zone"
     },
     {
-      "label": "Warehouse Form Drawer",
-      "file_type": "document",
-      "source_file": "app/warehouses/templates/warehouses/form.html",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "rationale": "The warehouse form can render in a drawer or full layout and captures warehouse name, location, and active status.",
-      "community": 43,
-      "norm_label": "warehouse form drawer",
-      "id": "form_warehouse_warehouse_form_drawer"
-    },
-    {
       "label": "Shared List Filter Pagination Pattern",
       "file_type": "concept",
       "source_file": "app/invoices/templates/invoices/index.html",
@@ -34029,5 +34015,5 @@
       "source_file": "app/invoices/templates/invoices/index.html"
     }
   ],
-  "built_at_commit": "264055fa51c697e472286214b646606c5827d366"
+  "built_at_commit": "92c2cde6378b52d4d22e61047709d3547b8916de"
 }

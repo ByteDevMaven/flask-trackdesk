@@ -149,7 +149,7 @@
       "file_type": "code",
       "source_file": "app.py",
       "source_location": "L1",
-      "community": 8,
+      "community": 0,
       "norm_label": "app.py",
       "id": "app"
     },
@@ -176,7 +176,7 @@
       "file_type": "code",
       "source_file": "app/accounting/__init__.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 19,
       "norm_label": "__init__.py",
       "id": "accounting_init"
     },
@@ -194,7 +194,7 @@
       "file_type": "code",
       "source_file": "app/accounting/routes.py",
       "source_location": "L14",
-      "community": 24,
+      "community": 19,
       "norm_label": "_sidebar_ctx()",
       "id": "accounting_routes_sidebar_ctx"
     },
@@ -212,7 +212,7 @@
       "file_type": "code",
       "source_file": "app/accounting/routes.py",
       "source_location": "L21",
-      "community": 24,
+      "community": 19,
       "norm_label": "_company_url_id()",
       "id": "accounting_routes_company_url_id"
     },
@@ -248,7 +248,7 @@
       "file_type": "code",
       "source_file": "app/accounting/routes.py",
       "source_location": "L45",
-      "community": 24,
+      "community": 19,
       "norm_label": "expenses_list()",
       "id": "accounting_routes_expenses_list"
     },
@@ -284,7 +284,7 @@
       "file_type": "code",
       "source_file": "app/accounting/routes.py",
       "source_location": "L242",
-      "community": 24,
+      "community": 19,
       "norm_label": "income_list()",
       "id": "accounting_routes_income_list"
     },
@@ -320,7 +320,7 @@
       "file_type": "code",
       "source_file": "app/accounting/routes.py",
       "source_location": "L417",
-      "community": 24,
+      "community": 19,
       "norm_label": "journal_list()",
       "id": "accounting_routes_journal_list"
     },
@@ -329,7 +329,7 @@
       "file_type": "code",
       "source_file": "app/accounting/routes.py",
       "source_location": "L481",
-      "community": 24,
+      "community": 19,
       "norm_label": "create_journal_entry()",
       "id": "accounting_routes_create_journal_entry"
     },
@@ -338,7 +338,7 @@
       "file_type": "code",
       "source_file": "app/accounting/routes.py",
       "source_location": "L520",
-      "community": 24,
+      "community": 19,
       "norm_label": "edit_journal_entry()",
       "id": "accounting_routes_edit_journal_entry"
     },
@@ -365,7 +365,7 @@
       "file_type": "code",
       "source_file": "app/accounting/routes.py",
       "source_location": "L611",
-      "community": 24,
+      "community": 19,
       "norm_label": "ledger()",
       "id": "accounting_routes_ledger"
     },
@@ -374,7 +374,7 @@
       "file_type": "code",
       "source_file": "app/accounting/routes.py",
       "source_location": "L663",
-      "community": 24,
+      "community": 19,
       "norm_label": "chart_of_accounts()",
       "id": "accounting_routes_chart_of_accounts"
     },
@@ -401,7 +401,7 @@
       "file_type": "code",
       "source_file": "app/accounting/routes.py",
       "source_location": "L750",
-      "community": 19,
+      "community": 27,
       "norm_label": "delete_account()",
       "id": "accounting_routes_delete_account"
     },
@@ -419,7 +419,7 @@
       "file_type": "code",
       "source_file": "app/accounting/routes.py",
       "source_location": "L787",
-      "community": 24,
+      "community": 19,
       "norm_label": "trial_balance()",
       "id": "accounting_routes_trial_balance"
     },
@@ -428,7 +428,7 @@
       "file_type": "code",
       "source_file": "app/accounting/routes.py",
       "source_location": "L822",
-      "community": 24,
+      "community": 19,
       "norm_label": "reports()",
       "id": "accounting_routes_reports"
     },
@@ -455,7 +455,7 @@
       "file_type": "code",
       "source_file": "app/accounting/routes.py",
       "source_location": "L907",
-      "community": 24,
+      "community": 19,
       "norm_label": "projects_list()",
       "id": "accounting_routes_projects_list"
     },
@@ -464,7 +464,7 @@
       "file_type": "code",
       "source_file": "app/accounting/routes.py",
       "source_location": "L939",
-      "community": 24,
+      "community": 19,
       "norm_label": "project_detail()",
       "id": "accounting_routes_project_detail"
     },
@@ -491,7 +491,7 @@
       "file_type": "code",
       "source_file": "app/accounting/routes.py",
       "source_location": "L1008",
-      "community": 19,
+      "community": 48,
       "norm_label": "delete_project()",
       "id": "accounting_routes_delete_project"
     },
@@ -500,7 +500,7 @@
       "file_type": "rationale",
       "source_file": "app/accounting/routes.py",
       "source_location": "L22",
-      "community": 24,
+      "community": 19,
       "norm_label": "url segment for company-scoped routes (slug preferred, else numeric id).",
       "id": "accounting_routes_rationale_22"
     },
@@ -653,7 +653,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/_balance.py",
       "source_location": "L195",
-      "community": 12,
+      "community": 27,
       "norm_label": "expense",
       "id": "app_accounting_services_balance_py_expense"
     },
@@ -671,7 +671,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/_balance.py",
       "source_location": "L216",
-      "community": 12,
+      "community": 27,
       "norm_label": "account",
       "id": "app_accounting_services_balance_py_account"
     },
@@ -689,7 +689,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/_balance.py",
       "source_location": "L294",
-      "community": 9,
+      "community": 26,
       "norm_label": "_create_balanced_transaction()",
       "id": "services_balance_create_balanced_transaction"
     },
@@ -779,7 +779,7 @@
       "file_type": "rationale",
       "source_file": "app/accounting/services/_balance.py",
       "source_location": "L304",
-      "community": 9,
+      "community": 26,
       "norm_label": "create a transaction + ledgerentry rows atomically.     raises valueerror if ent",
       "id": "services_balance_rationale_304"
     },
@@ -914,7 +914,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/account_service.py",
       "source_location": "L1",
-      "community": 10,
+      "community": 27,
       "norm_label": "account_service.py",
       "id": "services_account_service"
     },
@@ -923,7 +923,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/account_service.py",
       "source_location": "L13",
-      "community": 12,
+      "community": 27,
       "norm_label": ".create_account()",
       "id": "services_account_service_accountservice_create_account"
     },
@@ -932,7 +932,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/account_service.py",
       "source_location": "L13",
-      "community": 12,
+      "community": 27,
       "norm_label": "int",
       "id": "app_accounting_services_account_service_py_int"
     },
@@ -941,7 +941,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/account_service.py",
       "source_location": "L13",
-      "community": 12,
+      "community": 27,
       "norm_label": "account",
       "id": "app_accounting_services_account_service_py_account"
     },
@@ -950,7 +950,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/account_service.py",
       "source_location": "L38",
-      "community": 12,
+      "community": 27,
       "norm_label": ".update_account()",
       "id": "services_account_service_accountservice_update_account"
     },
@@ -959,7 +959,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/account_service.py",
       "source_location": "L83",
-      "community": 12,
+      "community": 27,
       "norm_label": ".generate_default_accounts()",
       "id": "services_account_service_accountservice_generate_default_accounts"
     },
@@ -968,7 +968,7 @@
       "file_type": "rationale",
       "source_file": "app/accounting/services/account_service.py",
       "source_location": "L1",
-      "community": 10,
+      "community": 27,
       "norm_label": "account crud and chart of accounts generation.",
       "id": "services_account_service_rationale_1"
     },
@@ -977,7 +977,7 @@
       "file_type": "rationale",
       "source_file": "app/accounting/services/account_service.py",
       "source_location": "L57",
-      "community": 19,
+      "community": 27,
       "norm_label": "soft-delete an account.         raises valueerror if the account has any non-voi",
       "id": "services_account_service_rationale_57"
     },
@@ -1076,7 +1076,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/dashboard_service.py",
       "source_location": "L23",
-      "community": 12,
+      "community": 27,
       "norm_label": "int",
       "id": "app_accounting_services_dashboard_service_py_int"
     },
@@ -1220,7 +1220,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/income_service.py",
       "source_location": "L1",
-      "community": 10,
+      "community": 26,
       "norm_label": "income_service.py",
       "id": "services_income_service"
     },
@@ -1301,7 +1301,7 @@
       "file_type": "rationale",
       "source_file": "app/accounting/services/income_service.py",
       "source_location": "L1",
-      "community": 10,
+      "community": 26,
       "norm_label": "income (revenue) crud service.",
       "id": "services_income_service_rationale_1"
     },
@@ -1598,7 +1598,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L237",
-      "community": 48,
+      "community": 18,
       "norm_label": ".compute_report()",
       "id": "services_project_service_projectservice_compute_report"
     },
@@ -1616,7 +1616,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L237",
-      "community": 48,
+      "community": 12,
       "norm_label": "object",
       "id": "object"
     },
@@ -2201,7 +2201,7 @@
       "file_type": "code",
       "source_file": "app/contacts/__init__.py",
       "source_location": "L1",
-      "community": 22,
+      "community": 33,
       "norm_label": "__init__.py",
       "id": "contacts_init"
     },
@@ -2210,7 +2210,7 @@
       "file_type": "code",
       "source_file": "app/contacts/routes.py",
       "source_location": "L1",
-      "community": 22,
+      "community": 33,
       "norm_label": "routes.py",
       "id": "contacts_routes"
     },
@@ -2219,7 +2219,7 @@
       "file_type": "code",
       "source_file": "app/contacts/routes.py",
       "source_location": "L14",
-      "community": 22,
+      "community": 33,
       "norm_label": "index()",
       "id": "contacts_routes_index"
     },
@@ -2228,7 +2228,7 @@
       "file_type": "code",
       "source_file": "app/contacts/routes.py",
       "source_location": "L41",
-      "community": 22,
+      "community": 33,
       "norm_label": "create()",
       "id": "contacts_routes_create"
     },
@@ -2237,7 +2237,7 @@
       "file_type": "code",
       "source_file": "app/contacts/routes.py",
       "source_location": "L79",
-      "community": 22,
+      "community": 33,
       "norm_label": "view()",
       "id": "contacts_routes_view"
     },
@@ -2246,7 +2246,7 @@
       "file_type": "code",
       "source_file": "app/contacts/routes.py",
       "source_location": "L98",
-      "community": 22,
+      "community": 33,
       "norm_label": "edit()",
       "id": "contacts_routes_edit"
     },
@@ -2255,7 +2255,7 @@
       "file_type": "code",
       "source_file": "app/contacts/routes.py",
       "source_location": "L131",
-      "community": 22,
+      "community": 33,
       "norm_label": "delete()",
       "id": "contacts_routes_delete"
     },
@@ -2264,7 +2264,7 @@
       "file_type": "code",
       "source_file": "app/contacts/routes.py",
       "source_location": "L151",
-      "community": 22,
+      "community": 33,
       "norm_label": "api_search()",
       "id": "contacts_routes_api_search"
     },
@@ -2273,7 +2273,7 @@
       "file_type": "code",
       "source_file": "app/contacts/services/__init__.py",
       "source_location": "L1",
-      "community": 11,
+      "community": 29,
       "norm_label": "__init__.py",
       "id": "app_contacts_services_init_py_services_init"
     },
@@ -2282,7 +2282,7 @@
       "file_type": "code",
       "source_file": "app/contacts/services/contact_service.py",
       "source_location": "L1",
-      "community": 11,
+      "community": 29,
       "norm_label": "contact_service.py",
       "id": "services_contact_service"
     },
@@ -2291,7 +2291,7 @@
       "file_type": "code",
       "source_file": "app/contacts/services/contact_service.py",
       "source_location": "L11",
-      "community": 11,
+      "community": 29,
       "norm_label": ".get_paginated_contacts()",
       "id": "services_contact_service_contactservice_get_paginated_contacts"
     },
@@ -2300,7 +2300,7 @@
       "file_type": "code",
       "source_file": "app/contacts/services/contact_service.py",
       "source_location": "L36",
-      "community": 11,
+      "community": 29,
       "norm_label": ".create_contact()",
       "id": "services_contact_service_contactservice_create_contact"
     },
@@ -2309,7 +2309,7 @@
       "file_type": "code",
       "source_file": "app/contacts/services/contact_service.py",
       "source_location": "L67",
-      "community": 11,
+      "community": 29,
       "norm_label": ".get_contact_with_stats()",
       "id": "services_contact_service_contactservice_get_contact_with_stats"
     },
@@ -2318,7 +2318,7 @@
       "file_type": "code",
       "source_file": "app/contacts/services/contact_service.py",
       "source_location": "L105",
-      "community": 11,
+      "community": 29,
       "norm_label": ".update_contact()",
       "id": "services_contact_service_contactservice_update_contact"
     },
@@ -2327,7 +2327,7 @@
       "file_type": "code",
       "source_file": "app/contacts/services/contact_service.py",
       "source_location": "L136",
-      "community": 11,
+      "community": 29,
       "norm_label": ".delete_contact()",
       "id": "services_contact_service_contactservice_delete_contact"
     },
@@ -2336,7 +2336,7 @@
       "file_type": "code",
       "source_file": "app/contacts/services/contact_service.py",
       "source_location": "L151",
-      "community": 11,
+      "community": 29,
       "norm_label": ".search_contacts()",
       "id": "services_contact_service_contactservice_search_contacts"
     },
@@ -2462,7 +2462,7 @@
       "file_type": "code",
       "source_file": "app/dashboard/services/dashboard_service.py",
       "source_location": "L1",
-      "community": 15,
+      "community": 28,
       "norm_label": "dashboard_service.py",
       "id": "app_dashboard_services_dashboard_service_py_services_dashboard_service"
     },
@@ -2570,7 +2570,7 @@
       "file_type": "code",
       "source_file": "app/hr/__init__.py",
       "source_location": "L1",
-      "community": 1,
+      "community": 36,
       "norm_label": "__init__.py",
       "id": "hr_init"
     },
@@ -2579,7 +2579,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L1",
-      "community": 1,
+      "community": 36,
       "norm_label": "routes.py",
       "id": "hr_routes"
     },
@@ -2588,7 +2588,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L19",
-      "community": 1,
+      "community": 36,
       "norm_label": "_is_ajax()",
       "id": "hr_routes_is_ajax"
     },
@@ -2597,7 +2597,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L23",
-      "community": 1,
+      "community": 36,
       "norm_label": "_allowed_file()",
       "id": "hr_routes_allowed_file"
     },
@@ -2624,7 +2624,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L27",
-      "community": 1,
+      "community": 36,
       "norm_label": "_save_attachment()",
       "id": "hr_routes_save_attachment"
     },
@@ -2633,7 +2633,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L46",
-      "community": 1,
+      "community": 36,
       "norm_label": "employees()",
       "id": "hr_routes_employees"
     },
@@ -2651,7 +2651,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L171",
-      "community": 1,
+      "community": 36,
       "norm_label": "edit_employee()",
       "id": "hr_routes_edit_employee"
     },
@@ -2660,7 +2660,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L256",
-      "community": 1,
+      "community": 36,
       "norm_label": "delete_employee()",
       "id": "hr_routes_delete_employee"
     },
@@ -2678,7 +2678,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L322",
-      "community": 1,
+      "community": 36,
       "norm_label": "create_leave()",
       "id": "hr_routes_create_leave"
     },
@@ -2687,7 +2687,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L377",
-      "community": 1,
+      "community": 36,
       "norm_label": "edit_leave()",
       "id": "hr_routes_edit_leave"
     },
@@ -2696,7 +2696,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L437",
-      "community": 1,
+      "community": 36,
       "norm_label": "review_leave()",
       "id": "hr_routes_review_leave"
     },
@@ -2705,7 +2705,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L481",
-      "community": 1,
+      "community": 36,
       "norm_label": "view_leave()",
       "id": "hr_routes_view_leave"
     },
@@ -2714,7 +2714,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L494",
-      "community": 1,
+      "community": 36,
       "norm_label": "delete_leave()",
       "id": "hr_routes_delete_leave"
     },
@@ -2723,7 +2723,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L521",
-      "community": 1,
+      "community": 36,
       "norm_label": "schedules()",
       "id": "hr_routes_schedules"
     },
@@ -2732,7 +2732,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L533",
-      "community": 1,
+      "community": 36,
       "norm_label": "schedule_events()",
       "id": "hr_routes_schedule_events"
     },
@@ -2741,7 +2741,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L633",
-      "community": 1,
+      "community": 36,
       "norm_label": "create_schedule()",
       "id": "hr_routes_create_schedule"
     },
@@ -2750,7 +2750,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L680",
-      "community": 1,
+      "community": 36,
       "norm_label": "edit_schedule()",
       "id": "hr_routes_edit_schedule"
     },
@@ -2759,7 +2759,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L734",
-      "community": 1,
+      "community": 36,
       "norm_label": "delete_schedule()",
       "id": "hr_routes_delete_schedule"
     },
@@ -2768,7 +2768,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L755",
-      "community": 1,
+      "community": 36,
       "norm_label": "view_deviation()",
       "id": "hr_routes_view_deviation"
     },
@@ -2984,7 +2984,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/__init__.py",
       "source_location": "L1",
-      "community": 15,
+      "community": 14,
       "norm_label": "__init__.py",
       "id": "app_inventory_services_init_py_services_init"
     },
@@ -2993,7 +2993,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L1",
-      "community": 15,
+      "community": 14,
       "norm_label": "inventory_service.py",
       "id": "services_inventory_service"
     },
@@ -3002,7 +3002,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L38",
-      "community": 15,
+      "community": 14,
       "norm_label": ".get_inventory_stats()",
       "id": "services_inventory_service_inventoryservice_get_inventory_stats"
     },
@@ -3038,7 +3038,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L185",
-      "community": 15,
+      "community": 14,
       "norm_label": ".get_inventory_item()",
       "id": "services_inventory_service_inventoryservice_get_inventory_item"
     },
@@ -3047,7 +3047,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L189",
-      "community": 15,
+      "community": 14,
       "norm_label": ".get_item_by_sku()",
       "id": "services_inventory_service_inventoryservice_get_item_by_sku"
     },
@@ -3056,7 +3056,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L194",
-      "community": 15,
+      "community": 14,
       "norm_label": ".update_inventory_item()",
       "id": "services_inventory_service_inventoryservice_update_inventory_item"
     },
@@ -3065,7 +3065,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L239",
-      "community": 15,
+      "community": 14,
       "norm_label": ".delete_inventory_item()",
       "id": "services_inventory_service_inventoryservice_delete_inventory_item"
     },
@@ -3074,7 +3074,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L247",
-      "community": 15,
+      "community": 14,
       "norm_label": ".get_stock_movements()",
       "id": "services_inventory_service_inventoryservice_get_stock_movements"
     },
@@ -3083,7 +3083,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L297",
-      "community": 15,
+      "community": 14,
       "norm_label": ".bulk_delete_items()",
       "id": "services_inventory_service_inventoryservice_bulk_delete_items"
     },
@@ -3092,7 +3092,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L312",
-      "community": 15,
+      "community": 14,
       "norm_label": ".search_inventory_items()",
       "id": "services_inventory_service_inventoryservice_search_inventory_items"
     },
@@ -3101,7 +3101,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L327",
-      "community": 15,
+      "community": 14,
       "norm_label": ".export_inventory_items_xlsx()",
       "id": "services_inventory_service_inventoryservice_export_inventory_items_xlsx"
     },
@@ -3110,7 +3110,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L367",
-      "community": 15,
+      "community": 14,
       "norm_label": ".export_stock_movements_xlsx()",
       "id": "services_inventory_service_inventoryservice_export_stock_movements_xlsx"
     },
@@ -3119,7 +3119,7 @@
       "file_type": "rationale",
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L190",
-      "community": 15,
+      "community": 14,
       "norm_label": "fetch an item by its sku within a company.",
       "id": "services_inventory_service_rationale_190"
     },
@@ -3344,7 +3344,7 @@
       "file_type": "code",
       "source_file": "app/invoices/__init__.py",
       "source_location": "L1",
-      "community": 6,
+      "community": 0,
       "norm_label": "__init__.py",
       "id": "invoices_init"
     },
@@ -3380,7 +3380,7 @@
       "file_type": "code",
       "source_file": "app/invoices/routes.py",
       "source_location": "L75",
-      "community": 6,
+      "community": 13,
       "norm_label": "create()",
       "id": "invoices_routes_create"
     },
@@ -3398,7 +3398,7 @@
       "file_type": "code",
       "source_file": "app/invoices/routes.py",
       "source_location": "L140",
-      "community": 6,
+      "community": 13,
       "norm_label": "view()",
       "id": "invoices_routes_view"
     },
@@ -3407,7 +3407,7 @@
       "file_type": "code",
       "source_file": "app/invoices/routes.py",
       "source_location": "L183",
-      "community": 86,
+      "community": 6,
       "norm_label": "add_payment()",
       "id": "invoices_routes_add_payment"
     },
@@ -3416,7 +3416,7 @@
       "file_type": "code",
       "source_file": "app/invoices/routes.py",
       "source_location": "L216",
-      "community": 6,
+      "community": 13,
       "norm_label": "edit()",
       "id": "invoices_routes_edit"
     },
@@ -3443,7 +3443,7 @@
       "file_type": "code",
       "source_file": "app/invoices/routes.py",
       "source_location": "L375",
-      "community": 6,
+      "community": 7,
       "norm_label": "print_invoice()",
       "id": "invoices_routes_print_invoice"
     },
@@ -3767,7 +3767,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/invoice_query_service.py",
       "source_location": "L1",
-      "community": 6,
+      "community": 8,
       "norm_label": "invoice_query_service.py",
       "id": "services_invoice_query_service"
     },
@@ -3785,7 +3785,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/invoice_update_service.py",
       "source_location": "L1",
-      "community": 86,
+      "community": 6,
       "norm_label": "invoice_update_service.py",
       "id": "services_invoice_update_service"
     },
@@ -3812,7 +3812,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/invoice_update_service.py",
       "source_location": "L164",
-      "community": 86,
+      "community": 6,
       "norm_label": "add_invoice_payment()",
       "id": "services_invoice_update_service_add_invoice_payment"
     },
@@ -3830,7 +3830,7 @@
       "file_type": "rationale",
       "source_file": "app/invoices/services/invoice_update_service.py",
       "source_location": "L165",
-      "community": 86,
+      "community": 6,
       "norm_label": "add a payment to an invoice, post accounting income, and update its status.",
       "id": "services_invoice_update_service_rationale_165"
     },
@@ -4073,7 +4073,7 @@
       "file_type": "code",
       "source_file": "app/middleware/audit.py",
       "source_location": "L28",
-      "community": 34,
+      "community": 0,
       "norm_label": "auditmiddleware",
       "id": "middleware_audit_auditmiddleware"
     },
@@ -4082,7 +4082,7 @@
       "file_type": "code",
       "source_file": "app/middleware/audit.py",
       "source_location": "L30",
-      "community": 34,
+      "community": 0,
       "norm_label": ".log_change()",
       "id": "middleware_audit_auditmiddleware_log_change"
     },
@@ -4109,7 +4109,7 @@
       "file_type": "rationale",
       "source_file": "app/middleware/audit.py",
       "source_location": "L31",
-      "community": 34,
+      "community": 0,
       "norm_label": "manually log a change. useful if automated listeners are not enough.",
       "id": "middleware_audit_rationale_31"
     },
@@ -4226,7 +4226,7 @@
       "file_type": "code",
       "source_file": "app/models/account.py",
       "source_location": "L5",
-      "community": 10,
+      "community": 27,
       "norm_label": "account",
       "id": "models_account_account"
     },
@@ -4235,7 +4235,7 @@
       "file_type": "code",
       "source_file": "app/models/account.py",
       "source_location": "L31",
-      "community": 10,
+      "community": 27,
       "norm_label": ".normal_balance()",
       "id": "models_account_account_normal_balance"
     },
@@ -4244,7 +4244,7 @@
       "file_type": "code",
       "source_file": "app/models/account.py",
       "source_location": "L31",
-      "community": 10,
+      "community": 27,
       "norm_label": "str",
       "id": "app_models_account_py_str"
     },
@@ -4253,7 +4253,7 @@
       "file_type": "code",
       "source_file": "app/models/account.py",
       "source_location": "L37",
-      "community": 10,
+      "community": 27,
       "norm_label": ".__repr__()",
       "id": "models_account_account_repr"
     },
@@ -4262,7 +4262,7 @@
       "file_type": "rationale",
       "source_file": "app/models/account.py",
       "source_location": "L6",
-      "community": 10,
+      "community": 27,
       "norm_label": "chart of accounts entry.      important: balance is not stored here \u2014 it is alwa",
       "id": "models_account_rationale_6"
     },
@@ -4271,7 +4271,7 @@
       "file_type": "rationale",
       "source_file": "app/models/account.py",
       "source_location": "L32",
-      "community": 10,
+      "community": 27,
       "norm_label": "accounts that normally carry a debit balance vs credit balance.",
       "id": "models_account_rationale_32"
     },
@@ -4289,7 +4289,7 @@
       "file_type": "code",
       "source_file": "app/models/audit.py",
       "source_location": "L1",
-      "community": 34,
+      "community": 3,
       "norm_label": "audit.py",
       "id": "models_audit"
     },
@@ -4298,7 +4298,7 @@
       "file_type": "code",
       "source_file": "app/models/audit.py",
       "source_location": "L4",
-      "community": 34,
+      "community": 3,
       "norm_label": "auditlog",
       "id": "models_audit_auditlog"
     },
@@ -4307,7 +4307,7 @@
       "file_type": "code",
       "source_file": "app/models/audit.py",
       "source_location": "L20",
-      "community": 34,
+      "community": 3,
       "norm_label": ".__repr__()",
       "id": "models_audit_auditlog_repr"
     },
@@ -4316,7 +4316,7 @@
       "file_type": "code",
       "source_file": "app/models/audit.py",
       "source_location": "L20",
-      "community": 34,
+      "community": 3,
       "norm_label": "str",
       "id": "app_models_audit_py_str"
     },
@@ -4334,7 +4334,7 @@
       "file_type": "code",
       "source_file": "app/models/base.py",
       "source_location": "L6",
-      "community": 91,
+      "community": 3,
       "norm_label": "basemodel",
       "id": "models_base_basemodel"
     },
@@ -4406,7 +4406,7 @@
       "file_type": "code",
       "source_file": "app/models/contact.py",
       "source_location": "L1",
-      "community": 3,
+      "community": 28,
       "norm_label": "contact.py",
       "id": "models_contact"
     },
@@ -4415,7 +4415,7 @@
       "file_type": "code",
       "source_file": "app/models/contact.py",
       "source_location": "L5",
-      "community": 11,
+      "community": 28,
       "norm_label": "contact",
       "id": "models_contact_contact"
     },
@@ -4424,7 +4424,7 @@
       "file_type": "code",
       "source_file": "app/models/contact.py",
       "source_location": "L26",
-      "community": 11,
+      "community": 28,
       "norm_label": "str",
       "id": "app_models_contact_py_str"
     },
@@ -4433,7 +4433,7 @@
       "file_type": "code",
       "source_file": "app/models/contact.py",
       "source_location": "L26",
-      "community": 11,
+      "community": 28,
       "norm_label": "bool",
       "id": "app_models_contact_py_bool"
     },
@@ -4442,7 +4442,7 @@
       "file_type": "code",
       "source_file": "app/models/contact.py",
       "source_location": "L34",
-      "community": 11,
+      "community": 28,
       "norm_label": ".validate_phone()",
       "id": "models_contact_contact_validate_phone"
     },
@@ -4451,7 +4451,7 @@
       "file_type": "code",
       "source_file": "app/models/contact.py",
       "source_location": "L40",
-      "community": 11,
+      "community": 28,
       "norm_label": ".__repr__()",
       "id": "models_contact_contact_repr"
     },
@@ -4460,7 +4460,7 @@
       "file_type": "rationale",
       "source_file": "app/models/contact.py",
       "source_location": "L35",
-      "community": 11,
+      "community": 28,
       "norm_label": "validate phone format (basic: digits, +, -, spaces).",
       "id": "models_contact_rationale_35"
     },
@@ -4640,7 +4640,7 @@
       "file_type": "code",
       "source_file": "app/models/document_item.py",
       "source_location": "L27",
-      "community": 75,
+      "community": 6,
       "norm_label": ".__repr__()",
       "id": "models_document_item_documentitem_repr"
     },
@@ -4649,7 +4649,7 @@
       "file_type": "code",
       "source_file": "app/models/document_item.py",
       "source_location": "L27",
-      "community": 75,
+      "community": 6,
       "norm_label": "str",
       "id": "app_models_document_item_py_str"
     },
@@ -4658,7 +4658,7 @@
       "file_type": "code",
       "source_file": "app/models/document_sequence.py",
       "source_location": "L1",
-      "community": 91,
+      "community": 3,
       "norm_label": "document_sequence.py",
       "id": "models_document_sequence"
     },
@@ -4667,7 +4667,7 @@
       "file_type": "code",
       "source_file": "app/models/document_sequence.py",
       "source_location": "L19",
-      "community": 91,
+      "community": 3,
       "norm_label": ".__repr__()",
       "id": "models_document_sequence_documentsequence_repr"
     },
@@ -4676,7 +4676,7 @@
       "file_type": "code",
       "source_file": "app/models/document_sequence.py",
       "source_location": "L19",
-      "community": 91,
+      "community": 3,
       "norm_label": "str",
       "id": "app_models_document_sequence_py_str"
     },
@@ -4820,7 +4820,7 @@
       "file_type": "code",
       "source_file": "app/models/enums.py",
       "source_location": "L3",
-      "community": 12,
+      "community": 27,
       "norm_label": "accounttype",
       "id": "models_enums_accounttype"
     },
@@ -4829,7 +4829,7 @@
       "file_type": "code",
       "source_file": "app/models/enums.py",
       "source_location": "L20",
-      "community": 48,
+      "community": 8,
       "norm_label": "documenttype",
       "id": "models_enums_documenttype"
     },
@@ -4847,7 +4847,7 @@
       "file_type": "code",
       "source_file": "app/models/enums.py",
       "source_location": "L39",
-      "community": 49,
+      "community": 15,
       "norm_label": "stockmovementtype",
       "id": "models_enums_stockmovementtype"
     },
@@ -4856,7 +4856,7 @@
       "file_type": "code",
       "source_file": "app/models/enums.py",
       "source_location": "L44",
-      "community": 86,
+      "community": 6,
       "norm_label": "paymentmethod",
       "id": "models_enums_paymentmethod"
     },
@@ -4865,7 +4865,7 @@
       "file_type": "code",
       "source_file": "app/models/enums.py",
       "source_location": "L51",
-      "community": 10,
+      "community": 28,
       "norm_label": "contacttype",
       "id": "models_enums_contacttype"
     },
@@ -4928,7 +4928,7 @@
       "file_type": "code",
       "source_file": "app/models/enums.py",
       "source_location": "L127",
-      "community": 1,
+      "community": 24,
       "norm_label": "userstatus",
       "id": "models_enums_userstatus"
     },
@@ -4955,7 +4955,7 @@
       "file_type": "code",
       "source_file": "app/models/expense.py",
       "source_location": "L1",
-      "community": 29,
+      "community": 3,
       "norm_label": "expense.py",
       "id": "models_expense"
     },
@@ -4964,7 +4964,7 @@
       "file_type": "code",
       "source_file": "app/models/expense.py",
       "source_location": "L6",
-      "community": 29,
+      "community": 12,
       "norm_label": "expense",
       "id": "models_expense_expense"
     },
@@ -4973,7 +4973,7 @@
       "file_type": "code",
       "source_file": "app/models/expense.py",
       "source_location": "L58",
-      "community": 29,
+      "community": 12,
       "norm_label": ".vendor_display()",
       "id": "models_expense_expense_vendor_display"
     },
@@ -4982,7 +4982,7 @@
       "file_type": "code",
       "source_file": "app/models/expense.py",
       "source_location": "L58",
-      "community": 29,
+      "community": 12,
       "norm_label": "str",
       "id": "app_models_expense_py_str"
     },
@@ -4991,7 +4991,7 @@
       "file_type": "code",
       "source_file": "app/models/expense.py",
       "source_location": "L64",
-      "community": 29,
+      "community": 12,
       "norm_label": ".__repr__()",
       "id": "models_expense_expense_repr"
     },
@@ -5000,7 +5000,7 @@
       "file_type": "rationale",
       "source_file": "app/models/expense.py",
       "source_location": "L7",
-      "community": 29,
+      "community": 12,
       "norm_label": "represents a business expense (outflow of money).      income / revenue is recor",
       "id": "models_expense_rationale_7"
     },
@@ -5009,7 +5009,7 @@
       "file_type": "rationale",
       "source_file": "app/models/expense.py",
       "source_location": "L59",
-      "community": 29,
+      "community": 12,
       "norm_label": "resolve vendor name from supplier relation or vendor_name field.",
       "id": "models_expense_rationale_59"
     },
@@ -5027,7 +5027,7 @@
       "file_type": "code",
       "source_file": "app/models/inventory_item.py",
       "source_location": "L29",
-      "community": 1,
+      "community": 24,
       "norm_label": ".build_sku()",
       "id": "models_inventory_item_inventoryitem_build_sku"
     },
@@ -5036,7 +5036,7 @@
       "file_type": "code",
       "source_file": "app/models/inventory_item.py",
       "source_location": "L29",
-      "community": 1,
+      "community": 24,
       "norm_label": "str",
       "id": "app_models_inventory_item_py_str"
     },
@@ -5045,7 +5045,7 @@
       "file_type": "code",
       "source_file": "app/models/inventory_item.py",
       "source_location": "L29",
-      "community": 1,
+      "community": 24,
       "norm_label": "int",
       "id": "app_models_inventory_item_py_int"
     },
@@ -5054,7 +5054,7 @@
       "file_type": "code",
       "source_file": "app/models/inventory_item.py",
       "source_location": "L38",
-      "community": 1,
+      "community": 24,
       "norm_label": ".__repr__()",
       "id": "models_inventory_item_inventoryitem_repr"
     },
@@ -5063,7 +5063,7 @@
       "file_type": "rationale",
       "source_file": "app/models/inventory_item.py",
       "source_location": "L30",
-      "community": 1,
+      "community": 24,
       "norm_label": "auto-generate a sku from the item name and its db id.                  example:",
       "id": "models_inventory_item_rationale_30"
     },
@@ -5135,7 +5135,7 @@
       "file_type": "code",
       "source_file": "app/models/ledger_entry.py",
       "source_location": "L1",
-      "community": 47,
+      "community": 41,
       "norm_label": "ledger_entry.py",
       "id": "models_ledger_entry"
     },
@@ -5162,7 +5162,7 @@
       "file_type": "code",
       "source_file": "app/models/ledger_entry.py",
       "source_location": "L52",
-      "community": 47,
+      "community": 41,
       "norm_label": ".__repr__()",
       "id": "models_ledger_entry_ledgerentry_repr"
     },
@@ -5171,7 +5171,7 @@
       "file_type": "code",
       "source_file": "app/models/ledger_entry.py",
       "source_location": "L52",
-      "community": 47,
+      "community": 41,
       "norm_label": "str",
       "id": "app_models_ledger_entry_py_str"
     },
@@ -5180,7 +5180,7 @@
       "file_type": "rationale",
       "source_file": "app/models/ledger_entry.py",
       "source_location": "L6",
-      "community": 47,
+      "community": 41,
       "norm_label": "a single line in the accounting ledger.  every entry must belong to a     transa",
       "id": "models_ledger_entry_rationale_6"
     },
@@ -5198,7 +5198,7 @@
       "file_type": "code",
       "source_file": "app/models/notification.py",
       "source_location": "L1",
-      "community": 91,
+      "community": 3,
       "norm_label": "notification.py",
       "id": "models_notification"
     },
@@ -5207,7 +5207,7 @@
       "file_type": "code",
       "source_file": "app/models/notification.py",
       "source_location": "L11",
-      "community": 91,
+      "community": 3,
       "norm_label": ".__repr__()",
       "id": "models_notification_notification_repr"
     },
@@ -5216,7 +5216,7 @@
       "file_type": "code",
       "source_file": "app/models/notification.py",
       "source_location": "L11",
-      "community": 91,
+      "community": 3,
       "norm_label": "str",
       "id": "app_models_notification_py_str"
     },
@@ -5234,7 +5234,7 @@
       "file_type": "code",
       "source_file": "app/models/payment.py",
       "source_location": "L4",
-      "community": 86,
+      "community": 6,
       "norm_label": "payment",
       "id": "models_payment_payment"
     },
@@ -5243,7 +5243,7 @@
       "file_type": "code",
       "source_file": "app/models/payment.py",
       "source_location": "L19",
-      "community": 86,
+      "community": 6,
       "norm_label": ".__repr__()",
       "id": "models_payment_payment_repr"
     },
@@ -5252,7 +5252,7 @@
       "file_type": "code",
       "source_file": "app/models/payment.py",
       "source_location": "L19",
-      "community": 86,
+      "community": 6,
       "norm_label": "str",
       "id": "app_models_payment_py_str"
     },
@@ -5306,7 +5306,7 @@
       "file_type": "code",
       "source_file": "app/models/project.py",
       "source_location": "L17",
-      "community": 91,
+      "community": 3,
       "norm_label": ".__repr__()",
       "id": "models_project_project_repr"
     },
@@ -5315,7 +5315,7 @@
       "file_type": "code",
       "source_file": "app/models/project.py",
       "source_location": "L17",
-      "community": 91,
+      "community": 3,
       "norm_label": "str",
       "id": "app_models_project_py_str"
     },
@@ -5324,7 +5324,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order.py",
       "source_location": "L1",
-      "community": 14,
+      "community": 15,
       "norm_label": "purchase_order.py",
       "id": "models_purchase_order"
     },
@@ -5333,7 +5333,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order.py",
       "source_location": "L24",
-      "community": 14,
+      "community": 15,
       "norm_label": ".__repr__()",
       "id": "models_purchase_order_purchaseorder_repr"
     },
@@ -5342,7 +5342,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order.py",
       "source_location": "L24",
-      "community": 14,
+      "community": 15,
       "norm_label": "str",
       "id": "app_models_purchase_order_py_str"
     },
@@ -5351,7 +5351,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order_item.py",
       "source_location": "L1",
-      "community": 14,
+      "community": 15,
       "norm_label": "purchase_order_item.py",
       "id": "models_purchase_order_item"
     },
@@ -5360,7 +5360,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order_item.py",
       "source_location": "L23",
-      "community": 14,
+      "community": 24,
       "norm_label": ".__repr__()",
       "id": "models_purchase_order_item_purchaseorderitem_repr"
     },
@@ -5369,7 +5369,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order_item.py",
       "source_location": "L23",
-      "community": 14,
+      "community": 24,
       "norm_label": "str",
       "id": "app_models_purchase_order_item_py_str"
     },
@@ -5396,7 +5396,7 @@
       "file_type": "code",
       "source_file": "app/models/report.py",
       "source_location": "L11",
-      "community": 91,
+      "community": 48,
       "norm_label": ".__repr__()",
       "id": "models_report_report_repr"
     },
@@ -5405,7 +5405,7 @@
       "file_type": "code",
       "source_file": "app/models/report.py",
       "source_location": "L11",
-      "community": 91,
+      "community": 48,
       "norm_label": "str",
       "id": "app_models_report_py_str"
     },
@@ -5423,7 +5423,7 @@
       "file_type": "code",
       "source_file": "app/models/role.py",
       "source_location": "L4",
-      "community": 35,
+      "community": 2,
       "norm_label": "role",
       "id": "models_role_role"
     },
@@ -5432,7 +5432,7 @@
       "file_type": "code",
       "source_file": "app/models/role.py",
       "source_location": "L13",
-      "community": 35,
+      "community": 2,
       "norm_label": ".has_permission()",
       "id": "models_role_role_has_permission"
     },
@@ -5441,7 +5441,7 @@
       "file_type": "code",
       "source_file": "app/models/role.py",
       "source_location": "L13",
-      "community": 35,
+      "community": 2,
       "norm_label": "str",
       "id": "app_models_role_py_str"
     },
@@ -5450,7 +5450,7 @@
       "file_type": "code",
       "source_file": "app/models/role.py",
       "source_location": "L13",
-      "community": 35,
+      "community": 2,
       "norm_label": "bool",
       "id": "app_models_role_py_bool"
     },
@@ -5459,7 +5459,7 @@
       "file_type": "code",
       "source_file": "app/models/role.py",
       "source_location": "L17",
-      "community": 35,
+      "community": 2,
       "norm_label": ".__repr__()",
       "id": "models_role_role_repr"
     },
@@ -5468,7 +5468,7 @@
       "file_type": "rationale",
       "source_file": "app/models/role.py",
       "source_location": "L14",
-      "community": 35,
+      "community": 2,
       "norm_label": "return true if this role carries *permission_name*.",
       "id": "models_role_rationale_14"
     },
@@ -5477,7 +5477,7 @@
       "file_type": "code",
       "source_file": "app/models/stock_movement.py",
       "source_location": "L1",
-      "community": 49,
+      "community": 15,
       "norm_label": "stock_movement.py",
       "id": "models_stock_movement"
     },
@@ -5486,7 +5486,7 @@
       "file_type": "code",
       "source_file": "app/models/stock_movement.py",
       "source_location": "L31",
-      "community": 49,
+      "community": 15,
       "norm_label": ".qty_change()",
       "id": "models_stock_movement_stockmovement_qty_change"
     },
@@ -5495,7 +5495,7 @@
       "file_type": "code",
       "source_file": "app/models/stock_movement.py",
       "source_location": "L31",
-      "community": 49,
+      "community": 15,
       "norm_label": "int",
       "id": "app_models_stock_movement_py_int"
     },
@@ -5504,7 +5504,7 @@
       "file_type": "code",
       "source_file": "app/models/stock_movement.py",
       "source_location": "L37",
-      "community": 49,
+      "community": 15,
       "norm_label": ".__repr__()",
       "id": "models_stock_movement_stockmovement_repr"
     },
@@ -5513,7 +5513,7 @@
       "file_type": "code",
       "source_file": "app/models/stock_movement.py",
       "source_location": "L37",
-      "community": 49,
+      "community": 15,
       "norm_label": "str",
       "id": "app_models_stock_movement_py_str"
     },
@@ -5522,7 +5522,7 @@
       "file_type": "rationale",
       "source_file": "app/models/stock_movement.py",
       "source_location": "L32",
-      "community": 49,
+      "community": 15,
       "norm_label": "return signed quantity: negative for outgoing, positive for incoming/adjustment.",
       "id": "models_stock_movement_rationale_32"
     },
@@ -5531,7 +5531,7 @@
       "file_type": "code",
       "source_file": "app/models/tag.py",
       "source_location": "L1",
-      "community": 91,
+      "community": 3,
       "norm_label": "tag.py",
       "id": "models_tag"
     },
@@ -5540,7 +5540,7 @@
       "file_type": "code",
       "source_file": "app/models/tag.py",
       "source_location": "L3",
-      "community": 91,
+      "community": 10,
       "norm_label": "tag",
       "id": "models_tag_tag"
     },
@@ -5549,7 +5549,7 @@
       "file_type": "code",
       "source_file": "app/models/tag.py",
       "source_location": "L15",
-      "community": 91,
+      "community": 10,
       "norm_label": ".__repr__()",
       "id": "models_tag_tag_repr"
     },
@@ -5558,7 +5558,7 @@
       "file_type": "code",
       "source_file": "app/models/tag.py",
       "source_location": "L15",
-      "community": 91,
+      "community": 10,
       "norm_label": "str",
       "id": "app_models_tag_py_str"
     },
@@ -5567,7 +5567,7 @@
       "file_type": "code",
       "source_file": "app/models/transaction.py",
       "source_location": "L6",
-      "community": 10,
+      "community": 30,
       "norm_label": "transaction",
       "id": "models_transaction_transaction"
     },
@@ -5594,7 +5594,7 @@
       "file_type": "code",
       "source_file": "app/models/transaction.py",
       "source_location": "L56",
-      "community": 43,
+      "community": 30,
       "norm_label": ".total_amount()",
       "id": "models_transaction_transaction_total_amount"
     },
@@ -5603,7 +5603,7 @@
       "file_type": "code",
       "source_file": "app/models/transaction.py",
       "source_location": "L56",
-      "community": 43,
+      "community": 30,
       "norm_label": "float",
       "id": "app_models_transaction_py_float"
     },
@@ -5612,7 +5612,7 @@
       "file_type": "code",
       "source_file": "app/models/transaction.py",
       "source_location": "L60",
-      "community": 10,
+      "community": 30,
       "norm_label": ".__repr__()",
       "id": "models_transaction_transaction_repr"
     },
@@ -5621,7 +5621,7 @@
       "file_type": "code",
       "source_file": "app/models/transaction.py",
       "source_location": "L60",
-      "community": 10,
+      "community": 30,
       "norm_label": "str",
       "id": "app_models_transaction_py_str"
     },
@@ -5630,7 +5630,7 @@
       "file_type": "rationale",
       "source_file": "app/models/transaction.py",
       "source_location": "L7",
-      "community": 10,
+      "community": 30,
       "norm_label": "groups one or more paired ledgerentry rows into an atomic double-entry     journ",
       "id": "models_transaction_rationale_7"
     },
@@ -5648,7 +5648,7 @@
       "file_type": "rationale",
       "source_file": "app/models/transaction.py",
       "source_location": "L57",
-      "community": 43,
+      "community": 30,
       "norm_label": "return the transaction amount (sum of debit side).",
       "id": "models_transaction_rationale_57"
     },
@@ -5666,7 +5666,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L7",
-      "community": 1,
+      "community": 24,
       "norm_label": "user",
       "id": "models_user_user"
     },
@@ -5675,7 +5675,7 @@
       "file_type": "code",
       "source_file": "",
       "source_location": "",
-      "community": 1,
+      "community": 24,
       "norm_label": "usermixin",
       "id": "usermixin"
     },
@@ -5684,7 +5684,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L26",
-      "community": 1,
+      "community": 24,
       "norm_label": ".is_active()",
       "id": "models_user_user_is_active"
     },
@@ -5693,7 +5693,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L30",
-      "community": 1,
+      "community": 24,
       "norm_label": ".full_name()",
       "id": "models_user_user_full_name"
     },
@@ -5702,7 +5702,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L33",
-      "community": 1,
+      "community": 24,
       "norm_label": ".has_permission()",
       "id": "models_user_user_has_permission"
     },
@@ -5711,7 +5711,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L33",
-      "community": 1,
+      "community": 24,
       "norm_label": "str",
       "id": "app_models_user_py_str"
     },
@@ -5720,7 +5720,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L33",
-      "community": 1,
+      "community": 24,
       "norm_label": "bool",
       "id": "app_models_user_py_bool"
     },
@@ -5729,7 +5729,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L44",
-      "community": 1,
+      "community": 24,
       "norm_label": ".is_admin()",
       "id": "models_user_user_is_admin"
     },
@@ -5738,7 +5738,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L49",
-      "community": 1,
+      "community": 24,
       "norm_label": ".is_superadmin()",
       "id": "models_user_user_is_superadmin"
     },
@@ -5747,7 +5747,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L54",
-      "community": 1,
+      "community": 24,
       "norm_label": ".is_owner()",
       "id": "models_user_user_is_owner"
     },
@@ -5756,7 +5756,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L59",
-      "community": 1,
+      "community": 24,
       "norm_label": ".validate_email()",
       "id": "models_user_user_validate_email"
     },
@@ -5765,7 +5765,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L64",
-      "community": 1,
+      "community": 24,
       "norm_label": ".__repr__()",
       "id": "models_user_user_repr"
     },
@@ -5774,7 +5774,7 @@
       "file_type": "rationale",
       "source_file": "app/models/user.py",
       "source_location": "L34",
-      "community": 1,
+      "community": 24,
       "norm_label": "return true if the user's role carries *permission_name*.         superadmins (r",
       "id": "models_user_rationale_34"
     },
@@ -5783,7 +5783,7 @@
       "file_type": "rationale",
       "source_file": "app/models/user.py",
       "source_location": "L45",
-      "community": 1,
+      "community": 24,
       "norm_label": "shortcut \u2014 true when the user's role is 'superadmin' (platform admin).",
       "id": "models_user_rationale_45"
     },
@@ -5792,7 +5792,7 @@
       "file_type": "rationale",
       "source_file": "app/models/user.py",
       "source_location": "L55",
-      "community": 1,
+      "community": 24,
       "norm_label": "true when the user's role is 'owner' (company-level admin).",
       "id": "models_user_rationale_55"
     },
@@ -5801,7 +5801,7 @@
       "file_type": "rationale",
       "source_file": "app/models/user.py",
       "source_location": "L60",
-      "community": 11,
+      "community": 28,
       "norm_label": "validate email format.",
       "id": "models_user_rationale_60"
     },
@@ -5810,7 +5810,7 @@
       "file_type": "code",
       "source_file": "app/models/warehouse.py",
       "source_location": "L1",
-      "community": 27,
+      "community": 14,
       "norm_label": "warehouse.py",
       "id": "models_warehouse"
     },
@@ -5819,7 +5819,7 @@
       "file_type": "code",
       "source_file": "app/models/warehouse.py",
       "source_location": "L17",
-      "community": 27,
+      "community": 14,
       "norm_label": ".__repr__()",
       "id": "models_warehouse_warehouse_repr"
     },
@@ -5828,7 +5828,7 @@
       "file_type": "code",
       "source_file": "app/models/warehouse.py",
       "source_location": "L17",
-      "community": 27,
+      "community": 14,
       "norm_label": "str",
       "id": "app_models_warehouse_py_str"
     },
@@ -6008,7 +6008,7 @@
       "file_type": "code",
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L1",
-      "community": 14,
+      "community": 15,
       "norm_label": "purchase_order_service.py",
       "id": "services_purchase_order_service"
     },
@@ -6017,7 +6017,7 @@
       "file_type": "code",
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L9",
-      "community": 14,
+      "community": 15,
       "norm_label": "create_purchase_order()",
       "id": "services_purchase_order_service_create_purchase_order"
     },
@@ -6026,7 +6026,7 @@
       "file_type": "code",
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L124",
-      "community": 14,
+      "community": 15,
       "norm_label": "update_purchase_order()",
       "id": "services_purchase_order_service_update_purchase_order"
     },
@@ -6134,7 +6134,7 @@
       "file_type": "code",
       "source_file": "app/payments/__init__.py",
       "source_location": "L1",
-      "community": 28,
+      "community": 13,
       "norm_label": "__init__.py",
       "id": "payments_init"
     },
@@ -6143,7 +6143,7 @@
       "file_type": "code",
       "source_file": "app/payments/routes.py",
       "source_location": "L1",
-      "community": 28,
+      "community": 13,
       "norm_label": "routes.py",
       "id": "payments_routes"
     },
@@ -6152,7 +6152,7 @@
       "file_type": "code",
       "source_file": "app/payments/routes.py",
       "source_location": "L14",
-      "community": 28,
+      "community": 13,
       "norm_label": "index()",
       "id": "payments_routes_index"
     },
@@ -6161,7 +6161,7 @@
       "file_type": "code",
       "source_file": "app/payments/routes.py",
       "source_location": "L38",
-      "community": 28,
+      "community": 13,
       "norm_label": "create()",
       "id": "payments_routes_create"
     },
@@ -6170,7 +6170,7 @@
       "file_type": "code",
       "source_file": "app/payments/routes.py",
       "source_location": "L52",
-      "community": 28,
+      "community": 13,
       "norm_label": "search_invoices()",
       "id": "payments_routes_search_invoices"
     },
@@ -6179,7 +6179,7 @@
       "file_type": "code",
       "source_file": "app/payments/routes.py",
       "source_location": "L63",
-      "community": 28,
+      "community": 13,
       "norm_label": "store()",
       "id": "payments_routes_store"
     },
@@ -6188,7 +6188,7 @@
       "file_type": "code",
       "source_file": "app/payments/routes.py",
       "source_location": "L78",
-      "community": 28,
+      "community": 13,
       "norm_label": "view()",
       "id": "payments_routes_view"
     },
@@ -6197,7 +6197,7 @@
       "file_type": "code",
       "source_file": "app/payments/routes.py",
       "source_location": "L88",
-      "community": 28,
+      "community": 13,
       "norm_label": "edit()",
       "id": "payments_routes_edit"
     },
@@ -6206,7 +6206,7 @@
       "file_type": "code",
       "source_file": "app/payments/routes.py",
       "source_location": "L104",
-      "community": 28,
+      "community": 13,
       "norm_label": "update()",
       "id": "payments_routes_update"
     },
@@ -6215,7 +6215,7 @@
       "file_type": "code",
       "source_file": "app/payments/routes.py",
       "source_location": "L118",
-      "community": 28,
+      "community": 13,
       "norm_label": "delete()",
       "id": "payments_routes_delete"
     },
@@ -6800,7 +6800,7 @@
       "file_type": "code",
       "source_file": "app/utils.py",
       "source_location": "L16",
-      "community": 24,
+      "community": 19,
       "norm_label": "export_excel_response()",
       "id": "app_utils_export_excel_response"
     },
@@ -6818,7 +6818,7 @@
       "file_type": "rationale",
       "source_file": "app/utils.py",
       "source_location": "L17",
-      "community": 24,
+      "community": 19,
       "norm_label": "generates an excel file response.",
       "id": "app_utils_rationale_17"
     },
@@ -6827,7 +6827,7 @@
       "file_type": "code",
       "source_file": "app/warehouses/__init__.py",
       "source_location": "L1",
-      "community": 33,
+      "community": 22,
       "norm_label": "__init__.py",
       "id": "warehouses_init"
     },
@@ -6836,7 +6836,7 @@
       "file_type": "code",
       "source_file": "app/warehouses/routes.py",
       "source_location": "L1",
-      "community": 33,
+      "community": 22,
       "norm_label": "routes.py",
       "id": "warehouses_routes"
     },
@@ -6845,7 +6845,7 @@
       "file_type": "code",
       "source_file": "app/warehouses/routes.py",
       "source_location": "L15",
-      "community": 33,
+      "community": 22,
       "norm_label": "create()",
       "id": "warehouses_routes_create"
     },
@@ -6854,7 +6854,7 @@
       "file_type": "code",
       "source_file": "app/warehouses/routes.py",
       "source_location": "L23",
-      "community": 33,
+      "community": 22,
       "norm_label": "edit()",
       "id": "warehouses_routes_edit"
     },
@@ -6863,7 +6863,7 @@
       "file_type": "code",
       "source_file": "app/warehouses/routes.py",
       "source_location": "L32",
-      "community": 33,
+      "community": 22,
       "norm_label": "index()",
       "id": "warehouses_routes_index"
     },
@@ -6872,7 +6872,7 @@
       "file_type": "code",
       "source_file": "app/warehouses/routes.py",
       "source_location": "L48",
-      "community": 33,
+      "community": 22,
       "norm_label": "store()",
       "id": "warehouses_routes_store"
     },
@@ -6881,7 +6881,7 @@
       "file_type": "code",
       "source_file": "app/warehouses/routes.py",
       "source_location": "L79",
-      "community": 33,
+      "community": 22,
       "norm_label": "update()",
       "id": "warehouses_routes_update"
     },
@@ -6890,7 +6890,7 @@
       "file_type": "code",
       "source_file": "app/warehouses/services/__init__.py",
       "source_location": "L1",
-      "community": 27,
+      "community": 14,
       "norm_label": "__init__.py",
       "id": "app_warehouses_services_init_py_services_init"
     },
@@ -6899,7 +6899,7 @@
       "file_type": "code",
       "source_file": "app/warehouses/services/warehouse_service.py",
       "source_location": "L1",
-      "community": 27,
+      "community": 14,
       "norm_label": "warehouse_service.py",
       "id": "services_warehouse_service"
     },
@@ -6908,7 +6908,7 @@
       "file_type": "code",
       "source_file": "app/warehouses/services/warehouse_service.py",
       "source_location": "L6",
-      "community": 27,
+      "community": 14,
       "norm_label": ".get_paginated_warehouses()",
       "id": "services_warehouse_service_warehouseservice_get_paginated_warehouses"
     },
@@ -6917,7 +6917,7 @@
       "file_type": "code",
       "source_file": "app/warehouses/services/warehouse_service.py",
       "source_location": "L14",
-      "community": 27,
+      "community": 14,
       "norm_label": ".get_warehouse()",
       "id": "services_warehouse_service_warehouseservice_get_warehouse"
     },
@@ -6926,7 +6926,7 @@
       "file_type": "code",
       "source_file": "app/warehouses/services/warehouse_service.py",
       "source_location": "L18",
-      "community": 27,
+      "community": 14,
       "norm_label": ".create_warehouse()",
       "id": "services_warehouse_service_warehouseservice_create_warehouse"
     },
@@ -6935,7 +6935,7 @@
       "file_type": "code",
       "source_file": "app/warehouses/services/warehouse_service.py",
       "source_location": "L42",
-      "community": 27,
+      "community": 14,
       "norm_label": ".update_warehouse()",
       "id": "services_warehouse_service_warehouseservice_update_warehouse"
     },
@@ -6971,7 +6971,7 @@
       "file_type": "code",
       "source_file": "expire_documents.py",
       "source_location": "L1",
-      "community": 8,
+      "community": 0,
       "norm_label": "expire_documents.py",
       "id": "expire_documents"
     },
@@ -6980,7 +6980,7 @@
       "file_type": "code",
       "source_file": "expire_documents.py",
       "source_location": "L18",
-      "community": 8,
+      "community": 0,
       "norm_label": "run_task()",
       "id": "expire_documents_run_task"
     },
@@ -8501,7 +8501,7 @@
       "file_type": "code",
       "source_file": "app/utils.py",
       "source_location": "L16",
-      "community": 1,
+      "community": 24,
       "norm_label": "str",
       "id": "str"
     },
@@ -8510,7 +8510,7 @@
       "file_type": "rationale",
       "source_file": "app/invoices/services/invoice_update_service.py",
       "source_location": "L162",
-      "community": 86,
+      "community": 6,
       "norm_label": "add a payment to an invoice and update its status.",
       "id": "services_invoice_update_service_rationale_162"
     },
@@ -8519,7 +8519,7 @@
       "file_type": "code",
       "source_file": "",
       "source_location": "",
-      "community": 14,
+      "community": 15,
       "norm_label": "basemodel",
       "id": "basemodel"
     },
@@ -8537,7 +8537,7 @@
       "file_type": "code",
       "source_file": "app/orders/services/__init__.py",
       "source_location": "L1",
-      "community": 14,
+      "community": 15,
       "norm_label": "__init__.py",
       "id": "services_init"
     },
@@ -9188,7 +9188,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Lists employees with search, active/inactive filtering, class filtering, PTO balance visibility, and drawer-based create/edit/delete actions.",
-      "community": 1,
+      "community": 35,
       "norm_label": "employee directory",
       "id": "hr_employees_employee_directory"
     },
@@ -9202,7 +9202,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Captures personal information, optional linked user, employment classification, dates, standard working hours/days, compensation, PTO accrual, and notes.",
-      "community": 1,
+      "community": 35,
       "norm_label": "employee editor drawer",
       "id": "hr_employee_form_employee_editor_drawer"
     },
@@ -9216,7 +9216,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Defines an employee's PTO balance, accrual rate, and accrual period so leave workflows can show or consume available time off.",
-      "community": 1,
+      "community": 35,
       "norm_label": "pto configuration",
       "id": "hr_employee_form_pto_configuration"
     },
@@ -9305,34 +9305,6 @@
       "id": "hr_deviation_view_schedule_deviation_detail"
     },
     {
-      "label": "Inventory Catalog",
-      "file_type": "concept",
-      "source_file": "app/inventory/templates/inventory/index.html",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "rationale": "Lists products with search, export, drawer-based creation/editing, detail links, delete confirmation, and likely supplier filtering state.",
-      "community": 21,
-      "norm_label": "inventory catalog",
-      "id": "inventory_index_inventory_catalog"
-    },
-    {
-      "label": "Product Editor Drawer",
-      "file_type": "concept",
-      "source_file": "app/inventory/templates/inventory/form.html",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "rationale": "Creates or edits products with name, description, SKU auto-generation hint, quantity, price, cost, discount, supplier, and initial warehouse.",
-      "community": 21,
-      "norm_label": "product editor drawer",
-      "id": "inventory_form_product_editor_drawer"
-    },
-    {
       "label": "Product Detail Screen",
       "file_type": "concept",
       "source_file": "app/inventory/templates/inventory/view.html",
@@ -9342,7 +9314,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Shows product details, stock status, price/cost/tax/discount metrics, total stock value, warehouse distribution, movement history, barcode label access, and edit controls.",
-      "community": 21,
+      "community": 34,
       "norm_label": "product detail screen",
       "id": "inventory_view_product_detail_screen"
     },
@@ -9356,7 +9328,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Displays per-warehouse item quantities and offers adjustment and transfer drawers from the product detail page.",
-      "community": 21,
+      "community": 34,
       "norm_label": "warehouse stock distribution",
       "id": "inventory_view_stock_distribution"
     },
@@ -9370,7 +9342,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Drawer form submits an AJAX JSON stock adjustment for a product and warehouse, allowing positive or negative quantity changes.",
-      "community": 21,
+      "community": 34,
       "norm_label": "stock adjustment form",
       "id": "inventory_drawer_adjust_stock_adjustment_form"
     },
@@ -9384,23 +9356,9 @@
       "author": null,
       "contributor": null,
       "rationale": "Drawer form transfers product stock between two different warehouses using FormData and an AJAX POST.",
-      "community": 21,
+      "community": 34,
       "norm_label": "stock transfer form",
       "id": "inventory_drawer_transfer_stock_transfer_form"
-    },
-    {
-      "label": "Stock Movement Ledger",
-      "file_type": "concept",
-      "source_file": "app/inventory/templates/inventory/movements.html",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "rationale": "Lists inventory movements with search, client/supplier/type/period filters, export, movement type badges, origin/destination, references, quantities, and pagination.",
-      "community": 21,
-      "norm_label": "stock movement ledger",
-      "id": "inventory_movements_stock_movement_ledger"
     },
     {
       "label": "Company Scoped Navigation",
@@ -9697,90 +9655,6 @@
       "id": "view_payment_payment_detail_screen"
     },
     {
-      "label": "TrackDesk Application Shell",
-      "file_type": "document",
-      "source_file": "app/templates/base.html",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "rationale": "Base layout defines the authenticated ERP shell with primary module sidebar, secondary page sidebar, global search, company switcher, mobile menu, drawers, confirmation modal, and toast support.",
-      "community": 5,
-      "norm_label": "trackdesk application shell",
-      "id": "templates_base_application_shell"
-    },
-    {
-      "label": "Primary Module Navigation",
-      "file_type": "concept",
-      "source_file": "app/templates/base.html",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "rationale": "Icon navigation links to dashboard, contacts, inventory, warehouses, invoices, payments, orders, accounting, HR, users, and companies, with active endpoint styling.",
-      "community": 5,
-      "norm_label": "primary module navigation",
-      "id": "templates_base_primary_module_navigation"
-    },
-    {
-      "label": "Secondary Sidebar Blocks",
-      "file_type": "concept",
-      "source_file": "app/templates/base.html",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "rationale": "Feature templates provide sidebar_title and sidebar_nav blocks that are rendered inside a consistent secondary sidebar.",
-      "community": 5,
-      "norm_label": "secondary sidebar blocks",
-      "id": "templates_base_secondary_sidebar_blocks"
-    },
-    {
-      "label": "Global Search Form",
-      "file_type": "concept",
-      "source_file": "app/templates/base.html",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "rationale": "The top bar includes a persistent search form submitting query parameter q to the search endpoint.",
-      "community": 5,
-      "norm_label": "global search form",
-      "id": "templates_base_global_search_form"
-    },
-    {
-      "label": "Shared Confirmation Modal",
-      "file_type": "concept",
-      "source_file": "app/templates/base.html",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "rationale": "A central confirm modal supports destructive or sensitive actions advertised through data-action=\"confirm-delete\" across feature screens.",
-      "community": 5,
-      "norm_label": "shared confirmation modal",
-      "id": "templates_base_shared_confirm_modal"
-    },
-    {
-      "label": "Shared Side Drawer",
-      "file_type": "concept",
-      "source_file": "app/templates/base.html",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "rationale": "A reusable side drawer allows modules such as users and warehouses to open forms without leaving the index or detail screen.",
-      "community": 5,
-      "norm_label": "shared side drawer",
-      "id": "templates_base_shared_drawer"
-    },
-    {
       "label": "Error Page",
       "file_type": "document",
       "source_file": "app/templates/errors/error.html",
@@ -9832,7 +9706,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Search results group matched items by section and link directly to entity URLs for contacts, documents, inventory items, purchase orders, and companies.",
-      "community": 5,
+      "community": 49,
       "norm_label": "global search results screen",
       "id": "search_results_global_search_results_screen"
     },
@@ -9930,23 +9804,9 @@
       "author": null,
       "contributor": null,
       "rationale": "The warehouse form can render in a drawer or full layout and captures warehouse name, location, and active status.",
-      "community": 5,
+      "community": 43,
       "norm_label": "warehouse form drawer",
       "id": "form_warehouse_warehouse_form_drawer"
-    },
-    {
-      "label": "Warehouse List Screen",
-      "file_type": "document",
-      "source_file": "app/warehouses/templates/warehouses/index.html",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "rationale": "The warehouse index shows search, drawer creation/editing, total/active/inactive stats, product counts per warehouse, status badges, empty-state creation, and pagination.",
-      "community": 5,
-      "norm_label": "warehouse list screen",
-      "id": "index_warehouse_warehouse_list_screen"
     },
     {
       "label": "Shared List Filter Pagination Pattern",
@@ -9961,20 +9821,6 @@
       "community": 5,
       "norm_label": "shared list filter pagination pattern",
       "id": "chunk_shared_list_filter_pagination_pattern"
-    },
-    {
-      "label": "Shared Drawer Form Pattern",
-      "file_type": "concept",
-      "source_file": "app/templates/base.html",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "rationale": "User and warehouse forms explicitly support AJAX drawer usage through blank layout selection, data-drawer-form, and data-success-message attributes.",
-      "community": 5,
-      "norm_label": "shared drawer form pattern",
-      "id": "chunk_shared_drawer_form_pattern"
     },
     {
       "label": "Financial Document Payment Flow",
@@ -33503,26 +33349,6 @@
       "target": "dashboard_index_erp_summary_dashboard"
     },
     {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.85,
-      "source_file": "app/contacts/templates/contacts/view.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "contacts_view_supplier_product_history",
-      "target": "inventory_index_inventory_catalog"
-    },
-    {
-      "relation": "shares_data_with",
-      "confidence": "INFERRED",
-      "confidence_score": 0.85,
-      "source_file": "app/inventory/templates/inventory/form.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "inventory_form_product_editor_drawer",
-      "target": "contacts_view_supplier_product_history"
-    },
-    {
       "relation": "implements",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -33531,16 +33357,6 @@
       "weight": 1.0,
       "source": "dashboard_index_erp_summary_dashboard",
       "target": "dashboard_index_dashboard_quick_actions"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/dashboard/templates/dashboard/index.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "dashboard_index_erp_summary_dashboard",
-      "target": "inventory_index_inventory_catalog"
     },
     {
       "relation": "conceptually_related_to",
@@ -33653,56 +33469,6 @@
       "target": "hr_schedule_form_schedule_deviation_form"
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/inventory/templates/inventory/index.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "inventory_index_inventory_catalog",
-      "target": "inventory_form_product_editor_drawer"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/inventory/templates/inventory/index.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "inventory_index_inventory_catalog",
-      "target": "inventory_movements_stock_movement_ledger"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/inventory/templates/inventory/index.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "inventory_index_inventory_catalog",
-      "target": "inventory_view_product_detail_screen"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/inventory/templates/inventory/index.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "shared_company_scoped_navigation",
-      "target": "inventory_index_inventory_catalog"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/inventory/templates/inventory/view.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "inventory_view_product_detail_screen",
-      "target": "inventory_movements_stock_movement_ledger"
-    },
-    {
       "relation": "implements",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -33733,26 +33499,6 @@
       "target": "inventory_drawer_transfer_stock_transfer_form"
     },
     {
-      "relation": "shares_data_with",
-      "confidence": "INFERRED",
-      "confidence_score": 0.85,
-      "source_file": "app/inventory/templates/inventory/drawer_adjust.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "inventory_drawer_adjust_stock_adjustment_form",
-      "target": "inventory_movements_stock_movement_ledger"
-    },
-    {
-      "relation": "shares_data_with",
-      "confidence": "INFERRED",
-      "confidence_score": 0.85,
-      "source_file": "app/inventory/templates/inventory/drawer_transfer.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "inventory_drawer_transfer_stock_transfer_form",
-      "target": "inventory_movements_stock_movement_ledger"
-    },
-    {
       "relation": "implements",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -33781,16 +33527,6 @@
       "weight": 1.0,
       "source": "form_invoice_document_form_screen",
       "target": "form_invoice_project_picker"
-    },
-    {
-      "relation": "implements",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/invoices/templates/invoices/form.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "form_invoice_document_form_screen",
-      "target": "templates_base_application_shell"
     },
     {
       "relation": "references",
@@ -34066,101 +33802,11 @@
       "relation": "implements",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "app/templates/base.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "templates_base_application_shell",
-      "target": "templates_base_global_search_form"
-    },
-    {
-      "relation": "implements",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/templates/base.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "templates_base_application_shell",
-      "target": "templates_base_primary_module_navigation"
-    },
-    {
-      "relation": "implements",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/templates/base.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "templates_base_application_shell",
-      "target": "templates_base_secondary_sidebar_blocks"
-    },
-    {
-      "relation": "implements",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/templates/base.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "templates_base_application_shell",
-      "target": "templates_base_shared_confirm_modal"
-    },
-    {
-      "relation": "implements",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/templates/base.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "templates_base_application_shell",
-      "target": "templates_base_shared_drawer"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/templates/base.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "templates_base_global_search_form",
-      "target": "search_results_global_search_results_screen"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "INFERRED",
-      "confidence_score": 0.85,
-      "source_file": "app/users/templates/users/view.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "templates_base_shared_confirm_modal",
-      "target": "view_user_danger_zone"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/templates/base.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "chunk_shared_drawer_form_pattern",
-      "target": "templates_base_shared_drawer"
-    },
-    {
-      "relation": "implements",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
       "source_file": "app/templates/public/landing.html",
       "source_location": null,
       "weight": 1.0,
       "source": "public_landing_marketing_landing_page",
       "target": "public_landing_integrated_erp_value_proposition"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/users/templates/users/form.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "chunk_shared_drawer_form_pattern",
-      "target": "form_user_user_form_drawer"
     },
     {
       "relation": "implements",
@@ -34241,36 +33887,6 @@
       "weight": 1.0,
       "source": "view_user_user_profile_screen",
       "target": "view_user_danger_zone"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/warehouses/templates/warehouses/form.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "chunk_shared_drawer_form_pattern",
-      "target": "form_warehouse_warehouse_form_drawer"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/warehouses/templates/warehouses/index.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "index_warehouse_warehouse_list_screen",
-      "target": "form_warehouse_warehouse_form_drawer"
-    },
-    {
-      "relation": "conceptually_related_to",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/warehouses/templates/warehouses/index.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "chunk_shared_list_filter_pagination_pattern",
-      "target": "index_warehouse_warehouse_list_screen"
     }
   ],
   "hyperedges": [
@@ -34413,5 +34029,5 @@
       "source_file": "app/invoices/templates/invoices/index.html"
     }
   ],
-  "built_at_commit": "a5b349da30955ad9197d1456504068afd3703af3"
+  "built_at_commit": "264055fa51c697e472286214b646606c5827d366"
 }
