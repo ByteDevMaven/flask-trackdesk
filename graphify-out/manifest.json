@@ -885,8 +885,8 @@
     "semantic_hash": "2baa6c504f7d59476b7e01e517ded6a7"
   },
   "app/templates/base.html": {
-    "mtime": 1781247798.3321705,
-    "ast_hash": "5f70215298a08e6a22bb73c68986e0bd",
+    "mtime": 1781248126.6084158,
+    "ast_hash": "96f132db1b54ed391993bac91bfbed65",
     "semantic_hash": ""
   },
   "app/templates/blank.html": {
