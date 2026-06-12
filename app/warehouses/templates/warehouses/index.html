@@ -5,7 +5,7 @@
 {% block sidebar_title %}Almacenes{% endblock %}
 
 {% block sidebar_nav %}
-{% set cid = company_id %}
+{% set cid = session.get('selected_company_slug') or company_id %}
 {{ inventory_nav(cid, request.endpoint) }}
 {% endblock %}
 

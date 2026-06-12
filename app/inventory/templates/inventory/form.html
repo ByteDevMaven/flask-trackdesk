@@ -8,7 +8,7 @@
 {% block title %}{{ 'Nuevo' if not item else 'Editar' }} Producto – TrackDesk{% endblock %}
 {% block sidebar_title %}Nuevo Producto{% endblock %}
 {% block sidebar_nav %}
-{% set cid = company_id or session.get('selected_company_slug') %}
+{% set cid = session.get('selected_company_slug') or company_id %}
 {{ inventory_nav(cid, request.endpoint) }}
 {% endblock %}
 

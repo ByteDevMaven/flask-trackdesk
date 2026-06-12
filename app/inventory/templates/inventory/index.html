@@ -5,7 +5,7 @@
 {% block sidebar_title %}Inventario{% endblock %}
 
 {% block sidebar_nav %}
-{% set cid = company_id or session.get('selected_company_slug') %}
+{% set cid = session.get('selected_company_slug') or company_id %}
 {{ inventory_nav(cid, request.endpoint) }}
 {% endblock %}
 

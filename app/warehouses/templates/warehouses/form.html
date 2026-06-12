@@ -6,7 +6,7 @@
 {% block title %}{{ 'Nuevo' if not warehouse else 'Editar' }} Almacén – TrackDesk{% endblock %}
 {% block sidebar_title %}Almacenes{% endblock %}
 {% block sidebar_nav %}
-{% set cid = company_id %}
+{% set cid = session.get('selected_company_slug') or company_id %}
 <a href="{{ url_for('warehouses.index', company_id=cid) }}"
   class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm">
   <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
