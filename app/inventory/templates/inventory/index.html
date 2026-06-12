@@ -1,26 +1,12 @@
 {% extends "base.html" %}
+{% from "inventory/partials/_nav.html" import inventory_nav %}
+
 {% block title %}Inventario – TrackDesk{% endblock %}
 {% block sidebar_title %}Inventario{% endblock %}
 
 {% block sidebar_nav %}
 {% set cid = company_id or session.get('selected_company_slug') %}
-<a href="{{ url_for('inventory.index', company_id=cid) }}"
-  class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'inventory.index' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
-  <span
-    class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if request.endpoint == 'inventory.index' else 'bg-slate-300' }}"></span>
-  Todos los productos
-</a>
-<a href="{{ url_for('inventory.create', company_id=cid) }}"
-  class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'inventory.create' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
-  <span
-    class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if request.endpoint == 'inventory.create' else 'bg-slate-300' }}"></span>
-  Nuevo Producto
-</a>
-<a href="{{ url_for('inventory.movements', company_id=cid) }}"
-  class="flex items-center gap-3 px-3 py-2 rounded-md text-slate-600 hover:bg-slate-50 text-sm transition-colors">
-  <span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
-  Movimientos
-</a>
+{{ inventory_nav(cid, request.endpoint) }}
 {% endblock %}
 
 {% block page_title %}Inventario{% endblock %}
@@ -62,7 +48,7 @@
   <div class="flex-1 overflow-y-auto p-4 md:p-6">
 
     {% if stats %}
-    <div class="grid grid-cols-1 md:grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
       <div class="bg-white border border-slate-200 rounded-lg p-4 shadow-sm flex items-center justify-between">
         <div>
           <p class="text-xs font-semibold uppercase text-slate-400 tracking-wider mb-1">Total Productos</p>

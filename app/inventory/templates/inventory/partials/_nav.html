@@ -1,0 +1,26 @@
+{% macro inventory_nav(cid, endpoint) %}
+<a href="{{ url_for('inventory.index', company_id=cid) }}"
+    class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if endpoint == 'inventory.index' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+    <span
+        class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if endpoint == 'inventory.index' else 'bg-slate-300' }}"></span>
+    Todos los productos
+</a>
+<a href="{{ url_for('inventory.create', company_id=cid) }}"
+    class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if endpoint == 'inventory.create' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+    <span
+        class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if endpoint == 'inventory.create' else 'bg-slate-300' }}"></span>
+    Nuevo Producto
+</a>
+<a href="{{ url_for('warehouses.index', company_id=cid) }}"
+    class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if endpoint == 'warehouses.index' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+    <span
+        class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if endpoint == 'warehouses.index' else 'bg-slate-300' }}"></span>
+    Todos los Almacenes
+</a>
+<a href="{{ url_for('inventory.movements', company_id=cid) }}"
+    class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if endpoint == 'inventory.movements' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+    <span
+        class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if endpoint == 'inventory.movements' else 'bg-slate-300' }}"></span>
+    Movimientos
+</a>
+{% endmacro %}

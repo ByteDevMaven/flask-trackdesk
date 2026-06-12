@@ -1,25 +1,12 @@
 {% extends "base.html" %}
+{% from "inventory/partials/_nav.html" import inventory_nav %}
+
 {% block title %}Almacenes – TrackDesk{% endblock %}
 {% block sidebar_title %}Almacenes{% endblock %}
 
 {% block sidebar_nav %}
 {% set cid = company_id %}
-<div class="px-4 space-y-1">
-  <a href="{{ url_for('warehouses.index', company_id=cid) }}"
-    class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'warehouses.index' else 'text-slate-600 hover:bg-slate-50' }} text-sm">
-    <span
-      class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if request.endpoint == 'warehouses.index' else 'bg-slate-300' }}"></span>
-    Todos los Almacenes
-  </a>
-</div>
-
-<div class="px-4 mt-6">
-  <div class="bg-emerald-50 border border-emerald-100 rounded-xl p-4">
-    <p class="text-xs font-bold text-emerald-700 uppercase tracking-wider mb-1">Total de Almacenes</p>
-    <p class="text-2xl font-black text-emerald-800">{{ pagination.total }}</p>
-    <p class="text-xs text-emerald-600 mt-1">registrados en el sistema</p>
-  </div>
-</div>
+{{ inventory_nav(cid, request.endpoint) }}
 {% endblock %}
 
 {% block page_title %}Almacenes{% endblock %}
