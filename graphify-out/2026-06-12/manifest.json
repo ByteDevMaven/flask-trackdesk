@@ -1,0 +1,2262 @@
+{
+  "app.py": {
+    "mtime": 1779222750.7514486,
+    "ast_hash": "57ae4c3f0125c46d3c65c735f77c1174",
+    "semantic_hash": "57ae4c3f0125c46d3c65c735f77c1174"
+  },
+  "app/__init__.py": {
+    "mtime": 1780882101.761564,
+    "ast_hash": "c6ca50f46d7be76712e0c468474f00cd",
+    "semantic_hash": ""
+  },
+  "app/accounting/__init__.py": {
+    "mtime": 1779668445.127662,
+    "ast_hash": "575eea8e049486e005f9383dd12f3b9f",
+    "semantic_hash": "575eea8e049486e005f9383dd12f3b9f"
+  },
+  "app/accounting/routes.py": {
+    "mtime": 1781200772.2046385,
+    "ast_hash": "b369e2fe1c5fff5fa77e748338a7f18f",
+    "semantic_hash": ""
+  },
+  "app/accounting/services/__init__.py": {
+    "mtime": 1780277083.3406694,
+    "ast_hash": "06a79a348fc6371a64b29f70f6b16f83",
+    "semantic_hash": "06a79a348fc6371a64b29f70f6b16f83"
+  },
+  "app/accounting/services/accounting_service.py": {
+    "mtime": 1781148452.9718122,
+    "ast_hash": "7b603ec1d1b832cb280d0c8db5f7554f",
+    "semantic_hash": ""
+  },
+  "app/auth/__init__.py": {
+    "mtime": 1779222751.148324,
+    "ast_hash": "f8cee64ca8894edd8c6a62a484b655fe",
+    "semantic_hash": "f8cee64ca8894edd8c6a62a484b655fe"
+  },
+  "app/auth/routes.py": {
+    "mtime": 1780886009.084948,
+    "ast_hash": "399abff0a4b1c9bd1abdfacf163dcb7a",
+    "semantic_hash": ""
+  },
+  "app/auth/services/__init__.py": {
+    "mtime": 1780277031.8392506,
+    "ast_hash": "86d4a9435d6c98da81cd4ac51b0c808a",
+    "semantic_hash": "86d4a9435d6c98da81cd4ac51b0c808a"
+  },
+  "app/auth/services/auth_service.py": {
+    "mtime": 1780890809.7828753,
+    "ast_hash": "3a8f9141da0f560d8b3a00dc0b81289b",
+    "semantic_hash": ""
+  },
+  "app/blueprints.py": {
+    "mtime": 1780450560.4397154,
+    "ast_hash": "969fadc3096eaa080c2b58e94aae742e",
+    "semantic_hash": "969fadc3096eaa080c2b58e94aae742e"
+  },
+  "app/cli.py": {
+    "mtime": 1780882826.499958,
+    "ast_hash": "9c9e610ade12a59ce138edea27833ac5",
+    "semantic_hash": ""
+  },
+  "app/companies/__init__.py": {
+    "mtime": 1779222751.156821,
+    "ast_hash": "c9672dd87ec2b16df21781f249188544",
+    "semantic_hash": "c9672dd87ec2b16df21781f249188544"
+  },
+  "app/companies/routes.py": {
+    "mtime": 1780276664.811109,
+    "ast_hash": "69e920fd33eab3876366d56d79fb5396",
+    "semantic_hash": "69e920fd33eab3876366d56d79fb5396"
+  },
+  "app/companies/services/__init__.py": {
+    "mtime": 1780276625.3346882,
+    "ast_hash": "8e7082785fa69badea7ef5502dafe154",
+    "semantic_hash": "8e7082785fa69badea7ef5502dafe154"
+  },
+  "app/companies/services/company_service.py": {
+    "mtime": 1780890162.5753098,
+    "ast_hash": "f908365ca4fc5e8a8f2313266897a470",
+    "semantic_hash": ""
+  },
+  "app/contacts/__init__.py": {
+    "mtime": 1779222751.1620471,
+    "ast_hash": "1b5857bbfb98168997d1b06f54d02e82",
+    "semantic_hash": "1b5857bbfb98168997d1b06f54d02e82"
+  },
+  "app/contacts/routes.py": {
+    "mtime": 1780890076.3905945,
+    "ast_hash": "569562a4197c80d44212d94bc01fa144",
+    "semantic_hash": ""
+  },
+  "app/contacts/services/__init__.py": {
+    "mtime": 1780276555.2401526,
+    "ast_hash": "d8330053d41f53ae9b61b5b69b00b9e3",
+    "semantic_hash": "d8330053d41f53ae9b61b5b69b00b9e3"
+  },
+  "app/contacts/services/contact_service.py": {
+    "mtime": 1780322650.1828492,
+    "ast_hash": "046f05c8913958b2a682ba0b509ceba8",
+    "semantic_hash": "046f05c8913958b2a682ba0b509ceba8"
+  },
+  "app/context_processors.py": {
+    "mtime": 1780966305.6913683,
+    "ast_hash": "46c92af8b636029c7b71a9f5783b4bb1",
+    "semantic_hash": ""
+  },
+  "app/dashboard/__init__.py": {
+    "mtime": 1779222751.1728835,
+    "ast_hash": "1be4f6021705660567d58e82a81eb03d",
+    "semantic_hash": "1be4f6021705660567d58e82a81eb03d"
+  },
+  "app/dashboard/routes.py": {
+    "mtime": 1780890388.0287528,
+    "ast_hash": "884ba9eacdf3e7081ba5f38a0bee9cbc",
+    "semantic_hash": ""
+  },
+  "app/dashboard/services/__init__.py": {
+    "mtime": 1780277032.6266155,
+    "ast_hash": "c12c8028cf27765592a92b36d577bd84",
+    "semantic_hash": "c12c8028cf27765592a92b36d577bd84"
+  },
+  "app/dashboard/services/dashboard_service.py": {
+    "mtime": 1780277055.7364671,
+    "ast_hash": "b63519bf200c7415d0bc05b135a8e386",
+    "semantic_hash": "b63519bf200c7415d0bc05b135a8e386"
+  },
+  "app/extensions.py": {
+    "mtime": 1780883361.7441647,
+    "ast_hash": "f805dea88a1504f4e8281567c7c895b1",
+    "semantic_hash": ""
+  },
+  "app/hooks.py": {
+    "mtime": 1780890498.9617517,
+    "ast_hash": "59fdb57851ddb41ed803a15cb7e8cc47",
+    "semantic_hash": ""
+  },
+  "app/hr/__init__.py": {
+    "mtime": 1780451189.1364365,
+    "ast_hash": "970186455043bd01ec3381a298b63471",
+    "semantic_hash": "970186455043bd01ec3381a298b63471"
+  },
+  "app/hr/routes.py": {
+    "mtime": 1780890076.40532,
+    "ast_hash": "2a1544c928904bca45f2136caf58c496",
+    "semantic_hash": ""
+  },
+  "app/inventory/__init__.py": {
+    "mtime": 1779222751.186567,
+    "ast_hash": "b6bc215a7a633d7c4529f241b8046022",
+    "semantic_hash": "b6bc215a7a633d7c4529f241b8046022"
+  },
+  "app/inventory/routes.py": {
+    "mtime": 1780890076.4075716,
+    "ast_hash": "fe44bfa56ad1779ee61a2b487b8e43b8",
+    "semantic_hash": ""
+  },
+  "app/inventory/services/__init__.py": {
+    "mtime": 1779222751.1915693,
+    "ast_hash": "198ff05abd2b118b8e27426034273585",
+    "semantic_hash": "198ff05abd2b118b8e27426034273585"
+  },
+  "app/inventory/services/inventory_service.py": {
+    "mtime": 1780887946.6979535,
+    "ast_hash": "2a239e6b4b52469cc06b24682113ab4f",
+    "semantic_hash": ""
+  },
+  "app/inventory/static/js/barcode.js": {
+    "mtime": 1780275598.5022752,
+    "ast_hash": "31713ab5c0a72cc6bd67ef65d281641a",
+    "semantic_hash": "31713ab5c0a72cc6bd67ef65d281641a"
+  },
+  "app/invoices/__init__.py": {
+    "mtime": 1779222751.2057378,
+    "ast_hash": "3eb0159e2b400a5e34e6b92c5da8d806",
+    "semantic_hash": "3eb0159e2b400a5e34e6b92c5da8d806"
+  },
+  "app/invoices/routes.py": {
+    "mtime": 1780968409.839365,
+    "ast_hash": "ef22b111a12ee245b1f812b53bd3d1aa",
+    "semantic_hash": ""
+  },
+  "app/invoices/services/__init__.py": {
+    "mtime": 1780281587.2221286,
+    "ast_hash": "15b19ce7d0f946f8b36e564ca36b9085",
+    "semantic_hash": "15b19ce7d0f946f8b36e564ca36b9085"
+  },
+  "app/invoices/services/invoice_create_service.py": {
+    "mtime": 1780968382.563648,
+    "ast_hash": "e562c326351456ae2d809675d216e069",
+    "semantic_hash": ""
+  },
+  "app/invoices/services/invoice_pdf_service.py": {
+    "mtime": 1780322044.7400074,
+    "ast_hash": "31db469fbb3d1b6e8f7357a1b961a129",
+    "semantic_hash": "31db469fbb3d1b6e8f7357a1b961a129"
+  },
+  "app/invoices/services/invoice_query_service.py": {
+    "mtime": 1779222751.2139823,
+    "ast_hash": "27d9ad9a9d0bc60bb5fcf2d340123d7a",
+    "semantic_hash": "27d9ad9a9d0bc60bb5fcf2d340123d7a"
+  },
+  "app/invoices/services/invoice_update_service.py": {
+    "mtime": 1781237560.3995547,
+    "ast_hash": "f2fc437056b66ad69aec45707e2c8058",
+    "semantic_hash": ""
+  },
+  "app/invoices/services/pdf_layouts/__init__.py": {
+    "mtime": 1780034325.7680454,
+    "ast_hash": "5bb9723a27ba44600b0cf3be494b159e",
+    "semantic_hash": "5bb9723a27ba44600b0cf3be494b159e"
+  },
+  "app/invoices/services/pdf_layouts/ferre_lagos.py": {
+    "mtime": 1780034320.806595,
+    "ast_hash": "8dfadbe8809897e30f7ea2bc8137dcf4",
+    "semantic_hash": "8dfadbe8809897e30f7ea2bc8137dcf4"
+  },
+  "app/invoices/static/js/invoice-form.js": {
+    "mtime": 1780969590.9357572,
+    "ast_hash": "074a4c66c302e8bda49d2d248bbd139e",
+    "semantic_hash": ""
+  },
+  "app/middleware/__init__.py": {
+    "mtime": 1780882093.8323169,
+    "ast_hash": "2a0c0d0d6037280ee791167aeb94b2f7",
+    "semantic_hash": ""
+  },
+  "app/middleware/audit.py": {
+    "mtime": 1780535281.7280767,
+    "ast_hash": "292202145e07a66e1b78223a8a2971c2",
+    "semantic_hash": ""
+  },
+  "app/middleware/rbac.py": {
+    "mtime": 1780967673.6614873,
+    "ast_hash": "664f5a8e8944670c75fa54808e8ef1f0",
+    "semantic_hash": ""
+  },
+  "app/models/__init__.py": {
+    "mtime": 1780885936.293555,
+    "ast_hash": "e20e21a9df5546f1ce104257cd0ac19c",
+    "semantic_hash": ""
+  },
+  "app/models/account.py": {
+    "mtime": 1780539219.3044965,
+    "ast_hash": "68d0a4f22cfc0777fe1c66c6629c4ccc",
+    "semantic_hash": ""
+  },
+  "app/models/associations.py": {
+    "mtime": 1780025214.972962,
+    "ast_hash": "59f09644dcda5fc5f9f96b793a67b544",
+    "semantic_hash": "59f09644dcda5fc5f9f96b793a67b544"
+  },
+  "app/models/audit.py": {
+    "mtime": 1779946972.8469856,
+    "ast_hash": "ae135c1241571910f4e4a1dd5048bb4d",
+    "semantic_hash": "ae135c1241571910f4e4a1dd5048bb4d"
+  },
+  "app/models/base.py": {
+    "mtime": 1779782082.5889783,
+    "ast_hash": "4e5389bc8e561584d631f823d4ffee85",
+    "semantic_hash": "4e5389bc8e561584d631f823d4ffee85"
+  },
+  "app/models/company.py": {
+    "mtime": 1780890160.554001,
+    "ast_hash": "8c693b9beb57dea71b87eec74b9c45b2",
+    "semantic_hash": ""
+  },
+  "app/models/contact.py": {
+    "mtime": 1780321589.7515423,
+    "ast_hash": "1fb1b1d3066059c8ff4a0b17bb94b7d1",
+    "semantic_hash": "1fb1b1d3066059c8ff4a0b17bb94b7d1"
+  },
+  "app/models/document.py": {
+    "mtime": 1780968335.1144714,
+    "ast_hash": "767dce836756f6785081dfe1dab70475",
+    "semantic_hash": ""
+  },
+  "app/models/document_item.py": {
+    "mtime": 1780290469.5393803,
+    "ast_hash": "131a53b522039098bbe26b1d77a147cd",
+    "semantic_hash": "131a53b522039098bbe26b1d77a147cd"
+  },
+  "app/models/document_sequence.py": {
+    "mtime": 1779946972.8469856,
+    "ast_hash": "910ce238037dc149d306ab4ae39a389c",
+    "semantic_hash": "910ce238037dc149d306ab4ae39a389c"
+  },
+  "app/models/document_template.py": {
+    "mtime": 1780321968.3663967,
+    "ast_hash": "ebca68fcbb2ad6c9579112b66df160c0",
+    "semantic_hash": "ebca68fcbb2ad6c9579112b66df160c0"
+  },
+  "app/models/employee.py": {
+    "mtime": 1780529984.4659727,
+    "ast_hash": "e5a7414b5820a2e6546c0cb98dad9a3c",
+    "semantic_hash": "e5a7414b5820a2e6546c0cb98dad9a3c"
+  },
+  "app/models/enums.py": {
+    "mtime": 1781147584.331258,
+    "ast_hash": "0acb092ef4118171a17f9df89203e23c",
+    "semantic_hash": ""
+  },
+  "app/models/expense.py": {
+    "mtime": 1780539251.4697566,
+    "ast_hash": "b18a76b8de2c0116ac1b188ede958373",
+    "semantic_hash": ""
+  },
+  "app/models/inventory_item.py": {
+    "mtime": 1780887916.1201413,
+    "ast_hash": "687b1fa7304d7153d1a32d91056e1c29",
+    "semantic_hash": ""
+  },
+  "app/models/leave_request.py": {
+    "mtime": 1780450442.9427404,
+    "ast_hash": "11d2c7b814b23a2865e11a5bad4f6b07",
+    "semantic_hash": "11d2c7b814b23a2865e11a5bad4f6b07"
+  },
+  "app/models/ledger_entry.py": {
+    "mtime": 1780539234.292737,
+    "ast_hash": "17d82800591a410dd42fa20e62d941dd",
+    "semantic_hash": ""
+  },
+  "app/models/notification.py": {
+    "mtime": 1779946972.8469856,
+    "ast_hash": "3416a49c3def71503ada812db4957db1",
+    "semantic_hash": "3416a49c3def71503ada812db4957db1"
+  },
+  "app/models/payment.py": {
+    "mtime": 1779946972.8327112,
+    "ast_hash": "d75a9ba4c6f65f51503e6d1261ffd17a",
+    "semantic_hash": "d75a9ba4c6f65f51503e6d1261ffd17a"
+  },
+  "app/models/permission.py": {
+    "mtime": 1779946972.8469856,
+    "ast_hash": "599143d74a2f6fc29db2090afa926f6f",
+    "semantic_hash": "599143d74a2f6fc29db2090afa926f6f"
+  },
+  "app/models/project.py": {
+    "mtime": 1779946972.8469856,
+    "ast_hash": "720ef3a6afba6c9a661edc422521bd81",
+    "semantic_hash": "720ef3a6afba6c9a661edc422521bd81"
+  },
+  "app/models/purchase_order.py": {
+    "mtime": 1780712373.8865967,
+    "ast_hash": "16a8e3ce1ce52b25454e829282c75f8d",
+    "semantic_hash": ""
+  },
+  "app/models/purchase_order_item.py": {
+    "mtime": 1780868554.3284369,
+    "ast_hash": "6d8aac02312e8ecad2e9dc06228275a7",
+    "semantic_hash": ""
+  },
+  "app/models/report.py": {
+    "mtime": 1779946972.8410912,
+    "ast_hash": "af655683d930c85d04f4066d87f3b0c9",
+    "semantic_hash": "af655683d930c85d04f4066d87f3b0c9"
+  },
+  "app/models/role.py": {
+    "mtime": 1779946972.8469856,
+    "ast_hash": "bd6e7af21e979492a231f7bad3af48b7",
+    "semantic_hash": "bd6e7af21e979492a231f7bad3af48b7"
+  },
+  "app/models/stock_movement.py": {
+    "mtime": 1780708510.4396791,
+    "ast_hash": "96e9a8a27c13abd87f27d87d60806d6f",
+    "semantic_hash": "96e9a8a27c13abd87f27d87d60806d6f"
+  },
+  "app/models/tag.py": {
+    "mtime": 1780025212.9518473,
+    "ast_hash": "9a2edafd4f7726afc735022c7e85c309",
+    "semantic_hash": "9a2edafd4f7726afc735022c7e85c309"
+  },
+  "app/models/user.py": {
+    "mtime": 1780866414.7751617,
+    "ast_hash": "20b65b8f5bbaa96296e9f29dbab684d3",
+    "semantic_hash": ""
+  },
+  "app/models/warehouse.py": {
+    "mtime": 1780197729.563438,
+    "ast_hash": "1ba1496a96aedc29fe4c107a737f4c0e",
+    "semantic_hash": "1ba1496a96aedc29fe4c107a737f4c0e"
+  },
+  "app/models/warehouse_item.py": {
+    "mtime": 1780197737.7213774,
+    "ast_hash": "38249448d11fb0228a66a6fcda909615",
+    "semantic_hash": "38249448d11fb0228a66a6fcda909615"
+  },
+  "app/models/work_schedule.py": {
+    "mtime": 1780450452.04154,
+    "ast_hash": "b8d41d4d5618bc19c9fd4de37a3e5c16",
+    "semantic_hash": "b8d41d4d5618bc19c9fd4de37a3e5c16"
+  },
+  "app/orders/__init__.py": {
+    "mtime": 1779222751.2482624,
+    "ast_hash": "68d6c392b6812987cc0f80c932ddfa6f",
+    "semantic_hash": "68d6c392b6812987cc0f80c932ddfa6f"
+  },
+  "app/orders/routes.py": {
+    "mtime": 1780890076.412776,
+    "ast_hash": "66e6cfbf62eee82d4603973f18e7eabb",
+    "semantic_hash": ""
+  },
+  "app/orders/services/__init__.py": {
+    "mtime": 1780711781.4755902,
+    "ast_hash": "df884b66c8f90f140d3f7cdfc0767f12",
+    "semantic_hash": ""
+  },
+  "app/orders/services/purchase_order_query_service.py": {
+    "mtime": 1779222751.25783,
+    "ast_hash": "c5450b19683de25083f330beaf957cea",
+    "semantic_hash": "c5450b19683de25083f330beaf957cea"
+  },
+  "app/orders/services/purchase_order_service.py": {
+    "mtime": 1780710700.7924123,
+    "ast_hash": "feaea81ff948c26ddcd95078d3131f8b",
+    "semantic_hash": ""
+  },
+  "app/orders/services/purchase_order_stats_service.py": {
+    "mtime": 1779222751.2649171,
+    "ast_hash": "ec75fc53b3d4a351ca0b8a2bf71419ca",
+    "semantic_hash": "ec75fc53b3d4a351ca0b8a2bf71419ca"
+  },
+  "app/orders/static/js/form.js": {
+    "mtime": 1779222808.4630504,
+    "ast_hash": "d6e9d4e7990f744bbabeca76e61ab70c",
+    "semantic_hash": "d6e9d4e7990f744bbabeca76e61ab70c"
+  },
+  "app/payments/__init__.py": {
+    "mtime": 1779222751.2720704,
+    "ast_hash": "0bca208f663e1f5bd87a7fabb84dcd3d",
+    "semantic_hash": "0bca208f663e1f5bd87a7fabb84dcd3d"
+  },
+  "app/payments/routes.py": {
+    "mtime": 1780890076.4157495,
+    "ast_hash": "94815b508bdf4cc0dabc53e858a48d30",
+    "semantic_hash": ""
+  },
+  "app/payments/services/__init__.py": {
+    "mtime": 1780276952.848003,
+    "ast_hash": "3ad686de10fcb31d4f58e596eaa337ec",
+    "semantic_hash": "3ad686de10fcb31d4f58e596eaa337ec"
+  },
+  "app/payments/services/payment_service.py": {
+    "mtime": 1781237560.3995547,
+    "ast_hash": "ec1bb73166959072771285c3255903bd",
+    "semantic_hash": ""
+  },
+  "app/routes.py": {
+    "mtime": 1780890349.6931863,
+    "ast_hash": "89b65556ce0fca9ccce2e80449f3dc81",
+    "semantic_hash": ""
+  },
+  "app/static/js/drawer.js": {
+    "mtime": 1780535767.1571376,
+    "ast_hash": "af2bd5f36e7a9c92d54da13b6928e6ed",
+    "semantic_hash": ""
+  },
+  "app/static/js/flash.js": {
+    "mtime": 1779222808.4738624,
+    "ast_hash": "bff28f54832832719b349ff639abd587",
+    "semantic_hash": "bff28f54832832719b349ff639abd587"
+  },
+  "app/static/js/index.js": {
+    "mtime": 1779945216.072401,
+    "ast_hash": "7d8fa3c51f2d5d65bd5c29ff39f80a2b",
+    "semantic_hash": "7d8fa3c51f2d5d65bd5c29ff39f80a2b"
+  },
+  "app/static/js/modals.js": {
+    "mtime": 1779686458.228449,
+    "ast_hash": "7f374e7204fbc32f605eaa68a172ea29",
+    "semantic_hash": "7f374e7204fbc32f605eaa68a172ea29"
+  },
+  "app/users/__init__.py": {
+    "mtime": 1779222751.2895756,
+    "ast_hash": "3cc22faa685273fb894af80c88ab4447",
+    "semantic_hash": "3cc22faa685273fb894af80c88ab4447"
+  },
+  "app/users/routes.py": {
+    "mtime": 1780967714.1740136,
+    "ast_hash": "51f87ef7b9560253edc1b0a097d21220",
+    "semantic_hash": ""
+  },
+  "app/users/services/__init__.py": {
+    "mtime": 1780276705.9395607,
+    "ast_hash": "5d682d068dab6ab56f90b9a759b5d510",
+    "semantic_hash": "5d682d068dab6ab56f90b9a759b5d510"
+  },
+  "app/users/services/user_service.py": {
+    "mtime": 1780967699.3487601,
+    "ast_hash": "3a047a92672f5e8c5a2643544e5a2c35",
+    "semantic_hash": ""
+  },
+  "app/warehouses/__init__.py": {
+    "mtime": 1780199315.4396286,
+    "ast_hash": "1cabadcfd2144e0fe96879c4e70aae6b",
+    "semantic_hash": "1cabadcfd2144e0fe96879c4e70aae6b"
+  },
+  "app/warehouses/routes.py": {
+    "mtime": 1780890076.420397,
+    "ast_hash": "cf890e064335fc7fdb8ab6e35438f2b2",
+    "semantic_hash": ""
+  },
+  "app/warehouses/services/__init__.py": {
+    "mtime": 1780276770.8212483,
+    "ast_hash": "f5d9f1fdd12b769d25a3776cc2a61730",
+    "semantic_hash": "f5d9f1fdd12b769d25a3776cc2a61730"
+  },
+  "app/warehouses/services/warehouse_service.py": {
+    "mtime": 1780281701.1143417,
+    "ast_hash": "2eea571313cf1f2b73a56f3c38bae588",
+    "semantic_hash": "2eea571313cf1f2b73a56f3c38bae588"
+  },
+  "config.py": {
+    "mtime": 1780885494.1630054,
+    "ast_hash": "8b883617176000258d58d1d07ec04a20",
+    "semantic_hash": ""
+  },
+  "expire_documents.py": {
+    "mtime": 1780296882.7082705,
+    "ast_hash": "25f5db397b82e2da2165cbdf4b0c10f3",
+    "semantic_hash": "25f5db397b82e2da2165cbdf4b0c10f3"
+  },
+  "migrations/env.py": {
+    "mtime": 1779222751.29383,
+    "ast_hash": "56cd2558f40e81af49b35c669eea0ae7",
+    "semantic_hash": "56cd2558f40e81af49b35c669eea0ae7"
+  },
+  "migrations/versions/0c2495f8e36b_unify_contacts.py": {
+    "mtime": 1779222751.29584,
+    "ast_hash": "aeef0208b17462134fad06d68b995973",
+    "semantic_hash": "aeef0208b17462134fad06d68b995973"
+  },
+  "migrations/versions/0c8a80a1e4fb_auto_migration.py": {
+    "mtime": 1780322252.9195614,
+    "ast_hash": "544faa1f68406ef2df1a38b14a188abc",
+    "semantic_hash": "544faa1f68406ef2df1a38b14a188abc"
+  },
+  "migrations/versions/0e4aaddd35d0_initial.py": {
+    "mtime": 1779222751.2968402,
+    "ast_hash": "b0de44b1ab2d84e3cc8a5942ffa078b5",
+    "semantic_hash": "b0de44b1ab2d84e3cc8a5942ffa078b5"
+  },
+  "migrations/versions/21f4dcb595f6_add_standard_schedule_fields_to_employee.py": {
+    "mtime": 1780530007.8606148,
+    "ast_hash": "1ff822639b0b026e7ae2e062dffa54b5",
+    "semantic_hash": "1ff822639b0b026e7ae2e062dffa54b5"
+  },
+  "migrations/versions/46e167baf673_add_audit_to_contacts.py": {
+    "mtime": 1779222751.2968402,
+    "ast_hash": "7068cd2f06de2f8fec1ec1a403a8b8f2",
+    "semantic_hash": "7068cd2f06de2f8fec1ec1a403a8b8f2"
+  },
+  "migrations/versions/4c2584349c01_auto_migration.py": {
+    "mtime": 1779865142.858805,
+    "ast_hash": "542ba7a1c715de5891b9c8217e222fa5",
+    "semantic_hash": "542ba7a1c715de5891b9c8217e222fa5"
+  },
+  "migrations/versions/6a160cf40b05_add_document_templates.py": {
+    "mtime": 1780208686.9040732,
+    "ast_hash": "897e9c2237c4a5a28e9d83d9b5c971a4",
+    "semantic_hash": "897e9c2237c4a5a28e9d83d9b5c971a4"
+  },
+  "migrations/versions/8abc28cd44ee_update_models.py": {
+    "mtime": 1779949600.5033123,
+    "ast_hash": "61e589be99eb0a033c92fe1de23420d5",
+    "semantic_hash": "61e589be99eb0a033c92fe1de23420d5"
+  },
+  "migrations/versions/a2b1c3d4e5f6_add_missing_audit_columns.py": {
+    "mtime": 1779222751.2978427,
+    "ast_hash": "b7b940a4dbedcee822a502908c958306",
+    "semantic_hash": "b7b940a4dbedcee822a502908c958306"
+  },
+  "migrations/versions/b3c4d5e6f7a8_add_description_to_role_and_permission.py": {
+    "mtime": 1779664097.4328065,
+    "ast_hash": "4f658c7459a58459e520ebdb5a0223ef",
+    "semantic_hash": "4f658c7459a58459e520ebdb5a0223ef"
+  },
+  "migrations/versions/be74a037a830_add_warehouses.py": {
+    "mtime": 1780197842.6306987,
+    "ast_hash": "d945ff2515079ba5a185f76324908235",
+    "semantic_hash": "d945ff2515079ba5a185f76324908235"
+  },
+  "migrations/versions/c1ed0fea63d7_add_budget_and_soft_deletes.py": {
+    "mtime": 1779781210.7980447,
+    "ast_hash": "f68ce724ed0a50702c5cc423c101e4d4",
+    "semantic_hash": "f68ce724ed0a50702c5cc423c101e4d4"
+  },
+  "migrations/versions/c4d5e6f7a8b9_add_accounting.py": {
+    "mtime": 1779667634.8773239,
+    "ast_hash": "ead8b2981f7d3cdf4d7f357381af8520",
+    "semantic_hash": "ead8b2981f7d3cdf4d7f357381af8520"
+  },
+  "migrations/versions/c6d168cff81e_add_hr_module_employee_leaverequest_.py": {
+    "mtime": 1780450790.8459628,
+    "ast_hash": "2934a90a5a11d54b04659d421ac489e0",
+    "semantic_hash": "2934a90a5a11d54b04659d421ac489e0"
+  },
+  "migrations/versions/d1e2f3a4b5c6_consolidate_schema.py": {
+    "mtime": 1779866285.2187777,
+    "ast_hash": "9f30d7092ef712d6183dbbe428089147",
+    "semantic_hash": "9f30d7092ef712d6183dbbe428089147"
+  },
+  "migrations/versions/e24269f70ee6_update_last_login_nullable.py": {
+    "mtime": 1779950002.712763,
+    "ast_hash": "15da294568d92f27a3315380f2c6e01f",
+    "semantic_hash": "15da294568d92f27a3315380f2c6e01f"
+  },
+  "migrations/versions/f5d882475acb_add_tags.py": {
+    "mtime": 1780025681.1612964,
+    "ast_hash": "1163ea955ba64924251441294dd65c18",
+    "semantic_hash": "1163ea955ba64924251441294dd65c18"
+  },
+  "package.json": {
+    "mtime": 1756531182.983219,
+    "ast_hash": "84531173607a97b5a802e678d9e4775c",
+    "semantic_hash": "84531173607a97b5a802e678d9e4775c"
+  },
+  ".agents/rules/graphify.md": {
+    "mtime": 1780531807.158685,
+    "ast_hash": "a0e4d192b9e2e17256124dbfc8e24e6a",
+    "semantic_hash": "a0e4d192b9e2e17256124dbfc8e24e6a"
+  },
+  ".agents/skills/graphify/SKILL.md": {
+    "mtime": 1780531807.144099,
+    "ast_hash": "1acfc5e3ff91c92373909c5c11f55769",
+    "semantic_hash": "1acfc5e3ff91c92373909c5c11f55769"
+  },
+  ".agents/skills/graphify/references/add-watch.md": {
+    "mtime": 1780531551.1224434,
+    "ast_hash": "0df0589623217ca38a12bdcabfb42f4c",
+    "semantic_hash": "0df0589623217ca38a12bdcabfb42f4c"
+  },
+  ".agents/skills/graphify/references/exports.md": {
+    "mtime": 1780531551.1224434,
+    "ast_hash": "7fb1a81aca17a462db70684a324fcfb0",
+    "semantic_hash": "7fb1a81aca17a462db70684a324fcfb0"
+  },
+  ".agents/skills/graphify/references/extraction-spec.md": {
+    "mtime": 1780531551.1264427,
+    "ast_hash": "24808b03abfeaf5f6435bb69c0125b2c",
+    "semantic_hash": "24808b03abfeaf5f6435bb69c0125b2c"
+  },
+  ".agents/skills/graphify/references/github-and-merge.md": {
+    "mtime": 1780531551.129444,
+    "ast_hash": "cde13df085e4c492aeb7ba298a996d0d",
+    "semantic_hash": "cde13df085e4c492aeb7ba298a996d0d"
+  },
+  ".agents/skills/graphify/references/hooks.md": {
+    "mtime": 1780531551.1304443,
+    "ast_hash": "3f545db6ce646650bb9de588f5512a27",
+    "semantic_hash": "3f545db6ce646650bb9de588f5512a27"
+  },
+  ".agents/skills/graphify/references/query.md": {
+    "mtime": 1780531551.1314425,
+    "ast_hash": "8b40ed8c9e9060fc215219a8fc964091",
+    "semantic_hash": "8b40ed8c9e9060fc215219a8fc964091"
+  },
+  ".agents/skills/graphify/references/transcribe.md": {
+    "mtime": 1780531551.1324432,
+    "ast_hash": "70f6aa30d6211f3a2c7e9fc45479f50c",
+    "semantic_hash": "70f6aa30d6211f3a2c7e9fc45479f50c"
+  },
+  ".agents/skills/graphify/references/update.md": {
+    "mtime": 1780531551.1334443,
+    "ast_hash": "735932eaa4f0c8fef9566c538ae3e5f8",
+    "semantic_hash": "735932eaa4f0c8fef9566c538ae3e5f8"
+  },
+  ".agents/workflows/graphify.md": {
+    "mtime": 1780531807.1596844,
+    "ast_hash": "637776aa6f7496d069afe7520c845c8a",
+    "semantic_hash": "637776aa6f7496d069afe7520c845c8a"
+  },
+  "app/accounting/templates/accounting/chart_of_accounts.html": {
+    "mtime": 1781146815.252812,
+    "ast_hash": "0937d4d5f633552f915675cf752b25ca",
+    "semantic_hash": ""
+  },
+  "app/accounting/templates/accounting/dashboard.html": {
+    "mtime": 1781147636.5033512,
+    "ast_hash": "d9e9e388ad9d20f3310de32c158624af",
+    "semantic_hash": ""
+  },
+  "app/accounting/templates/accounting/expense_form.html": {
+    "mtime": 1780891625.38196,
+    "ast_hash": "997166f0ade003229fab0d9da4ee82a3",
+    "semantic_hash": ""
+  },
+  "app/accounting/templates/accounting/ledger.html": {
+    "mtime": 1781147668.106119,
+    "ast_hash": "2279014e6e1d5b8ffaa31deb8402512c",
+    "semantic_hash": ""
+  },
+  "app/accounting/templates/accounting/partials/account_form.html": {
+    "mtime": 1780891625.4000778,
+    "ast_hash": "c2ae0c02b65f897ec73b085039858f10",
+    "semantic_hash": ""
+  },
+  "app/accounting/templates/accounting/partials/expense_form.html": {
+    "mtime": 1781053405.5420866,
+    "ast_hash": "f148a07ec60db2e052fe3c40e6cc8139",
+    "semantic_hash": ""
+  },
+  "app/accounting/templates/accounting/partials/project_form.html": {
+    "mtime": 1780891625.4070778,
+    "ast_hash": "5979b7769e80280af4994d399edbec1d",
+    "semantic_hash": ""
+  },
+  "app/accounting/templates/accounting/partials/tag_form.html": {
+    "mtime": 1780891625.408078,
+    "ast_hash": "58b061681328865b78d5a4157a1034ef",
+    "semantic_hash": ""
+  },
+  "app/accounting/templates/accounting/project_form.html": {
+    "mtime": 1780891625.395074,
+    "ast_hash": "ce51b492e48165f2c405b65098a677fc",
+    "semantic_hash": ""
+  },
+  "app/accounting/templates/accounting/reports.html": {
+    "mtime": 1781208624.8149736,
+    "ast_hash": "42c5247cc7de562197032380c59a1ae0",
+    "semantic_hash": ""
+  },
+  "app/auth/templates/auth/login.html": {
+    "mtime": 1780891625.413078,
+    "ast_hash": "43c325d48d7aa276eb6532a750219d11",
+    "semantic_hash": ""
+  },
+  "app/companies/templates/companies/form.html": {
+    "mtime": 1780891625.4180782,
+    "ast_hash": "ef736fdcf76074fc996859f2cbbc9a47",
+    "semantic_hash": ""
+  },
+  "app/companies/templates/companies/index.html": {
+    "mtime": 1780891625.4210782,
+    "ast_hash": "33c94c6024a39fb5ff2f7f7b7aa52567",
+    "semantic_hash": ""
+  },
+  "app/companies/templates/companies/sequences/form.html": {
+    "mtime": 1780891625.4270804,
+    "ast_hash": "a48bf05cf0939109c49825663a96110b",
+    "semantic_hash": ""
+  },
+  "app/companies/templates/companies/sequences/index.html": {
+    "mtime": 1780891663.7013736,
+    "ast_hash": "da8540ff885ba0efdd72c2270761eed7",
+    "semantic_hash": ""
+  },
+  "app/companies/templates/companies/view.html": {
+    "mtime": 1780891625.425078,
+    "ast_hash": "decb516cc9d3136a96844378f417c422",
+    "semantic_hash": ""
+  },
+  "app/contacts/templates/contacts/form.html": {
+    "mtime": 1780891625.4330857,
+    "ast_hash": "e64a82d6beedb977c47f18c96c766a1b",
+    "semantic_hash": ""
+  },
+  "app/contacts/templates/contacts/index.html": {
+    "mtime": 1780891625.4360857,
+    "ast_hash": "df9492a915d3e78dac305cd2470e00e0",
+    "semantic_hash": ""
+  },
+  "app/contacts/templates/contacts/view.html": {
+    "mtime": 1780891663.7033732,
+    "ast_hash": "0afe142e4d13bb0b723ee2493176b469",
+    "semantic_hash": ""
+  },
+  "app/dashboard/templates/dashboard/index.html": {
+    "mtime": 1780891849.2225096,
+    "ast_hash": "39700153ae40f10e0080e1287005e05b",
+    "semantic_hash": ""
+  },
+  "app/hr/templates/hr/employee_form.html": {
+    "mtime": 1780891625.449608,
+    "ast_hash": "39be3fa42bb616156c892f7f98e254ba",
+    "semantic_hash": ""
+  },
+  "app/hr/templates/hr/employees.html": {
+    "mtime": 1780891663.7063718,
+    "ast_hash": "44704df7c6db9bdbe4c69989890fce1d",
+    "semantic_hash": ""
+  },
+  "app/hr/templates/hr/leave_form.html": {
+    "mtime": 1780891625.4537592,
+    "ast_hash": "3e424db0c8ff9c427c44cab76d9bfbc9",
+    "semantic_hash": ""
+  },
+  "app/hr/templates/hr/leave_requests.html": {
+    "mtime": 1780891663.7073727,
+    "ast_hash": "7101e69eaf9e87d5e92d629cd13b0829",
+    "semantic_hash": ""
+  },
+  "app/hr/templates/hr/schedule_form.html": {
+    "mtime": 1780891625.4635897,
+    "ast_hash": "1ca3764e4edcd4b1941b20a8fea4f977",
+    "semantic_hash": ""
+  },
+  "app/hr/templates/hr/schedules.html": {
+    "mtime": 1780891625.462589,
+    "ast_hash": "34608bcf07f3714b2e4dca31c483f041",
+    "semantic_hash": ""
+  },
+  "app/inventory/templates/inventory/barcode.html": {
+    "mtime": 1780275853.208333,
+    "ast_hash": "009dd26e17ea098a5e69ddd0ba335f55",
+    "semantic_hash": "009dd26e17ea098a5e69ddd0ba335f55"
+  },
+  "app/inventory/templates/inventory/drawer_adjust.html": {
+    "mtime": 1780891625.4693458,
+    "ast_hash": "f7a90fd073249417ab8240668f212ecc",
+    "semantic_hash": ""
+  },
+  "app/inventory/templates/inventory/drawer_transfer.html": {
+    "mtime": 1780891625.4708316,
+    "ast_hash": "ff9b7809e1e029721b30423542b6eef6",
+    "semantic_hash": ""
+  },
+  "app/inventory/templates/inventory/form.html": {
+    "mtime": 1780891625.4721684,
+    "ast_hash": "f4e9e80d4558ef697d9beb0c9905cf3c",
+    "semantic_hash": ""
+  },
+  "app/inventory/templates/inventory/index.html": {
+    "mtime": 1780891663.7113721,
+    "ast_hash": "6fe2b6a3cce5efddac3a74e02850afab",
+    "semantic_hash": ""
+  },
+  "app/inventory/templates/inventory/movements.html": {
+    "mtime": 1780891663.7123716,
+    "ast_hash": "c802f1997eb5ab300934dc4cd7e2a030",
+    "semantic_hash": ""
+  },
+  "app/inventory/templates/inventory/view.html": {
+    "mtime": 1780891625.4810784,
+    "ast_hash": "c5e4e95da4b0b4c9417a4502280aebc2",
+    "semantic_hash": ""
+  },
+  "app/invoices/templates/invoices/form.html": {
+    "mtime": 1780969590.9357572,
+    "ast_hash": "93e2d4475d609ce38e7a9fdf2b16a0d8",
+    "semantic_hash": ""
+  },
+  "app/invoices/templates/invoices/index.html": {
+    "mtime": 1780891663.7165475,
+    "ast_hash": "1e19c010ce9d9900197d5b8db5cf8747",
+    "semantic_hash": ""
+  },
+  "app/invoices/templates/invoices/view.html": {
+    "mtime": 1780968457.9771075,
+    "ast_hash": "4e12bdeee0030ce3ef6073d54201d1b7",
+    "semantic_hash": ""
+  },
+  "app/orders/templates/orders/form.html": {
+    "mtime": 1780891625.5024028,
+    "ast_hash": "75a8cb2ff7033e170aeeb0e3a24d8566",
+    "semantic_hash": ""
+  },
+  "app/orders/templates/orders/index.html": {
+    "mtime": 1780891663.7205486,
+    "ast_hash": "805535c67875be9c2f902c97762a33f9",
+    "semantic_hash": ""
+  },
+  "app/orders/templates/orders/view.html": {
+    "mtime": 1780891663.7215495,
+    "ast_hash": "99d701f2680a6342fbe212753e30c888",
+    "semantic_hash": ""
+  },
+  "app/payments/templates/payments/form.html": {
+    "mtime": 1780891625.513972,
+    "ast_hash": "2ac24e0a70c960a08a33e4b69976e128",
+    "semantic_hash": ""
+  },
+  "app/payments/templates/payments/index.html": {
+    "mtime": 1780891663.7238395,
+    "ast_hash": "c67705fba4ea4766538c3d955d4152ef",
+    "semantic_hash": ""
+  },
+  "app/payments/templates/payments/view.html": {
+    "mtime": 1780891625.5193374,
+    "ast_hash": "c4821d03787f89196494650e3dcce10d",
+    "semantic_hash": ""
+  },
+  "app/static/templates/demo.html": {
+    "mtime": 1780322024.8635564,
+    "ast_hash": "2baa6c504f7d59476b7e01e517ded6a7",
+    "semantic_hash": "2baa6c504f7d59476b7e01e517ded6a7"
+  },
+  "app/templates/base.html": {
+    "mtime": 1780892228.934493,
+    "ast_hash": "6889c4d5a0f8256e962db38c34c85ed4",
+    "semantic_hash": ""
+  },
+  "app/templates/blank.html": {
+    "mtime": 1779222808.4773867,
+    "ast_hash": "d85c73526a493e288b838a473db990c0",
+    "semantic_hash": "d85c73526a493e288b838a473db990c0"
+  },
+  "app/templates/search/results.html": {
+    "mtime": 1780891625.5375428,
+    "ast_hash": "a51fff5b092da43bdf07b7e971836a7e",
+    "semantic_hash": ""
+  },
+  "app/users/templates/users/form.html": {
+    "mtime": 1780967793.259997,
+    "ast_hash": "0b8450e34fa213cf437ccfdbff2477c7",
+    "semantic_hash": ""
+  },
+  "app/users/templates/users/index.html": {
+    "mtime": 1780967743.8005202,
+    "ast_hash": "7f73577f54e3286e0b560280086f0fed",
+    "semantic_hash": ""
+  },
+  "app/users/templates/users/view.html": {
+    "mtime": 1780967769.0519538,
+    "ast_hash": "a1e9f814d857748beeec6428f224623e",
+    "semantic_hash": ""
+  },
+  "app/warehouses/templates/warehouses/form.html": {
+    "mtime": 1780891625.5518339,
+    "ast_hash": "57bd1c7e3f12262beb5652d3f79c2556",
+    "semantic_hash": ""
+  },
+  "app/warehouses/templates/warehouses/index.html": {
+    "mtime": 1780891663.730771,
+    "ast_hash": "80f332787ed52da1cdc2f0f3a51e1a7c",
+    "semantic_hash": ""
+  },
+  "requirements.txt": {
+    "mtime": 1780887050.968993,
+    "ast_hash": "5814d9a16e46ff6f7584d860dcfbba4a",
+    "semantic_hash": ""
+  },
+  "app/static/templates/Factura Ferre-lagos.pdf": {
+    "mtime": 1775019005.6316662,
+    "ast_hash": "10eb528485d562cdcc277874fd2133c5",
+    "semantic_hash": "10eb528485d562cdcc277874fd2133c5"
+  },
+  "app/invoices/static/img/logo.jpeg": {
+    "mtime": 1775019005.58621,
+    "ast_hash": "e65c8628ade25fb600ae42505ac75e06",
+    "semantic_hash": "e65c8628ade25fb600ae42505ac75e06"
+  },
+  "app/static/img/apple-touch-icon.png": {
+    "mtime": 1779693230.384572,
+    "ast_hash": "dfb9dad4bc60b54beac33eae3931b099",
+    "semantic_hash": "dfb9dad4bc60b54beac33eae3931b099"
+  },
+  "app/static/img/favicon-96x96.png": {
+    "mtime": 1779693230.366007,
+    "ast_hash": "e32970f0e90aa1f3645fb867b1950211",
+    "semantic_hash": "e32970f0e90aa1f3645fb867b1950211"
+  },
+  "app/static/img/favicon.svg": {
+    "mtime": 1779693230.3512485,
+    "ast_hash": "233bfa6d427de7d3a24682ecade401d4",
+    "semantic_hash": "233bfa6d427de7d3a24682ecade401d4"
+  },
+  "app/static/img/web-app-manifest-192x192.png": {
+    "mtime": 1779693230.3930986,
+    "ast_hash": "ebf7d703e22c9ffbf967c2f48999de48",
+    "semantic_hash": "ebf7d703e22c9ffbf967c2f48999de48"
+  },
+  "app/static/img/web-app-manifest-512x512.png": {
+    "mtime": 1779693230.4026718,
+    "ast_hash": "622a5f1a0c2fc53a9f0f100823dea54b",
+    "semantic_hash": "622a5f1a0c2fc53a9f0f100823dea54b"
+  },
+  "app/hr/templates/hr/deviation_view.html": {
+    "mtime": 1780891625.444606,
+    "ast_hash": "3dd2b9730186c977e99eaaf79c55082c",
+    "semantic_hash": ""
+  },
+  "app/hr/templates/hr/leave_view.html": {
+    "mtime": 1780891625.4605901,
+    "ast_hash": "9fba54ab86a3333f69b2eac0f300a0b4",
+    "semantic_hash": ""
+  },
+  "app/models/transaction.py": {
+    "mtime": 1780539207.0774453,
+    "ast_hash": "4b19480d6b5d83cb47e29082b6e21416",
+    "semantic_hash": ""
+  },
+  "migrations/versions/8698fd4ab822_accounting_add_transaction_model_.py": {
+    "mtime": 1780539584.0447342,
+    "ast_hash": "0c8b8d61923ed1e42002375179671c58",
+    "semantic_hash": ""
+  },
+  "app/accounting/templates/accounting/expenses.html": {
+    "mtime": 1781140585.676126,
+    "ast_hash": "5d243be477c47433fb35269aacea2f44",
+    "semantic_hash": ""
+  },
+  "app/accounting/templates/accounting/income.html": {
+    "mtime": 1781146969.1772048,
+    "ast_hash": "56fa4f32312f7168b58f478a8c3cf2b8",
+    "semantic_hash": ""
+  },
+  "app/accounting/templates/accounting/journal.html": {
+    "mtime": 1781200766.665362,
+    "ast_hash": "84480e7d72adb76fa7fb6e016d1bf0b4",
+    "semantic_hash": ""
+  },
+  "app/accounting/templates/accounting/partials/_nav.html": {
+    "mtime": 1780695912.9196675,
+    "ast_hash": "74dce42df310b551e40dbe3a41703b92",
+    "semantic_hash": ""
+  },
+  "app/accounting/templates/accounting/partials/income_form.html": {
+    "mtime": 1781237560.3981605,
+    "ast_hash": "aba42fb4ae75782516372fd526e6a5c3",
+    "semantic_hash": ""
+  },
+  "app/accounting/templates/accounting/partials/journal_form.html": {
+    "mtime": 1781200767.0064058,
+    "ast_hash": "7c1d1cd08f70328d53a61baefc4d4055",
+    "semantic_hash": ""
+  },
+  "app/accounting/templates/accounting/trial_balance.html": {
+    "mtime": 1781146817.2740777,
+    "ast_hash": "8b2a868e458235c33454806305b52b16",
+    "semantic_hash": ""
+  },
+  "migrations/versions/749cb1581826_auto_migration.py": {
+    "mtime": 1780707920.242686,
+    "ast_hash": "d0d926551613d9cca619d1c9b0adba1f",
+    "semantic_hash": ""
+  },
+  "app/accounting/templates/accounting/project_detail.html": {
+    "mtime": 1780971057.6183329,
+    "ast_hash": "3a212ebacfb3308bbc9c0c0c4c290738",
+    "semantic_hash": ""
+  },
+  "app/accounting/templates/accounting/projects.html": {
+    "mtime": 1781146813.2387125,
+    "ast_hash": "449c8d728f442392e3fb95a4a9bc5088",
+    "semantic_hash": ""
+  },
+  "migrations/versions/e635f316840c_update_po_models_to_4_decimal_places.py": {
+    "mtime": 1780712393.0705214,
+    "ast_hash": "906ea7cb056db98291d356987e012a6f",
+    "semantic_hash": ""
+  },
+  "migrations/versions/c5fdf769a3df_increase_po_item_price_and_total_to_5_.py": {
+    "mtime": 1780868703.0470233,
+    "ast_hash": "33cdebd8544d37f9dff616ea2c868edf",
+    "semantic_hash": ""
+  },
+  "app/templates/public/landing.html": {
+    "mtime": 1780891625.5360434,
+    "ast_hash": "5926705b5abdc0bfa5d8721eb72122d1",
+    "semantic_hash": ""
+  },
+  "app/middleware/error_handler.py": {
+    "mtime": 1780885188.6904314,
+    "ast_hash": "18c9349b721150c1194630676cb42db6",
+    "semantic_hash": ""
+  },
+  "app/templates/errors/error.html": {
+    "mtime": 1780891625.5315,
+    "ast_hash": "329bd14bbdffaecf8c1de5d02b79a9c0",
+    "semantic_hash": ""
+  },
+  "app/services/email_service.py": {
+    "mtime": 1780885169.4958122,
+    "ast_hash": "b6133a156fcfbb7096bf20650df07cbf",
+    "semantic_hash": ""
+  },
+  "migrations/versions/ddacfaf54248_add_sku_to_inventory_items.py": {
+    "mtime": 1780888193.9881325,
+    "ast_hash": "dc2ce088c79006e56e25b0958e2f594a",
+    "semantic_hash": ""
+  },
+  "app/utils.py": {
+    "mtime": 1781140312.624866,
+    "ast_hash": "d46cb1613c567330df7da313a72ce4ed",
+    "semantic_hash": ""
+  },
+  "migrations/versions/50c607698792_add_slug_to_company.py": {
+    "mtime": 1780890225.7127411,
+    "ast_hash": "2256f477078529e3088842725e8c0107",
+    "semantic_hash": ""
+  },
+  "migrations/versions/6af85a17e660_add_project_id_to_document.py": {
+    "mtime": 1780968364.4489372,
+    "ast_hash": "9292f2a033a717d20f76d7ad34d585b1",
+    "semantic_hash": ""
+  },
+  "app/accounting/services/_balance.py": {
+    "mtime": 1781148250.4653869,
+    "ast_hash": "9836d999a60d1acd1695e76ec0d6b52b",
+    "semantic_hash": ""
+  },
+  "app/accounting/services/_helpers.py": {
+    "mtime": 1781148206.8808446,
+    "ast_hash": "3f053b7148bd4ba7c3171a8be1548889",
+    "semantic_hash": ""
+  },
+  "app/accounting/services/account_service.py": {
+    "mtime": 1781148439.1605835,
+    "ast_hash": "d5103585727067eae7d8a583275f1891",
+    "semantic_hash": ""
+  },
+  "app/accounting/services/dashboard_service.py": {
+    "mtime": 1781148271.3510437,
+    "ast_hash": "4f671fc478e61cb112d31f813dd2fc5e",
+    "semantic_hash": ""
+  },
+  "app/accounting/services/expense_service.py": {
+    "mtime": 1781148308.956571,
+    "ast_hash": "f61eb7873d81829f6e0a0d67d454364e",
+    "semantic_hash": ""
+  },
+  "app/accounting/services/income_service.py": {
+    "mtime": 1781237560.3967674,
+    "ast_hash": "dbd64ae981776a2ddaf93bf0c678e053",
+    "semantic_hash": ""
+  },
+  "app/accounting/services/journal_service.py": {
+    "mtime": 1781200750.9595938,
+    "ast_hash": "d14f21dceb5654dba4e9a52464cd5fc2",
+    "semantic_hash": ""
+  },
+  "app/accounting/services/project_service.py": {
+    "mtime": 1781149105.2599795,
+    "ast_hash": "dd09c300fa330c7473d167a2dd3817d8",
+    "semantic_hash": ""
+  },
+  "app/invoices/services/accounting_integration.py": {
+    "mtime": 1781237560.3981605,
+    "ast_hash": "0f9acc193c0f427c07aeae10277a845d",
+    "semantic_hash": ""
+  },
+  "D:\\projects\\flask-trackdesk\\app.py": {
+    "mtime": 1779222750.7514486,
+    "ast_hash": "57ae4c3f0125c46d3c65c735f77c1174",
+    "semantic_hash": "57ae4c3f0125c46d3c65c735f77c1174"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\__init__.py": {
+    "mtime": 1780882101.761564,
+    "ast_hash": "c6ca50f46d7be76712e0c468474f00cd",
+    "semantic_hash": "c6ca50f46d7be76712e0c468474f00cd"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\__init__.py": {
+    "mtime": 1779668445.127662,
+    "ast_hash": "575eea8e049486e005f9383dd12f3b9f",
+    "semantic_hash": "575eea8e049486e005f9383dd12f3b9f"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\routes.py": {
+    "mtime": 1781200772.2046385,
+    "ast_hash": "b369e2fe1c5fff5fa77e748338a7f18f",
+    "semantic_hash": "b369e2fe1c5fff5fa77e748338a7f18f"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\services\\__init__.py": {
+    "mtime": 1780277083.3406694,
+    "ast_hash": "06a79a348fc6371a64b29f70f6b16f83",
+    "semantic_hash": "06a79a348fc6371a64b29f70f6b16f83"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\services\\_balance.py": {
+    "mtime": 1781148250.4653869,
+    "ast_hash": "9836d999a60d1acd1695e76ec0d6b52b",
+    "semantic_hash": "9836d999a60d1acd1695e76ec0d6b52b"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\services\\_helpers.py": {
+    "mtime": 1781148206.8808446,
+    "ast_hash": "3f053b7148bd4ba7c3171a8be1548889",
+    "semantic_hash": "3f053b7148bd4ba7c3171a8be1548889"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\services\\account_service.py": {
+    "mtime": 1781148439.1605835,
+    "ast_hash": "d5103585727067eae7d8a583275f1891",
+    "semantic_hash": "d5103585727067eae7d8a583275f1891"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\services\\accounting_service.py": {
+    "mtime": 1781148452.9718122,
+    "ast_hash": "7b603ec1d1b832cb280d0c8db5f7554f",
+    "semantic_hash": "7b603ec1d1b832cb280d0c8db5f7554f"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\services\\dashboard_service.py": {
+    "mtime": 1781148271.3510437,
+    "ast_hash": "4f671fc478e61cb112d31f813dd2fc5e",
+    "semantic_hash": "4f671fc478e61cb112d31f813dd2fc5e"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\services\\expense_service.py": {
+    "mtime": 1781148308.956571,
+    "ast_hash": "f61eb7873d81829f6e0a0d67d454364e",
+    "semantic_hash": "f61eb7873d81829f6e0a0d67d454364e"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\services\\income_service.py": {
+    "mtime": 1781237560.3967674,
+    "ast_hash": "dbd64ae981776a2ddaf93bf0c678e053",
+    "semantic_hash": "dbd64ae981776a2ddaf93bf0c678e053"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\services\\journal_service.py": {
+    "mtime": 1781200750.9595938,
+    "ast_hash": "d14f21dceb5654dba4e9a52464cd5fc2",
+    "semantic_hash": "d14f21dceb5654dba4e9a52464cd5fc2"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\services\\project_service.py": {
+    "mtime": 1781149105.2599795,
+    "ast_hash": "dd09c300fa330c7473d167a2dd3817d8",
+    "semantic_hash": "dd09c300fa330c7473d167a2dd3817d8"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\auth\\__init__.py": {
+    "mtime": 1779222751.148324,
+    "ast_hash": "f8cee64ca8894edd8c6a62a484b655fe",
+    "semantic_hash": "f8cee64ca8894edd8c6a62a484b655fe"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\auth\\routes.py": {
+    "mtime": 1780886009.084948,
+    "ast_hash": "399abff0a4b1c9bd1abdfacf163dcb7a",
+    "semantic_hash": "399abff0a4b1c9bd1abdfacf163dcb7a"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\auth\\services\\__init__.py": {
+    "mtime": 1780277031.8392506,
+    "ast_hash": "86d4a9435d6c98da81cd4ac51b0c808a",
+    "semantic_hash": "86d4a9435d6c98da81cd4ac51b0c808a"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\auth\\services\\auth_service.py": {
+    "mtime": 1780890809.7828753,
+    "ast_hash": "3a8f9141da0f560d8b3a00dc0b81289b",
+    "semantic_hash": "3a8f9141da0f560d8b3a00dc0b81289b"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\blueprints.py": {
+    "mtime": 1780450560.4397154,
+    "ast_hash": "969fadc3096eaa080c2b58e94aae742e",
+    "semantic_hash": "969fadc3096eaa080c2b58e94aae742e"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\cli.py": {
+    "mtime": 1780882826.499958,
+    "ast_hash": "9c9e610ade12a59ce138edea27833ac5",
+    "semantic_hash": "9c9e610ade12a59ce138edea27833ac5"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\companies\\__init__.py": {
+    "mtime": 1779222751.156821,
+    "ast_hash": "c9672dd87ec2b16df21781f249188544",
+    "semantic_hash": "c9672dd87ec2b16df21781f249188544"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\companies\\routes.py": {
+    "mtime": 1780276664.811109,
+    "ast_hash": "69e920fd33eab3876366d56d79fb5396",
+    "semantic_hash": "69e920fd33eab3876366d56d79fb5396"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\companies\\services\\__init__.py": {
+    "mtime": 1780276625.3346882,
+    "ast_hash": "8e7082785fa69badea7ef5502dafe154",
+    "semantic_hash": "8e7082785fa69badea7ef5502dafe154"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\companies\\services\\company_service.py": {
+    "mtime": 1780890162.5753098,
+    "ast_hash": "f908365ca4fc5e8a8f2313266897a470",
+    "semantic_hash": "f908365ca4fc5e8a8f2313266897a470"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\contacts\\__init__.py": {
+    "mtime": 1779222751.1620471,
+    "ast_hash": "1b5857bbfb98168997d1b06f54d02e82",
+    "semantic_hash": "1b5857bbfb98168997d1b06f54d02e82"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\contacts\\routes.py": {
+    "mtime": 1780890076.3905945,
+    "ast_hash": "569562a4197c80d44212d94bc01fa144",
+    "semantic_hash": "569562a4197c80d44212d94bc01fa144"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\contacts\\services\\__init__.py": {
+    "mtime": 1780276555.2401526,
+    "ast_hash": "d8330053d41f53ae9b61b5b69b00b9e3",
+    "semantic_hash": "d8330053d41f53ae9b61b5b69b00b9e3"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\contacts\\services\\contact_service.py": {
+    "mtime": 1780322650.1828492,
+    "ast_hash": "046f05c8913958b2a682ba0b509ceba8",
+    "semantic_hash": "046f05c8913958b2a682ba0b509ceba8"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\context_processors.py": {
+    "mtime": 1780966305.6913683,
+    "ast_hash": "46c92af8b636029c7b71a9f5783b4bb1",
+    "semantic_hash": "46c92af8b636029c7b71a9f5783b4bb1"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\dashboard\\__init__.py": {
+    "mtime": 1779222751.1728835,
+    "ast_hash": "1be4f6021705660567d58e82a81eb03d",
+    "semantic_hash": "1be4f6021705660567d58e82a81eb03d"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\dashboard\\routes.py": {
+    "mtime": 1780890388.0287528,
+    "ast_hash": "884ba9eacdf3e7081ba5f38a0bee9cbc",
+    "semantic_hash": "884ba9eacdf3e7081ba5f38a0bee9cbc"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\dashboard\\services\\__init__.py": {
+    "mtime": 1780277032.6266155,
+    "ast_hash": "c12c8028cf27765592a92b36d577bd84",
+    "semantic_hash": "c12c8028cf27765592a92b36d577bd84"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\dashboard\\services\\dashboard_service.py": {
+    "mtime": 1780277055.7364671,
+    "ast_hash": "b63519bf200c7415d0bc05b135a8e386",
+    "semantic_hash": "b63519bf200c7415d0bc05b135a8e386"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\extensions.py": {
+    "mtime": 1780883361.7441647,
+    "ast_hash": "f805dea88a1504f4e8281567c7c895b1",
+    "semantic_hash": "f805dea88a1504f4e8281567c7c895b1"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\hooks.py": {
+    "mtime": 1780890498.9617517,
+    "ast_hash": "59fdb57851ddb41ed803a15cb7e8cc47",
+    "semantic_hash": "59fdb57851ddb41ed803a15cb7e8cc47"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\hr\\__init__.py": {
+    "mtime": 1780451189.1364365,
+    "ast_hash": "970186455043bd01ec3381a298b63471",
+    "semantic_hash": "970186455043bd01ec3381a298b63471"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\hr\\routes.py": {
+    "mtime": 1780890076.40532,
+    "ast_hash": "2a1544c928904bca45f2136caf58c496",
+    "semantic_hash": "2a1544c928904bca45f2136caf58c496"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\inventory\\__init__.py": {
+    "mtime": 1779222751.186567,
+    "ast_hash": "b6bc215a7a633d7c4529f241b8046022",
+    "semantic_hash": "b6bc215a7a633d7c4529f241b8046022"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\inventory\\routes.py": {
+    "mtime": 1780890076.4075716,
+    "ast_hash": "fe44bfa56ad1779ee61a2b487b8e43b8",
+    "semantic_hash": "fe44bfa56ad1779ee61a2b487b8e43b8"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\inventory\\services\\__init__.py": {
+    "mtime": 1779222751.1915693,
+    "ast_hash": "198ff05abd2b118b8e27426034273585",
+    "semantic_hash": "198ff05abd2b118b8e27426034273585"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\inventory\\services\\inventory_service.py": {
+    "mtime": 1780887946.6979535,
+    "ast_hash": "2a239e6b4b52469cc06b24682113ab4f",
+    "semantic_hash": "2a239e6b4b52469cc06b24682113ab4f"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\inventory\\static\\js\\barcode.js": {
+    "mtime": 1780275598.5022752,
+    "ast_hash": "31713ab5c0a72cc6bd67ef65d281641a",
+    "semantic_hash": "31713ab5c0a72cc6bd67ef65d281641a"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\invoices\\__init__.py": {
+    "mtime": 1779222751.2057378,
+    "ast_hash": "3eb0159e2b400a5e34e6b92c5da8d806",
+    "semantic_hash": "3eb0159e2b400a5e34e6b92c5da8d806"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\invoices\\routes.py": {
+    "mtime": 1780968409.839365,
+    "ast_hash": "ef22b111a12ee245b1f812b53bd3d1aa",
+    "semantic_hash": "ef22b111a12ee245b1f812b53bd3d1aa"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\invoices\\services\\__init__.py": {
+    "mtime": 1780281587.2221286,
+    "ast_hash": "15b19ce7d0f946f8b36e564ca36b9085",
+    "semantic_hash": "15b19ce7d0f946f8b36e564ca36b9085"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\invoices\\services\\accounting_integration.py": {
+    "mtime": 1781237560.3981605,
+    "ast_hash": "0f9acc193c0f427c07aeae10277a845d",
+    "semantic_hash": "0f9acc193c0f427c07aeae10277a845d"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\invoices\\services\\invoice_create_service.py": {
+    "mtime": 1780968382.563648,
+    "ast_hash": "e562c326351456ae2d809675d216e069",
+    "semantic_hash": "e562c326351456ae2d809675d216e069"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\invoices\\services\\invoice_pdf_service.py": {
+    "mtime": 1780322044.7400074,
+    "ast_hash": "31db469fbb3d1b6e8f7357a1b961a129",
+    "semantic_hash": "31db469fbb3d1b6e8f7357a1b961a129"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\invoices\\services\\invoice_query_service.py": {
+    "mtime": 1779222751.2139823,
+    "ast_hash": "27d9ad9a9d0bc60bb5fcf2d340123d7a",
+    "semantic_hash": "27d9ad9a9d0bc60bb5fcf2d340123d7a"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\invoices\\services\\invoice_update_service.py": {
+    "mtime": 1781237560.3995547,
+    "ast_hash": "f2fc437056b66ad69aec45707e2c8058",
+    "semantic_hash": "f2fc437056b66ad69aec45707e2c8058"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\invoices\\services\\pdf_layouts\\__init__.py": {
+    "mtime": 1780034325.7680454,
+    "ast_hash": "5bb9723a27ba44600b0cf3be494b159e",
+    "semantic_hash": "5bb9723a27ba44600b0cf3be494b159e"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\invoices\\services\\pdf_layouts\\ferre_lagos.py": {
+    "mtime": 1780034320.806595,
+    "ast_hash": "8dfadbe8809897e30f7ea2bc8137dcf4",
+    "semantic_hash": "8dfadbe8809897e30f7ea2bc8137dcf4"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\invoices\\static\\js\\invoice-form.js": {
+    "mtime": 1780969590.9357572,
+    "ast_hash": "074a4c66c302e8bda49d2d248bbd139e",
+    "semantic_hash": "074a4c66c302e8bda49d2d248bbd139e"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\middleware\\__init__.py": {
+    "mtime": 1780882093.8323169,
+    "ast_hash": "2a0c0d0d6037280ee791167aeb94b2f7",
+    "semantic_hash": "2a0c0d0d6037280ee791167aeb94b2f7"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\middleware\\audit.py": {
+    "mtime": 1780535281.7280767,
+    "ast_hash": "292202145e07a66e1b78223a8a2971c2",
+    "semantic_hash": "292202145e07a66e1b78223a8a2971c2"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\middleware\\error_handler.py": {
+    "mtime": 1780885188.6904314,
+    "ast_hash": "18c9349b721150c1194630676cb42db6",
+    "semantic_hash": "18c9349b721150c1194630676cb42db6"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\middleware\\rbac.py": {
+    "mtime": 1780967673.6614873,
+    "ast_hash": "664f5a8e8944670c75fa54808e8ef1f0",
+    "semantic_hash": "664f5a8e8944670c75fa54808e8ef1f0"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\__init__.py": {
+    "mtime": 1780885936.293555,
+    "ast_hash": "e20e21a9df5546f1ce104257cd0ac19c",
+    "semantic_hash": "e20e21a9df5546f1ce104257cd0ac19c"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\account.py": {
+    "mtime": 1780539219.3044965,
+    "ast_hash": "68d0a4f22cfc0777fe1c66c6629c4ccc",
+    "semantic_hash": "68d0a4f22cfc0777fe1c66c6629c4ccc"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\associations.py": {
+    "mtime": 1780025214.972962,
+    "ast_hash": "59f09644dcda5fc5f9f96b793a67b544",
+    "semantic_hash": "59f09644dcda5fc5f9f96b793a67b544"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\audit.py": {
+    "mtime": 1779946972.8469856,
+    "ast_hash": "ae135c1241571910f4e4a1dd5048bb4d",
+    "semantic_hash": "ae135c1241571910f4e4a1dd5048bb4d"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\base.py": {
+    "mtime": 1779782082.5889783,
+    "ast_hash": "4e5389bc8e561584d631f823d4ffee85",
+    "semantic_hash": "4e5389bc8e561584d631f823d4ffee85"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\company.py": {
+    "mtime": 1780890160.554001,
+    "ast_hash": "8c693b9beb57dea71b87eec74b9c45b2",
+    "semantic_hash": "8c693b9beb57dea71b87eec74b9c45b2"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\contact.py": {
+    "mtime": 1780321589.7515423,
+    "ast_hash": "1fb1b1d3066059c8ff4a0b17bb94b7d1",
+    "semantic_hash": "1fb1b1d3066059c8ff4a0b17bb94b7d1"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\document.py": {
+    "mtime": 1780968335.1144714,
+    "ast_hash": "767dce836756f6785081dfe1dab70475",
+    "semantic_hash": "767dce836756f6785081dfe1dab70475"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\document_item.py": {
+    "mtime": 1780290469.5393803,
+    "ast_hash": "131a53b522039098bbe26b1d77a147cd",
+    "semantic_hash": "131a53b522039098bbe26b1d77a147cd"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\document_sequence.py": {
+    "mtime": 1779946972.8469856,
+    "ast_hash": "910ce238037dc149d306ab4ae39a389c",
+    "semantic_hash": "910ce238037dc149d306ab4ae39a389c"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\document_template.py": {
+    "mtime": 1780321968.3663967,
+    "ast_hash": "ebca68fcbb2ad6c9579112b66df160c0",
+    "semantic_hash": "ebca68fcbb2ad6c9579112b66df160c0"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\employee.py": {
+    "mtime": 1780529984.4659727,
+    "ast_hash": "e5a7414b5820a2e6546c0cb98dad9a3c",
+    "semantic_hash": "e5a7414b5820a2e6546c0cb98dad9a3c"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\enums.py": {
+    "mtime": 1781147584.331258,
+    "ast_hash": "0acb092ef4118171a17f9df89203e23c",
+    "semantic_hash": "0acb092ef4118171a17f9df89203e23c"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\expense.py": {
+    "mtime": 1780539251.4697566,
+    "ast_hash": "b18a76b8de2c0116ac1b188ede958373",
+    "semantic_hash": "b18a76b8de2c0116ac1b188ede958373"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\inventory_item.py": {
+    "mtime": 1780887916.1201413,
+    "ast_hash": "687b1fa7304d7153d1a32d91056e1c29",
+    "semantic_hash": "687b1fa7304d7153d1a32d91056e1c29"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\leave_request.py": {
+    "mtime": 1780450442.9427404,
+    "ast_hash": "11d2c7b814b23a2865e11a5bad4f6b07",
+    "semantic_hash": "11d2c7b814b23a2865e11a5bad4f6b07"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\ledger_entry.py": {
+    "mtime": 1780539234.292737,
+    "ast_hash": "17d82800591a410dd42fa20e62d941dd",
+    "semantic_hash": "17d82800591a410dd42fa20e62d941dd"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\notification.py": {
+    "mtime": 1779946972.8469856,
+    "ast_hash": "3416a49c3def71503ada812db4957db1",
+    "semantic_hash": "3416a49c3def71503ada812db4957db1"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\payment.py": {
+    "mtime": 1779946972.8327112,
+    "ast_hash": "d75a9ba4c6f65f51503e6d1261ffd17a",
+    "semantic_hash": "d75a9ba4c6f65f51503e6d1261ffd17a"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\permission.py": {
+    "mtime": 1779946972.8469856,
+    "ast_hash": "599143d74a2f6fc29db2090afa926f6f",
+    "semantic_hash": "599143d74a2f6fc29db2090afa926f6f"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\project.py": {
+    "mtime": 1779946972.8469856,
+    "ast_hash": "720ef3a6afba6c9a661edc422521bd81",
+    "semantic_hash": "720ef3a6afba6c9a661edc422521bd81"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\purchase_order.py": {
+    "mtime": 1780712373.8865967,
+    "ast_hash": "16a8e3ce1ce52b25454e829282c75f8d",
+    "semantic_hash": "16a8e3ce1ce52b25454e829282c75f8d"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\purchase_order_item.py": {
+    "mtime": 1780868554.3284369,
+    "ast_hash": "6d8aac02312e8ecad2e9dc06228275a7",
+    "semantic_hash": "6d8aac02312e8ecad2e9dc06228275a7"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\report.py": {
+    "mtime": 1779946972.8410912,
+    "ast_hash": "af655683d930c85d04f4066d87f3b0c9",
+    "semantic_hash": "af655683d930c85d04f4066d87f3b0c9"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\role.py": {
+    "mtime": 1779946972.8469856,
+    "ast_hash": "bd6e7af21e979492a231f7bad3af48b7",
+    "semantic_hash": "bd6e7af21e979492a231f7bad3af48b7"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\stock_movement.py": {
+    "mtime": 1780708510.4396791,
+    "ast_hash": "96e9a8a27c13abd87f27d87d60806d6f",
+    "semantic_hash": "96e9a8a27c13abd87f27d87d60806d6f"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\tag.py": {
+    "mtime": 1780025212.9518473,
+    "ast_hash": "9a2edafd4f7726afc735022c7e85c309",
+    "semantic_hash": "9a2edafd4f7726afc735022c7e85c309"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\transaction.py": {
+    "mtime": 1780539207.0774453,
+    "ast_hash": "4b19480d6b5d83cb47e29082b6e21416",
+    "semantic_hash": "4b19480d6b5d83cb47e29082b6e21416"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\user.py": {
+    "mtime": 1780866414.7751617,
+    "ast_hash": "20b65b8f5bbaa96296e9f29dbab684d3",
+    "semantic_hash": "20b65b8f5bbaa96296e9f29dbab684d3"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\warehouse.py": {
+    "mtime": 1780197729.563438,
+    "ast_hash": "1ba1496a96aedc29fe4c107a737f4c0e",
+    "semantic_hash": "1ba1496a96aedc29fe4c107a737f4c0e"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\warehouse_item.py": {
+    "mtime": 1780197737.7213774,
+    "ast_hash": "38249448d11fb0228a66a6fcda909615",
+    "semantic_hash": "38249448d11fb0228a66a6fcda909615"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\models\\work_schedule.py": {
+    "mtime": 1780450452.04154,
+    "ast_hash": "b8d41d4d5618bc19c9fd4de37a3e5c16",
+    "semantic_hash": "b8d41d4d5618bc19c9fd4de37a3e5c16"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\orders\\__init__.py": {
+    "mtime": 1779222751.2482624,
+    "ast_hash": "68d6c392b6812987cc0f80c932ddfa6f",
+    "semantic_hash": "68d6c392b6812987cc0f80c932ddfa6f"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\orders\\routes.py": {
+    "mtime": 1780890076.412776,
+    "ast_hash": "66e6cfbf62eee82d4603973f18e7eabb",
+    "semantic_hash": "66e6cfbf62eee82d4603973f18e7eabb"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\orders\\services\\__init__.py": {
+    "mtime": 1780711781.4755902,
+    "ast_hash": "df884b66c8f90f140d3f7cdfc0767f12",
+    "semantic_hash": "df884b66c8f90f140d3f7cdfc0767f12"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\orders\\services\\purchase_order_query_service.py": {
+    "mtime": 1779222751.25783,
+    "ast_hash": "c5450b19683de25083f330beaf957cea",
+    "semantic_hash": "c5450b19683de25083f330beaf957cea"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\orders\\services\\purchase_order_service.py": {
+    "mtime": 1780710700.7924123,
+    "ast_hash": "feaea81ff948c26ddcd95078d3131f8b",
+    "semantic_hash": "feaea81ff948c26ddcd95078d3131f8b"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\orders\\services\\purchase_order_stats_service.py": {
+    "mtime": 1779222751.2649171,
+    "ast_hash": "ec75fc53b3d4a351ca0b8a2bf71419ca",
+    "semantic_hash": "ec75fc53b3d4a351ca0b8a2bf71419ca"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\orders\\static\\js\\form.js": {
+    "mtime": 1779222808.4630504,
+    "ast_hash": "d6e9d4e7990f744bbabeca76e61ab70c",
+    "semantic_hash": "d6e9d4e7990f744bbabeca76e61ab70c"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\payments\\__init__.py": {
+    "mtime": 1779222751.2720704,
+    "ast_hash": "0bca208f663e1f5bd87a7fabb84dcd3d",
+    "semantic_hash": "0bca208f663e1f5bd87a7fabb84dcd3d"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\payments\\routes.py": {
+    "mtime": 1780890076.4157495,
+    "ast_hash": "94815b508bdf4cc0dabc53e858a48d30",
+    "semantic_hash": "94815b508bdf4cc0dabc53e858a48d30"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\payments\\services\\__init__.py": {
+    "mtime": 1780276952.848003,
+    "ast_hash": "3ad686de10fcb31d4f58e596eaa337ec",
+    "semantic_hash": "3ad686de10fcb31d4f58e596eaa337ec"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\payments\\services\\payment_service.py": {
+    "mtime": 1781237560.3995547,
+    "ast_hash": "ec1bb73166959072771285c3255903bd",
+    "semantic_hash": "ec1bb73166959072771285c3255903bd"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\routes.py": {
+    "mtime": 1780890349.6931863,
+    "ast_hash": "89b65556ce0fca9ccce2e80449f3dc81",
+    "semantic_hash": "89b65556ce0fca9ccce2e80449f3dc81"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\services\\email_service.py": {
+    "mtime": 1780885169.4958122,
+    "ast_hash": "b6133a156fcfbb7096bf20650df07cbf",
+    "semantic_hash": "b6133a156fcfbb7096bf20650df07cbf"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\static\\js\\drawer.js": {
+    "mtime": 1780535767.1571376,
+    "ast_hash": "af2bd5f36e7a9c92d54da13b6928e6ed",
+    "semantic_hash": "af2bd5f36e7a9c92d54da13b6928e6ed"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\static\\js\\flash.js": {
+    "mtime": 1779222808.4738624,
+    "ast_hash": "bff28f54832832719b349ff639abd587",
+    "semantic_hash": "bff28f54832832719b349ff639abd587"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\static\\js\\index.js": {
+    "mtime": 1779945216.072401,
+    "ast_hash": "7d8fa3c51f2d5d65bd5c29ff39f80a2b",
+    "semantic_hash": "7d8fa3c51f2d5d65bd5c29ff39f80a2b"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\static\\js\\modals.js": {
+    "mtime": 1779686458.228449,
+    "ast_hash": "7f374e7204fbc32f605eaa68a172ea29",
+    "semantic_hash": "7f374e7204fbc32f605eaa68a172ea29"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\users\\__init__.py": {
+    "mtime": 1779222751.2895756,
+    "ast_hash": "3cc22faa685273fb894af80c88ab4447",
+    "semantic_hash": "3cc22faa685273fb894af80c88ab4447"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\users\\routes.py": {
+    "mtime": 1780967714.1740136,
+    "ast_hash": "51f87ef7b9560253edc1b0a097d21220",
+    "semantic_hash": "51f87ef7b9560253edc1b0a097d21220"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\users\\services\\__init__.py": {
+    "mtime": 1780276705.9395607,
+    "ast_hash": "5d682d068dab6ab56f90b9a759b5d510",
+    "semantic_hash": "5d682d068dab6ab56f90b9a759b5d510"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\users\\services\\user_service.py": {
+    "mtime": 1780967699.3487601,
+    "ast_hash": "3a047a92672f5e8c5a2643544e5a2c35",
+    "semantic_hash": "3a047a92672f5e8c5a2643544e5a2c35"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\utils.py": {
+    "mtime": 1781140312.624866,
+    "ast_hash": "d46cb1613c567330df7da313a72ce4ed",
+    "semantic_hash": "d46cb1613c567330df7da313a72ce4ed"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\warehouses\\__init__.py": {
+    "mtime": 1780199315.4396286,
+    "ast_hash": "1cabadcfd2144e0fe96879c4e70aae6b",
+    "semantic_hash": "1cabadcfd2144e0fe96879c4e70aae6b"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\warehouses\\routes.py": {
+    "mtime": 1780890076.420397,
+    "ast_hash": "cf890e064335fc7fdb8ab6e35438f2b2",
+    "semantic_hash": "cf890e064335fc7fdb8ab6e35438f2b2"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\warehouses\\services\\__init__.py": {
+    "mtime": 1780276770.8212483,
+    "ast_hash": "f5d9f1fdd12b769d25a3776cc2a61730",
+    "semantic_hash": "f5d9f1fdd12b769d25a3776cc2a61730"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\warehouses\\services\\warehouse_service.py": {
+    "mtime": 1780281701.1143417,
+    "ast_hash": "2eea571313cf1f2b73a56f3c38bae588",
+    "semantic_hash": "2eea571313cf1f2b73a56f3c38bae588"
+  },
+  "D:\\projects\\flask-trackdesk\\config.py": {
+    "mtime": 1780885494.1630054,
+    "ast_hash": "8b883617176000258d58d1d07ec04a20",
+    "semantic_hash": "8b883617176000258d58d1d07ec04a20"
+  },
+  "D:\\projects\\flask-trackdesk\\expire_documents.py": {
+    "mtime": 1780296882.7082705,
+    "ast_hash": "25f5db397b82e2da2165cbdf4b0c10f3",
+    "semantic_hash": "25f5db397b82e2da2165cbdf4b0c10f3"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\env.py": {
+    "mtime": 1779222751.29383,
+    "ast_hash": "56cd2558f40e81af49b35c669eea0ae7",
+    "semantic_hash": "56cd2558f40e81af49b35c669eea0ae7"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\0c2495f8e36b_unify_contacts.py": {
+    "mtime": 1779222751.29584,
+    "ast_hash": "aeef0208b17462134fad06d68b995973",
+    "semantic_hash": "aeef0208b17462134fad06d68b995973"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\0c8a80a1e4fb_auto_migration.py": {
+    "mtime": 1780322252.9195614,
+    "ast_hash": "544faa1f68406ef2df1a38b14a188abc",
+    "semantic_hash": "544faa1f68406ef2df1a38b14a188abc"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\0e4aaddd35d0_initial.py": {
+    "mtime": 1779222751.2968402,
+    "ast_hash": "b0de44b1ab2d84e3cc8a5942ffa078b5",
+    "semantic_hash": "b0de44b1ab2d84e3cc8a5942ffa078b5"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\21f4dcb595f6_add_standard_schedule_fields_to_employee.py": {
+    "mtime": 1780530007.8606148,
+    "ast_hash": "1ff822639b0b026e7ae2e062dffa54b5",
+    "semantic_hash": "1ff822639b0b026e7ae2e062dffa54b5"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\46e167baf673_add_audit_to_contacts.py": {
+    "mtime": 1779222751.2968402,
+    "ast_hash": "7068cd2f06de2f8fec1ec1a403a8b8f2",
+    "semantic_hash": "7068cd2f06de2f8fec1ec1a403a8b8f2"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\4c2584349c01_auto_migration.py": {
+    "mtime": 1779865142.858805,
+    "ast_hash": "542ba7a1c715de5891b9c8217e222fa5",
+    "semantic_hash": "542ba7a1c715de5891b9c8217e222fa5"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\50c607698792_add_slug_to_company.py": {
+    "mtime": 1780890225.7127411,
+    "ast_hash": "2256f477078529e3088842725e8c0107",
+    "semantic_hash": "2256f477078529e3088842725e8c0107"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\6a160cf40b05_add_document_templates.py": {
+    "mtime": 1780208686.9040732,
+    "ast_hash": "897e9c2237c4a5a28e9d83d9b5c971a4",
+    "semantic_hash": "897e9c2237c4a5a28e9d83d9b5c971a4"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\6af85a17e660_add_project_id_to_document.py": {
+    "mtime": 1780968364.4489372,
+    "ast_hash": "9292f2a033a717d20f76d7ad34d585b1",
+    "semantic_hash": "9292f2a033a717d20f76d7ad34d585b1"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\749cb1581826_auto_migration.py": {
+    "mtime": 1780707920.242686,
+    "ast_hash": "d0d926551613d9cca619d1c9b0adba1f",
+    "semantic_hash": "d0d926551613d9cca619d1c9b0adba1f"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\8698fd4ab822_accounting_add_transaction_model_.py": {
+    "mtime": 1780539584.0447342,
+    "ast_hash": "0c8b8d61923ed1e42002375179671c58",
+    "semantic_hash": "0c8b8d61923ed1e42002375179671c58"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\8abc28cd44ee_update_models.py": {
+    "mtime": 1779949600.5033123,
+    "ast_hash": "61e589be99eb0a033c92fe1de23420d5",
+    "semantic_hash": "61e589be99eb0a033c92fe1de23420d5"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\a2b1c3d4e5f6_add_missing_audit_columns.py": {
+    "mtime": 1779222751.2978427,
+    "ast_hash": "b7b940a4dbedcee822a502908c958306",
+    "semantic_hash": "b7b940a4dbedcee822a502908c958306"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\b3c4d5e6f7a8_add_description_to_role_and_permission.py": {
+    "mtime": 1779664097.4328065,
+    "ast_hash": "4f658c7459a58459e520ebdb5a0223ef",
+    "semantic_hash": "4f658c7459a58459e520ebdb5a0223ef"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\be74a037a830_add_warehouses.py": {
+    "mtime": 1780197842.6306987,
+    "ast_hash": "d945ff2515079ba5a185f76324908235",
+    "semantic_hash": "d945ff2515079ba5a185f76324908235"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\c1ed0fea63d7_add_budget_and_soft_deletes.py": {
+    "mtime": 1779781210.7980447,
+    "ast_hash": "f68ce724ed0a50702c5cc423c101e4d4",
+    "semantic_hash": "f68ce724ed0a50702c5cc423c101e4d4"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\c4d5e6f7a8b9_add_accounting.py": {
+    "mtime": 1779667634.8773239,
+    "ast_hash": "ead8b2981f7d3cdf4d7f357381af8520",
+    "semantic_hash": "ead8b2981f7d3cdf4d7f357381af8520"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\c5fdf769a3df_increase_po_item_price_and_total_to_5_.py": {
+    "mtime": 1780868703.0470233,
+    "ast_hash": "33cdebd8544d37f9dff616ea2c868edf",
+    "semantic_hash": "33cdebd8544d37f9dff616ea2c868edf"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\c6d168cff81e_add_hr_module_employee_leaverequest_.py": {
+    "mtime": 1780450790.8459628,
+    "ast_hash": "2934a90a5a11d54b04659d421ac489e0",
+    "semantic_hash": "2934a90a5a11d54b04659d421ac489e0"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\d1e2f3a4b5c6_consolidate_schema.py": {
+    "mtime": 1779866285.2187777,
+    "ast_hash": "9f30d7092ef712d6183dbbe428089147",
+    "semantic_hash": "9f30d7092ef712d6183dbbe428089147"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\ddacfaf54248_add_sku_to_inventory_items.py": {
+    "mtime": 1780888193.9881325,
+    "ast_hash": "dc2ce088c79006e56e25b0958e2f594a",
+    "semantic_hash": "dc2ce088c79006e56e25b0958e2f594a"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\e24269f70ee6_update_last_login_nullable.py": {
+    "mtime": 1779950002.712763,
+    "ast_hash": "15da294568d92f27a3315380f2c6e01f",
+    "semantic_hash": "15da294568d92f27a3315380f2c6e01f"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\e635f316840c_update_po_models_to_4_decimal_places.py": {
+    "mtime": 1780712393.0705214,
+    "ast_hash": "906ea7cb056db98291d356987e012a6f",
+    "semantic_hash": "906ea7cb056db98291d356987e012a6f"
+  },
+  "D:\\projects\\flask-trackdesk\\migrations\\versions\\f5d882475acb_add_tags.py": {
+    "mtime": 1780025681.1612964,
+    "ast_hash": "1163ea955ba64924251441294dd65c18",
+    "semantic_hash": "1163ea955ba64924251441294dd65c18"
+  },
+  "D:\\projects\\flask-trackdesk\\package.json": {
+    "mtime": 1756531182.983219,
+    "ast_hash": "84531173607a97b5a802e678d9e4775c",
+    "semantic_hash": "84531173607a97b5a802e678d9e4775c"
+  },
+  "D:\\projects\\flask-trackdesk\\.agents\\rules\\graphify.md": {
+    "mtime": 1780531807.158685,
+    "ast_hash": "a0e4d192b9e2e17256124dbfc8e24e6a",
+    "semantic_hash": "a0e4d192b9e2e17256124dbfc8e24e6a"
+  },
+  "D:\\projects\\flask-trackdesk\\.agents\\skills\\graphify\\SKILL.md": {
+    "mtime": 1780531807.144099,
+    "ast_hash": "1acfc5e3ff91c92373909c5c11f55769",
+    "semantic_hash": "1acfc5e3ff91c92373909c5c11f55769"
+  },
+  "D:\\projects\\flask-trackdesk\\.agents\\skills\\graphify\\references\\add-watch.md": {
+    "mtime": 1780531551.1224434,
+    "ast_hash": "0df0589623217ca38a12bdcabfb42f4c",
+    "semantic_hash": "0df0589623217ca38a12bdcabfb42f4c"
+  },
+  "D:\\projects\\flask-trackdesk\\.agents\\skills\\graphify\\references\\exports.md": {
+    "mtime": 1780531551.1224434,
+    "ast_hash": "7fb1a81aca17a462db70684a324fcfb0",
+    "semantic_hash": "7fb1a81aca17a462db70684a324fcfb0"
+  },
+  "D:\\projects\\flask-trackdesk\\.agents\\skills\\graphify\\references\\extraction-spec.md": {
+    "mtime": 1780531551.1264427,
+    "ast_hash": "24808b03abfeaf5f6435bb69c0125b2c",
+    "semantic_hash": "24808b03abfeaf5f6435bb69c0125b2c"
+  },
+  "D:\\projects\\flask-trackdesk\\.agents\\skills\\graphify\\references\\github-and-merge.md": {
+    "mtime": 1780531551.129444,
+    "ast_hash": "cde13df085e4c492aeb7ba298a996d0d",
+    "semantic_hash": "cde13df085e4c492aeb7ba298a996d0d"
+  },
+  "D:\\projects\\flask-trackdesk\\.agents\\skills\\graphify\\references\\hooks.md": {
+    "mtime": 1780531551.1304443,
+    "ast_hash": "3f545db6ce646650bb9de588f5512a27",
+    "semantic_hash": "3f545db6ce646650bb9de588f5512a27"
+  },
+  "D:\\projects\\flask-trackdesk\\.agents\\skills\\graphify\\references\\query.md": {
+    "mtime": 1780531551.1314425,
+    "ast_hash": "8b40ed8c9e9060fc215219a8fc964091",
+    "semantic_hash": "8b40ed8c9e9060fc215219a8fc964091"
+  },
+  "D:\\projects\\flask-trackdesk\\.agents\\skills\\graphify\\references\\transcribe.md": {
+    "mtime": 1780531551.1324432,
+    "ast_hash": "70f6aa30d6211f3a2c7e9fc45479f50c",
+    "semantic_hash": "70f6aa30d6211f3a2c7e9fc45479f50c"
+  },
+  "D:\\projects\\flask-trackdesk\\.agents\\skills\\graphify\\references\\update.md": {
+    "mtime": 1780531551.1334443,
+    "ast_hash": "735932eaa4f0c8fef9566c538ae3e5f8",
+    "semantic_hash": "735932eaa4f0c8fef9566c538ae3e5f8"
+  },
+  "D:\\projects\\flask-trackdesk\\.agents\\workflows\\graphify.md": {
+    "mtime": 1780531807.1596844,
+    "ast_hash": "637776aa6f7496d069afe7520c845c8a",
+    "semantic_hash": "637776aa6f7496d069afe7520c845c8a"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\templates\\accounting\\chart_of_accounts.html": {
+    "mtime": 1781146815.252812,
+    "ast_hash": "0937d4d5f633552f915675cf752b25ca",
+    "semantic_hash": "0937d4d5f633552f915675cf752b25ca"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\templates\\accounting\\dashboard.html": {
+    "mtime": 1781147636.5033512,
+    "ast_hash": "d9e9e388ad9d20f3310de32c158624af",
+    "semantic_hash": "d9e9e388ad9d20f3310de32c158624af"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\templates\\accounting\\expense_form.html": {
+    "mtime": 1780891625.38196,
+    "ast_hash": "997166f0ade003229fab0d9da4ee82a3",
+    "semantic_hash": "997166f0ade003229fab0d9da4ee82a3"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\templates\\accounting\\expenses.html": {
+    "mtime": 1781140585.676126,
+    "ast_hash": "5d243be477c47433fb35269aacea2f44",
+    "semantic_hash": "5d243be477c47433fb35269aacea2f44"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\templates\\accounting\\income.html": {
+    "mtime": 1781146969.1772048,
+    "ast_hash": "56fa4f32312f7168b58f478a8c3cf2b8",
+    "semantic_hash": "56fa4f32312f7168b58f478a8c3cf2b8"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\templates\\accounting\\journal.html": {
+    "mtime": 1781200766.665362,
+    "ast_hash": "84480e7d72adb76fa7fb6e016d1bf0b4",
+    "semantic_hash": "84480e7d72adb76fa7fb6e016d1bf0b4"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\templates\\accounting\\ledger.html": {
+    "mtime": 1781147668.106119,
+    "ast_hash": "2279014e6e1d5b8ffaa31deb8402512c",
+    "semantic_hash": "2279014e6e1d5b8ffaa31deb8402512c"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\templates\\accounting\\partials\\_nav.html": {
+    "mtime": 1780695912.9196675,
+    "ast_hash": "74dce42df310b551e40dbe3a41703b92",
+    "semantic_hash": "74dce42df310b551e40dbe3a41703b92"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\templates\\accounting\\partials\\account_form.html": {
+    "mtime": 1780891625.4000778,
+    "ast_hash": "c2ae0c02b65f897ec73b085039858f10",
+    "semantic_hash": "c2ae0c02b65f897ec73b085039858f10"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\templates\\accounting\\partials\\expense_form.html": {
+    "mtime": 1781053405.5420866,
+    "ast_hash": "f148a07ec60db2e052fe3c40e6cc8139",
+    "semantic_hash": "f148a07ec60db2e052fe3c40e6cc8139"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\templates\\accounting\\partials\\income_form.html": {
+    "mtime": 1781237560.3981605,
+    "ast_hash": "aba42fb4ae75782516372fd526e6a5c3",
+    "semantic_hash": "aba42fb4ae75782516372fd526e6a5c3"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\templates\\accounting\\partials\\journal_form.html": {
+    "mtime": 1781200767.0064058,
+    "ast_hash": "7c1d1cd08f70328d53a61baefc4d4055",
+    "semantic_hash": "7c1d1cd08f70328d53a61baefc4d4055"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\templates\\accounting\\partials\\project_form.html": {
+    "mtime": 1780891625.4070778,
+    "ast_hash": "5979b7769e80280af4994d399edbec1d",
+    "semantic_hash": "5979b7769e80280af4994d399edbec1d"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\templates\\accounting\\partials\\tag_form.html": {
+    "mtime": 1780891625.408078,
+    "ast_hash": "58b061681328865b78d5a4157a1034ef",
+    "semantic_hash": "58b061681328865b78d5a4157a1034ef"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\templates\\accounting\\project_detail.html": {
+    "mtime": 1780971057.6183329,
+    "ast_hash": "3a212ebacfb3308bbc9c0c0c4c290738",
+    "semantic_hash": "3a212ebacfb3308bbc9c0c0c4c290738"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\templates\\accounting\\project_form.html": {
+    "mtime": 1780891625.395074,
+    "ast_hash": "ce51b492e48165f2c405b65098a677fc",
+    "semantic_hash": "ce51b492e48165f2c405b65098a677fc"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\templates\\accounting\\projects.html": {
+    "mtime": 1781146813.2387125,
+    "ast_hash": "449c8d728f442392e3fb95a4a9bc5088",
+    "semantic_hash": "449c8d728f442392e3fb95a4a9bc5088"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\templates\\accounting\\reports.html": {
+    "mtime": 1781208624.8149736,
+    "ast_hash": "42c5247cc7de562197032380c59a1ae0",
+    "semantic_hash": "42c5247cc7de562197032380c59a1ae0"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\accounting\\templates\\accounting\\trial_balance.html": {
+    "mtime": 1781146817.2740777,
+    "ast_hash": "8b2a868e458235c33454806305b52b16",
+    "semantic_hash": "8b2a868e458235c33454806305b52b16"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\auth\\templates\\auth\\login.html": {
+    "mtime": 1780891625.413078,
+    "ast_hash": "43c325d48d7aa276eb6532a750219d11",
+    "semantic_hash": "43c325d48d7aa276eb6532a750219d11"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\companies\\templates\\companies\\form.html": {
+    "mtime": 1780891625.4180782,
+    "ast_hash": "ef736fdcf76074fc996859f2cbbc9a47",
+    "semantic_hash": "ef736fdcf76074fc996859f2cbbc9a47"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\companies\\templates\\companies\\index.html": {
+    "mtime": 1780891625.4210782,
+    "ast_hash": "33c94c6024a39fb5ff2f7f7b7aa52567",
+    "semantic_hash": "33c94c6024a39fb5ff2f7f7b7aa52567"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\companies\\templates\\companies\\sequences\\form.html": {
+    "mtime": 1780891625.4270804,
+    "ast_hash": "a48bf05cf0939109c49825663a96110b",
+    "semantic_hash": "a48bf05cf0939109c49825663a96110b"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\companies\\templates\\companies\\sequences\\index.html": {
+    "mtime": 1780891663.7013736,
+    "ast_hash": "da8540ff885ba0efdd72c2270761eed7",
+    "semantic_hash": "da8540ff885ba0efdd72c2270761eed7"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\companies\\templates\\companies\\view.html": {
+    "mtime": 1780891625.425078,
+    "ast_hash": "decb516cc9d3136a96844378f417c422",
+    "semantic_hash": "decb516cc9d3136a96844378f417c422"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\contacts\\templates\\contacts\\form.html": {
+    "mtime": 1780891625.4330857,
+    "ast_hash": "e64a82d6beedb977c47f18c96c766a1b",
+    "semantic_hash": "e64a82d6beedb977c47f18c96c766a1b"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\contacts\\templates\\contacts\\index.html": {
+    "mtime": 1780891625.4360857,
+    "ast_hash": "df9492a915d3e78dac305cd2470e00e0",
+    "semantic_hash": "df9492a915d3e78dac305cd2470e00e0"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\contacts\\templates\\contacts\\view.html": {
+    "mtime": 1780891663.7033732,
+    "ast_hash": "0afe142e4d13bb0b723ee2493176b469",
+    "semantic_hash": "0afe142e4d13bb0b723ee2493176b469"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\dashboard\\templates\\dashboard\\index.html": {
+    "mtime": 1780891849.2225096,
+    "ast_hash": "39700153ae40f10e0080e1287005e05b",
+    "semantic_hash": "39700153ae40f10e0080e1287005e05b"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\hr\\templates\\hr\\deviation_view.html": {
+    "mtime": 1780891625.444606,
+    "ast_hash": "3dd2b9730186c977e99eaaf79c55082c",
+    "semantic_hash": "3dd2b9730186c977e99eaaf79c55082c"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\hr\\templates\\hr\\employee_form.html": {
+    "mtime": 1780891625.449608,
+    "ast_hash": "39be3fa42bb616156c892f7f98e254ba",
+    "semantic_hash": "39be3fa42bb616156c892f7f98e254ba"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\hr\\templates\\hr\\employees.html": {
+    "mtime": 1780891663.7063718,
+    "ast_hash": "44704df7c6db9bdbe4c69989890fce1d",
+    "semantic_hash": "44704df7c6db9bdbe4c69989890fce1d"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\hr\\templates\\hr\\leave_form.html": {
+    "mtime": 1780891625.4537592,
+    "ast_hash": "3e424db0c8ff9c427c44cab76d9bfbc9",
+    "semantic_hash": "3e424db0c8ff9c427c44cab76d9bfbc9"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\hr\\templates\\hr\\leave_requests.html": {
+    "mtime": 1780891663.7073727,
+    "ast_hash": "7101e69eaf9e87d5e92d629cd13b0829",
+    "semantic_hash": "7101e69eaf9e87d5e92d629cd13b0829"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\hr\\templates\\hr\\leave_view.html": {
+    "mtime": 1780891625.4605901,
+    "ast_hash": "9fba54ab86a3333f69b2eac0f300a0b4",
+    "semantic_hash": "9fba54ab86a3333f69b2eac0f300a0b4"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\hr\\templates\\hr\\schedule_form.html": {
+    "mtime": 1780891625.4635897,
+    "ast_hash": "1ca3764e4edcd4b1941b20a8fea4f977",
+    "semantic_hash": "1ca3764e4edcd4b1941b20a8fea4f977"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\hr\\templates\\hr\\schedules.html": {
+    "mtime": 1780891625.462589,
+    "ast_hash": "34608bcf07f3714b2e4dca31c483f041",
+    "semantic_hash": "34608bcf07f3714b2e4dca31c483f041"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\inventory\\templates\\inventory\\barcode.html": {
+    "mtime": 1780275853.208333,
+    "ast_hash": "009dd26e17ea098a5e69ddd0ba335f55",
+    "semantic_hash": "009dd26e17ea098a5e69ddd0ba335f55"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\inventory\\templates\\inventory\\drawer_adjust.html": {
+    "mtime": 1780891625.4693458,
+    "ast_hash": "f7a90fd073249417ab8240668f212ecc",
+    "semantic_hash": "f7a90fd073249417ab8240668f212ecc"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\inventory\\templates\\inventory\\drawer_transfer.html": {
+    "mtime": 1780891625.4708316,
+    "ast_hash": "ff9b7809e1e029721b30423542b6eef6",
+    "semantic_hash": "ff9b7809e1e029721b30423542b6eef6"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\inventory\\templates\\inventory\\form.html": {
+    "mtime": 1780891625.4721684,
+    "ast_hash": "f4e9e80d4558ef697d9beb0c9905cf3c",
+    "semantic_hash": "f4e9e80d4558ef697d9beb0c9905cf3c"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\inventory\\templates\\inventory\\index.html": {
+    "mtime": 1780891663.7113721,
+    "ast_hash": "6fe2b6a3cce5efddac3a74e02850afab",
+    "semantic_hash": "6fe2b6a3cce5efddac3a74e02850afab"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\inventory\\templates\\inventory\\movements.html": {
+    "mtime": 1780891663.7123716,
+    "ast_hash": "c802f1997eb5ab300934dc4cd7e2a030",
+    "semantic_hash": "c802f1997eb5ab300934dc4cd7e2a030"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\inventory\\templates\\inventory\\view.html": {
+    "mtime": 1780891625.4810784,
+    "ast_hash": "c5e4e95da4b0b4c9417a4502280aebc2",
+    "semantic_hash": "c5e4e95da4b0b4c9417a4502280aebc2"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\invoices\\templates\\invoices\\form.html": {
+    "mtime": 1780969590.9357572,
+    "ast_hash": "93e2d4475d609ce38e7a9fdf2b16a0d8",
+    "semantic_hash": "93e2d4475d609ce38e7a9fdf2b16a0d8"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\invoices\\templates\\invoices\\index.html": {
+    "mtime": 1780891663.7165475,
+    "ast_hash": "1e19c010ce9d9900197d5b8db5cf8747",
+    "semantic_hash": "1e19c010ce9d9900197d5b8db5cf8747"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\invoices\\templates\\invoices\\view.html": {
+    "mtime": 1780968457.9771075,
+    "ast_hash": "4e12bdeee0030ce3ef6073d54201d1b7",
+    "semantic_hash": "4e12bdeee0030ce3ef6073d54201d1b7"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\orders\\templates\\orders\\form.html": {
+    "mtime": 1780891625.5024028,
+    "ast_hash": "75a8cb2ff7033e170aeeb0e3a24d8566",
+    "semantic_hash": "75a8cb2ff7033e170aeeb0e3a24d8566"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\orders\\templates\\orders\\index.html": {
+    "mtime": 1780891663.7205486,
+    "ast_hash": "805535c67875be9c2f902c97762a33f9",
+    "semantic_hash": "805535c67875be9c2f902c97762a33f9"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\orders\\templates\\orders\\view.html": {
+    "mtime": 1780891663.7215495,
+    "ast_hash": "99d701f2680a6342fbe212753e30c888",
+    "semantic_hash": "99d701f2680a6342fbe212753e30c888"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\payments\\templates\\payments\\form.html": {
+    "mtime": 1780891625.513972,
+    "ast_hash": "2ac24e0a70c960a08a33e4b69976e128",
+    "semantic_hash": "2ac24e0a70c960a08a33e4b69976e128"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\payments\\templates\\payments\\index.html": {
+    "mtime": 1780891663.7238395,
+    "ast_hash": "c67705fba4ea4766538c3d955d4152ef",
+    "semantic_hash": "c67705fba4ea4766538c3d955d4152ef"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\payments\\templates\\payments\\view.html": {
+    "mtime": 1780891625.5193374,
+    "ast_hash": "c4821d03787f89196494650e3dcce10d",
+    "semantic_hash": "c4821d03787f89196494650e3dcce10d"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\static\\templates\\demo.html": {
+    "mtime": 1780322024.8635564,
+    "ast_hash": "2baa6c504f7d59476b7e01e517ded6a7",
+    "semantic_hash": "2baa6c504f7d59476b7e01e517ded6a7"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\templates\\base.html": {
+    "mtime": 1780892228.934493,
+    "ast_hash": "6889c4d5a0f8256e962db38c34c85ed4",
+    "semantic_hash": "6889c4d5a0f8256e962db38c34c85ed4"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\templates\\blank.html": {
+    "mtime": 1779222808.4773867,
+    "ast_hash": "d85c73526a493e288b838a473db990c0",
+    "semantic_hash": "d85c73526a493e288b838a473db990c0"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\templates\\errors\\error.html": {
+    "mtime": 1780891625.5315,
+    "ast_hash": "329bd14bbdffaecf8c1de5d02b79a9c0",
+    "semantic_hash": "329bd14bbdffaecf8c1de5d02b79a9c0"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\templates\\public\\landing.html": {
+    "mtime": 1780891625.5360434,
+    "ast_hash": "5926705b5abdc0bfa5d8721eb72122d1",
+    "semantic_hash": "5926705b5abdc0bfa5d8721eb72122d1"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\templates\\search\\results.html": {
+    "mtime": 1780891625.5375428,
+    "ast_hash": "a51fff5b092da43bdf07b7e971836a7e",
+    "semantic_hash": "a51fff5b092da43bdf07b7e971836a7e"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\users\\templates\\users\\form.html": {
+    "mtime": 1780967793.259997,
+    "ast_hash": "0b8450e34fa213cf437ccfdbff2477c7",
+    "semantic_hash": "0b8450e34fa213cf437ccfdbff2477c7"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\users\\templates\\users\\index.html": {
+    "mtime": 1780967743.8005202,
+    "ast_hash": "7f73577f54e3286e0b560280086f0fed",
+    "semantic_hash": "7f73577f54e3286e0b560280086f0fed"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\users\\templates\\users\\view.html": {
+    "mtime": 1780967769.0519538,
+    "ast_hash": "a1e9f814d857748beeec6428f224623e",
+    "semantic_hash": "a1e9f814d857748beeec6428f224623e"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\warehouses\\templates\\warehouses\\form.html": {
+    "mtime": 1780891625.5518339,
+    "ast_hash": "57bd1c7e3f12262beb5652d3f79c2556",
+    "semantic_hash": "57bd1c7e3f12262beb5652d3f79c2556"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\warehouses\\templates\\warehouses\\index.html": {
+    "mtime": 1780891663.730771,
+    "ast_hash": "80f332787ed52da1cdc2f0f3a51e1a7c",
+    "semantic_hash": "80f332787ed52da1cdc2f0f3a51e1a7c"
+  },
+  "D:\\projects\\flask-trackdesk\\requirements.txt": {
+    "mtime": 1780887050.968993,
+    "ast_hash": "5814d9a16e46ff6f7584d860dcfbba4a",
+    "semantic_hash": "5814d9a16e46ff6f7584d860dcfbba4a"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\static\\templates\\Factura Ferre-lagos.pdf": {
+    "mtime": 1775019005.6316662,
+    "ast_hash": "10eb528485d562cdcc277874fd2133c5",
+    "semantic_hash": "10eb528485d562cdcc277874fd2133c5"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\invoices\\static\\img\\logo.jpeg": {
+    "mtime": 1775019005.58621,
+    "ast_hash": "e65c8628ade25fb600ae42505ac75e06",
+    "semantic_hash": "e65c8628ade25fb600ae42505ac75e06"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\static\\img\\apple-touch-icon.png": {
+    "mtime": 1779693230.384572,
+    "ast_hash": "dfb9dad4bc60b54beac33eae3931b099",
+    "semantic_hash": "dfb9dad4bc60b54beac33eae3931b099"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\static\\img\\favicon-96x96.png": {
+    "mtime": 1779693230.366007,
+    "ast_hash": "e32970f0e90aa1f3645fb867b1950211",
+    "semantic_hash": "e32970f0e90aa1f3645fb867b1950211"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\static\\img\\favicon.svg": {
+    "mtime": 1779693230.3512485,
+    "ast_hash": "233bfa6d427de7d3a24682ecade401d4",
+    "semantic_hash": "233bfa6d427de7d3a24682ecade401d4"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\static\\img\\web-app-manifest-192x192.png": {
+    "mtime": 1779693230.3930986,
+    "ast_hash": "ebf7d703e22c9ffbf967c2f48999de48",
+    "semantic_hash": "ebf7d703e22c9ffbf967c2f48999de48"
+  },
+  "D:\\projects\\flask-trackdesk\\app\\static\\img\\web-app-manifest-512x512.png": {
+    "mtime": 1779693230.4026718,
+    "ast_hash": "622a5f1a0c2fc53a9f0f100823dea54b",
+    "semantic_hash": "622a5f1a0c2fc53a9f0f100823dea54b"
+  }
+}
