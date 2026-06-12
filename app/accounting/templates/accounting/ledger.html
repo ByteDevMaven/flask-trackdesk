@@ -116,16 +116,34 @@
       
       {# Pagination #}
       {% if pagination and pagination.pages > 1 %}
-      <div class="px-4 md:px-6 py-3 border-t border-slate-200 bg-slate-50 flex items-center justify-between">
-        <p class="text-xs text-slate-500">Página {{ pagination.page }} de {{ pagination.pages }}</p>
-        <div class="flex gap-1">
+      {% set first_item = ((pagination.page - 1) * pagination.per_page) + 1 if pagination.total else 0 %}
+      {% set last_item = first_item + pagination.items|length - 1 if pagination.total else 0 %}
+      <div class="px-4 md:px-6 py-3 border-t border-slate-100 bg-white flex items-center justify-between">
+        <p class="text-sm text-slate-500">Mostrando {{ first_item }} a {{ last_item }} de {{ pagination.total }} resultados</p>
+        <div class="flex items-center gap-1">
           {% if pagination.has_prev %}
           <a href="{{ url_for('accounting.ledger', company_id=company.id, account_id=account.id, page=pagination.prev_num, start_date=start_date, end_date=end_date) }}"
-            class="px-3 py-1 border border-slate-200 bg-white rounded text-sm text-slate-600 hover:bg-slate-50">← Anterior</a>
+            class="px-3 py-1.5 text-sm text-slate-500 hover:bg-slate-100 rounded transition-colors">Anterior</a>
+          {% else %}
+          <button class="px-3 py-1.5 text-sm text-slate-500 hover:bg-slate-100 rounded transition-colors disabled:opacity-50 disabled:hover:bg-transparent" disabled>Anterior</button>
           {% endif %}
+          {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+            {% if page_num %}
+              {% if page_num == pagination.page %}
+              <span class="px-3 py-1.5 text-sm font-medium text-white bg-emerald-600 rounded">{{ page_num }}</span>
+              {% else %}
+              <a href="{{ url_for('accounting.ledger', company_id=company.id, account_id=account.id, page=page_num, start_date=start_date, end_date=end_date) }}"
+                class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">{{ page_num }}</a>
+              {% endif %}
+            {% else %}
+            <span class="px-2 text-slate-400">...</span>
+            {% endif %}
+          {% endfor %}
           {% if pagination.has_next %}
           <a href="{{ url_for('accounting.ledger', company_id=company.id, account_id=account.id, page=pagination.next_num, start_date=start_date, end_date=end_date) }}"
-            class="px-3 py-1 border border-slate-200 bg-white rounded text-sm text-slate-600 hover:bg-slate-50">Siguiente →</a>
+            class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">Siguiente</a>
+          {% else %}
+          <button class="px-3 py-1.5 text-sm text-slate-500 hover:bg-slate-100 rounded transition-colors disabled:opacity-50 disabled:hover:bg-transparent" disabled>Siguiente</button>
           {% endif %}
         </div>
       </div>
