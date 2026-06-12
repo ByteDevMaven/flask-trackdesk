@@ -715,8 +715,8 @@
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/reports.html": {
-    "mtime": 1781146825.0618408,
-    "ast_hash": "2a3cbf49638ca6cf5d763095367c500b",
+    "mtime": 1781208624.8149736,
+    "ast_hash": "42c5247cc7de562197032380c59a1ae0",
     "semantic_hash": ""
   },
   "app/auth/templates/auth/login.html": {
