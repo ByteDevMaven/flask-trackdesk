@@ -2,6 +2,7 @@ from flask import session
 from app.models import db, DocumentItem, InventoryItem, DocumentType, StockMovement, StockMovementType
 from datetime import datetime, UTC
 
+
 def update_invoice_or_quote(document, form):
     # Parse incoming items
     items_data = {}
@@ -147,6 +148,7 @@ def update_invoice_or_quote(document, form):
     project_id_raw = form.get("project_id")
     document.project_id = int(project_id_raw) if project_id_raw else None
 
+
 def delete_invoice_or_quote(document):
     """Soft delete an invoice or quote and its items."""
     items = DocumentItem.query.filter_by(document_id=document.id).all()
@@ -158,10 +160,12 @@ def delete_invoice_or_quote(document):
     document.deleted_at = datetime.now(UTC)
     db.session.commit()
 
+
 def add_invoice_payment(document, form):
-    """Add a payment to an invoice and update its status."""
+    """Add a payment to an invoice, post accounting income, and update its status."""
     from app.models import Payment, PaymentMethod
     from app.models.enums import DocumentStatus
+    from .accounting_integration import post_invoice_payment_income
     
     amount = float(form.get('amount', 0))
     payment_date_str = form.get('payment_date')
@@ -184,6 +188,8 @@ def add_invoice_payment(document, form):
 
     db.session.add(payment)
     db.session.flush()
+
+    post_invoice_payment_income(payment, document)
 
     paid_amount = document.calculate_paid_amount()
     if paid_amount >= float(document.total_amount):
