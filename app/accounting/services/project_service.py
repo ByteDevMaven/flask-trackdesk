@@ -1,12 +1,18 @@
 """Project CRUD, tagging, and reporting service."""
 
+import base64
+import os
+import re
 from datetime import UTC, datetime
+from io import BytesIO
 
+from flask import current_app, render_template
 from flask_login import current_user
 from sqlalchemy import func, select
 from sqlalchemy.orm import joinedload
+from xhtml2pdf import pisa
 
-from app.models import db, Account, Expense, LedgerEntry, Project, Tag, Transaction
+from app.models import db, Account, Company, Expense, LedgerEntry, Project, Tag, Transaction
 from app.models.document import Document
 from app.models.enums import AccountType, DocumentType
 from app.models.report import Report
@@ -24,6 +30,47 @@ from ._balance import (
 
 
 class ProjectService:
+    REPORT_TITLES = {
+        'income_statement': 'Estado de Resultados',
+        'balance_sheet': 'Balance General',
+        'cash_flow': 'Estado de Flujo de Efectivo',
+    }
+
+    REPORT_FILENAMES = {
+        'income_statement': 'estado_resultados',
+        'balance_sheet': 'balance_general',
+        'cash_flow': 'flujo_efectivo',
+    }
+
+    @staticmethod
+    def _report_title(report_type: str) -> str:
+        return ProjectService.REPORT_TITLES.get(report_type, 'Reporte Financiero')
+
+    @staticmethod
+    def _company_logo_data_uri(company: Company) -> str | None:
+        if not company.logo_url:
+            return None
+
+        logo_path = os.path.join(current_app.static_folder, company.logo_url.replace('/', os.sep))
+        if not os.path.exists(logo_path):
+            return None
+
+        try:
+            from PIL import Image
+
+            with Image.open(logo_path) as image:
+                image.thumbnail((420, 420))
+                output = BytesIO()
+                image.convert('RGBA').save(output, format='PNG')
+                encoded = base64.b64encode(output.getvalue()).decode('ascii')
+                return f'data:image/png;base64,{encoded}'
+        except Exception:
+            return None
+
+    @staticmethod
+    def _safe_filename(value: str) -> str:
+        value = re.sub(r'[^a-zA-Z0-9_-]+', '_', value.strip())
+        return value.strip('_') or 'reporte'
 
     # ── Projects ───────────────────────────────────────────────────────────
 
@@ -425,3 +472,44 @@ class ProjectService:
 
         from app.utils import export_excel_response
         return export_excel_response(f'{report_type}_{end_date}', headers, rows)
+
+    @staticmethod
+    def export_report_pdf(company_id: int, report_type: str,
+                          report_data: dict, total,
+                          start_date: str, end_date: str):
+        company = Company.query.get_or_404(company_id)
+        title = ProjectService._report_title(report_type)
+        generated_at = datetime.now(UTC)
+        logo_data_uri = ProjectService._company_logo_data_uri(company)
+
+        html = render_template(
+            'accounting/report_pdf.html',
+            company=company,
+            report_type=report_type,
+            report_title=title,
+            report_data=report_data,
+            total=total,
+            start_date=start_date,
+            end_date=end_date,
+            generated_at=generated_at,
+            logo_data_uri=logo_data_uri,
+        )
+
+        output = BytesIO()
+        status = pisa.CreatePDF(BytesIO(html.encode('utf-8')), dest=output, encoding='utf-8')
+        if status.err:
+            raise ValueError('No se pudo generar el PDF del reporte.')
+
+        rep = Report(
+            company_id=company_id,
+            title=f"{title} ({start_date} a {end_date})",
+            report_type=report_type,
+            generated_by=current_user.id,
+        )
+        db.session.add(rep)
+        db.session.commit()
+
+        filename_base = ProjectService.REPORT_FILENAMES.get(report_type, 'reporte_financiero')
+        company_part = ProjectService._safe_filename(company.name.lower())
+        filename = f'{filename_base}_{company_part}_{end_date}.pdf'
+        return output.getvalue(), filename

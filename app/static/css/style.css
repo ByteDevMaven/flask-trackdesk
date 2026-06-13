@@ -1519,6 +1519,9 @@
   .bg-slate-800 {
     background-color: var(--color-slate-800);
   }
+  .bg-slate-900 {
+    background-color: var(--color-slate-900);
+  }
   .bg-slate-900\/40 {
     background-color: color-mix(in srgb, #0f172a 40%, transparent);
     @supports (color: color-mix(in lab, red, red)) {
@@ -2362,6 +2365,11 @@
       padding-inline: calc(var(--spacing) * 3);
     }
   }
+  .file\:px-3\.5 {
+    &::file-selector-button {
+      padding-inline: calc(var(--spacing) * 3.5);
+    }
+  }
   .file\:py-1 {
     &::file-selector-button {
       padding-block: calc(var(--spacing) * 1);
@@ -2370,6 +2378,17 @@
   .file\:py-1\.5 {
     &::file-selector-button {
       padding-block: calc(var(--spacing) * 1.5);
+    }
+  }
+  .file\:py-2\.5 {
+    &::file-selector-button {
+      padding-block: calc(var(--spacing) * 2.5);
+    }
+  }
+  .file\:text-sm {
+    &::file-selector-button {
+      font-size: var(--text-sm);
+      line-height: var(--tw-leading, var(--text-sm--line-height));
     }
   }
   .file\:text-xs {
@@ -2382,6 +2401,12 @@
     &::file-selector-button {
       --tw-font-weight: var(--font-weight-medium);
       font-weight: var(--font-weight-medium);
+    }
+  }
+  .file\:font-semibold {
+    &::file-selector-button {
+      --tw-font-weight: var(--font-weight-semibold);
+      font-weight: var(--font-weight-semibold);
     }
   }
   .file\:text-emerald-700 {
@@ -2636,6 +2661,13 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-slate-700);
+      }
+    }
+  }
+  .hover\:bg-slate-800 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-slate-800);
       }
     }
   }

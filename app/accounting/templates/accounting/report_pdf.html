@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>{{ report_title }} - {{ company.name }}</title>
+  <style>
+    @page {
+      size: letter;
+      margin: 24mm 18mm 20mm 18mm;
+      @frame footer_frame {
+        -pdf-frame-content: footer_content;
+        left: 18mm;
+        right: 18mm;
+        bottom: 8mm;
+        height: 8mm;
+      }
+    }
+
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+      color: #172033;
+      font-size: 10px;
+      line-height: 1.35;
+      background: #ffffff;
+    }
+
+    .header {
+      border-bottom: 2px solid #0f766e;
+      padding-bottom: 14px;
+      margin-bottom: 18px;
+    }
+
+    .brand-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .brand-logo {
+      width: 72px;
+      height: 72px;
+      border: 1px solid #dbe4ef;
+      padding: 8px;
+      text-align: center;
+      vertical-align: middle;
+      background: #f8fafc;
+    }
+
+    .brand-logo img {
+      max-width: 56px;
+      max-height: 56px;
+    }
+
+    .brand-fallback {
+      background: #0f766e;
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: bold;
+      text-align: center;
+      padding-top: 20px;
+      width: 56px;
+      height: 36px;
+    }
+
+    .company-name {
+      font-size: 20px;
+      font-weight: bold;
+      color: #0f172a;
+      margin: 0 0 4px 0;
+    }
+
+    .company-meta {
+      color: #64748b;
+      font-size: 9px;
+    }
+
+    .report-kicker {
+      text-align: right;
+      color: #0f766e;
+      font-size: 9px;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    .report-title {
+      text-align: right;
+      font-size: 18px;
+      font-weight: bold;
+      color: #0f172a;
+      margin-top: 4px;
+    }
+
+    .report-period {
+      text-align: right;
+      color: #64748b;
+      font-size: 9px;
+      margin-top: 4px;
+    }
+
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 18px;
+    }
+
+    .summary-box {
+      border: 1px solid #dbe4ef;
+      background: #f8fafc;
+      padding: 10px 12px;
+    }
+
+    .summary-label {
+      color: #64748b;
+      font-size: 8px;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .summary-value {
+      color: #0f172a;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .positive { color: #047857; }
+    .negative { color: #be123c; }
+    .muted { color: #64748b; }
+
+    table.report {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid #dbe4ef;
+    }
+
+    table.report th {
+      background: #0f172a;
+      color: #ffffff;
+      text-align: left;
+      padding: 8px 10px;
+      font-size: 8px;
+      text-transform: uppercase;
+    }
+
+    table.report td {
+      padding: 7px 10px;
+      border-bottom: 1px solid #edf2f7;
+      vertical-align: top;
+    }
+
+    .section-row td {
+      background: #ecfdf5;
+      color: #065f46;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 8px;
+      border-top: 1px solid #a7f3d0;
+    }
+
+    .section-row.alt td {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border-top-color: #bfdbfe;
+    }
+
+    .section-row.warn td {
+      background: #fff7ed;
+      color: #c2410c;
+      border-top-color: #fed7aa;
+    }
+
+    .account-name {
+      color: #334155;
+    }
+
+    .amount {
+      text-align: right;
+      font-family: Courier, monospace;
+      white-space: nowrap;
+    }
+
+    .subtotal td {
+      background: #f8fafc;
+      font-weight: bold;
+      border-top: 1px solid #dbe4ef;
+    }
+
+    .grand-total td {
+      background: #0f172a;
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 12px;
+      padding: 10px;
+    }
+
+    .note {
+      margin-top: 14px;
+      padding: 10px 12px;
+      background: #f8fafc;
+      border-left: 3px solid #0f766e;
+      color: #475569;
+      font-size: 9px;
+    }
+
+    #footer_content {
+      color: #94a3b8;
+      font-size: 8px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  {% macro money(amount, sign=False) -%}
+    {{ '+' if sign and amount >= 0 else '' }}{{ company.currency }} {{ "{:,.2f}".format(amount or 0) }}
+  {%- endmacro %}
+
+  <div class="header">
+    <table class="brand-table">
+      <tr>
+        <td style="width: 84px;">
+          <div class="brand-logo">
+            {% if logo_data_uri %}
+            <img src="{{ logo_data_uri }}" alt="Logo">
+            {% else %}
+            <div class="brand-fallback">{{ company.name[:2]|upper }}</div>
+            {% endif %}
+          </div>
+        </td>
+        <td>
+          <p class="company-name">{{ company.name }}</p>
+          <div class="company-meta">
+            {% if company.identifier %}RTN / ID: {{ company.identifier }}<br>{% endif %}
+            {% if company.email %}{{ company.email }}{% endif %}
+            {% if company.phone %}{% if company.email %} · {% endif %}{{ company.phone }}{% endif %}
+            {% if company.address %}<br>{{ company.address }}{% endif %}
+          </div>
+        </td>
+        <td style="width: 230px;">
+          <div class="report-kicker">Reporte financiero</div>
+          <div class="report-title">{{ report_title }}</div>
+          <div class="report-period">
+            {% if report_type == 'balance_sheet' %}
+            Al {{ end_date }}
+            {% else %}
+            {{ start_date }} al {{ end_date }}
+            {% endif %}
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <table class="summary-table">
+    <tr>
+      <td class="summary-box">
+        <div class="summary-label">Empresa</div>
+        <div class="summary-value">{{ company.name }}</div>
+      </td>
+      <td style="width: 10px;"></td>
+      <td class="summary-box">
+        <div class="summary-label">Moneda</div>
+        <div class="summary-value">{{ company.currency }}</div>
+      </td>
+      <td style="width: 10px;"></td>
+      <td class="summary-box">
+        <div class="summary-label">Generado</div>
+        <div class="summary-value">{{ generated_at.strftime('%Y-%m-%d') }}</div>
+      </td>
+    </tr>
+  </table>
+
+  {% if report_type == 'income_statement' %}
+  {% set total_revenue = namespace(val=0.0) %}
+  {% set total_expense = namespace(val=0.0) %}
+  <table class="report">
+    <thead>
+      <tr><th>Cuenta</th><th style="text-align:right;">Monto</th></tr>
+    </thead>
+    <tbody>
+      <tr class="section-row"><td colspan="2">Ingresos</td></tr>
+      {% for name, amount in report_data.get('revenue', {}).items() %}
+      {% set total_revenue.val = total_revenue.val + amount %}
+      <tr>
+        <td class="account-name">{{ name }}</td>
+        <td class="amount positive">{{ money(amount) }}</td>
+      </tr>
+      {% else %}
+      <tr><td class="muted">Sin ingresos registrados</td><td class="amount">{{ money(0) }}</td></tr>
+      {% endfor %}
+      <tr class="subtotal"><td>Total Ingresos</td><td class="amount positive">{{ money(total_revenue.val) }}</td></tr>
+
+      <tr class="section-row warn"><td colspan="2">Gastos</td></tr>
+      {% for name, amount in report_data.get('expense', {}).items() %}
+      {% set total_expense.val = total_expense.val + amount %}
+      <tr>
+        <td class="account-name">{{ name }}</td>
+        <td class="amount negative">{{ money(amount) }}</td>
+      </tr>
+      {% else %}
+      <tr><td class="muted">Sin gastos registrados</td><td class="amount">{{ money(0) }}</td></tr>
+      {% endfor %}
+      <tr class="subtotal"><td>Total Gastos</td><td class="amount negative">{{ money(total_expense.val) }}</td></tr>
+
+      <tr class="grand-total">
+        <td>Utilidad / Pérdida Neta</td>
+        <td class="amount">{{ money(total) }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  {% elif report_type == 'balance_sheet' %}
+  <table class="report">
+    <thead>
+      <tr><th>Cuenta</th><th style="text-align:right;">Monto</th></tr>
+    </thead>
+    <tbody>
+      <tr class="section-row alt"><td colspan="2">Activos</td></tr>
+      {% for name, amount in report_data.get('asset', {}).items() %}
+      <tr><td class="account-name">{{ name }}</td><td class="amount">{{ money(amount) }}</td></tr>
+      {% else %}
+      <tr><td class="muted">Sin activos registrados</td><td class="amount">{{ money(0) }}</td></tr>
+      {% endfor %}
+      <tr class="subtotal"><td>Total Activos</td><td class="amount">{{ money(total.assets if total is mapping else 0) }}</td></tr>
+
+      <tr class="section-row warn"><td colspan="2">Pasivos</td></tr>
+      {% for name, amount in report_data.get('liability', {}).items() %}
+      <tr><td class="account-name">{{ name }}</td><td class="amount">{{ money(amount) }}</td></tr>
+      {% else %}
+      <tr><td class="muted">Sin pasivos registrados</td><td class="amount">{{ money(0) }}</td></tr>
+      {% endfor %}
+
+      <tr class="section-row"><td colspan="2">Patrimonio</td></tr>
+      {% for name, amount in report_data.get('equity', {}).items() %}
+      <tr><td class="account-name">{{ name }}</td><td class="amount">{{ money(amount) }}</td></tr>
+      {% else %}
+      <tr><td class="muted">Sin patrimonio registrado</td><td class="amount">{{ money(0) }}</td></tr>
+      {% endfor %}
+      <tr class="grand-total">
+        <td>Total Pasivos + Patrimonio</td>
+        <td class="amount">{{ money(total.liabilities_and_equity if total is mapping else 0) }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  {% if total is mapping %}
+  {% set diff = total.assets - total.liabilities_and_equity %}
+  {% if diff|abs > 0.01 %}
+  <div class="note">
+    Diferencia de balance detectada: {{ money(diff|abs) }}. Revisa movimientos pendientes, asientos manuales o cuentas sin clasificar.
+  </div>
+  {% endif %}
+  {% endif %}
+
+  {% elif report_type == 'cash_flow' %}
+  {% set section_styles = {'operating': 'Actividades Operativas', 'investing': 'Actividades de Inversión', 'financing': 'Actividades de Financiamiento'} %}
+  <table class="report">
+    <thead>
+      <tr><th>Concepto</th><th style="text-align:right;">Monto</th></tr>
+    </thead>
+    <tbody>
+      {% for section_key, items in report_data.items() %}
+      <tr class="section-row {{ 'alt' if section_key == 'investing' else 'warn' if section_key == 'financing' else '' }}">
+        <td colspan="2">{{ section_styles.get(section_key, section_key|title) }}</td>
+      </tr>
+      {% for concept, amount in items.items() %}
+      <tr>
+        <td class="account-name">{{ concept }}</td>
+        <td class="amount {{ 'positive' if amount >= 0 else 'negative' }}">{{ money(amount, True) }}</td>
+      </tr>
+      {% endfor %}
+      {% endfor %}
+      <tr class="grand-total">
+        <td>Flujo Neto de Efectivo</td>
+        <td class="amount">{{ money(total, True) }}</td>
+      </tr>
+    </tbody>
+  </table>
+  {% endif %}
+
+  <div class="note">
+    Reporte generado desde TrackDesk con base en los movimientos contables registrados para el período seleccionado.
+  </div>
+
+  <div id="footer_content">
+    {{ company.name }} · {{ report_title }} · Página <pdf:pagenumber> de <pdf:pagecount>
+  </div>
+</body>
+</html>

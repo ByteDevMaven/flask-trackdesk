@@ -1,6 +1,6 @@
 from app.utils import resolve_company
 from datetime import datetime, UTC
-from flask import render_template, request, redirect, url_for, flash, jsonify
+from flask import make_response, render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required
 
 from app.models import Account, Project, Tag, Transaction
@@ -844,6 +844,25 @@ def reports(company_id):
 
     if export == 'excel':
         return AccountingService.export_report_excel(company_id, report_type, report_data, total, start_date, end_date)
+
+    if export == 'pdf':
+        try:
+            pdf_bytes, filename = AccountingService.export_report_pdf(
+                company_id,
+                report_type,
+                report_data,
+                total,
+                start_date,
+                end_date,
+            )
+        except ValueError as exc:
+            flash(str(exc), 'error')
+            return redirect(url_for('accounting.reports', company_id=_company_url_id(company), report_type=report_type, start_date=start_date, end_date=end_date))
+
+        response = make_response(pdf_bytes)
+        response.headers['Content-Type'] = 'application/pdf'
+        response.headers['Content-Disposition'] = f'attachment; filename="{filename}"'
+        return response
 
     return render_template(
         'accounting/reports.html',
