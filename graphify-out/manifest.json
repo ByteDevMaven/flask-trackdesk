@@ -15,8 +15,8 @@
     "semantic_hash": "575eea8e049486e005f9383dd12f3b9f"
   },
   "app/accounting/routes.py": {
-    "mtime": 1781296741.6342692,
-    "ast_hash": "f199e1ff59d7611e5cdf54e917989658",
+    "mtime": 1781324339.6897528,
+    "ast_hash": "aa7f373aeecea6e45fedd240b42a5ae8",
     "semantic_hash": ""
   },
   "app/accounting/services/__init__.py": {
@@ -715,9 +715,9 @@
     "semantic_hash": "ce51b492e48165f2c405b65098a677fc"
   },
   "app/accounting/templates/accounting/reports.html": {
-    "mtime": 1781208624.8149736,
-    "ast_hash": "42c5247cc7de562197032380c59a1ae0",
-    "semantic_hash": "42c5247cc7de562197032380c59a1ae0"
+    "mtime": 1781324425.670195,
+    "ast_hash": "39ccbb0bede9475fa183f41e3cd557f7",
+    "semantic_hash": ""
   },
   "app/auth/templates/auth/login.html": {
     "mtime": 1780891625.413078,
@@ -1120,8 +1120,8 @@
     "semantic_hash": "d14f21dceb5654dba4e9a52464cd5fc2"
   },
   "app/accounting/services/project_service.py": {
-    "mtime": 1781296734.8702254,
-    "ast_hash": "c3b4ff65566d28a2cd761f1aa58a3aeb",
+    "mtime": 1781324331.5289242,
+    "ast_hash": "8ed4a1cb00b3e091c35ab03c70cecf90",
     "semantic_hash": ""
   },
   "app/invoices/services/accounting_integration.py": {
@@ -1137,6 +1137,11 @@
   "migrations/versions/9f8e7d6c5b4a_add_company_timezone_and_logo.py": {
     "mtime": 1781322979.65664,
     "ast_hash": "15ada381feaeccee9515f4c10f5aa983",
+    "semantic_hash": ""
+  },
+  "app/accounting/templates/accounting/report_pdf.html": {
+    "mtime": 1781324406.0239909,
+    "ast_hash": "cba79185df4e2474b3e83247197b67bd",
     "semantic_hash": ""
   }
 }
