@@ -815,18 +815,18 @@
     "semantic_hash": "ff9b7809e1e029721b30423542b6eef6"
   },
   "app/inventory/templates/inventory/form.html": {
-    "mtime": 1781247095.2060366,
-    "ast_hash": "b59829bc098c3acd867d542bbc13692b",
+    "mtime": 1781248264.735757,
+    "ast_hash": "f115518d8c8c2080d9b5de2c732a6544",
     "semantic_hash": ""
   },
   "app/inventory/templates/inventory/index.html": {
-    "mtime": 1781246948.735392,
-    "ast_hash": "131011c798d7883d4b9787822a9b96a7",
+    "mtime": 1781248273.7733114,
+    "ast_hash": "5a8ddfac8680b3dcfa37cf7686af17c2",
     "semantic_hash": ""
   },
   "app/inventory/templates/inventory/movements.html": {
-    "mtime": 1781247031.6568246,
-    "ast_hash": "436d0e202313dc982a7a121bf83e231d",
+    "mtime": 1781248280.3412995,
+    "ast_hash": "7bd1e2f945ec203958b4bddba4f23f9c",
     "semantic_hash": ""
   },
   "app/inventory/templates/inventory/view.html": {
@@ -915,13 +915,13 @@
     "semantic_hash": "a1e9f814d857748beeec6428f224623e"
   },
   "app/warehouses/templates/warehouses/form.html": {
-    "mtime": 1780891625.5518339,
-    "ast_hash": "57bd1c7e3f12262beb5652d3f79c2556",
-    "semantic_hash": "57bd1c7e3f12262beb5652d3f79c2556"
+    "mtime": 1781248310.162762,
+    "ast_hash": "2d162676e61aafc5fe71c3a3b160bd7a",
+    "semantic_hash": ""
   },
   "app/warehouses/templates/warehouses/index.html": {
-    "mtime": 1781247745.160091,
-    "ast_hash": "893606a0f2b6b27a1bdada624ca205b4",
+    "mtime": 1781248300.4486268,
+    "ast_hash": "2d81ff9b410a7829c919ee2f2974844c",
     "semantic_hash": ""
   },
   "requirements.txt": {
