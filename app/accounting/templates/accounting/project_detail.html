@@ -7,20 +7,20 @@
 
 {% block content %}
 <div class="flex flex-col h-full overflow-hidden bg-slate-50">
-  <header class="bg-white border-b border-slate-200 px-4 md:px-6 py-4 flex items-start justify-between flex-shrink-0">
-    <div>
+  <header class="bg-white border-b border-slate-200 px-4 md:px-6 py-4 flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between flex-shrink-0">
+    <div class="min-w-0">
       <div class="flex items-center gap-3 mb-1">
-        <a href="{{ url_for('accounting.projects_list', company_id=company.id) }}" class="text-slate-400 hover:text-slate-600">
+        <a href="{{ url_for('accounting.projects_list', company_id=company.id) }}" class="text-slate-400 hover:text-slate-600 transition-colors" title="Volver">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
         </a>
-        <h1 class="text-xl font-bold text-slate-800">{{ project.name }}</h1>
-        {% set s_map = {'active': ('bg-emerald-50 text-emerald-700', 'Activo'), 'on_hold': ('bg-amber-50 text-amber-700', 'En pausa'), 'completed': ('bg-slate-100 text-slate-600', 'Completado'), 'cancelled': ('bg-rose-50 text-rose-700', 'Cancelado')} %}
-        {% set s_style, s_label = s_map.get(project.status, ('bg-slate-100 text-slate-600', project.status)) %}
-        <span class="inline-flex px-2 py-0.5 rounded-full text-xs font-semibold {{ s_style }}">{{ s_label }}</span>
+        <h1 class="text-xl font-bold text-slate-900 truncate">{{ project.name }}</h1>
+        {% set s_map = {'active': ('bg-emerald-50 text-emerald-700 border-emerald-100', 'Activo'), 'on_hold': ('bg-amber-50 text-amber-700 border-amber-100', 'En pausa'), 'completed': ('bg-slate-100 text-slate-600 border-slate-200', 'Completado'), 'cancelled': ('bg-rose-50 text-rose-700 border-rose-100', 'Cancelado')} %}
+        {% set s_style, s_label = s_map.get(project.status, ('bg-slate-100 text-slate-600 border-slate-200', project.status)) %}
+        <span class="inline-flex px-2 py-0.5 rounded-full border text-xs font-semibold {{ s_style }}">{{ s_label }}</span>
       </div>
-      <p class="text-sm text-slate-500 pl-8 max-w-2xl">{{ project.description or 'Sin descripción.' }}</p>
+      <p class="text-sm text-slate-500 pl-8 max-w-3xl">{{ project.description or 'Sin descripción.' }}</p>
     </div>
-    <div class="flex gap-2">
+    <div class="flex flex-wrap gap-2">
       <button data-action="open-drawer" data-url="{{ url_for('accounting.edit_project', company_id=company.id, project_id=project.id) }}" data-title="Editar Proyecto"
         class="px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors shadow-sm">Editar</button>
       <form method="POST" action="{{ url_for('accounting.delete_project', company_id=company.id, project_id=project.id) }}" onsubmit="return confirm('¿Eliminar este proyecto?')" class="inline">
@@ -30,24 +30,23 @@
     </div>
   </header>
 
-  <div class="flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
-    {# Metrics #}
-    <div class="grid grid-cols-1 md:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-      <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+  <main class="flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
+    <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+      <div class="bg-white rounded-lg border border-slate-200 p-4 shadow-sm">
         <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Ingresos Totales</p>
         <p class="text-2xl font-mono font-bold text-emerald-600">{{ company.currency }}{{ "{:,.2f}".format(total_income) }}</p>
       </div>
-      <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+      <div class="bg-white rounded-lg border border-slate-200 p-4 shadow-sm">
         <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Gastos Totales</p>
         <p class="text-2xl font-mono font-bold text-rose-600">{{ company.currency }}{{ "{:,.2f}".format(total_expenses) }}</p>
       </div>
-      <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+      <div class="bg-white rounded-lg border border-slate-200 p-4 shadow-sm">
         <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Rentabilidad Neta</p>
         <p class="text-2xl font-mono font-bold {{ 'text-emerald-600' if net > 0 else 'text-rose-600' if net < 0 else 'text-slate-800' }}">
           {{ company.currency }}{{ "{:,.2f}".format(net) }}
         </p>
       </div>
-      <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+      <div class="bg-white rounded-lg border border-slate-200 p-4 shadow-sm">
         <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">Presupuesto Restante</p>
         <p class="text-2xl font-mono font-bold {{ 'text-rose-600' if budget_remaining < 0 else 'text-slate-800' }}">
           {{ 'Ilimitado' if budget == 0 else company.currency + "{:,.2f}".format(budget_remaining) }}
@@ -59,130 +58,243 @@
         </div>
         {% endif %}
       </div>
-    </div>
+    </section>
 
-    <div class="grid grid-cols-1 lg:grid-cols-1 md:grid-cols-2 gap-6">
-      {# Expenses Table #}
-      <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col h-96">
-        <div class="px-5 py-3 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
-          <h2 class="font-semibold text-slate-800 text-sm">Gastos Recientes</h2>
-          <button data-action="open-drawer" data-url="{{ url_for('accounting.create_expense', company_id=company.id) }}" data-title="Registrar Gasto"
-            class="text-xs font-medium text-emerald-600 hover:text-emerald-700">+ Nuevo Gasto</button>
-        </div>
-        <div class="flex-1 overflow-y-auto">
-          <div class="w-full overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
-<table class="w-full text-left text-sm">
-            <tbody class="divide-y divide-slate-100">
-              {% for e in expenses[:10] %}
-              <tr class="hover:bg-slate-50 group">
-                <td class="px-5 py-3 text-slate-500">{{ e.date.strftime('%d/%m') if e.date else '—' }}</td>
-                <td class="px-5 py-3 font-medium text-slate-800">{{ e.description }}</td>
-                <td class="px-5 py-3 text-right font-mono font-bold text-rose-600">-{{ company.currency }}{{ "{:,.2f}".format(e.amount) }}</td>
-              </tr>
-              {% else %}
-              <tr><td colspan="3" class="px-5 py-8 text-center text-slate-400 text-sm">No hay gastos asociados.</td></tr>
-              {% endfor %}
-            </tbody>
-          </table>
-</div>
-        </div>
-      </div>
-
-      {# Income Table #}
-      <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col h-96">
-        <div class="px-5 py-3 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
-          <h2 class="font-semibold text-slate-800 text-sm">Ingresos Recientes</h2>
-          <button data-action="open-drawer" data-url="{{ url_for('accounting.create_income', company_id=company.id) }}" data-title="Registrar Ingreso"
-            class="text-xs font-medium text-emerald-600 hover:text-emerald-700">+ Nuevo Ingreso</button>
-        </div>
-        <div class="flex-1 overflow-y-auto">
-          <div class="w-full overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
-<table class="w-full text-left text-sm">
-            <tbody class="divide-y divide-slate-100">
-              {% for e in income_entries[:10] %}
-              <tr class="hover:bg-slate-50 group">
-                <td class="px-5 py-3 text-slate-500">{{ e.date.strftime('%d/%m') if e.date else '—' }}</td>
-                <td class="px-5 py-3 font-medium text-slate-800">{{ e.description }}</td>
-                <td class="px-5 py-3 text-right font-mono font-bold text-emerald-600">+{{ company.currency }}{{ "{:,.2f}".format(e.credit) }}</td>
-              </tr>
-              {% else %}
-              <tr><td colspan="3" class="px-5 py-8 text-center text-slate-400 text-sm">No hay ingresos asociados.</td></tr>
-              {% endfor %}
-            </tbody>
-          </table>
-</div>
-        </div>
-      </div>
-    </div>
-
-    {# Invoices Table #}
-    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
-      <div class="px-5 py-3 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
+    <section id="expenses" class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+      <div class="px-4 md:px-5 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
         <div>
-          <h2 class="font-semibold text-slate-800 text-sm">Facturas Asociadas</h2>
-          <p class="text-xs text-slate-500 mt-0.5">{{ total_invoices }} factura{{ 's' if total_invoices != 1 else '' }}</p>
+          <h2 class="font-semibold text-slate-900 text-sm">Gastos del Proyecto</h2>
+          <p class="text-xs text-slate-500 mt-0.5">{{ expense_pagination.total }} registro{{ 's' if expense_pagination.total != 1 else '' }}</p>
         </div>
-        <a href="{{ url_for('invoices.create', company_id=company.id, project_id=project.id) }}" class="text-xs font-medium text-emerald-600 hover:text-emerald-700">+ Nueva Factura</a>
+        <button data-action="open-drawer" data-url="{{ url_for('accounting.create_expense', company_id=company.id) }}" data-title="Registrar Gasto"
+          class="px-3 py-1.5 bg-white border border-slate-200 rounded-md text-xs font-medium text-emerald-600 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">+ Nuevo Gasto</button>
       </div>
-      <div class="flex-1 overflow-y-auto">
-        {% if invoices %}
-        <div class="w-full overflow-x-auto">
-          <table class="w-full text-left text-sm">
-            <thead>
-              <tr class="bg-slate-50 border-b border-slate-100 text-xs font-semibold text-slate-600 uppercase">
-                <th class="px-5 py-3">Número</th>
-                <th class="px-5 py-3">Cliente</th>
-                <th class="px-5 py-3">Fecha</th>
-                <th class="px-5 py-3">Estado</th>
-                <th class="px-5 py-3 text-right">Monto</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-100">
-              {% for inv in invoices[:15] %}
-              <tr class="hover:bg-slate-50">
-                <td class="px-5 py-3">
-                  <a href="{{ url_for('invoices.edit', company_id=company.id, id=inv.id) }}" class="text-emerald-600 hover:text-emerald-700 font-medium">{{ inv.document_number }}</a>
-                </td>
-                <td class="px-5 py-3 text-slate-700">{{ inv.client.name if inv.client else '—' }}</td>
-                <td class="px-5 py-3 text-slate-500">{{ inv.issued_date.strftime('%d/%m/%Y') if inv.issued_date else '—' }}</td>
-                <td class="px-5 py-3">
-                  {% set status_colors = {
-                    'draft': 'bg-slate-100 text-slate-600',
-                    'pending': 'bg-amber-50 text-amber-600',
-                    'issued': 'bg-blue-50 text-blue-600',
-                    'sent': 'bg-sky-50 text-sky-600',
-                    'partial': 'bg-purple-50 text-purple-600',
-                    'paid': 'bg-emerald-50 text-emerald-600',
-                    'overdue': 'bg-rose-50 text-rose-600',
-                    'cancelled': 'bg-slate-50 text-slate-500',
-                    'credit': 'bg-slate-50 text-slate-500'
-                  } %}
-                  {% set status_labels = {
-                    'draft': 'Borrador',
-                    'pending': 'Pendiente',
-                    'issued': 'Emitida',
-                    'sent': 'Enviada',
-                    'partial': 'Pago Parcial',
-                    'paid': 'Pagada',
-                    'overdue': 'Vencida',
-                    'cancelled': 'Cancelada',
-                    'credit': 'Nota Crédito'
-                  } %}
-                  <span class="text-[10px] font-semibold px-2 py-1 rounded {{ status_colors.get(inv.status.value, 'bg-slate-100 text-slate-600') }}">
-                    {{ status_labels.get(inv.status.value, inv.status.value) }}
-                  </span>
-                </td>
-                <td class="px-5 py-3 text-right font-mono font-bold text-slate-800">{{ company.currency }}{{ "{:,.2f}".format(inv.total_amount) }}</td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead>
+            <tr class="border-b border-slate-100 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              <th class="px-4 md:px-5 py-3">Fecha</th>
+              <th class="px-4 md:px-5 py-3">Descripción</th>
+              <th class="px-4 md:px-5 py-3">Cuenta</th>
+              <th class="px-4 md:px-5 py-3 text-right">Monto</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-50">
+            {% for e in expenses %}
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="px-4 md:px-5 py-3 text-slate-500 whitespace-nowrap">{{ e.date.strftime('%d/%m/%Y') if e.date else '—' }}</td>
+              <td class="px-4 md:px-5 py-3 font-medium text-slate-800">{{ e.description or 'Sin descripción' }}</td>
+              <td class="px-4 md:px-5 py-3 text-slate-500">{{ e.account.name if e.account else '—' }}</td>
+              <td class="px-4 md:px-5 py-3 text-right font-mono font-bold text-rose-600">-{{ company.currency }}{{ "{:,.2f}".format(e.amount) }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="4" class="px-5 py-10 text-center text-sm text-slate-400">No hay gastos asociados.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% if expense_pagination.pages > 1 %}
+      {% set first_item = ((expense_pagination.page - 1) * expense_pagination.per_page) + 1 if expense_pagination.total else 0 %}
+      {% set last_item = first_item + expense_pagination.items|length - 1 if expense_pagination.total else 0 %}
+      <div class="px-4 md:px-5 py-3 border-t border-slate-100 flex items-center justify-between">
+        <p class="text-sm text-slate-500">Mostrando {{ first_item }} a {{ last_item }} de {{ expense_pagination.total }} resultados</p>
+        <div class="flex items-center gap-1">
+          {% if expense_pagination.has_prev %}
+          <a href="{{ url_for('accounting.project_detail', company_id=company.id, project_id=project.id, expense_page=expense_pagination.prev_num, income_page=income_pagination.page, invoice_page=invoice_pagination.page, _anchor='expenses') }}"
+            class="px-3 py-1.5 text-sm text-slate-500 hover:bg-slate-100 rounded transition-colors">Anterior</a>
+          {% else %}
+          <button class="px-3 py-1.5 text-sm text-slate-500 rounded opacity-50" disabled>Anterior</button>
+          {% endif %}
+          {% for page_num in expense_pagination.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+            {% if page_num %}
+              {% if page_num == expense_pagination.page %}
+              <span class="px-3 py-1.5 text-sm font-medium text-white bg-emerald-600 rounded">{{ page_num }}</span>
+              {% else %}
+              <a href="{{ url_for('accounting.project_detail', company_id=company.id, project_id=project.id, expense_page=page_num, income_page=income_pagination.page, invoice_page=invoice_pagination.page, _anchor='expenses') }}"
+                class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">{{ page_num }}</a>
+              {% endif %}
+            {% else %}
+            <span class="px-2 text-slate-400">...</span>
+            {% endif %}
+          {% endfor %}
+          {% if expense_pagination.has_next %}
+          <a href="{{ url_for('accounting.project_detail', company_id=company.id, project_id=project.id, expense_page=expense_pagination.next_num, income_page=income_pagination.page, invoice_page=invoice_pagination.page, _anchor='expenses') }}"
+            class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">Siguiente</a>
+          {% else %}
+          <button class="px-3 py-1.5 text-sm text-slate-500 rounded opacity-50" disabled>Siguiente</button>
+          {% endif %}
         </div>
-        {% else %}
-        <div class="py-8 text-center text-slate-400 text-sm">No hay facturas asociadas a este proyecto.</div>
-        {% endif %}
       </div>
-    </div>
-  </div>
+      {% endif %}
+    </section>
+
+    <section id="income" class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+      <div class="px-4 md:px-5 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+        <div>
+          <h2 class="font-semibold text-slate-900 text-sm">Ingresos del Proyecto</h2>
+          <p class="text-xs text-slate-500 mt-0.5">{{ income_pagination.total }} registro{{ 's' if income_pagination.total != 1 else '' }}</p>
+        </div>
+        <button data-action="open-drawer" data-url="{{ url_for('accounting.create_income', company_id=company.id) }}" data-title="Registrar Ingreso"
+          class="px-3 py-1.5 bg-white border border-slate-200 rounded-md text-xs font-medium text-emerald-600 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">+ Nuevo Ingreso</button>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead>
+            <tr class="border-b border-slate-100 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              <th class="px-4 md:px-5 py-3">Fecha</th>
+              <th class="px-4 md:px-5 py-3">Descripción</th>
+              <th class="px-4 md:px-5 py-3">Cuenta</th>
+              <th class="px-4 md:px-5 py-3 text-right">Monto</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-50">
+            {% for e in income_entries %}
+            {% set income_amount = (e.credit|float) - (e.debit|float) %}
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="px-4 md:px-5 py-3 text-slate-500 whitespace-nowrap">{{ e.date.strftime('%d/%m/%Y') if e.date else '—' }}</td>
+              <td class="px-4 md:px-5 py-3 font-medium text-slate-800">{{ e.description or 'Sin descripción' }}</td>
+              <td class="px-4 md:px-5 py-3 text-slate-500">{{ e.account.name if e.account else '—' }}</td>
+              <td class="px-4 md:px-5 py-3 text-right font-mono font-bold text-emerald-600">+{{ company.currency }}{{ "{:,.2f}".format(income_amount) }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="4" class="px-5 py-10 text-center text-sm text-slate-400">No hay ingresos asociados.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% if income_pagination.pages > 1 %}
+      {% set first_item = ((income_pagination.page - 1) * income_pagination.per_page) + 1 if income_pagination.total else 0 %}
+      {% set last_item = first_item + income_pagination.items|length - 1 if income_pagination.total else 0 %}
+      <div class="px-4 md:px-5 py-3 border-t border-slate-100 flex items-center justify-between">
+        <p class="text-sm text-slate-500">Mostrando {{ first_item }} a {{ last_item }} de {{ income_pagination.total }} resultados</p>
+        <div class="flex items-center gap-1">
+          {% if income_pagination.has_prev %}
+          <a href="{{ url_for('accounting.project_detail', company_id=company.id, project_id=project.id, expense_page=expense_pagination.page, income_page=income_pagination.prev_num, invoice_page=invoice_pagination.page, _anchor='income') }}"
+            class="px-3 py-1.5 text-sm text-slate-500 hover:bg-slate-100 rounded transition-colors">Anterior</a>
+          {% else %}
+          <button class="px-3 py-1.5 text-sm text-slate-500 rounded opacity-50" disabled>Anterior</button>
+          {% endif %}
+          {% for page_num in income_pagination.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+            {% if page_num %}
+              {% if page_num == income_pagination.page %}
+              <span class="px-3 py-1.5 text-sm font-medium text-white bg-emerald-600 rounded">{{ page_num }}</span>
+              {% else %}
+              <a href="{{ url_for('accounting.project_detail', company_id=company.id, project_id=project.id, expense_page=expense_pagination.page, income_page=page_num, invoice_page=invoice_pagination.page, _anchor='income') }}"
+                class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">{{ page_num }}</a>
+              {% endif %}
+            {% else %}
+            <span class="px-2 text-slate-400">...</span>
+            {% endif %}
+          {% endfor %}
+          {% if income_pagination.has_next %}
+          <a href="{{ url_for('accounting.project_detail', company_id=company.id, project_id=project.id, expense_page=expense_pagination.page, income_page=income_pagination.next_num, invoice_page=invoice_pagination.page, _anchor='income') }}"
+            class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">Siguiente</a>
+          {% else %}
+          <button class="px-3 py-1.5 text-sm text-slate-500 rounded opacity-50" disabled>Siguiente</button>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+    </section>
+
+    <section id="invoices" class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
+      <div class="px-4 md:px-5 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
+        <div>
+          <h2 class="font-semibold text-slate-900 text-sm">Facturas Asociadas</h2>
+          <p class="text-xs text-slate-500 mt-0.5">{{ invoice_pagination.total }} factura{{ 's' if invoice_pagination.total != 1 else '' }}</p>
+        </div>
+        <a href="{{ url_for('invoices.create', company_id=company.id, project_id=project.id) }}"
+          class="px-3 py-1.5 bg-white border border-slate-200 rounded-md text-xs font-medium text-emerald-600 hover:bg-emerald-50 hover:border-emerald-200 transition-colors">+ Nueva Factura</a>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-sm">
+          <thead>
+            <tr class="border-b border-slate-100 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              <th class="px-4 md:px-5 py-3">Número</th>
+              <th class="px-4 md:px-5 py-3">Cliente</th>
+              <th class="px-4 md:px-5 py-3">Fecha</th>
+              <th class="px-4 md:px-5 py-3">Estado</th>
+              <th class="px-4 md:px-5 py-3 text-right">Monto</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-50">
+            {% for inv in invoices %}
+            {% set inv_status = inv.status.value if inv.status and inv.status.value is defined else inv.status %}
+            {% set status_colors = {
+              'draft': 'bg-slate-100 text-slate-600',
+              'pending': 'bg-amber-50 text-amber-600',
+              'issued': 'bg-blue-50 text-blue-600',
+              'sent': 'bg-sky-50 text-sky-600',
+              'partial': 'bg-purple-50 text-purple-600',
+              'paid': 'bg-emerald-50 text-emerald-600',
+              'overdue': 'bg-rose-50 text-rose-600',
+              'cancelled': 'bg-slate-50 text-slate-500',
+              'credit_note': 'bg-slate-50 text-slate-500'
+            } %}
+            {% set status_labels = {
+              'draft': 'Borrador',
+              'pending': 'Pendiente',
+              'issued': 'Emitida',
+              'sent': 'Enviada',
+              'partial': 'Pago Parcial',
+              'paid': 'Pagada',
+              'overdue': 'Vencida',
+              'cancelled': 'Cancelada',
+              'credit_note': 'Nota Crédito'
+            } %}
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="px-4 md:px-5 py-3">
+                <a href="{{ url_for('invoices.edit', company_id=company.id, id=inv.id) }}" class="text-emerald-600 hover:text-emerald-700 font-medium">{{ inv.document_number }}</a>
+              </td>
+              <td class="px-4 md:px-5 py-3 text-slate-700">{{ inv.client.name if inv.client else '—' }}</td>
+              <td class="px-4 md:px-5 py-3 text-slate-500 whitespace-nowrap">{{ inv.issued_date.strftime('%d/%m/%Y') if inv.issued_date else '—' }}</td>
+              <td class="px-4 md:px-5 py-3">
+                <span class="inline-flex text-[10px] font-semibold px-2 py-1 rounded {{ status_colors.get(inv_status, 'bg-slate-100 text-slate-600') }}">
+                  {{ status_labels.get(inv_status, inv_status) }}
+                </span>
+              </td>
+              <td class="px-4 md:px-5 py-3 text-right font-mono font-bold text-slate-800">{{ company.currency }}{{ "{:,.2f}".format(inv.total_amount) }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="5" class="px-5 py-10 text-center text-sm text-slate-400">No hay facturas asociadas a este proyecto.</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% if invoice_pagination.pages > 1 %}
+      {% set first_item = ((invoice_pagination.page - 1) * invoice_pagination.per_page) + 1 if invoice_pagination.total else 0 %}
+      {% set last_item = first_item + invoice_pagination.items|length - 1 if invoice_pagination.total else 0 %}
+      <div class="px-4 md:px-5 py-3 border-t border-slate-100 flex items-center justify-between">
+        <p class="text-sm text-slate-500">Mostrando {{ first_item }} a {{ last_item }} de {{ invoice_pagination.total }} resultados</p>
+        <div class="flex items-center gap-1">
+          {% if invoice_pagination.has_prev %}
+          <a href="{{ url_for('accounting.project_detail', company_id=company.id, project_id=project.id, expense_page=expense_pagination.page, income_page=income_pagination.page, invoice_page=invoice_pagination.prev_num, _anchor='invoices') }}"
+            class="px-3 py-1.5 text-sm text-slate-500 hover:bg-slate-100 rounded transition-colors">Anterior</a>
+          {% else %}
+          <button class="px-3 py-1.5 text-sm text-slate-500 rounded opacity-50" disabled>Anterior</button>
+          {% endif %}
+          {% for page_num in invoice_pagination.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+            {% if page_num %}
+              {% if page_num == invoice_pagination.page %}
+              <span class="px-3 py-1.5 text-sm font-medium text-white bg-emerald-600 rounded">{{ page_num }}</span>
+              {% else %}
+              <a href="{{ url_for('accounting.project_detail', company_id=company.id, project_id=project.id, expense_page=expense_pagination.page, income_page=income_pagination.page, invoice_page=page_num, _anchor='invoices') }}"
+                class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">{{ page_num }}</a>
+              {% endif %}
+            {% else %}
+            <span class="px-2 text-slate-400">...</span>
+            {% endif %}
+          {% endfor %}
+          {% if invoice_pagination.has_next %}
+          <a href="{{ url_for('accounting.project_detail', company_id=company.id, project_id=project.id, expense_page=expense_pagination.page, income_page=income_pagination.page, invoice_page=invoice_pagination.next_num, _anchor='invoices') }}"
+            class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">Siguiente</a>
+          {% else %}
+          <button class="px-3 py-1.5 text-sm text-slate-500 rounded opacity-50" disabled>Siguiente</button>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+    </section>
+  </main>
 </div>
 {% endblock %}

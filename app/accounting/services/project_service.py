@@ -105,28 +105,44 @@ class ProjectService:
         return result
 
     @staticmethod
-    def get_project_detail(company_id: int, project_id: int) -> dict:
+    def get_project_detail(
+        company_id: int,
+        project_id: int,
+        expense_page: int = 1,
+        income_page: int = 1,
+        invoice_page: int = 1,
+        per_page: int = 8,
+    ) -> dict:
         """Return full P&L breakdown for a project."""
         project = Project.query.filter_by(id=project_id, company_id=company_id).first_or_404()
 
+        expense_stmt = (
+            select(Expense)
+            .options(joinedload(Expense.account))
+            .outerjoin(Transaction, Expense.transaction_id == Transaction.id)
+            .where(
+                Expense.company_id == company_id,
+                Expense.project_id == project_id,
+                _active_expense_conditions(),
+            )
+            .order_by(Expense.date.desc())
+        )
+        expense_pagination = db.paginate(
+            expense_stmt,
+            page=max(expense_page, 1),
+            per_page=per_page,
+            error_out=False,
+        )
         expenses = (
             db.session.execute(
-                select(Expense)
-                .options(joinedload(Expense.account))
-                .outerjoin(Transaction, Expense.transaction_id == Transaction.id)
-                .where(
-                    Expense.company_id == company_id,
-                    Expense.project_id == project_id,
-                    _active_expense_conditions(),
-                )
-                .order_by(Expense.date.desc())
+                expense_stmt
             )
             .unique()
             .scalars()
             .all()
         )
 
-        income_entries = (
+        income_query = (
             LedgerEntry.query
             .join(Account, LedgerEntry.account_id == Account.id)
             .outerjoin(Transaction, LedgerEntry.transaction_id == Transaction.id)
@@ -137,8 +153,13 @@ class ProjectService:
                 _active_ledger_conditions(),
             )
             .order_by(LedgerEntry.date.desc())
-            .all()
         )
+        income_pagination = income_query.paginate(
+            page=max(income_page, 1),
+            per_page=per_page,
+            error_out=False,
+        )
+        income_entries = income_query.all()
 
         total_expenses = round(sum(float(e.amount) for e in expenses), 2)
         total_income = round(
@@ -174,12 +195,17 @@ class ProjectService:
             .all()
         )
 
-        invoices = (
+        invoice_query = (
             Document.query
             .filter_by(project_id=project_id, company_id=company_id, type=DocumentType.invoice)
             .order_by(Document.issued_date.desc())
-            .all()
         )
+        invoice_pagination = invoice_query.paginate(
+            page=max(invoice_page, 1),
+            per_page=per_page,
+            error_out=False,
+        )
+        invoices = invoice_query.all()
 
         invoice_counts = db.session.query(
             Document.status,
@@ -195,10 +221,13 @@ class ProjectService:
 
         return {
             'project': project,
-            'expenses': expenses,
-            'income_entries': income_entries,
+            'expenses': expense_pagination.items,
+            'income_entries': income_pagination.items,
             'all_ledger': all_ledger,
-            'invoices': invoices,
+            'invoices': invoice_pagination.items,
+            'expense_pagination': expense_pagination,
+            'income_pagination': income_pagination,
+            'invoice_pagination': invoice_pagination,
             'invoices_by_status': invoices_by_status,
             'total_invoices': total_invoices,
             'total_expenses': total_expenses,

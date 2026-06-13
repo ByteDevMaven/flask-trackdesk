@@ -941,7 +941,16 @@ def project_detail(company_id, project_id):
     company_id = company.id
     from app.models import Company
     company = Company.query.get_or_404(company_id)
-    data = AccountingService.get_project_detail(company_id, project_id)
+    expense_page = request.args.get('expense_page', 1, type=int)
+    income_page = request.args.get('income_page', 1, type=int)
+    invoice_page = request.args.get('invoice_page', 1, type=int)
+    data = AccountingService.get_project_detail(
+        company_id,
+        project_id,
+        expense_page=expense_page,
+        income_page=income_page,
+        invoice_page=invoice_page,
+    )
     return render_template(
         'accounting/project_detail.html',
         company=company,

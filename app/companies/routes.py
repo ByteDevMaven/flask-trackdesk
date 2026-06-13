@@ -24,20 +24,20 @@ def index():
 @login_required
 def create():
     users = User.query.all()
-    return render_template('companies/form.html', comp=None, users=users)
+    return render_template('companies/form.html', comp=None, users=users, timezones=CompanyService.TIMEZONE_CHOICES)
 
 @companies.route('/companies/store', methods=['POST'])
 @login_required
 def store():
     try:
-        company = CompanyService.create_company(request.form, current_user)
-        flash('Company created successfully!', 'success')
+        company = CompanyService.create_company(request.form, current_user, request.files)
+        flash('Empresa creada exitosamente.', 'success')
         return redirect(url_for('companies.view', id=company.id))
     except ValueError as e:
         flash(str(e), 'error')
         return redirect(url_for('companies.create'))
     except Exception as e:
-        flash(f'Error creating company: {str(e)}', 'error')
+        flash(f'Error al crear la empresa: {str(e)}', 'error')
         return redirect(url_for('companies.create'))
 
 @companies.route('/companies/<int:id>')
@@ -56,20 +56,20 @@ def view(id):
 def edit(id):
     company = CompanyService.get_company_for_user(id, current_user)
     users = User.query.all()
-    return render_template('companies/form.html', comp=company, users=users)
+    return render_template('companies/form.html', comp=company, users=users, timezones=CompanyService.TIMEZONE_CHOICES)
 
 @companies.route('/companies/<int:id>/update', methods=['POST'])
 @login_required
 def update(id):
     try:
-        company = CompanyService.update_company(id, request.form, current_user)
-        flash('Company updated successfully!', 'success')
+        company = CompanyService.update_company(id, request.form, current_user, request.files)
+        flash('Empresa actualizada exitosamente.', 'success')
         return redirect(url_for('companies.view', id=company.id))
     except ValueError as e:
         flash(str(e), 'error')
         return redirect(url_for('companies.edit', id=id))
     except Exception as e:
-        flash(f'Error updating company: {str(e)}', 'error')
+        flash(f'Error al actualizar la empresa: {str(e)}', 'error')
         return redirect(url_for('companies.edit', id=id))
 
 @companies.route('/companies/<int:id>/delete', methods=['POST'])
@@ -77,13 +77,13 @@ def update(id):
 def delete(id):
     try:
         CompanyService.delete_company(id, current_user)
-        flash('Company deleted successfully!', 'success')
+        flash('Empresa eliminada exitosamente.', 'success')
         return redirect(url_for('companies.index'))
     except ValueError as e:
         flash(str(e), 'error')
         return redirect(url_for('companies.view', id=id))
     except Exception as e:
-        flash(f'Error deleting company: {str(e)}', 'error')
+        flash(f'Error al eliminar la empresa: {str(e)}', 'error')
         return redirect(url_for('companies.view', id=id))
 
 @companies.route('/companies/search')

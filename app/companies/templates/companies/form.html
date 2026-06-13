@@ -45,6 +45,7 @@
   <div class="p-4 md:p-6">
     <form method="POST"
           action="{{ url_for('companies.update', id=comp.id) if comp else url_for('companies.store') }}"
+          enctype="multipart/form-data"
           data-drawer-form
           data-success-message="{{ 'Empresa creada exitosamente' if not comp else 'Empresa actualizada exitosamente' }}"
           class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden max-w-3xl">
@@ -85,6 +86,39 @@
                    placeholder="Ej. 0801-1990-123456"
                    class="w-full px-3.5 py-2.5 border border-slate-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-slate-800 placeholder-slate-400 font-medium transition-all shadow-inner">
           </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Zona Horaria</label>
+              <select name="timezone"
+                      class="w-full px-3.5 py-2.5 border border-slate-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-slate-850 font-semibold transition-all">
+                {% set selected_timezone = comp.timezone if comp and comp.timezone else 'UTC' %}
+                {% for timezone in timezones %}
+                <option value="{{ timezone }}" {{ 'selected' if selected_timezone == timezone else '' }}>{{ timezone }}</option>
+                {% endfor %}
+              </select>
+              <p class="text-xs text-slate-400 mt-1">Se usará para reportes, fechas y documentos de la empresa.</p>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2">Logo WebP</label>
+              <input type="file" name="logo" accept="image/webp,.webp"
+                     class="block w-full text-sm text-slate-600 file:mr-3 file:rounded-lg file:border-0 file:bg-emerald-50 file:px-3.5 file:py-2.5 file:text-sm file:font-semibold file:text-emerald-700 hover:file:bg-emerald-100">
+              <p class="text-xs text-slate-400 mt-1">Sube una imagen cuadrada en formato .webp. Tamaño recomendado: 500 x 500 px.</p>
+            </div>
+          </div>
+
+          {% if comp and comp.logo_url %}
+          <div class="flex items-center gap-4 rounded-lg border border-slate-200 bg-slate-50 p-3">
+            <div class="flex h-16 w-16 items-center justify-center rounded-lg border border-slate-200 bg-white p-2">
+              <img src="{{ url_for('static', filename=comp.logo_url) }}" alt="Logo de {{ comp.name }}"
+                   width="500" height="500" class="h-full w-full object-contain">
+            </div>
+            <div>
+              <p class="text-sm font-semibold text-slate-800">Logo actual</p>
+              <p class="text-xs text-slate-500">Al subir otro archivo WebP, este logo será reemplazado.</p>
+            </div>
+          </div>
+          {% endif %}
 
           <!-- Currency & Tax rate in 2 columns -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">

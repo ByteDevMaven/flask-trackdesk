@@ -1,10 +1,61 @@
+import os
+import uuid
 from datetime import datetime, UTC
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError, available_timezones
+
 from flask import abort
+from flask import current_app
 
 from app.models import db, Company, User, Contact, InventoryItem, Document, Payment, Report, DocumentSequence, Account
 from app.models.enums import ContactType, AccountType
 
+
+COMMON_TIMEZONES = [
+    'America/Tegucigalpa',
+    'America/Guatemala',
+    'America/El_Salvador',
+    'America/Managua',
+    'America/Costa_Rica',
+    'America/Panama',
+    'America/Mexico_City',
+    'America/Bogota',
+    'America/New_York',
+    'UTC',
+]
+
+
 class CompanyService:
+    TIMEZONE_CHOICES = COMMON_TIMEZONES + [
+        timezone_name
+        for timezone_name in sorted(available_timezones())
+        if timezone_name not in COMMON_TIMEZONES
+    ]
+
+    @staticmethod
+    def _normalize_timezone(timezone_name):
+        timezone_name = (timezone_name or 'UTC').strip()
+        try:
+            ZoneInfo(timezone_name)
+        except ZoneInfoNotFoundError as exc:
+            raise ValueError("Zona horaria inválida.") from exc
+        return timezone_name
+
+    @staticmethod
+    def _save_logo(file):
+        if not file or not file.filename:
+            return None
+
+        ext = file.filename.rsplit('.', 1)[-1].lower() if '.' in file.filename else ''
+        if ext != 'webp':
+            raise ValueError("El logo debe ser una imagen en formato WebP.")
+
+        upload_dir = os.path.join(current_app.config.get('UPLOAD_FOLDER', ''), 'company_logos')
+        os.makedirs(upload_dir, exist_ok=True)
+
+        filename = f"{uuid.uuid4().hex}.webp"
+        file.save(os.path.join(upload_dir, filename))
+        return f"uploads/company_logos/{filename}"
+
     @staticmethod
     def get_company_for_user(company_id, current_user):
         company = Company.query.get_or_404(company_id)
@@ -34,14 +85,14 @@ class CompanyService:
         )
 
     @staticmethod
-    def create_company(data, current_user):
+    def create_company(data, current_user, files=None):
         name = data.get('name', '').strip()
         if not name:
-            raise ValueError("Company name is required.")
+            raise ValueError("El nombre de la empresa es obligatorio.")
             
         existing_company = Company.query.filter_by(name=name).first()
         if existing_company:
-            raise ValueError("A company with this name already exists.")
+            raise ValueError("Ya existe una empresa con este nombre.")
 
         company = Company(
             name=name,
@@ -51,6 +102,8 @@ class CompanyService:
             phone=data.get('phone', '').strip(),
             email=data.get('email', '').strip(),
             identifier=data.get('identifier', '').strip(),
+            timezone=CompanyService._normalize_timezone(data.get('timezone')),
+            logo_url=CompanyService._save_logo(files.get('logo')) if files else None,
             created_at=datetime.now(UTC)
         )
         
@@ -115,16 +168,16 @@ class CompanyService:
         return company, stats, recent_documents, recent_payments
 
     @staticmethod
-    def update_company(company_id, data, current_user):
+    def update_company(company_id, data, current_user, files=None):
         company = CompanyService.get_company_for_user(company_id, current_user)
         
         name = data.get('name', '').strip()
         if not name:
-            raise ValueError("Company name is required.")
+            raise ValueError("El nombre de la empresa es obligatorio.")
             
         existing_company = Company.query.filter(Company.name == name, Company.id != company_id).first()
         if existing_company:
-            raise ValueError("A company with this name already exists.")
+            raise ValueError("Ya existe una empresa con este nombre.")
 
         company.name = name
         company.currency = data.get('currency', 'USD')
@@ -133,7 +186,12 @@ class CompanyService:
         company.phone = data.get('phone', '').strip()
         company.email = data.get('email', '').strip()
         company.identifier = data.get('identifier', '').strip()
+        company.timezone = CompanyService._normalize_timezone(data.get('timezone'))
         company.updated_at = datetime.now(UTC)
+
+        uploaded_logo = CompanyService._save_logo(files.get('logo')) if files else None
+        if uploaded_logo:
+            company.logo_url = uploaded_logo
         
         # Handle slug update
         input_slug = data.get('slug', '').strip()

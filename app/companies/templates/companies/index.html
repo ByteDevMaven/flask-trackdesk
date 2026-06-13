@@ -114,8 +114,13 @@
         <div>
           <!-- Company Info Header -->
           <div class="flex items-start gap-4 mb-5">
-            <div class="w-12 h-12 rounded-xl bg-gradient-to-br {{ 'from-emerald-500 to-teal-600 text-white' if is_active else 'from-slate-100 to-slate-200 text-slate-700' }} flex items-center justify-center font-bold text-lg flex-shrink-0 shadow-inner">
+            <div class="w-12 h-12 rounded-xl {{ 'border border-emerald-200 bg-white' if company.logo_url else 'bg-gradient-to-br ' ~ ('from-emerald-500 to-teal-600 text-white' if is_active else 'from-slate-100 to-slate-200 text-slate-700') }} flex items-center justify-center font-bold text-lg flex-shrink-0 shadow-inner overflow-hidden">
+              {% if company.logo_url %}
+              <img src="{{ url_for('static', filename=company.logo_url) }}" alt="Logo de {{ company.name }}"
+                   width="500" height="500" class="h-full w-full object-contain p-1">
+              {% else %}
               {{ company.name[:2]|upper }}
+              {% endif %}
             </div>
             <div class="min-w-0 pr-12">
               <a href="{{ url_for('companies.view', id=company.id) }}" class="text-base font-bold text-slate-900 hover:text-emerald-600 transition-colors truncate block" title="{{ company.name }}">
@@ -138,6 +143,10 @@
             <div class="flex justify-between items-center text-slate-600">
               <span class="text-xs text-slate-400 font-medium">Tasa ISV:</span>
               <span class="font-semibold text-slate-800">{{ company.tax_rate }}%</span>
+            </div>
+            <div class="flex justify-between items-center text-slate-600">
+              <span class="text-xs text-slate-400 font-medium">Zona horaria:</span>
+              <span class="font-semibold text-slate-800 truncate max-w-[180px]" title="{{ company.timezone or 'UTC' }}">{{ company.timezone or 'UTC' }}</span>
             </div>
             {% if company.email %}
             <div class="flex justify-between items-center text-slate-600">
