@@ -26,6 +26,7 @@ from ._balance import (
     _ledger_revenue_by_account,
     _period_expense_total,
     _period_revenue_total,
+    _replace_receivable_asset_balance,
 )
 
 
@@ -349,6 +350,12 @@ class ProjectService:
                 else:
                     net = float(entry.credit) - float(entry.debit)
                 report_data[acc_type][acc_name] = report_data[acc_type].get(acc_name, 0.0) + net
+
+            report_data['asset'] = _replace_receivable_asset_balance(
+                company_id,
+                report_data['asset'],
+                as_of=end_dt,
+            )
 
             net_income = round(
                 _period_revenue_total(company_id, end_dt=end_dt)
