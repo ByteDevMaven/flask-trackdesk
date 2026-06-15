@@ -1085,9 +1085,9 @@
     "semantic_hash": "9292f2a033a717d20f76d7ad34d585b1"
   },
   "app/accounting/services/_balance.py": {
-    "mtime": 1781494341.9393077,
-    "ast_hash": "d5c19d482509bee2acb94e6392678482",
-    "semantic_hash": ""
+    "mtime": 1781148250.4653869,
+    "ast_hash": "9836d999a60d1acd1695e76ec0d6b52b",
+    "semantic_hash": "9836d999a60d1acd1695e76ec0d6b52b"
   },
   "app/accounting/services/_helpers.py": {
     "mtime": 1781148206.8808446,
@@ -1120,8 +1120,8 @@
     "semantic_hash": "d14f21dceb5654dba4e9a52464cd5fc2"
   },
   "app/accounting/services/project_service.py": {
-    "mtime": 1781494351.7227635,
-    "ast_hash": "3eff98f328136dd78fee373395d73e5c",
+    "mtime": 1781324331.5289242,
+    "ast_hash": "8ed4a1cb00b3e091c35ab03c70cecf90",
     "semantic_hash": ""
   },
   "app/invoices/services/accounting_integration.py": {
