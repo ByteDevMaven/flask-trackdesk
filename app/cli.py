@@ -148,8 +148,8 @@ def register_cli(app: Flask):
         
         Run with: flask update-expired-documents
         """
-        from app.models import Document
-        from app.models.enums import DocumentStatus
+        from app.models import Document, Notification
+        from app.models.enums import DocumentStatus, DocumentType
         from datetime import datetime, UTC
         
         with app.app_context():
@@ -169,11 +169,57 @@ def register_cli(app: Flask):
                 Document.due_date < now,
                 Document.status.in_(eligible_statuses)
             ).all()
+
+            def invoice_link(document):
+                return f'/{document.company_id}/invoices/{document.id}'
+
+            def notification_exists(document, link_url):
+                return Notification.query.filter(
+                    Notification.user_id == document.user_id,
+                    Notification.company_id == document.company_id,
+                    Notification.type == 'warning',
+                    Notification.link_url == link_url,
+                ).first() is not None
+
+            def create_expired_invoice_notification(document):
+                if document.type != DocumentType.invoice or not document.user_id:
+                    return False
+
+                link_url = invoice_link(document)
+                if notification_exists(document, link_url):
+                    return False
+
+                invoice_number = document.document_number or f'#{document.id}'
+                due_date = document.due_date.strftime('%d/%m/%Y') if document.due_date else 'sin fecha'
+                balance_due = document.calculate_balance_due()
+                body = (
+                    f'La factura {invoice_number} vencio el {due_date}. '
+                    f'Saldo pendiente: {balance_due:,.2f}.'
+                )
+
+                db.session.add(Notification(
+                    user_id=document.user_id,
+                    company_id=document.company_id,
+                    type='warning',
+                    title=f'Factura vencida {invoice_number}',
+                    message=body,
+                    body=body,
+                    link_url=link_url,
+                    priority='high',
+                    channel='in_app',
+                    status='unread',
+                    is_popup=True,
+                    sent_at=now,
+                ))
+                return True
             
             count = 0
+            notification_count = 0
             for doc in expired_docs:
+                notification_count += 1 if create_expired_invoice_notification(doc) else 0
                 doc.status = DocumentStatus.overdue
                 count += 1
                 
             db.session.commit()
             print(f'[OK] Updated {count} expired document(s) to overdue status.')
+            print(f'[OK] Created {notification_count} expired invoice notification(s).')
