@@ -55,9 +55,9 @@
     "semantic_hash": "b251690634d3cd5256532f679f5e6ec9"
   },
   "app/cli.py": {
-    "mtime": 1780882826.499958,
-    "ast_hash": "9c9e610ade12a59ce138edea27833ac5",
-    "semantic_hash": "9c9e610ade12a59ce138edea27833ac5"
+    "mtime": 1781588248.188771,
+    "ast_hash": "891345b7a58d85290a93861b463cee81",
+    "semantic_hash": ""
   },
   "app/companies/__init__.py": {
     "mtime": 1779222751.156821,
@@ -515,9 +515,9 @@
     "semantic_hash": "8b883617176000258d58d1d07ec04a20"
   },
   "expire_documents.py": {
-    "mtime": 1780296882.7082705,
-    "ast_hash": "25f5db397b82e2da2165cbdf4b0c10f3",
-    "semantic_hash": "25f5db397b82e2da2165cbdf4b0c10f3"
+    "mtime": 1781588208.8167114,
+    "ast_hash": "3d65ed6930904a03aa035f5c1e4912ca",
+    "semantic_hash": ""
   },
   "migrations/env.py": {
     "mtime": 1779222751.29383,

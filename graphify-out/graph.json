@@ -97,436 +97,508 @@
   },
   "nodes": [
     {
+      "label": "cli.py",
+      "file_type": "code",
+      "source_file": "app/cli.py",
+      "source_location": "L1",
+      "id": "app_cli",
+      "community": 42,
+      "norm_label": "cli.py"
+    },
+    {
+      "label": "register_cli()",
+      "file_type": "code",
+      "source_file": "app/cli.py",
+      "source_location": "L5",
+      "id": "app_cli_register_cli",
+      "community": 42,
+      "norm_label": "register_cli()"
+    },
+    {
+      "label": "Flask",
+      "file_type": "code",
+      "source_file": "app/cli.py",
+      "source_location": "L5",
+      "id": "flask",
+      "community": 42,
+      "norm_label": "flask"
+    },
+    {
+      "label": "expire_documents.py",
+      "file_type": "code",
+      "source_file": "expire_documents.py",
+      "source_location": "L1",
+      "id": "expire_documents",
+      "community": 60,
+      "norm_label": "expire_documents.py"
+    },
+    {
+      "label": "_invoice_link()",
+      "file_type": "code",
+      "source_file": "expire_documents.py",
+      "source_location": "L18",
+      "id": "expire_documents_invoice_link",
+      "community": 60,
+      "norm_label": "_invoice_link()"
+    },
+    {
+      "label": "_notification_exists()",
+      "file_type": "code",
+      "source_file": "expire_documents.py",
+      "source_location": "L22",
+      "id": "expire_documents_notification_exists",
+      "community": 60,
+      "norm_label": "_notification_exists()"
+    },
+    {
+      "label": "_create_expired_invoice_notification()",
+      "file_type": "code",
+      "source_file": "expire_documents.py",
+      "source_location": "L31",
+      "id": "expire_documents_create_expired_invoice_notification",
+      "community": 60,
+      "norm_label": "_create_expired_invoice_notification()"
+    },
+    {
+      "label": "run_task()",
+      "file_type": "code",
+      "source_file": "expire_documents.py",
+      "source_location": "L65",
+      "id": "expire_documents_run_task",
+      "community": 60,
+      "norm_label": "run_task()"
+    },
+    {
       "label": "blueprints.py",
       "file_type": "code",
       "source_file": "app/blueprints.py",
       "source_location": "L1",
-      "id": "app_blueprints",
       "community": 103,
-      "norm_label": "blueprints.py"
+      "norm_label": "blueprints.py",
+      "id": "app_blueprints"
     },
     {
       "label": "register_blueprints()",
       "file_type": "code",
       "source_file": "app/blueprints.py",
       "source_location": "L17",
-      "id": "app_blueprints_register_blueprints",
       "community": 103,
-      "norm_label": "register_blueprints()"
+      "norm_label": "register_blueprints()",
+      "id": "app_blueprints_register_blueprints"
     },
     {
       "label": "Flask",
       "file_type": "code",
       "source_file": "app/blueprints.py",
       "source_location": "L17",
-      "id": "app_blueprints_py_flask",
       "community": 103,
-      "norm_label": "flask"
+      "norm_label": "flask",
+      "id": "app_blueprints_py_flask"
     },
     {
       "label": "rbac.py",
       "file_type": "code",
       "source_file": "app/middleware/rbac.py",
       "source_location": "L1",
-      "id": "middleware_rbac",
       "community": 97,
-      "norm_label": "rbac.py"
+      "norm_label": "rbac.py",
+      "id": "middleware_rbac"
     },
     {
       "label": "init_rbac()",
       "file_type": "code",
       "source_file": "app/middleware/rbac.py",
       "source_location": "L221",
-      "id": "middleware_rbac_init_rbac",
       "community": 97,
-      "norm_label": "init_rbac()"
+      "norm_label": "init_rbac()",
+      "id": "middleware_rbac_init_rbac"
     },
     {
       "label": "Flask",
       "file_type": "code",
       "source_file": "app/middleware/rbac.py",
       "source_location": "L221",
-      "id": "app_middleware_rbac_py_flask",
       "community": 97,
-      "norm_label": "flask"
+      "norm_label": "flask",
+      "id": "app_middleware_rbac_py_flask"
     },
     {
       "label": "seed_default_roles_and_permissions()",
       "file_type": "code",
       "source_file": "app/middleware/rbac.py",
       "source_location": "L257",
-      "id": "middleware_rbac_seed_default_roles_and_permissions",
       "community": 97,
-      "norm_label": "seed_default_roles_and_permissions()"
+      "norm_label": "seed_default_roles_and_permissions()",
+      "id": "middleware_rbac_seed_default_roles_and_permissions"
     },
     {
       "label": "RBAC Middleware =============== Plugged into the app via ``init_rbac(app)`` in `",
       "file_type": "rationale",
       "source_file": "app/middleware/rbac.py",
       "source_location": "L1",
-      "id": "middleware_rbac_rationale_1",
       "community": 97,
-      "norm_label": "rbac middleware =============== plugged into the app via ``init_rbac(app)`` in `"
+      "norm_label": "rbac middleware =============== plugged into the app via ``init_rbac(app)`` in `",
+      "id": "middleware_rbac_rationale_1"
     },
     {
       "label": "Register the RBAC ``before_request`` hook on *app*.",
       "file_type": "rationale",
       "source_file": "app/middleware/rbac.py",
       "source_location": "L222",
-      "id": "middleware_rbac_rationale_222",
       "community": 97,
-      "norm_label": "register the rbac ``before_request`` hook on *app*."
+      "norm_label": "register the rbac ``before_request`` hook on *app*.",
+      "id": "middleware_rbac_rationale_222"
     },
     {
       "label": "Seed the database with default roles and their permissions.      Roles     -----",
       "file_type": "rationale",
       "source_file": "app/middleware/rbac.py",
       "source_location": "L258",
-      "id": "middleware_rbac_rationale_258",
       "community": 97,
-      "norm_label": "seed the database with default roles and their permissions.      roles     -----"
+      "norm_label": "seed the database with default roles and their permissions.      roles     -----",
+      "id": "middleware_rbac_rationale_258"
     },
     {
       "label": "notification.py",
       "file_type": "code",
       "source_file": "app/models/notification.py",
       "source_location": "L1",
-      "id": "models_notification",
       "community": 9,
-      "norm_label": "notification.py"
+      "norm_label": "notification.py",
+      "id": "models_notification"
     },
     {
       "label": "Notification",
       "file_type": "code",
       "source_file": "app/models/notification.py",
       "source_location": "L5",
-      "id": "models_notification_notification",
       "community": 9,
-      "norm_label": "notification"
+      "norm_label": "notification",
+      "id": "models_notification_notification"
     },
     {
       "label": "BaseModel",
       "file_type": "code",
       "source_file": "",
       "source_location": "",
-      "id": "basemodel",
-      "community": 44,
-      "norm_label": "basemodel"
+      "community": 54,
+      "norm_label": "basemodel",
+      "id": "basemodel"
     },
     {
       "label": ".display_body()",
       "file_type": "code",
       "source_file": "app/models/notification.py",
       "source_location": "L30",
-      "id": "models_notification_notification_display_body",
       "community": 9,
-      "norm_label": ".display_body()"
+      "norm_label": ".display_body()",
+      "id": "models_notification_notification_display_body"
     },
     {
       "label": ".is_unread()",
       "file_type": "code",
       "source_file": "app/models/notification.py",
       "source_location": "L34",
-      "id": "models_notification_notification_is_unread",
       "community": 9,
-      "norm_label": ".is_unread()"
+      "norm_label": ".is_unread()",
+      "id": "models_notification_notification_is_unread"
     },
     {
       "label": ".__repr__()",
       "file_type": "code",
       "source_file": "app/models/notification.py",
       "source_location": "L37",
-      "id": "models_notification_notification_repr",
       "community": 9,
-      "norm_label": ".__repr__()"
+      "norm_label": ".__repr__()",
+      "id": "models_notification_notification_repr"
     },
     {
       "label": "str",
       "file_type": "code",
       "source_file": "app/models/notification.py",
       "source_location": "L37",
-      "id": "str",
-      "community": 50,
-      "norm_label": "str"
+      "community": 22,
+      "norm_label": "str",
+      "id": "str"
     },
     {
       "label": "__init__.py",
       "file_type": "code",
       "source_file": "app/notifications/__init__.py",
       "source_location": "L1",
-      "id": "notifications_init",
       "community": 9,
-      "norm_label": "__init__.py"
+      "norm_label": "__init__.py",
+      "id": "notifications_init"
     },
     {
       "label": "routes.py",
       "file_type": "code",
       "source_file": "app/notifications/routes.py",
       "source_location": "L1",
-      "id": "notifications_routes",
       "community": 9,
-      "norm_label": "routes.py"
+      "norm_label": "routes.py",
+      "id": "notifications_routes"
     },
     {
       "label": "_can_send_notifications()",
       "file_type": "code",
       "source_file": "app/notifications/routes.py",
       "source_location": "L11",
-      "id": "notifications_routes_can_send_notifications",
       "community": 9,
-      "norm_label": "_can_send_notifications()"
+      "norm_label": "_can_send_notifications()",
+      "id": "notifications_routes_can_send_notifications"
     },
     {
       "label": "_visible_users()",
       "file_type": "code",
       "source_file": "app/notifications/routes.py",
       "source_location": "L21",
-      "id": "notifications_routes_visible_users",
       "community": 9,
-      "norm_label": "_visible_users()"
+      "norm_label": "_visible_users()",
+      "id": "notifications_routes_visible_users"
     },
     {
       "label": "_visible_companies()",
       "file_type": "code",
       "source_file": "app/notifications/routes.py",
       "source_location": "L37",
-      "id": "notifications_routes_visible_companies",
       "community": 9,
-      "norm_label": "_visible_companies()"
+      "norm_label": "_visible_companies()",
+      "id": "notifications_routes_visible_companies"
     },
     {
       "label": "_serialize()",
       "file_type": "code",
       "source_file": "app/notifications/routes.py",
       "source_location": "L43",
-      "id": "notifications_routes_serialize",
       "community": 9,
-      "norm_label": "_serialize()"
+      "norm_label": "_serialize()",
+      "id": "notifications_routes_serialize"
     },
     {
       "label": "_query_current_user_notifications()",
       "file_type": "code",
       "source_file": "app/notifications/routes.py",
       "source_location": "L58",
-      "id": "notifications_routes_query_current_user_notifications",
       "community": 9,
-      "norm_label": "_query_current_user_notifications()"
+      "norm_label": "_query_current_user_notifications()",
+      "id": "notifications_routes_query_current_user_notifications"
     },
     {
       "label": "index()",
       "file_type": "code",
       "source_file": "app/notifications/routes.py",
       "source_location": "L69",
-      "id": "notifications_routes_index",
       "community": 9,
-      "norm_label": "index()"
+      "norm_label": "index()",
+      "id": "notifications_routes_index"
     },
     {
       "label": "send()",
       "file_type": "code",
       "source_file": "app/notifications/routes.py",
       "source_location": "L111",
-      "id": "notifications_routes_send",
       "community": 9,
-      "norm_label": "send()"
+      "norm_label": "send()",
+      "id": "notifications_routes_send"
     },
     {
       "label": "recent()",
       "file_type": "code",
       "source_file": "app/notifications/routes.py",
       "source_location": "L174",
-      "id": "notifications_routes_recent",
       "community": 9,
-      "norm_label": "recent()"
+      "norm_label": "recent()",
+      "id": "notifications_routes_recent"
     },
     {
       "label": "popups()",
       "file_type": "code",
       "source_file": "app/notifications/routes.py",
       "source_location": "L190",
-      "id": "notifications_routes_popups",
       "community": 9,
-      "norm_label": "popups()"
+      "norm_label": "popups()",
+      "id": "notifications_routes_popups"
     },
     {
       "label": "mark_read()",
       "file_type": "code",
       "source_file": "app/notifications/routes.py",
       "source_location": "L203",
-      "id": "notifications_routes_mark_read",
       "community": 9,
-      "norm_label": "mark_read()"
+      "norm_label": "mark_read()",
+      "id": "notifications_routes_mark_read"
     },
     {
       "label": "mark_all_read()",
       "file_type": "code",
       "source_file": "app/notifications/routes.py",
       "source_location": "L213",
-      "id": "notifications_routes_mark_all_read",
       "community": 9,
-      "norm_label": "mark_all_read()"
+      "norm_label": "mark_all_read()",
+      "id": "notifications_routes_mark_all_read"
     },
     {
       "label": "archive()",
       "file_type": "code",
       "source_file": "app/notifications/routes.py",
       "source_location": "L225",
-      "id": "notifications_routes_archive",
       "community": 9,
-      "norm_label": "archive()"
+      "norm_label": "archive()",
+      "id": "notifications_routes_archive"
     },
     {
       "label": "index.js",
       "file_type": "code",
       "source_file": "app/static/js/index.js",
       "source_location": "L1",
-      "id": "js_index",
       "community": 39,
-      "norm_label": "index.js"
+      "norm_label": "index.js",
+      "id": "js_index"
     },
     {
       "label": "endpoint()",
       "file_type": "code",
       "source_file": "app/static/js/index.js",
       "source_location": "L83",
-      "id": "js_index_endpoint",
       "community": 39,
-      "norm_label": "endpoint()"
+      "norm_label": "endpoint()",
+      "id": "js_index_endpoint"
     },
     {
       "label": "notificationTypeClass()",
       "file_type": "code",
       "source_file": "app/static/js/index.js",
       "source_location": "L88",
-      "id": "js_index_notificationtypeclass",
       "community": 39,
-      "norm_label": "notificationtypeclass()"
+      "norm_label": "notificationtypeclass()",
+      "id": "js_index_notificationtypeclass"
     },
     {
       "label": "postNotificationAction()",
       "file_type": "code",
       "source_file": "app/static/js/index.js",
       "source_location": "L99",
-      "id": "js_index_postnotificationaction",
       "community": 39,
-      "norm_label": "postnotificationaction()"
+      "norm_label": "postnotificationaction()",
+      "id": "js_index_postnotificationaction"
     },
     {
       "label": "updateNotificationBadge()",
       "file_type": "code",
       "source_file": "app/static/js/index.js",
       "source_location": "L109",
-      "id": "js_index_updatenotificationbadge",
       "community": 39,
-      "norm_label": "updatenotificationbadge()"
+      "norm_label": "updatenotificationbadge()",
+      "id": "js_index_updatenotificationbadge"
     },
     {
       "label": "renderNotificationList()",
       "file_type": "code",
       "source_file": "app/static/js/index.js",
       "source_location": "L120",
-      "id": "js_index_rendernotificationlist",
       "community": 39,
-      "norm_label": "rendernotificationlist()"
+      "norm_label": "rendernotificationlist()",
+      "id": "js_index_rendernotificationlist"
     },
     {
       "label": "loadNotifications()",
       "file_type": "code",
       "source_file": "app/static/js/index.js",
       "source_location": "L203",
-      "id": "js_index_loadnotifications",
       "community": 39,
-      "norm_label": "loadnotifications()"
+      "norm_label": "loadnotifications()",
+      "id": "js_index_loadnotifications"
     },
     {
       "label": "showNotificationPopup()",
       "file_type": "code",
       "source_file": "app/static/js/index.js",
       "source_location": "L216",
-      "id": "js_index_shownotificationpopup",
       "community": 39,
-      "norm_label": "shownotificationpopup()"
+      "norm_label": "shownotificationpopup()",
+      "id": "js_index_shownotificationpopup"
     },
     {
       "label": "loadPopupNotifications()",
       "file_type": "code",
       "source_file": "app/static/js/index.js",
       "source_location": "L260",
-      "id": "js_index_loadpopupnotifications",
       "community": 39,
-      "norm_label": "loadpopupnotifications()"
+      "norm_label": "loadpopupnotifications()",
+      "id": "js_index_loadpopupnotifications"
     },
     {
       "label": "b7c9a2d4e8f1_expand_notifications.py",
       "file_type": "code",
       "source_file": "migrations/versions/b7c9a2d4e8f1_expand_notifications.py",
       "source_location": "L1",
-      "id": "versions_b7c9a2d4e8f1_expand_notifications",
       "community": 53,
-      "norm_label": "b7c9a2d4e8f1_expand_notifications.py"
+      "norm_label": "b7c9a2d4e8f1_expand_notifications.py",
+      "id": "versions_b7c9a2d4e8f1_expand_notifications"
     },
     {
       "label": "_column_exists()",
       "file_type": "code",
       "source_file": "migrations/versions/b7c9a2d4e8f1_expand_notifications.py",
       "source_location": "L20",
-      "id": "versions_b7c9a2d4e8f1_expand_notifications_column_exists",
       "community": 53,
-      "norm_label": "_column_exists()"
+      "norm_label": "_column_exists()",
+      "id": "versions_b7c9a2d4e8f1_expand_notifications_column_exists"
     },
     {
       "label": "upgrade()",
       "file_type": "code",
       "source_file": "migrations/versions/b7c9a2d4e8f1_expand_notifications.py",
       "source_location": "L24",
-      "id": "versions_b7c9a2d4e8f1_expand_notifications_upgrade",
       "community": 53,
-      "norm_label": "upgrade()"
+      "norm_label": "upgrade()",
+      "id": "versions_b7c9a2d4e8f1_expand_notifications_upgrade"
     },
     {
       "label": "downgrade()",
       "file_type": "code",
       "source_file": "migrations/versions/b7c9a2d4e8f1_expand_notifications.py",
       "source_location": "L72",
-      "id": "versions_b7c9a2d4e8f1_expand_notifications_downgrade",
       "community": 53,
-      "norm_label": "downgrade()"
+      "norm_label": "downgrade()",
+      "id": "versions_b7c9a2d4e8f1_expand_notifications_downgrade"
     },
     {
       "label": "_has_index()",
       "file_type": "code",
       "source_file": "migrations/versions/b7c9a2d4e8f1_expand_notifications.py",
       "source_location": "L107",
-      "id": "versions_b7c9a2d4e8f1_expand_notifications_has_index",
       "community": 53,
-      "norm_label": "_has_index()"
+      "norm_label": "_has_index()",
+      "id": "versions_b7c9a2d4e8f1_expand_notifications_has_index"
     },
     {
       "label": "ddee51204bae_update_notification_center.py",
       "file_type": "code",
       "source_file": "migrations/versions/ddee51204bae_update_notification_center.py",
       "source_location": "L1",
-      "id": "versions_ddee51204bae_update_notification_center",
       "community": 83,
-      "norm_label": "ddee51204bae_update_notification_center.py"
+      "norm_label": "ddee51204bae_update_notification_center.py",
+      "id": "versions_ddee51204bae_update_notification_center"
     },
     {
       "label": "upgrade()",
       "file_type": "code",
       "source_file": "migrations/versions/ddee51204bae_update_notification_center.py",
       "source_location": "L19",
-      "id": "versions_ddee51204bae_update_notification_center_upgrade",
       "community": 83,
-      "norm_label": "upgrade()"
+      "norm_label": "upgrade()",
+      "id": "versions_ddee51204bae_update_notification_center_upgrade"
     },
     {
       "label": "downgrade()",
       "file_type": "code",
       "source_file": "migrations/versions/ddee51204bae_update_notification_center.py",
       "source_location": "L39",
-      "id": "versions_ddee51204bae_update_notification_center_downgrade",
       "community": 83,
-      "norm_label": "downgrade()"
+      "norm_label": "downgrade()",
+      "id": "versions_ddee51204bae_update_notification_center_downgrade"
     },
     {
       "label": "audit.py",
@@ -623,7 +695,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/invoice_update_service.py",
       "source_location": "L5",
-      "community": 16,
+      "community": 21,
       "norm_label": "_company_tax_rate()",
       "id": "services_invoice_update_service_company_tax_rate"
     },
@@ -659,7 +731,7 @@
       "file_type": "code",
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L1",
-      "community": 44,
+      "community": 11,
       "norm_label": "purchase_order_service.py",
       "id": "services_purchase_order_service"
     },
@@ -668,7 +740,7 @@
       "file_type": "code",
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L9",
-      "community": 44,
+      "community": 11,
       "norm_label": "_purchase_cost_from_form()",
       "id": "services_purchase_order_service_purchase_cost_from_form"
     },
@@ -695,7 +767,7 @@
       "file_type": "rationale",
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L10",
-      "community": 44,
+      "community": 11,
       "norm_label": "use the submitted purchase cost, falling back to the item's cost price.",
       "id": "services_purchase_order_service_rationale_10"
     },
@@ -799,15 +871,6 @@
       "id": "app_routes_register_routes"
     },
     {
-      "label": "Flask",
-      "file_type": "code",
-      "source_file": "app/routes.py",
-      "source_location": "L92",
-      "community": 19,
-      "norm_label": "flask",
-      "id": "flask"
-    },
-    {
       "label": "_balance.py",
       "file_type": "code",
       "source_file": "app/accounting/services/_balance.py",
@@ -830,7 +893,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/_balance.py",
       "source_location": "L33",
-      "community": 34,
+      "community": 4,
       "norm_label": "_active_expense_conditions()",
       "id": "services_balance_active_expense_conditions"
     },
@@ -956,7 +1019,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/_balance.py",
       "source_location": "L195",
-      "community": 7,
+      "community": 31,
       "norm_label": "bool",
       "id": "bool"
     },
@@ -1001,7 +1064,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/_balance.py",
       "source_location": "L300",
-      "community": 30,
+      "community": 4,
       "norm_label": "_recent_active_expenses()",
       "id": "services_balance_recent_active_expenses"
     },
@@ -1010,7 +1073,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/_balance.py",
       "source_location": "L300",
-      "community": 30,
+      "community": 4,
       "norm_label": "expense",
       "id": "expense"
     },
@@ -1055,7 +1118,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/_balance.py",
       "source_location": "L417",
-      "community": 3,
+      "community": 6,
       "norm_label": "transaction",
       "id": "transaction"
     },
@@ -1082,7 +1145,7 @@
       "file_type": "rationale",
       "source_file": "app/accounting/services/_balance.py",
       "source_location": "L34",
-      "community": 34,
+      "community": 4,
       "norm_label": "expense rows count only when unlinked or tied to a non-voided transaction.",
       "id": "services_balance_rationale_34"
     },
@@ -1163,7 +1226,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L47",
-      "community": 34,
+      "community": 4,
       "norm_label": "._report_title()",
       "id": "services_project_service_projectservice_report_title"
     },
@@ -1172,7 +1235,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L47",
-      "community": 34,
+      "community": 4,
       "norm_label": "str",
       "id": "app_accounting_services_project_service_py_str"
     },
@@ -1181,7 +1244,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L51",
-      "community": 34,
+      "community": 4,
       "norm_label": "._company_logo_data_uri()",
       "id": "services_project_service_projectservice_company_logo_data_uri"
     },
@@ -1190,7 +1253,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L51",
-      "community": 34,
+      "community": 4,
       "norm_label": "company",
       "id": "company"
     },
@@ -1199,7 +1262,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L72",
-      "community": 34,
+      "community": 4,
       "norm_label": "._safe_filename()",
       "id": "services_project_service_projectservice_safe_filename"
     },
@@ -1208,7 +1271,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L79",
-      "community": 34,
+      "community": 4,
       "norm_label": ".create_project()",
       "id": "services_project_service_projectservice_create_project"
     },
@@ -1217,7 +1280,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L79",
-      "community": 34,
+      "community": 4,
       "norm_label": "int",
       "id": "app_accounting_services_project_service_py_int"
     },
@@ -1226,7 +1289,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L79",
-      "community": 34,
+      "community": 4,
       "norm_label": "project",
       "id": "project"
     },
@@ -1235,7 +1298,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L95",
-      "community": 34,
+      "community": 4,
       "norm_label": ".update_project()",
       "id": "services_project_service_projectservice_update_project"
     },
@@ -1244,7 +1307,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L124",
-      "community": 34,
+      "community": 4,
       "norm_label": ".get_projects_list()",
       "id": "services_project_service_projectservice_get_projects_list"
     },
@@ -1253,7 +1316,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L156",
-      "community": 34,
+      "community": 4,
       "norm_label": ".get_project_detail()",
       "id": "services_project_service_projectservice_get_project_detail"
     },
@@ -1262,7 +1325,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L292",
-      "community": 34,
+      "community": 4,
       "norm_label": ".create_tag()",
       "id": "services_project_service_projectservice_create_tag"
     },
@@ -1271,7 +1334,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L292",
-      "community": 7,
+      "community": 4,
       "norm_label": "tag",
       "id": "tag"
     },
@@ -1280,7 +1343,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L305",
-      "community": 34,
+      "community": 4,
       "norm_label": ".delete_tag()",
       "id": "services_project_service_projectservice_delete_tag"
     },
@@ -1298,7 +1361,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L314",
-      "community": 7,
+      "community": 4,
       "norm_label": "object",
       "id": "object"
     },
@@ -1307,7 +1370,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L435",
-      "community": 34,
+      "community": 4,
       "norm_label": ".export_report_excel()",
       "id": "services_project_service_projectservice_export_report_excel"
     },
@@ -1316,7 +1379,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L484",
-      "community": 34,
+      "community": 4,
       "norm_label": ".export_report_pdf()",
       "id": "services_project_service_projectservice_export_report_pdf"
     },
@@ -1325,7 +1388,7 @@
       "file_type": "rationale",
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L1",
-      "community": 34,
+      "community": 4,
       "norm_label": "project crud, tagging, and reporting service.",
       "id": "services_project_service_rationale_1"
     },
@@ -1334,7 +1397,7 @@
       "file_type": "rationale",
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L164",
-      "community": 34,
+      "community": 4,
       "norm_label": "return full p&l breakdown for a project.",
       "id": "services_project_service_rationale_164"
     },
@@ -1415,7 +1478,7 @@
       "file_type": "code",
       "source_file": "app/accounting/routes.py",
       "source_location": "L393",
-      "community": 1,
+      "community": 31,
       "norm_label": "delete_income()",
       "id": "accounting_routes_delete_income"
     },
@@ -1505,7 +1568,7 @@
       "file_type": "code",
       "source_file": "app/accounting/routes.py",
       "source_location": "L750",
-      "community": 1,
+      "community": 43,
       "norm_label": "delete_account()",
       "id": "accounting_routes_delete_account"
     },
@@ -1568,7 +1631,7 @@
       "file_type": "code",
       "source_file": "app/accounting/routes.py",
       "source_location": "L1036",
-      "community": 1,
+      "community": 4,
       "norm_label": "delete_project()",
       "id": "accounting_routes_delete_project"
     },
@@ -1919,7 +1982,7 @@
       "file_type": "code",
       "source_file": "app/models/company.py",
       "source_location": "L25",
-      "community": 98,
+      "community": 2,
       "norm_label": ".build_slug()",
       "id": "models_company_company_build_slug"
     },
@@ -1928,7 +1991,7 @@
       "file_type": "code",
       "source_file": "app/models/company.py",
       "source_location": "L25",
-      "community": 98,
+      "community": 2,
       "norm_label": "str",
       "id": "app_models_company_py_str"
     },
@@ -1937,7 +2000,7 @@
       "file_type": "code",
       "source_file": "app/models/company.py",
       "source_location": "L60",
-      "community": 98,
+      "community": 2,
       "norm_label": ".__repr__()",
       "id": "models_company_company_repr"
     },
@@ -1946,7 +2009,7 @@
       "file_type": "rationale",
       "source_file": "app/models/company.py",
       "source_location": "L26",
-      "community": 98,
+      "community": 2,
       "norm_label": "auto-generate a url-safe slug from the company name.",
       "id": "models_company_rationale_26"
     },
@@ -1991,7 +2054,7 @@
       "file_type": "code",
       "source_file": "app.py",
       "source_location": "L1",
-      "community": 42,
+      "community": 60,
       "norm_label": "app.py",
       "id": "app"
     },
@@ -2018,7 +2081,7 @@
       "file_type": "code",
       "source_file": "app/accounting/__init__.py",
       "source_location": "L1",
-      "community": 19,
+      "community": 1,
       "norm_label": "__init__.py",
       "id": "accounting_init"
     },
@@ -2036,7 +2099,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/_helpers.py",
       "source_location": "L1",
-      "community": 3,
+      "community": 31,
       "norm_label": "_helpers.py",
       "id": "services_helpers"
     },
@@ -2045,7 +2108,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/_helpers.py",
       "source_location": "L11",
-      "community": 3,
+      "community": 31,
       "norm_label": "_allowed_file()",
       "id": "services_helpers_allowed_file"
     },
@@ -2054,7 +2117,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/_helpers.py",
       "source_location": "L11",
-      "community": 3,
+      "community": 31,
       "norm_label": "str",
       "id": "app_accounting_services_helpers_py_str"
     },
@@ -2063,7 +2126,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/_helpers.py",
       "source_location": "L11",
-      "community": 3,
+      "community": 31,
       "norm_label": "bool",
       "id": "app_accounting_services_helpers_py_bool"
     },
@@ -2072,7 +2135,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/_helpers.py",
       "source_location": "L16",
-      "community": 3,
+      "community": 31,
       "norm_label": "_save_receipt()",
       "id": "services_helpers_save_receipt"
     },
@@ -2081,7 +2144,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/_helpers.py",
       "source_location": "L30",
-      "community": 3,
+      "community": 31,
       "norm_label": "_parse_date()",
       "id": "services_helpers_parse_date"
     },
@@ -2090,7 +2153,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/_helpers.py",
       "source_location": "L30",
-      "community": 3,
+      "community": 31,
       "norm_label": "datetime",
       "id": "app_accounting_services_helpers_py_datetime"
     },
@@ -2099,7 +2162,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/_helpers.py",
       "source_location": "L40",
-      "community": 3,
+      "community": 4,
       "norm_label": "_make_naive()",
       "id": "services_helpers_make_naive"
     },
@@ -2108,7 +2171,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/_helpers.py",
       "source_location": "L47",
-      "community": 3,
+      "community": 31,
       "norm_label": "_get_period_bounds()",
       "id": "services_helpers_get_period_bounds"
     },
@@ -2117,7 +2180,7 @@
       "file_type": "rationale",
       "source_file": "app/accounting/services/_helpers.py",
       "source_location": "L1",
-      "community": 3,
+      "community": 31,
       "norm_label": "internal date / file helpers shared across accounting services.",
       "id": "services_helpers_rationale_1"
     },
@@ -2126,7 +2189,7 @@
       "file_type": "rationale",
       "source_file": "app/accounting/services/_helpers.py",
       "source_location": "L17",
-      "community": 3,
+      "community": 31,
       "norm_label": "save uploaded receipt; return relative url or none.",
       "id": "services_helpers_rationale_17"
     },
@@ -2135,7 +2198,7 @@
       "file_type": "rationale",
       "source_file": "app/accounting/services/_helpers.py",
       "source_location": "L31",
-      "community": 3,
+      "community": 31,
       "norm_label": "parse yyyy-mm-dd string \u2192 naive datetime. falls back to now(utc).",
       "id": "services_helpers_rationale_31"
     },
@@ -2144,7 +2207,7 @@
       "file_type": "rationale",
       "source_file": "app/accounting/services/_helpers.py",
       "source_location": "L41",
-      "community": 3,
+      "community": 4,
       "norm_label": "strip timezone info so comparisons work with our stored naive datetimes.",
       "id": "services_helpers_rationale_41"
     },
@@ -2153,7 +2216,7 @@
       "file_type": "rationale",
       "source_file": "app/accounting/services/_helpers.py",
       "source_location": "L48",
-      "community": 3,
+      "community": 31,
       "norm_label": "return (start_dt, end_dt) as naive datetimes for the given period.",
       "id": "services_helpers_rationale_48"
     },
@@ -2171,7 +2234,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/account_service.py",
       "source_location": "L13",
-      "community": 30,
+      "community": 43,
       "norm_label": ".create_account()",
       "id": "services_account_service_accountservice_create_account"
     },
@@ -2180,7 +2243,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/account_service.py",
       "source_location": "L13",
-      "community": 30,
+      "community": 43,
       "norm_label": "int",
       "id": "app_accounting_services_account_service_py_int"
     },
@@ -2189,7 +2252,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/account_service.py",
       "source_location": "L13",
-      "community": 30,
+      "community": 43,
       "norm_label": "account",
       "id": "app_accounting_services_account_service_py_account"
     },
@@ -2198,7 +2261,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/account_service.py",
       "source_location": "L38",
-      "community": 30,
+      "community": 43,
       "norm_label": ".update_account()",
       "id": "services_account_service_accountservice_update_account"
     },
@@ -2207,7 +2270,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/account_service.py",
       "source_location": "L83",
-      "community": 30,
+      "community": 43,
       "norm_label": ".generate_default_accounts()",
       "id": "services_account_service_accountservice_generate_default_accounts"
     },
@@ -2225,7 +2288,7 @@
       "file_type": "rationale",
       "source_file": "app/accounting/services/account_service.py",
       "source_location": "L57",
-      "community": 1,
+      "community": 43,
       "norm_label": "soft-delete an account.         raises valueerror if the account has any non-voi",
       "id": "services_account_service_rationale_57"
     },
@@ -2243,7 +2306,7 @@
       "file_type": "code",
       "source_file": "",
       "source_location": "",
-      "community": 30,
+      "community": 4,
       "norm_label": "dashboardservice",
       "id": "dashboardservice"
     },
@@ -2324,7 +2387,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/dashboard_service.py",
       "source_location": "L23",
-      "community": 30,
+      "community": 4,
       "norm_label": "int",
       "id": "app_accounting_services_dashboard_service_py_int"
     },
@@ -2333,7 +2396,7 @@
       "file_type": "rationale",
       "source_file": "app/accounting/services/dashboard_service.py",
       "source_location": "L1",
-      "community": 30,
+      "community": 4,
       "norm_label": "dashboard aggregation service.",
       "id": "services_dashboard_service_rationale_1"
     },
@@ -2576,7 +2639,7 @@
       "file_type": "rationale",
       "source_file": "app/accounting/services/income_service.py",
       "source_location": "L145",
-      "community": 1,
+      "community": 31,
       "norm_label": "void an income transaction (soft delete).",
       "id": "services_income_service_rationale_145"
     },
@@ -2923,33 +2986,6 @@
       "id": "services_auth_service_rationale_82"
     },
     {
-      "label": "cli.py",
-      "file_type": "code",
-      "source_file": "app/cli.py",
-      "source_location": "L1",
-      "community": 42,
-      "norm_label": "cli.py",
-      "id": "app_cli"
-    },
-    {
-      "label": "register_cli()",
-      "file_type": "code",
-      "source_file": "app/cli.py",
-      "source_location": "L5",
-      "community": 42,
-      "norm_label": "register_cli()",
-      "id": "app_cli_register_cli"
-    },
-    {
-      "label": "Flask",
-      "file_type": "code",
-      "source_file": "app/cli.py",
-      "source_location": "L5",
-      "community": 42,
-      "norm_label": "flask",
-      "id": "app_cli_py_flask"
-    },
-    {
       "label": "__init__.py",
       "file_type": "code",
       "source_file": "app/companies/__init__.py",
@@ -3116,7 +3152,7 @@
       "file_type": "code",
       "source_file": "app/context_processors.py",
       "source_location": "L1",
-      "community": 60,
+      "community": 42,
       "norm_label": "context_processors.py",
       "id": "app_context_processors"
     },
@@ -3125,7 +3161,7 @@
       "file_type": "code",
       "source_file": "app/context_processors.py",
       "source_location": "L6",
-      "community": 60,
+      "community": 42,
       "norm_label": "register_context_processors()",
       "id": "app_context_processors_register_context_processors"
     },
@@ -3134,7 +3170,7 @@
       "file_type": "code",
       "source_file": "app/context_processors.py",
       "source_location": "L6",
-      "community": 60,
+      "community": 42,
       "norm_label": "flask",
       "id": "app_context_processors_py_flask"
     },
@@ -3278,7 +3314,7 @@
       "file_type": "code",
       "source_file": "app/extensions.py",
       "source_location": "L1",
-      "community": 60,
+      "community": 42,
       "norm_label": "extensions.py",
       "id": "app_extensions"
     },
@@ -3287,7 +3323,7 @@
       "file_type": "code",
       "source_file": "app/extensions.py",
       "source_location": "L28",
-      "community": 60,
+      "community": 42,
       "norm_label": "get_locale()",
       "id": "app_extensions_get_locale"
     },
@@ -3332,7 +3368,7 @@
       "file_type": "code",
       "source_file": "app/hr/__init__.py",
       "source_location": "L1",
-      "community": 19,
+      "community": 24,
       "norm_label": "__init__.py",
       "id": "hr_init"
     },
@@ -3359,7 +3395,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L23",
-      "community": 50,
+      "community": 22,
       "norm_label": "_allowed_file()",
       "id": "hr_routes_allowed_file"
     },
@@ -3368,7 +3404,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L23",
-      "community": 50,
+      "community": 22,
       "norm_label": "str",
       "id": "app_hr_routes_py_str"
     },
@@ -3386,7 +3422,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L27",
-      "community": 50,
+      "community": 24,
       "norm_label": "_save_attachment()",
       "id": "hr_routes_save_attachment"
     },
@@ -3440,7 +3476,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L322",
-      "community": 32,
+      "community": 24,
       "norm_label": "create_leave()",
       "id": "hr_routes_create_leave"
     },
@@ -3539,7 +3575,7 @@
       "file_type": "code",
       "source_file": "app/inventory/__init__.py",
       "source_location": "L1",
-      "community": 19,
+      "community": 12,
       "norm_label": "__init__.py",
       "id": "inventory_init"
     },
@@ -4223,7 +4259,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/accounting_integration.py",
       "source_location": "L1",
-      "community": 7,
+      "community": 0,
       "norm_label": "accounting_integration.py",
       "id": "services_accounting_integration"
     },
@@ -4232,7 +4268,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/accounting_integration.py",
       "source_location": "L8",
-      "community": 7,
+      "community": 0,
       "norm_label": "_resolve_cash_account()",
       "id": "services_accounting_integration_resolve_cash_account"
     },
@@ -4241,7 +4277,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/accounting_integration.py",
       "source_location": "L8",
-      "community": 7,
+      "community": 0,
       "norm_label": "int",
       "id": "app_invoices_services_accounting_integration_py_int"
     },
@@ -4250,7 +4286,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/accounting_integration.py",
       "source_location": "L8",
-      "community": 7,
+      "community": 0,
       "norm_label": "account",
       "id": "app_invoices_services_accounting_integration_py_account"
     },
@@ -4259,7 +4295,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/accounting_integration.py",
       "source_location": "L40",
-      "community": 7,
+      "community": 0,
       "norm_label": "_resolve_revenue_account()",
       "id": "services_accounting_integration_resolve_revenue_account"
     },
@@ -4268,7 +4304,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/accounting_integration.py",
       "source_location": "L56",
-      "community": 7,
+      "community": 0,
       "norm_label": "post_invoice_payment_income()",
       "id": "services_accounting_integration_post_invoice_payment_income"
     },
@@ -4277,7 +4313,7 @@
       "file_type": "rationale",
       "source_file": "app/invoices/services/accounting_integration.py",
       "source_location": "L1",
-      "community": 7,
+      "community": 0,
       "norm_label": "accounting integration helpers for invoice payments.",
       "id": "services_accounting_integration_rationale_1"
     },
@@ -4286,7 +4322,7 @@
       "file_type": "rationale",
       "source_file": "app/invoices/services/accounting_integration.py",
       "source_location": "L9",
-      "community": 7,
+      "community": 0,
       "norm_label": "return the preferred cash/bank asset account for a company.",
       "id": "services_accounting_integration_rationale_9"
     },
@@ -4295,7 +4331,7 @@
       "file_type": "rationale",
       "source_file": "app/invoices/services/accounting_integration.py",
       "source_location": "L41",
-      "community": 7,
+      "community": 0,
       "norm_label": "return the preferred revenue account for invoice-payment income.",
       "id": "services_accounting_integration_rationale_41"
     },
@@ -4304,7 +4340,7 @@
       "file_type": "rationale",
       "source_file": "app/invoices/services/accounting_integration.py",
       "source_location": "L57",
-      "community": 7,
+      "community": 0,
       "norm_label": "post a balanced income transaction for an invoice payment.      the transactio",
       "id": "services_accounting_integration_rationale_57"
     },
@@ -4502,7 +4538,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/invoice_query_service.py",
       "source_location": "L1",
-      "community": 21,
+      "community": 4,
       "norm_label": "invoice_query_service.py",
       "id": "services_invoice_query_service"
     },
@@ -4520,7 +4556,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/pdf_layouts/__init__.py",
       "source_location": "L1",
-      "community": 100,
+      "community": 2,
       "norm_label": "__init__.py",
       "id": "pdf_layouts_init"
     },
@@ -4529,7 +4565,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/pdf_layouts/__init__.py",
       "source_location": "L14",
-      "community": 100,
+      "community": 2,
       "norm_label": "get_layout()",
       "id": "pdf_layouts_init_get_layout"
     },
@@ -4538,7 +4574,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/pdf_layouts/__init__.py",
       "source_location": "L14",
-      "community": 100,
+      "community": 2,
       "norm_label": "int",
       "id": "app_invoices_services_pdf_layouts_init_py_int"
     },
@@ -4547,7 +4583,7 @@
       "file_type": "rationale",
       "source_file": "app/invoices/services/pdf_layouts/__init__.py",
       "source_location": "L15",
-      "community": 100,
+      "community": 2,
       "norm_label": "retrieve the pdftemplatelayout for the given company_id.",
       "id": "pdf_layouts_init_rationale_15"
     },
@@ -4556,7 +4592,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/pdf_layouts/ferre_lagos.py",
       "source_location": "L1",
-      "community": 100,
+      "community": 2,
       "norm_label": "ferre_lagos.py",
       "id": "pdf_layouts_ferre_lagos"
     },
@@ -4889,7 +4925,7 @@
       "file_type": "code",
       "source_file": "app/models/contact.py",
       "source_location": "L1",
-      "community": 45,
+      "community": 6,
       "norm_label": "contact.py",
       "id": "models_contact"
     },
@@ -4898,7 +4934,7 @@
       "file_type": "code",
       "source_file": "app/models/contact.py",
       "source_location": "L5",
-      "community": 45,
+      "community": 33,
       "norm_label": "contact",
       "id": "models_contact_contact"
     },
@@ -4907,7 +4943,7 @@
       "file_type": "code",
       "source_file": "app/models/contact.py",
       "source_location": "L26",
-      "community": 45,
+      "community": 33,
       "norm_label": "str",
       "id": "app_models_contact_py_str"
     },
@@ -4916,7 +4952,7 @@
       "file_type": "code",
       "source_file": "app/models/contact.py",
       "source_location": "L26",
-      "community": 45,
+      "community": 33,
       "norm_label": "bool",
       "id": "app_models_contact_py_bool"
     },
@@ -4925,7 +4961,7 @@
       "file_type": "code",
       "source_file": "app/models/contact.py",
       "source_location": "L34",
-      "community": 45,
+      "community": 33,
       "norm_label": ".validate_phone()",
       "id": "models_contact_contact_validate_phone"
     },
@@ -4934,7 +4970,7 @@
       "file_type": "code",
       "source_file": "app/models/contact.py",
       "source_location": "L40",
-      "community": 45,
+      "community": 33,
       "norm_label": ".__repr__()",
       "id": "models_contact_contact_repr"
     },
@@ -4943,7 +4979,7 @@
       "file_type": "rationale",
       "source_file": "app/models/contact.py",
       "source_location": "L35",
-      "community": 45,
+      "community": 33,
       "norm_label": "validate phone format (basic: digits, +, -, spaces).",
       "id": "models_contact_rationale_35"
     },
@@ -4952,7 +4988,7 @@
       "file_type": "code",
       "source_file": "app/models/document.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 6,
       "norm_label": "document.py",
       "id": "models_document"
     },
@@ -4961,7 +4997,7 @@
       "file_type": "code",
       "source_file": "app/models/document.py",
       "source_location": "L5",
-      "community": 0,
+      "community": 4,
       "norm_label": "document",
       "id": "models_document_document"
     },
@@ -4970,7 +5006,7 @@
       "file_type": "code",
       "source_file": "app/models/document.py",
       "source_location": "L40",
-      "community": 0,
+      "community": 4,
       "norm_label": ".subtotal()",
       "id": "models_document_document_subtotal"
     },
@@ -4979,7 +5015,7 @@
       "file_type": "code",
       "source_file": "app/models/document.py",
       "source_location": "L40",
-      "community": 0,
+      "community": 4,
       "norm_label": "float",
       "id": "app_models_document_py_float"
     },
@@ -4988,7 +5024,7 @@
       "file_type": "code",
       "source_file": "app/models/document.py",
       "source_location": "L55",
-      "community": 0,
+      "community": 4,
       "norm_label": ".tax_amount()",
       "id": "models_document_document_tax_amount"
     },
@@ -4997,7 +5033,7 @@
       "file_type": "code",
       "source_file": "app/models/document.py",
       "source_location": "L66",
-      "community": 0,
+      "community": 4,
       "norm_label": ".calculate_paid_amount()",
       "id": "models_document_document_calculate_paid_amount"
     },
@@ -5006,7 +5042,7 @@
       "file_type": "code",
       "source_file": "app/models/document.py",
       "source_location": "L71",
-      "community": 0,
+      "community": 4,
       "norm_label": ".calculate_balance_due()",
       "id": "models_document_document_calculate_balance_due"
     },
@@ -5015,7 +5051,7 @@
       "file_type": "code",
       "source_file": "app/models/document.py",
       "source_location": "L77",
-      "community": 0,
+      "community": 4,
       "norm_label": ".discount_amount()",
       "id": "models_document_document_discount_amount"
     },
@@ -5024,7 +5060,7 @@
       "file_type": "code",
       "source_file": "app/models/document.py",
       "source_location": "L87",
-      "community": 0,
+      "community": 4,
       "norm_label": ".refresh_cache()",
       "id": "models_document_document_refresh_cache"
     },
@@ -5033,7 +5069,7 @@
       "file_type": "code",
       "source_file": "app/models/document.py",
       "source_location": "L103",
-      "community": 0,
+      "community": 22,
       "norm_label": ".__repr__()",
       "id": "models_document_document_repr"
     },
@@ -5042,7 +5078,7 @@
       "file_type": "code",
       "source_file": "app/models/document.py",
       "source_location": "L103",
-      "community": 0,
+      "community": 22,
       "norm_label": "str",
       "id": "app_models_document_py_str"
     },
@@ -5051,7 +5087,7 @@
       "file_type": "rationale",
       "source_file": "app/models/document.py",
       "source_location": "L41",
-      "community": 0,
+      "community": 4,
       "norm_label": "calculate subtotal from document items (before tax). cached.",
       "id": "models_document_rationale_41"
     },
@@ -5060,7 +5096,7 @@
       "file_type": "rationale",
       "source_file": "app/models/document.py",
       "source_location": "L56",
-      "community": 0,
+      "community": 4,
       "norm_label": "calculate tax amount based on subtotal and company tax rate. cached.",
       "id": "models_document_rationale_56"
     },
@@ -5069,7 +5105,7 @@
       "file_type": "rationale",
       "source_file": "app/models/document.py",
       "source_location": "L67",
-      "community": 0,
+      "community": 4,
       "norm_label": "calculate total amount paid via payments",
       "id": "models_document_rationale_67"
     },
@@ -5078,7 +5114,7 @@
       "file_type": "rationale",
       "source_file": "app/models/document.py",
       "source_location": "L72",
-      "community": 0,
+      "community": 4,
       "norm_label": "calculate remaining balance to be paid",
       "id": "models_document_rationale_72"
     },
@@ -5087,7 +5123,7 @@
       "file_type": "rationale",
       "source_file": "app/models/document.py",
       "source_location": "L78",
-      "community": 0,
+      "community": 4,
       "norm_label": "calculate total discount amount from document items. cached.",
       "id": "models_document_rationale_78"
     },
@@ -5096,7 +5132,7 @@
       "file_type": "rationale",
       "source_file": "app/models/document.py",
       "source_location": "L88",
-      "community": 0,
+      "community": 4,
       "norm_label": "refresh subtotal and tax caches",
       "id": "models_document_rationale_88"
     },
@@ -5123,7 +5159,7 @@
       "file_type": "code",
       "source_file": "app/models/document_item.py",
       "source_location": "L27",
-      "community": 21,
+      "community": 101,
       "norm_label": ".__repr__()",
       "id": "models_document_item_documentitem_repr"
     },
@@ -5132,7 +5168,7 @@
       "file_type": "code",
       "source_file": "app/models/document_item.py",
       "source_location": "L27",
-      "community": 21,
+      "community": 101,
       "norm_label": "str",
       "id": "app_models_document_item_py_str"
     },
@@ -5141,7 +5177,7 @@
       "file_type": "code",
       "source_file": "app/models/document_sequence.py",
       "source_location": "L1",
-      "community": 6,
+      "community": 5,
       "norm_label": "document_sequence.py",
       "id": "models_document_sequence"
     },
@@ -5150,7 +5186,7 @@
       "file_type": "code",
       "source_file": "app/models/document_sequence.py",
       "source_location": "L19",
-      "community": 6,
+      "community": 5,
       "norm_label": ".__repr__()",
       "id": "models_document_sequence_documentsequence_repr"
     },
@@ -5159,7 +5195,7 @@
       "file_type": "code",
       "source_file": "app/models/document_sequence.py",
       "source_location": "L19",
-      "community": 6,
+      "community": 5,
       "norm_label": "str",
       "id": "app_models_document_sequence_py_str"
     },
@@ -5303,7 +5339,7 @@
       "file_type": "code",
       "source_file": "app/models/enums.py",
       "source_location": "L3",
-      "community": 7,
+      "community": 43,
       "norm_label": "accounttype",
       "id": "models_enums_accounttype"
     },
@@ -5312,7 +5348,7 @@
       "file_type": "code",
       "source_file": "app/models/enums.py",
       "source_location": "L20",
-      "community": 0,
+      "community": 4,
       "norm_label": "documenttype",
       "id": "models_enums_documenttype"
     },
@@ -5321,7 +5357,7 @@
       "file_type": "code",
       "source_file": "app/models/enums.py",
       "source_location": "L24",
-      "community": 0,
+      "community": 6,
       "norm_label": "documentstatus",
       "id": "models_enums_documentstatus"
     },
@@ -5339,7 +5375,7 @@
       "file_type": "code",
       "source_file": "app/models/enums.py",
       "source_location": "L44",
-      "community": 21,
+      "community": 6,
       "norm_label": "paymentmethod",
       "id": "models_enums_paymentmethod"
     },
@@ -5348,7 +5384,7 @@
       "file_type": "code",
       "source_file": "app/models/enums.py",
       "source_location": "L51",
-      "community": 45,
+      "community": 33,
       "norm_label": "contacttype",
       "id": "models_enums_contacttype"
     },
@@ -5501,7 +5537,7 @@
       "file_type": "code",
       "source_file": "app/models/inventory_item.py",
       "source_location": "L1",
-      "community": 44,
+      "community": 21,
       "norm_label": "inventory_item.py",
       "id": "models_inventory_item"
     },
@@ -5618,7 +5654,7 @@
       "file_type": "code",
       "source_file": "app/models/ledger_entry.py",
       "source_location": "L1",
-      "community": 30,
+      "community": 54,
       "norm_label": "ledger_entry.py",
       "id": "models_ledger_entry"
     },
@@ -5627,7 +5663,7 @@
       "file_type": "code",
       "source_file": "app/models/ledger_entry.py",
       "source_location": "L48",
-      "community": 43,
+      "community": 54,
       "norm_label": ".net_effect()",
       "id": "models_ledger_entry_ledgerentry_net_effect"
     },
@@ -5636,7 +5672,7 @@
       "file_type": "code",
       "source_file": "app/models/ledger_entry.py",
       "source_location": "L48",
-      "community": 43,
+      "community": 54,
       "norm_label": "float",
       "id": "app_models_ledger_entry_py_float"
     },
@@ -5645,7 +5681,7 @@
       "file_type": "code",
       "source_file": "app/models/ledger_entry.py",
       "source_location": "L52",
-      "community": 6,
+      "community": 54,
       "norm_label": ".__repr__()",
       "id": "models_ledger_entry_ledgerentry_repr"
     },
@@ -5654,7 +5690,7 @@
       "file_type": "code",
       "source_file": "app/models/ledger_entry.py",
       "source_location": "L52",
-      "community": 6,
+      "community": 54,
       "norm_label": "str",
       "id": "app_models_ledger_entry_py_str"
     },
@@ -5663,7 +5699,7 @@
       "file_type": "rationale",
       "source_file": "app/models/ledger_entry.py",
       "source_location": "L6",
-      "community": 30,
+      "community": 54,
       "norm_label": "a single line in the accounting ledger.  every entry must belong to a     transa",
       "id": "models_ledger_entry_rationale_6"
     },
@@ -5672,7 +5708,7 @@
       "file_type": "rationale",
       "source_file": "app/models/ledger_entry.py",
       "source_location": "L49",
-      "community": 43,
+      "community": 54,
       "norm_label": "positive = debit effect, negative = credit effect.",
       "id": "models_ledger_entry_rationale_49"
     },
@@ -5708,7 +5744,7 @@
       "file_type": "code",
       "source_file": "app/models/payment.py",
       "source_location": "L19",
-      "community": 21,
+      "community": 6,
       "norm_label": "str",
       "id": "app_models_payment_py_str"
     },
@@ -5780,7 +5816,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order.py",
       "source_location": "L1",
-      "community": 44,
+      "community": 11,
       "norm_label": "purchase_order.py",
       "id": "models_purchase_order"
     },
@@ -5789,7 +5825,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order.py",
       "source_location": "L24",
-      "community": 44,
+      "community": 11,
       "norm_label": ".__repr__()",
       "id": "models_purchase_order_purchaseorder_repr"
     },
@@ -5798,7 +5834,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order.py",
       "source_location": "L24",
-      "community": 44,
+      "community": 11,
       "norm_label": "str",
       "id": "app_models_purchase_order_py_str"
     },
@@ -5807,7 +5843,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order_item.py",
       "source_location": "L1",
-      "community": 44,
+      "community": 6,
       "norm_label": "purchase_order_item.py",
       "id": "models_purchase_order_item"
     },
@@ -5816,7 +5852,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order_item.py",
       "source_location": "L23",
-      "community": 50,
+      "community": 22,
       "norm_label": ".__repr__()",
       "id": "models_purchase_order_item_purchaseorderitem_repr"
     },
@@ -5825,7 +5861,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order_item.py",
       "source_location": "L23",
-      "community": 50,
+      "community": 22,
       "norm_label": "str",
       "id": "app_models_purchase_order_item_py_str"
     },
@@ -5843,7 +5879,7 @@
       "file_type": "code",
       "source_file": "app/models/report.py",
       "source_location": "L3",
-      "community": 34,
+      "community": 4,
       "norm_label": "report",
       "id": "models_report_report"
     },
@@ -5852,7 +5888,7 @@
       "file_type": "code",
       "source_file": "app/models/report.py",
       "source_location": "L11",
-      "community": 34,
+      "community": 4,
       "norm_label": ".__repr__()",
       "id": "models_report_report_repr"
     },
@@ -5861,7 +5897,7 @@
       "file_type": "code",
       "source_file": "app/models/report.py",
       "source_location": "L11",
-      "community": 34,
+      "community": 4,
       "norm_label": "str",
       "id": "app_models_report_py_str"
     },
@@ -5879,7 +5915,7 @@
       "file_type": "code",
       "source_file": "app/models/role.py",
       "source_location": "L4",
-      "community": 23,
+      "community": 6,
       "norm_label": "role",
       "id": "models_role_role"
     },
@@ -5888,7 +5924,7 @@
       "file_type": "code",
       "source_file": "app/models/role.py",
       "source_location": "L13",
-      "community": 23,
+      "community": 98,
       "norm_label": ".has_permission()",
       "id": "models_role_role_has_permission"
     },
@@ -5897,7 +5933,7 @@
       "file_type": "code",
       "source_file": "app/models/role.py",
       "source_location": "L13",
-      "community": 23,
+      "community": 98,
       "norm_label": "str",
       "id": "app_models_role_py_str"
     },
@@ -5906,7 +5942,7 @@
       "file_type": "code",
       "source_file": "app/models/role.py",
       "source_location": "L13",
-      "community": 23,
+      "community": 98,
       "norm_label": "bool",
       "id": "app_models_role_py_bool"
     },
@@ -5915,7 +5951,7 @@
       "file_type": "code",
       "source_file": "app/models/role.py",
       "source_location": "L17",
-      "community": 23,
+      "community": 98,
       "norm_label": ".__repr__()",
       "id": "models_role_role_repr"
     },
@@ -5924,7 +5960,7 @@
       "file_type": "rationale",
       "source_file": "app/models/role.py",
       "source_location": "L14",
-      "community": 23,
+      "community": 98,
       "norm_label": "return true if this role carries *permission_name*.",
       "id": "models_role_rationale_14"
     },
@@ -6023,7 +6059,7 @@
       "file_type": "code",
       "source_file": "app/models/transaction.py",
       "source_location": "L6",
-      "community": 35,
+      "community": 6,
       "norm_label": "transaction",
       "id": "models_transaction_transaction"
     },
@@ -6050,7 +6086,7 @@
       "file_type": "code",
       "source_file": "app/models/transaction.py",
       "source_location": "L56",
-      "community": 35,
+      "community": 100,
       "norm_label": ".total_amount()",
       "id": "models_transaction_transaction_total_amount"
     },
@@ -6059,7 +6095,7 @@
       "file_type": "code",
       "source_file": "app/models/transaction.py",
       "source_location": "L56",
-      "community": 35,
+      "community": 100,
       "norm_label": "float",
       "id": "app_models_transaction_py_float"
     },
@@ -6068,7 +6104,7 @@
       "file_type": "code",
       "source_file": "app/models/transaction.py",
       "source_location": "L60",
-      "community": 35,
+      "community": 6,
       "norm_label": ".__repr__()",
       "id": "models_transaction_transaction_repr"
     },
@@ -6077,7 +6113,7 @@
       "file_type": "code",
       "source_file": "app/models/transaction.py",
       "source_location": "L60",
-      "community": 35,
+      "community": 6,
       "norm_label": "str",
       "id": "app_models_transaction_py_str"
     },
@@ -6086,7 +6122,7 @@
       "file_type": "rationale",
       "source_file": "app/models/transaction.py",
       "source_location": "L7",
-      "community": 35,
+      "community": 6,
       "norm_label": "groups one or more paired ledgerentry rows into an atomic double-entry     journ",
       "id": "models_transaction_rationale_7"
     },
@@ -6104,7 +6140,7 @@
       "file_type": "rationale",
       "source_file": "app/models/transaction.py",
       "source_location": "L57",
-      "community": 35,
+      "community": 100,
       "norm_label": "return the transaction amount (sum of debit side).",
       "id": "models_transaction_rationale_57"
     },
@@ -6248,7 +6284,7 @@
       "file_type": "rationale",
       "source_file": "app/models/user.py",
       "source_location": "L60",
-      "community": 45,
+      "community": 33,
       "norm_label": "validate email format.",
       "id": "models_user_rationale_60"
     },
@@ -6671,7 +6707,7 @@
       "file_type": "code",
       "source_file": "app/payments/services/payment_service.py",
       "source_location": "L149",
-      "community": 29,
+      "community": 0,
       "norm_label": ".create_payment()",
       "id": "services_payment_service_paymentservice_create_payment"
     },
@@ -6707,7 +6743,7 @@
       "file_type": "code",
       "source_file": "app/services/email_service.py",
       "source_location": "L1",
-      "community": 18,
+      "community": 45,
       "norm_label": "email_service.py",
       "id": "services_email_service"
     },
@@ -6716,7 +6752,7 @@
       "file_type": "code",
       "source_file": "app/services/email_service.py",
       "source_location": "L9",
-      "community": 18,
+      "community": 45,
       "norm_label": ".send_async_email()",
       "id": "services_email_service_emailservice_send_async_email"
     },
@@ -6725,7 +6761,7 @@
       "file_type": "code",
       "source_file": "app/services/email_service.py",
       "source_location": "L17",
-      "community": 18,
+      "community": 45,
       "norm_label": ".send_email()",
       "id": "services_email_service_emailservice_send_email"
     },
@@ -6734,7 +6770,7 @@
       "file_type": "code",
       "source_file": "app/services/email_service.py",
       "source_location": "L30",
-      "community": 18,
+      "community": 45,
       "norm_label": ".notify_error()",
       "id": "services_email_service_emailservice_notify_error"
     },
@@ -6743,7 +6779,7 @@
       "file_type": "rationale",
       "source_file": "app/services/email_service.py",
       "source_location": "L31",
-      "community": 18,
+      "community": 45,
       "norm_label": "sends an error notification to the configured admin email.",
       "id": "services_email_service_rationale_31"
     },
@@ -6752,7 +6788,7 @@
       "file_type": "rationale",
       "source_file": "app/services/email_service.py",
       "source_location": "L53",
-      "community": 23,
+      "community": 45,
       "norm_label": "sends a password reset email.",
       "id": "services_email_service_rationale_53"
     },
@@ -6842,7 +6878,7 @@
       "file_type": "code",
       "source_file": "app/users/__init__.py",
       "source_location": "L1",
-      "community": 23,
+      "community": 34,
       "norm_label": "__init__.py",
       "id": "users_init"
     },
@@ -6851,7 +6887,7 @@
       "file_type": "code",
       "source_file": "app/users/routes.py",
       "source_location": "L1",
-      "community": 23,
+      "community": 34,
       "norm_label": "routes.py",
       "id": "users_routes"
     },
@@ -6860,7 +6896,7 @@
       "file_type": "code",
       "source_file": "app/users/routes.py",
       "source_location": "L10",
-      "community": 23,
+      "community": 34,
       "norm_label": "index()",
       "id": "users_routes_index"
     },
@@ -6869,7 +6905,7 @@
       "file_type": "code",
       "source_file": "app/users/routes.py",
       "source_location": "L42",
-      "community": 23,
+      "community": 34,
       "norm_label": "create()",
       "id": "users_routes_create"
     },
@@ -6878,7 +6914,7 @@
       "file_type": "code",
       "source_file": "app/users/routes.py",
       "source_location": "L55",
-      "community": 23,
+      "community": 34,
       "norm_label": "store()",
       "id": "users_routes_store"
     },
@@ -6887,7 +6923,7 @@
       "file_type": "code",
       "source_file": "app/users/routes.py",
       "source_location": "L70",
-      "community": 23,
+      "community": 34,
       "norm_label": "view()",
       "id": "users_routes_view"
     },
@@ -6896,7 +6932,7 @@
       "file_type": "code",
       "source_file": "app/users/routes.py",
       "source_location": "L77",
-      "community": 23,
+      "community": 34,
       "norm_label": "edit()",
       "id": "users_routes_edit"
     },
@@ -6905,7 +6941,7 @@
       "file_type": "code",
       "source_file": "app/users/routes.py",
       "source_location": "L95",
-      "community": 23,
+      "community": 34,
       "norm_label": "update()",
       "id": "users_routes_update"
     },
@@ -6914,7 +6950,7 @@
       "file_type": "code",
       "source_file": "app/users/routes.py",
       "source_location": "L110",
-      "community": 23,
+      "community": 34,
       "norm_label": "delete()",
       "id": "users_routes_delete"
     },
@@ -6923,7 +6959,7 @@
       "file_type": "code",
       "source_file": "app/users/routes.py",
       "source_location": "L124",
-      "community": 23,
+      "community": 34,
       "norm_label": "toggle_status()",
       "id": "users_routes_toggle_status"
     },
@@ -6932,7 +6968,7 @@
       "file_type": "code",
       "source_file": "app/users/routes.py",
       "source_location": "L142",
-      "community": 23,
+      "community": 45,
       "norm_label": "send_password_reset()",
       "id": "users_routes_send_password_reset"
     },
@@ -6941,7 +6977,7 @@
       "file_type": "code",
       "source_file": "app/users/routes.py",
       "source_location": "L159",
-      "community": 23,
+      "community": 34,
       "norm_label": "search()",
       "id": "users_routes_search"
     },
@@ -7067,7 +7103,7 @@
       "file_type": "code",
       "source_file": "app/users/services/user_service.py",
       "source_location": "L294",
-      "community": 23,
+      "community": 45,
       "norm_label": ".generate_and_send_password_reset()",
       "id": "services_user_service_userservice_generate_and_send_password_reset"
     },
@@ -7157,7 +7193,7 @@
       "file_type": "code",
       "source_file": "app/warehouses/__init__.py",
       "source_location": "L1",
-      "community": 19,
+      "community": 46,
       "norm_label": "__init__.py",
       "id": "warehouses_init"
     },
@@ -7166,7 +7202,7 @@
       "file_type": "code",
       "source_file": "app/warehouses/routes.py",
       "source_location": "L1",
-      "community": 19,
+      "community": 46,
       "norm_label": "routes.py",
       "id": "warehouses_routes"
     },
@@ -7175,7 +7211,7 @@
       "file_type": "code",
       "source_file": "app/warehouses/routes.py",
       "source_location": "L15",
-      "community": 19,
+      "community": 46,
       "norm_label": "create()",
       "id": "warehouses_routes_create"
     },
@@ -7184,7 +7220,7 @@
       "file_type": "code",
       "source_file": "app/warehouses/routes.py",
       "source_location": "L23",
-      "community": 19,
+      "community": 46,
       "norm_label": "edit()",
       "id": "warehouses_routes_edit"
     },
@@ -7193,7 +7229,7 @@
       "file_type": "code",
       "source_file": "app/warehouses/routes.py",
       "source_location": "L32",
-      "community": 19,
+      "community": 46,
       "norm_label": "index()",
       "id": "warehouses_routes_index"
     },
@@ -7202,7 +7238,7 @@
       "file_type": "code",
       "source_file": "app/warehouses/routes.py",
       "source_location": "L48",
-      "community": 19,
+      "community": 46,
       "norm_label": "store()",
       "id": "warehouses_routes_store"
     },
@@ -7211,7 +7247,7 @@
       "file_type": "code",
       "source_file": "app/warehouses/routes.py",
       "source_location": "L79",
-      "community": 19,
+      "community": 46,
       "norm_label": "update()",
       "id": "warehouses_routes_update"
     },
@@ -7274,7 +7310,7 @@
       "file_type": "code",
       "source_file": "config.py",
       "source_location": "L1",
-      "community": 60,
+      "community": 42,
       "norm_label": "config.py",
       "id": "config"
     },
@@ -7283,7 +7319,7 @@
       "file_type": "code",
       "source_file": "config.py",
       "source_location": "L4",
-      "community": 60,
+      "community": 42,
       "norm_label": "config",
       "id": "config_config"
     },
@@ -7292,34 +7328,16 @@
       "file_type": "code",
       "source_file": "config.py",
       "source_location": "L46",
-      "community": 60,
+      "community": 42,
       "norm_label": ".init_app()",
       "id": "config_config_init_app"
-    },
-    {
-      "label": "expire_documents.py",
-      "file_type": "code",
-      "source_file": "expire_documents.py",
-      "source_location": "L1",
-      "community": 42,
-      "norm_label": "expire_documents.py",
-      "id": "expire_documents"
-    },
-    {
-      "label": "run_task()",
-      "file_type": "code",
-      "source_file": "expire_documents.py",
-      "source_location": "L18",
-      "community": 42,
-      "norm_label": "run_task()",
-      "id": "expire_documents_run_task"
     },
     {
       "label": "env.py",
       "file_type": "code",
       "source_file": "migrations/env.py",
       "source_location": "L1",
-      "community": 27,
+      "community": 44,
       "norm_label": "env.py",
       "id": "migrations_env"
     },
@@ -7328,7 +7346,7 @@
       "file_type": "code",
       "source_file": "migrations/env.py",
       "source_location": "L18",
-      "community": 27,
+      "community": 44,
       "norm_label": "get_engine()",
       "id": "migrations_env_get_engine"
     },
@@ -7337,7 +7355,7 @@
       "file_type": "code",
       "source_file": "migrations/env.py",
       "source_location": "L27",
-      "community": 27,
+      "community": 44,
       "norm_label": "get_engine_url()",
       "id": "migrations_env_get_engine_url"
     },
@@ -7346,7 +7364,7 @@
       "file_type": "code",
       "source_file": "migrations/env.py",
       "source_location": "L48",
-      "community": 27,
+      "community": 44,
       "norm_label": "get_metadata()",
       "id": "migrations_env_get_metadata"
     },
@@ -7355,7 +7373,7 @@
       "file_type": "code",
       "source_file": "migrations/env.py",
       "source_location": "L54",
-      "community": 27,
+      "community": 44,
       "norm_label": "run_migrations_offline()",
       "id": "migrations_env_run_migrations_offline"
     },
@@ -7364,7 +7382,7 @@
       "file_type": "code",
       "source_file": "migrations/env.py",
       "source_location": "L75",
-      "community": 27,
+      "community": 44,
       "norm_label": "run_migrations_online()",
       "id": "migrations_env_run_migrations_online"
     },
@@ -7373,7 +7391,7 @@
       "file_type": "rationale",
       "source_file": "migrations/env.py",
       "source_location": "L55",
-      "community": 27,
+      "community": 44,
       "norm_label": "run migrations in 'offline' mode.      this configures the context with just a u",
       "id": "migrations_env_rationale_55"
     },
@@ -7382,7 +7400,7 @@
       "file_type": "rationale",
       "source_file": "migrations/env.py",
       "source_location": "L76",
-      "community": 27,
+      "community": 44,
       "norm_label": "run migrations in 'online' mode.      in this scenario we need to create an engi",
       "id": "migrations_env_rationale_76"
     },
@@ -7553,7 +7571,7 @@
       "file_type": "code",
       "source_file": "migrations/versions/50c607698792_add_slug_to_company.py",
       "source_location": "L1",
-      "community": 98,
+      "community": 2,
       "norm_label": "50c607698792_add_slug_to_company.py",
       "id": "versions_50c607698792_add_slug_to_company"
     },
@@ -7562,7 +7580,7 @@
       "file_type": "code",
       "source_file": "migrations/versions/50c607698792_add_slug_to_company.py",
       "source_location": "L19",
-      "community": 98,
+      "community": 2,
       "norm_label": "upgrade()",
       "id": "versions_50c607698792_add_slug_to_company_upgrade"
     },
@@ -7571,7 +7589,7 @@
       "file_type": "code",
       "source_file": "migrations/versions/50c607698792_add_slug_to_company.py",
       "source_location": "L56",
-      "community": 98,
+      "community": 2,
       "norm_label": "downgrade()",
       "id": "versions_50c607698792_add_slug_to_company_downgrade"
     },
@@ -8777,7 +8795,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/dashboard_service.py",
       "source_location": "L23",
-      "community": 30,
+      "community": 4,
       "norm_label": ".get_dashboard_data()",
       "id": "services_dashboard_service_dashboardservice_get_dashboard_data"
     },
@@ -8795,7 +8813,7 @@
       "file_type": "code",
       "source_file": "app/orders/services/__init__.py",
       "source_location": "L1",
-      "community": 44,
+      "community": 11,
       "norm_label": "__init__.py",
       "id": "services_init"
     },
@@ -9997,7 +10015,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 34,
+      "community": 4,
       "norm_label": "projectservice",
       "id": "services_projectservice"
     },
@@ -10010,7 +10028,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 1,
       "norm_label": "projectservice.get_projects_list",
       "id": "services_projectservice_get_projects_list"
     },
@@ -10036,7 +10054,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 46,
+      "community": 5,
       "norm_label": "projectservice.export_report_pdf",
       "id": "services_projectservice_export_report_pdf"
     },
@@ -10049,7 +10067,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 46,
+      "community": 5,
       "norm_label": "projectservice._company_logo_data_uri",
       "id": "services_projectservice_company_logo_data_uri"
     },
@@ -10075,7 +10093,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 46,
+      "community": 5,
       "norm_label": "companies.store",
       "id": "routes_companies_store"
     },
@@ -10088,7 +10106,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 46,
+      "community": 5,
       "norm_label": "companies.update",
       "id": "routes_companies_update"
     },
@@ -10127,7 +10145,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 46,
+      "community": 5,
       "norm_label": "companyservice.create_company",
       "id": "services_companyservice_create_company"
     },
@@ -10140,7 +10158,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 46,
+      "community": 5,
       "norm_label": "companyservice.update_company",
       "id": "services_companyservice_update_company"
     },
@@ -10153,7 +10171,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 46,
+      "community": 5,
       "norm_label": "companyservice._save_logo",
       "id": "services_companyservice_save_logo"
     },
@@ -10166,7 +10184,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 46,
+      "community": 5,
       "norm_label": "companyservice._normalize_timezone",
       "id": "services_companyservice_normalize_timezone"
     },
@@ -10192,7 +10210,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 104,
+      "community": 5,
       "norm_label": "company model",
       "id": "company_company"
     },
@@ -10205,7 +10223,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 46,
+      "community": 5,
       "norm_label": "company.build_slug",
       "id": "company_build_slug"
     },
@@ -10244,7 +10262,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 16,
+      "community": 21,
       "norm_label": "update_invoice_or_quote",
       "id": "invoice_update_update_invoice_or_quote"
     },
@@ -10270,7 +10288,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 11,
       "norm_label": "create_purchase_order",
       "id": "purchase_order_create_purchase_order"
     },
@@ -10283,7 +10301,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 11,
       "norm_label": "update_purchase_order",
       "id": "purchase_order_update_purchase_order"
     },
@@ -10348,7 +10366,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 104,
+      "community": 5,
       "norm_label": "global search",
       "id": "routes_global_search"
     },
@@ -10387,7 +10405,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 104,
+      "community": 5,
       "norm_label": "company timezone and logo migration",
       "id": "versions_9f8e7d6c5b4a_company_timezone_logo_migration"
     },
@@ -10400,7 +10418,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 101,
+      "community": 16,
       "norm_label": "libro diario",
       "id": "accounting_journal_libro_diario"
     },
@@ -10413,7 +10431,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 101,
+      "community": 16,
       "norm_label": "libro mayor",
       "id": "accounting_ledger_libro_mayor"
     },
@@ -10426,7 +10444,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 102,
+      "community": 16,
       "norm_label": "project financial detail",
       "id": "accounting_project_detail_project_financial_detail"
     },
@@ -10439,7 +10457,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 102,
+      "community": 16,
       "norm_label": "financial reports",
       "id": "accounting_reports_financial_reports"
     },
@@ -10622,7 +10640,7 @@
       "author": null,
       "contributor": null,
       "rationale": "The journal template exposes modal workflows for voiding and deleting accounting transactions with CSRF-protected POST forms.",
-      "community": 101,
+      "community": 16,
       "norm_label": "transaction void delete workflow",
       "id": "accounting_journal_transaction_void_delete_workflow"
     },
@@ -10636,7 +10654,7 @@
       "author": null,
       "contributor": null,
       "rationale": "The reports templates coordinate report type selection, date ranges, HTML display, Excel export, and PDF rendering for accounting reports.",
-      "community": 102,
+      "community": 16,
       "norm_label": "financial reporting workflow",
       "id": "accounting_reports_financial_reporting_workflow"
     },
@@ -10699,6 +10717,837 @@
   ],
   "links": [
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/cli.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_cli",
+      "target": "app_cli_register_cli"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/cli.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_cli",
+      "target": "app_extensions"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/cli.py",
+      "source_location": "L130",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_cli",
+      "target": "app_init_create_app"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/cli.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_cli",
+      "target": "flask"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/cli.py",
+      "source_location": "L151",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_cli",
+      "target": "models_document_document"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/cli.py",
+      "source_location": "L152",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_cli",
+      "target": "models_enums_documentstatus"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/cli.py",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_cli",
+      "target": "models_permission"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/cli.py",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_cli",
+      "target": "models_role_role"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/cli.py",
+      "source_location": "L61",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_cli",
+      "target": "models_user_user"
+    },
+    {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "app/__init__.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_init",
+      "target": "app_cli"
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "app/cli.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_cli_register_cli",
+      "target": "flask"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/__init__.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_init",
+      "target": "app_cli_register_cli"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/__init__.py",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_init_create_app",
+      "target": "app_cli_register_cli"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "accounting_init",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "accounting_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/context_processors.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_context_processors",
+      "target": "flask"
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "app/context_processors.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_context_processors_register_context_processors",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/extensions.py",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_extensions",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_init",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/routes.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "app/routes.py",
+      "source_location": "L92",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_routes_register_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/utils.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_utils",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/auth/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "auth_init",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/auth/routes.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "auth_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/companies/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "companies_init",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/companies/routes.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "companies_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/contacts/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "contacts_init",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/contacts/routes.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "contacts_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/dashboard/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dashboard_init",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/dashboard/routes.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "dashboard_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/hr/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "hr_init",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/hr/routes.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "hr_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/inventory/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "inventory_init",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/inventory/routes.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "inventory_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_init",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/middleware/audit.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "middleware_audit",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/middleware/error_handler.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "middleware_error_handler",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/middleware/rbac.py",
+      "source_location": "L26",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "middleware_rbac",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "migrations/env.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "migrations_env",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/notifications/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "notifications_init",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/notifications/routes.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "notifications_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/orders/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "orders_init",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/orders/routes.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "orders_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/payments/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "payments_init",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/payments/routes.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "payments_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/services/accounting_service.py",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_accounting_service",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/auth/services/auth_service.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_auth_service",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/companies/services/company_service.py",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_companyservice",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/contacts/services/contact_service.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_contact_service",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/email_service.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_email_service",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/services/_helpers.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_helpers",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_create_service",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_pdf_service",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_query_service.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_query_service",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_update_service",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/payments/services/payment_service.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_payment_service",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/services/project_service.py",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_projectservice",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/orders/services/purchase_order_service.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_purchase_order_service",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/users/services/user_service.py",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_user_service",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/users/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "users_init",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/users/routes.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "users_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/warehouses/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "warehouses_init",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/warehouses/routes.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "warehouses_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "expire_documents.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "expire_documents",
+      "target": "app"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "expire_documents.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "expire_documents",
+      "target": "app_init_create_app"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "expire_documents.py",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "expire_documents",
+      "target": "datetime",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "expire_documents.py",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "expire_documents",
+      "target": "expire_documents_create_expired_invoice_notification",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "expire_documents.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "expire_documents",
+      "target": "expire_documents_invoice_link",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "expire_documents.py",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "expire_documents",
+      "target": "expire_documents_notification_exists",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "expire_documents.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "expire_documents",
+      "target": "expire_documents_run_task"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "expire_documents.py",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "expire_documents",
+      "target": "models_document_document"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "expire_documents.py",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "expire_documents",
+      "target": "models_enums_documentstatus"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "expire_documents.py",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "expire_documents_create_expired_invoice_notification",
+      "target": "expire_documents_invoice_link",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "expire_documents.py",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "expire_documents_create_expired_invoice_notification",
+      "target": "expire_documents_notification_exists",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "expire_documents.py",
+      "source_location": "L85",
+      "weight": 1.0,
+      "source": "expire_documents_run_task",
+      "target": "expire_documents_create_expired_invoice_notification",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -10715,9 +11564,9 @@
       "source_file": "app/blueprints.py",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_blueprints",
-      "target": "app_blueprints_register_blueprints",
-      "confidence_score": 1.0
+      "target": "app_blueprints_register_blueprints"
     },
     {
       "relation": "re_exports",
@@ -10737,9 +11586,9 @@
       "source_file": "app/blueprints.py",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_blueprints_register_blueprints",
-      "target": "app_blueprints_py_flask",
-      "confidence_score": 1.0
+      "target": "app_blueprints_py_flask"
     },
     {
       "relation": "re_exports",
@@ -10764,25 +11613,14 @@
       "target": "app_middleware_rbac_py_flask"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/middleware/rbac.py",
-      "source_location": "L26",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "middleware_rbac",
-      "target": "flask"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/middleware/rbac.py",
       "source_location": "L221",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "middleware_rbac",
-      "target": "middleware_rbac_init_rbac",
-      "confidence_score": 1.0
+      "target": "middleware_rbac_init_rbac"
     },
     {
       "relation": "contains",
@@ -10790,9 +11628,9 @@
       "source_file": "app/middleware/rbac.py",
       "source_location": "L257",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "middleware_rbac",
-      "target": "middleware_rbac_seed_default_roles_and_permissions",
-      "confidence_score": 1.0
+      "target": "middleware_rbac_seed_default_roles_and_permissions"
     },
     {
       "relation": "rationale_for",
@@ -10811,9 +11649,9 @@
       "source_file": "app/middleware/rbac.py",
       "source_location": "L221",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "middleware_rbac_init_rbac",
-      "target": "app_middleware_rbac_py_flask",
-      "confidence_score": 1.0
+      "target": "app_middleware_rbac_py_flask"
     },
     {
       "relation": "rationale_for",
@@ -10821,9 +11659,9 @@
       "source_file": "app/middleware/rbac.py",
       "source_location": "L222",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "middleware_rbac_rationale_222",
-      "target": "middleware_rbac_init_rbac",
-      "confidence_score": 1.0
+      "target": "middleware_rbac_init_rbac"
     },
     {
       "relation": "rationale_for",
@@ -10831,9 +11669,9 @@
       "source_file": "app/middleware/rbac.py",
       "source_location": "L258",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "middleware_rbac_rationale_258",
-      "target": "middleware_rbac_seed_default_roles_and_permissions",
-      "confidence_score": 1.0
+      "target": "middleware_rbac_seed_default_roles_and_permissions"
     },
     {
       "relation": "re_exports",
@@ -10895,9 +11733,9 @@
       "source_file": "app/models/notification.py",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "models_notification",
-      "target": "models_notification_notification",
-      "confidence_score": 1.0
+      "target": "models_notification_notification"
     },
     {
       "relation": "method",
@@ -10946,9 +11784,9 @@
       "source_file": "app/models/notification.py",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "models_notification_notification",
-      "target": "basemodel",
-      "confidence_score": 1.0
+      "target": "basemodel"
     },
     {
       "relation": "method",
@@ -10956,9 +11794,9 @@
       "source_file": "app/models/notification.py",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "models_notification_notification",
-      "target": "models_notification_notification_display_body",
-      "confidence_score": 1.0
+      "target": "models_notification_notification_display_body"
     },
     {
       "relation": "method",
@@ -10966,9 +11804,9 @@
       "source_file": "app/models/notification.py",
       "source_location": "L34",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "models_notification_notification",
-      "target": "models_notification_notification_is_unread",
-      "confidence_score": 1.0
+      "target": "models_notification_notification_is_unread"
     },
     {
       "relation": "method",
@@ -10976,9 +11814,9 @@
       "source_file": "app/models/notification.py",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "models_notification_notification",
-      "target": "models_notification_notification_repr",
-      "confidence_score": 1.0
+      "target": "models_notification_notification_repr"
     },
     {
       "relation": "calls",
@@ -11098,9 +11936,9 @@
       "source_file": "app/models/notification.py",
       "source_location": "L37",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "models_notification_notification_repr",
-      "target": "str",
-      "confidence_score": 1.0
+      "target": "str"
     },
     {
       "relation": "references",
@@ -11332,22 +12170,11 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/notifications/__init__.py",
-      "source_location": "L1",
+      "source_location": "L12",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "notifications_init",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/notifications/__init__.py",
-      "source_location": "L12",
-      "weight": 1.0,
-      "source": "notifications_init",
-      "target": "notifications_init",
-      "confidence_score": 1.0
+      "target": "notifications_init"
     },
     {
       "relation": "imports_from",
@@ -11370,17 +12197,6 @@
       "confidence_score": 1.0,
       "source": "notifications_routes",
       "target": "datetime"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/notifications/routes.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "notifications_routes",
-      "target": "flask"
     },
     {
       "relation": "contains",
@@ -11894,17 +12710,6 @@
       "target": "datetime"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/middleware/audit.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "middleware_audit",
-      "target": "flask"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/middleware/audit.py",
@@ -12062,17 +12867,6 @@
       "target": "datetime"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_create_service",
-      "target": "flask"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/invoices/services/invoice_create_service.py",
@@ -12223,17 +13017,6 @@
       "confidence_score": 1.0,
       "source": "services_invoice_update_service",
       "target": "datetime"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_update_service",
-      "target": "flask"
     },
     {
       "relation": "contains",
@@ -12470,17 +13253,6 @@
       "confidence_score": 1.0,
       "source": "services_purchase_order_service",
       "target": "datetime"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/orders/services/purchase_order_service.py",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_purchase_order_service",
-      "target": "flask"
     },
     {
       "relation": "imports",
@@ -12841,17 +13613,6 @@
       "target": "config_config"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/routes.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_routes",
-      "target": "flask"
-    },
-    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -12949,501 +13710,6 @@
       "confidence_score": 1.0,
       "source": "app_init_create_app",
       "target": "app_routes_register_routes"
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "app/routes.py",
-      "source_location": "L92",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_routes_register_routes",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/__init__.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "accounting_init",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "accounting_routes",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/cli.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_cli",
-      "target": "flask"
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "app/cli.py",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_cli_register_cli",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/context_processors.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_context_processors",
-      "target": "flask"
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "app/context_processors.py",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_context_processors_register_context_processors",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/extensions.py",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_extensions",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/__init__.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_init",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/utils.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_utils",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/auth/__init__.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "auth_init",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/auth/routes.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "auth_routes",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/companies/__init__.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "companies_init",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/companies/routes.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "companies_routes",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/contacts/__init__.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "contacts_init",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/contacts/routes.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "contacts_routes",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/dashboard/__init__.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "dashboard_init",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/dashboard/routes.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "dashboard_routes",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/hr/__init__.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "hr_init",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/hr/routes.py",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "hr_routes",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/inventory/__init__.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "inventory_init",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/inventory/routes.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "inventory_routes",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/__init__.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_init",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/middleware/error_handler.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "middleware_error_handler",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "migrations/env.py",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "migrations_env",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/orders/__init__.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "orders_init",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/orders/routes.py",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "orders_routes",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/payments/__init__.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "payments_init",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/payments/routes.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "payments_routes",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/services/accounting_service.py",
-      "source_location": "L19",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_accounting_service",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/auth/services/auth_service.py",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_auth_service",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/companies/services/company_service.py",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_companyservice",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/contacts/services/contact_service.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_contact_service",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/email_service.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_email_service",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/services/_helpers.py",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_helpers",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L19",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_pdf_service",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_query_service.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_query_service",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/payments/services/payment_service.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_payment_service",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/services/project_service.py",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_projectservice",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/users/services/user_service.py",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_user_service",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/users/__init__.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "users_init",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/users/routes.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "users_routes",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/warehouses/__init__.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "warehouses_init",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/warehouses/routes.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "warehouses_routes",
-      "target": "flask"
     },
     {
       "relation": "imports_from",
@@ -18666,39 +18932,6 @@
       "target": "app_init_create_app"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "expire_documents.py",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "expire_documents",
-      "target": "app"
-    },
-    {
-      "relation": "re_exports",
-      "context": "export",
-      "confidence": "EXTRACTED",
-      "source_file": "app/__init__.py",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_init",
-      "target": "app_cli"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/__init__.py",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_init",
-      "target": "app_cli_register_cli"
-    },
-    {
       "relation": "re_exports",
       "context": "export",
       "confidence": "EXTRACTED",
@@ -18830,28 +19063,6 @@
       "target": "middleware_init"
     },
     {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/cli.py",
-      "source_location": "L130",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_cli",
-      "target": "app_init_create_app"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/__init__.py",
-      "source_location": "L31",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_init_create_app",
-      "target": "app_cli_register_cli"
-    },
-    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
@@ -18905,17 +19116,6 @@
       "confidence_score": 1.0,
       "source": "app_init_create_app",
       "target": "middleware_error_handler_init_error_handlers"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "expire_documents.py",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "expire_documents",
-      "target": "app_init_create_app"
     },
     {
       "relation": "re_exports",
@@ -22003,114 +22203,6 @@
       "confidence_score": 1.0,
       "source": "services_auth_service_rationale_82",
       "target": "services_auth_service_authservice_validate_and_reset_password"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/cli.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_cli",
-      "target": "app_cli_py_flask"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/cli.py",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_cli",
-      "target": "app_cli_register_cli"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/cli.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_cli",
-      "target": "app_extensions"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/cli.py",
-      "source_location": "L151",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_cli",
-      "target": "models_document_document"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/cli.py",
-      "source_location": "L152",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_cli",
-      "target": "models_enums_documentstatus"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/cli.py",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_cli",
-      "target": "models_permission"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/cli.py",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_cli",
-      "target": "models_role_role"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/cli.py",
-      "source_location": "L61",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_cli",
-      "target": "models_user_user"
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "app/cli.py",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_cli_register_cli",
-      "target": "app_cli_py_flask"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "app/cli.py",
-      "source_location": "L152",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "app_cli_py_flask",
-      "target": "models_enums_documentstatus"
     },
     {
       "relation": "re_exports",
@@ -29105,17 +29197,6 @@
       "target": "models_enums_documenttype"
     },
     {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "expire_documents.py",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "expire_documents",
-      "target": "models_document_document"
-    },
-    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
@@ -30109,17 +30190,6 @@
       "confidence_score": 0.5,
       "source": "services_projectservice",
       "target": "models_enums_documenttype"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "expire_documents.py",
-      "source_location": "L12",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "expire_documents",
-      "target": "models_enums_documentstatus"
     },
     {
       "relation": "uses",
@@ -33635,16 +33705,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "expire_documents.py",
-      "source_location": "L18",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "expire_documents",
-      "target": "expire_documents_run_task"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "migrations/env.py",
       "source_location": "L18",
       "weight": 1.0,
@@ -36535,5 +36595,5 @@
       "source_file": "app/orders/templates/orders/form.html"
     }
   ],
-  "built_at_commit": "2e1ef1f0ed3a9e041fd30d42a6ac6dbc7ee7145f"
+  "built_at_commit": "6799c5497d2e401840e72fe193986ff0c48ae328"
 }
