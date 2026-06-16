@@ -225,9 +225,9 @@
     "semantic_hash": "2a0c0d0d6037280ee791167aeb94b2f7"
   },
   "app/middleware/audit.py": {
-    "mtime": 1780535281.7280767,
-    "ast_hash": "292202145e07a66e1b78223a8a2971c2",
-    "semantic_hash": "292202145e07a66e1b78223a8a2971c2"
+    "mtime": 1781570291.4658473,
+    "ast_hash": "39e675e469ca7c9563f3ab6c3202b476",
+    "semantic_hash": ""
   },
   "app/middleware/rbac.py": {
     "mtime": 1780967673.6614873,
