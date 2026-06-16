@@ -145,193 +145,283 @@
   },
   "nodes": [
     {
+      "label": "invoice_create_service.py",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L1",
+      "id": "services_invoice_create_service",
+      "community": 6,
+      "norm_label": "invoice_create_service.py"
+    },
+    {
+      "label": "_generate_document_number()",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L10",
+      "id": "services_invoice_create_service_generate_document_number",
+      "community": 6,
+      "norm_label": "_generate_document_number()"
+    },
+    {
+      "label": "create_invoice_or_quote()",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L53",
+      "id": "services_invoice_create_service_create_invoice_or_quote",
+      "community": 6,
+      "norm_label": "create_invoice_or_quote()"
+    },
+    {
+      "label": "invoice_update_service.py",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L1",
+      "id": "services_invoice_update_service",
+      "community": 6,
+      "norm_label": "invoice_update_service.py"
+    },
+    {
+      "label": "_company_tax_rate()",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L5",
+      "id": "services_invoice_update_service_company_tax_rate",
+      "community": 6,
+      "norm_label": "_company_tax_rate()"
+    },
+    {
+      "label": "update_invoice_or_quote()",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L12",
+      "id": "services_invoice_update_service_update_invoice_or_quote",
+      "community": 6,
+      "norm_label": "update_invoice_or_quote()"
+    },
+    {
+      "label": "delete_invoice_or_quote()",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L158",
+      "id": "services_invoice_update_service_delete_invoice_or_quote",
+      "community": 6,
+      "norm_label": "delete_invoice_or_quote()"
+    },
+    {
+      "label": "add_invoice_payment()",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L170",
+      "id": "services_invoice_update_service_add_invoice_payment",
+      "community": 6,
+      "norm_label": "add_invoice_payment()"
+    },
+    {
+      "label": "Soft delete an invoice or quote and its items.",
+      "file_type": "rationale",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L159",
+      "id": "services_invoice_update_service_rationale_159",
+      "community": 6,
+      "norm_label": "soft delete an invoice or quote and its items."
+    },
+    {
+      "label": "Add a payment to an invoice, post accounting income, and update its status.",
+      "file_type": "rationale",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L171",
+      "id": "services_invoice_update_service_rationale_171",
+      "community": 6,
+      "norm_label": "add a payment to an invoice, post accounting income, and update its status."
+    },
+    {
       "label": "purchase_order_service.py",
       "file_type": "code",
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L1",
-      "id": "services_purchase_order_service",
       "community": 14,
-      "norm_label": "purchase_order_service.py"
+      "norm_label": "purchase_order_service.py",
+      "id": "services_purchase_order_service"
     },
     {
       "label": "_purchase_cost_from_form()",
       "file_type": "code",
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L9",
-      "id": "services_purchase_order_service_purchase_cost_from_form",
       "community": 14,
-      "norm_label": "_purchase_cost_from_form()"
+      "norm_label": "_purchase_cost_from_form()",
+      "id": "services_purchase_order_service_purchase_cost_from_form"
     },
     {
       "label": "create_purchase_order()",
       "file_type": "code",
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L16",
-      "id": "services_purchase_order_service_create_purchase_order",
       "community": 14,
-      "norm_label": "create_purchase_order()"
+      "norm_label": "create_purchase_order()",
+      "id": "services_purchase_order_service_create_purchase_order"
     },
     {
       "label": "update_purchase_order()",
       "file_type": "code",
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L133",
-      "id": "services_purchase_order_service_update_purchase_order",
       "community": 14,
-      "norm_label": "update_purchase_order()"
+      "norm_label": "update_purchase_order()",
+      "id": "services_purchase_order_service_update_purchase_order"
     },
     {
       "label": "delete_purchase_order()",
       "file_type": "code",
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L339",
-      "id": "services_purchase_order_service_delete_purchase_order",
       "community": 14,
-      "norm_label": "delete_purchase_order()"
+      "norm_label": "delete_purchase_order()",
+      "id": "services_purchase_order_service_delete_purchase_order"
     },
     {
       "label": "int",
       "file_type": "code",
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L339",
-      "id": "int",
       "community": 14,
-      "norm_label": "int"
+      "norm_label": "int",
+      "id": "int"
     },
     {
       "label": "export_purchase_orders_xlsx()",
       "file_type": "code",
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L347",
-      "id": "services_purchase_order_service_export_purchase_orders_xlsx",
       "community": 14,
-      "norm_label": "export_purchase_orders_xlsx()"
+      "norm_label": "export_purchase_orders_xlsx()",
+      "id": "services_purchase_order_service_export_purchase_orders_xlsx"
     },
     {
       "label": "str",
       "file_type": "code",
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L347",
-      "id": "str",
       "community": 2,
-      "norm_label": "str"
+      "norm_label": "str",
+      "id": "str"
     },
     {
       "label": "Use the submitted purchase cost, falling back to the item's cost price.",
       "file_type": "rationale",
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L10",
-      "id": "services_purchase_order_service_rationale_10",
       "community": 14,
-      "norm_label": "use the submitted purchase cost, falling back to the item's cost price."
+      "norm_label": "use the submitted purchase cost, falling back to the item's cost price.",
+      "id": "services_purchase_order_service_rationale_10"
     },
     {
       "label": "Soft-delete a purchase order.",
       "file_type": "rationale",
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L340",
-      "id": "services_purchase_order_service_rationale_340",
       "community": 14,
-      "norm_label": "soft-delete a purchase order."
+      "norm_label": "soft-delete a purchase order.",
+      "id": "services_purchase_order_service_rationale_340"
     },
     {
       "label": "Return (workbook, filename) tuple for all purchase orders matching criteria.",
       "file_type": "rationale",
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L348",
-      "id": "services_purchase_order_service_rationale_348",
       "community": 14,
-      "norm_label": "return (workbook, filename) tuple for all purchase orders matching criteria."
+      "norm_label": "return (workbook, filename) tuple for all purchase orders matching criteria.",
+      "id": "services_purchase_order_service_rationale_348"
     },
     {
       "label": "routes.py",
       "file_type": "code",
       "source_file": "app/routes.py",
       "source_location": "L1",
-      "id": "app_routes",
       "community": 47,
-      "norm_label": "routes.py"
+      "norm_label": "routes.py",
+      "id": "app_routes"
     },
     {
       "label": "_search_tokens()",
       "file_type": "code",
       "source_file": "app/routes.py",
       "source_location": "L22",
-      "id": "app_routes_search_tokens",
       "community": 47,
-      "norm_label": "_search_tokens()"
+      "norm_label": "_search_tokens()",
+      "id": "app_routes_search_tokens"
     },
     {
       "label": "_field_values()",
       "file_type": "code",
       "source_file": "app/routes.py",
       "source_location": "L26",
-      "id": "app_routes_field_values",
       "community": 47,
-      "norm_label": "_field_values()"
+      "norm_label": "_field_values()",
+      "id": "app_routes_field_values"
     },
     {
       "label": "_match_context()",
       "file_type": "code",
       "source_file": "app/routes.py",
       "source_location": "L30",
-      "id": "app_routes_match_context",
       "community": 47,
-      "norm_label": "_match_context()"
+      "norm_label": "_match_context()",
+      "id": "app_routes_match_context"
     },
     {
       "label": "_result()",
       "file_type": "code",
       "source_file": "app/routes.py",
       "source_location": "L60",
-      "id": "app_routes_result",
       "community": 47,
-      "norm_label": "_result()"
+      "norm_label": "_result()",
+      "id": "app_routes_result"
     },
     {
       "label": "_enum_label()",
       "file_type": "code",
       "source_file": "app/routes.py",
       "source_location": "L73",
-      "id": "app_routes_enum_label",
       "community": 47,
-      "norm_label": "_enum_label()"
+      "norm_label": "_enum_label()",
+      "id": "app_routes_enum_label"
     },
     {
       "label": "_money()",
       "file_type": "code",
       "source_file": "app/routes.py",
       "source_location": "L77",
-      "id": "app_routes_money",
       "community": 47,
-      "norm_label": "_money()"
+      "norm_label": "_money()",
+      "id": "app_routes_money"
     },
     {
       "label": "_selected_company_scope()",
       "file_type": "code",
       "source_file": "app/routes.py",
       "source_location": "L84",
-      "id": "app_routes_selected_company_scope",
       "community": 47,
-      "norm_label": "_selected_company_scope()"
+      "norm_label": "_selected_company_scope()",
+      "id": "app_routes_selected_company_scope"
     },
     {
       "label": "register_routes()",
       "file_type": "code",
       "source_file": "app/routes.py",
       "source_location": "L92",
-      "id": "app_routes_register_routes",
       "community": 47,
-      "norm_label": "register_routes()"
+      "norm_label": "register_routes()",
+      "id": "app_routes_register_routes"
     },
     {
       "label": "Flask",
       "file_type": "code",
       "source_file": "app/routes.py",
       "source_location": "L92",
-      "id": "flask",
-      "community": 0,
-      "norm_label": "flask"
+      "community": 22,
+      "norm_label": "flask",
+      "id": "flask"
     },
     {
       "label": "_balance.py",
@@ -1661,7 +1751,7 @@
       "file_type": "code",
       "source_file": "app.py",
       "source_location": "L1",
-      "community": 83,
+      "community": 15,
       "norm_label": "app.py",
       "id": "app"
     },
@@ -1679,7 +1769,7 @@
       "file_type": "code",
       "source_file": "app/__init__.py",
       "source_location": "L15",
-      "community": 83,
+      "community": 15,
       "norm_label": "create_app()",
       "id": "app_init_create_app"
     },
@@ -1688,7 +1778,7 @@
       "file_type": "code",
       "source_file": "app/accounting/__init__.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 22,
       "norm_label": "__init__.py",
       "id": "accounting_init"
     },
@@ -2426,7 +2516,7 @@
       "file_type": "code",
       "source_file": "app/auth/__init__.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 22,
       "norm_label": "__init__.py",
       "id": "auth_init"
     },
@@ -2435,7 +2525,7 @@
       "file_type": "code",
       "source_file": "app/auth/routes.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 22,
       "norm_label": "routes.py",
       "id": "auth_routes"
     },
@@ -2444,7 +2534,7 @@
       "file_type": "code",
       "source_file": "app/auth/routes.py",
       "source_location": "L13",
-      "community": 0,
+      "community": 22,
       "norm_label": "login()",
       "id": "auth_routes_login"
     },
@@ -2453,7 +2543,7 @@
       "file_type": "code",
       "source_file": "app/auth/routes.py",
       "source_location": "L39",
-      "community": 0,
+      "community": 22,
       "norm_label": "logout()",
       "id": "auth_routes_logout"
     },
@@ -2462,7 +2552,7 @@
       "file_type": "code",
       "source_file": "app/auth/routes.py",
       "source_location": "L46",
-      "community": 0,
+      "community": 22,
       "norm_label": "register()",
       "id": "auth_routes_register"
     },
@@ -2471,7 +2561,7 @@
       "file_type": "code",
       "source_file": "app/auth/routes.py",
       "source_location": "L52",
-      "community": 0,
+      "community": 22,
       "norm_label": "forgot_password()",
       "id": "auth_routes_forgot_password"
     },
@@ -2480,7 +2570,7 @@
       "file_type": "code",
       "source_file": "app/auth/routes.py",
       "source_location": "L67",
-      "community": 0,
+      "community": 22,
       "norm_label": "reset_password()",
       "id": "auth_routes_reset_password"
     },
@@ -2597,7 +2687,7 @@
       "file_type": "code",
       "source_file": "app/blueprints.py",
       "source_location": "L1",
-      "community": 83,
+      "community": 24,
       "norm_label": "blueprints.py",
       "id": "app_blueprints"
     },
@@ -2606,7 +2696,7 @@
       "file_type": "code",
       "source_file": "app/blueprints.py",
       "source_location": "L16",
-      "community": 83,
+      "community": 24,
       "norm_label": "register_blueprints()",
       "id": "app_blueprints_register_blueprints"
     },
@@ -2615,7 +2705,7 @@
       "file_type": "code",
       "source_file": "app/blueprints.py",
       "source_location": "L16",
-      "community": 83,
+      "community": 24,
       "norm_label": "flask",
       "id": "app_blueprints_py_flask"
     },
@@ -3245,7 +3335,7 @@
       "file_type": "code",
       "source_file": "app/inventory/__init__.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 22,
       "norm_label": "__init__.py",
       "id": "inventory_init"
     },
@@ -3812,7 +3902,7 @@
       "file_type": "code",
       "source_file": "app/invoices/__init__.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 22,
       "norm_label": "__init__.py",
       "id": "invoices_init"
     },
@@ -4013,33 +4103,6 @@
       "community": 27,
       "norm_label": "post a balanced income transaction for an invoice payment.      the transactio",
       "id": "services_accounting_integration_rationale_57"
-    },
-    {
-      "label": "invoice_create_service.py",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L1",
-      "community": 6,
-      "norm_label": "invoice_create_service.py",
-      "id": "services_invoice_create_service"
-    },
-    {
-      "label": "_generate_document_number()",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L10",
-      "community": 6,
-      "norm_label": "_generate_document_number()",
-      "id": "services_invoice_create_service_generate_document_number"
-    },
-    {
-      "label": "create_invoice_or_quote()",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L53",
-      "community": 6,
-      "norm_label": "create_invoice_or_quote()",
-      "id": "services_invoice_create_service_create_invoice_or_quote"
     },
     {
       "label": "invoice_pdf_service.py",
@@ -4247,60 +4310,6 @@
       "community": 6,
       "norm_label": "get_invoice_list()",
       "id": "services_invoice_query_service_get_invoice_list"
-    },
-    {
-      "label": "invoice_update_service.py",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L1",
-      "community": 6,
-      "norm_label": "invoice_update_service.py",
-      "id": "services_invoice_update_service"
-    },
-    {
-      "label": "update_invoice_or_quote()",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L6",
-      "community": 6,
-      "norm_label": "update_invoice_or_quote()",
-      "id": "services_invoice_update_service_update_invoice_or_quote"
-    },
-    {
-      "label": "delete_invoice_or_quote()",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L152",
-      "community": 6,
-      "norm_label": "delete_invoice_or_quote()",
-      "id": "services_invoice_update_service_delete_invoice_or_quote"
-    },
-    {
-      "label": "add_invoice_payment()",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L164",
-      "community": 6,
-      "norm_label": "add_invoice_payment()",
-      "id": "services_invoice_update_service_add_invoice_payment"
-    },
-    {
-      "label": "Soft delete an invoice or quote and its items.",
-      "file_type": "rationale",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L153",
-      "community": 6,
-      "norm_label": "soft delete an invoice or quote and its items.",
-      "id": "services_invoice_update_service_rationale_153"
-    },
-    {
-      "label": "Add a payment to an invoice, post accounting income, and update its status.",
-      "file_type": "rationale",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L165",
-      "community": 6,
-      "norm_label": "add a payment to an invoice, post accounting income, and update its status.",
-      "id": "services_invoice_update_service_rationale_165"
     },
     {
       "label": "__init__.py",
@@ -4514,7 +4523,7 @@
       "file_type": "code",
       "source_file": "app/middleware/audit.py",
       "source_location": "L1",
-      "community": 15,
+      "community": 49,
       "norm_label": "audit.py",
       "id": "middleware_audit"
     },
@@ -4523,7 +4532,7 @@
       "file_type": "code",
       "source_file": "app/middleware/audit.py",
       "source_location": "L15",
-      "community": 15,
+      "community": 49,
       "norm_label": "alchemyencoder",
       "id": "middleware_audit_alchemyencoder"
     },
@@ -4532,7 +4541,7 @@
       "file_type": "code",
       "source_file": "app/middleware/audit.py",
       "source_location": "L16",
-      "community": 15,
+      "community": 49,
       "norm_label": ".default()",
       "id": "middleware_audit_alchemyencoder_default"
     },
@@ -4541,7 +4550,7 @@
       "file_type": "code",
       "source_file": "app/middleware/audit.py",
       "source_location": "L28",
-      "community": 15,
+      "community": 49,
       "norm_label": "auditmiddleware",
       "id": "middleware_audit_auditmiddleware"
     },
@@ -4550,7 +4559,7 @@
       "file_type": "code",
       "source_file": "app/middleware/audit.py",
       "source_location": "L30",
-      "community": 15,
+      "community": 49,
       "norm_label": ".log_change()",
       "id": "middleware_audit_auditmiddleware_log_change"
     },
@@ -4559,7 +4568,7 @@
       "file_type": "code",
       "source_file": "app/middleware/audit.py",
       "source_location": "L90",
-      "community": 15,
+      "community": 49,
       "norm_label": "get_model_changes()",
       "id": "middleware_audit_get_model_changes"
     },
@@ -4577,7 +4586,7 @@
       "file_type": "rationale",
       "source_file": "app/middleware/audit.py",
       "source_location": "L31",
-      "community": 15,
+      "community": 49,
       "norm_label": "manually log a change. useful if automated listeners are not enough.",
       "id": "middleware_audit_rationale_31"
     },
@@ -4586,7 +4595,7 @@
       "file_type": "rationale",
       "source_file": "app/middleware/audit.py",
       "source_location": "L91",
-      "community": 15,
+      "community": 49,
       "norm_label": "helper to detect changed attributes and their values.",
       "id": "middleware_audit_rationale_91"
     },
@@ -6674,7 +6683,7 @@
       "file_type": "code",
       "source_file": "app/services/email_service.py",
       "source_location": "L1",
-      "community": 49,
+      "community": 0,
       "norm_label": "email_service.py",
       "id": "services_email_service"
     },
@@ -6683,7 +6692,7 @@
       "file_type": "code",
       "source_file": "app/services/email_service.py",
       "source_location": "L9",
-      "community": 49,
+      "community": 0,
       "norm_label": ".send_async_email()",
       "id": "services_email_service_emailservice_send_async_email"
     },
@@ -6692,7 +6701,7 @@
       "file_type": "code",
       "source_file": "app/services/email_service.py",
       "source_location": "L17",
-      "community": 49,
+      "community": 0,
       "norm_label": ".send_email()",
       "id": "services_email_service_emailservice_send_email"
     },
@@ -6701,7 +6710,7 @@
       "file_type": "code",
       "source_file": "app/services/email_service.py",
       "source_location": "L30",
-      "community": 49,
+      "community": 0,
       "norm_label": ".notify_error()",
       "id": "services_email_service_emailservice_notify_error"
     },
@@ -6710,7 +6719,7 @@
       "file_type": "rationale",
       "source_file": "app/services/email_service.py",
       "source_location": "L31",
-      "community": 49,
+      "community": 0,
       "norm_label": "sends an error notification to the configured admin email.",
       "id": "services_email_service_rationale_31"
     },
@@ -6719,7 +6728,7 @@
       "file_type": "rationale",
       "source_file": "app/services/email_service.py",
       "source_location": "L53",
-      "community": 49,
+      "community": 0,
       "norm_label": "sends a password reset email.",
       "id": "services_email_service_rationale_53"
     },
@@ -6908,7 +6917,7 @@
       "file_type": "code",
       "source_file": "app/users/routes.py",
       "source_location": "L142",
-      "community": 49,
+      "community": 0,
       "norm_label": "send_password_reset()",
       "id": "users_routes_send_password_reset"
     },
@@ -7043,7 +7052,7 @@
       "file_type": "code",
       "source_file": "app/users/services/user_service.py",
       "source_location": "L294",
-      "community": 49,
+      "community": 0,
       "norm_label": ".generate_and_send_password_reset()",
       "id": "services_user_service_userservice_generate_and_send_password_reset"
     },
@@ -7277,7 +7286,7 @@
       "file_type": "code",
       "source_file": "expire_documents.py",
       "source_location": "L1",
-      "community": 83,
+      "community": 15,
       "norm_label": "expire_documents.py",
       "id": "expire_documents"
     },
@@ -7286,7 +7295,7 @@
       "file_type": "code",
       "source_file": "expire_documents.py",
       "source_location": "L18",
-      "community": 83,
+      "community": 15,
       "norm_label": "run_task()",
       "id": "expire_documents_run_task"
     },
@@ -8767,15 +8776,6 @@
       "id": "services_income_service_resolve_debit_account"
     },
     {
-      "label": "Add a payment to an invoice and update its status.",
-      "file_type": "rationale",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L162",
-      "community": 6,
-      "norm_label": "add a payment to an invoice and update its status.",
-      "id": "services_invoice_update_service_rationale_162"
-    },
-    {
       "label": "__init__.py",
       "file_type": "code",
       "source_file": "app/orders/services/__init__.py",
@@ -9271,7 +9271,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Lists employees with search, active/inactive filtering, class filtering, PTO balance visibility, and drawer-based create/edit/delete actions.",
-      "community": 36,
+      "community": 83,
       "norm_label": "employee directory",
       "id": "hr_employees_employee_directory"
     },
@@ -9285,7 +9285,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Captures personal information, optional linked user, employment classification, dates, standard working hours/days, compensation, PTO accrual, and notes.",
-      "community": 36,
+      "community": 83,
       "norm_label": "employee editor drawer",
       "id": "hr_employee_form_employee_editor_drawer"
     },
@@ -9299,7 +9299,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Defines an employee's PTO balance, accrual rate, and accrual period so leave workflows can show or consume available time off.",
-      "community": 36,
+      "community": 83,
       "norm_label": "pto configuration",
       "id": "hr_employee_form_pto_configuration"
     },
@@ -9827,6 +9827,669 @@
       "relation": "re_exports",
       "context": "export",
       "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/__init__.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_init_py_services_init",
+      "target": "services_invoice_create_service"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "services_invoice_create_service"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "services_invoice_create_service",
+      "target": "datetime",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_create_service",
+      "target": "flask"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_create_service",
+      "target": "models_document_document"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_create_service",
+      "target": "models_document_item"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_create_service",
+      "target": "models_document_sequence"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_create_service",
+      "target": "models_enums_documenttype"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_create_service",
+      "target": "models_enums_paymentmethod"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_create_service",
+      "target": "models_enums_stockmovementtype"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_create_service",
+      "target": "models_inventory_item"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_create_service",
+      "target": "models_payment_payment"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_create_service",
+      "target": "models_stock_movement"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L113",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_create_service",
+      "target": "models_warehouse_item"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L53",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_create_service",
+      "target": "services_invoice_create_service_create_invoice_or_quote"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_create_service",
+      "target": "services_invoice_create_service_generate_document_number"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "services_invoice_create_service_generate_document_number"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L294",
+      "weight": 1.0,
+      "source": "invoices_routes_update",
+      "target": "services_invoice_create_service_generate_document_number"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L58",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_create_service_create_invoice_or_quote",
+      "target": "services_invoice_create_service_generate_document_number"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/__init__.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_init_py_services_init",
+      "target": "services_invoice_create_service_create_invoice_or_quote"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "services_invoice_create_service_create_invoice_or_quote"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L116",
+      "weight": 1.0,
+      "source": "invoices_routes_store",
+      "target": "services_invoice_create_service_create_invoice_or_quote"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L72",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_create_service_create_invoice_or_quote",
+      "target": "models_document_document"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L133",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_create_service_create_invoice_or_quote",
+      "target": "models_document_item"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L151",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_create_service_create_invoice_or_quote",
+      "target": "models_payment_payment"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L121",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_create_service_create_invoice_or_quote",
+      "target": "models_stock_movement"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L116",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_create_service_create_invoice_or_quote",
+      "target": "models_warehouse_item"
+    },
+    {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/__init__.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_init_py_services_init",
+      "target": "services_invoice_update_service"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "services_invoice_update_service",
+      "target": "datetime",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_update_service",
+      "target": "flask"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_update_service",
+      "target": "models_document_item"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L167",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_update_service",
+      "target": "models_enums_documentstatus"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_update_service",
+      "target": "models_enums_documenttype"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L166",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_update_service",
+      "target": "models_enums_paymentmethod"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_update_service",
+      "target": "models_enums_stockmovementtype"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_update_service",
+      "target": "models_inventory_item"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L159",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_update_service",
+      "target": "models_payment_payment"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_update_service",
+      "target": "models_stock_movement"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L104",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_update_service",
+      "target": "models_warehouse_item"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L168",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_update_service",
+      "target": "services_accounting_integration_post_invoice_payment_income"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L164",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_update_service",
+      "target": "services_invoice_update_service_add_invoice_payment"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "services_invoice_update_service",
+      "target": "services_invoice_update_service_company_tax_rate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L152",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_update_service",
+      "target": "services_invoice_update_service_delete_invoice_or_quote"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_update_service",
+      "target": "services_invoice_update_service_update_invoice_or_quote"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L145",
+      "weight": 1.0,
+      "source": "services_invoice_update_service_update_invoice_or_quote",
+      "target": "services_invoice_update_service_company_tax_rate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/__init__.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_init_py_services_init",
+      "target": "services_invoice_update_service_update_invoice_or_quote"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "services_invoice_update_service_update_invoice_or_quote"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L317",
+      "weight": 1.0,
+      "source": "invoices_routes_update",
+      "target": "services_invoice_update_service_update_invoice_or_quote"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L48",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_update_service_update_invoice_or_quote",
+      "target": "models_document_item"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L125",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_update_service_update_invoice_or_quote",
+      "target": "models_stock_movement"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L108",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_update_service_update_invoice_or_quote",
+      "target": "models_warehouse_item"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/__init__.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_init_py_services_init",
+      "target": "services_invoice_update_service_delete_invoice_or_quote"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L328",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "services_invoice_update_service_delete_invoice_or_quote"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L364",
+      "weight": 1.0,
+      "source": "invoices_routes_delete",
+      "target": "services_invoice_update_service_delete_invoice_or_quote"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L159",
+      "weight": 1.0,
+      "source": "services_invoice_update_service_rationale_159",
+      "target": "services_invoice_update_service_delete_invoice_or_quote",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/__init__.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_init_py_services_init",
+      "target": "services_invoice_update_service_add_invoice_payment"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L179",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "invoices_routes",
+      "target": "services_invoice_update_service_add_invoice_payment"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L201",
+      "weight": 1.0,
+      "source": "invoices_routes_add_payment",
+      "target": "services_invoice_update_service_add_invoice_payment"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L172",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_update_service_add_invoice_payment",
+      "target": "models_payment_payment"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L192",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "services_invoice_update_service_add_invoice_payment",
+      "target": "services_accounting_integration_post_invoice_payment_income"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L171",
+      "weight": 1.0,
+      "source": "services_invoice_update_service_rationale_171",
+      "target": "services_invoice_update_service_add_invoice_payment",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
       "source_file": "app/orders/services/__init__.py",
       "source_location": "L2",
       "weight": 1.0,
@@ -9841,9 +10504,9 @@
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_purchase_order_service",
-      "target": "datetime",
-      "confidence_score": 1.0
+      "target": "datetime"
     },
     {
       "relation": "imports_from",
@@ -9980,9 +10643,9 @@
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_purchase_order_service",
-      "target": "services_purchase_order_service_purchase_cost_from_form",
-      "confidence_score": 1.0
+      "target": "services_purchase_order_service_purchase_cost_from_form"
     },
     {
       "relation": "contains",
@@ -10001,9 +10664,9 @@
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L78",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_purchase_order_service_create_purchase_order",
-      "target": "services_purchase_order_service_purchase_cost_from_form",
-      "confidence_score": 1.0
+      "target": "services_purchase_order_service_purchase_cost_from_form"
     },
     {
       "relation": "rationale_for",
@@ -10011,9 +10674,9 @@
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_purchase_order_service_rationale_10",
-      "target": "services_purchase_order_service_purchase_cost_from_form",
-      "confidence_score": 1.0
+      "target": "services_purchase_order_service_purchase_cost_from_form"
     },
     {
       "relation": "calls",
@@ -10022,9 +10685,9 @@
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L177",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_purchase_order_service_update_purchase_order",
-      "target": "services_purchase_order_service_purchase_cost_from_form",
-      "confidence_score": 1.0
+      "target": "services_purchase_order_service_purchase_cost_from_form"
     },
     {
       "relation": "imports",
@@ -10209,9 +10872,9 @@
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L339",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_purchase_order_service_delete_purchase_order",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "rationale_for",
@@ -10219,9 +10882,9 @@
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L340",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_purchase_order_service_rationale_340",
-      "target": "services_purchase_order_service_delete_purchase_order",
-      "confidence_score": 1.0
+      "target": "services_purchase_order_service_delete_purchase_order"
     },
     {
       "relation": "references",
@@ -10230,9 +10893,9 @@
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L347",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_purchase_order_service_export_purchase_orders_xlsx",
-      "target": "int",
-      "confidence_score": 1.0
+      "target": "int"
     },
     {
       "relation": "imports",
@@ -10285,9 +10948,9 @@
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L347",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_purchase_order_service_export_purchase_orders_xlsx",
-      "target": "str",
-      "confidence_score": 1.0
+      "target": "str"
     },
     {
       "relation": "rationale_for",
@@ -10295,9 +10958,9 @@
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L348",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_purchase_order_service_rationale_348",
-      "target": "services_purchase_order_service_export_purchase_orders_xlsx",
-      "confidence_score": 1.0
+      "target": "services_purchase_order_service_export_purchase_orders_xlsx"
     },
     {
       "relation": "references",
@@ -10530,9 +11193,9 @@
       "source_file": "app/routes.py",
       "source_location": "L73",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_routes",
-      "target": "app_routes_enum_label",
-      "confidence_score": 1.0
+      "target": "app_routes_enum_label"
     },
     {
       "relation": "contains",
@@ -10540,9 +11203,9 @@
       "source_file": "app/routes.py",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_routes",
-      "target": "app_routes_field_values",
-      "confidence_score": 1.0
+      "target": "app_routes_field_values"
     },
     {
       "relation": "contains",
@@ -10550,9 +11213,9 @@
       "source_file": "app/routes.py",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_routes",
-      "target": "app_routes_match_context",
-      "confidence_score": 1.0
+      "target": "app_routes_match_context"
     },
     {
       "relation": "contains",
@@ -10560,9 +11223,9 @@
       "source_file": "app/routes.py",
       "source_location": "L77",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_routes",
-      "target": "app_routes_money",
-      "confidence_score": 1.0
+      "target": "app_routes_money"
     },
     {
       "relation": "contains",
@@ -10580,9 +11243,9 @@
       "source_file": "app/routes.py",
       "source_location": "L60",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_routes",
-      "target": "app_routes_result",
-      "confidence_score": 1.0
+      "target": "app_routes_result"
     },
     {
       "relation": "contains",
@@ -10590,9 +11253,9 @@
       "source_file": "app/routes.py",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_routes",
-      "target": "app_routes_search_tokens",
-      "confidence_score": 1.0
+      "target": "app_routes_search_tokens"
     },
     {
       "relation": "contains",
@@ -10600,9 +11263,9 @@
       "source_file": "app/routes.py",
       "source_location": "L84",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_routes",
-      "target": "app_routes_selected_company_scope",
-      "confidence_score": 1.0
+      "target": "app_routes_selected_company_scope"
     },
     {
       "relation": "imports_from",
@@ -10633,9 +11296,9 @@
       "source_file": "app/routes.py",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_routes",
-      "target": "flask",
-      "confidence_score": 1.0
+      "target": "flask"
     },
     {
       "relation": "imports",
@@ -10699,9 +11362,9 @@
       "source_file": "app/routes.py",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_routes_match_context",
-      "target": "app_routes_search_tokens",
-      "confidence_score": 1.0
+      "target": "app_routes_search_tokens"
     },
     {
       "relation": "calls",
@@ -10710,9 +11373,9 @@
       "source_file": "app/routes.py",
       "source_location": "L61",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_routes_result",
-      "target": "app_routes_match_context",
-      "confidence_score": 1.0
+      "target": "app_routes_match_context"
     },
     {
       "relation": "imports",
@@ -10743,9 +11406,9 @@
       "source_file": "app/routes.py",
       "source_location": "L92",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_routes_register_routes",
-      "target": "flask",
-      "confidence_score": 1.0
+      "target": "flask"
     },
     {
       "relation": "imports_from",
@@ -11169,17 +11832,6 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_create_service",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L19",
       "weight": 1.0,
@@ -11196,17 +11848,6 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "services_invoice_query_service",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_update_service",
       "target": "flask"
     },
     {
@@ -24018,39 +24659,6 @@
       "target": "models_warehouse"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L16",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "services_invoice_create_service"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "services_invoice_create_service_create_invoice_or_quote"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L16",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "services_invoice_create_service_generate_document_number"
-    },
-    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -24071,39 +24679,6 @@
       "confidence_score": 1.0,
       "source": "invoices_routes",
       "target": "services_invoice_query_service_get_invoice_list"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L179",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "services_invoice_update_service_add_invoice_payment"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L328",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "services_invoice_update_service_delete_invoice_or_quote"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "invoices_routes",
-      "target": "services_invoice_update_service_update_invoice_or_quote"
     },
     {
       "relation": "calls",
@@ -24155,17 +24730,6 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/invoices/routes.py",
-      "source_location": "L116",
-      "weight": 1.0,
-      "source": "invoices_routes_store",
-      "target": "services_invoice_create_service_create_invoice_or_quote"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/invoices/routes.py",
       "source_location": "L141",
       "weight": 1.0,
       "source": "invoices_routes_view",
@@ -24181,17 +24745,6 @@
       "weight": 1.0,
       "source": "invoices_routes_add_payment",
       "target": "app_utils_resolve_company"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L201",
-      "weight": 1.0,
-      "source": "invoices_routes_add_payment",
-      "target": "services_invoice_update_service_add_invoice_payment"
     },
     {
       "relation": "calls",
@@ -24221,43 +24774,10 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "app/invoices/routes.py",
-      "source_location": "L294",
-      "weight": 1.0,
-      "source": "invoices_routes_update",
-      "target": "services_invoice_create_service_generate_document_number"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L317",
-      "weight": 1.0,
-      "source": "invoices_routes_update",
-      "target": "services_invoice_update_service_update_invoice_or_quote"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/invoices/routes.py",
       "source_location": "L346",
       "weight": 1.0,
       "source": "invoices_routes_delete",
       "target": "app_utils_resolve_company"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L364",
-      "weight": 1.0,
-      "source": "invoices_routes_delete",
-      "target": "services_invoice_update_service_delete_invoice_or_quote"
     },
     {
       "relation": "calls",
@@ -24280,28 +24800,6 @@
       "weight": 1.0,
       "source": "invoices_routes_print_invoice",
       "target": "services_invoice_pdf_service_generate_invoice_pdf"
-    },
-    {
-      "relation": "re_exports",
-      "context": "export",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/__init__.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_init_py_services_init",
-      "target": "services_invoice_create_service"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/__init__.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_init_py_services_init",
-      "target": "services_invoice_create_service_create_invoice_or_quote"
     },
     {
       "relation": "re_exports",
@@ -24346,50 +24844,6 @@
       "confidence_score": 1.0,
       "source": "app_invoices_services_init_py_services_init",
       "target": "services_invoice_query_service_get_invoice_list"
-    },
-    {
-      "relation": "re_exports",
-      "context": "export",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/__init__.py",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_init_py_services_init",
-      "target": "services_invoice_update_service"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/__init__.py",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_init_py_services_init",
-      "target": "services_invoice_update_service_add_invoice_payment"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/__init__.py",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_init_py_services_init",
-      "target": "services_invoice_update_service_delete_invoice_or_quote"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/__init__.py",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_init_py_services_init",
-      "target": "services_invoice_update_service_update_invoice_or_quote"
     },
     {
       "relation": "imports",
@@ -24615,28 +25069,6 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L168",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_update_service",
-      "target": "services_accounting_integration_post_invoice_payment_income"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L192",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_update_service_add_invoice_payment",
-      "target": "services_accounting_integration_post_invoice_payment_income"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "app/payments/services/payment_service.py",
       "source_location": "L166",
       "weight": 1.0,
@@ -24654,202 +25086,6 @@
       "weight": 1.0,
       "source": "services_payment_service_paymentservice_create_payment",
       "target": "services_accounting_integration_post_invoice_payment_income"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_create_service",
-      "target": "models_document_document"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_create_service",
-      "target": "models_document_item"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_create_service",
-      "target": "models_document_sequence"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_create_service",
-      "target": "models_enums_documenttype"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_create_service",
-      "target": "models_enums_paymentmethod"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_create_service",
-      "target": "models_enums_stockmovementtype"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_create_service",
-      "target": "models_inventory_item"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_create_service",
-      "target": "models_payment_payment"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_create_service",
-      "target": "models_stock_movement"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L113",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_create_service",
-      "target": "models_warehouse_item"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L53",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_create_service",
-      "target": "services_invoice_create_service_create_invoice_or_quote"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_create_service",
-      "target": "services_invoice_create_service_generate_document_number"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L58",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_create_service_create_invoice_or_quote",
-      "target": "services_invoice_create_service_generate_document_number"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L72",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_create_service_create_invoice_or_quote",
-      "target": "models_document_document"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L133",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_create_service_create_invoice_or_quote",
-      "target": "models_document_item"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L151",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_create_service_create_invoice_or_quote",
-      "target": "models_payment_payment"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L121",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_create_service_create_invoice_or_quote",
-      "target": "models_stock_movement"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L116",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_create_service_create_invoice_or_quote",
-      "target": "models_warehouse_item"
     },
     {
       "relation": "imports",
@@ -25440,209 +25676,6 @@
       "confidence_score": 1.0,
       "source": "services_invoice_query_service",
       "target": "services_invoice_query_service_get_invoice_list"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_update_service",
-      "target": "models_document_item"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L167",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_update_service",
-      "target": "models_enums_documentstatus"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_update_service",
-      "target": "models_enums_documenttype"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L166",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_update_service",
-      "target": "models_enums_paymentmethod"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_update_service",
-      "target": "models_enums_stockmovementtype"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_update_service",
-      "target": "models_inventory_item"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L159",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_update_service",
-      "target": "models_payment_payment"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_update_service",
-      "target": "models_stock_movement"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L104",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_update_service",
-      "target": "models_warehouse_item"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L164",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_update_service",
-      "target": "services_invoice_update_service_add_invoice_payment"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L152",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_update_service",
-      "target": "services_invoice_update_service_delete_invoice_or_quote"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_update_service",
-      "target": "services_invoice_update_service_update_invoice_or_quote"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L48",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_update_service_update_invoice_or_quote",
-      "target": "models_document_item"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L125",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_update_service_update_invoice_or_quote",
-      "target": "models_stock_movement"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L108",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_update_service_update_invoice_or_quote",
-      "target": "models_warehouse_item"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L153",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_update_service_rationale_153",
-      "target": "services_invoice_update_service_delete_invoice_or_quote"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L172",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_update_service_add_invoice_payment",
-      "target": "models_payment_payment"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L162",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_update_service_rationale_162",
-      "target": "services_invoice_update_service_add_invoice_payment"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L165",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "services_invoice_update_service_rationale_165",
-      "target": "services_invoice_update_service_add_invoice_payment"
     },
     {
       "relation": "re_exports",
@@ -34617,5 +34650,5 @@
       "source_file": "app/invoices/templates/invoices/index.html"
     }
   ],
-  "built_at_commit": "f01ca166e372fc57fe91d27ffee700591f4a3ce2"
+  "built_at_commit": "a2d8a24fb80e652778d2b7cabaa53c010c79b693"
 }

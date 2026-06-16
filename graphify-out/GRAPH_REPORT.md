@@ -1,16 +1,16 @@
 # Graph Report - flask-trackdesk  (2026-06-15)
 
 ## Corpus Check
-- 155 files · ~120,813 words
+- 155 files · ~120,842 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1036 nodes · 2340 edges · 88 communities (77 shown, 11 thin omitted)
+- 1036 nodes · 2343 edges · 88 communities (77 shown, 11 thin omitted)
 - Extraction: 87% EXTRACTED · 13% INFERRED · 0% AMBIGUOUS · INFERRED: 309 edges (avg confidence: 0.52)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `f01ca166`
+- Built from commit: `a2d8a24f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -125,8 +125,8 @@
 ## Communities (88 total, 11 thin omitted)
 
 ### Community 0 - "Core Models"
-Cohesion: 0.11
-Nodes (7): bool, str, Flask, Authenticate a user by email and password.         Returns (user, error_message), Determine safe redirect URL after login., Generate and send a password reset token if user exists., Validate token and reset password.
+Cohesion: 0.14
+Nodes (9): bool, str, Authenticate a user by email and password.         Returns (user, error_message), Determine safe redirect URL after login., Generate and send a password reset token if user exists., Validate token and reset password., Sends an error notification to the configured admin email., Sends a password reset email. (+1 more)
 
 ### Community 2 - "Inventory & Orders Service"
 Cohesion: 0.08
@@ -181,8 +181,8 @@ Cohesion: 0.07
 Nodes (20): str, str, int, create(), delete(), edit(), export(), index() (+12 more)
 
 ### Community 15 - "NPM Config"
-Cohesion: 0.14
-Nodes (11): AlchemyEncoder, AuditMiddleware, get_model_changes(), Registers global SQLAlchemy listeners for all models inheriting from Base., Manually log a change. Useful if automated listeners are not enough., Helper to detect changed attributes and their values., register_audit_listeners(), init_error_handlers() (+3 more)
+Cohesion: 0.22
+Nodes (7): create_app(), Registers global SQLAlchemy listeners for all models inheriting from Base., register_audit_listeners(), init_error_handlers(), init_rbac(), RBAC Middleware =============== Plugged into the app via ``init_rbac(app)`` in `, Register the RBAC ``before_request`` hook on *app*.
 
 ### Community 16 - "Warehouses Service"
 Cohesion: 0.08
@@ -209,16 +209,16 @@ Cohesion: 0.32
 Nodes (8): Contact Directory, Contact Type Filtering, Contact Detail Screen, Customer Invoice History, Supplier Product History, Dashboard Quick Actions, ERP Summary Dashboard, Company Scoped Navigation
 
 ### Community 22 - "Unify Contacts Migration"
-Cohesion: 0.22
-Nodes (7): format_currency(), format_date(), index(), locale_date(), Format a number as currency, Format a date in a readable format, Format date according to the current locale
+Cohesion: 0.11
+Nodes (8): format_currency(), format_date(), index(), locale_date(), Format a number as currency, Format a date in a readable format, Format date according to the current locale, Flask
 
 ### Community 23 - "Auto Migration"
 Cohesion: 0.18
 Nodes (14): bindRowEvents(), closeCustomerSearch(), closeProductSearch(), closeProjectSearch(), openCustomerSearch(), openProductSearch(), openProjectSearch(), renderCustomers() (+6 more)
 
 ### Community 24 - "Initial Migration"
-Cohesion: 0.35
-Nodes (7): Flask, register_context_processors(), get_locale(), register_extensions(), Flask, register_request_hooks(), Config
+Cohesion: 0.27
+Nodes (9): Flask, register_blueprints(), Flask, register_context_processors(), get_locale(), register_extensions(), Flask, register_request_hooks() (+1 more)
 
 ### Community 25 - "Schedule Migration"
 Cohesion: 0.12
@@ -265,8 +265,8 @@ Cohesion: 0.25
 Nodes (8): Flask, register_cli(), bool, str, Seed the database with default roles and their permissions.      Roles     -----, seed_default_roles_and_permissions(), Return True if this role carries *permission_name*., Role
 
 ### Community 36 - "Login Migration"
-Cohesion: 0.14
-Nodes (23): bool, str, bool, float, str, int, str, Employee Editor Drawer (+15 more)
+Cohesion: 0.16
+Nodes (20): bool, str, bool, float, str, int, str, Leave Request Form (+12 more)
 
 ### Community 38 - "Modals UI JS"
 Cohesion: 0.47
@@ -305,8 +305,8 @@ Cohesion: 0.21
 Nodes (8): int, str, str, Company, Report, Project, ProjectService, Tag
 
 ### Community 49 - "Community 49"
-Cohesion: 0.32
-Nodes (3): Sends an error notification to the configured admin email., Sends a password reset email., send_password_reset()
+Cohesion: 0.25
+Nodes (5): AlchemyEncoder, AuditMiddleware, get_model_changes(), Manually log a change. Useful if automated listeners are not enough., Helper to detect changed attributes and their values.
 
 ### Community 52 - "Community 52"
 Cohesion: 0.67
@@ -317,8 +317,8 @@ Cohesion: 0.83
 Nodes (3): _column_exists(), downgrade(), upgrade()
 
 ### Community 83 - "Community 83"
-Cohesion: 0.38
-Nodes (3): Flask, register_blueprints(), create_app()
+Cohesion: 0.67
+Nodes (3): Employee Editor Drawer, PTO Configuration, Employee Directory
 
 ### Community 86 - "Community 86"
 Cohesion: 0.60
@@ -332,17 +332,17 @@ Nodes (5): Schedule Deviation Detail, Leave Request Queue, Leave Review Panel, S
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Flask` connect `Core Models` to `Inventory & Orders Service`, `HR Module`, `PDF Generators`, `Inventory Routes`, `Auth Module`, `Users Service`, `Barcode JS`, `Companies Routes`, `Companies Service`, `NPM Config`, `Migrations Core`, `Drawer UI JS`, `Consolidate Schema Migration`, `Unify Contacts Migration`, `Initial Migration`, `Auto Migration 2`, `Audit Columns Migration`, `Roles Migration`, `Budget Migration`, `HR Migration`, `Setup Script`, `Community 43`, `Community 47`, `Community 49`?**
-  _High betweenness centrality (0.112) - this node is a cross-community bridge._
-- **Why does `BaseModel` connect `Invoices Service` to `App Init & Middleware`, `Inventory & Orders Service`, `HR Module`, `PDF Generators`, `Inventory Routes`, `Auth Module`, `Barcode JS`, `Payments Module`, `Companies Service`, `NPM Config`, `Audit Migration`, `Doc Templates Migration`, `Models Update Migration`, `HR Migration`, `Login Migration`, `Community 43`, `Community 48`, `Community 75`, `Community 87`?**
-  _High betweenness centrality (0.101) - this node is a cross-community bridge._
+- **Why does `Flask` connect `Unify Contacts Migration` to `Core Models`, `Inventory & Orders Service`, `HR Module`, `PDF Generators`, `Inventory Routes`, `Auth Module`, `Users Service`, `Barcode JS`, `Companies Routes`, `Companies Service`, `NPM Config`, `Migrations Core`, `Drawer UI JS`, `Consolidate Schema Migration`, `Initial Migration`, `Auto Migration 2`, `Audit Columns Migration`, `Roles Migration`, `Budget Migration`, `HR Migration`, `Setup Script`, `Community 43`, `Community 47`, `Community 49`?**
+  _High betweenness centrality (0.119) - this node is a cross-community bridge._
+- **Why does `BaseModel` connect `Invoices Service` to `App Init & Middleware`, `Inventory & Orders Service`, `HR Module`, `PDF Generators`, `Inventory Routes`, `Auth Module`, `Barcode JS`, `Payments Module`, `Companies Service`, `Audit Migration`, `Doc Templates Migration`, `Models Update Migration`, `HR Migration`, `Login Migration`, `Community 43`, `Community 48`, `Community 49`, `Community 75`, `Community 87`?**
+  _High betweenness centrality (0.096) - this node is a cross-community bridge._
 - **Why does `resolve_company()` connect `Companies Routes` to `Budget Migration`, `Login Migration`, `HR Module`, `PDF Generators`, `Community 43`, `Companies Service`, `Drawer UI JS`, `Unify Contacts Migration`, `Roles Migration`?**
-  _High betweenness centrality (0.069) - this node is a cross-community bridge._
+  _High betweenness centrality (0.072) - this node is a cross-community bridge._
 - **Are the 71 inferred relationships involving `BaseModel` (e.g. with `str` and `str`) actually correct?**
   _`BaseModel` has 71 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 37 inferred relationships involving `AccountType` (e.g. with `int` and `str`) actually correct?**
   _`AccountType` has 37 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 30 inferred relationships involving `TransactionType` (e.g. with `int` and `str`) actually correct?**
   _`TransactionType` has 30 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `Use the submitted purchase cost, falling back to the item's cost price.`, `Soft-delete a purchase order.`, `Return (workbook, filename) tuple for all purchase orders matching criteria.` to the rest of the system?**
-  _204 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `Soft delete an invoice or quote and its items.`, `Add a payment to an invoice, post accounting income, and update its status.`, `Use the submitted purchase cost, falling back to the item's cost price.` to the rest of the system?**
+  _203 weakly-connected nodes found - possible documentation gaps or missing edges._
