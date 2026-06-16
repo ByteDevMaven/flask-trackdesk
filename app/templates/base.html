@@ -241,9 +241,9 @@
         <div class="flex items-center gap-2">
           <div class="relative hidden md:block">
             <form action="{{ url_for('search') }}" method="get" class="relative">
-              <input name="q" id="global-search" type="text" placeholder="Buscar..."
+              <input name="q" id="global-search" type="text" placeholder="Buscar todo..."
                 value="{{ request.args.get('q', '') }}"
-                class="w-56 h-9 pl-9 pr-4 text-sm bg-slate-100 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-colors">
+                class="w-64 h-9 pl-9 pr-4 text-sm bg-slate-100 border-0 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-colors">
               <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" fill="none"
                 stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

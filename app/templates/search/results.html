@@ -1,43 +1,143 @@
 {% extends 'base.html' %}
 
-{% block title %}Buscar · TrackDesk ERP{% endblock %}
-{% block page_title %}Resultados de búsqueda{% endblock %}
+{% block title %}Busqueda global - TrackDesk ERP{% endblock %}
+{% block page_title %}Busqueda global{% endblock %}
 
 {% block content %}
-<div class="p-4 md:p-6">
-  <div class="max-w-4xl mx-auto">
-    <div class="mb-6">
-      <h2 class="text-xl font-semibold text-slate-900">Resultados para "{{ query }}"</h2>
-      {% if not query %}
-      <p class="mt-2 text-sm text-slate-500">Escribe un término y presiona Enter para buscar contactos, facturas, inventario y órdenes.</p>
-      {% endif %}
-    </div>
-
-    {% if query %}
-      {% for section, items in results.items() %}
-        {% if items %}
-        <div class="mb-8">
-          <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wider mb-3">{{ section.replace('_', ' ') | title }}</h3>
-          <div class="space-y-2">
-            {% for item in items %}
-            <a href="{{ item.url }}" class="block rounded-xl border border-slate-200 bg-white p-4 transition hover:bg-slate-50">
-              <p class="text-sm font-semibold text-slate-900">{{ item.title }}</p>
-              {% if item.subtitle %}
-              <p class="text-xs text-slate-500 mt-1">{{ item.subtitle }}</p>
-              {% endif %}
-            </a>
-            {% endfor %}
-          </div>
+<div class="min-h-full bg-slate-50">
+  <div class="border-b border-slate-200 bg-white">
+    <div class="mx-auto max-w-7xl px-4 py-5 md:px-6">
+      <form action="{{ url_for('search') }}" method="get" class="flex flex-col gap-3 md:flex-row md:items-center">
+        <div class="relative flex-1">
+          <svg class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" fill="none"
+            stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input name="q" value="{{ query }}" type="text" autofocus
+            placeholder="Buscar clientes, facturas, productos, pagos, proyectos..."
+            class="h-12 w-full rounded-lg border border-slate-300 bg-white pl-12 pr-4 text-sm text-slate-900 shadow-sm transition focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20">
         </div>
+        {% if active_type and active_type != 'all' %}
+        <input type="hidden" name="type" value="{{ active_type }}">
         {% endif %}
-      {% endfor %}
+        <button type="submit"
+          class="inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-emerald-600 px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          Buscar
+        </button>
+      </form>
 
-      {% if not results.contacts and not results.documents and not results.inventory_items and not results.purchase_orders and not results.companies %}
-      <div class="rounded-xl border border-slate-200 bg-white p-4 md:p-6 text-sm text-slate-600">
-        No se encontraron resultados para "{{ query }}".
+      <div class="mt-4 flex flex-col gap-2 text-sm text-slate-600 md:flex-row md:items-center md:justify-between">
+        {% if query %}
+        <p>
+          <span class="font-semibold text-slate-900">{{ total_results }}</span>
+          resultados para <span class="font-semibold text-slate-900">"{{ query }}"</span>
+        </p>
+        {% else %}
+        <p>Busca en contactos, documentos, inventario, ordenes, pagos, proyectos, gastos, almacenes y empresas.</p>
+        {% endif %}
+        {% if query %}
+        <a href="{{ url_for('search') }}" class="text-sm font-medium text-emerald-700 hover:text-emerald-800">
+          Limpiar busqueda
+        </a>
+        {% endif %}
       </div>
+    </div>
+  </div>
+
+  <div class="mx-auto grid max-w-7xl gap-5 px-4 py-5 md:grid-cols-[240px_1fr] md:px-6">
+    <aside class="self-start rounded-lg border border-slate-200 bg-white p-3 shadow-sm">
+      <a href="{{ url_for('search', q=query) }}"
+        class="mb-1 flex items-center justify-between rounded-md px-3 py-2 text-sm transition {{ 'bg-emerald-50 font-semibold text-emerald-700' if active_type == 'all' else 'text-slate-700 hover:bg-slate-50' }}">
+        <span>Todo</span>
+        <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-500">{{ total_results }}</span>
+      </a>
+      <div class="space-y-1">
+        {% for category in categories %}
+          {% if category.key != 'best_matches' %}
+          <a href="{{ url_for('search', q=query, type=category.key) }}"
+            class="flex items-center justify-between rounded-md px-3 py-2 text-sm transition {{ 'bg-emerald-50 font-semibold text-emerald-700' if active_type == category.key else 'text-slate-700 hover:bg-slate-50' }}">
+            <span class="truncate">{{ category.label }}</span>
+            <span class="rounded-full bg-slate-100 px-2 py-0.5 text-xs text-slate-500">{{ category.count }}</span>
+          </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </aside>
+
+    <section class="space-y-5">
+      {% if not query %}
+      <div class="rounded-lg border border-dashed border-slate-300 bg-white p-8 text-center">
+        <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-emerald-50 text-emerald-700">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+              d="M4 7h16M4 12h10M4 17h7" />
+          </svg>
+        </div>
+        <h2 class="text-base font-semibold text-slate-900">Encuentra cualquier registro rapido</h2>
+        <p class="mt-1 text-sm text-slate-500">Puedes buscar por nombre, RTN, correo, SKU, numero de documento, proveedor, proyecto o nota.</p>
+      </div>
+      {% elif total_results == 0 %}
+      <div class="rounded-lg border border-slate-200 bg-white p-8 text-center shadow-sm">
+        <h2 class="text-base font-semibold text-slate-900">Sin resultados</h2>
+        <p class="mt-1 text-sm text-slate-500">No se encontraron coincidencias para "{{ query }}". Prueba con menos palabras o un numero de documento.</p>
+      </div>
+      {% else %}
+        {% for category in visible_categories %}
+          {% set items = results.get(category.key, []) %}
+          {% if items %}
+          <div class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+            <div class="border-b border-slate-100 px-4 py-3">
+              <div class="flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <h2 class="text-sm font-semibold text-slate-900">{{ category.label }}</h2>
+                  <p class="text-xs text-slate-500">{{ category.description }}</p>
+                </div>
+                <span class="text-xs font-medium text-slate-500">{{ items|length }} resultados</span>
+              </div>
+            </div>
+            <div class="divide-y divide-slate-100">
+              {% for item in items %}
+              <a href="{{ item.url }}" class="block px-4 py-3 transition hover:bg-slate-50">
+                <div class="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                  <div class="min-w-0">
+                    <div class="flex flex-wrap items-center gap-2">
+                      <span class="rounded bg-slate-100 px-2 py-0.5 text-[11px] font-semibold uppercase text-slate-600">{{ item.kind }}</span>
+                      <h3 class="truncate text-sm font-semibold text-slate-900">{{ item.title }}</h3>
+                    </div>
+                    {% if item.subtitle %}
+                    <p class="mt-1 line-clamp-2 text-sm text-slate-600">{{ item.subtitle }}</p>
+                    {% endif %}
+                    {% if item.matched_fields %}
+                    <div class="mt-2 flex flex-wrap gap-1.5">
+                      {% for field in item.matched_fields[:4] %}
+                      <span class="rounded-full bg-emerald-50 px-2 py-0.5 text-xs font-medium text-emerald-700">Coincide: {{ field }}</span>
+                      {% endfor %}
+                    </div>
+                    {% endif %}
+                  </div>
+                  {% if item.meta %}
+                  <div class="flex flex-wrap gap-1.5 md:max-w-xs md:justify-end">
+                    {% for meta in item.meta %}
+                      {% if meta %}
+                      <span class="rounded-full border border-slate-200 px-2 py-0.5 text-xs text-slate-500">{{ meta }}</span>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                  {% endif %}
+                </div>
+              </a>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+        {% endfor %}
       {% endif %}
-    {% endif %}
+    </section>
   </div>
 </div>
 {% endblock %}

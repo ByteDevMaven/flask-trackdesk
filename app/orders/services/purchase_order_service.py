@@ -6,6 +6,13 @@ from flask import current_app
 from sqlalchemy.exc import SQLAlchemyError
 
 
+def _purchase_cost_from_form(raw_price, inventory_item):
+    """Use the submitted purchase cost, falling back to the item's cost price."""
+    if raw_price not in (None, ''):
+        return float(raw_price)
+    return float(inventory_item.cost_price or 0)
+
+
 def create_purchase_order(company_id, form_data):
     try:
         supplier_id = form_data.get('supplier_id')
@@ -60,19 +67,21 @@ def create_purchase_order(company_id, form_data):
             quantity = form_data.get(f'items[{idx}][quantity]')
             price = form_data.get(f'items[{idx}][price]')
             
-            if item_id and quantity and price:
+            if item_id and quantity:
                 try:
                     quantity = int(quantity)
-                    price = float(price)
-                    if quantity <= 0 or price < 0:
-                        continue
                     
                     inventory_item = InventoryItem.query.get(int(item_id))
                     if not inventory_item or inventory_item.company_id != company_id:
                         continue
+
+                    price = _purchase_cost_from_form(price, inventory_item)
+                    if quantity <= 0 or price < 0:
+                        continue
                     
                     item_total = quantity * price
                     inventory_item.quantity = (inventory_item.quantity or 0) + quantity
+                    inventory_item.cost_price = price
                     db.session.add(inventory_item)
                     
                     if warehouse_id:
@@ -151,12 +160,21 @@ def update_purchase_order(company_id, order_id, form_data):
             quantity = form_data.get(f'items[{idx}][quantity]')
             price = form_data.get(f'items[{idx}][price]')
 
-            if not item_id or not quantity or not price:
+            if not item_id or not quantity:
                 continue
 
             try:
+                item_id = int(item_id)
                 quantity = int(quantity)
-                price = float(price)
+            except (ValueError, TypeError):
+                continue
+
+            inventory_item = InventoryItem.query.get(item_id)
+            if not inventory_item or inventory_item.company_id != company_id:
+                continue
+
+            try:
+                price = _purchase_cost_from_form(price, inventory_item)
             except (ValueError, TypeError):
                 continue
 
@@ -164,10 +182,11 @@ def update_purchase_order(company_id, order_id, form_data):
                 continue
 
             parsed_items.append({
-                'inventory_item_id': int(item_id),
+                'inventory_item_id': item_id,
                 'code': code or '',
                 'quantity': quantity,
-                'price': price
+                'price': price,
+                'inventory_item': inventory_item,
             })
 
         if not parsed_items:
@@ -224,11 +243,11 @@ def update_purchase_order(company_id, order_id, form_data):
             quantity = data['quantity']
             price = data['price']
             code = data['code']
+            inventory_item = data['inventory_item']
             item_total = quantity * price
 
-            inventory_item = InventoryItem.query.get(item_id)
-            if not inventory_item or inventory_item.company_id != company_id:
-                continue
+            inventory_item.cost_price = price
+            db.session.add(inventory_item)
 
             # Add positive deltas
             inventory_deltas[item_id] = inventory_deltas.get(item_id, 0) + quantity

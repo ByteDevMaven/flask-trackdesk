@@ -167,7 +167,7 @@
                   <th class="px-4 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Producto</th>
                   <th class="px-4 py-2.5 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider w-28">Código</th>
                   <th class="px-4 py-2.5 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider w-24">Cantidad</th>
-                  <th class="px-4 py-2.5 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider w-32">Precio Unit.</th>
+                  <th class="px-4 py-2.5 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider w-32">Costo Unit.</th>
                   <th class="px-4 py-2.5 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider w-28">Total</th>
                   <th class="w-10 px-2 py-2.5"></th>
                 </tr>
@@ -350,6 +350,7 @@
       "name": {{ inv.name|tojson|safe }},
       "code": {{ (inv.sku or inv.code or '')|tojson|safe if (inv.sku is defined or inv.code is defined) else '""'|safe }},
       "price": {{ (inv.price or 0.0)|tojson|safe }},
+      "cost_price": {{ (inv.cost_price or 0.0)|tojson|safe }},
       "stock": {{ (inv.quantity or 0)|tojson|safe }}
     }{{ "," if not loop.last else "" }}
     {% endfor %}
@@ -430,11 +431,11 @@
                class="item-qty w-full px-2 py-1.5 border border-slate-200 rounded-lg text-sm text-right focus:outline-none focus:ring-1 focus:ring-emerald-500 font-medium">
       </td>
       <td class="px-4 py-3">
-        <input type="number" name="items[${idx}][price]" value="${product ? Number(product.price).toFixed(5) : '0.00000'}" min="0" step="0.00001"
+        <input type="number" name="items[${idx}][price]" value="${product ? Number(product.cost_price).toFixed(5) : '0.00000'}" min="0" step="0.00001"
                class="item-price w-full px-2 py-1.5 border border-slate-200 rounded-lg text-sm text-right focus:outline-none focus:ring-1 focus:ring-emerald-500 font-medium">
       </td>
       <td class="px-4 py-3 text-sm font-semibold text-slate-800 text-right item-total">
-        ${product ? Number(product.price).toFixed(5) : '0.00000'}
+        ${product ? Number(product.cost_price).toFixed(5) : '0.00000'}
       </td>
       <td class="px-2 py-3 text-center">
         <button type="button" class="remove-order-item text-slate-400 hover:text-rose-500 transition-colors">
@@ -476,7 +477,7 @@
         </div>
         <div class="flex-1 min-w-0">
           <p class="text-sm font-semibold text-slate-800 truncate group-hover:text-emerald-700">${inv.name}</p>
-          <p class="text-xs text-slate-400 mt-0.5">Stock: ${inv.stock} &nbsp;·&nbsp; Precio: {{ session.get('currency','L') }} ${inv.price.toLocaleString(undefined, { minimumFractionDigits: 5, maximumFractionDigits: 5 })}</p>
+          <p class="text-xs text-slate-400 mt-0.5">Stock: ${inv.stock} &nbsp;·&nbsp; Costo: {{ session.get('currency','L') }} ${inv.cost_price.toLocaleString(undefined, { minimumFractionDigits: 5, maximumFractionDigits: 5 })}</p>
         </div>
         <span class="text-xs font-semibold text-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity">+ Agregar</span>
       `;
@@ -503,7 +504,7 @@
       targetRow.querySelector('.item-product-id').value = inv.id;
       targetRow.querySelector('.item-product-trigger').value = inv.name;
       targetRow.querySelector('.item-code').value = inv.code || '';
-      targetRow.querySelector('.item-price').value = Number(inv.price).toFixed(5);
+      targetRow.querySelector('.item-price').value = Number(inv.cost_price).toFixed(5);
       recalc();
     } else {
       addRow(inv);
