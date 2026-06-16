@@ -1,0 +1,242 @@
+{% extends "base.html" %}
+
+{% block title %}Notificaciones - TrackDesk{% endblock %}
+{% block sidebar_title %}Notificaciones{% endblock %}
+{% block page_title %}Centro de Notificaciones{% endblock %}
+
+{% block sidebar_nav %}
+<div class="px-2 py-1 space-y-1">
+  <a href="{{ url_for('notifications.index') }}"
+    class="flex items-center justify-between px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-semibold' if status == 'all' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+    <span class="flex items-center gap-3">
+      <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if status == 'all' else 'bg-slate-300' }}"></span>
+      Todas
+    </span>
+    <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">{{ pagination.total }}</span>
+  </a>
+  <a href="{{ url_for('notifications.index', status='unread') }}"
+    class="flex items-center justify-between px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-semibold' if status == 'unread' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+    <span class="flex items-center gap-3">
+      <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if status == 'unread' else 'bg-slate-300' }}"></span>
+      Sin leer
+    </span>
+    <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">{{ unread_count }}</span>
+  </a>
+  <a href="{{ url_for('notifications.index', status='read') }}"
+    class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-semibold' if status == 'read' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+    <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if status == 'read' else 'bg-slate-300' }}"></span>
+    Leidas
+  </a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="flex h-full flex-col overflow-hidden bg-slate-50">
+  <header class="bg-white border-b border-slate-200 px-4 md:px-6 py-3 flex items-center justify-between flex-shrink-0">
+    <div>
+      <p class="text-sm font-medium text-slate-900">{{ unread_count }} notificaciones sin leer</p>
+      <p class="text-xs text-slate-500">Revisa avisos del sistema y mensajes enviados por tu equipo.</p>
+    </div>
+    <button type="button" id="notifications-mark-all-center"
+      class="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50">
+      <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M5 13l4 4L19 7" />
+      </svg>
+      Marcar todo como leido
+    </button>
+  </header>
+
+  <div class="flex-1 overflow-y-auto p-4 md:p-6">
+    <div class="grid gap-6 xl:grid-cols-[1fr_420px]">
+      <section class="space-y-4">
+        <div class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+          <div class="border-b border-slate-100 px-5 py-4">
+            <h2 class="text-sm font-semibold text-slate-900">Bandeja</h2>
+            <p class="text-xs text-slate-500">Las notificaciones emergentes quedan guardadas aqui despues de cerrarlas.</p>
+          </div>
+          <div class="divide-y divide-slate-100">
+            {% if notifications %}
+              {% for item in notifications %}
+              {% set is_unread = item.status == 'unread' and not item.read_at %}
+              {% set type_styles = {
+                'success': 'bg-emerald-50 text-emerald-700',
+                'warning': 'bg-amber-50 text-amber-700',
+                'danger': 'bg-rose-50 text-rose-700',
+                'error': 'bg-rose-50 text-rose-700',
+                'info': 'bg-sky-50 text-sky-700'
+              } %}
+              <article class="px-5 py-4 {{ 'bg-emerald-50/30' if is_unread else 'bg-white' }}">
+                <div class="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                  <div class="min-w-0">
+                    <div class="flex flex-wrap items-center gap-2">
+                      <span class="inline-flex rounded-full px-2 py-0.5 text-[11px] font-semibold uppercase {{ type_styles.get(item.type, 'bg-slate-100 text-slate-600') }}">{{ item.type }}</span>
+                      {% if item.priority == 'high' %}
+                      <span class="inline-flex rounded-full bg-rose-50 px-2 py-0.5 text-[11px] font-semibold uppercase text-rose-700">Alta</span>
+                      {% endif %}
+                      {% if item.is_popup %}
+                      <span class="inline-flex rounded-full bg-indigo-50 px-2 py-0.5 text-[11px] font-semibold uppercase text-indigo-700">Popup</span>
+                      {% endif %}
+                      {% if is_unread %}
+                      <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                      {% endif %}
+                    </div>
+                    <h3 class="mt-2 text-sm font-semibold text-slate-900">{{ item.title }}</h3>
+                    <p class="mt-1 text-sm text-slate-600">{{ item.display_body }}</p>
+                    <p class="mt-2 text-xs text-slate-400">
+                      {{ item.sent_at.strftime('%d/%m/%Y %H:%M') if item.sent_at else item.created_at.strftime('%d/%m/%Y %H:%M') }}
+                      {% if item.created_by %}por {{ item.created_by.name }}{% endif %}
+                    </p>
+                  </div>
+                  <div class="flex shrink-0 items-center gap-2">
+                    {% if item.link_url %}
+                    <a href="{{ item.link_url }}" class="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-50">Abrir</a>
+                    {% endif %}
+                    {% if is_unread %}
+                    <button type="button" data-notification-read="{{ item.id }}"
+                      class="rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-emerald-700">
+                      Leida
+                    </button>
+                    {% endif %}
+                  </div>
+                </div>
+              </article>
+              {% endfor %}
+            {% else %}
+              <div class="px-5 py-12 text-center">
+                <div class="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-lg bg-slate-100 text-slate-500">
+                  <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 10-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h11z" />
+                  </svg>
+                </div>
+                <h3 class="text-sm font-semibold text-slate-900">No hay notificaciones</h3>
+                <p class="mt-1 text-sm text-slate-500">Cuando recibas avisos apareceran aqui.</p>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+
+        {% if pagination.pages > 1 %}
+        <div class="flex items-center justify-end gap-2">
+          {% if pagination.has_prev %}
+          <a href="{{ url_for('notifications.index', page=pagination.prev_num, status=status) }}" class="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-600 hover:bg-slate-50">Anterior</a>
+          {% endif %}
+          {% if pagination.has_next %}
+          <a href="{{ url_for('notifications.index', page=pagination.next_num, status=status) }}" class="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-600 hover:bg-slate-50">Siguiente</a>
+          {% endif %}
+        </div>
+        {% endif %}
+      </section>
+
+      <aside class="space-y-6">
+        {% if can_send %}
+        <section class="rounded-lg border border-slate-200 bg-white shadow-sm">
+          <div class="border-b border-slate-100 px-5 py-4">
+            <h2 class="text-sm font-semibold text-slate-900">Enviar notificacion</h2>
+            <p class="text-xs text-slate-500">Publica avisos en la campana y como popup opcional.</p>
+          </div>
+          <form method="post" action="{{ url_for('notifications.send') }}" class="space-y-4 p-5">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div>
+              <label class="mb-1.5 block text-sm font-medium text-slate-700">Titulo</label>
+              <input name="title" required maxlength="255" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            </div>
+            <div>
+              <label class="mb-1.5 block text-sm font-medium text-slate-700">Mensaje</label>
+              <textarea name="body" required rows="4" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"></textarea>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="mb-1.5 block text-sm font-medium text-slate-700">Tipo</label>
+                <select name="type" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                  <option value="info">Info</option>
+                  <option value="success">Exito</option>
+                  <option value="warning">Alerta</option>
+                  <option value="danger">Urgente</option>
+                </select>
+              </div>
+              <div>
+                <label class="mb-1.5 block text-sm font-medium text-slate-700">Prioridad</label>
+                <select name="priority" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                  <option value="normal">Normal</option>
+                  <option value="high">Alta</option>
+                  <option value="low">Baja</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <label class="mb-1.5 block text-sm font-medium text-slate-700">Destino</label>
+              <select name="target" id="notification-target" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                <option value="users">Usuarios seleccionados</option>
+                <option value="company">Toda una empresa</option>
+                <option value="all">Todos los visibles</option>
+              </select>
+            </div>
+            <div id="notification-users-field">
+              <label class="mb-1.5 block text-sm font-medium text-slate-700">Usuarios</label>
+              <select name="user_ids" multiple size="6" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                {% for user in users %}
+                <option value="{{ user.id }}">{{ user.name }} - {{ user.email }}</option>
+                {% endfor %}
+              </select>
+              <p class="mt-1 text-xs text-slate-500">Usa Ctrl/Cmd para seleccionar varios.</p>
+            </div>
+            <div id="notification-company-field" class="hidden">
+              <label class="mb-1.5 block text-sm font-medium text-slate-700">Empresa</label>
+              <select name="company_id" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                {% for company in companies %}
+                <option value="{{ company.id }}">{{ company.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div>
+              <label class="mb-1.5 block text-sm font-medium text-slate-700">Enlace opcional</label>
+              <input name="link_url" placeholder="/acme/invoices" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+            </div>
+            <label class="flex items-center gap-2 rounded-lg bg-slate-50 px-3 py-2 text-sm text-slate-700">
+              <input type="checkbox" name="is_popup" value="1" class="rounded border-slate-300 text-emerald-600 focus:ring-emerald-500">
+              Mostrar como popup hasta que el usuario lo marque como leido
+            </label>
+            <button type="submit" class="w-full rounded-lg bg-emerald-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-emerald-700">
+              Enviar notificacion
+            </button>
+          </form>
+        </section>
+
+        <section class="rounded-lg border border-slate-200 bg-white shadow-sm">
+          <div class="border-b border-slate-100 px-5 py-4">
+            <h2 class="text-sm font-semibold text-slate-900">Enviadas recientemente</h2>
+          </div>
+          <div class="divide-y divide-slate-100">
+            {% for item in sent_notifications %}
+            <div class="px-5 py-3">
+              <p class="truncate text-sm font-semibold text-slate-900">{{ item.title }}</p>
+              <p class="mt-1 text-xs text-slate-500">Para {{ item.user.name if item.user else 'usuario' }} - {{ item.sent_at.strftime('%d/%m/%Y %H:%M') if item.sent_at else '' }}</p>
+            </div>
+            {% else %}
+            <p class="px-5 py-6 text-sm text-slate-500">Aun no has enviado notificaciones.</p>
+            {% endfor %}
+          </div>
+        </section>
+        {% endif %}
+      </aside>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const targetSelect = document.getElementById('notification-target');
+  const usersField = document.getElementById('notification-users-field');
+  const companyField = document.getElementById('notification-company-field');
+
+  function syncTargetFields() {
+    const target = targetSelect?.value;
+    usersField?.classList.toggle('hidden', target !== 'users');
+    companyField?.classList.toggle('hidden', target !== 'company');
+  }
+
+  targetSelect?.addEventListener('change', syncTargetFields);
+  syncTargetFields();
+});
+</script>
+{% endblock %}

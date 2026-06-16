@@ -193,6 +193,15 @@ ROUTE_PERMISSIONS: dict[str, str] = {
 
     # ── Global search ─────────────────────────────────────────────────────
     'search': 'dashboard.view',
+
+    # ── Notifications ─────────────────────────────────────────────────────
+    'notifications.index': 'dashboard.view',
+    'notifications.recent': 'dashboard.view',
+    'notifications.popups': 'dashboard.view',
+    'notifications.mark_read': 'dashboard.view',
+    'notifications.mark_all_read': 'dashboard.view',
+    'notifications.archive': 'dashboard.view',
+    'notifications.send': 'users.manage',
 }
 
 # Endpoints that are always public (no login / permission required).
