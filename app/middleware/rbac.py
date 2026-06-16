@@ -73,6 +73,7 @@ ROUTE_PERMISSIONS: dict[str, str] = {
     'inventory.drawer_adjust':    'inventory.manage',
     'inventory.drawer_transfer':  'inventory.manage',
     'inventory.export':           'inventory.view',
+    'inventory.export_movements': 'inventory.view',
     'inventory.movements':        'inventory.view',
     'inventory.transfer':         'inventory.manage',
 
@@ -102,6 +103,7 @@ ROUTE_PERMISSIONS: dict[str, str] = {
     'invoices.update': 'invoices.manage',
     'invoices.delete': 'invoices.delete',
     'invoices.add_payment':   'invoices.manage',
+    'invoices.export':        'invoices.view',
     'invoices.item_row':      'invoices.manage',
     'invoices.print_invoice': 'invoices.view',
 
@@ -162,6 +164,7 @@ ROUTE_PERMISSIONS: dict[str, str] = {
     'accounting.delete_income':             'accounting.delete',
     'accounting.create_journal_entry':      'accounting.manage',
     'accounting.edit_journal_entry':        'accounting.manage',
+    'accounting.delete_journal_entry':      'accounting.delete',
     'accounting.void_transaction':          'accounting.manage',
     'accounting.create_project':            'accounting.manage',
     'accounting.edit_project':              'accounting.manage',

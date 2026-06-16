@@ -1,4 +1,4 @@
-from .invoice_query_service import get_invoice_list
+from .invoice_query_service import get_invoice_list, export_invoice_report_xlsx
 
 from .invoice_create_service import create_invoice_or_quote
 
@@ -8,6 +8,7 @@ from .invoice_pdf_service import generate_invoice_pdf, generate_invoice_pdf_from
 
 __all__ = [
     "get_invoice_list",
+    "export_invoice_report_xlsx",
     "create_invoice_or_quote",
     "update_invoice_or_quote",
     "delete_invoice_or_quote",

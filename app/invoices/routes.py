@@ -1,5 +1,5 @@
 from app.utils import resolve_company
-from flask import render_template, request, redirect, session, url_for, flash, make_response
+from flask import render_template, request, redirect, session, url_for, flash, make_response, send_file
 from flask_login import login_required, current_user
 from flask_wtf.csrf import validate_csrf
 from flask_babel import _
@@ -13,6 +13,7 @@ from app.models import db, Document, DocumentItem, Contact, InventoryItem, Docum
 
 from app.models.enums import ContactType, DocumentStatus
 from .services import get_invoice_list, create_invoice_or_quote, update_invoice_or_quote, generate_invoice_pdf_from_request
+from .services.invoice_query_service import export_invoice_report_xlsx
 from .services.invoice_create_service import _generate_document_number
 from . import invoices
 
@@ -40,11 +41,36 @@ def index(company_id):
         'draft': Document.query.filter_by(company_id=company_id, status='draft').count()
     }
 
+    export_args = request.args.to_dict(flat=True)
+    export_args.pop('page', None)
+    export_url = url_for('invoices.export', company_id=company.slug or company.id, **export_args)
+
     return render_template(
         "invoices/index.html",
         invoices=pagination.items,
         pagination=pagination,
-        stats=stats
+        stats=stats,
+        export_url=export_url
+    )
+
+
+@invoices.route('/<string:company_id>/invoices/export')
+@login_required
+def export(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
+    import io
+
+    wb, filename = export_invoice_report_xlsx(company_id, request.args)
+    out = io.BytesIO()
+    wb.save(out)
+    out.seek(0)
+
+    return send_file(
+        out,
+        mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        as_attachment=True,
+        download_name=filename
     )
 
 

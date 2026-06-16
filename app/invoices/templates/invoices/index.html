@@ -99,6 +99,14 @@
     </form>
     
     <div class="flex items-center gap-2">
+      <a href="{{ export_url }}"
+         class="flex items-center gap-2 px-3 py-2 border border-emerald-200 rounded-lg text-sm font-medium text-emerald-700 hover:bg-emerald-50 transition-colors shadow-sm bg-white"
+         title="Descargar reporte XLSX">
+        <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/>
+        </svg>
+        Exportar a Excel
+      </a>
       <a href="{{ url_for('invoices.create', company_id=session.get('selected_company_slug'), type='quote') }}"
          class="flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors shadow-sm bg-white">
         <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
