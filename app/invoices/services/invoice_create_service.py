@@ -3,7 +3,7 @@ from flask import session
 from flask_babel import _
 from app.models import (
     db, Document, DocumentItem, InventoryItem, DocumentSequence,
-    DocumentType, Payment, PaymentMethod, StockMovement, StockMovementType
+    DocumentType, Payment, PaymentMethod, StockMovement, StockMovementType, Company
 )
 
 
@@ -148,11 +148,16 @@ def create_invoice_or_quote(company_id, form, user_id):
 
         total += qty * price * (1 - discount / 100)
 
+    company = Company.query.get(company_id)
     try:
-        tax_rate = float(session.get("tax_rate", 0)) / 100
+        tax_rate = float(company.tax_rate if company else session.get("tax_rate", 0))
     except (TypeError, ValueError):
         tax_rate = 0.0
-    document.total_amount = round(total * (1 + tax_rate), 2)
+    subtotal = round(total, 2)
+    tax_amount = round(subtotal * (tax_rate / 100), 2)
+    document.subtotal_cache = subtotal
+    document.tax_cache = tax_amount
+    document.total_amount = round(subtotal + tax_amount, 2)
 
     if document.status == "paid":
         db.session.add(Payment(

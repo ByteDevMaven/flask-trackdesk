@@ -1,6 +1,12 @@
-from flask import session
 from app.models import db, DocumentItem, InventoryItem, DocumentType, StockMovement, StockMovementType
 from datetime import datetime, UTC
+
+
+def _company_tax_rate(document):
+    try:
+        return float(document.company.tax_rate or 0)
+    except (AttributeError, TypeError, ValueError):
+        return 0.0
 
 
 def update_invoice_or_quote(document, form):
@@ -135,10 +141,10 @@ def update_invoice_or_quote(document, form):
                     )
                     db.session.add(m)
 
-    subtotal = total
-    tax_rate = float(form.get("tax_rate", 0)) if form.get("tax_rate") else 0
-    tax_amount = subtotal * (tax_rate / 100)
-    total_amount = subtotal + tax_amount
+    subtotal = round(total, 2)
+    tax_rate = _company_tax_rate(document)
+    tax_amount = round(subtotal * (tax_rate / 100), 2)
+    total_amount = round(subtotal + tax_amount, 2)
 
     document.subtotal_cache = subtotal
     document.tax_cache = tax_amount
