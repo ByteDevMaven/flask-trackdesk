@@ -28,8 +28,10 @@ class Config:
     MAIL_SERVER = os.getenv("MAIL_SERVER", "smtp.googlemail.com")
     MAIL_PORT = int(os.getenv("MAIL_PORT", 587))
     MAIL_USE_TLS = os.getenv("MAIL_USE_TLS", "true").lower() in ["true", "on", "1"]
+    MAIL_USE_SSL = os.getenv("MAIL_USE_SSL", "false").lower() in ["true", "on", "1"]
     MAIL_USERNAME = os.getenv("MAIL_USERNAME")
     MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
+    MAIL_DEFAULT_SENDER = os.getenv("MAIL_DEFAULT_SENDER")
     TRACKDESK_MAIL_SUBJECT_PREFIX = '[TrackDesk]'
     TRACKDESK_MAIL_SENDER = os.getenv("TRACKDESK_MAIL_SENDER", "TrackDesk Admin <admin@trackdesk.local>")
     TRACKDESK_ADMIN = os.getenv("TRACKDESK_ADMIN", "vrsanchesu@gmail.com")
