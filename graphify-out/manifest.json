@@ -75,9 +75,9 @@
     "semantic_hash": "8e7082785fa69badea7ef5502dafe154"
   },
   "app/companies/services/company_service.py": {
-    "mtime": 1781323165.932766,
-    "ast_hash": "31b4f6f5c5db0fbb3e31db0f6df0f094",
-    "semantic_hash": "31b4f6f5c5db0fbb3e31db0f6df0f094"
+    "mtime": 1781668909.5713081,
+    "ast_hash": "3112ece71e80e1304b2490607bc48894",
+    "semantic_hash": ""
   },
   "app/contacts/__init__.py": {
     "mtime": 1779222751.1620471,
@@ -240,9 +240,9 @@
     "semantic_hash": "e20e21a9df5546f1ce104257cd0ac19c"
   },
   "app/models/account.py": {
-    "mtime": 1780539219.3044965,
-    "ast_hash": "68d0a4f22cfc0777fe1c66c6629c4ccc",
-    "semantic_hash": "68d0a4f22cfc0777fe1c66c6629c4ccc"
+    "mtime": 1781668812.2088528,
+    "ast_hash": "616369caa1372e07202d8986bc7043d9",
+    "semantic_hash": ""
   },
   "app/models/associations.py": {
     "mtime": 1780025214.972962,
@@ -670,9 +670,9 @@
     "semantic_hash": "637776aa6f7496d069afe7520c845c8a"
   },
   "app/accounting/templates/accounting/chart_of_accounts.html": {
-    "mtime": 1781146815.252812,
-    "ast_hash": "0937d4d5f633552f915675cf752b25ca",
-    "semantic_hash": "0937d4d5f633552f915675cf752b25ca"
+    "mtime": 1781668942.0255673,
+    "ast_hash": "868170e0cec03b18441a44e1ccfffeac",
+    "semantic_hash": ""
   },
   "app/accounting/templates/accounting/dashboard.html": {
     "mtime": 1781147636.5033512,
@@ -690,9 +690,9 @@
     "semantic_hash": "678e680ea706aec9ba48089373dbabe5"
   },
   "app/accounting/templates/accounting/partials/account_form.html": {
-    "mtime": 1780891625.4000778,
-    "ast_hash": "c2ae0c02b65f897ec73b085039858f10",
-    "semantic_hash": "c2ae0c02b65f897ec73b085039858f10"
+    "mtime": 1781668934.5144181,
+    "ast_hash": "774bfd29984c0e62c72634e63509a5dd",
+    "semantic_hash": ""
   },
   "app/accounting/templates/accounting/partials/expense_form.html": {
     "mtime": 1781053405.5420866,
@@ -1095,9 +1095,9 @@
     "semantic_hash": "3f053b7148bd4ba7c3171a8be1548889"
   },
   "app/accounting/services/account_service.py": {
-    "mtime": 1781148439.1605835,
-    "ast_hash": "d5103585727067eae7d8a583275f1891",
-    "semantic_hash": "d5103585727067eae7d8a583275f1891"
+    "mtime": 1781668893.0535326,
+    "ast_hash": "583eb984c8b1168cc4983348354d6e20",
+    "semantic_hash": ""
   },
   "app/accounting/services/dashboard_service.py": {
     "mtime": 1781148271.3510437,
@@ -1125,9 +1125,9 @@
     "semantic_hash": "3eff98f328136dd78fee373395d73e5c"
   },
   "app/invoices/services/accounting_integration.py": {
-    "mtime": 1781237560.3981605,
-    "ast_hash": "0f9acc193c0f427c07aeae10277a845d",
-    "semantic_hash": "0f9acc193c0f427c07aeae10277a845d"
+    "mtime": 1781668900.845976,
+    "ast_hash": "03f27ea39e03ab80538cd5c5c0df392d",
+    "semantic_hash": ""
   },
   "app/inventory/templates/inventory/partials/_nav.html": {
     "mtime": 1781247563.9413238,
@@ -1168,5 +1168,20 @@
     "mtime": 1781571371.350256,
     "ast_hash": "e139b90fc2b41bde6fc8b2b7136c720f",
     "semantic_hash": "e139b90fc2b41bde6fc8b2b7136c720f"
+  },
+  ".codex-flask-venv/Include/site/python3.14/greenlet/greenlet.h": {
+    "mtime": 1781670393.3962882,
+    "ast_hash": "cc0e0312fb195f7869ed488415d18243",
+    "semantic_hash": ""
+  },
+  ".codex-flask-venv/Scripts/Activate.ps1": {
+    "mtime": 1759857612.0,
+    "ast_hash": "c32677ff1a8444fc54b6dfa2c40c4f84",
+    "semantic_hash": ""
+  },
+  "migrations/versions/e1a2b3c4d5f6_add_account_default_purpose.py": {
+    "mtime": 1781668971.0880027,
+    "ast_hash": "d65ce07177554253d792587b657ba4f9",
+    "semantic_hash": ""
   }
 }
