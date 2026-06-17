@@ -21,6 +21,7 @@ class Account(BaseModel):
     type = db.Column(db.Enum(AccountType), nullable=False)
     description = db.Column(db.String(1024))
     is_default = db.Column(db.Boolean, default=False, index=True)
+    default_purpose = db.Column(db.String(50), nullable=True, index=True)
     is_active = db.Column(db.Boolean, default=True, nullable=False, index=True)
 
     company = db.relationship('Company', backref=db.backref('accounts', lazy='select'))

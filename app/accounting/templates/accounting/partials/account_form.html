@@ -29,6 +29,16 @@
       <textarea name="description" rows="2" placeholder="Descripción opcional..."
         class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none">{{ account.description if account else '' }}</textarea>
     </div>
+    <div>
+      <label class="block text-sm font-medium text-slate-700 mb-1">Uso predeterminado</label>
+      <select name="default_purpose" class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+        <option value="">Sin uso predeterminado</option>
+        <option value="invoice_payment_revenue" {{ 'selected' if account and account.default_purpose == 'invoice_payment_revenue' else '' }}>
+          Ingresos por pagos de factura
+        </option>
+      </select>
+      <p class="text-xs text-slate-400 mt-1">Use esta opcion en una cuenta de ingresos, por ejemplo Ventas de Productos.</p>
+    </div>
     {% if account %}
     <div class="flex items-center gap-3">
       <input type="checkbox" name="is_active" id="is_active" value="true" {{ 'checked' if account.is_active }}

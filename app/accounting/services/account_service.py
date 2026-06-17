@@ -8,6 +8,23 @@ from ._balance import _active_ledger_conditions
 
 
 class AccountService:
+    INVOICE_PAYMENT_REVENUE_PURPOSE = 'invoice_payment_revenue'
+
+    @staticmethod
+    def _clean_default_purpose(account_type: AccountType, data) -> str | None:
+        default_purpose = data.get('default_purpose', '').strip() or None
+        if default_purpose == AccountService.INVOICE_PAYMENT_REVENUE_PURPOSE:
+            if account_type != AccountType.revenue:
+                raise ValueError('Solo una cuenta de ingresos puede ser predeterminada para pagos de factura.')
+            return default_purpose
+        return None
+
+    @staticmethod
+    def _clear_default_purpose(company_id: int, default_purpose: str, except_account_id: int | None = None) -> None:
+        query = Account.query.filter_by(company_id=company_id, default_purpose=default_purpose)
+        if except_account_id:
+            query = query.filter(Account.id != except_account_id)
+        query.update({'default_purpose': None}, synchronize_session=False)
 
     @staticmethod
     def create_account(company_id: int, data) -> Account:
@@ -23,12 +40,17 @@ class AccountService:
         except ValueError:
             raise ValueError('Tipo de cuenta inválido.')
 
+        default_purpose = AccountService._clean_default_purpose(act_type_enum, data)
+        if default_purpose:
+            AccountService._clear_default_purpose(company_id, default_purpose)
+
         account = Account(
             company_id=company_id,
             code=code,
             name=name,
             type=act_type_enum,
             description=description,
+            default_purpose=default_purpose,
         )
         db.session.add(account)
         db.session.commit()
@@ -45,9 +67,14 @@ class AccountService:
             account.type = AccountType(account_type)
         except ValueError:
             raise ValueError('Tipo de cuenta inválido.')
+        default_purpose = AccountService._clean_default_purpose(account.type, data)
+        if default_purpose:
+            AccountService._clear_default_purpose(company_id, default_purpose, except_account_id=account.id)
+
         account.name = name
         account.code = data.get('code', '').strip() or account.code
         account.description = data.get('description', '').strip()
+        account.default_purpose = default_purpose
         account.is_active = data.get('is_active', 'true').lower() == 'true'
         db.session.commit()
         return account
@@ -92,7 +119,7 @@ class AccountService:
             {'code': '3100', 'name': 'Capital Social',         'type': AccountType.equity,    'description': 'Aportaciones de socios.'},
             {'code': '3200', 'name': 'Resultados Acumulados',  'type': AccountType.equity,    'description': 'Utilidades/pérdidas de ejercicios anteriores.'},
             {'code': '4100', 'name': 'Ventas de Servicios',    'type': AccountType.revenue,   'description': 'Ingresos por servicios.'},
-            {'code': '4200', 'name': 'Ventas de Productos',    'type': AccountType.revenue,   'description': 'Ingresos por ventas de bienes.'},
+            {'code': '4200', 'name': 'Ventas de Productos',    'type': AccountType.revenue,   'description': 'Ingresos por ventas de bienes.', 'default_purpose': AccountService.INVOICE_PAYMENT_REVENUE_PURPOSE},
             {'code': '5100', 'name': 'Costo de Ventas',        'type': AccountType.expense,   'description': 'Costo directo de bienes vendidos.'},
             {'code': '5200', 'name': 'Nóminas y Salarios',     'type': AccountType.expense,   'description': 'Remuneraciones al personal.'},
             {'code': '5300', 'name': 'Gastos de Alquiler',     'type': AccountType.expense,   'description': 'Arrendamiento de locales.'},
@@ -114,11 +141,15 @@ class AccountService:
                     name=def_acc['name'],
                     type=def_acc['type'],
                     description=def_acc['description'],
+                    default_purpose=def_acc.get('default_purpose'),
                     is_default=True,
                     is_active=True,
                 ))
                 created_count += 1
+            elif def_acc.get('default_purpose') and exists.default_purpose != def_acc['default_purpose']:
+                AccountService._clear_default_purpose(company_id, def_acc['default_purpose'], except_account_id=exists.id)
+                exists.default_purpose = def_acc['default_purpose']
 
-        if created_count > 0:
+        if created_count > 0 or db.session.dirty:
             db.session.commit()
         return created_count

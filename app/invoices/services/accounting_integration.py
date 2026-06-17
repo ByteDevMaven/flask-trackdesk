@@ -41,8 +41,26 @@ def _resolve_revenue_account(company_id: int) -> Account:
     """Return the preferred revenue account for invoice-payment income."""
     account = (
         Account.query
+        .filter_by(
+            company_id=company_id,
+            is_active=True,
+            type=AccountType.revenue,
+            default_purpose='invoice_payment_revenue',
+        )
+        .first()
+    )
+    if account:
+        return account
+
+    account = (
+        Account.query
         .filter_by(company_id=company_id, is_active=True, type=AccountType.revenue)
-        .order_by(Account.is_default.desc(), Account.code, Account.name)
+        .order_by(
+            Account.name.ilike('%productos%').desc(),
+            Account.is_default.desc(),
+            Account.code,
+            Account.name,
+        )
         .first()
     )
     if not account:

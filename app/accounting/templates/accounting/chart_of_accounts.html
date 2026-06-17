@@ -57,7 +57,14 @@
           {% set bal = balances.get(acct.id, 0.0) %}
           <tr class="hover:bg-slate-50/80 transition-colors group/row">
             <td class="px-4 py-3 text-slate-400 font-mono text-xs">{{ acct.code or '—' }}</td>
-            <td class="px-4 py-3 font-medium text-slate-800">{{ acct.name }}</td>
+            <td class="px-4 py-3 font-medium text-slate-800">
+              <div class="flex flex-wrap items-center gap-2">
+                <span>{{ acct.name }}</span>
+                {% if acct.default_purpose == 'invoice_payment_revenue' %}
+                <span class="inline-flex px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100 text-[10px] font-semibold">Pagos de factura</span>
+                {% endif %}
+              </div>
+            </td>
             <td class="px-4 py-3 text-xs text-slate-500 max-w-xs truncate">{{ acct.description or '' }}</td>
             <td class="px-4 py-3 text-right font-mono font-bold
               {% if bal > 0 %}text-emerald-700{% elif bal < 0 %}text-rose-600{% else %}text-slate-400{% endif %}">
