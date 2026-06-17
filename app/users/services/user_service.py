@@ -196,7 +196,8 @@ class UserService:
         if user.is_superadmin and not current_user.is_superadmin:
             abort(403)
             
-        has_manage = current_user.has_permission('users.manage')
+        is_self_update = user.id == current_user.id
+        has_manage = current_user.has_permission('users.manage') and not is_self_update
             
         name = data.get('name', '').strip()
         email = data.get('email', '').strip().lower()
