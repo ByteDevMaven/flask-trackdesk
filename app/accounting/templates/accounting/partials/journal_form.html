@@ -1,6 +1,6 @@
 <form method="POST" action="{{ url_for('accounting.edit_journal_entry', company_id=company_url_id|default(company.id), txn_id=transaction.id) if transaction else url_for('accounting.create_journal_entry', company_id=company_url_id|default(company.id)) }}"
   data-drawer-form data-success-message="{{ 'Asiento contable actualizado' if transaction else 'Asiento contable creado' }} exitosamente"
-  onsubmit="return reindexJournalLines()">
+  onsubmit="return reindexJournalLines()" enctype="multipart/form-data">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
   <div class="p-4 md:p-6 space-y-4">
     <div>
@@ -105,6 +105,11 @@
           <span id="balance-indicator" class="w-8 flex items-center justify-center"></span>
         </div>
       </div>
+    </div>
+
+    {# Attachments #}
+    <div class="mt-4">
+      {% include 'accounting/partials/_attachments.html' %}
     </div>
 
     <div class="border-t border-slate-200 pt-4">

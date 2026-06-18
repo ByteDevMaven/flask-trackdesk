@@ -148,6 +148,7 @@ def create_expense(company_id):
     projects = Project.query.filter_by(company_id=company_id).all()
     tags = Tag.query.filter_by(company_id=company_id).all()
     from app.models.enums import ExpenseStatus
+    from app.models import AccountingAttachment
 
     ctx = dict(
         company=company,
@@ -156,6 +157,7 @@ def create_expense(company_id):
         tags=tags,
         expense=None,
         ExpenseStatus=ExpenseStatus,
+        existing_attachments=[],
         now=datetime.now(UTC),
         **_sidebar_ctx(company_id),
     )
@@ -200,6 +202,13 @@ def edit_expense(company_id, expense_id):
     projects = Project.query.filter_by(company_id=company_id).all()
     tags = Tag.query.filter_by(company_id=company_id).all()
     from app.models.enums import ExpenseStatus
+    from app.models import AccountingAttachment
+
+    existing_attachments = AccountingAttachment.query.filter_by(
+        reference_type='Expense',
+        reference_id=expense.id,
+        is_deleted=False
+    ).all()
 
     ctx = dict(
         company=company,
@@ -208,6 +217,7 @@ def edit_expense(company_id, expense_id):
         projects=projects,
         tags=tags,
         ExpenseStatus=ExpenseStatus,
+        existing_attachments=existing_attachments,
         now=datetime.now(UTC),
         **_sidebar_ctx(company_id),
     )
@@ -296,7 +306,7 @@ def create_income(company_id):
     if request.method == 'POST':
         is_ajax = _is_ajax()
         try:
-            AccountingService.record_income(company_id, request.form)
+            AccountingService.record_income(company_id, request.form, request.files)
             if is_ajax:
                 return jsonify({'success': True, 'message': 'Ingreso registrado exitosamente.'})
             flash('Ingreso registrado exitosamente.', 'success')
@@ -317,6 +327,7 @@ def create_income(company_id):
         company_id=company_id, is_active=True, type=AccountType.asset
     ).order_by(Account.code, Account.name).all()
     projects = Project.query.filter_by(company_id=company_id).all()
+    from app.models import AccountingAttachment
 
     ctx = dict(
         company=company,
@@ -324,6 +335,7 @@ def create_income(company_id):
         asset_accounts=asset_accounts,
         projects=projects,
         transaction=None,
+        existing_attachments=[],
         now=datetime.now(UTC),
         **_sidebar_ctx(company_id),
     )
@@ -345,7 +357,7 @@ def edit_income(company_id, txn_id):
     if request.method == 'POST':
         is_ajax = _is_ajax()
         try:
-            AccountingService.update_income(company_id, txn_id, request.form)
+            AccountingService.update_income(company_id, txn_id, request.form, request.files)
             if is_ajax:
                 return jsonify({'success': True, 'message': 'Ingreso actualizado exitosamente.'})
             flash('Ingreso actualizado exitosamente.', 'success')
@@ -370,6 +382,13 @@ def edit_income(company_id, txn_id):
     # Parse existing entry data from the transaction
     debit_entry = next((e for e in transaction.entries if e.debit > 0), None)
     credit_entry = next((e for e in transaction.entries if e.credit > 0), None)
+    
+    from app.models import AccountingAttachment
+    existing_attachments = AccountingAttachment.query.filter_by(
+        reference_type='Income',
+        reference_id=transaction.id,
+        is_deleted=False
+    ).all()
 
     ctx = dict(
         company=company,
@@ -379,6 +398,7 @@ def edit_income(company_id, txn_id):
         projects=projects,
         debit_entry=debit_entry,
         credit_entry=credit_entry,
+        existing_attachments=existing_attachments,
         now=datetime.now(UTC),
         **_sidebar_ctx(company_id),
     )
@@ -488,7 +508,7 @@ def create_journal_entry(company_id):
     if request.method == 'POST':
         is_ajax = _is_ajax()
         try:
-            AccountingService.create_journal_entry(company_id, request.form)
+            AccountingService.create_journal_entry(company_id, request.form, request.files)
             if is_ajax:
                 return jsonify({'success': True, 'message': 'Asiento contable creado.'})
             flash('Asiento contable creado.', 'success')
@@ -503,10 +523,12 @@ def create_journal_entry(company_id):
             flash(f'Error: {e}', 'error')
 
     accounts = Account.query.filter_by(company_id=company_id, is_active=True).order_by(Account.type, Account.code, Account.name).all()
+    from app.models import AccountingAttachment
     ctx = dict(
         company=company,
         company_url_id=company_url_id,
         accounts=accounts,
+        existing_attachments=[],
         now=datetime.now(UTC),
         **_sidebar_ctx(company_id),
     )
@@ -538,7 +560,7 @@ def edit_journal_entry(company_id, txn_id):
     if request.method == 'POST':
         is_ajax = _is_ajax()
         try:
-            updated_txn = AccountingService.update_journal_entry(company_id, txn_id, request.form)
+            updated_txn = AccountingService.update_journal_entry(company_id, txn_id, request.form, request.files)
             if is_ajax:
                 return jsonify({'success': True, 'message': 'Asiento contable actualizado.'})
             flash('Asiento contable actualizado.', 'success')
@@ -554,11 +576,20 @@ def edit_journal_entry(company_id, txn_id):
     
     # GET request or error recovery - render form with existing data
     accounts = Account.query.filter_by(company_id=company_id, is_active=True).order_by(Account.type, Account.code, Account.name).all()
+    
+    from app.models import AccountingAttachment
+    existing_attachments = AccountingAttachment.query.filter_by(
+        reference_type='Journal',
+        reference_id=transaction.id,
+        is_deleted=False
+    ).all()
+    
     ctx = dict(
         company=company,
         company_url_id=company_url_id,
         accounts=accounts,
         transaction=transaction,
+        existing_attachments=existing_attachments,
         now=datetime.now(UTC),
         **_sidebar_ctx(company_id),
     )
@@ -602,6 +633,26 @@ def delete_journal_entry(company_id, txn_id):
             return jsonify({'success': False, 'message': str(e)}), 400
         flash(str(e), 'error')
     return redirect(url_for('accounting.journal_list', company_id=company_id))
+
+
+# ─── Attachments ──────────────────────────────────────────────────────────────
+
+@accounting.route('/<string:company_id>/accounting/attachments/<int:att_id>/delete', methods=['POST'])
+@login_required
+def delete_attachment(company_id, att_id):
+    company = resolve_company(company_id)
+    company_id = company.id
+    from app.models import AccountingAttachment, db
+    
+    attachment = AccountingAttachment.query.filter_by(id=att_id, company_id=company_id).first_or_404()
+    attachment.is_deleted = True
+    attachment.deleted_at = datetime.now(UTC)
+    db.session.commit()
+    
+    if _is_ajax():
+        return jsonify({'success': True, 'message': 'Archivo adjunto eliminado.'})
+    flash('Archivo adjunto eliminado.', 'success')
+    return redirect(request.referrer or url_for('accounting.index', company_id=company_id))
 
 
 # ─── Ledger ───────────────────────────────────────────────────────────────────

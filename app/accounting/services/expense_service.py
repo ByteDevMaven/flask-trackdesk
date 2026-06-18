@@ -7,7 +7,7 @@ from sqlalchemy.orm import joinedload
 from app.models import db, Account, Expense, Tag, Transaction
 from app.models.enums import AccountType, ExpenseStatus, TransactionType
 
-from ._helpers import _parse_date, _get_period_bounds, _save_receipt
+from ._helpers import _parse_date, _get_period_bounds, _save_receipt, _save_attachments
 from ._balance import _active_expense_conditions, _create_balanced_transaction
 
 
@@ -74,12 +74,20 @@ class ExpenseService:
             description=description,
             vendor_name=vendor_name,
             category=category,
-            receipt_url=receipt_url,
+            receipt_url=None,   # Deprecated — use AccountingAttachment instead
             status=status,
             tags=selected_tags,
         )
         db.session.add(expense)
-        db.session.flush()
+        db.session.flush()  # Get expense.id before saving attachments
+
+        # Save multi-file attachments
+        from flask_login import current_user
+        user_id = current_user.id if hasattr(current_user, 'id') else None
+        new_files = files.getlist('attachments') if files else []
+        attachments = _save_attachments(new_files, 'Expense', expense.id, company_id, user_id)
+        for att in attachments:
+            db.session.add(att)
 
         if status != ExpenseStatus.draft:
             memo = description or f"Gasto — {expense_account.name}"
@@ -187,9 +195,18 @@ class ExpenseService:
                 old_txn.voided_reason = f'Replaced by edit of Expense #{expense_id}'
 
         if files and 'receipt_file' in files and files['receipt_file'].filename:
+            # Legacy single-file path kept for older form submissions
             new_receipt = _save_receipt(files['receipt_file'])
             if new_receipt:
                 expense.receipt_url = new_receipt
+
+        # Save any new multi-file attachments
+        from flask_login import current_user
+        user_id = current_user.id if hasattr(current_user, 'id') else None
+        new_files = files.getlist('attachments') if files else []
+        attachments = _save_attachments(new_files, 'Expense', expense.id, company_id, user_id)
+        for att in attachments:
+            db.session.add(att)
 
         cash_account = _resolve_cash_account(company_id)
 

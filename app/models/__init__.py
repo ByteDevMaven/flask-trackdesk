@@ -32,6 +32,7 @@ from .employee import Employee
 from .leave_request import LeaveRequest
 from .work_schedule import WorkSchedule
 from .token import Token
+from .accounting_attachment import AccountingAttachment
 
 __all__ = [
     'db', 'migrate',
@@ -48,4 +49,5 @@ __all__ = [
     'Warehouse', 'WarehouseItem',
     'DocumentTemplate',
     'Employee', 'LeaveRequest', 'WorkSchedule', 'Token',
+    'AccountingAttachment',
 ]

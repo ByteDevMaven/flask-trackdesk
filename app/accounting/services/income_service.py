@@ -2,14 +2,14 @@
 from app.models import db, Account, Transaction
 from app.models.enums import AccountType, TransactionType
 
-from ._helpers import _parse_date, _get_period_bounds
+from ._helpers import _parse_date, _get_period_bounds, _save_attachments
 from ._balance import _create_balanced_transaction
 
 
 class IncomeService:
 
     @staticmethod
-    def record_income(company_id: int, data) -> Transaction:
+    def record_income(company_id: int, data, files=None) -> Transaction:
         """
         Record an income / revenue event.
 
@@ -61,6 +61,15 @@ class IncomeService:
             reference=reference,
             reference_type='Income',
         )
+
+        # Save multi-file attachments
+        from flask_login import current_user
+        user_id = current_user.id if hasattr(current_user, 'id') else None
+        new_files = files.getlist('attachments') if files else []
+        attachments = _save_attachments(new_files, 'Income', txn.id, company_id, user_id)
+        for att in attachments:
+            db.session.add(att)
+
         db.session.commit()
         return txn
 
@@ -84,7 +93,7 @@ class IncomeService:
         return q.paginate(page=page, per_page=per_page, error_out=False)
 
     @staticmethod
-    def update_income(company_id: int, txn_id: int, data) -> Transaction:
+    def update_income(company_id: int, txn_id: int, data, files=None) -> Transaction:
         """Void old income transaction and create a corrected one."""
         old_txn = Transaction.query.filter_by(
             id=txn_id, company_id=company_id, transaction_type=TransactionType.income
@@ -137,6 +146,15 @@ class IncomeService:
             reference=reference,
             reference_type='Income',
         )
+
+        # Save multi-file attachments
+        from flask_login import current_user
+        user_id = current_user.id if hasattr(current_user, 'id') else None
+        new_files = files.getlist('attachments') if files else []
+        attachments = _save_attachments(new_files, 'Income', new_txn.id, company_id, user_id)
+        for att in attachments:
+            db.session.add(att)
+
         db.session.commit()
         return new_txn
 

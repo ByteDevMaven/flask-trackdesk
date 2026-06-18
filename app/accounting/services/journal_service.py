@@ -4,7 +4,7 @@ from datetime import UTC, datetime
 from app.models import db, Account, LedgerEntry, Transaction
 from app.models.enums import TransactionType
 
-from ._helpers import _parse_date, _get_period_bounds, _make_naive
+from ._helpers import _parse_date, _get_period_bounds, _make_naive, _save_attachments
 from ._balance import (
     _active_ledger_conditions,
     _compute_account_balance,
@@ -60,7 +60,7 @@ class JournalService:
     # ── Journal CRUD ───────────────────────────────────────────────────────
 
     @staticmethod
-    def create_journal_entry(company_id: int, data) -> Transaction:
+    def create_journal_entry(company_id: int, data, files=None) -> Transaction:
         """
         Manual multi-line journal entry.
         Expects form fields: memo, date, reference,
@@ -87,11 +87,20 @@ class JournalService:
             reference=reference,
             reference_type='Journal',
         )
+
+        # Save multi-file attachments
+        from flask_login import current_user
+        user_id = current_user.id if hasattr(current_user, 'id') else None
+        new_files = files.getlist('attachments') if files else []
+        attachments = _save_attachments(new_files, 'Journal', txn.id, company_id, user_id)
+        for att in attachments:
+            db.session.add(att)
+
         db.session.commit()
         return txn
 
     @staticmethod
-    def update_journal_entry(company_id: int, txn_id: int, data) -> Transaction:
+    def update_journal_entry(company_id: int, txn_id: int, data, files=None) -> Transaction:
         """Void old entry and post a corrected replacement."""
         old_txn = Transaction.query.filter_by(id=txn_id, company_id=company_id).first_or_404()
         if old_txn.transaction_type != TransactionType.journal:
@@ -126,6 +135,15 @@ class JournalService:
             reference=reference,
             reference_type='Journal',
         )
+
+        # Save multi-file attachments
+        from flask_login import current_user
+        user_id = current_user.id if hasattr(current_user, 'id') else None
+        new_files = files.getlist('attachments') if files else []
+        attachments = _save_attachments(new_files, 'Journal', txn.id, company_id, user_id)
+        for att in attachments:
+            db.session.add(att)
+
         db.session.commit()
         return txn
 
