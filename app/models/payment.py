@@ -6,6 +6,7 @@ class Payment(BaseModel):
     
     company_id = db.Column(db.Integer, db.ForeignKey('companies.id'), nullable=False, index=True)
     document_id = db.Column(db.Integer, db.ForeignKey('documents.id'), index=True)
+    pos_register_session_id = db.Column(db.Integer, db.ForeignKey('pos_register_sessions.id'), nullable=True, index=True)
     
     amount = db.Column(db.Numeric(12, 2), nullable=False)
     payment_date = db.Column(db.DateTime, nullable=False, index=True)

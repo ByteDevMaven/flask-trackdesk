@@ -27,6 +27,7 @@ from .tag import Tag
 
 from .warehouse import Warehouse
 from .warehouse_item import WarehouseItem
+from .pos_register import PosRegisterSession, PosCashMovement
 from .document_template import DocumentTemplate, DocumentTemplateType
 from .employee import Employee
 from .leave_request import LeaveRequest
@@ -47,6 +48,7 @@ __all__ = [
     'Account', 'Project', 'Expense', 'LedgerEntry', 'Transaction',
     'AuditLog', 'Tag',
     'Warehouse', 'WarehouseItem',
+    'PosRegisterSession', 'PosCashMovement',
     'DocumentTemplate',
     'Employee', 'LeaveRequest', 'WorkSchedule', 'Token',
     'AccountingAttachment',

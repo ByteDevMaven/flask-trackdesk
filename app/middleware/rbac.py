@@ -107,6 +107,14 @@ ROUTE_PERMISSIONS: dict[str, str] = {
     'invoices.item_row':      'invoices.manage',
     'invoices.print_invoice': 'invoices.view',
 
+    # POS uses invoice creation/payment permissions because each checkout creates
+    # an invoice and may record a payment with accounting impact.
+    'pos.index':    'invoices.manage',
+    'pos.checkout': 'invoices.manage',
+    'pos.open_register': 'invoices.manage',
+    'pos.close_register': 'invoices.manage',
+    'pos.cash_movement': 'invoices.manage',
+
     # ── Payments ──────────────────────────────────────────────────────────
     'payments.index':  'payments.view',
     'payments.view':   'payments.view',

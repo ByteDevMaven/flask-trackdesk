@@ -177,6 +177,7 @@ def add_invoice_payment(document, form):
     payment_date_str = form.get('payment_date')
     payment_method = form.get('payment_method', 'cash')
     reference = form.get('reference', '')
+    register_session_id = form.get('register_session_id')
 
     if amount <= 0:
         raise ValueError('Payment amount must be greater than 0')
@@ -189,6 +190,7 @@ def add_invoice_payment(document, form):
         amount=amount,
         payment_date=payment_date,
         method=PaymentMethod[payment_method],
+        pos_register_session_id=int(register_session_id) if register_session_id else None,
         notes=reference
     )
 

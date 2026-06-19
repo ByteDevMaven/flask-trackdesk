@@ -8,6 +8,7 @@ class InventoryItem(BaseModel):
     sku = db.Column(db.String(64), nullable=True, index=True)
     name = db.Column(db.String(255), nullable=False, index=True)
     description = db.Column(db.String(1024))
+    #TODO: add category_id foreign key to categories table and add if it is non numeric eg a service
     
     quantity = db.Column(db.Integer, nullable=False, default=0)
     price = db.Column(db.Numeric(12, 2), nullable=False, default=0.0)
