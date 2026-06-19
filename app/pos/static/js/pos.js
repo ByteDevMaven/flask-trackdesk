@@ -97,6 +97,41 @@
       .replaceAll("'", "&#039;");
   }
 
+  function normalizeSearch(value) {
+    return String(value ?? "").toLowerCase().replace(/[\s-]/g, "");
+  }
+
+  function productSearchTerms(product) {
+    const extraTerms = Array.isArray(product.search_terms) ? product.search_terms : [];
+    return [
+      product.id,
+      String(product.id || "").padStart(6, "0"),
+      product.sku,
+      product.barcode,
+      product.name,
+      product.description,
+      ...extraTerms
+    ].map(normalizeSearch).filter(Boolean);
+  }
+
+  function findExactProduct(term) {
+    const query = normalizeSearch(term);
+    if (!query) {
+      return null;
+    }
+
+    return products.find((product) => {
+      const exactTerms = [
+        product.id,
+        String(product.id || "").padStart(6, "0"),
+        product.sku,
+        product.barcode
+      ].map(normalizeSearch);
+
+      return exactTerms.includes(query);
+    }) || null;
+  }
+
   function calcTotals() {
     let subtotal = 0;
     state.cart.forEach((item) => {
@@ -300,15 +335,15 @@
   }
 
   function filterProducts() {
-    const term = productSearch.value.trim().toLowerCase();
+    const term = productSearch.value.trim();
+    const query = normalizeSearch(term);
     if (!term) {
       renderProducts(products);
       return products;
     }
 
     const filtered = products.filter((product) => {
-      const haystack = `${product.sku} ${product.name} ${product.description}`.toLowerCase();
-      return haystack.includes(term);
+      return productSearchTerms(product).some((value) => value.includes(query));
     });
     renderProducts(filtered);
     return filtered;
@@ -516,9 +551,9 @@
       return;
     }
     event.preventDefault();
-    const term = productSearch.value.trim().toLowerCase();
+    const term = productSearch.value.trim();
     const matches = filterProducts();
-    const exact = products.find((product) => String(product.sku || "").toLowerCase() === term);
+    const exact = findExactProduct(term);
     const product = exact || matches[0];
     if (product) {
       addProduct(product);

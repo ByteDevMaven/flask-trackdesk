@@ -413,6 +413,8 @@ def api_get_items(company_id):
     return jsonify({
         'items': [{
             'id': item.id,
+            'sku': item.sku,
+            'barcode': item.generated_tag,
             'name': item.name,
             'description': item.description,
             'quantity': item.quantity,
@@ -623,6 +625,8 @@ def api_search(company_id):
     for item in items:
         results.append({
             'id': item.id,
+            'sku': item.sku,
+            'barcode': item.generated_tag,
             'name': item.name,
             'quantity': item.quantity,
             'price': item.price,
@@ -653,7 +657,7 @@ def barcode(company_id, sku):
         from flask import abort; abort(404)
     copies = request.args.get('copies', 12, type=int)
     currency_symbol = session.get('currency', '$')
-    barcode_value = f"{company_id}{item.id:06d}"
+    barcode_value = item.generated_tag
 
     return render_template('inventory/barcode.html',
                           company_id=company_id,

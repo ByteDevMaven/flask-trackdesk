@@ -223,3 +223,18 @@ def register_cli(app: Flask):
             db.session.commit()
             print(f'[OK] Updated {count} expired document(s) to overdue status.')
             print(f'[OK] Created {notification_count} expired invoice notification(s).')
+
+    @app.cli.command('send-low-stock-notifications')
+    @click.option('--threshold', default=5, show_default=True, help='Quantity at or below this value is low stock')
+    def send_low_stock_notifications_command(threshold):
+        """Send one-time notifications for low-stock inventory items.
+
+        Run with: flask send-low-stock-notifications
+        """
+        from app.inventory.services import send_low_stock_notifications
+
+        with app.app_context():
+            result = send_low_stock_notifications(threshold=threshold)
+
+        print(f"[OK] Checked {result['checked_items']} low-stock item(s).")
+        print(f"[OK] Created {result['created_notifications']} low-stock notification(s).")

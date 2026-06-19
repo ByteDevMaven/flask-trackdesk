@@ -51,6 +51,44 @@
 
   const projects = Array.isArray(formData.projects) ? formData.projects : [];
 
+  function normalizeProductSearch(value) {
+    return String(value ?? '').toLowerCase().replace(/[\s-]/g, '');
+  }
+
+  function getProductSearchTerms(product) {
+    const extraTerms = Array.isArray(product.searchTerms)
+      ? product.searchTerms
+      : (Array.isArray(product.search_terms) ? product.search_terms : []);
+
+    return [
+      product.id,
+      String(product.id || '').padStart(6, '0'),
+      product.sku,
+      product.barcode,
+      product.name,
+      product.description,
+      ...extraTerms
+    ].map(normalizeProductSearch).filter(Boolean);
+  }
+
+  function filterInventoryProducts(searchQuery) {
+    const q = normalizeProductSearch(searchQuery);
+    if (!q) return inventoryItems;
+    return inventoryItems.filter(product => getProductSearchTerms(product).some(term => term.includes(q)));
+  }
+
+  function findExactInventoryProduct(searchQuery) {
+    const q = normalizeProductSearch(searchQuery);
+    if (!q) return null;
+
+    return inventoryItems.find(product => [
+      product.id,
+      String(product.id || '').padStart(6, '0'),
+      product.sku,
+      product.barcode
+    ].map(normalizeProductSearch).includes(q)) || null;
+  }
+
   function openCustomerSearch() {
     customerModal?.classList.remove('hidden');
     if (customerSearchInput) {
@@ -209,8 +247,7 @@
     if (!productListBox) return;
 
     productListBox.innerHTML = '';
-    const q = String(searchQuery || '').toLowerCase();
-    const filtered = inventoryItems.filter(p => String(p.name || '').toLowerCase().includes(q));
+    const filtered = filterInventoryProducts(searchQuery);
 
     if (filtered.length === 0) {
       productListBox.innerHTML = `
@@ -231,6 +268,11 @@
       const badgeHtml = isOutOfStock
         ? `<span class="text-[10px] font-bold text-rose-700 bg-rose-50 border border-rose-100 rounded px-2 py-0.5">Sin Stock${isBlocked ? ' (Bloqueado)' : ''}</span>`
         : `<span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-100 rounded px-2 py-0.5">${stockVal} unids</span>`;
+      const productDetails = [
+        p.sku ? `SKU: ${p.sku}` : '',
+        p.barcode ? `Etiqueta: ${p.barcode}` : '',
+        p.price ? 'Precio base: ' + Number(p.price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : ''
+      ].filter(Boolean).join(' / ') || 'Sin precio configurado';
 
       div.innerHTML = `
         <div class="flex items-center gap-3">
@@ -242,7 +284,7 @@
               <p class="text-sm font-semibold text-slate-800">${p.name || ''}</p>
               ${badgeHtml}
             </div>
-            <p class="text-xs text-slate-400 mt-0.5">${p.price ? 'Precio base: ' + Number(p.price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 'Sin precio configurado'}</p>
+            <p class="text-xs text-slate-400 mt-0.5">${productDetails}</p>
           </div>
         </div>
         <span class="text-sm font-bold text-slate-700 px-2.5 py-1 rounded bg-slate-100">${Number(p.price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>`;
@@ -366,6 +408,13 @@
   if (customerSearchInput) customerSearchInput.addEventListener('input', () => renderCustomers(customerSearchInput.value));
   if (closeProductModal) closeProductModal.addEventListener('click', closeProductSearch);
   if (productSearchInput) productSearchInput.addEventListener('input', () => renderProducts(productSearchInput.value));
+  if (productSearchInput) productSearchInput.addEventListener('keydown', event => {
+    if (event.key !== 'Enter') return;
+    event.preventDefault();
+    const matches = filterInventoryProducts(productSearchInput.value);
+    const product = findExactInventoryProduct(productSearchInput.value) || matches[0];
+    if (product) selectProduct(product);
+  });
 
   if (openProjectModalBtn) openProjectModalBtn.addEventListener('click', openProjectSearch);
   if (closeProjectModal) closeProjectModal.addEventListener('click', closeProjectSearch);

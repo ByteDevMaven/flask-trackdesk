@@ -89,11 +89,26 @@ document.addEventListener('DOMContentLoaded', () => {
     const classes = {
       success: 'bg-emerald-50 text-emerald-700',
       warning: 'bg-amber-50 text-amber-700',
+      alert: 'bg-amber-50 text-amber-700',
+      low_stock: 'bg-amber-50 text-amber-700',
       danger: 'bg-rose-50 text-rose-700',
       error: 'bg-rose-50 text-rose-700',
       info: 'bg-sky-50 text-sky-700'
     };
     return classes[type] || 'bg-slate-100 text-slate-600';
+  }
+
+  function notificationTypeLabel(type) {
+    const labels = {
+      success: 'Exito',
+      warning: 'Advertencia',
+      alert: 'Aviso',
+      low_stock: 'Stock bajo',
+      danger: 'Urgente',
+      error: 'Error',
+      info: 'Informacion'
+    };
+    return labels[type] || String(type || 'info').replace(/_/g, ' ');
   }
 
   function postNotificationAction(url) {
@@ -143,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const type = document.createElement('span');
       type.className = `rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase ${notificationTypeClass(item.type)}`;
-      type.textContent = item.type || 'info';
+      type.textContent = notificationTypeLabel(item.type);
       header.appendChild(type);
 
       if (item.priority === 'high') {
@@ -225,7 +240,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (typeBadge) {
       typeBadge.className = `mb-3 inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold uppercase ${notificationTypeClass(item.type)}`;
-      typeBadge.textContent = item.type || 'Aviso';
+      typeBadge.textContent = notificationTypeLabel(item.type);
     }
     if (title) title.textContent = item.title || 'Notificacion';
     if (body) body.textContent = item.body || '';

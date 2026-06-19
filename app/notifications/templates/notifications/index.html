@@ -31,6 +31,15 @@
 {% endblock %}
 
 {% block content %}
+{% set notification_type_labels = {
+  'success': 'Exito',
+  'warning': 'Advertencia',
+  'alert': 'Aviso',
+  'low_stock': 'Stock bajo',
+  'danger': 'Urgente',
+  'error': 'Error',
+  'info': 'Informacion'
+} %}
 <div class="flex h-full flex-col overflow-hidden bg-slate-50">
   <header class="bg-white border-b border-slate-200 px-4 md:px-6 py-3 flex items-center justify-between flex-shrink-0">
     <div>
@@ -61,15 +70,18 @@
               {% set type_styles = {
                 'success': 'bg-emerald-50 text-emerald-700',
                 'warning': 'bg-amber-50 text-amber-700',
+                'alert': 'bg-amber-50 text-amber-700',
+                'low_stock': 'bg-amber-50 text-amber-700',
                 'danger': 'bg-rose-50 text-rose-700',
                 'error': 'bg-rose-50 text-rose-700',
                 'info': 'bg-sky-50 text-sky-700'
               } %}
+              {% set type_label = notification_type_labels.get(item.type, item.type|replace('_', ' ')|title) %}
               <article class="px-5 py-4 {{ 'bg-emerald-50/30' if is_unread else 'bg-white' }}">
                 <div class="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
                   <div class="min-w-0">
                     <div class="flex flex-wrap items-center gap-2">
-                      <span class="inline-flex rounded-full px-2 py-0.5 text-[11px] font-semibold uppercase {{ type_styles.get(item.type, 'bg-slate-100 text-slate-600') }}">{{ item.type }}</span>
+                      <span class="inline-flex rounded-full px-2 py-0.5 text-[11px] font-semibold uppercase {{ type_styles.get(item.type, 'bg-slate-100 text-slate-600') }}">{{ type_label }}</span>
                       {% if item.priority == 'high' %}
                       <span class="inline-flex rounded-full bg-rose-50 px-2 py-0.5 text-[11px] font-semibold uppercase text-rose-700">Alta</span>
                       {% endif %}
@@ -116,13 +128,40 @@
         </div>
 
         {% if pagination.pages > 1 %}
-        <div class="flex items-center justify-end gap-2">
+        <div class="rounded-lg border border-slate-200 bg-white px-5 py-3 shadow-sm flex items-center justify-between">
+          <p class="text-sm text-slate-500 font-medium">
+            Mostrando {{ (pagination.page - 1) * pagination.per_page + 1 }} a
+            {% if pagination.page * pagination.per_page > pagination.total %}{{ pagination.total }}{% else %}{{ pagination.page * pagination.per_page }}{% endif %}
+            de {{ pagination.total }} resultados
+          </p>
+          <div class="flex items-center gap-1">
           {% if pagination.has_prev %}
-          <a href="{{ url_for('notifications.index', page=pagination.prev_num, status=status) }}" class="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-600 hover:bg-slate-50">Anterior</a>
+          <a href="{{ url_for('notifications.index', page=pagination.prev_num, status=status) }}"
+            class="px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded transition-colors">Anterior</a>
+          {% else %}
+          <span class="px-3 py-1.5 text-sm font-medium text-slate-400 rounded cursor-not-allowed">Anterior</span>
           {% endif %}
+
+          {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+          {% if page_num %}
+          {% if page_num == pagination.page %}
+          <span class="px-3 py-1.5 text-sm font-bold text-white bg-emerald-600 rounded shadow-sm">{{ page_num }}</span>
+          {% else %}
+          <a href="{{ url_for('notifications.index', page=page_num, status=status) }}"
+            class="px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded transition-colors">{{ page_num }}</a>
+          {% endif %}
+          {% else %}
+          <span class="px-2 text-slate-400 font-medium">...</span>
+          {% endif %}
+          {% endfor %}
+
           {% if pagination.has_next %}
-          <a href="{{ url_for('notifications.index', page=pagination.next_num, status=status) }}" class="rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-600 hover:bg-slate-50">Siguiente</a>
+          <a href="{{ url_for('notifications.index', page=pagination.next_num, status=status) }}"
+            class="px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded transition-colors">Siguiente</a>
+          {% else %}
+          <span class="px-3 py-1.5 text-sm font-medium text-slate-400 rounded cursor-not-allowed">Siguiente</span>
           {% endif %}
+          </div>
         </div>
         {% endif %}
       </section>
@@ -150,7 +189,7 @@
                 <select name="type" class="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500">
                   <option value="info">Info</option>
                   <option value="success">Exito</option>
-                  <option value="warning">Alerta</option>
+                  <option value="warning">Advertencia</option>
                   <option value="danger">Urgente</option>
                 </select>
               </div>

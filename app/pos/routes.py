@@ -76,14 +76,24 @@ def _available_stock(item: InventoryItem, warehouse_id: int | None) -> int:
 
 def _product_payload(item: InventoryItem, warehouse_id: int | None):
     stock = _available_stock(item, warehouse_id)
+    barcode = item.generated_tag
     return {
         "id": item.id,
         "sku": item.sku or "",
+        "barcode": barcode,
         "name": item.name,
         "description": item.description or item.name,
         "price": float(_money(item.price)),
         "discount": float(_money(item.discount)),
         "stock": stock,
+        "search_terms": [
+            item.sku or "",
+            barcode,
+            str(item.id),
+            f"{item.id:06d}",
+            item.name,
+            item.description or "",
+        ],
     }
 
 

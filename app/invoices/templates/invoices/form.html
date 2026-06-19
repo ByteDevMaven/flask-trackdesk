@@ -367,7 +367,7 @@ TrackDesk{% endblock %}
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
-        <input type="text" id="product-search-input" placeholder="Buscar por nombre de producto..."
+        <input type="text" id="product-search-input" placeholder="Buscar por nombre, SKU o etiqueta..."
           class="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-slate-700 font-medium">
       </div>
     </div>
@@ -433,9 +433,20 @@ TrackDesk{% endblock %}
     {% for item in inventory_items %}
     {
       "id": {{ item.id|tojson|safe }},
+      "sku": {{ (item.sku or '')|tojson|safe }},
+      "barcode": {{ item.generated_tag|tojson|safe }},
       "name": {{ item.name|tojson|safe }},
+      "description": {{ (item.description or '')|tojson|safe }},
       "price": {{ (item.price or 0.0)|tojson|safe }},
-      "stock": {{ (item.quantity or 0)|tojson|safe }}
+      "stock": {{ (item.quantity or 0)|tojson|safe }},
+      "searchTerms": [
+        {{ (item.sku or '')|tojson|safe }},
+        {{ item.generated_tag|tojson|safe }},
+        {{ item.id|string|tojson|safe }},
+        {{ ("%06d"|format(item.id))|tojson|safe }},
+        {{ item.name|tojson|safe }},
+        {{ (item.description or '')|tojson|safe }}
+      ]
     }{{ "," if not loop.last else "" }}
     {% endfor %}
   ],

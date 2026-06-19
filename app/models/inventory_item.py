@@ -36,5 +36,15 @@ class InventoryItem(BaseModel):
         slug = slug.strip('-')[:24]  # cap prefix at 24 chars
         return f"{slug}-{item_id}"
 
+    @staticmethod
+    def build_generated_tag(company_id: int, item_id: int) -> str:
+        return f"{company_id}{item_id:06d}"
+
+    @property
+    def generated_tag(self) -> str:
+        if self.company_id is None or self.id is None:
+            return ""
+        return self.build_generated_tag(self.company_id, self.id)
+
     def __repr__(self) -> str:
         return f'<InventoryItem {self.id} {self.name} (qty={self.quantity})'

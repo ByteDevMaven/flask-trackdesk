@@ -5,6 +5,23 @@ from flask_babel import _
 from flask_login import current_user
 
 from app.models import db, InventoryItem, StockMovement, StockMovementType
+from .low_stock_notifications import LOW_STOCK_THRESHOLD
+
+
+def _item_ids_from_search_tag(company_id, search):
+    digits = ''.join(ch for ch in str(search or '') if ch.isdigit())
+    if not digits:
+        return []
+
+    candidates = set()
+    company_prefix = str(company_id)
+    if digits.startswith(company_prefix):
+        tag_suffix = digits[len(company_prefix):]
+        if tag_suffix:
+            candidates.add(int(tag_suffix))
+
+    candidates.add(int(digits.lstrip('0') or '0'))
+    return [item_id for item_id in candidates if item_id > 0]
 
 
 class InventoryService:
@@ -13,11 +30,17 @@ class InventoryService:
         query = InventoryItem.query.filter_by(company_id=company_id)
         
         if search:
+            item_id_matches = _item_ids_from_search_tag(company_id, search)
+            conditions = [
+                InventoryItem.name.ilike(f'%{search}%'),
+                InventoryItem.description.ilike(f'%{search}%'),
+                InventoryItem.sku.ilike(f'%{search}%')
+            ]
+            if item_id_matches:
+                conditions.append(InventoryItem.id.in_(item_id_matches))
+
             query = query.filter(
-                or_(
-                    InventoryItem.name.ilike(f'%{search}%'),
-                    InventoryItem.description.ilike(f'%{search}%')
-                )
+                or_(*conditions)
             )
         
         if supplier_id and str(supplier_id).isdigit():
@@ -38,7 +61,7 @@ class InventoryService:
     def get_inventory_stats(company_id):
         total_items = InventoryItem.query.filter_by(company_id=company_id).count()
         low_stock_items = InventoryItem.query.filter(
-            and_(InventoryItem.company_id == company_id, InventoryItem.quantity <= 10)
+            and_(InventoryItem.company_id == company_id, InventoryItem.quantity <= LOW_STOCK_THRESHOLD)
         ).count()
         out_of_stock_items = InventoryItem.query.filter(
             and_(InventoryItem.company_id == company_id, InventoryItem.quantity == 0)
@@ -48,6 +71,7 @@ class InventoryService:
         
         return {
             'total_items': total_items,
+            'low_stock': low_stock_items,
             'low_stock_items': low_stock_items,
             'out_of_stock_items': out_of_stock_items,
             'total_value': float(total_value),
@@ -312,14 +336,20 @@ class InventoryService:
     def search_inventory_items(company_id, query, limit=10):
         if not query or len(query) < 2:
             return []
-            
+
+        item_id_matches = _item_ids_from_search_tag(company_id, query)
+        conditions = [
+            InventoryItem.name.ilike(f'%{query}%'),
+            InventoryItem.description.ilike(f'%{query}%'),
+            InventoryItem.sku.ilike(f'%{query}%')
+        ]
+        if item_id_matches:
+            conditions.append(InventoryItem.id.in_(item_id_matches))
+
         return InventoryItem.query.filter(
             and_(
                 InventoryItem.company_id == company_id,
-                or_(
-                    InventoryItem.name.ilike(f'%{query}%'),
-                    InventoryItem.description.ilike(f'%{query}%')
-                )
+                or_(*conditions)
             )
         ).limit(limit).all()
 

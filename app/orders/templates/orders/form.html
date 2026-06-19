@@ -317,7 +317,7 @@
     <div class="p-4 border-b border-slate-50 bg-slate-50/50">
       <div class="relative">
         <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-        <input type="text" id="product-search-input" placeholder="Buscar por nombre de producto..."
+        <input type="text" id="product-search-input" placeholder="Buscar por nombre, SKU o etiqueta..."
                class="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-slate-700 font-medium">
       </div>
     </div>
@@ -349,9 +349,19 @@
       "id": {{ inv.id|tojson|safe }},
       "name": {{ inv.name|tojson|safe }},
       "code": {{ (inv.sku or inv.code or '')|tojson|safe if (inv.sku is defined or inv.code is defined) else '""'|safe }},
+      "barcode": {{ inv.generated_tag|tojson|safe }},
+      "description": {{ (inv.description or '')|tojson|safe }},
       "price": {{ (inv.price or 0.0)|tojson|safe }},
       "cost_price": {{ (inv.cost_price or 0.0)|tojson|safe }},
-      "stock": {{ (inv.quantity or 0)|tojson|safe }}
+      "stock": {{ (inv.quantity or 0)|tojson|safe }},
+      "searchTerms": [
+        {{ (inv.sku or '')|tojson|safe }},
+        {{ inv.generated_tag|tojson|safe }},
+        {{ inv.id|string|tojson|safe }},
+        {{ ("%06d"|format(inv.id))|tojson|safe }},
+        {{ inv.name|tojson|safe }},
+        {{ (inv.description or '')|tojson|safe }}
+      ]
     }{{ "," if not loop.last else "" }}
     {% endfor %}
   ]
@@ -373,6 +383,44 @@
   const summaryItms = document.getElementById('summary-items');
   const supplierSel = document.getElementById('supplier-select');
   const summarySupp = document.getElementById('summary-supplier');
+
+  function normalizeProductSearch(value) {
+    return String(value ?? '').toLowerCase().replace(/[\s-]/g, '');
+  }
+
+  function itemSearchTerms(item) {
+    const extraTerms = Array.isArray(item.searchTerms)
+      ? item.searchTerms
+      : (Array.isArray(item.search_terms) ? item.search_terms : []);
+
+    return [
+      item.id,
+      String(item.id || '').padStart(6, '0'),
+      item.code,
+      item.barcode,
+      item.name,
+      item.description,
+      ...extraTerms
+    ].map(normalizeProductSearch).filter(Boolean);
+  }
+
+  function filterItems(query) {
+    const q = normalizeProductSearch(query);
+    if (!q) return items;
+    return items.filter(item => itemSearchTerms(item).some(term => term.includes(q)));
+  }
+
+  function findExactItem(query) {
+    const q = normalizeProductSearch(query);
+    if (!q) return null;
+
+    return items.find(item => [
+      item.id,
+      String(item.id || '').padStart(6, '0'),
+      item.code,
+      item.barcode
+    ].map(normalizeProductSearch).includes(q)) || null;
+  }
 
   /* ── Recalculate totals ── */
   function recalc() {
@@ -460,8 +508,7 @@
   let   targetRow  = null;
 
   function renderList(query) {
-    const q = query.toLowerCase();
-    const filtered = q ? items.filter(i => i.name.toLowerCase().includes(q)) : items;
+    const filtered = filterItems(query);
     listBox.innerHTML = '';
     if (filtered.length === 0) {
       listBox.innerHTML = '<p class="text-sm text-slate-400 text-center py-6">Sin resultados</p>';
@@ -471,13 +518,19 @@
       const el = document.createElement('button');
       el.type = 'button';
       el.className = 'w-full flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-emerald-50 text-left transition-colors group';
+      const itemDetails = [
+        inv.code ? 'SKU: ' + inv.code : '',
+        inv.barcode ? 'Etiqueta: ' + inv.barcode : '',
+        'Stock: ' + inv.stock,
+        'Costo: {{ session.get('currency','L') }} ' + inv.cost_price.toLocaleString(undefined, { minimumFractionDigits: 5, maximumFractionDigits: 5 })
+      ].filter(Boolean).join(' / ');
       el.innerHTML = `
         <div class="w-9 h-9 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-600 text-xs font-bold flex-shrink-0">
           ${inv.name.slice(0,2).toUpperCase()}
         </div>
         <div class="flex-1 min-w-0">
           <p class="text-sm font-semibold text-slate-800 truncate group-hover:text-emerald-700">${inv.name}</p>
-          <p class="text-xs text-slate-400 mt-0.5">Stock: ${inv.stock} &nbsp;·&nbsp; Costo: {{ session.get('currency','L') }} ${inv.cost_price.toLocaleString(undefined, { minimumFractionDigits: 5, maximumFractionDigits: 5 })}</p>
+          <p class="text-xs text-slate-400 mt-0.5">${itemDetails}</p>
         </div>
         <span class="text-xs font-semibold text-emerald-600 opacity-0 group-hover:opacity-100 transition-opacity">+ Agregar</span>
       `;
@@ -522,6 +575,12 @@
   document.getElementById('close-product-modal').addEventListener('click', closeModal);
   modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
   searchInput.addEventListener('input', () => renderList(searchInput.value));
+  searchInput.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
+    const match = findExactItem(searchInput.value) || filterItems(searchInput.value)[0];
+    if (match) selectProduct(match);
+  });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
   /* ── Supplier Modal Logic ── */
