@@ -91,15 +91,23 @@ class AuditMiddleware:
             print(f"Audit Logging Error: {str(e)}")
 
 def get_model_changes(target):
-    """Helper to detect changed attributes and their values."""
+    """Helper to detect changed attributes and their values (only real changes)."""
     state = db.inspect(target)
     old_data = {}
     new_data = {}
     for attr in state.mapper.column_attrs:
         hist = state.get_history(attr.key, True)
         if hist.has_changes():
-            old_data[attr.key] = hist.deleted[0] if hist.deleted else None
-            new_data[attr.key] = hist.added[0] if hist.added else None
+            old_val = hist.deleted[0] if hist.deleted else None
+            new_val = hist.added[0] if hist.added else None
+            # Normalize enum values for comparison
+            old_cmp = old_val.value if isinstance(old_val, enum.Enum) else old_val
+            new_cmp = new_val.value if isinstance(new_val, enum.Enum) else new_val
+            # Skip fields where value hasn't actually changed
+            if old_cmp == new_cmp:
+                continue
+            old_data[attr.key] = old_val
+            new_data[attr.key] = new_val
     return old_data, new_data
 
 def register_audit_listeners():
@@ -116,6 +124,7 @@ def register_audit_listeners():
         for obj in session.dirty:
             if isinstance(obj, BaseModel) and not isinstance(obj, AuditLog):
                 old_data, new_data = get_model_changes(obj)
+                # Only log if there are genuine changes
                 if old_data or new_data:
                     AuditMiddleware.log_change(obj, 'UPDATE', old_data=old_data, new_data=new_data)
 
