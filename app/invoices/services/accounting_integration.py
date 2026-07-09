@@ -1,7 +1,7 @@
 """Accounting integration helpers for invoice payments."""
 
 from app.accounting.services._balance import _create_balanced_transaction
-from app.models import Account, LedgerEntry
+from app.models import Account, LedgerEntry, Transaction
 from app.models.enums import AccountType, TransactionType
 
 
@@ -82,11 +82,17 @@ def post_invoice_payment_income(payment, document):
     if not payment or not document:
         return None
 
-    existing_entry = LedgerEntry.query.filter_by(
-        company_id=payment.company_id,
-        reference_type='Payment',
-        reference_id=payment.id,
-    ).first()
+    # Check if a non-voided transaction already exists for this payment
+    existing_entry = (
+        LedgerEntry.query.join(Transaction)
+        .filter(
+            LedgerEntry.company_id == payment.company_id,
+            LedgerEntry.reference_type == 'Payment',
+            LedgerEntry.reference_id == payment.id,
+            Transaction.is_voided.is_(False)
+        )
+        .first()
+    )
     if existing_entry:
         return existing_entry.transaction
 

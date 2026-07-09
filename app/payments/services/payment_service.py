@@ -187,11 +187,34 @@ class PaymentService:
 
         old_document_id = payment.document_id
 
+        # Find and void old transaction if it exists
+        from app.models import LedgerEntry, Transaction
+        old_txn = (
+            Transaction.query.join(LedgerEntry)
+            .filter(
+                LedgerEntry.company_id == company_id,
+                LedgerEntry.reference_type == 'Payment',
+                LedgerEntry.reference_id == payment.id,
+                Transaction.is_voided.is_(False)
+            )
+            .first()
+        )
+        if old_txn:
+            old_txn.is_voided = True
+            old_txn.voided_reason = f'Replaced by edit of Payment #{payment.id}'
+
         payment.document_id = int(data.get('document_id')) if data.get('document_id') else None  # type: ignore
         payment.amount = float(data.get('amount', 0))
         payment.payment_date = datetime.strptime(data.get('payment_date'), '%Y-%m-%d') if data.get('payment_date') else payment.payment_date  # type: ignore
         payment.method = data.get('method', payment.method)
         payment.notes = data.get('notes', payment.notes)
+
+        # Update invoice status and post new accounting entry
+        if payment.document_id:
+            invoice = Document.query.get(payment.document_id)
+            if invoice:
+                from app.invoices.services.accounting_integration import post_invoice_payment_income
+                post_invoice_payment_income(payment, invoice)
 
         invoices_to_update = set()
         if old_document_id:
@@ -213,6 +236,22 @@ class PaymentService:
         ).first_or_404()
 
         document_id = payment.document_id
+
+        # Void related transaction
+        from app.models import LedgerEntry, Transaction
+        old_txn = (
+            Transaction.query.join(LedgerEntry)
+            .filter(
+                LedgerEntry.company_id == company_id,
+                LedgerEntry.reference_type == 'Payment',
+                LedgerEntry.reference_id == payment.id,
+                Transaction.is_voided.is_(False)
+            )
+            .first()
+        )
+        if old_txn:
+            old_txn.is_voided = True
+            old_txn.voided_reason = f'Payment #{payment.id} deleted'
 
         payment.is_deleted = True
         payment.deleted_at = datetime.now(UTC)
