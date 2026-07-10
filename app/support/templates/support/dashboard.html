@@ -1,0 +1,118 @@
+{% extends "support/base_support.html" %}
+
+{% block page_title %}Dashboard de Soporte{% endblock %}
+
+{% block content %}
+<div class="p-6 max-w-7xl mx-auto space-y-6">
+  
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-center">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-sm font-semibold text-slate-600 uppercase tracking-wider">Total Eliminados (Soft)</h3>
+        <div class="w-10 h-10 bg-amber-50 text-amber-600 rounded-lg flex items-center justify-center">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+        </div>
+      </div>
+      <p class="text-4xl font-bold text-slate-900">{{ total_deleted }}</p>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-center">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-sm font-semibold text-slate-600 uppercase tracking-wider">Logs de Auditoría</h3>
+        <div class="w-10 h-10 bg-sky-50 text-sky-600 rounded-lg flex items-center justify-center">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        </div>
+      </div>
+      <p class="text-4xl font-bold text-slate-900">{{ audit_count }}</p>
+    </div>
+    
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col justify-center">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-sm font-semibold text-slate-600 uppercase tracking-wider">Modelos Registrados</h3>
+        <div class="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-lg flex items-center justify-center">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
+        </div>
+      </div>
+      <p class="text-4xl font-bold text-slate-900">{{ tables|length }}</p>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <div class="bg-white border border-slate-200 shadow-sm rounded-xl overflow-hidden flex flex-col">
+      <div class="p-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
+        <h3 class="font-semibold text-slate-800">Registros Eliminados por Tabla</h3>
+      </div>
+      <div class="p-4 flex-1">
+        {% if deleted_counts %}
+        <div class="space-y-3">
+          {% for table, count in deleted_counts.items() %}
+          <div class="flex items-center justify-between p-3 bg-slate-50 border border-slate-100 rounded-lg">
+            <span class="font-mono text-sm text-slate-700">{{ table }}</span>
+            <span class="px-2.5 py-1 bg-amber-100 text-amber-700 rounded-md text-xs font-bold">{{ count }}</span>
+          </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-10">
+          <p class="text-slate-500">No hay registros eliminados en el sistema.</p>
+        </div>
+        {% endif %}
+      </div>
+      <div class="p-4 bg-slate-50 border-t border-slate-200">
+        <a href="{{ url_for('support.deleted_items') }}" class="text-sm font-semibold text-emerald-600 hover:text-emerald-700">Explorar eliminados &rarr;</a>
+      </div>
+    </div>
+
+    <div class="bg-white border border-slate-200 shadow-sm rounded-xl overflow-hidden flex flex-col">
+      <div class="p-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
+        <h3 class="font-semibold text-slate-800">Últimos Logs de Auditoría</h3>
+      </div>
+      <div class="flex-1 overflow-auto">
+        <table class="w-full text-left text-sm whitespace-nowrap">
+          <thead class="bg-slate-50 border-b border-slate-200 sticky top-0">
+            <tr>
+              <th class="px-4 py-3 font-semibold text-slate-600">ID</th>
+              <th class="px-4 py-3 font-semibold text-slate-600">Acción</th>
+              <th class="px-4 py-3 font-semibold text-slate-600">Tabla</th>
+              <th class="px-4 py-3 font-semibold text-slate-600">Registro</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100">
+            {% for log in recent_audits %}
+            <tr class="hover:bg-slate-50 transition-colors">
+              <td class="px-4 py-3 text-slate-500">#{{ log.id }}</td>
+              <td class="px-4 py-3">
+                <span class="px-2 py-1 rounded text-xs font-semibold
+                  {% if log.action == 'create' %}bg-emerald-100 text-emerald-700
+                  {% elif log.action == 'update' %}bg-sky-100 text-sky-700
+                  {% elif log.action == 'delete' %}bg-rose-100 text-rose-700
+                  {% else %}bg-slate-100 text-slate-700{% endif %}">
+                  {{ log.action|upper }}
+                </span>
+              </td>
+              <td class="px-4 py-3 font-mono text-xs text-slate-600">{{ log.table_name }}</td>
+              <td class="px-4 py-3">
+                {% if log.record_id %}
+                <a href="{{ url_for('support.record_view', table_name=log.table_name, record_id=log.record_id) }}" class="text-emerald-600 hover:underline font-semibold">
+                  Ver #{{ log.record_id }}
+                </a>
+                {% else %}
+                <span class="text-slate-400">-</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="4" class="px-4 py-8 text-center text-slate-500">No hay logs recientes.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="p-4 bg-slate-50 border-t border-slate-200">
+        <a href="{{ url_for('support.audit_logs') }}" class="text-sm font-semibold text-emerald-600 hover:text-emerald-700">Ver todos los logs &rarr;</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

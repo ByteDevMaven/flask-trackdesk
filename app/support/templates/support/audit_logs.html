@@ -1,0 +1,130 @@
+{% extends "support/base_support.html" %}
+
+{% block page_title %}Logs de Auditoría{% endblock %}
+
+{% block content %}
+<div class="p-6 max-w-7xl mx-auto flex flex-col h-full gap-6">
+
+  <!-- Filters -->
+  <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 shrink-0">
+    <form method="GET" action="{{ url_for('support.audit_logs') }}" class="flex flex-col md:flex-row items-end gap-4">
+      <div class="flex-1 w-full">
+        <label for="table_name" class="block text-sm font-semibold text-slate-700 mb-1.5">Tabla</label>
+        <select name="table_name" id="table_name" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+          <option value="">Todas las tablas</option>
+          {% for table in tables %}
+          <option value="{{ table }}" {% if table_filter == table %}selected{% endif %}>{{ table }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="flex-1 w-full">
+        <label for="action" class="block text-sm font-semibold text-slate-700 mb-1.5">Acción</label>
+        <select name="action" id="action" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+          <option value="">Todas las acciones</option>
+          <option value="create" {% if action_filter == 'create' %}selected{% endif %}>Create</option>
+          <option value="update" {% if action_filter == 'update' %}selected{% endif %}>Update</option>
+          <option value="delete" {% if action_filter == 'delete' %}selected{% endif %}>Delete</option>
+        </select>
+      </div>
+      <div class="flex gap-2">
+        <a href="{{ url_for('support.audit_logs') }}" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-semibold hover:bg-slate-200 transition-colors">Limpiar</a>
+        <button type="submit" class="px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-semibold hover:bg-emerald-700 transition-colors">Filtrar</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Results -->
+  <div class="bg-white rounded-xl shadow-sm border border-slate-200 flex-1 flex flex-col overflow-hidden">
+    <div class="flex-1 overflow-auto">
+      <table class="w-full text-left text-sm whitespace-nowrap">
+        <thead class="bg-slate-50 sticky top-0 z-10 shadow-sm">
+          <tr>
+            <th class="px-4 py-3 font-semibold text-slate-600">ID</th>
+            <th class="px-4 py-3 font-semibold text-slate-600">Fecha</th>
+            <th class="px-4 py-3 font-semibold text-slate-600">Usuario</th>
+            <th class="px-4 py-3 font-semibold text-slate-600">Empresa</th>
+            <th class="px-4 py-3 font-semibold text-slate-600">Acción</th>
+            <th class="px-4 py-3 font-semibold text-slate-600">Tabla</th>
+            <th class="px-4 py-3 font-semibold text-slate-600">Registro</th>
+            <th class="px-4 py-3 font-semibold text-slate-600">Datos Viejos</th>
+            <th class="px-4 py-3 font-semibold text-slate-600">Datos Nuevos</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          {% for log in pagination.items %}
+          <tr class="hover:bg-slate-50">
+            <td class="px-4 py-3 text-slate-500">#{{ log.id }}</td>
+            <td class="px-4 py-3 text-slate-600">{{ log.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            <td class="px-4 py-3 text-slate-800">{{ log.user.name if log.user else 'Sistema' }}</td>
+            <td class="px-4 py-3 text-slate-600">{{ log.company.name if log.company else 'N/A' }}</td>
+            <td class="px-4 py-3">
+              <span class="px-2 py-1 rounded text-xs font-semibold
+                {% if log.action == 'create' %}bg-emerald-100 text-emerald-700
+                {% elif log.action == 'update' %}bg-sky-100 text-sky-700
+                {% elif log.action == 'delete' %}bg-rose-100 text-rose-700
+                {% else %}bg-slate-100 text-slate-700{% endif %}">
+                {{ log.action|upper }}
+              </span>
+            </td>
+            <td class="px-4 py-3 font-mono text-xs text-slate-600">{{ log.table_name }}</td>
+            <td class="px-4 py-3">
+              {% if log.record_id %}
+              <a href="{{ url_for('support.record_view', table_name=log.table_name, record_id=log.record_id) }}" class="text-emerald-600 hover:underline font-semibold">
+                Ver #{{ log.record_id }}
+              </a>
+              {% else %}
+              <span class="text-slate-400">-</span>
+              {% endif %}
+            </td>
+            <td class="px-4 py-3">
+              {% if log.old_data %}
+              <details class="cursor-pointer">
+                <summary class="text-xs text-slate-500 hover:text-slate-700 font-semibold select-none">Ver JSON</summary>
+                <div class="mt-2 p-2 bg-slate-900 rounded-lg text-emerald-400 font-mono text-[10px] overflow-auto max-w-xs max-h-32">
+                  <pre>{{ log.old_data | tojson(indent=2) }}</pre>
+                </div>
+              </details>
+              {% else %}
+              <span class="text-xs text-slate-400">-</span>
+              {% endif %}
+            </td>
+            <td class="px-4 py-3">
+              {% if log.new_data %}
+              <details class="cursor-pointer">
+                <summary class="text-xs text-slate-500 hover:text-slate-700 font-semibold select-none">Ver JSON</summary>
+                <div class="mt-2 p-2 bg-slate-900 rounded-lg text-sky-400 font-mono text-[10px] overflow-auto max-w-xs max-h-32">
+                  <pre>{{ log.new_data | tojson(indent=2) }}</pre>
+                </div>
+              </details>
+              {% else %}
+              <span class="text-xs text-slate-400">-</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="9" class="px-4 py-8 text-center text-slate-500">No hay logs de auditoría que coincidan con los filtros.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    {% if pagination.pages > 1 %}
+    <div class="p-4 border-t border-slate-200 bg-white flex items-center justify-between shrink-0">
+      <p class="text-sm text-slate-600">Página {{ pagination.page }} de {{ pagination.pages }}</p>
+      <div class="flex gap-2">
+        {% if pagination.has_prev %}
+        <a href="{{ url_for('support.audit_logs', page=pagination.prev_num, table_name=table_filter, action=action_filter) }}" class="px-3 py-1.5 border border-slate-300 rounded-md text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors">Anterior</a>
+        {% endif %}
+        {% if pagination.has_next %}
+        <a href="{{ url_for('support.audit_logs', page=pagination.next_num, table_name=table_filter, action=action_filter) }}" class="px-3 py-1.5 border border-slate-300 rounded-md text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors">Siguiente</a>
+        {% endif %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+</div>
+{% endblock %}

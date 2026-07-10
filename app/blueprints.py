@@ -14,6 +14,7 @@ from app.warehouses import warehouses as warehouses_bp
 from app.hr import hr as hr_bp
 from app.notifications import notifications as notifications_bp
 from app.pos import pos as pos_bp
+from app.support import support as support_bp
 
 def register_blueprints(app: Flask):
     app.register_blueprint(auth_bp)
@@ -30,3 +31,4 @@ def register_blueprints(app: Flask):
     app.register_blueprint(hr_bp)
     app.register_blueprint(notifications_bp)
     app.register_blueprint(pos_bp)
+    app.register_blueprint(support_bp)
