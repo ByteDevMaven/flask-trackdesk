@@ -19,8 +19,7 @@
 {% block page_title %}Detalle del Pago{% endblock %}
 
 {% block content %}
-{% set method_labels = {'cash':'Efectivo','card':'Tarjeta','transfer':'Transferencia','check':'Cheque'} %}
-{% set method_styles = {'cash':'bg-emerald-50 text-emerald-700 border-emerald-200','card':'bg-sky-50 text-sky-700 border-sky-200','transfer':'bg-violet-50 text-violet-700 border-violet-200','check':'bg-amber-50 text-amber-700 border-amber-200'} %}
+{% set method_styles = {'cash':'bg-emerald-50 text-emerald-700 border-emerald-200','bank transfer':'bg-violet-50 text-violet-700 border-violet-200','credit card':'bg-sky-50 text-sky-700 border-sky-200','cheque':'bg-amber-50 text-amber-700 border-amber-200'} %}
 {% set mv = payment.method.value if payment.method else '' %}
 
 <div class="flex-1 overflow-y-auto p-4 md:p-6 bg-slate-50">
@@ -31,14 +30,21 @@
         <h1 class="text-xl font-semibold text-slate-900">Pago #{{ payment.id }}</h1>
         <p class="text-sm text-slate-500 mt-0.5">{{ payment.payment_date.strftime('%d de %B, %Y') if payment.payment_date else '—' }}</p>
       </div>
-      <button type="button"
-              data-action="confirm-delete"
-              data-url="{{ url_for('payments.delete', company_id=payment.company_id, id=payment.id) }}"
-              data-name="pago #{{ payment.id }}"
-              class="flex items-center gap-2 px-3 py-2 border border-rose-200 text-rose-600 rounded-lg text-sm font-medium hover:bg-rose-50 transition-colors">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-        Eliminar
-      </button>
+      <div class="flex items-center gap-2">
+        <a href="{{ url_for('payments.edit', company_id=payment.company_id, id=payment.id) }}"
+           class="flex items-center gap-2 px-3 py-2 border border-slate-200 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+          Editar
+        </a>
+        <button type="button"
+                data-action="confirm-delete"
+                data-url="{{ url_for('payments.delete', company_id=payment.company_id, id=payment.id) }}"
+                data-name="pago #{{ payment.id }}"
+                class="flex items-center gap-2 px-3 py-2 border border-rose-200 text-rose-600 rounded-lg text-sm font-medium hover:bg-rose-50 transition-colors">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+          Eliminar
+        </button>
+      </div>
     </div>
 
     <div class="bg-white rounded-lg border border-slate-200 shadow-sm overflow-hidden">
@@ -52,7 +58,7 @@
           <div class="text-right">
             <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Método</p>
             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold border {{ method_styles.get(mv, 'bg-slate-100 text-slate-600 border-slate-200') }}">
-              {{ method_labels.get(mv, mv or '—') }}
+              {{ payment.method.label_es if payment.method else '—' }}
             </span>
           </div>
         </div>
@@ -102,7 +108,7 @@
           </div>
           <div>
             <dt class="text-xs text-slate-500 mb-0.5">Método de Pago</dt>
-            <dd class="text-sm font-medium text-slate-900">{{ method_labels.get(mv, mv or '—') }}</dd>
+            <dd class="text-sm font-medium text-slate-900">{{ payment.method.label_es if payment.method else '—' }}</dd>
           </div>
           <div>
             <dt class="text-xs text-slate-500 mb-0.5">Monto</dt>

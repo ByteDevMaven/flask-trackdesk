@@ -1,0 +1,331 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Editar' if template else 'Nueva' }} Plantilla – TrackDesk{% endblock %}
+{% block sidebar_title %}Plantillas{% endblock %}
+
+{% block sidebar_nav %}
+{% set cid = company.slug or company.id %}
+<div class="px-2 py-1 space-y-1">
+  <a href="{{ url_for('invoices.templates_index', company_id=cid) }}"
+    class="flex items-center gap-2 text-slate-600 hover:text-emerald-700 text-sm font-medium transition-colors px-3 py-2">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+    </svg>
+    Volver a Plantillas
+  </a>
+</div>
+{% endblock %}
+
+{% block page_title %}{{ 'Editar' if template else 'Nueva' }} Plantilla{% endblock %}
+
+{% block content %}
+{% set cid = company.slug or company.id %}
+<div class="h-full bg-slate-50 flex flex-col">
+
+  <!-- Header -->
+  <div class="bg-white border-b border-slate-200 px-4 md:px-6 py-4 flex items-center justify-between shrink-0">
+    <div>
+      <p class="text-sm text-slate-500">
+        Empresa: <span class="font-semibold text-slate-800">{{ company.name }}</span>
+      </p>
+    </div>
+    {% if template %}
+    <a href="{{ url_for('invoices.templates_preview', company_id=cid, template_id=template.id) }}" target="_blank"
+      class="flex items-center gap-2 px-4 py-2 border border-slate-200 text-slate-700 rounded-lg text-sm font-semibold hover:bg-slate-50 transition-colors shadow-sm bg-white">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+      </svg>
+      Previsualizar
+    </a>
+    {% endif %}
+  </div>
+
+  <form method="POST"
+    action="{{ url_for('invoices.templates_update', company_id=cid, template_id=template.id) if template else url_for('invoices.templates_store', company_id=cid) }}"
+    enctype="multipart/form-data" class="flex-1 flex flex-col lg:flex-row overflow-hidden" id="template-form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    {% if template %}
+    <input type="hidden" name="template_id" value="{{ template.id }}">
+    {% endif %}
+
+    <!-- Left Panel: Basic Info & Type -->
+    <div
+      class="w-full md:w-1/3 lg:w-1/4 bg-white border-r border-slate-200 p-4 md:p-6 overflow-y-auto shrink-0 flex flex-col gap-6">
+
+      <div>
+        <label class="block text-sm font-semibold text-slate-700 mb-1.5">Nombre de la Plantilla</label>
+        <input type="text" name="name" required value="{{ template.name if template else '' }}"
+          class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors bg-white">
+      </div>
+
+      <div>
+        <label class="block text-sm font-semibold text-slate-700 mb-1.5">Tipo de Plantilla</label>
+        <div class="grid grid-cols-2 gap-2">
+          <label
+            class="flex flex-col items-center justify-center p-3 border-2 rounded-xl cursor-pointer transition-all type-selector {{ 'border-emerald-500 bg-emerald-50 text-emerald-700' if (not template or template.type.value == 'html') else 'border-slate-200 bg-white text-slate-600 hover:border-slate-300' }}">
+            <input type="radio" name="type" value="html" class="sr-only" {{ 'checked' if (not template or
+              template.type.value=='html' ) else '' }} {% if template %}disabled{% endif %}>
+            <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+            </svg>
+            <span class="text-xs font-bold">HTML</span>
+          </label>
+          <label
+            class="flex flex-col items-center justify-center p-3 border-2 rounded-xl cursor-pointer transition-all type-selector {{ 'border-emerald-500 bg-emerald-50 text-emerald-700' if (template and template.type.value == 'pdf_overlay') else 'border-slate-200 bg-white text-slate-600 hover:border-slate-300' }}">
+            <input type="radio" name="type" value="pdf_overlay" class="sr-only" {{ 'checked' if (template and
+              template.type.value=='pdf_overlay' ) else '' }} {% if template %}disabled{% endif %}>
+            <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            <span class="text-xs font-bold text-center leading-tight">PDF<br>Overlay</span>
+          </label>
+        </div>
+        {% if template %}
+        <p class="text-[11px] text-slate-400 mt-2">El tipo no se puede cambiar después de crear la plantilla.</p>
+        <!-- Ensure type is submitted since the radio is disabled -->
+        <input type="hidden" name="type" value="{{ template.type.value }}">
+        {% else %}
+        <p class="text-[11px] text-slate-500 mt-2"><strong>HTML:</strong> Crea el PDF con código HTML y
+          Jinja2.<br><strong>PDF Overlay:</strong> Sube un PDF pre-impreso y ubica los textos con coordenadas
+          (avanzado).</p>
+        {% endif %}
+      </div>
+
+      <div class="mt-auto pt-6 border-t border-slate-100">
+        <button type="submit"
+          class="w-full px-5 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-bold hover:bg-emerald-700 active:scale-[0.98] transition-all shadow-sm">
+          Guardar Plantilla
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Middle Panel: Editor -->
+    <div
+      class="flex-1 lg:flex-none lg:w-2/5 overflow-y-auto bg-slate-100 p-4 md:p-6 flex flex-col border-r border-slate-200 shrink-0">
+
+      <!-- HTML Editor Mode -->
+      <div id="editor-html"
+        class="{{ 'hidden' if template and template.type.value == 'pdf_overlay' else 'flex-1 flex flex-col gap-4' }}">
+
+        <div class="bg-white rounded-xl border border-slate-200 p-4 shadow-sm shrink-0">
+          <h3 class="text-sm font-bold text-slate-800 mb-2">Variables Disponibles (Jinja2)</h3>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs font-mono text-slate-600">
+            <span class="bg-slate-50 px-2 py-1 rounded border border-slate-100">{{ '{{ document }}' }}</span>
+            <span class="bg-slate-50 px-2 py-1 rounded border border-slate-100">{{ '{{ company }}' }}</span>
+            <span class="bg-slate-50 px-2 py-1 rounded border border-slate-100">{{ '{{ client }}' }}</span>
+            <span class="bg-slate-50 px-2 py-1 rounded border border-slate-100">{{ '{{ items }}' }} (lista)</span>
+            <span class="bg-slate-50 px-2 py-1 rounded border border-slate-100">{{ '{{ tax_data }}' }} (dict)</span>
+            <span class="bg-slate-50 px-2 py-1 rounded border border-slate-100">{{ '{{ currency }}' }}</span>
+            <span class="bg-slate-50 px-2 py-1 rounded border border-slate-100">{{ '{{ words }}' }}</span>
+            <span class="bg-slate-50 px-2 py-1 rounded border border-slate-100">{{ '{{ seller_name }}' }}</span>
+          </div>
+        </div>
+
+        <div class="flex-1 bg-white border border-slate-200 rounded-xl overflow-hidden flex flex-col shadow-sm">
+          <div class="bg-slate-800 text-slate-300 text-xs px-4 py-2 font-mono flex items-center gap-2 shrink-0">
+            <div class="w-3 h-3 rounded-full bg-rose-500"></div>
+            <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+            <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+            <span class="ml-2">plantilla.html</span>
+          </div>
+          <textarea name="html_content"
+            class="flex-1 w-full p-4 font-mono text-sm bg-slate-900 text-emerald-400 focus:outline-none resize-none"
+            spellcheck="false" placeholder="Escribe tu HTML aquí...">{{ html_content }}</textarea>
+        </div>
+
+      </div>
+
+      <!-- PDF Overlay Editor Mode -->
+      <div id="editor-pdf"
+        class="{{ 'hidden' if not template or template.type.value == 'html' else 'flex-1 flex flex-col gap-4' }}">
+
+        <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm shrink-0">
+          <h3 class="text-sm font-bold text-slate-800 mb-4">Archivo PDF de Fondo</h3>
+
+          {% if template and template.pdf_background_path %}
+          <div class="flex items-center gap-3 p-3 bg-slate-50 border border-slate-200 rounded-lg mb-4">
+            <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded flex items-center justify-center shrink-0">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+            </div>
+            <div class="min-w-0 flex-1">
+              <p class="text-sm font-semibold text-slate-800 truncate">{{ template.pdf_background_path }}</p>
+              <p class="text-xs text-slate-500">PDF actual configurado.</p>
+            </div>
+          </div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1.5">Reemplazar PDF (opcional)</label>
+          {% else %}
+          <label class="block text-sm font-semibold text-slate-700 mb-1.5">Subir PDF Base (Requerido)</label>
+          {% endif %}
+
+          <input type="file" name="pdf_background" accept=".pdf"
+            class="block w-full text-sm text-slate-500
+                        file:mr-4 file:py-2 file:px-4
+                        file:rounded-lg file:border-0
+                        file:text-sm file:font-semibold
+                        file:bg-emerald-50 file:text-emerald-700
+                        hover:file:bg-emerald-100 transition-colors cursor-pointer border border-slate-200 rounded-lg p-1 bg-white">
+        </div>
+
+        <div class="flex-1 bg-white border border-slate-200 rounded-xl overflow-hidden flex flex-col shadow-sm">
+          <div
+            class="bg-slate-800 text-slate-300 text-xs px-4 py-2 font-mono flex items-center justify-between shrink-0">
+            <div class="flex items-center gap-2">
+              <div class="w-3 h-3 rounded-full bg-rose-500"></div>
+              <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+              <div class="w-3 h-3 rounded-full bg-emerald-500"></div>
+              <span class="ml-2">coordenadas.json</span>
+            </div>
+          </div>
+          <textarea name="pdf_coordinates_json"
+            class="flex-1 w-full p-4 font-mono text-sm bg-slate-900 text-amber-400 focus:outline-none resize-none"
+            spellcheck="false">{{ default_coords_json }}</textarea>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Right Panel: Live Preview -->
+    <div class="hidden lg:flex flex-1 flex-col bg-slate-200 relative">
+      <div class="absolute inset-0 flex flex-col">
+        <div class="p-3 bg-white border-b border-slate-200 flex justify-between items-center shrink-0 shadow-sm z-10">
+          <h3 class="font-bold text-sm text-slate-800 flex items-center gap-2">
+            <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+            Vista Previa en Vivo
+          </h3>
+          <span id="preview-status"
+            class="text-[10px] font-bold uppercase tracking-wider text-slate-400 bg-slate-100 px-2 py-1 rounded">Listo</span>
+        </div>
+        <iframe id="live-preview-frame" class="flex-1 w-full border-none bg-white"></iframe>
+      </div>
+    </div>
+
+  </form>
+
+</div>
+
+{% block scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const typeRadios = document.querySelectorAll('input[name="type"]');
+    const htmlPanel = document.getElementById('editor-html');
+    const pdfPanel = document.getElementById('editor-pdf');
+    const selectors = document.querySelectorAll('.type-selector');
+
+    function updateType() {
+      const selected = document.querySelector('input[name="type"]:checked')?.value;
+
+      if (selected === 'html') {
+        htmlPanel.classList.remove('hidden');
+        htmlPanel.classList.add('flex-1', 'flex', 'flex-col', 'gap-4');
+        pdfPanel.classList.add('hidden');
+        pdfPanel.classList.remove('flex-1', 'flex', 'flex-col', 'gap-4');
+      } else {
+        pdfPanel.classList.remove('hidden');
+        pdfPanel.classList.add('flex-1', 'flex', 'flex-col', 'gap-4');
+        htmlPanel.classList.add('hidden');
+        htmlPanel.classList.remove('flex-1', 'flex', 'flex-col', 'gap-4');
+      }
+
+      selectors.forEach(sel => {
+        const radio = sel.querySelector('input');
+        if (radio.checked) {
+          sel.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-700');
+          sel.classList.remove('border-slate-200', 'bg-white', 'text-slate-600');
+        } else {
+          sel.classList.remove('border-emerald-500', 'bg-emerald-50', 'text-emerald-700');
+          sel.classList.add('border-slate-200', 'bg-white', 'text-slate-600');
+        }
+      });
+    }
+
+    typeRadios.forEach(radio => radio.addEventListener('change', updateType));
+
+    // Also handle Tab key in textareas to insert spaces instead of jumping focus
+    const textareas = document.querySelectorAll('textarea');
+    textareas.forEach(ta => {
+      ta.addEventListener('keydown', function (e) {
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          const start = this.selectionStart;
+          const end = this.selectionEnd;
+          this.value = this.value.substring(0, start) + "  " + this.value.substring(end);
+          this.selectionStart = this.selectionEnd = start + 2;
+        }
+      });
+    });
+
+    // Live Preview Logic
+    const livePreviewUrl = "{{ url_for('invoices.templates_live_preview', company_id=(company.slug or company.id)) }}";
+    const iframe = document.getElementById('live-preview-frame');
+    const statusEl = document.getElementById('preview-status');
+    const form = document.getElementById('template-form');
+    let previewTimeout;
+    let currentBlobUrl = null;
+
+    async function updatePreview() {
+      statusEl.textContent = 'ACTUALIZANDO...';
+      statusEl.className = 'text-[10px] font-bold uppercase tracking-wider text-amber-600 bg-amber-50 px-2 py-1 rounded';
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch(livePreviewUrl, {
+          method: 'POST',
+          body: formData
+        });
+
+        if (response.ok) {
+          const blob = await response.blob();
+          if (currentBlobUrl) {
+            URL.revokeObjectURL(currentBlobUrl);
+          }
+          currentBlobUrl = URL.createObjectURL(blob);
+          iframe.src = currentBlobUrl;
+
+          statusEl.textContent = 'ACTUALIZADO';
+          statusEl.className = 'text-[10px] font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2 py-1 rounded';
+        } else {
+          const text = await response.text();
+          console.error('Preview error:', text);
+          statusEl.textContent = 'ERROR';
+          statusEl.className = 'text-[10px] font-bold uppercase tracking-wider text-rose-600 bg-rose-50 px-2 py-1 rounded';
+        }
+      } catch (err) {
+        console.error('Preview request failed:', err);
+        statusEl.textContent = 'ERROR';
+        statusEl.className = 'text-[10px] font-bold uppercase tracking-wider text-rose-600 bg-rose-50 px-2 py-1 rounded';
+      }
+    }
+
+    function triggerPreview() {
+      clearTimeout(previewTimeout);
+      statusEl.textContent = 'ESPERANDO...';
+      statusEl.className = 'text-[10px] font-bold uppercase tracking-wider text-slate-400 bg-slate-100 px-2 py-1 rounded';
+      previewTimeout = setTimeout(updatePreview, 1000);
+    }
+
+    // Trigger preview on textarea input
+    textareas.forEach(ta => ta.addEventListener('input', triggerPreview));
+
+    // Trigger on type change
+    typeRadios.forEach(radio => radio.addEventListener('change', triggerPreview));
+
+    // Initial load
+    updatePreview();
+  });
+</script>
+{% endblock %}
+{% endblock %}

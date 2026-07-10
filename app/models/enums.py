@@ -21,6 +21,13 @@ class DocumentType(enum.Enum):
     quote = 'quote'
     invoice = 'invoice'
 
+    @property
+    def label_es(self):
+        return {
+            'quote': 'Cotización',
+            'invoice': 'Factura'
+        }.get(self.value, self.value.title())
+
 class DocumentStatus(enum.Enum):
     draft = 'draft'
     sent = 'sent'
@@ -33,6 +40,21 @@ class DocumentStatus(enum.Enum):
     exchange = 'exchange'
     cancelled = 'cancelled'
 
+    @property
+    def label_es(self):
+        return {
+            'draft': 'Borrador',
+            'sent': 'Enviado',
+            'issued': 'Emitido',
+            'partial': 'Parcial',
+            'paid': 'Pagado',
+            'overdue': 'Vencido',
+            'pending': 'Pendiente',
+            'credit_note': 'Nota de Crédito',
+            'exchange': 'Intercambio',
+            'cancelled': 'Cancelado'
+        }.get(self.value, self.value.title())
+
 # Legacy alias for backward compatibility
 InvoiceType = DocumentStatus
 
@@ -41,6 +63,14 @@ class StockMovementType(enum.Enum):
     outgoing = 'outgoing'
     adjustment = 'adjustment'
 
+    @property
+    def label_es(self):
+        return {
+            'incoming': 'Entrada',
+            'outgoing': 'Salida',
+            'adjustment': 'Ajuste'
+        }.get(self.value, self.value.title())
+
 class PaymentMethod(enum.Enum):
     cash = 'cash'
     bank_transfer = 'bank transfer'
@@ -48,12 +78,32 @@ class PaymentMethod(enum.Enum):
     cheque = 'cheque'
     other = 'other'
 
+    @property
+    def label_es(self):
+        return {
+            'cash': 'Efectivo',
+            'bank transfer': 'Transferencia',
+            'credit card': 'Tarjeta',
+            'cheque': 'Cheque',
+            'other': 'Otro'
+        }.get(self.value, self.value.title())
+
 class ContactType(enum.Enum):
     customer = 'customer'
     supplier = 'supplier'
     customer_supplier = "customer_supplier"
     lead = "lead"
     other = "other"
+
+    @property
+    def label_es(self):
+        return {
+            'customer': 'Cliente',
+            'supplier': 'Proveedor',
+            'customer_supplier': 'Cliente/Proveedor',
+            'lead': 'Lead',
+            'other': 'Otro'
+        }.get(self.value, self.value.title())
 
 class EmployeeClass(enum.Enum):
     full_time = 'full_time'

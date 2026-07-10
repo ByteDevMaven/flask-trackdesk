@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+{% block title %}Plantillas de Documentos – TrackDesk{% endblock %}
+{% block sidebar_title %}Plantillas{% endblock %}
+
+{% block sidebar_nav %}
+{% set cid = company.slug or company.id %}
+<div class="px-2 py-1 space-y-1">
+  <a href="{{ url_for('companies.view', id=company.id) }}"
+     class="flex items-center gap-2 text-slate-600 hover:text-emerald-700 text-sm font-medium transition-colors px-3 py-2">
+    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+    </svg>
+    Volver a la Empresa
+  </a>
+  <div class="border-t border-slate-100 pt-2 mt-2">
+    <p class="px-3 py-1 text-xs font-semibold text-slate-400 uppercase tracking-wider">Plantillas</p>
+    <a href="{{ url_for('invoices.templates_new', company_id=cid) }}"
+       class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 hover:bg-emerald-50 hover:text-emerald-700 text-sm transition-all">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+      </svg>
+      Nueva Plantilla
+    </a>
+  </div>
+</div>
+{% endblock %}
+
+{% block page_title %}Plantillas de Documentos{% endblock %}
+
+{% block content %}
+{% set cid = company.slug or company.id %}
+<div class="flex-1 overflow-y-auto bg-slate-50">
+
+  <!-- Header -->
+  <div class="bg-white border-b border-slate-200 px-4 md:px-6 py-4 flex items-center justify-between">
+    <div>
+      <p class="text-sm text-slate-500">Empresa: <span class="font-semibold text-slate-800">{{ company.name }}</span></p>
+    </div>
+    <a href="{{ url_for('invoices.templates_new', company_id=cid) }}"
+       class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-semibold hover:bg-emerald-700 transition-colors shadow-sm">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+      </svg>
+      Nueva Plantilla
+    </a>
+  </div>
+
+  <div class="p-4 md:p-6 max-w-5xl mx-auto">
+
+    {% if not templates %}
+    <!-- Empty State -->
+    <div class="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-slate-200 bg-white py-20 text-center">
+      <div class="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-50">
+        <svg class="h-8 w-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+      </div>
+      <h2 class="text-lg font-semibold text-slate-900 mb-1">Sin plantillas configuradas</h2>
+      <p class="text-sm text-slate-500 mb-6 max-w-sm">Crea tu primera plantilla HTML para personalizar cómo se ven tus facturas y cotizaciones en PDF.</p>
+      <a href="{{ url_for('invoices.templates_new', company_id=cid) }}"
+         class="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-semibold hover:bg-emerald-700 transition-colors shadow-sm">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+        </svg>
+        Crear Primera Plantilla
+      </a>
+    </div>
+    {% else %}
+    <!-- Template Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      {% for tpl in templates %}
+      <div class="group bg-white rounded-xl border {{ 'border-emerald-300 shadow-emerald-100' if tpl.is_default else 'border-slate-200' }} shadow-sm hover:shadow-md transition-all overflow-hidden">
+
+        <!-- Card top: preview strip -->
+        <div class="h-2 w-full {{ 'bg-gradient-to-r from-emerald-500 to-teal-400' if tpl.is_default else 'bg-gradient-to-r from-slate-200 to-slate-300' }}"></div>
+
+        <div class="p-5">
+          <div class="flex items-start justify-between mb-3">
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2 flex-wrap">
+                <h3 class="text-base font-bold text-slate-900 truncate">{{ tpl.name }}</h3>
+                {% if tpl.is_default %}
+                <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">
+                  <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                  Predeterminada
+                </span>
+                {% endif %}
+                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold
+                  {% if tpl.type.value == 'html' %}bg-sky-50 text-sky-700{% else %}bg-violet-50 text-violet-700{% endif %}">
+                  {{ 'HTML' if tpl.type.value == 'html' else 'PDF Overlay' }}
+                </span>
+              </div>
+              {% if tpl.type.value == 'html' and tpl.html_template_path %}
+              <p class="text-xs text-slate-400 mt-1 truncate font-mono">{{ tpl.html_template_path }}</p>
+              {% elif tpl.type.value == 'pdf_overlay' and tpl.pdf_background_path %}
+              <p class="text-xs text-slate-400 mt-1 truncate font-mono">{{ tpl.pdf_background_path }}</p>
+              {% endif %}
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex items-center gap-2 flex-wrap mt-4 pt-4 border-t border-slate-100">
+            <a href="{{ url_for('invoices.templates_preview', company_id=cid, template_id=tpl.id) }}"
+               target="_blank"
+               class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 bg-slate-50 border border-slate-200 rounded-lg hover:bg-slate-100 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+              </svg>
+              Previsualizar
+            </a>
+            <a href="{{ url_for('invoices.templates_edit', company_id=cid, template_id=tpl.id) }}"
+               class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-600 bg-slate-50 border border-slate-200 rounded-lg hover:bg-slate-100 transition-colors">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
+              </svg>
+              Editar
+            </a>
+            {% if not tpl.is_default %}
+            <form method="POST" action="{{ url_for('invoices.templates_set_default', company_id=cid, template_id=tpl.id) }}" class="inline">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <button type="submit"
+                      class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg hover:bg-emerald-100 transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                Establecer Predeterminada
+              </button>
+            </form>
+            {% endif %}
+            <form method="POST" action="{{ url_for('invoices.templates_delete', company_id=cid, template_id=tpl.id) }}" class="inline ml-auto">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <button type="submit"
+                      data-action="confirm-delete"
+                      data-name="plantilla '{{ tpl.name }}'"
+                      data-url="{{ url_for('invoices.templates_delete', company_id=cid, template_id=tpl.id) }}"
+                      class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-rose-600 bg-rose-50 border border-rose-200 rounded-lg hover:bg-rose-100 transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+                Eliminar
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Info box -->
+    <div class="mt-6 rounded-xl bg-sky-50 border border-sky-200 p-4 flex gap-3">
+      <svg class="w-5 h-5 text-sky-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+      </svg>
+      <div>
+        <p class="text-sm font-semibold text-sky-800">Plantilla Predeterminada</p>
+        <p class="text-xs text-sky-700 mt-0.5">La plantilla predeterminada se usa automáticamente al descargar o imprimir cualquier factura o cotización de esta empresa.</p>
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

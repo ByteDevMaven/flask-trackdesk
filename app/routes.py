@@ -71,6 +71,8 @@ def _result(kind, title, subtitle, url, query_text, fields, meta=None):
 
 
 def _enum_label(value):
+    if hasattr(value, 'label_es'):
+        return value.label_es
     return getattr(value, 'value', value)
 
 
@@ -144,7 +146,7 @@ def register_routes(app: Flask):
                 _result(
                     'Contactos',
                     c.name,
-                    ' - '.join(_field_values(c.type.name.replace('_', ' ').title(), c.email or c.phone or c.identifier)),
+                    ' - '.join(_field_values(c.type.label_es if hasattr(c.type, 'label_es') else c.type.name.replace('_', ' ').title(), c.email or c.phone or c.identifier)),
                     url_for('contacts.view', company_id=c.company_id, contact_id=c.id),
                     query_text,
                     (

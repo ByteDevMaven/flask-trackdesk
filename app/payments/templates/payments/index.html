@@ -21,26 +21,26 @@
       </div>
       <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">L</span>
     </a>
-    <a href="{{ url_for('payments.index', company_id=cid, method='card') }}"
-       class="flex items-center justify-between px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-semibold' if act_method == 'card' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+    <a href="{{ url_for('payments.index', company_id=cid, method='credit card') }}"
+       class="flex items-center justify-between px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-semibold' if act_method == 'credit card' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
       <div class="flex items-center gap-3">
-        <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if act_method == 'card' else 'bg-slate-300' }}"></span>
+        <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if act_method == 'credit card' else 'bg-slate-300' }}"></span>
         Tarjeta
       </div>
       <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-sky-50 text-sky-700 border border-sky-100">T</span>
     </a>
-    <a href="{{ url_for('payments.index', company_id=cid, method='transfer') }}"
-       class="flex items-center justify-between px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-semibold' if act_method == 'transfer' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+    <a href="{{ url_for('payments.index', company_id=cid, method='bank transfer') }}"
+       class="flex items-center justify-between px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-semibold' if act_method == 'bank transfer' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
       <div class="flex items-center gap-3">
-        <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if act_method == 'transfer' else 'bg-slate-300' }}"></span>
+        <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if act_method == 'bank transfer' else 'bg-slate-300' }}"></span>
         Transferencia
       </div>
       <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-violet-50 text-violet-700 border border-violet-100">B</span>
     </a>
-    <a href="{{ url_for('payments.index', company_id=cid, method='check') }}"
-       class="flex items-center justify-between px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-semibold' if act_method == 'check' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
+    <a href="{{ url_for('payments.index', company_id=cid, method='cheque') }}"
+       class="flex items-center justify-between px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-semibold' if act_method == 'cheque' else 'text-slate-600 hover:bg-slate-50' }} text-sm transition-colors">
       <div class="flex items-center gap-3">
-        <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if act_method == 'check' else 'bg-slate-300' }}"></span>
+        <span class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if act_method == 'cheque' else 'bg-slate-300' }}"></span>
         Cheque
       </div>
       <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-100">C</span>
@@ -75,8 +75,7 @@
 {% block page_title %}Pagos Recibidos{% endblock %}
 
 {% block content %}
-{% set method_labels = {'cash':'Efectivo','card':'Tarjeta','bank transfer':'Transferencia','check':'Cheque'} %}
-{% set method_styles = {'cash':'bg-emerald-50 text-emerald-700','card':'bg-sky-50 text-sky-700','bank transfer':'bg-violet-50 text-violet-700','check':'bg-amber-50 text-amber-700'} %}
+{% set method_styles = {'cash':'bg-emerald-50 text-emerald-700','credit card':'bg-sky-50 text-sky-700','bank transfer':'bg-violet-50 text-violet-700','cheque':'bg-amber-50 text-amber-700'} %}
 
 <div class="flex flex-col h-full overflow-hidden bg-slate-50">
 
@@ -146,7 +145,7 @@
           <div>
             <p class="text-sm text-slate-500 mb-1">Tarjeta / Cheque</p>
             <p class="text-2xl font-semibold text-slate-900">
-              {{ (payments | selectattr('method') | selectattr('method.value', 'equalto', 'card') | list | length) + (payments | selectattr('method') | selectattr('method.value', 'equalto', 'check') | list | length) }}
+              {{ (payments | selectattr('method') | selectattr('method.value', 'equalto', 'credit card') | list | length) + (payments | selectattr('method') | selectattr('method.value', 'equalto', 'cheque') | list | length) }}
             </p>
           </div>
           <div class="w-10 h-10 rounded-lg bg-sky-100 flex items-center justify-center">
@@ -219,11 +218,11 @@
               <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold {{ method_styles.get(mv, 'bg-slate-100 text-slate-600') }}">
                 <span class="w-1 h-1 rounded-full
                   {% if mv == 'cash' %}bg-emerald-500
-                  {% elif mv == 'card' %}bg-sky-500
-                  {% elif mv == 'transfer' %}bg-violet-500
-                  {% elif mv == 'check' %}bg-amber-500
+                  {% elif mv == 'credit card' %}bg-sky-500
+                  {% elif mv == 'bank transfer' %}bg-violet-500
+                  {% elif mv == 'cheque' %}bg-amber-500
                   {% else %}bg-slate-400{% endif %}"></span>
-                {{ method_labels.get(mv, mv or '—') }}
+                {{ payment.method.label_es if payment.method else '—' }}
               </span>
             </td>
             <td class="px-5 py-3 text-sm text-slate-500 max-w-[180px]">

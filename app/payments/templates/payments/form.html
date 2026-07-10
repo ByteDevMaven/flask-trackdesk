@@ -159,10 +159,10 @@
             {% set cur_method = payment.method.value if payment and payment.method else 'cash' %}
             <div class="grid grid-cols-1 md:grid-cols-2 sm:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" id="method-selector">
               {% for val, label, color, dot, icon_path in [
-                ('cash',     'Efectivo',       'hover:border-emerald-400 hover:bg-emerald-50', 'bg-emerald-500', 'M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z'),
-                ('card',     'Tarjeta',        'hover:border-sky-400 hover:bg-sky-50',         'bg-sky-500',     'M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z'),
-                ('transfer', 'Transferencia',  'hover:border-violet-400 hover:bg-violet-50',   'bg-violet-500',  'M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4'),
-                ('check',    'Cheque',         'hover:border-amber-400 hover:bg-amber-50',     'bg-amber-500',   'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z')
+                ('cash',          'Efectivo',       'hover:border-emerald-400 hover:bg-emerald-50', 'bg-emerald-500', 'M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z'),
+                ('credit card',   'Tarjeta',        'hover:border-sky-400 hover:bg-sky-50',         'bg-sky-500',     'M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z'),
+                ('bank transfer', 'Transferencia',  'hover:border-violet-400 hover:bg-violet-50',   'bg-violet-500',  'M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4'),
+                ('cheque',        'Cheque',         'hover:border-amber-400 hover:bg-amber-50',     'bg-amber-500',   'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z')
               ] %}
               <label class="method-card relative flex flex-col items-center gap-2 p-4 border-2 rounded-xl cursor-pointer transition-all
                             {% if val == cur_method %}border-emerald-500 bg-emerald-50{% else %}border-slate-200 bg-white {{ color }}{% endif %}">
@@ -263,12 +263,12 @@
   const summaryMethod  = document.getElementById('summary-method');
   const summaryDate    = document.getElementById('summary-date');
 
-  const methodLabels = { cash: 'Efectivo', card: 'Tarjeta', transfer: 'Transferencia', check: 'Cheque' };
+  const methodLabels = { 'cash': 'Efectivo', 'credit card': 'Tarjeta', 'bank transfer': 'Transferencia', 'cheque': 'Cheque' };
   const methodColors = {
-    cash:     { border: 'border-emerald-500', bg: 'bg-emerald-50', text: 'text-emerald-700', icon: 'text-emerald-600', dot: '' },
-    card:     { border: 'border-sky-500',     bg: 'bg-sky-50',     text: 'text-sky-700',     icon: 'text-sky-600',     dot: '' },
-    transfer: { border: 'border-violet-500',  bg: 'bg-violet-50',  text: 'text-violet-700',  icon: 'text-violet-600',  dot: '' },
-    check:    { border: 'border-amber-500',   bg: 'bg-amber-50',   text: 'text-amber-700',   icon: 'text-amber-600',   dot: '' },
+    'cash':          { border: 'border-emerald-500', bg: 'bg-emerald-50', text: 'text-emerald-700', icon: 'text-emerald-600', dot: '' },
+    'credit card':   { border: 'border-sky-500',     bg: 'bg-sky-50',     text: 'text-sky-700',     icon: 'text-sky-600',     dot: '' },
+    'bank transfer': { border: 'border-violet-500',  bg: 'bg-violet-50',  text: 'text-violet-700',  icon: 'text-violet-600',  dot: '' },
+    'cheque':        { border: 'border-amber-500',   bg: 'bg-amber-50',   text: 'text-amber-700',   icon: 'text-amber-600',   dot: '' },
   };
 
   function getCheckedMethod() {

@@ -187,17 +187,20 @@ def _generate_html_pdf(document, template, currency, tax_rate, include_tax, sell
         'words': words,
     }
 
-    # Render template from file
-    html_template_path = template.html_template_path
-    if html_template_path:
-        full_path = os.path.join(current_app.static_folder, "templates", html_template_path)
-        try:
-            with open(full_path, "r", encoding="utf-8") as f:
-                html_raw = f.read()
-        except FileNotFoundError:
-            html_raw = f"<h1>Plantilla no encontrada: {html_template_path}</h1>"
+    # Render template from file or raw content
+    if hasattr(template, 'raw_html_content') and template.raw_html_content:
+        html_raw = template.raw_html_content
     else:
-        html_raw = "<h1>Plantilla Vacía</h1>"
+        html_template_path = template.html_template_path
+        if html_template_path:
+            full_path = os.path.join(current_app.static_folder, "templates", html_template_path)
+            try:
+                with open(full_path, "r", encoding="utf-8") as f:
+                    html_raw = f.read()
+            except FileNotFoundError:
+                html_raw = f"<h1>Plantilla no encontrada: {html_template_path}</h1>"
+        else:
+            html_raw = "<h1>Plantilla Vacía</h1>"
         
     html_out = render_template_string(html_raw, **context)
     
@@ -421,24 +424,25 @@ def _draw_totals(c, tax_data, number_to_words, height, font_name, font_bold, cur
 # Request wrapper
 # ============================================================================
 
-def generate_invoice_pdf_from_request(document, request, session, current_user):
+def generate_invoice_pdf_from_request(document, request, session, current_user, template=None):
     """
     Used by the existing invoice route. Resolves the layout automatically
     from the database template for the document's company.
     """
-    from app.models.document_template import DocumentTemplate
-    
-    template = DocumentTemplate.query.filter_by(company_id=document.company_id, is_default=True).first()
     if not template:
-        template = DocumentTemplate.query.filter_by(company_id=document.company_id).first()
-    
-    if not template:
-        # Provide a fallback just in case
-        from app.models.document_template import DocumentTemplateType
-        from .pdf_layouts.ferre_lagos import FERRE_LAGOS_LAYOUT
+        from app.models.document_template import DocumentTemplate
         
-        coords = {
-            "header": dataclasses.asdict(FERRE_LAGOS_LAYOUT.header),
+        template = DocumentTemplate.query.filter_by(company_id=document.company_id, is_default=True).first()
+        if not template:
+            template = DocumentTemplate.query.filter_by(company_id=document.company_id).first()
+        
+        if not template:
+            # Provide a fallback just in case
+            from app.models.document_template import DocumentTemplateType
+            from .pdf_layouts.ferre_lagos import FERRE_LAGOS_LAYOUT
+            
+            coords = {
+                "header": dataclasses.asdict(FERRE_LAGOS_LAYOUT.header),
             "client": dataclasses.asdict(FERRE_LAGOS_LAYOUT.client),
             "items":  dataclasses.asdict(FERRE_LAGOS_LAYOUT.items),
             "totals": dataclasses.asdict(FERRE_LAGOS_LAYOUT.totals)
