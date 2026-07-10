@@ -33,3 +33,6 @@
   </div>
 </div>
 {% endblock %}
+
+{# Override main to use overflow-hidden so inner pages can control their own scroll areas #}
+{% block main_class %}flex-1 overflow-hidden bg-slate-50{% endblock %}

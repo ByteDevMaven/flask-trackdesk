@@ -352,7 +352,7 @@
 
       </header>
 
-      <main class="flex-1 overflow-y-auto bg-slate-50">
+      <main class="{% block main_class %}flex-1 overflow-y-auto bg-slate-50{% endblock %}">
         {% block content %}{% endblock %}
       </main>
     </div>

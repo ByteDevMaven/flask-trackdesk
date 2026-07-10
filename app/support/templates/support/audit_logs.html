@@ -3,107 +3,231 @@
 {% block page_title %}Logs de Auditoría{% endblock %}
 
 {% block content %}
-<div class="p-6 max-w-7xl mx-auto flex flex-col h-full gap-6">
+<div class="flex h-full overflow-hidden">
 
-  <!-- Filters -->
-  <div class="bg-white p-4 rounded-xl shadow-sm border border-slate-200 shrink-0">
-    <form method="GET" action="{{ url_for('support.audit_logs') }}" class="flex flex-col md:flex-row items-end gap-4">
-      <div class="flex-1 w-full">
-        <label for="table_name" class="block text-sm font-semibold text-slate-700 mb-1.5">Tabla</label>
-        <select name="table_name" id="table_name" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+  <!-- ── Filter Sidebar ─────────────────────────────────────────── -->
+  <aside class="w-72 bg-white border-r border-slate-200 flex flex-col shrink-0 overflow-y-auto">
+    <div class="p-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
+      <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
+        <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z"/></svg>
+        Filtros
+      </h3>
+      {% if active_filters %}
+      <a href="{{ url_for('support.audit_logs') }}" class="text-xs font-semibold text-rose-600 hover:text-rose-700">Limpiar todo</a>
+      {% endif %}
+    </div>
+
+    <form method="GET" action="{{ url_for('support.audit_logs') }}" class="flex-1 p-4 space-y-5" id="filter-form">
+
+      <!-- Quick search by record ID -->
+      <div>
+        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">ID de Registro</label>
+        <input type="number" name="record_id" value="{{ record_filter }}" placeholder="ej. 42"
+               class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+      </div>
+
+      <!-- Table -->
+      <div>
+        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Tabla</label>
+        <select name="table_name" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
           <option value="">Todas las tablas</option>
           {% for table in tables %}
           <option value="{{ table }}" {% if table_filter == table %}selected{% endif %}>{{ table }}</option>
           {% endfor %}
         </select>
       </div>
-      <div class="flex-1 w-full">
-        <label for="action" class="block text-sm font-semibold text-slate-700 mb-1.5">Acción</label>
-        <select name="action" id="action" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
-          <option value="">Todas las acciones</option>
-          <option value="create" {% if action_filter == 'create' %}selected{% endif %}>Create</option>
-          <option value="update" {% if action_filter == 'update' %}selected{% endif %}>Update</option>
-          <option value="delete" {% if action_filter == 'delete' %}selected{% endif %}>Delete</option>
+
+      <!-- Action -->
+      <div>
+        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Acción</label>
+        <div class="grid grid-cols-3 gap-1.5">
+          {% for action, color in [('create','emerald'), ('update','sky'), ('delete','rose')] %}
+          <label class="flex items-center justify-center gap-1 p-2 rounded-lg border cursor-pointer text-xs font-bold transition-all
+            {% if action_filter == action %}
+              bg-{{ color }}-100 border-{{ color }}-400 text-{{ color }}-700
+            {% else %}
+              border-slate-200 text-slate-500 hover:border-slate-300 hover:bg-slate-50
+            {% endif %}">
+            <input type="radio" name="action" value="{{ action }}" class="hidden"
+                   {% if action_filter == action %}checked{% endif %}
+                   onchange="this.form.submit()">
+            {{ action|upper }}
+          </label>
+          {% endfor %}
+        </div>
+        {% if action_filter %}
+        <div class="mt-1.5">
+          <label class="flex items-center gap-1 text-xs text-slate-400 cursor-pointer hover:text-slate-600">
+            <input type="radio" name="action" value="" class="accent-slate-400"
+                   onchange="this.form.submit()"> Todas
+          </label>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- User -->
+      <div>
+        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Usuario</label>
+        <select name="user_id" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+          <option value="">Todos los usuarios</option>
+          {% for user in users %}
+          <option value="{{ user.id }}" {% if user_filter == user.id|string %}selected{% endif %}>{{ user.name }}</option>
+          {% endfor %}
         </select>
       </div>
-      <div class="flex gap-2">
-        <a href="{{ url_for('support.audit_logs') }}" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-semibold hover:bg-slate-200 transition-colors">Limpiar</a>
-        <button type="submit" class="px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-semibold hover:bg-emerald-700 transition-colors">Filtrar</button>
-      </div>
-    </form>
-  </div>
 
-  <!-- Results -->
-  <div class="bg-white rounded-xl shadow-sm border border-slate-200 flex-1 flex flex-col overflow-hidden">
+      <!-- Company -->
+      <div>
+        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Empresa</label>
+        <select name="company_id" class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+          <option value="">Todas las empresas</option>
+          {% for company in companies %}
+          <option value="{{ company.id }}" {% if company_filter == company.id|string %}selected{% endif %}>{{ company.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <!-- Date range -->
+      <div>
+        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">Rango de Fechas</label>
+        <div class="space-y-2">
+          <div>
+            <p class="text-[11px] text-slate-400 mb-1">Desde</p>
+            <input type="date" name="date_from" value="{{ date_from }}"
+                   class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+          </div>
+          <div>
+            <p class="text-[11px] text-slate-400 mb-1">Hasta</p>
+            <input type="date" name="date_to" value="{{ date_to }}"
+                   class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm bg-white focus:ring-2 focus:ring-emerald-500 focus:outline-none">
+          </div>
+        </div>
+      </div>
+
+      <button type="submit"
+              class="w-full px-4 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-bold hover:bg-emerald-700 transition-colors shadow-sm">
+        Aplicar Filtros
+      </button>
+    </form>
+  </aside>
+
+  <!-- ── Main Content ───────────────────────────────────────────── -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+
+    <!-- Header bar with active filter badges -->
+    <div class="px-6 py-3 bg-white border-b border-slate-200 flex items-center gap-3 flex-wrap shrink-0">
+      <p class="text-sm font-semibold text-slate-700">
+        {{ pagination.total }} resultado{{ 's' if pagination.total != 1 else '' }}
+      </p>
+      {% if active_filters %}
+      <div class="flex flex-wrap gap-2">
+        {% for label, value in active_filters.items() %}
+        <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-full text-xs font-semibold">
+          <span class="text-emerald-400">{{ label }}:</span> {{ value }}
+        </span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+
+    <!-- Table -->
     <div class="flex-1 overflow-auto">
       <table class="w-full text-left text-sm whitespace-nowrap">
         <thead class="bg-slate-50 sticky top-0 z-10 shadow-sm">
           <tr>
-            <th class="px-4 py-3 font-semibold text-slate-600">ID</th>
-            <th class="px-4 py-3 font-semibold text-slate-600">Fecha</th>
-            <th class="px-4 py-3 font-semibold text-slate-600">Usuario</th>
-            <th class="px-4 py-3 font-semibold text-slate-600">Empresa</th>
-            <th class="px-4 py-3 font-semibold text-slate-600">Acción</th>
-            <th class="px-4 py-3 font-semibold text-slate-600">Tabla</th>
-            <th class="px-4 py-3 font-semibold text-slate-600">Registro</th>
-            <th class="px-4 py-3 font-semibold text-slate-600">Datos Viejos</th>
-            <th class="px-4 py-3 font-semibold text-slate-600">Datos Nuevos</th>
+            <th class="px-4 py-3 font-semibold text-slate-600 text-xs uppercase tracking-wide">ID</th>
+            <th class="px-4 py-3 font-semibold text-slate-600 text-xs uppercase tracking-wide">Fecha</th>
+            <th class="px-4 py-3 font-semibold text-slate-600 text-xs uppercase tracking-wide">Usuario</th>
+            <th class="px-4 py-3 font-semibold text-slate-600 text-xs uppercase tracking-wide">Empresa</th>
+            <th class="px-4 py-3 font-semibold text-slate-600 text-xs uppercase tracking-wide">Acción</th>
+            <th class="px-4 py-3 font-semibold text-slate-600 text-xs uppercase tracking-wide">Tabla</th>
+            <th class="px-4 py-3 font-semibold text-slate-600 text-xs uppercase tracking-wide">Registro</th>
+            <th class="px-4 py-3 font-semibold text-slate-600 text-xs uppercase tracking-wide">Antes / Después</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-100">
           {% for log in pagination.items %}
-          <tr class="hover:bg-slate-50">
-            <td class="px-4 py-3 text-slate-500">#{{ log.id }}</td>
-            <td class="px-4 py-3 text-slate-600">{{ log.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
-            <td class="px-4 py-3 text-slate-800">{{ log.user.name if log.user else 'Sistema' }}</td>
-            <td class="px-4 py-3 text-slate-600">{{ log.company.name if log.company else 'N/A' }}</td>
-            <td class="px-4 py-3">
-              <span class="px-2 py-1 rounded text-xs font-semibold
-                {% if log.action == 'create' %}bg-emerald-100 text-emerald-700
-                {% elif log.action == 'update' %}bg-sky-100 text-sky-700
-                {% elif log.action == 'delete' %}bg-rose-100 text-rose-700
-                {% else %}bg-slate-100 text-slate-700{% endif %}">
-                {{ log.action|upper }}
-              </span>
+          <tr class="hover:bg-slate-50 align-top">
+            <td class="px-4 py-3 text-slate-400 text-xs">#{{ log.id }}</td>
+            <td class="px-4 py-3 text-slate-600 text-xs">
+              {{ log.created_at.strftime('%d %b %Y') }}<br>
+              <span class="text-slate-400">{{ log.created_at.strftime('%H:%M:%S') }}</span>
             </td>
-            <td class="px-4 py-3 font-mono text-xs text-slate-600">{{ log.table_name }}</td>
+            <td class="px-4 py-3">
+              {% if log.user %}
+              <a href="{{ url_for('support.audit_logs', user_id=log.user_id) }}"
+                 class="text-slate-800 font-semibold text-xs hover:text-emerald-600 hover:underline">{{ log.user.name }}</a>
+              {% else %}
+              <span class="text-slate-400 text-xs">Sistema</span>
+              {% endif %}
+            </td>
+            <td class="px-4 py-3">
+              {% if log.company %}
+              <a href="{{ url_for('support.audit_logs', company_id=log.company_id) }}"
+                 class="text-slate-600 text-xs hover:text-emerald-600 hover:underline">{{ log.company.name }}</a>
+              {% else %}
+              <span class="text-slate-400 text-xs">-</span>
+              {% endif %}
+            </td>
+            <td class="px-4 py-3">
+              <a href="{{ url_for('support.audit_logs', action=log.action) }}">
+                <span class="px-2 py-1 rounded-md text-[10px] font-bold uppercase tracking-wider
+                  {% if log.action == 'create' %}bg-emerald-100 text-emerald-700
+                  {% elif log.action == 'update' %}bg-sky-100 text-sky-700
+                  {% elif log.action == 'delete' %}bg-rose-100 text-rose-700
+                  {% else %}bg-slate-100 text-slate-700{% endif %}">
+                  {{ log.action }}
+                </span>
+              </a>
+            </td>
+            <td class="px-4 py-3">
+              <a href="{{ url_for('support.audit_logs', table_name=log.table_name) }}"
+                 class="font-mono text-xs text-indigo-600 hover:underline">{{ log.table_name }}</a>
+            </td>
             <td class="px-4 py-3">
               {% if log.record_id %}
-              <a href="{{ url_for('support.record_view', table_name=log.table_name, record_id=log.record_id) }}" class="text-emerald-600 hover:underline font-semibold">
-                Ver #{{ log.record_id }}
+              <a href="{{ url_for('support.record_view', table_name=log.table_name, record_id=log.record_id) }}"
+                 class="inline-flex items-center gap-1 px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-md text-xs font-semibold transition-colors">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                #{{ log.record_id }}
               </a>
               {% else %}
-              <span class="text-slate-400">-</span>
+              <span class="text-slate-400 text-xs">-</span>
               {% endif %}
             </td>
-            <td class="px-4 py-3">
-              {% if log.old_data %}
-              <details class="cursor-pointer">
-                <summary class="text-xs text-slate-500 hover:text-slate-700 font-semibold select-none">Ver JSON</summary>
-                <div class="mt-2 p-2 bg-slate-900 rounded-lg text-emerald-400 font-mono text-[10px] overflow-auto max-w-xs max-h-32">
-                  <pre>{{ log.old_data | tojson(indent=2) }}</pre>
-                </div>
-              </details>
-              {% else %}
-              <span class="text-xs text-slate-400">-</span>
-              {% endif %}
-            </td>
-            <td class="px-4 py-3">
-              {% if log.new_data %}
-              <details class="cursor-pointer">
-                <summary class="text-xs text-slate-500 hover:text-slate-700 font-semibold select-none">Ver JSON</summary>
-                <div class="mt-2 p-2 bg-slate-900 rounded-lg text-sky-400 font-mono text-[10px] overflow-auto max-w-xs max-h-32">
-                  <pre>{{ log.new_data | tojson(indent=2) }}</pre>
-                </div>
-              </details>
-              {% else %}
-              <span class="text-xs text-slate-400">-</span>
-              {% endif %}
+            <td class="px-4 py-3 max-w-xs">
+              <div class="flex gap-2">
+                {% if log.old_data %}
+                <details class="flex-1">
+                  <summary class="cursor-pointer select-none text-[10px] font-bold text-rose-600 hover:text-rose-700 uppercase tracking-wider">Antes</summary>
+                  <div class="mt-1.5 p-2 bg-slate-900 rounded-lg text-rose-300 font-mono text-[9px] overflow-auto max-h-40 max-w-xs">
+                    <pre>{{ log.old_data | tojson(indent=2) }}</pre>
+                  </div>
+                </details>
+                {% endif %}
+                {% if log.new_data %}
+                <details class="flex-1">
+                  <summary class="cursor-pointer select-none text-[10px] font-bold text-sky-600 hover:text-sky-700 uppercase tracking-wider">Después</summary>
+                  <div class="mt-1.5 p-2 bg-slate-900 rounded-lg text-sky-300 font-mono text-[9px] overflow-auto max-h-40 max-w-xs">
+                    <pre>{{ log.new_data | tojson(indent=2) }}</pre>
+                  </div>
+                </details>
+                {% endif %}
+                {% if not log.old_data and not log.new_data %}
+                <span class="text-slate-400 text-xs">Sin datos</span>
+                {% endif %}
+              </div>
             </td>
           </tr>
           {% else %}
           <tr>
-            <td colspan="9" class="px-4 py-8 text-center text-slate-500">No hay logs de auditoría que coincidan con los filtros.</td>
+            <td colspan="8" class="px-4 py-16 text-center">
+              <div class="flex flex-col items-center gap-3 text-slate-400">
+                <svg class="w-10 h-10 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                <p class="text-sm font-medium">No hay logs que coincidan con los filtros.</p>
+                <a href="{{ url_for('support.audit_logs') }}" class="text-sm font-semibold text-emerald-600 hover:underline">Limpiar filtros</a>
+              </div>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
@@ -112,19 +236,20 @@
 
     <!-- Pagination -->
     {% if pagination.pages > 1 %}
-    <div class="p-4 border-t border-slate-200 bg-white flex items-center justify-between shrink-0">
-      <p class="text-sm text-slate-600">Página {{ pagination.page }} de {{ pagination.pages }}</p>
+    <div class="px-6 py-3 border-t border-slate-200 bg-white flex items-center justify-between shrink-0">
+      <p class="text-sm text-slate-600">Página <strong>{{ pagination.page }}</strong> de <strong>{{ pagination.pages }}</strong></p>
       <div class="flex gap-2">
         {% if pagination.has_prev %}
-        <a href="{{ url_for('support.audit_logs', page=pagination.prev_num, table_name=table_filter, action=action_filter) }}" class="px-3 py-1.5 border border-slate-300 rounded-md text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors">Anterior</a>
+        <a href="{{ url_for('support.audit_logs', page=pagination.prev_num, table_name=table_filter, action=action_filter, user_id=user_filter, company_id=company_filter, record_id=record_filter, date_from=date_from, date_to=date_to) }}"
+           class="px-3 py-1.5 border border-slate-300 rounded-md text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors">&larr; Anterior</a>
         {% endif %}
         {% if pagination.has_next %}
-        <a href="{{ url_for('support.audit_logs', page=pagination.next_num, table_name=table_filter, action=action_filter) }}" class="px-3 py-1.5 border border-slate-300 rounded-md text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors">Siguiente</a>
+        <a href="{{ url_for('support.audit_logs', page=pagination.next_num, table_name=table_filter, action=action_filter, user_id=user_filter, company_id=company_filter, record_id=record_filter, date_from=date_from, date_to=date_to) }}"
+           class="px-3 py-1.5 border border-slate-300 rounded-md text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors">Siguiente &rarr;</a>
         {% endif %}
       </div>
     </div>
     {% endif %}
   </div>
-
 </div>
 {% endblock %}

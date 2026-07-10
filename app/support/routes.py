@@ -52,50 +52,136 @@ def dashboard():
 
 @support.route('/audit-logs')
 def audit_logs():
+    from app.models.user import User
+    from app.models.company import Company
+    from datetime import datetime, timedelta
+
     page = request.args.get('page', 1, type=int)
     per_page = 50
-    table_filter = request.args.get('table_name', '').strip()
-    action_filter = request.args.get('action', '').strip()
-    
+
+    # Collect all filter params
+    table_filter   = request.args.get('table_name', '').strip()
+    action_filter  = request.args.get('action', '').strip()
+    user_filter    = request.args.get('user_id', '').strip()
+    company_filter = request.args.get('company_id', '').strip()
+    record_filter  = request.args.get('record_id', '').strip()
+    date_from      = request.args.get('date_from', '').strip()
+    date_to        = request.args.get('date_to', '').strip()
+
     query = AuditLog.query
 
     if table_filter:
         query = query.filter(AuditLog.table_name == table_filter)
     if action_filter:
         query = query.filter(AuditLog.action == action_filter)
-        
+    if user_filter:
+        try:
+            query = query.filter(AuditLog.user_id == int(user_filter))
+        except ValueError:
+            pass
+    if company_filter:
+        try:
+            query = query.filter(AuditLog.company_id == int(company_filter))
+        except ValueError:
+            pass
+    if record_filter:
+        try:
+            query = query.filter(AuditLog.record_id == int(record_filter))
+        except ValueError:
+            pass
+    if date_from:
+        try:
+            query = query.filter(AuditLog.created_at >= datetime.strptime(date_from, '%Y-%m-%d'))
+        except ValueError:
+            pass
+    if date_to:
+        try:
+            query = query.filter(AuditLog.created_at < datetime.strptime(date_to, '%Y-%m-%d') + timedelta(days=1))
+        except ValueError:
+            pass
+
     pagination = query.order_by(AuditLog.id.desc()).paginate(page=page, per_page=per_page, error_out=False)
-    
-    models = get_all_models()
+
+    models    = get_all_models()
+    users     = User.query.with_entities(User.id, User.name).order_by(User.name).all()
+    companies = Company.query.with_entities(Company.id, Company.name).order_by(Company.name).all()
+
+    # Build active filter dict for badge display
+    active_filters = {k: v for k, v in {
+        'Tabla': table_filter,
+        'Acción': action_filter,
+        'Usuario': next((u.name for u in users if str(u.id) == user_filter), None) if user_filter else None,
+        'Empresa': next((c.name for c in companies if str(c.id) == company_filter), None) if company_filter else None,
+        'Registro #': record_filter,
+        'Desde': date_from,
+        'Hasta': date_to,
+    }.items() if v}
+
     return render_template(
-        'support/audit_logs.html', 
-        pagination=pagination, 
+        'support/audit_logs.html',
+        pagination=pagination,
         tables=sorted(list(models.keys())),
+        users=users,
+        companies=companies,
         table_filter=table_filter,
-        action_filter=action_filter
+        action_filter=action_filter,
+        user_filter=user_filter,
+        company_filter=company_filter,
+        record_filter=record_filter,
+        date_from=date_from,
+        date_to=date_to,
+        active_filters=active_filters,
     )
 
 @support.route('/deleted-items')
 def deleted_items():
-    table_name = request.args.get('table_name', '')
-    models = get_all_models()
-    
-    items = []
+    from app.models.company import Company
+
+    table_name     = request.args.get('table_name', '')
+    search_query   = request.args.get('q', '').strip()
+    company_filter = request.args.get('company_id', '').strip()
+    models         = get_all_models()
+
+    items   = []
     columns = []
-    
+
     if table_name and table_name in models:
         model_cls = models[table_name]
-        items = model_cls.query.execution_options(include_deleted=True).filter(model_cls.is_deleted == True).order_by(model_cls.deleted_at.desc()).all()
-        # Get primary columns to display (just a few)
-        mapper = inspect(model_cls)
-        columns = [c.key for c in mapper.columns][:5] # Show first 5 columns
+        q = model_cls.query.execution_options(include_deleted=True).filter(model_cls.is_deleted == True)
+
+        # Company filter (if the model has company_id)
+        if company_filter and hasattr(model_cls, 'company_id'):
+            try:
+                q = q.filter(model_cls.company_id == int(company_filter))
+            except ValueError:
+                pass
+
+        items = q.order_by(model_cls.deleted_at.desc()).all()
+
+        # Text search across string columns (in Python after DB fetch)
+        if search_query:
+            mapper   = inspect(model_cls)
+            str_cols = [c.key for c in mapper.columns if hasattr(c.type, 'length')]
+            items = [
+                item for item in items
+                if any(search_query.lower() in str(getattr(item, col, '') or '').lower()
+                       for col in str_cols)
+            ]
+
+        mapper  = inspect(model_cls)
+        columns = [c.key for c in mapper.columns][:6]
+
+    companies = Company.query.with_entities(Company.id, Company.name).order_by(Company.name).all()
 
     return render_template(
         'support/deleted_items.html',
         tables=sorted(list(models.keys())),
         selected_table=table_name,
         items=items,
-        columns=columns
+        columns=columns,
+        companies=companies,
+        company_filter=company_filter,
+        search_query=search_query,
     )
 
 @support.route('/restore/<string:table_name>/<int:record_id>', methods=['POST'])
