@@ -1983,6 +1983,9 @@
   .whitespace-pre-wrap {
     white-space: pre-wrap;
   }
+  .text-amber-400 {
+    color: var(--color-amber-400);
+  }
   .text-amber-600 {
     color: var(--color-amber-600);
   }
@@ -2156,6 +2159,9 @@
   }
   .italic {
     font-style: italic;
+  }
+  .underline {
+    text-decoration-line: underline;
   }
   .antialiased {
     -webkit-font-smoothing: antialiased;

@@ -1,0 +1,71 @@
+<form method="POST"
+  action="{{ url_for('accounting.create_loan', company_id=company.id, account_id=account.id) }}"
+  data-drawer-form
+  data-success-message="Crédito registrado exitosamente"
+  enctype="multipart/form-data">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <input type="hidden" name="liability_account_id" value="{{ account.id }}">
+  
+  <div class="p-4 md:p-6 space-y-4">
+    <div>
+      <p class="text-sm text-slate-500 mb-2">Registrando crédito en la cuenta de pasivo:</p>
+      <div class="flex items-center gap-2 p-3 bg-emerald-50 text-emerald-800 rounded-lg border border-emerald-100">
+        <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+        <span class="font-medium text-sm">{{ account.name }}</span>
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-slate-700 mb-1">Fecha <span class="text-rose-500">*</span></label>
+      <input type="date" name="date"
+        value="{{ now.strftime('%Y-%m-%d') }}"
+        required class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-slate-700 mb-1">Cuenta Destino (Activo/Gasto) <span class="text-rose-500">*</span></label>
+      <select name="asset_account_id" required class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+        <option value="">Seleccione dónde ingresó el valor...</option>
+        {% for acct in counterpart_accounts %}
+        <option value="{{ acct.id }}">
+          {% if acct.code %}[{{ acct.code }}] {% endif %}{{ acct.name }} ({{ acct.type.label_es }})
+        </option>
+        {% endfor %}
+      </select>
+      <p class="text-xs text-slate-500 mt-1">Ej: Bancos (si fue un préstamo en efectivo) o Inventario/Gastos (si fue un préstamo de proveedor).</p>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-slate-700 mb-1">Monto del Crédito <span class="text-rose-500">*</span></label>
+      <div class="relative">
+        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm font-medium">{{ company.currency }}</span>
+        <input type="number" name="amount" step="0.01" min="0.01" required placeholder="0.00"
+          class="w-full pl-8 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+      </div>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-slate-700 mb-1">Descripción / Proveedor <span class="text-rose-500">*</span></label>
+      <input type="text" name="memo" required placeholder="Ej: Préstamo bancario No. 12345"
+        class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-slate-700 mb-1">Referencia</label>
+      <input type="text" name="reference" placeholder="Opcional"
+        class="w-full border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+    </div>
+
+    {% include 'accounting/partials/_attachments.html' %}
+
+    <div class="border-t border-slate-200 pt-4 mt-2">
+      <p class="text-xs text-slate-500 mb-3 bg-emerald-50 p-2 rounded-lg border border-emerald-100">
+        <span class="font-semibold">Asiento automático:</span>
+        DR → Cuenta Destino | CR → {{ account.name }} (Pasivo)
+      </p>
+      <button type="submit" class="w-full flex justify-center items-center gap-2 px-4 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
+        Registrar Crédito
+      </button>
+    </div>
+  </div>
+</form>

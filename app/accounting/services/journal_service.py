@@ -148,6 +148,112 @@ class JournalService:
         return txn
 
     @staticmethod
+    def record_loan(company_id: int, data, files=None) -> Transaction:
+        """
+        Record a new credit/loan.
+        Expects: memo, date, reference, amount, liability_account_id, asset_account_id.
+        Creates a journal transaction debiting the asset account and crediting the liability account.
+        """
+        memo = data.get('memo', '').strip()
+        if not memo:
+            raise ValueError('El memo/descripción es requerido.')
+
+        entry_date = _parse_date(data.get('date', '').strip())
+        reference = data.get('reference', '').strip() or None
+        
+        try:
+            amount = round(float(data.get('amount', 0)), 2)
+            if amount <= 0:
+                raise ValueError('El monto debe ser mayor a 0.')
+            liability_account_id = int(data.get('liability_account_id', 0))
+            asset_account_id = int(data.get('asset_account_id', 0))
+        except ValueError:
+            raise ValueError('Valores de monto o cuenta inválidos.')
+
+        liability_acc = Account.query.filter_by(id=liability_account_id, company_id=company_id).first()
+        asset_acc = Account.query.filter_by(id=asset_account_id, company_id=company_id).first()
+        if not liability_acc or not asset_acc:
+            raise ValueError('Cuenta no encontrada.')
+
+        entries = [
+            {'account_id': asset_account_id, 'debit': amount, 'credit': 0.0, 'description': memo, 'project_id': None, 'tags': []},
+            {'account_id': liability_account_id, 'debit': 0.0, 'credit': amount, 'description': memo, 'project_id': None, 'tags': []}
+        ]
+
+        txn = _create_balanced_transaction(
+            company_id=company_id,
+            date=entry_date,
+            memo=memo,
+            transaction_type=TransactionType.journal,
+            entries=entries,
+            reference=reference,
+            reference_type='Loan'
+        )
+
+        from flask_login import current_user
+        user_id = current_user.id if hasattr(current_user, 'id') else None
+        new_files = files.getlist('attachments') if files else []
+        attachments = _save_attachments(new_files, 'Journal', txn.id, company_id, user_id)
+        for att in attachments:
+            db.session.add(att)
+
+        db.session.commit()
+        return txn
+
+    @staticmethod
+    def record_loan_payment(company_id: int, data, files=None) -> Transaction:
+        """
+        Record a payment towards a credit/loan.
+        Expects: memo, date, reference, amount, liability_account_id, payment_account_id.
+        Creates a journal transaction debiting the liability account and crediting the payment account.
+        """
+        memo = data.get('memo', '').strip()
+        if not memo:
+            raise ValueError('El memo/descripción es requerido.')
+
+        entry_date = _parse_date(data.get('date', '').strip())
+        reference = data.get('reference', '').strip() or None
+        
+        try:
+            amount = round(float(data.get('amount', 0)), 2)
+            if amount <= 0:
+                raise ValueError('El monto debe ser mayor a 0.')
+            liability_account_id = int(data.get('liability_account_id', 0))
+            payment_account_id = int(data.get('payment_account_id', 0))
+        except ValueError:
+            raise ValueError('Valores de monto o cuenta inválidos.')
+
+        liability_acc = Account.query.filter_by(id=liability_account_id, company_id=company_id).first()
+        payment_acc = Account.query.filter_by(id=payment_account_id, company_id=company_id).first()
+        if not liability_acc or not payment_acc:
+            raise ValueError('Cuenta no encontrada.')
+
+        entries = [
+            {'account_id': liability_account_id, 'debit': amount, 'credit': 0.0, 'description': memo, 'project_id': None, 'tags': []},
+            {'account_id': payment_account_id, 'debit': 0.0, 'credit': amount, 'description': memo, 'project_id': None, 'tags': []}
+        ]
+
+        txn = _create_balanced_transaction(
+            company_id=company_id,
+            date=entry_date,
+            memo=memo,
+            transaction_type=TransactionType.journal,
+            entries=entries,
+            reference=reference,
+            reference_type='LoanPayment'
+        )
+
+        from flask_login import current_user
+        user_id = current_user.id if hasattr(current_user, 'id') else None
+        new_files = files.getlist('attachments') if files else []
+        attachments = _save_attachments(new_files, 'Journal', txn.id, company_id, user_id)
+        for att in attachments:
+            db.session.add(att)
+
+        db.session.commit()
+        return txn
+
+    @staticmethod
     def get_journal_entries(company_id: int, search: str = '',
                             start_date: str = '', end_date: str = '',
                             page: int = 1, per_page: int = 30):

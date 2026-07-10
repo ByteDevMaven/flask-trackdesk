@@ -139,6 +139,7 @@ class UserStatus(enum.Enum):
 
 class ExpenseStatus(enum.Enum):
     draft = 'draft'
+    pending = 'pending'
     approved = 'approved'
     paid = 'paid'
 
@@ -146,6 +147,7 @@ class ExpenseStatus(enum.Enum):
     def label_es(self):
         return {
             'draft': 'Borrador',
+            'pending': 'Pendiente',
             'approved': 'Aprobado',
             'paid': 'Pagado'
         }.get(self.value, self.value.title())

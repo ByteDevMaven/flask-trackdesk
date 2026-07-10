@@ -1098,3 +1098,107 @@ def delete_project(company_id, project_id):
             return jsonify({'success': False, 'message': str(e)}), 500
         flash(str(e), 'error')
     return redirect(url_for('accounting.projects_list', company_id=company_id))
+
+# ─── Loans / Credits ──────────────────────────────────────────────────────────
+
+@accounting.route('/<string:company_id>/accounting/loans')
+@login_required
+def loans_list(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
+    from app.models import Company
+    company = Company.query.get_or_404(company_id)
+    
+    # Show all liability accounts, or those that have balances
+    accounts = Account.query.filter_by(company_id=company_id, type=AccountType.liability, is_active=True).order_by(Account.name).all()
+    balances = AccountingService.get_account_balances_bulk(company_id)
+    
+    return render_template(
+        'accounting/loans.html',
+        company=company,
+        accounts=accounts,
+        balances=balances,
+        **_sidebar_ctx(company_id)
+    )
+
+@accounting.route('/<string:company_id>/accounting/loans/<int:account_id>/create', methods=['GET', 'POST'])
+@login_required
+def create_loan(company_id, account_id):
+    company = resolve_company(company_id)
+    company_id = company.id
+    from app.models import Company
+    company = Company.query.get_or_404(company_id)
+    account = Account.query.filter_by(id=account_id, company_id=company_id, type=AccountType.liability).first_or_404()
+    
+    if request.method == 'POST':
+        is_ajax = _is_ajax()
+        try:
+            AccountingService.record_loan(company_id, request.form, request.files)
+            if is_ajax:
+                return jsonify({'success': True, 'message': 'Crédito registrado exitosamente.'})
+            flash('Crédito registrado exitosamente.', 'success')
+            return redirect(url_for('accounting.loans_list', company_id=company_id))
+        except ValueError as e:
+            if is_ajax:
+                return jsonify({'success': False, 'message': str(e)}), 400
+            flash(str(e), 'error')
+        except Exception as e:
+            if is_ajax:
+                return jsonify({'success': False, 'message': f'Error: {e}'}), 500
+            flash(f'Error: {e}', 'error')
+
+    asset_accounts = Account.query.filter_by(company_id=company_id, type=AccountType.asset, is_active=True).order_by(Account.name).all()
+    expense_accounts = Account.query.filter_by(company_id=company_id, type=AccountType.expense, is_active=True).order_by(Account.name).all()
+    all_counterpart = asset_accounts + expense_accounts
+    
+    ctx = dict(
+        company=company,
+        account=account,
+        counterpart_accounts=all_counterpart,
+        now=datetime.now(UTC),
+        **_sidebar_ctx(company_id)
+    )
+    if _is_ajax():
+        return render_template('accounting/partials/loan_form.html', **ctx)
+    return render_template('accounting/loan_form.html', **ctx)
+
+
+@accounting.route('/<string:company_id>/accounting/loans/<int:account_id>/pay', methods=['GET', 'POST'])
+@login_required
+def pay_loan(company_id, account_id):
+    company = resolve_company(company_id)
+    company_id = company.id
+    from app.models import Company
+    company = Company.query.get_or_404(company_id)
+    account = Account.query.filter_by(id=account_id, company_id=company_id, type=AccountType.liability).first_or_404()
+    
+    if request.method == 'POST':
+        is_ajax = _is_ajax()
+        try:
+            AccountingService.record_loan_payment(company_id, request.form, request.files)
+            if is_ajax:
+                return jsonify({'success': True, 'message': 'Pago registrado exitosamente.'})
+            flash('Pago registrado exitosamente.', 'success')
+            return redirect(url_for('accounting.loans_list', company_id=company_id))
+        except ValueError as e:
+            if is_ajax:
+                return jsonify({'success': False, 'message': str(e)}), 400
+            flash(str(e), 'error')
+        except Exception as e:
+            if is_ajax:
+                return jsonify({'success': False, 'message': f'Error: {e}'}), 500
+            flash(f'Error: {e}', 'error')
+
+    asset_accounts = Account.query.filter_by(company_id=company_id, type=AccountType.asset, is_active=True).order_by(Account.name).all()
+    
+    ctx = dict(
+        company=company,
+        account=account,
+        payment_accounts=asset_accounts,
+        now=datetime.now(UTC),
+        **_sidebar_ctx(company_id)
+    )
+    if _is_ajax():
+        return render_template('accounting/partials/loan_payment_form.html', **ctx)
+    return render_template('accounting/loan_payment_form.html', **ctx)
+
