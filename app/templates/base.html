@@ -47,6 +47,8 @@
       <nav class="flex-1 flex flex-row md:flex-col items-center gap-2 md:gap-1 px-2 md:px-0 overflow-x-auto md:overflow-visible">
         {% set active_company_id=session.get('selected_company_slug') %}
 
+        {# Dashboard – visible to everyone with dashboard.view #}
+        {% if current_user.has_permission('dashboard.view') %}
         <a href="{{ url_for('dashboard.index', company_id=session.get('selected_company_slug')) }}"
           class="w-10 h-10 rounded-lg flex items-center justify-center transition-colors {% if request.endpoint and 'dashboard' in request.endpoint %}bg-slate-700 text-white{% else %}text-slate-400 hover:bg-slate-700 hover:text-white{% endif %}"
           title="Dashboard">
@@ -55,8 +57,12 @@
               d="M4 5a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm10 0a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zm0 6a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1h-4a1 1 0 01-1-1v-5zm-10 3a1 1 0 011-1h4a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1v-2z" />
           </svg>
         </a>
+        {% endif %}
 
         {% if active_company_id %}
+
+        {# Contacts #}
+        {% if current_user.has_permission('contacts.view') %}
         <a href="{{ url_for('contacts.index', company_id=active_company_id) }}"
           class="w-10 h-10 rounded-lg flex items-center justify-center transition-colors {% if request.endpoint and 'contacts' in request.endpoint %}bg-slate-700 text-white{% else %}text-slate-400 hover:bg-slate-700 hover:text-white{% endif %}"
           title="Contactos">
@@ -65,7 +71,10 @@
               d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
           </svg>
         </a>
+        {% endif %}
 
+        {# Inventory #}
+        {% if current_user.has_permission('inventory.view') %}
         <a href="{{ url_for('inventory.index', company_id=active_company_id) }}"
           class="w-10 h-10 rounded-lg flex items-center justify-center transition-colors {% if request.blueprint in ['inventory', 'warehouses'] %}bg-slate-700 text-white{% else %}text-slate-400 hover:bg-slate-700 hover:text-white{% endif %}"
           title="Inventario">
@@ -74,7 +83,10 @@
               d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
           </svg>
         </a>
+        {% endif %}
 
+        {# Invoices #}
+        {% if current_user.has_permission('invoices.view') %}
         <a href="{{ url_for('invoices.index', company_id=active_company_id) }}"
           class="w-10 h-10 rounded-lg flex items-center justify-center transition-colors {% if request.endpoint and 'invoices' in request.endpoint %}bg-slate-700 text-white{% else %}text-slate-400 hover:bg-slate-700 hover:text-white{% endif %}"
           title="Facturas">
@@ -83,7 +95,10 @@
               d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
         </a>
+        {% endif %}
 
+        {# Payments #}
+        {% if current_user.has_permission('payments.view') %}
         <a href="{{ url_for('payments.index', company_id=active_company_id) }}"
           class="w-10 h-10 rounded-lg flex items-center justify-center transition-colors {% if request.endpoint and 'payments' in request.endpoint %}bg-slate-700 text-white{% else %}text-slate-400 hover:bg-slate-700 hover:text-white{% endif %}"
           title="Pagos">
@@ -92,7 +107,10 @@
               d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" />
           </svg>
         </a>
+        {% endif %}
 
+        {# Purchase Orders #}
+        {% if current_user.has_permission('orders.view') %}
         <a href="{{ url_for('orders.index', company_id=active_company_id) }}"
           class="w-10 h-10 rounded-lg flex items-center justify-center transition-colors {% if request.endpoint and 'orders' in request.endpoint %}bg-slate-700 text-white{% else %}text-slate-400 hover:bg-slate-700 hover:text-white{% endif %}"
           title="Órdenes de Compra">
@@ -101,7 +119,10 @@
               d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
           </svg>
         </a>
+        {% endif %}
 
+        {# Accounting #}
+        {% if current_user.has_permission('accounting.view') %}
         <a href="{{ url_for('accounting.index', company_id=active_company_id) }}"
           class="w-10 h-10 rounded-lg flex items-center justify-center transition-colors {% if request.endpoint and 'accounting' in request.endpoint %}bg-slate-700 text-white{% else %}text-slate-400 hover:bg-slate-700 hover:text-white{% endif %}"
           title="Contabilidad">
@@ -110,7 +131,10 @@
               d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
           </svg>
         </a>
+        {% endif %}
 
+        {# HR #}
+        {% if current_user.has_permission('hr.view') %}
         <a href="{{ url_for('hr.employees', company_id=active_company_id) }}"
           class="w-10 h-10 rounded-lg flex items-center justify-center transition-colors {% if request.endpoint and 'hr' in request.endpoint %}bg-slate-700 text-white{% else %}text-slate-400 hover:bg-slate-700 hover:text-white{% endif %}"
           title="Recursos Humanos">
@@ -120,8 +144,12 @@
         </a>
         {% endif %}
 
+        {% endif %}{# end active_company_id #}
+
         <div class="w-px h-8 md:w-8 md:h-px bg-slate-700 my-0 mx-1 md:my-2 md:mx-0 flex-shrink-0"></div>
 
+        {# Users – only for those with users.view #}
+        {% if current_user.has_permission('users.view') %}
         <a href="{{ url_for('users.index') }}"
           class="w-10 h-10 rounded-lg flex items-center justify-center transition-colors {% if request.endpoint and 'users' in request.endpoint %}bg-slate-700 text-white{% else %}text-slate-400 hover:bg-slate-700 hover:text-white{% endif %}"
           title="Usuarios">
@@ -130,7 +158,10 @@
               d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
           </svg>
         </a>
+        {% endif %}
 
+        {# Companies – only for those with companies.view #}
+        {% if current_user.has_permission('companies.view') %}
         <a href="{{ url_for('companies.index') }}"
           class="w-10 h-10 rounded-lg flex items-center justify-center transition-colors {% if request.endpoint and 'companies' in request.endpoint %}bg-slate-700 text-white{% else %}text-slate-400 hover:bg-slate-700 hover:text-white{% endif %}"
           title="Empresas">
@@ -139,6 +170,7 @@
               d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
           </svg>
         </a>
+        {% endif %}
       </nav>
 
       {% if current_user.is_authenticated %}
