@@ -845,8 +845,8 @@
     "semantic_hash": ""
   },
   "app/invoices/templates/invoices/view.html": {
-    "mtime": 1783663672.5799236,
-    "ast_hash": "36f34ab9180c2e83fff0ae52de416bce",
+    "mtime": 1783733230.8913293,
+    "ast_hash": "b894eaddc634d77a4e0abd2cfd3e50ae",
     "semantic_hash": ""
   },
   "app/orders/templates/orders/form.html": {
@@ -885,8 +885,8 @@
     "semantic_hash": "2baa6c504f7d59476b7e01e517ded6a7"
   },
   "app/templates/base.html": {
-    "mtime": 1783706571.6328793,
-    "ast_hash": "86a76f0a6653df53532c317fe76a8899",
+    "mtime": 1783706888.4357686,
+    "ast_hash": "3b113ae294b061e5b81b74bf6278add0",
     "semantic_hash": ""
   },
   "app/templates/blank.html": {

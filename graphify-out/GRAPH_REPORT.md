@@ -1,16 +1,16 @@
 # Graph Report - flask-trackdesk  (2026-07-10)
 
 ## Corpus Check
-- 176 files · ~146,275 words
+- 176 files · ~146,403 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1214 nodes · 2386 edges · 118 communities (95 shown, 23 thin omitted)
+- 1208 nodes · 2383 edges · 123 communities (99 shown, 24 thin omitted)
 - Extraction: 93% EXTRACTED · 7% INFERRED · 0% AMBIGUOUS · INFERRED: 156 edges (avg confidence: 0.55)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `9d70ab34`
+- Built from commit: `ae928146`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -96,17 +96,21 @@
 - Community 108
 - Community 109
 - Community 110
+- email_service.py
 - AccountType
 - Community 113
 - Community 114
 - Community 115
 - Community 116
 - Centro de Mando Financiero
+- warehouse.py
+- _active_expense_conditions
 - Balanced Books Status
+- get_layout
 
 ## God Nodes (most connected - your core abstractions)
 1. `BaseModel` - 86 edges
-2. `resolve_company()` - 63 edges
+2. `resolve_company()` - 60 edges
 3. `ProjectService` - 39 edges
 4. `_is_ajax()` - 33 edges
 5. `Document` - 28 edges
@@ -125,8 +129,8 @@
   app/context_processors.py → config.py
 - `Company Timezone and Logo Migration` --implements--> `Company Model`  [EXTRACTED]
   migrations/versions/9f8e7d6c5b4a_add_company_timezone_and_logo.py → app/models/company.py
-- `create_leave()` --calls--> `Leave Request Form`  [EXTRACTED]
-  app/hr/routes.py → app/hr/templates/hr/leave_form.html
+- `str` --uses--> `BaseModel`  [INFERRED]
+  app/models/audit.py → app/models/base.py
 
 ## Import Cycles
 - 1-file cycle: `app/support/__init__.py -> app/support/__init__.py`
@@ -138,27 +142,27 @@
 - 1-file cycle: `app/accounting/services/accounting_service.py -> app/accounting/services/accounting_service.py`
 - 1-file cycle: `app/hooks.py -> app/hooks.py`
 
-## Communities (118 total, 23 thin omitted)
+## Communities (123 total, 24 thin omitted)
 
 ### Community 0 - "Core Models"
-Cohesion: 0.13
-Nodes (35): add_invoice_payment(), _company_tax_rate(), delete_invoice_or_quote(), Soft delete an invoice or quote and its items., Add a payment to an invoice, post accounting income, and update its status., update_invoice_or_quote(), _available_stock(), _build_invoice_form() (+27 more)
+Cohesion: 0.14
+Nodes (32): PosCashMovement, PosRegisterSession, str, _available_stock(), _build_invoice_form(), cash_movement(), checkout(), close_register() (+24 more)
 
 ### Community 2 - "Inventory & Orders Service"
 Cohesion: 0.07
-Nodes (45): print_invoice(), Stream a live PDF preview using the most recent invoice for this company., Generate a PDF on the fly using the submitted form data for a live preview., templates_delete(), templates_edit(), templates_index(), templates_live_preview(), templates_new() (+37 more)
+Nodes (43): print_invoice(), Stream a live PDF preview using the most recent invoice for this company., Generate a PDF on the fly using the submitted form data for a live preview., templates_delete(), templates_edit(), templates_index(), templates_live_preview(), templates_new() (+35 more)
 
 ### Community 3 - "Invoices Service"
-Cohesion: 0.11
+Cohesion: 0.09
 Nodes (30): ExpenseService, Account, int, str, Expense CRUD service (create, read, update, delete)., Void old transaction and post a corrected balanced entry., Record an expense.          Double-entry:           DR  Expense Account    (amou, Return the first cash/bank account for the company, or raise ValueError. (+22 more)
 
 ### Community 4 - "Accounting Module"
-Cohesion: 0.15
-Nodes (34): Account, _active_expense_conditions(), _active_ledger_conditions(), _compute_account_balance(), _compute_balances_bulk(), _expenses_by_account(), _is_receivable_account(), _ledger_manual_expenses_by_account() (+26 more)
+Cohesion: 0.17
+Nodes (33): Account, _active_ledger_conditions(), _compute_account_balance(), _compute_balances_bulk(), _expenses_by_account(), _is_receivable_account(), _ledger_manual_expenses_by_account(), _ledger_revenue_by_account() (+25 more)
 
 ### Community 6 - "HR Module"
-Cohesion: 0.11
-Nodes (12): BaseModel, str, str, str, Project, str, str, str (+4 more)
+Cohesion: 0.20
+Nodes (5): str, Project, str, Role, Transaction
 
 ### Community 7 - "PDF Generators"
 Cohesion: 0.12
@@ -166,7 +170,7 @@ Nodes (28): addProduct(), calcTotals(), clearCart(), customerLabel(), escapeHtml
 
 ### Community 8 - "Inventory Routes"
 Cohesion: 0.12
-Nodes (12): List all document sequences for a company, Form to create a new document sequence, Store a new document sequence, Form to edit an existing document sequence, Update an existing document sequence, sequence_create(), sequence_edit(), sequence_store() (+4 more)
+Nodes (13): List all document sequences for a company, Form to create a new document sequence, Store a new document sequence, Form to edit an existing document sequence, Update an existing document sequence, sequence_create(), sequence_edit(), sequence_store() (+5 more)
 
 ### Community 9 - "Auth Module"
 Cohesion: 0.20
@@ -174,19 +178,19 @@ Nodes (11): Notification, _can_send_notifications(), index(), mark_all_read(), p
 
 ### Community 10 - "Users Service"
 Cohesion: 0.11
-Nodes (17): Company Model, Document, str, float, str, Calculate subtotal from document items (before tax). Cached., Calculate tax amount based on subtotal and company tax rate. Cached., Calculate total amount paid via payments (+9 more)
+Nodes (14): Document, str, float, str, Calculate subtotal from document items (before tax). Cached., Calculate tax amount based on subtotal and company tax rate. Cached., Calculate total amount paid via payments, Calculate remaining balance to be paid (+6 more)
 
 ### Community 11 - "Barcode JS"
 Cohesion: 0.15
-Nodes (17): create_account(), create_income(), create_loan(), create_project(), create_tag(), delete_account(), delete_attachment(), delete_expense() (+9 more)
+Nodes (18): create_account(), create_income(), create_loan(), create_project(), create_tag(), delete_account(), delete_attachment(), delete_expense() (+10 more)
 
 ### Community 12 - "Payments Module"
-Cohesion: 0.11
-Nodes (15): api_adjust_stock(), api_bulk_delete(), api_create_item(), api_delete_item(), api_get_item(), api_stats(), api_update_item(), barcode() (+7 more)
+Cohesion: 0.12
+Nodes (14): api_adjust_stock(), api_bulk_delete(), api_create_item(), api_delete_item(), api_get_item(), api_stats(), api_update_item(), barcode() (+6 more)
 
 ### Community 13 - "Companies Routes"
-Cohesion: 0.17
-Nodes (13): _create_balanced_transaction(), Double-entry Balance Rules, Create a Transaction + LedgerEntry rows atomically.     Raises ValueError if ent, IncomeService, Account, int, str, Transaction (+5 more)
+Cohesion: 0.18
+Nodes (14): _create_balanced_transaction(), Double-entry Balance Rules, Create a Transaction + LedgerEntry rows atomically.     Raises ValueError if ent, IncomeService, Account, int, str, Transaction (+6 more)
 
 ### Community 14 - "Companies Service"
 Cohesion: 0.08
@@ -196,33 +200,33 @@ Nodes (23): For /graphify add and --watch, For /graphify query, For the commit h
 Cohesion: 0.14
 Nodes (18): applyBarcodes(), buildBulkGrid(), buildLabelDOM(), buildPrintArea(), _doRender(), history, loadTemplates(), pushHistory() (+10 more)
 
-### Community 16 - "Warehouses Service"
-Cohesion: 0.14
-Nodes (9): Accounting integration helpers for invoice payments., Account, str, Accounts that normally carry a debit balance vs credit balance., Chart of Accounts entry.      IMPORTANT: Balance is NOT stored here — it is alwa, float, str, Positive = debit effect, negative = credit effect. (+1 more)
-
 ### Community 17 - "Invoice Form JS"
 Cohesion: 0.50
 Nodes (4): Project Create Edit Form, Nuevo Proyecto Page, Cost Center Profitability Management, Projects List Screen
 
 ### Community 18 - "Migrations Core"
-Cohesion: 0.11
-Nodes (9): DocumentStatus, EmployeeClass, LeaveStatus, LeaveType, PaymentMethod, PayPeriod, PTOAccrualPeriod, StockMovementType (+1 more)
+Cohesion: 0.10
+Nodes (10): ContactType, DocumentStatus, DocumentType, EmployeeClass, LeaveStatus, LeaveType, PayPeriod, PTOAccrualPeriod (+2 more)
 
 ### Community 19 - "Drawer UI JS"
 Cohesion: 0.20
 Nodes (7): format_currency(), format_date(), index(), locale_date(), Format a number as currency, Format a date in a readable format, Format date according to the current locale
 
 ### Community 20 - "Consolidate Schema Migration"
-Cohesion: 0.38
+Cohesion: 0.24
 Nodes (3): _match_context(), _result(), _search_tokens()
 
 ### Community 21 - "Order Form JS"
-Cohesion: 0.33
-Nodes (7): AccountType, AccountService, Account, int, str, Account CRUD and chart of accounts generation., Soft-delete an account.         Raises ValueError if the account has any non-voi
+Cohesion: 0.38
+Nodes (6): AccountType, AccountService, Account, int, str, Soft-delete an account.         Raises ValueError if the account has any non-voi
 
 ### Community 22 - "Unify Contacts Migration"
-Cohesion: 0.17
-Nodes (22): _allowed_file(), create_employee(), create_leave(), create_schedule(), delete_employee(), delete_leave(), delete_schedule(), edit_employee() (+14 more)
+Cohesion: 0.23
+Nodes (15): create_schedule(), delete_employee(), delete_leave(), delete_schedule(), edit_employee(), edit_schedule(), employees(), leaves() (+7 more)
+
+### Community 23 - "Auto Migration"
+Cohesion: 0.33
+Nodes (3): float, str, Total hours for this schedule entry.
 
 ### Community 24 - "Initial Migration"
 Cohesion: 0.12
@@ -238,43 +242,43 @@ Nodes (15): dependencies, tailwindcss, devDependencies, concurrently, scripts, b
 
 ### Community 27 - "Auto Migration 2"
 Cohesion: 0.40
-Nodes (4): bool, str, Return True if this role carries *permission_name*., Role
+Nodes (3): bool, str, Return True if this role carries *permission_name*.
 
 ### Community 29 - "Models Update Migration"
-Cohesion: 0.07
-Nodes (16): Contact, bool, str, Validate phone format (basic: digits, +, -, spaces)., bool, str, Return True if the user's role carries *permission_name*.         Superadmins (r, Shortcut — True when the user's role is 'superadmin' (platform admin). (+8 more)
+Cohesion: 0.23
+Nodes (4): Returns IDs of companies the current user can see., Returns True if current_user can see/manage *user*., Returns the companies of target_user that current_user is allowed to see., UserService
 
 ### Community 30 - "Audit Columns Migration"
-Cohesion: 0.11
-Nodes (10): JournalService, _parse_journal_lines(), Void old entry and post a corrected replacement., Record a new credit/loan.         Expects: memo, date, reference, amount, liabil, Parse and validate multi-line journal form data into entry dicts., Record a payment towards a credit/loan.         Expects: memo, date, reference,, Soft-delete a manual journal transaction., Return a full ledger page dict ready to pass to the template. (+2 more)
+Cohesion: 0.09
+Nodes (13): JournalService, _parse_journal_lines(), Journal entries, ledger, and trial balance service., Void old entry and post a corrected replacement., Record a new credit/loan.         Expects: memo, date, reference, amount, liabil, Parse and validate multi-line journal form data into entry dicts., Record a payment towards a credit/loan.         Expects: memo, date, reference,, Soft-delete a manual journal transaction. (+5 more)
 
 ### Community 31 - "Roles Migration"
 Cohesion: 0.87
 Nodes (5): _column_exists(), downgrade(), _index_exists(), _table_exists(), upgrade()
 
 ### Community 32 - "Warehouses Migration"
-Cohesion: 0.33
-Nodes (3): str, Lowercase file extension without leading dot (e.g. 'pdf', 'jpg')., Human-readable file size.
+Cohesion: 0.12
+Nodes (11): BaseModel, str, str, str, str, Tag, bool, float (+3 more)
 
 ### Community 33 - "Budget Migration"
-Cohesion: 0.08
-Nodes (16): bool, str, Authenticate a user by email and password.         Returns (user, error_message), Determine safe redirect URL after login., Generate and send a password reset token if user exists., Validate token and reset password., InventoryItem, int (+8 more)
+Cohesion: 0.14
+Nodes (13): bool, str, Authenticate a user by email and password.         Returns (user, error_message), Determine safe redirect URL after login., Generate and send a password reset token if user exists., Validate token and reset password., _allowed_file(), edit_leave() (+5 more)
 
 ### Community 34 - "Accounting Migration"
 Cohesion: 0.67
 Nodes (4): User Status Toggle Workflow, User Administration List Screen, User Danger Zone, User Profile Screen
 
 ### Community 35 - "Community 35"
-Cohesion: 0.11
-Nodes (18): Account, datetime, float, int, AccountingService — complete double-entry bookkeeping service.  This module re-e, Main AccountingService facade.     Inherits all @staticmethod methods from the d, DashboardService, Dashboard aggregation service. (+10 more)
+Cohesion: 0.12
+Nodes (19): Account CRUD and chart of accounts generation., Account, datetime, float, int, AccountingService — complete double-entry bookkeeping service.  This module re-e, Main AccountingService facade.     Inherits all @staticmethod methods from the d, DashboardService (+11 more)
 
 ### Community 36 - "Community 36"
 Cohesion: 0.19
 Nodes (9): int, str, Project CRUD, tagging, and reporting service., Return full P&L breakdown for a project., export_excel_response(), Generates an Excel file response., Company, Project (+1 more)
 
 ### Community 37 - "Community 37"
-Cohesion: 0.07
-Nodes (30): Libro Diario, Transaction Void Delete Workflow, Libro Mayor, Project Financial Detail, Financial Reporting Workflow, Financial Reports, Contact Form, InventoryService (+22 more)
+Cohesion: 0.06
+Nodes (32): Libro Diario, Transaction Void Delete Workflow, Libro Mayor, Project Financial Detail, Financial Reporting Workflow, Financial Reports, InventoryService, _item_ids_from_search_tag() (+24 more)
 
 ### Community 38 - "Community 38"
 Cohesion: 0.67
@@ -293,12 +297,12 @@ Cohesion: 0.25
 Nodes (7): graphify reference: extra exports and benchmark, Step 6b - Wiki (only if --wiki flag), Step 7 - Neo4j export (only if --neo4j or --neo4j-push flag), Step 7b - SVG export (only if --svg flag), Step 7c - GraphML export (only if --graphml flag), Step 7d - MCP server (only if --mcp flag), Step 8 - Token reduction benchmark (only if total_words > 5000)
 
 ### Community 42 - "Detect Script"
-Cohesion: 0.06
-Nodes (40): register_blueprints(), register_cli(), Flask, register_context_processors(), get_locale(), register_extensions(), Flask, register_request_hooks() (+32 more)
+Cohesion: 0.07
+Nodes (37): register_blueprints(), register_cli(), Flask, register_context_processors(), get_locale(), register_extensions(), Flask, register_request_hooks() (+29 more)
 
 ### Community 43 - "Community 43"
-Cohesion: 0.22
-Nodes (7): Employee Editor Drawer, PTO Configuration, Employee Directory, Leave Request Form, int, str, Calendar days of the leave (inclusive).
+Cohesion: 0.15
+Nodes (13): create_leave(), Schedule Deviation Detail, Employee Editor Drawer, PTO Configuration, Employee Directory, Leave Request Form, Leave Request Queue, Leave Review Panel (+5 more)
 
 ### Community 44 - "Community 44"
 Cohesion: 0.39
@@ -358,27 +362,27 @@ Nodes (4): Expense, str, Resolve vendor name from supplier relation or vendor_na
 
 ### Community 95 - "Community 95"
 Cohesion: 0.15
-Nodes (10): view(), create(), edit(), store(), update(), edit(), index(), search_invoices() (+2 more)
+Nodes (9): create(), edit(), store(), update(), view(), edit(), index(), search_invoices() (+1 more)
 
 ### Community 96 - "Community 96"
-Cohesion: 0.24
-Nodes (6): Employee, bool, float, str, Prefer the linked user's name when available., Deduct *days* from pto_balance if balance is sufficient. Returns True on success
+Cohesion: 0.20
+Nodes (7): create_employee(), Employee, bool, float, str, Prefer the linked user's name when available., Deduct *days* from pto_balance if balance is sufficient. Returns True on success
 
 ### Community 100 - "Community 100"
-Cohesion: 0.60
-Nodes (5): Schedule Deviation Detail, Leave Request Queue, Leave Review Panel, Schedule Deviation Form, Work Schedule Calendar
+Cohesion: 0.19
+Nodes (5): Contact, bool, str, Validate phone format (basic: digits, +, -, spaces)., Validate email format.
 
 ### Community 101 - "Community 101"
-Cohesion: 0.29
-Nodes (3): str, Auto-generate a URL-safe slug from the company name., upgrade()
+Cohesion: 0.22
+Nodes (5): Company Model, str, Auto-generate a URL-safe slug from the company name., upgrade(), Company Timezone and Logo Migration
 
 ### Community 102 - "Community 102"
-Cohesion: 0.29
-Nodes (5): api_search(), create(), index(), view(), delete()
+Cohesion: 0.33
+Nodes (4): api_search(), create(), index(), delete()
 
 ### Community 103 - "email_service.py"
-Cohesion: 0.50
-Nodes (3): PosCashMovement, PosRegisterSession, str
+Cohesion: 0.19
+Nodes (7): bool, str, Return True if the user's role carries *permission_name*.         Superadmins (r, Shortcut — True when the user's role is 'superadmin' (platform admin)., True when the user's role is 'owner' (company-level admin)., User, UserMixin
 
 ### Community 104 - "Community 104"
 Cohesion: 0.40
@@ -389,31 +393,43 @@ Cohesion: 0.22
 Nodes (11): export(), create(), delete(), index(), get_purchase_orders(), delete_purchase_order(), Soft-delete a purchase order., Return (workbook, filename) tuple for all purchase orders matching criteria. (+3 more)
 
 ### Community 110 - "Community 110"
-Cohesion: 0.40
+Cohesion: 0.33
 Nodes (4): str, Report, object, Tag
 
+### Community 111 - "email_service.py"
+Cohesion: 0.36
+Nodes (4): EmailService, Sends a password reset email., Sends an error notification to the configured admin email., send_password_reset()
+
 ### Community 112 - "AccountType"
-Cohesion: 0.29
-Nodes (4): edit_account(), Journal entries, ledger, and trial balance service., AccountType, TransactionType
+Cohesion: 0.22
+Nodes (9): Contact Form, Product Form, Inventory Navigation, Purchase Order Detail, Cross Module Search, Global Search, Warehouse Form, Warehouse List (+1 more)
 
 ### Community 117 - "Centro de Mando Financiero"
 Cohesion: 0.67
 Nodes (3): Centro de Mando Financiero, Accounting Dashboard KPIs, Recent Expenses Transactions Projects
 
+### Community 119 - "_active_expense_conditions"
+Cohesion: 0.33
+Nodes (5): _active_expense_conditions(), Expense rows count only when unlinked or tied to a non-voided transaction., _recent_active_expenses(), float, int
+
+### Community 122 - "get_layout"
+Cohesion: 0.67
+Nodes (3): get_layout(), int, Retrieve the PdfTemplateLayout for the given company_id.
+
 ## Knowledge Gaps
 - **117 isolated node(s):** `DocumentSequence`, `Contact`, `str`, `str`, `Account` (+112 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **23 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **24 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `datetime` connect `Invoices Service` to `Core Models`, `Inventory & Orders Service`, `Accounting Module`, `Community 5`, `Community 37`, `email_service.py`, `Inventory Routes`, `Auth Module`, `Users Service`, `Barcode JS`, `Detect Script`, `Companies Routes`, `AccountType`, `Order Form JS`, `Community 36`, `Community 60`, `Models Update Migration`?**
-  _High betweenness centrality (0.145) - this node is a cross-community bridge._
-- **Why does `BaseModel` connect `HR Module` to `Community 96`, `Budget Migration`, `Community 35`, `Community 101`, `Community 37`, `Auth Module`, `Users Service`, `Community 43`, `Community 110`, `Warehouses Service`, `Community 93`, `Auto Migration`, `Auto Migration 2`, `Community 60`, `Models Update Migration`?**
-  _High betweenness centrality (0.084) - this node is a cross-community bridge._
-- **Why does `Company Model` connect `Users Service` to `Community 35`, `Community 5`, `HR Module`, `Community 101`, `Barcode JS`, `Payments Module`, `Models Update Migration`?**
-  _High betweenness centrality (0.045) - this node is a cross-community bridge._
+- **Why does `datetime` connect `Accounting Module` to `Core Models`, `Invoices Service`, `Community 35`, `Community 5`, `Community 37`, `Community 36`, `Inventory Routes`, `Auth Module`, `Users Service`, `Barcode JS`, `Detect Script`, `Companies Routes`, `Community 60`, `Models Update Migration`, `Audit Columns Migration`, `Community 95`?**
+  _High betweenness centrality (0.137) - this node is a cross-community bridge._
+- **Why does `BaseModel` connect `Warehouses Migration` to `HR Module`, `Auth Module`, `Users Service`, `Warehouses Service`, `Consolidate Schema Migration`, `Auto Migration`, `Auto Migration 2`, `Budget Migration`, `Community 35`, `Community 37`, `Community 43`, `Community 60`, `Community 93`, `Community 96`, `Community 100`, `Community 101`, `email_service.py`, `Community 110`, `warehouse.py`?**
+  _High betweenness centrality (0.082) - this node is a cross-community bridge._
+- **Why does `Document` connect `Users Service` to `Warehouses Migration`, `Community 35`, `Community 100`, `Community 36`, `Community 37`, `Community 101`, `HR Module`, `Detect Script`, `Community 110`, `Initial Migration`?**
+  _High betweenness centrality (0.042) - this node is a cross-community bridge._
 - **Are the 70 inferred relationships involving `BaseModel` (e.g. with `Leave Request Form` and `AlchemyEncoder`) actually correct?**
   _`BaseModel` has 70 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 7 inferred relationships involving `ProjectService` (e.g. with `accounting_service.py` and `Account`) actually correct?**
@@ -421,4 +437,4 @@ _Questions this graph is uniquely positioned to answer:_
 - **What connects `Stream a live PDF preview using the most recent invoice for this company.`, `Generate a PDF on the fly using the submitted form data for a live preview.`, `invoice_pdf_service.py ====================== Database-driven PDF and HTML engin` to the rest of the system?**
   _246 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Core Models` be split into smaller, more focused modules?**
-  _Cohesion score 0.12802275960170698 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected._
