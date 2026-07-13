@@ -1202,3 +1202,37 @@ def pay_loan(company_id, account_id):
         return render_template('accounting/partials/loan_payment_form.html', **ctx)
     return render_template('accounting/loan_payment_form.html', **ctx)
 
+
+# ─── View Transaction ─────────────────────────────────────────────────────────
+
+@accounting.route('/<string:company_id>/accounting/transaction/<int:txn_id>/view')
+@login_required
+def view_transaction(company_id, txn_id):
+    from app.utils import resolve_company
+    company = resolve_company(company_id)
+    company_id = company.id
+    from app.models import Company, Transaction, Expense, AccountingAttachment
+    company = Company.query.get_or_404(company_id)
+    transaction = Transaction.query.filter_by(id=txn_id, company_id=company_id).first_or_404()
+
+    attachments = []
+    if transaction.transaction_type.value == 'expense':
+        expense = Expense.query.filter_by(transaction_id=txn_id).first()
+        if expense:
+            attachments = AccountingAttachment.query.filter_by(reference_type='Expense', reference_id=expense.id, is_deleted=False).all()
+    elif transaction.transaction_type.value == 'income':
+        attachments = AccountingAttachment.query.filter_by(reference_type='Income', reference_id=txn_id, is_deleted=False).all()
+    else:
+        attachments = AccountingAttachment.query.filter_by(reference_type='Journal', reference_id=txn_id, is_deleted=False).all()
+
+    if _is_ajax():
+        return render_template('accounting/partials/transaction_view.html', company=company, transaction=transaction, attachments=attachments)
+    
+    return render_template(
+        'accounting/transaction_view.html',
+        company=company,
+        transaction=transaction,
+        attachments=attachments,
+        **_sidebar_ctx(company_id)
+    )
+

@@ -1,0 +1,85 @@
+<div class="space-y-6 p-6">
+  <div>
+    <h3 class="text-lg font-medium text-slate-800">Detalles de la Transacción</h3>
+    <p class="text-sm text-slate-500">{{ transaction.memo }}</p>
+  </div>
+
+  <div class="grid grid-cols-2 gap-4">
+    <div>
+      <span class="block text-xs font-medium text-slate-500">Fecha</span>
+      <span class="block text-sm text-slate-800">{{ transaction.date.strftime('%Y-%m-%d') if transaction.date else '' }}</span>
+    </div>
+    <div>
+      <span class="block text-xs font-medium text-slate-500">Tipo</span>
+      <span class="block text-sm text-slate-800">{{ transaction.transaction_type.label_es }}</span>
+    </div>
+    <div>
+      <span class="block text-xs font-medium text-slate-500">Referencia</span>
+      <span class="block text-sm text-slate-800">{{ transaction.reference or '-' }}</span>
+    </div>
+    <div>
+      <span class="block text-xs font-medium text-slate-500">Monto Total</span>
+      <span class="block text-sm font-semibold text-slate-800">{{ "{:,.2f}".format(transaction.total_amount()) }}</span>
+    </div>
+  </div>
+
+  <div>
+    <h4 class="text-sm font-medium text-slate-800 mb-2">Asientos</h4>
+    <div class="border border-slate-200 rounded-lg overflow-hidden">
+      <table class="w-full text-sm">
+        <thead class="bg-slate-50">
+          <tr>
+            <th class="px-3 py-2 text-left font-medium text-slate-500">Cuenta</th>
+            <th class="px-3 py-2 text-right font-medium text-slate-500">Débito</th>
+            <th class="px-3 py-2 text-right font-medium text-slate-500">Crédito</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100">
+          {% for entry in transaction.entries %}
+          <tr>
+            <td class="px-3 py-2 text-slate-700">{{ entry.account.name if entry.account else '' }}</td>
+            <td class="px-3 py-2 text-right text-slate-700">{{ "{:,.2f}".format(entry.debit) if entry.debit > 0 else '-' }}</td>
+            <td class="px-3 py-2 text-right text-slate-700">{{ "{:,.2f}".format(entry.credit) if entry.credit > 0 else '-' }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  {% if attachments %}
+  <div>
+    <h4 class="text-sm font-medium text-slate-800 mb-2">Archivos Adjuntos</h4>
+    <div class="grid grid-cols-1 gap-3">
+      {% for att in attachments %}
+      <div class="flex items-center justify-between p-3 border border-slate-200 rounded-lg bg-slate-50 gap-4">
+        <div class="flex items-center gap-3 flex-1 min-w-0">
+          {% if att.is_image %}
+          <div class="w-10 h-10 rounded bg-slate-200 flex flex-shrink-0 items-center justify-center overflow-hidden">
+            <img src="{{ url_for('static', filename=att.file_path) }}" alt="{{ att.filename }}" class="w-full h-full object-cover">
+          </div>
+          {% else %}
+          <div class="w-10 h-10 rounded bg-slate-200 flex flex-shrink-0 items-center justify-center text-slate-500">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 6H7a2 2 0 00-2 2v11a2 2 0 002 2z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 9h-4V5"></path>
+            </svg>
+          </div>
+          {% endif %}
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-slate-800 break-words" title="{{ att.filename }}">{{ att.filename }}</p>
+            <p class="text-xs text-slate-500">{{ att.size_display }}</p>
+          </div>
+        </div>
+        <a href="{{ url_for('static', filename=att.file_path) }}" target="_blank"
+           class="p-2 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors flex-shrink-0" title="Ver archivo">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% else %}
+  <div class="text-sm text-slate-500 italic">No hay archivos adjuntos.</div>
+  {% endif %}
+</div>
