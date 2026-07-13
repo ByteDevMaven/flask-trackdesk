@@ -221,33 +221,47 @@ def view(company_id, id):
                          now=datetime.now(UTC))
 
 
-@invoices.route('/<string:company_id>/invoices/<int:id>/add-payment', methods=['POST'])
+@invoices.route('/<string:company_id>/invoices/<int:id>/add-payment', methods=['GET', 'POST'])
 @login_required
 @limiter.exempt
 def add_payment(company_id, id):
     company = resolve_company(company_id)
     company_id = company.id
-    csrf_token = request.form.get("csrf_token")
+    
+    document = Document.query.filter(
+        Document.id == id,
+        Document.company_id == company_id
+    ).first_or_404()
+    
+    if request.method == 'GET':
+        is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+        if is_ajax:
+            return render_template('invoices/partials/payment_form.html', invoice=document, now=datetime.now(UTC))
+        return redirect(url_for('invoices.view', company_id=company_id, id=id))
 
+    csrf_token = request.form.get("csrf_token")
     try:
         validate_csrf(csrf_token)
     except ValidationError:
         flash(_("Invalid CSRF token. Please try again."), "error")
         return redirect(url_for("auth.login"))
 
-    document = Document.query.filter(
-        Document.id == id,
-        Document.company_id == company_id
-    ).first_or_404()
-
     try:
         from .services import add_invoice_payment
         add_invoice_payment(document, request.form, request.files)
         flash(_('Payment recorded successfully'), 'success')
+        
+        is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+        if is_ajax:
+            return {"success": True}
         return redirect(url_for('invoices.view', company_id=company_id, id=id))
 
     except ValueError as e:
         flash(_('Invalid payment data: %(error)s', error=str(e)), 'error')
+        is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
+        if is_ajax:
+            return {"success": False, "message": str(e)}, 400
+
         return redirect(url_for('invoices.view', company_id=company_id, id=id))
     except Exception as e:
         flash(_('Error recording payment: %(error)s', error=str(e)), 'error')

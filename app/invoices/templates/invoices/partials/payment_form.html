@@ -1,0 +1,116 @@
+<form method="POST" action="{{ url_for('invoices.add_payment', company_id=invoice.company_id, id=invoice.id) }}" enctype="multipart/form-data" data-drawer-form="true">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  
+  <div class="px-6 py-4 space-y-4">
+    <!-- Balance summary -->
+    {% set bal = invoice.calculate_balance_due() %}
+    {% if bal > 0 %}
+    <div class="flex items-center justify-between bg-rose-50 border border-rose-100 rounded-xl px-4 py-3 mb-4">
+      <span class="text-xs font-semibold text-rose-600 uppercase tracking-wider">Saldo Pendiente</span>
+      <span class="text-lg font-bold text-rose-700">{{ session.get('currency','L') }} {{ bal | format_currency }}</span>
+    </div>
+    {% endif %}
+
+    <!-- Amount -->
+    <div>
+      <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Monto del Pago <span class="text-rose-500 normal-case">*</span></label>
+      <div class="relative">
+        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm font-semibold">{{ session.get('currency','L') }}</span>
+        <input type="number" name="amount" step="0.01" min="0.01"
+          {% if bal > 0 %}value="{{ '%.2f'|format(bal) }}"{% endif %}
+          required
+          class="w-full pl-10 pr-4 py-3 border border-slate-200 rounded-xl text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white text-slate-800 text-right text-lg">
+      </div>
+    </div>
+    
+    <!-- Method selector (pill buttons) -->
+    <div>
+      <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Método de Pago</label>
+      <div class="grid grid-cols-2 gap-2" id="method-pills">
+        {% for val, label, icon_path in [
+          ('cash', 'Efectivo', 'M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z'),
+          ('bank_transfer', 'Transferencia', 'M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z'),
+          ('credit_card', 'Tarjeta', 'M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z'),
+          ('cheque', 'Cheque', 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'),
+          ('other', 'Otro', 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z')
+        ] %}
+        <label class="method-pill cursor-pointer">
+          <input type="radio" name="payment_method" value="{{ val }}" class="sr-only" {% if val == 'cash' %}checked{% endif %}>
+          <div class="flex items-center gap-2 px-3 py-2.5 rounded-xl border-2 border-slate-200 bg-white text-slate-600 text-xs font-semibold transition-all select-none method-pill-inner">
+            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ icon_path }}"/></svg>
+            {{ label }}
+          </div>
+        </label>
+        {% endfor %}
+      </div>
+    </div>
+    
+    <!-- Date + Reference -->
+    <div class="grid grid-cols-2 gap-3">
+      <div>
+        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Fecha</label>
+        <input type="date" name="payment_date" value="{{ now.strftime('%Y-%m-%d') }}"
+          class="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+      </div>
+      <div>
+        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Referencia</label>
+        <input type="text" name="reference" placeholder="N° depósito..."
+          class="w-full px-3 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+      </div>
+    </div>
+    
+    <!-- File upload -->
+    <div>
+      <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">Comprobante</label>
+      <label class="flex flex-col items-center justify-center gap-2 px-4 py-5 border-2 border-dashed border-slate-200 rounded-xl cursor-pointer hover:border-emerald-400 hover:bg-emerald-50/30 transition-colors group">
+        <svg class="w-7 h-7 text-slate-300 group-hover:text-emerald-400 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+        <div class="text-center">
+          <p class="text-xs font-semibold text-slate-500 group-hover:text-emerald-600 transition-colors">Arrastra o <span class="text-emerald-600 underline">elige</span></p>
+          <p class="text-[10px] text-slate-400 mt-0.5">PDF, PNG, JPG, WEBP</p>
+        </div>
+        <input type="file" name="attachments" multiple class="hidden" onchange="updateDrawerFileList(this)">
+      </label>
+      <div id="drawer-file-list" class="mt-2 space-y-1"></div>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  <div class="sticky bottom-0 bg-white px-6 py-4 border-t border-slate-100 flex items-center justify-end gap-3 mt-4">
+    <button type="button" onclick="closeDrawer()" class="px-4 py-2 border border-slate-200 text-slate-600 rounded-xl text-sm font-semibold hover:bg-slate-50 transition-colors">Cancelar</button>
+    <button type="submit" class="flex items-center gap-2 px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold transition-colors shadow-sm">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+      Registrar Pago
+    </button>
+  </div>
+</form>
+
+<script>
+  // Payment method pill selection
+  document.querySelectorAll('.method-pill input[type="radio"]').forEach(function(radio) {
+    radio.addEventListener('change', function() {
+      const parentForm = this.closest('form');
+      parentForm.querySelectorAll('.method-pill-inner').forEach(function(el) {
+        el.classList.remove('border-emerald-500', 'bg-emerald-50', 'text-emerald-700');
+        el.classList.add('border-slate-200', 'text-slate-600', 'bg-white');
+      });
+      if (this.checked) {
+        var inner = this.closest('.method-pill').querySelector('.method-pill-inner');
+        inner.classList.remove('border-slate-200', 'text-slate-600', 'bg-white');
+        inner.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-700');
+      }
+    });
+    if (radio.checked) radio.dispatchEvent(new Event('change'));
+  });
+
+  // File list display
+  function updateDrawerFileList(input) {
+    var list = document.getElementById('drawer-file-list');
+    list.innerHTML = '';
+    Array.from(input.files).forEach(function(f) {
+      var el = document.createElement('div');
+      el.className = 'flex items-center gap-2 px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-700';
+      el.innerHTML = '<svg class="w-3.5 h-3.5 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"/></svg><span class="truncate">' + f.name + '</span><span class="ml-auto text-slate-400 flex-shrink-0">' + (f.size > 1024*1024 ? (f.size/1024/1024).toFixed(1)+'MB' : Math.round(f.size/1024)+'KB') + '</span>';
+      list.appendChild(el);
+    });
+  }
+</script>
