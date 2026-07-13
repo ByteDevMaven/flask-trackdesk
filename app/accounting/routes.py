@@ -1222,6 +1222,9 @@ def view_transaction(company_id, txn_id):
             attachments = AccountingAttachment.query.filter_by(reference_type='Expense', reference_id=expense.id, is_deleted=False).all()
     elif transaction.transaction_type.value == 'income':
         attachments = AccountingAttachment.query.filter_by(reference_type='Income', reference_id=txn_id, is_deleted=False).all()
+        payment_entry = next((e for e in transaction.entries if e.reference_type == 'Payment'), None)
+        if payment_entry:
+            attachments += AccountingAttachment.query.filter_by(reference_type='Payment', reference_id=payment_entry.reference_id, is_deleted=False).all()
     else:
         attachments = AccountingAttachment.query.filter_by(reference_type='Journal', reference_id=txn_id, is_deleted=False).all()
 

@@ -133,6 +133,16 @@
       </div>
 
       <div class="flex items-center gap-2">
+        {% if audit_logs %}
+        <button onclick="openAuditModal()"
+          class="flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors shadow-sm bg-white">
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+          </svg>
+          Auditoría
+          <span class="inline-flex items-center justify-center w-5 h-5 text-[10px] font-bold bg-slate-100 text-slate-600 rounded-full">{{ audit_logs|length }}</span>
+        </button>
+        {% endif %}
         <a href="{{ url_for('invoices.edit', company_id=invoice.company_id, id=invoice.id) }}"
           class="flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors shadow-sm bg-white">
           <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -284,16 +294,18 @@
             <th class="text-left text-xs font-semibold py-2 px-3">Fecha</th>
             <th class="text-left text-xs font-semibold py-2 px-3">Método</th>
             <th class="text-left text-xs font-semibold py-2 px-3">Referencia / Notas</th>
+            <th class="text-left text-xs font-semibold py-2 px-3">Archivos</th>
             <th class="text-right text-xs font-semibold py-2 px-3 w-40">Monto</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-100">
           {% for payment in payments %}
+          {% set p_atts = payment_attachments.get(payment.id, []) %}
           <tr class="hover:bg-slate-50/50 transition-colors">
-            <td class="py-3 px-3 text-sm text-slate-600">
+            <td class="py-3 px-3 text-sm text-slate-600 whitespace-nowrap">
               {{ payment.payment_date.strftime('%d/%m/%Y') if payment.payment_date else '—' }}
             </td>
-            <td class="py-3 px-3 text-sm text-slate-700 font-medium">
+            <td class="py-3 px-3 text-sm text-slate-700 font-medium whitespace-nowrap">
               {% if payment.method.name == 'cash' %}
               Efectivo
               {% elif payment.method.name == 'bank_transfer' %}
@@ -309,7 +321,26 @@
             <td class="py-3 px-3 text-sm text-slate-500 italic">
               {{ payment.notes or '—' }}
             </td>
-            <td class="py-3 px-3 text-sm font-semibold text-emerald-600 text-right">
+            <td class="py-3 px-3">
+              {% if p_atts %}
+              <div class="flex items-center gap-1.5 flex-wrap">
+                {% for att in p_atts %}
+                <a href="{{ url_for('static', filename=att.file_path) }}" target="_blank"
+                   title="{{ att.filename }}"
+                   class="inline-flex items-center justify-center w-7 h-7 rounded bg-slate-100 hover:bg-emerald-50 text-slate-500 hover:text-emerald-600 transition-colors">
+                  {% if att.is_image %}
+                  <img src="{{ url_for('static', filename=att.file_path) }}" class="w-7 h-7 rounded object-cover" alt="{{ att.filename }}">
+                  {% else %}
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 6H7a2 2 0 00-2 2v11a2 2 0 002 2z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 9h-4V5"/></svg>
+                  {% endif %}
+                </a>
+                {% endfor %}
+              </div>
+              {% else %}
+              <span class="text-slate-300 text-xs">—</span>
+              {% endif %}
+            </td>
+            <td class="py-3 px-3 text-sm font-semibold text-emerald-600 text-right whitespace-nowrap">
               {{ session.get('currency','L') }} {{ (payment.amount or 0) | format_currency }}
             </td>
           </tr>
@@ -323,7 +354,7 @@
   {% if invoice.type and invoice.type.value == 'invoice' and sv.lower() not in ['paid','pagado'] %}
   <div class="bg-white rounded-lg border border-slate-200 p-4 md:p-6 shadow-sm">
     <h3 class="text-sm font-bold text-slate-900 mb-4">Registrar Transacción de Pago</h3>
-    <form method="POST" action="{{ url_for('invoices.add_payment', company_id=invoice.company_id, id=invoice.id) }}">
+    <form method="POST" action="{{ url_for('invoices.add_payment', company_id=invoice.company_id, id=invoice.id) }}" enctype="multipart/form-data">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 gap-4">
         <div>
@@ -360,6 +391,11 @@
           <input type="text" name="reference" placeholder="Ej: N° de depósito o transferencia..."
             class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 bg-white">
         </div>
+        <div class="md:col-span-2 mt-2 border-t border-slate-100 pt-4">
+          <label class="block text-sm font-semibold text-slate-700 mb-1.5">Archivos Adjuntos</label>
+          <input type="file" name="attachments" multiple
+            class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white text-slate-600">
+        </div>
       </div>
 
       <div class="mt-4 flex justify-end">
@@ -372,42 +408,68 @@
   </div>
   {% endif %}
 
+  <!-- Audit History Modal -->
   {% if audit_logs %}
-  <div class="bg-white rounded-lg border border-slate-200 overflow-hidden mb-6 p-4 md:p-6 shadow-sm">
-    <h3 class="text-sm font-bold text-slate-900 mb-4">Registro de Auditoría</h3>
-    <div class="overflow-x-auto">
-      <table class="w-full">
-        <thead>
-          <tr class="border-b border-slate-150 bg-slate-50/20 text-slate-500">
-            <th class="text-left text-xs font-semibold py-2 px-3">Fecha y Hora</th>
-            <th class="text-left text-xs font-semibold py-2 px-3">Usuario</th>
-            <th class="text-left text-xs font-semibold py-2 px-3">Acción</th>
-            <th class="text-right text-xs font-semibold py-2 px-3">Detalles</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-slate-100">
-          {% for log in audit_logs %}
-          <tr class="hover:bg-slate-50/50 transition-colors">
-            <td class="py-3 px-3 text-sm text-slate-600 whitespace-nowrap">
-              {{ log.created_at.strftime('%d/%m/%Y %H:%M') }}
-            </td>
-            <td class="py-3 px-3 text-sm text-slate-700 font-medium">
-              {{ (log.user.full_name or log.user.name) if log.user else 'Sistema' }}
-            </td>
-            <td class="py-3 px-3 text-sm text-slate-600">
-              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-xs font-medium bg-slate-100 text-slate-700">
-                {{ log.action }}
-              </span>
-            </td>
-            <td class="py-3 px-3 text-sm text-slate-600 text-right">
-              <button onclick="showAuditDetails({{ (log.old_data or {}) | tojson | forceescape }}, {{ (log.new_data or {}) | tojson | forceescape }})" class="text-emerald-600 hover:text-emerald-700 font-medium text-xs">
-                Ver Detalles
-              </button>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+  <div id="audit-history-modal" class="fixed inset-0 z-50 hidden" aria-modal="true" role="dialog">
+    <div class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm" onclick="closeAuditHistoryModal()"></div>
+    <div class="relative flex items-start justify-center min-h-screen p-4 pointer-events-none">
+      <div class="bg-white rounded-xl shadow-2xl w-full max-w-3xl mt-16 pointer-events-auto flex flex-col max-h-[80vh]">
+        <div class="flex items-center justify-between px-6 py-4 border-b border-slate-200 flex-shrink-0">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center">
+              <svg class="w-4 h-4 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" /></svg>
+            </div>
+            <div>
+              <h4 class="text-base font-semibold text-slate-800">Historial de Auditoría</h4>
+              <p class="text-xs text-slate-500">{{ audit_logs|length }} registro(s) encontrado(s)</p>
+            </div>
+          </div>
+          <button onclick="closeAuditHistoryModal()" class="p-2 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div class="flex-1 overflow-y-auto">
+          <table class="w-full">
+            <thead class="sticky top-0 bg-slate-50 border-b border-slate-200 z-10">
+              <tr class="text-slate-500">
+                <th class="text-left text-xs font-semibold py-3 px-4">Fecha y Hora</th>
+                <th class="text-left text-xs font-semibold py-3 px-4">Usuario</th>
+                <th class="text-left text-xs font-semibold py-3 px-4">Acción</th>
+                <th class="text-right text-xs font-semibold py-3 px-4">Detalles</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              {% for log in audit_logs %}
+              <tr class="hover:bg-slate-50/50 transition-colors">
+                <td class="py-3 px-4 text-sm text-slate-600 whitespace-nowrap">
+                  {{ log.created_at.strftime('%d/%m/%Y %H:%M') }}
+                </td>
+                <td class="py-3 px-4 text-sm text-slate-700 font-medium">
+                  {{ (log.user.full_name or log.user.name) if log.user else 'Sistema' }}
+                </td>
+                <td class="py-3 px-4 text-sm text-slate-600">
+                  <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-xs font-medium
+                    {% if log.action == 'CREATE' %}bg-emerald-50 text-emerald-700
+                    {% elif log.action == 'UPDATE' %}bg-sky-50 text-sky-700
+                    {% elif log.action == 'DELETE' %}bg-rose-50 text-rose-700
+                    {% else %}bg-slate-100 text-slate-700{% endif %}">
+                    {{ log.action }}
+                  </span>
+                </td>
+                <td class="py-3 px-4 text-sm text-right">
+                  <button onclick="showAuditDetails({{ (log.old_data or {}) | tojson | forceescape }}, {{ (log.new_data or {}) | tojson | forceescape }})" class="text-indigo-600 hover:text-indigo-700 font-medium text-xs hover:underline">
+                    Ver Cambios
+                  </button>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="px-6 py-4 border-t border-slate-200 flex justify-end flex-shrink-0">
+          <button onclick="closeAuditHistoryModal()" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-lg text-sm font-medium hover:bg-slate-200 transition-colors">Cerrar</button>
+        </div>
+      </div>
     </div>
   </div>
   {% endif %}
@@ -449,6 +511,7 @@
 
 {% block scripts %}
 <script>
+  // Audit detail diff modal (existing)
   function showAuditDetails(oldData, newData) {
     document.getElementById('audit-old-data').textContent = oldData && Object.keys(oldData).length ? JSON.stringify(oldData, null, 2) : 'Ninguno';
     document.getElementById('audit-new-data').textContent = newData && Object.keys(newData).length ? JSON.stringify(newData, null, 2) : 'Ninguno';
@@ -458,5 +521,24 @@
   function closeAuditModal() {
     document.getElementById('audit-modal').classList.add('hidden');
   }
+
+  // Audit history list modal
+  function openAuditModal() {
+    document.getElementById('audit-history-modal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeAuditHistoryModal() {
+    document.getElementById('audit-history-modal').classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  // Close modals on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeAuditModal();
+      closeAuditHistoryModal();
+    }
+  });
 </script>
 {% endblock %}

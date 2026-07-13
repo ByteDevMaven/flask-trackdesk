@@ -188,6 +188,20 @@ def view(company_id, id):
             item.inventory_item = None
     
     payments = Payment.query.filter_by(document_id=document.id).order_by(Payment.payment_date.desc()).all()
+
+    from app.models.accounting_attachment import AccountingAttachment
+    payment_ids = [p.id for p in payments]
+    if payment_ids:
+        p_atts = AccountingAttachment.query.filter(
+            AccountingAttachment.reference_type == 'Payment',
+            AccountingAttachment.reference_id.in_(payment_ids),
+            AccountingAttachment.is_deleted == False
+        ).all()
+    else:
+        p_atts = []
+    payment_attachments = {}
+    for att in p_atts:
+        payment_attachments.setdefault(att.reference_id, []).append(att)
     
     from app.models.audit import AuditLog
     from sqlalchemy.orm import joinedload
@@ -201,6 +215,7 @@ def view(company_id, id):
                          invoice=document, 
                          document_items=document_items,
                          payments=payments,
+                         payment_attachments=payment_attachments,
                          audit_logs=audit_logs,
                          templates=templates,
                          now=datetime.now(UTC))
@@ -227,7 +242,7 @@ def add_payment(company_id, id):
 
     try:
         from .services import add_invoice_payment
-        add_invoice_payment(document, request.form)
+        add_invoice_payment(document, request.form, request.files)
         flash(_('Payment recorded successfully'), 'success')
         return redirect(url_for('invoices.view', company_id=company_id, id=id))
 

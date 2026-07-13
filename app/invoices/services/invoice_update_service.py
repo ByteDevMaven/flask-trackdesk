@@ -167,7 +167,7 @@ def delete_invoice_or_quote(document):
     db.session.commit()
 
 
-def add_invoice_payment(document, form):
+def add_invoice_payment(document, form, files=None):
     """Add a payment to an invoice, post accounting income, and update its status."""
     from app.models import Payment, PaymentMethod
     from app.models.enums import DocumentStatus
@@ -196,6 +196,18 @@ def add_invoice_payment(document, form):
 
     db.session.add(payment)
     db.session.flush()
+
+    if files:
+        from app.accounting.services._helpers import _save_attachments
+        attachments = _save_attachments(
+            files.getlist('attachments'),
+            reference_type='Payment',
+            reference_id=payment.id,
+            company_id=document.company_id,
+            user_id=document.user_id
+        )
+        if attachments:
+            db.session.add_all(attachments)
 
     post_invoice_payment_income(payment, document)
 
