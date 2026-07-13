@@ -6,6 +6,616 @@
     {
       "label": "routes.py",
       "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_accounting_routes",
+      "community": 11,
+      "norm_label": "routes.py"
+    },
+    {
+      "label": "_sidebar_ctx()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "app_accounting_routes_sidebar_ctx",
+      "community": 11,
+      "norm_label": "_sidebar_ctx()"
+    },
+    {
+      "label": "_company_url_id()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "app_accounting_routes_company_url_id",
+      "community": 11,
+      "norm_label": "_company_url_id()"
+    },
+    {
+      "label": "_is_ajax()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "app_accounting_routes_is_ajax",
+      "community": 11,
+      "norm_label": "_is_ajax()"
+    },
+    {
+      "label": "index()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "app_accounting_routes_index",
+      "community": 11,
+      "norm_label": "index()"
+    },
+    {
+      "label": "expenses_list()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L45",
+      "_origin": "ast",
+      "id": "app_accounting_routes_expenses_list",
+      "community": 11,
+      "norm_label": "expenses_list()"
+    },
+    {
+      "label": "create_expense()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L119",
+      "_origin": "ast",
+      "id": "app_accounting_routes_create_expense",
+      "community": 11,
+      "norm_label": "create_expense()"
+    },
+    {
+      "label": "edit_expense()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L172",
+      "_origin": "ast",
+      "id": "app_accounting_routes_edit_expense",
+      "community": 11,
+      "norm_label": "edit_expense()"
+    },
+    {
+      "label": "delete_expense()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L232",
+      "_origin": "ast",
+      "id": "app_accounting_routes_delete_expense",
+      "community": 11,
+      "norm_label": "delete_expense()"
+    },
+    {
+      "label": "income_list()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L252",
+      "_origin": "ast",
+      "id": "app_accounting_routes_income_list",
+      "community": 11,
+      "norm_label": "income_list()"
+    },
+    {
+      "label": "create_income()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L300",
+      "_origin": "ast",
+      "id": "app_accounting_routes_create_income",
+      "community": 11,
+      "norm_label": "create_income()"
+    },
+    {
+      "label": "edit_income()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L350",
+      "_origin": "ast",
+      "id": "app_accounting_routes_edit_income",
+      "community": 11,
+      "norm_label": "edit_income()"
+    },
+    {
+      "label": "delete_income()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L413",
+      "_origin": "ast",
+      "id": "app_accounting_routes_delete_income",
+      "community": 11,
+      "norm_label": "delete_income()"
+    },
+    {
+      "label": "journal_list()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L437",
+      "_origin": "ast",
+      "id": "app_accounting_routes_journal_list",
+      "community": 11,
+      "norm_label": "journal_list()"
+    },
+    {
+      "label": "create_journal_entry()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L501",
+      "_origin": "ast",
+      "id": "app_accounting_routes_create_journal_entry",
+      "community": 11,
+      "norm_label": "create_journal_entry()"
+    },
+    {
+      "label": "edit_journal_entry()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L542",
+      "_origin": "ast",
+      "id": "app_accounting_routes_edit_journal_entry",
+      "community": 11,
+      "norm_label": "edit_journal_entry()"
+    },
+    {
+      "label": "void_transaction()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L603",
+      "_origin": "ast",
+      "id": "app_accounting_routes_void_transaction",
+      "community": 11,
+      "norm_label": "void_transaction()"
+    },
+    {
+      "label": "delete_journal_entry()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L622",
+      "_origin": "ast",
+      "id": "app_accounting_routes_delete_journal_entry",
+      "community": 11,
+      "norm_label": "delete_journal_entry()"
+    },
+    {
+      "label": "delete_attachment()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L642",
+      "_origin": "ast",
+      "id": "app_accounting_routes_delete_attachment",
+      "community": 11,
+      "norm_label": "delete_attachment()"
+    },
+    {
+      "label": "ledger()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L662",
+      "_origin": "ast",
+      "id": "app_accounting_routes_ledger",
+      "community": 11,
+      "norm_label": "ledger()"
+    },
+    {
+      "label": "chart_of_accounts()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L714",
+      "_origin": "ast",
+      "id": "app_accounting_routes_chart_of_accounts",
+      "community": 11,
+      "norm_label": "chart_of_accounts()"
+    },
+    {
+      "label": "create_account()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L748",
+      "_origin": "ast",
+      "id": "app_accounting_routes_create_account",
+      "community": 11,
+      "norm_label": "create_account()"
+    },
+    {
+      "label": "edit_account()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L774",
+      "_origin": "ast",
+      "id": "app_accounting_routes_edit_account",
+      "community": 11,
+      "norm_label": "edit_account()"
+    },
+    {
+      "label": "delete_account()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L801",
+      "_origin": "ast",
+      "id": "app_accounting_routes_delete_account",
+      "community": 11,
+      "norm_label": "delete_account()"
+    },
+    {
+      "label": "generate_default_accounts()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L823",
+      "_origin": "ast",
+      "id": "app_accounting_routes_generate_default_accounts",
+      "community": 11,
+      "norm_label": "generate_default_accounts()"
+    },
+    {
+      "label": "trial_balance()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L838",
+      "_origin": "ast",
+      "id": "app_accounting_routes_trial_balance",
+      "community": 11,
+      "norm_label": "trial_balance()"
+    },
+    {
+      "label": "reports()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L873",
+      "_origin": "ast",
+      "id": "app_accounting_routes_reports",
+      "community": 11,
+      "norm_label": "reports()"
+    },
+    {
+      "label": "create_tag()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L934",
+      "_origin": "ast",
+      "id": "app_accounting_routes_create_tag",
+      "community": 11,
+      "norm_label": "create_tag()"
+    },
+    {
+      "label": "delete_tag()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L962",
+      "_origin": "ast",
+      "id": "app_accounting_routes_delete_tag",
+      "community": 11,
+      "norm_label": "delete_tag()"
+    },
+    {
+      "label": "projects_list()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L977",
+      "_origin": "ast",
+      "id": "app_accounting_routes_projects_list",
+      "community": 11,
+      "norm_label": "projects_list()"
+    },
+    {
+      "label": "project_detail()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1009",
+      "_origin": "ast",
+      "id": "app_accounting_routes_project_detail",
+      "community": 11,
+      "norm_label": "project_detail()"
+    },
+    {
+      "label": "create_project()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1034",
+      "_origin": "ast",
+      "id": "app_accounting_routes_create_project",
+      "community": 11,
+      "norm_label": "create_project()"
+    },
+    {
+      "label": "edit_project()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1060",
+      "_origin": "ast",
+      "id": "app_accounting_routes_edit_project",
+      "community": 11,
+      "norm_label": "edit_project()"
+    },
+    {
+      "label": "delete_project()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1087",
+      "_origin": "ast",
+      "id": "app_accounting_routes_delete_project",
+      "community": 11,
+      "norm_label": "delete_project()"
+    },
+    {
+      "label": "loans_list()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1106",
+      "_origin": "ast",
+      "id": "app_accounting_routes_loans_list",
+      "community": 11,
+      "norm_label": "loans_list()"
+    },
+    {
+      "label": "create_loan()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1126",
+      "_origin": "ast",
+      "id": "app_accounting_routes_create_loan",
+      "community": 11,
+      "norm_label": "create_loan()"
+    },
+    {
+      "label": "pay_loan()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1168",
+      "_origin": "ast",
+      "id": "app_accounting_routes_pay_loan",
+      "community": 11,
+      "norm_label": "pay_loan()"
+    },
+    {
+      "label": "view_transaction()",
+      "file_type": "code",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1210",
+      "_origin": "ast",
+      "id": "app_accounting_routes_view_transaction",
+      "community": 11,
+      "norm_label": "view_transaction()"
+    },
+    {
+      "label": "URL segment for company-scoped routes (slug preferred, else numeric id).",
+      "file_type": "rationale",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L22",
+      "_origin": "ast",
+      "id": "app_accounting_routes_rationale_22",
+      "community": 11,
+      "norm_label": "url segment for company-scoped routes (slug preferred, else numeric id)."
+    },
+    {
+      "label": "email_implementation_plan.md",
+      "file_type": "document",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "email_implementation_plan",
+      "community": 45,
+      "norm_label": "email_implementation_plan.md"
+    },
+    {
+      "label": "Implementation Plan: Shared Company Email Threading",
+      "file_type": "document",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "email_implementation_plan_implementation_plan_shared_company_email_threading",
+      "community": 45,
+      "norm_label": "implementation plan: shared company email threading"
+    },
+    {
+      "label": "User Review Required",
+      "file_type": "document",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "email_implementation_plan_user_review_required",
+      "community": 45,
+      "norm_label": "user review required"
+    },
+    {
+      "label": "Open Questions",
+      "file_type": "document",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "email_implementation_plan_open_questions",
+      "community": 45,
+      "norm_label": "open questions"
+    },
+    {
+      "label": "Proposed Changes",
+      "file_type": "document",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "email_implementation_plan_proposed_changes",
+      "community": 45,
+      "norm_label": "proposed changes"
+    },
+    {
+      "label": "Database Models",
+      "file_type": "document",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "email_implementation_plan_database_models",
+      "community": 45,
+      "norm_label": "database models"
+    },
+    {
+      "label": "[NEW] `app/models/communication.py`",
+      "file_type": "document",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "email_implementation_plan_new_app_models_communication_py",
+      "community": 45,
+      "norm_label": "[new] `app/models/communication.py`"
+    },
+    {
+      "label": "[MODIFY] `app/models/enums.py`",
+      "file_type": "document",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L45",
+      "_origin": "ast",
+      "id": "email_implementation_plan_modify_app_models_enums_py",
+      "community": 45,
+      "norm_label": "[modify] `app/models/enums.py`"
+    },
+    {
+      "label": "[MODIFY] `app/models/__init__.py`",
+      "file_type": "document",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "email_implementation_plan_modify_app_models_init_py",
+      "community": 45,
+      "norm_label": "[modify] `app/models/__init__.py`"
+    },
+    {
+      "label": "Email Service Updates",
+      "file_type": "document",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L53",
+      "_origin": "ast",
+      "id": "email_implementation_plan_email_service_updates",
+      "community": 45,
+      "norm_label": "email service updates"
+    },
+    {
+      "label": "[MODIFY] `app/services/email_service.py`",
+      "file_type": "document",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L55",
+      "_origin": "ast",
+      "id": "email_implementation_plan_modify_app_services_email_service_py",
+      "community": 45,
+      "norm_label": "[modify] `app/services/email_service.py`"
+    },
+    {
+      "label": "Webhook & Routes",
+      "file_type": "document",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L61",
+      "_origin": "ast",
+      "id": "email_implementation_plan_webhook_routes",
+      "community": 45,
+      "norm_label": "webhook & routes"
+    },
+    {
+      "label": "[NEW] `app/communications/routes.py` (New Blueprint)",
+      "file_type": "document",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L63",
+      "_origin": "ast",
+      "id": "email_implementation_plan_new_app_communications_routes_py_new_blueprint",
+      "community": 45,
+      "norm_label": "[new] `app/communications/routes.py` (new blueprint)"
+    },
+    {
+      "label": "[NEW] `app/communications/webhooks.py`",
+      "file_type": "document",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L70",
+      "_origin": "ast",
+      "id": "email_implementation_plan_new_app_communications_webhooks_py",
+      "community": 45,
+      "norm_label": "[new] `app/communications/webhooks.py`"
+    },
+    {
+      "label": "User Interface (HTML Templates)",
+      "file_type": "document",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L79",
+      "_origin": "ast",
+      "id": "email_implementation_plan_user_interface_html_templates",
+      "community": 45,
+      "norm_label": "user interface (html templates)"
+    },
+    {
+      "label": "[NEW] `app/communications/templates/communications/inbox.html`",
+      "file_type": "document",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L81",
+      "_origin": "ast",
+      "id": "email_implementation_plan_new_app_communications_templates_communications_inbox_html",
+      "community": 45,
+      "norm_label": "[new] `app/communications/templates/communications/inbox.html`"
+    },
+    {
+      "label": "[NEW] `app/communications/templates/communications/thread.html`",
+      "file_type": "document",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L84",
+      "_origin": "ast",
+      "id": "email_implementation_plan_new_app_communications_templates_communications_thread_html",
+      "community": 45,
+      "norm_label": "[new] `app/communications/templates/communications/thread.html`"
+    },
+    {
+      "label": "[NEW] `app/communications/templates/communications/compose.html`",
+      "file_type": "document",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L87",
+      "_origin": "ast",
+      "id": "email_implementation_plan_new_app_communications_templates_communications_compose_html",
+      "community": 45,
+      "norm_label": "[new] `app/communications/templates/communications/compose.html`"
+    },
+    {
+      "label": "[MODIFY] `app/templates/base.html` (or sidebar/navigation)",
+      "file_type": "document",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L90",
+      "_origin": "ast",
+      "id": "email_implementation_plan_modify_app_templates_base_html_or_sidebar_navigation",
+      "community": 45,
+      "norm_label": "[modify] `app/templates/base.html` (or sidebar/navigation)"
+    },
+    {
+      "label": "Verification Plan",
+      "file_type": "document",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L95",
+      "_origin": "ast",
+      "id": "email_implementation_plan_verification_plan",
+      "community": 45,
+      "norm_label": "verification plan"
+    },
+    {
+      "label": "Automated Tests",
+      "file_type": "document",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L97",
+      "_origin": "ast",
+      "id": "email_implementation_plan_automated_tests",
+      "community": 45,
+      "norm_label": "automated tests"
+    },
+    {
+      "label": "Manual Verification",
+      "file_type": "document",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L100",
+      "_origin": "ast",
+      "id": "email_implementation_plan_manual_verification",
+      "community": 45,
+      "norm_label": "manual verification"
+    },
+    {
+      "label": "routes.py",
+      "file_type": "code",
       "source_file": "app/support/routes.py",
       "source_location": "L1",
       "_origin": "ast",
@@ -129,7 +739,7 @@
       "source_file": "app/invoices/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 95,
+      "community": 8,
       "norm_label": "routes.py",
       "id": "app_invoices_routes"
     },
@@ -139,7 +749,7 @@
       "source_file": "app/invoices/routes.py",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 95,
+      "community": 8,
       "norm_label": "index()",
       "id": "app_invoices_routes_index"
     },
@@ -159,7 +769,7 @@
       "source_file": "app/invoices/routes.py",
       "source_location": "L81",
       "_origin": "ast",
-      "community": 95,
+      "community": 8,
       "norm_label": "item_row()",
       "id": "app_invoices_routes_item_row"
     },
@@ -169,7 +779,7 @@
       "source_file": "app/invoices/routes.py",
       "source_location": "L102",
       "_origin": "ast",
-      "community": 95,
+      "community": 8,
       "norm_label": "create()",
       "id": "app_invoices_routes_create"
     },
@@ -179,7 +789,7 @@
       "source_file": "app/invoices/routes.py",
       "source_location": "L131",
       "_origin": "ast",
-      "community": 95,
+      "community": 8,
       "norm_label": "store()",
       "id": "app_invoices_routes_store"
     },
@@ -189,7 +799,7 @@
       "source_file": "app/invoices/routes.py",
       "source_location": "L167",
       "_origin": "ast",
-      "community": 95,
+      "community": 102,
       "norm_label": "view()",
       "id": "app_invoices_routes_view"
     },
@@ -199,7 +809,7 @@
       "source_file": "app/invoices/routes.py",
       "source_location": "L212",
       "_origin": "ast",
-      "community": 95,
+      "community": 8,
       "norm_label": "add_payment()",
       "id": "app_invoices_routes_add_payment"
     },
@@ -209,7 +819,7 @@
       "source_file": "app/invoices/routes.py",
       "source_location": "L245",
       "_origin": "ast",
-      "community": 95,
+      "community": 8,
       "norm_label": "edit()",
       "id": "app_invoices_routes_edit"
     },
@@ -219,7 +829,7 @@
       "source_file": "app/invoices/routes.py",
       "source_location": "L292",
       "_origin": "ast",
-      "community": 95,
+      "community": 8,
       "norm_label": "update()",
       "id": "app_invoices_routes_update"
     },
@@ -229,7 +839,7 @@
       "source_file": "app/invoices/routes.py",
       "source_location": "L374",
       "_origin": "ast",
-      "community": 102,
+      "community": 109,
       "norm_label": "delete()",
       "id": "app_invoices_routes_delete"
     },
@@ -769,7 +1379,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 30,
+      "community": 95,
       "norm_label": "accounttype",
       "id": "app_models_enums_accounttype"
     },
@@ -779,7 +1389,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 30,
+      "community": 95,
       "norm_label": ".label_es()",
       "id": "app_models_enums_accounttype_label_es"
     },
@@ -809,7 +1419,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L31",
       "_origin": "ast",
-      "community": 18,
+      "community": 103,
       "norm_label": "documentstatus",
       "id": "app_models_enums_documentstatus"
     },
@@ -819,7 +1429,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L44",
       "_origin": "ast",
-      "community": 18,
+      "community": 103,
       "norm_label": ".label_es()",
       "id": "app_models_enums_documentstatus_label_es"
     },
@@ -849,7 +1459,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L74",
       "_origin": "ast",
-      "community": 2,
+      "community": 18,
       "norm_label": "paymentmethod",
       "id": "app_models_enums_paymentmethod"
     },
@@ -859,7 +1469,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L82",
       "_origin": "ast",
-      "community": 2,
+      "community": 18,
       "norm_label": ".label_es()",
       "id": "app_models_enums_paymentmethod_label_es"
     },
@@ -929,7 +1539,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L138",
       "_origin": "ast",
-      "community": 18,
+      "community": 104,
       "norm_label": "leavetype",
       "id": "app_models_enums_leavetype"
     },
@@ -939,7 +1549,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L144",
       "_origin": "ast",
-      "community": 18,
+      "community": 104,
       "norm_label": ".label_es()",
       "id": "app_models_enums_leavetype_label_es"
     },
@@ -969,7 +1579,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L164",
       "_origin": "ast",
-      "community": 18,
+      "community": 110,
       "norm_label": "ptoaccrualperiod",
       "id": "app_models_enums_ptoaccrualperiod"
     },
@@ -979,7 +1589,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L170",
       "_origin": "ast",
-      "community": 18,
+      "community": 110,
       "norm_label": ".label_es()",
       "id": "app_models_enums_ptoaccrualperiod_label_es"
     },
@@ -989,7 +1599,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L177",
       "_origin": "ast",
-      "community": 18,
+      "community": 111,
       "norm_label": "userstatus",
       "id": "app_models_enums_userstatus"
     },
@@ -999,7 +1609,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L183",
       "_origin": "ast",
-      "community": 18,
+      "community": 111,
       "norm_label": ".label_es()",
       "id": "app_models_enums_userstatus_label_es"
     },
@@ -1009,7 +1619,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L190",
       "_origin": "ast",
-      "community": 104,
+      "community": 18,
       "norm_label": "expensestatus",
       "id": "app_models_enums_expensestatus"
     },
@@ -1019,7 +1629,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L197",
       "_origin": "ast",
-      "community": 104,
+      "community": 18,
       "norm_label": ".label_es()",
       "id": "app_models_enums_expensestatus_label_es"
     },
@@ -1029,7 +1639,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L205",
       "_origin": "ast",
-      "community": 30,
+      "community": 95,
       "norm_label": "transactiontype",
       "id": "app_models_enums_transactiontype"
     },
@@ -1039,7 +1649,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L213",
       "_origin": "ast",
-      "community": 30,
+      "community": 95,
       "norm_label": ".label_es()",
       "id": "app_models_enums_transactiontype_label_es"
     },
@@ -1134,392 +1744,12 @@
       "id": "app_routes_register_routes"
     },
     {
-      "label": "routes.py",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 11,
-      "norm_label": "routes.py",
-      "id": "app_accounting_routes"
-    },
-    {
-      "label": "_sidebar_ctx()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L14",
-      "_origin": "ast",
-      "community": 45,
-      "norm_label": "_sidebar_ctx()",
-      "id": "app_accounting_routes_sidebar_ctx"
-    },
-    {
-      "label": "_company_url_id()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L21",
-      "_origin": "ast",
-      "community": 45,
-      "norm_label": "_company_url_id()",
-      "id": "app_accounting_routes_company_url_id"
-    },
-    {
-      "label": "_is_ajax()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L26",
-      "_origin": "ast",
-      "community": 11,
-      "norm_label": "_is_ajax()",
-      "id": "app_accounting_routes_is_ajax"
-    },
-    {
-      "label": "index()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L34",
-      "_origin": "ast",
-      "community": 11,
-      "norm_label": "index()",
-      "id": "app_accounting_routes_index"
-    },
-    {
-      "label": "expenses_list()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L45",
-      "_origin": "ast",
-      "community": 104,
-      "norm_label": "expenses_list()",
-      "id": "app_accounting_routes_expenses_list"
-    },
-    {
-      "label": "create_expense()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L119",
-      "_origin": "ast",
-      "community": 104,
-      "norm_label": "create_expense()",
-      "id": "app_accounting_routes_create_expense"
-    },
-    {
-      "label": "edit_expense()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L172",
-      "_origin": "ast",
-      "community": 104,
-      "norm_label": "edit_expense()",
-      "id": "app_accounting_routes_edit_expense"
-    },
-    {
-      "label": "delete_expense()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L232",
-      "_origin": "ast",
-      "community": 11,
-      "norm_label": "delete_expense()",
-      "id": "app_accounting_routes_delete_expense"
-    },
-    {
-      "label": "income_list()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L252",
-      "_origin": "ast",
-      "community": 45,
-      "norm_label": "income_list()",
-      "id": "app_accounting_routes_income_list"
-    },
-    {
-      "label": "create_income()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L300",
-      "_origin": "ast",
-      "community": 11,
-      "norm_label": "create_income()",
-      "id": "app_accounting_routes_create_income"
-    },
-    {
-      "label": "edit_income()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L350",
-      "_origin": "ast",
-      "community": 11,
-      "norm_label": "edit_income()",
-      "id": "app_accounting_routes_edit_income"
-    },
-    {
-      "label": "delete_income()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L413",
-      "_origin": "ast",
-      "community": 11,
-      "norm_label": "delete_income()",
-      "id": "app_accounting_routes_delete_income"
-    },
-    {
-      "label": "journal_list()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L437",
-      "_origin": "ast",
-      "community": 45,
-      "norm_label": "journal_list()",
-      "id": "app_accounting_routes_journal_list"
-    },
-    {
-      "label": "create_journal_entry()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L501",
-      "_origin": "ast",
-      "community": 45,
-      "norm_label": "create_journal_entry()",
-      "id": "app_accounting_routes_create_journal_entry"
-    },
-    {
-      "label": "edit_journal_entry()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L542",
-      "_origin": "ast",
-      "community": 45,
-      "norm_label": "edit_journal_entry()",
-      "id": "app_accounting_routes_edit_journal_entry"
-    },
-    {
-      "label": "void_transaction()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L603",
-      "_origin": "ast",
-      "community": 11,
-      "norm_label": "void_transaction()",
-      "id": "app_accounting_routes_void_transaction"
-    },
-    {
-      "label": "delete_journal_entry()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L622",
-      "_origin": "ast",
-      "community": 11,
-      "norm_label": "delete_journal_entry()",
-      "id": "app_accounting_routes_delete_journal_entry"
-    },
-    {
-      "label": "delete_attachment()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L642",
-      "_origin": "ast",
-      "community": 11,
-      "norm_label": "delete_attachment()",
-      "id": "app_accounting_routes_delete_attachment"
-    },
-    {
-      "label": "ledger()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L662",
-      "_origin": "ast",
-      "community": 45,
-      "norm_label": "ledger()",
-      "id": "app_accounting_routes_ledger"
-    },
-    {
-      "label": "chart_of_accounts()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L714",
-      "_origin": "ast",
-      "community": 45,
-      "norm_label": "chart_of_accounts()",
-      "id": "app_accounting_routes_chart_of_accounts"
-    },
-    {
-      "label": "create_account()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L748",
-      "_origin": "ast",
-      "community": 11,
-      "norm_label": "create_account()",
-      "id": "app_accounting_routes_create_account"
-    },
-    {
-      "label": "edit_account()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L774",
-      "_origin": "ast",
-      "community": 11,
-      "norm_label": "edit_account()",
-      "id": "app_accounting_routes_edit_account"
-    },
-    {
-      "label": "delete_account()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L801",
-      "_origin": "ast",
-      "community": 11,
-      "norm_label": "delete_account()",
-      "id": "app_accounting_routes_delete_account"
-    },
-    {
-      "label": "generate_default_accounts()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L823",
-      "_origin": "ast",
-      "community": 11,
-      "norm_label": "generate_default_accounts()",
-      "id": "app_accounting_routes_generate_default_accounts"
-    },
-    {
-      "label": "trial_balance()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L838",
-      "_origin": "ast",
-      "community": 45,
-      "norm_label": "trial_balance()",
-      "id": "app_accounting_routes_trial_balance"
-    },
-    {
-      "label": "reports()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L873",
-      "_origin": "ast",
-      "community": 45,
-      "norm_label": "reports()",
-      "id": "app_accounting_routes_reports"
-    },
-    {
-      "label": "create_tag()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L934",
-      "_origin": "ast",
-      "community": 11,
-      "norm_label": "create_tag()",
-      "id": "app_accounting_routes_create_tag"
-    },
-    {
-      "label": "delete_tag()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L962",
-      "_origin": "ast",
-      "community": 11,
-      "norm_label": "delete_tag()",
-      "id": "app_accounting_routes_delete_tag"
-    },
-    {
-      "label": "projects_list()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L977",
-      "_origin": "ast",
-      "community": 45,
-      "norm_label": "projects_list()",
-      "id": "app_accounting_routes_projects_list"
-    },
-    {
-      "label": "project_detail()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1009",
-      "_origin": "ast",
-      "community": 45,
-      "norm_label": "project_detail()",
-      "id": "app_accounting_routes_project_detail"
-    },
-    {
-      "label": "create_project()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1034",
-      "_origin": "ast",
-      "community": 11,
-      "norm_label": "create_project()",
-      "id": "app_accounting_routes_create_project"
-    },
-    {
-      "label": "edit_project()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1060",
-      "_origin": "ast",
-      "community": 11,
-      "norm_label": "edit_project()",
-      "id": "app_accounting_routes_edit_project"
-    },
-    {
-      "label": "delete_project()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1087",
-      "_origin": "ast",
-      "community": 11,
-      "norm_label": "delete_project()",
-      "id": "app_accounting_routes_delete_project"
-    },
-    {
-      "label": "loans_list()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1106",
-      "_origin": "ast",
-      "community": 45,
-      "norm_label": "loans_list()",
-      "id": "app_accounting_routes_loans_list"
-    },
-    {
-      "label": "create_loan()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1126",
-      "_origin": "ast",
-      "community": 11,
-      "norm_label": "create_loan()",
-      "id": "app_accounting_routes_create_loan"
-    },
-    {
-      "label": "pay_loan()",
-      "file_type": "code",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1168",
-      "_origin": "ast",
-      "community": 11,
-      "norm_label": "pay_loan()",
-      "id": "app_accounting_routes_pay_loan"
-    },
-    {
-      "label": "URL segment for company-scoped routes (slug preferred, else numeric id).",
-      "file_type": "rationale",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L22",
-      "_origin": "ast",
-      "community": 45,
-      "norm_label": "url segment for company-scoped routes (slug preferred, else numeric id).",
-      "id": "app_accounting_routes_rationale_22"
-    },
-    {
       "label": "journal_service.py",
       "file_type": "code",
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 30,
+      "community": 95,
       "norm_label": "journal_service.py",
       "id": "app_accounting_services_journal_service"
     },
@@ -1529,7 +1759,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 30,
+      "community": 96,
       "norm_label": "_parse_journal_lines()",
       "id": "app_accounting_services_journal_service_parse_journal_lines"
     },
@@ -1549,7 +1779,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L63",
       "_origin": "ast",
-      "community": 30,
+      "community": 96,
       "norm_label": ".create_journal_entry()",
       "id": "app_accounting_services_journal_service_journalservice_create_journal_entry"
     },
@@ -1569,7 +1799,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L103",
       "_origin": "ast",
-      "community": 30,
+      "community": 96,
       "norm_label": ".update_journal_entry()",
       "id": "app_accounting_services_journal_service_journalservice_update_journal_entry"
     },
@@ -1659,7 +1889,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 30,
+      "community": 95,
       "norm_label": "journal entries, ledger, and trial balance service.",
       "id": "app_accounting_services_journal_service_rationale_1"
     },
@@ -1669,7 +1899,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 30,
+      "community": 96,
       "norm_label": "parse and validate multi-line journal form data into entry dicts.",
       "id": "app_accounting_services_journal_service_rationale_16"
     },
@@ -1679,7 +1909,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L64",
       "_origin": "ast",
-      "community": 30,
+      "community": 96,
       "norm_label": "manual multi-line journal entry.         expects form fields: memo, date, refere",
       "id": "app_accounting_services_journal_service_rationale_64"
     },
@@ -1689,7 +1919,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L104",
       "_origin": "ast",
-      "community": 30,
+      "community": 96,
       "norm_label": "void old entry and post a corrected replacement.",
       "id": "app_accounting_services_journal_service_rationale_104"
     },
@@ -2297,7 +2527,7 @@
       "file_type": "code",
       "source_file": "app/models/inventory_item.py",
       "source_location": "L1",
-      "community": 37,
+      "community": 33,
       "norm_label": "inventory_item.py",
       "id": "app_models_inventory_item"
     },
@@ -2306,7 +2536,7 @@
       "file_type": "code",
       "source_file": "app/models/inventory_item.py",
       "source_location": "L4",
-      "community": 37,
+      "community": 33,
       "norm_label": "inventoryitem",
       "id": "app_models_inventory_item_inventoryitem"
     },
@@ -2315,7 +2545,7 @@
       "file_type": "code",
       "source_file": "",
       "source_location": "",
-      "community": 35,
+      "community": 6,
       "norm_label": "basemodel",
       "id": "basemodel"
     },
@@ -2324,7 +2554,7 @@
       "file_type": "code",
       "source_file": "app/models/inventory_item.py",
       "source_location": "L30",
-      "community": 37,
+      "community": 33,
       "norm_label": ".build_sku()",
       "id": "app_models_inventory_item_inventoryitem_build_sku"
     },
@@ -2333,7 +2563,7 @@
       "file_type": "code",
       "source_file": "app/models/inventory_item.py",
       "source_location": "L30",
-      "community": 37,
+      "community": 33,
       "norm_label": "str",
       "id": "app_models_inventory_item_py_str"
     },
@@ -2342,7 +2572,7 @@
       "file_type": "code",
       "source_file": "app/models/inventory_item.py",
       "source_location": "L30",
-      "community": 37,
+      "community": 33,
       "norm_label": "int",
       "id": "app_models_inventory_item_py_int"
     },
@@ -2351,7 +2581,7 @@
       "file_type": "code",
       "source_file": "app/models/inventory_item.py",
       "source_location": "L40",
-      "community": 37,
+      "community": 33,
       "norm_label": ".build_generated_tag()",
       "id": "app_models_inventory_item_inventoryitem_build_generated_tag"
     },
@@ -2360,7 +2590,7 @@
       "file_type": "code",
       "source_file": "app/models/inventory_item.py",
       "source_location": "L44",
-      "community": 37,
+      "community": 33,
       "norm_label": ".generated_tag()",
       "id": "app_models_inventory_item_inventoryitem_generated_tag"
     },
@@ -2369,7 +2599,7 @@
       "file_type": "code",
       "source_file": "app/models/inventory_item.py",
       "source_location": "L49",
-      "community": 37,
+      "community": 33,
       "norm_label": ".__repr__()",
       "id": "app_models_inventory_item_inventoryitem_repr"
     },
@@ -2378,7 +2608,7 @@
       "file_type": "rationale",
       "source_file": "app/models/inventory_item.py",
       "source_location": "L31",
-      "community": 37,
+      "community": 33,
       "norm_label": "auto-generate a sku from the item name and its db id.                  example:",
       "id": "app_models_inventory_item_rationale_31"
     },
@@ -2594,7 +2824,7 @@
       "file_type": "code",
       "source_file": "app/pos/routes.py",
       "source_location": "L309",
-      "community": 33,
+      "community": 22,
       "norm_label": "str",
       "id": "app_pos_routes_py_str"
     },
@@ -3071,7 +3301,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/invoice_update_service.py",
       "source_location": "L1",
-      "community": 37,
+      "community": 33,
       "norm_label": "invoice_update_service.py",
       "id": "app_invoices_services_invoice_update_service"
     },
@@ -3080,7 +3310,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/invoice_update_service.py",
       "source_location": "L5",
-      "community": 37,
+      "community": 33,
       "norm_label": "_company_tax_rate()",
       "id": "app_invoices_services_invoice_update_service_company_tax_rate"
     },
@@ -3089,7 +3319,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/invoice_update_service.py",
       "source_location": "L12",
-      "community": 37,
+      "community": 33,
       "norm_label": "update_invoice_or_quote()",
       "id": "app_invoices_services_invoice_update_service_update_invoice_or_quote"
     },
@@ -3098,7 +3328,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/invoice_update_service.py",
       "source_location": "L158",
-      "community": 37,
+      "community": 33,
       "norm_label": "delete_invoice_or_quote()",
       "id": "app_invoices_services_invoice_update_service_delete_invoice_or_quote"
     },
@@ -3107,7 +3337,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/invoice_update_service.py",
       "source_location": "L170",
-      "community": 37,
+      "community": 0,
       "norm_label": "add_invoice_payment()",
       "id": "app_invoices_services_invoice_update_service_add_invoice_payment"
     },
@@ -3116,7 +3346,7 @@
       "file_type": "rationale",
       "source_file": "app/invoices/services/invoice_update_service.py",
       "source_location": "L159",
-      "community": 37,
+      "community": 33,
       "norm_label": "soft delete an invoice or quote and its items.",
       "id": "app_invoices_services_invoice_update_service_rationale_159"
     },
@@ -3125,7 +3355,7 @@
       "file_type": "rationale",
       "source_file": "app/invoices/services/invoice_update_service.py",
       "source_location": "L171",
-      "community": 37,
+      "community": 0,
       "norm_label": "add a payment to an invoice, post accounting income, and update its status.",
       "id": "app_invoices_services_invoice_update_service_rationale_171"
     },
@@ -3233,7 +3463,7 @@
       "file_type": "code",
       "source_file": "app/models/pos_register.py",
       "source_location": "L1",
-      "community": 0,
+      "community": 6,
       "norm_label": "pos_register.py",
       "id": "app_models_pos_register"
     },
@@ -3242,7 +3472,7 @@
       "file_type": "code",
       "source_file": "app/models/pos_register.py",
       "source_location": "L6",
-      "community": 0,
+      "community": 6,
       "norm_label": "posregistersession",
       "id": "app_models_pos_register_posregistersession"
     },
@@ -3251,7 +3481,7 @@
       "file_type": "code",
       "source_file": "app/models/pos_register.py",
       "source_location": "L33",
-      "community": 0,
+      "community": 6,
       "norm_label": ".__repr__()",
       "id": "app_models_pos_register_posregistersession_repr"
     },
@@ -3260,7 +3490,7 @@
       "file_type": "code",
       "source_file": "app/models/pos_register.py",
       "source_location": "L33",
-      "community": 0,
+      "community": 6,
       "norm_label": "str",
       "id": "app_models_pos_register_py_str"
     },
@@ -3269,7 +3499,7 @@
       "file_type": "code",
       "source_file": "app/models/pos_register.py",
       "source_location": "L37",
-      "community": 0,
+      "community": 6,
       "norm_label": "poscashmovement",
       "id": "app_models_pos_register_poscashmovement"
     },
@@ -3890,7 +4120,7 @@
       "file_type": "code",
       "source_file": "app/services/email_service.py",
       "source_location": "L1",
-      "community": 111,
+      "community": 33,
       "norm_label": "email_service.py",
       "id": "app_services_email_service"
     },
@@ -3899,7 +4129,7 @@
       "file_type": "code",
       "source_file": "app/services/email_service.py",
       "source_location": "L8",
-      "community": 111,
+      "community": 33,
       "norm_label": "emailservice",
       "id": "app_services_email_service_emailservice"
     },
@@ -3908,7 +4138,7 @@
       "file_type": "code",
       "source_file": "app/services/email_service.py",
       "source_location": "L10",
-      "community": 111,
+      "community": 33,
       "norm_label": "._safe_mail_context()",
       "id": "app_services_email_service_emailservice_safe_mail_context"
     },
@@ -3917,7 +4147,7 @@
       "file_type": "code",
       "source_file": "app/services/email_service.py",
       "source_location": "L26",
-      "community": 111,
+      "community": 33,
       "norm_label": ".send_async_email()",
       "id": "app_services_email_service_emailservice_send_async_email"
     },
@@ -3926,7 +4156,7 @@
       "file_type": "code",
       "source_file": "app/services/email_service.py",
       "source_location": "L78",
-      "community": 111,
+      "community": 33,
       "norm_label": ".send_email()",
       "id": "app_services_email_service_emailservice_send_email"
     },
@@ -3935,7 +4165,7 @@
       "file_type": "code",
       "source_file": "app/services/email_service.py",
       "source_location": "L98",
-      "community": 111,
+      "community": 33,
       "norm_label": ".notify_error()",
       "id": "app_services_email_service_emailservice_notify_error"
     },
@@ -3944,7 +4174,7 @@
       "file_type": "code",
       "source_file": "app/services/email_service.py",
       "source_location": "L120",
-      "community": 111,
+      "community": 33,
       "norm_label": ".send_password_reset()",
       "id": "app_services_email_service_emailservice_send_password_reset"
     },
@@ -3953,7 +4183,7 @@
       "file_type": "rationale",
       "source_file": "app/services/email_service.py",
       "source_location": "L99",
-      "community": 111,
+      "community": 33,
       "norm_label": "sends an error notification to the configured admin email.",
       "id": "app_services_email_service_rationale_99"
     },
@@ -3962,7 +4192,7 @@
       "file_type": "rationale",
       "source_file": "app/services/email_service.py",
       "source_location": "L121",
-      "community": 111,
+      "community": 33,
       "norm_label": "sends a password reset email.",
       "id": "app_services_email_service_rationale_121"
     },
@@ -4286,7 +4516,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/accounting_integration.py",
       "source_location": "L1",
-      "community": 35,
+      "community": 24,
       "norm_label": "accounting_integration.py",
       "id": "app_invoices_services_accounting_integration"
     },
@@ -4340,7 +4570,7 @@
       "file_type": "rationale",
       "source_file": "app/invoices/services/accounting_integration.py",
       "source_location": "L1",
-      "community": 35,
+      "community": 24,
       "norm_label": "accounting integration helpers for invoice payments.",
       "id": "app_invoices_services_accounting_integration_rationale_1"
     },
@@ -5159,7 +5389,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/_balance.py",
       "source_location": "L33",
-      "community": 119,
+      "community": 4,
       "norm_label": "_active_expense_conditions()",
       "id": "app_accounting_services_balance_active_expense_conditions"
     },
@@ -5321,7 +5551,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/_balance.py",
       "source_location": "L300",
-      "community": 119,
+      "community": 4,
       "norm_label": "_recent_active_expenses()",
       "id": "app_accounting_services_balance_recent_active_expenses"
     },
@@ -5384,7 +5614,7 @@
       "file_type": "rationale",
       "source_file": "app/accounting/services/_balance.py",
       "source_location": "L34",
-      "community": 119,
+      "community": 4,
       "norm_label": "expense rows count only when unlinked or tied to a non-voided transaction.",
       "id": "app_accounting_services_balance_rationale_34"
     },
@@ -5573,7 +5803,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L292",
-      "community": 110,
+      "community": 36,
       "norm_label": "tag",
       "id": "tag"
     },
@@ -5600,7 +5830,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L314",
-      "community": 110,
+      "community": 4,
       "norm_label": "object",
       "id": "object"
     },
@@ -5657,15 +5887,6 @@
       "community": 8,
       "norm_label": "index()",
       "id": "app_companies_routes_index"
-    },
-    {
-      "label": "view()",
-      "file_type": "code",
-      "source_file": "app/companies/routes.py",
-      "source_location": "L45",
-      "community": 8,
-      "norm_label": "view()",
-      "id": "app_companies_routes_view"
     },
     {
       "label": "sequences_index()",
@@ -6009,7 +6230,7 @@
       "file_type": "code",
       "source_file": "app/auth/__init__.py",
       "source_location": "L1",
-      "community": 121,
+      "community": 33,
       "norm_label": "__init__.py",
       "id": "app_auth_init"
     },
@@ -6018,7 +6239,7 @@
       "file_type": "code",
       "source_file": "app/auth/routes.py",
       "source_location": "L1",
-      "community": 121,
+      "community": 33,
       "norm_label": "routes.py",
       "id": "app_auth_routes"
     },
@@ -6027,7 +6248,7 @@
       "file_type": "code",
       "source_file": "app/auth/routes.py",
       "source_location": "L13",
-      "community": 121,
+      "community": 33,
       "norm_label": "login()",
       "id": "app_auth_routes_login"
     },
@@ -6036,7 +6257,7 @@
       "file_type": "code",
       "source_file": "app/auth/routes.py",
       "source_location": "L39",
-      "community": 121,
+      "community": 33,
       "norm_label": "logout()",
       "id": "app_auth_routes_logout"
     },
@@ -6045,7 +6266,7 @@
       "file_type": "code",
       "source_file": "app/auth/routes.py",
       "source_location": "L46",
-      "community": 121,
+      "community": 33,
       "norm_label": "register()",
       "id": "app_auth_routes_register"
     },
@@ -6054,7 +6275,7 @@
       "file_type": "code",
       "source_file": "app/auth/routes.py",
       "source_location": "L52",
-      "community": 121,
+      "community": 33,
       "norm_label": "forgot_password()",
       "id": "app_auth_routes_forgot_password"
     },
@@ -6063,7 +6284,7 @@
       "file_type": "code",
       "source_file": "app/auth/routes.py",
       "source_location": "L67",
-      "community": 121,
+      "community": 33,
       "norm_label": "reset_password()",
       "id": "app_auth_routes_reset_password"
     },
@@ -6234,7 +6455,7 @@
       "file_type": "code",
       "source_file": "app/contacts/routes.py",
       "source_location": "L151",
-      "community": 102,
+      "community": 12,
       "norm_label": "api_search()",
       "id": "app_contacts_routes_api_search"
     },
@@ -6243,7 +6464,7 @@
       "file_type": "code",
       "source_file": "app/contacts/services/contact_service.py",
       "source_location": "L1",
-      "community": 100,
+      "community": 29,
       "norm_label": "contact_service.py",
       "id": "app_contacts_services_contact_service"
     },
@@ -6252,7 +6473,7 @@
       "file_type": "code",
       "source_file": "app/contacts/services/contact_service.py",
       "source_location": "L11",
-      "community": 100,
+      "community": 29,
       "norm_label": ".get_paginated_contacts()",
       "id": "app_contacts_services_contact_service_contactservice_get_paginated_contacts"
     },
@@ -6261,7 +6482,7 @@
       "file_type": "code",
       "source_file": "app/contacts/services/contact_service.py",
       "source_location": "L36",
-      "community": 100,
+      "community": 29,
       "norm_label": ".create_contact()",
       "id": "app_contacts_services_contact_service_contactservice_create_contact"
     },
@@ -6270,7 +6491,7 @@
       "file_type": "code",
       "source_file": "app/contacts/services/contact_service.py",
       "source_location": "L67",
-      "community": 100,
+      "community": 29,
       "norm_label": ".get_contact_with_stats()",
       "id": "app_contacts_services_contact_service_contactservice_get_contact_with_stats"
     },
@@ -6279,7 +6500,7 @@
       "file_type": "code",
       "source_file": "app/contacts/services/contact_service.py",
       "source_location": "L105",
-      "community": 100,
+      "community": 29,
       "norm_label": ".update_contact()",
       "id": "app_contacts_services_contact_service_contactservice_update_contact"
     },
@@ -6288,7 +6509,7 @@
       "file_type": "code",
       "source_file": "app/contacts/services/contact_service.py",
       "source_location": "L136",
-      "community": 100,
+      "community": 29,
       "norm_label": ".delete_contact()",
       "id": "app_contacts_services_contact_service_contactservice_delete_contact"
     },
@@ -6297,7 +6518,7 @@
       "file_type": "code",
       "source_file": "app/contacts/services/contact_service.py",
       "source_location": "L151",
-      "community": 100,
+      "community": 29,
       "norm_label": ".search_contacts()",
       "id": "app_contacts_services_contact_service_contactservice_search_contacts"
     },
@@ -6423,7 +6644,7 @@
       "file_type": "code",
       "source_file": "app/dashboard/services/dashboard_service.py",
       "source_location": "L11",
-      "community": 119,
+      "community": 35,
       "norm_label": "._calculate_growth()",
       "id": "app_dashboard_services_dashboard_service_dashboardservice_calculate_growth"
     },
@@ -6432,7 +6653,7 @@
       "file_type": "code",
       "source_file": "app/dashboard/services/dashboard_service.py",
       "source_location": "L11",
-      "community": 119,
+      "community": 35,
       "norm_label": "float",
       "id": "app_dashboard_services_dashboard_service_py_float"
     },
@@ -6441,7 +6662,7 @@
       "file_type": "code",
       "source_file": "app/dashboard/services/dashboard_service.py",
       "source_location": "L17",
-      "community": 119,
+      "community": 4,
       "norm_label": "int",
       "id": "app_dashboard_services_dashboard_service_py_int"
     },
@@ -6522,7 +6743,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L23",
-      "community": 33,
+      "community": 22,
       "norm_label": "_allowed_file()",
       "id": "app_hr_routes_allowed_file"
     },
@@ -6531,7 +6752,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L23",
-      "community": 33,
+      "community": 22,
       "norm_label": "bool",
       "id": "app_hr_routes_py_bool"
     },
@@ -6540,7 +6761,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L27",
-      "community": 33,
+      "community": 22,
       "norm_label": "_save_attachment()",
       "id": "app_hr_routes_save_attachment"
     },
@@ -6558,7 +6779,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L87",
-      "community": 96,
+      "community": 11,
       "norm_label": "create_employee()",
       "id": "app_hr_routes_create_employee"
     },
@@ -6594,7 +6815,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L322",
-      "community": 43,
+      "community": 22,
       "norm_label": "create_leave()",
       "id": "app_hr_routes_create_leave"
     },
@@ -6603,7 +6824,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L377",
-      "community": 33,
+      "community": 22,
       "norm_label": "edit_leave()",
       "id": "app_hr_routes_edit_leave"
     },
@@ -7071,7 +7292,7 @@
       "file_type": "code",
       "source_file": "app/models/contact.py",
       "source_location": "L5",
-      "community": 100,
+      "community": 29,
       "norm_label": "contact",
       "id": "app_models_contact_contact"
     },
@@ -7080,7 +7301,7 @@
       "file_type": "code",
       "source_file": "app/models/contact.py",
       "source_location": "L26",
-      "community": 100,
+      "community": 29,
       "norm_label": "str",
       "id": "app_models_contact_py_str"
     },
@@ -7089,7 +7310,7 @@
       "file_type": "code",
       "source_file": "app/models/contact.py",
       "source_location": "L26",
-      "community": 100,
+      "community": 29,
       "norm_label": "bool",
       "id": "app_models_contact_py_bool"
     },
@@ -7098,7 +7319,7 @@
       "file_type": "code",
       "source_file": "app/models/contact.py",
       "source_location": "L34",
-      "community": 100,
+      "community": 29,
       "norm_label": ".validate_phone()",
       "id": "app_models_contact_contact_validate_phone"
     },
@@ -7107,7 +7328,7 @@
       "file_type": "code",
       "source_file": "app/models/contact.py",
       "source_location": "L40",
-      "community": 100,
+      "community": 29,
       "norm_label": ".__repr__()",
       "id": "app_models_contact_contact_repr"
     },
@@ -7116,7 +7337,7 @@
       "file_type": "rationale",
       "source_file": "app/models/contact.py",
       "source_location": "L35",
-      "community": 100,
+      "community": 29,
       "norm_label": "validate phone format (basic: digits, +, -, spaces).",
       "id": "app_models_contact_rationale_35"
     },
@@ -7314,7 +7535,7 @@
       "file_type": "code",
       "source_file": "app/models/document_sequence.py",
       "source_location": "L1",
-      "community": 32,
+      "community": 10,
       "norm_label": "document_sequence.py",
       "id": "app_models_document_sequence"
     },
@@ -7323,7 +7544,7 @@
       "file_type": "code",
       "source_file": "app/models/document_sequence.py",
       "source_location": "L19",
-      "community": 32,
+      "community": 10,
       "norm_label": ".__repr__()",
       "id": "app_models_document_sequence_documentsequence_repr"
     },
@@ -7332,7 +7553,7 @@
       "file_type": "code",
       "source_file": "app/models/document_sequence.py",
       "source_location": "L19",
-      "community": 32,
+      "community": 10,
       "norm_label": "str",
       "id": "app_models_document_sequence_py_str"
     },
@@ -7341,7 +7562,7 @@
       "file_type": "code",
       "source_file": "app/models/document_template.py",
       "source_location": "L1",
-      "community": 6,
+      "community": 32,
       "norm_label": "document_template.py",
       "id": "app_models_document_template"
     },
@@ -7350,7 +7571,7 @@
       "file_type": "code",
       "source_file": "app/models/document_template.py",
       "source_location": "L26",
-      "community": 6,
+      "community": 32,
       "norm_label": ".__repr__()",
       "id": "app_models_document_template_documenttemplate_repr"
     },
@@ -7359,7 +7580,7 @@
       "file_type": "code",
       "source_file": "app/models/document_template.py",
       "source_location": "L26",
-      "community": 6,
+      "community": 32,
       "norm_label": "str",
       "id": "app_models_document_template_py_str"
     },
@@ -7368,7 +7589,7 @@
       "file_type": "code",
       "source_file": "app/models/employee.py",
       "source_location": "L1",
-      "community": 96,
+      "community": 6,
       "norm_label": "employee.py",
       "id": "app_models_employee"
     },
@@ -7377,7 +7598,7 @@
       "file_type": "code",
       "source_file": "app/models/employee.py",
       "source_location": "L5",
-      "community": 96,
+      "community": 11,
       "norm_label": "employee",
       "id": "app_models_employee_employee"
     },
@@ -7386,7 +7607,7 @@
       "file_type": "code",
       "source_file": "app/models/employee.py",
       "source_location": "L49",
-      "community": 96,
+      "community": 11,
       "norm_label": ".full_name()",
       "id": "app_models_employee_employee_full_name"
     },
@@ -7395,7 +7616,7 @@
       "file_type": "code",
       "source_file": "app/models/employee.py",
       "source_location": "L49",
-      "community": 96,
+      "community": 11,
       "norm_label": "str",
       "id": "app_models_employee_py_str"
     },
@@ -7404,7 +7625,7 @@
       "file_type": "code",
       "source_file": "app/models/employee.py",
       "source_location": "L53",
-      "community": 96,
+      "community": 11,
       "norm_label": ".display_name()",
       "id": "app_models_employee_employee_display_name"
     },
@@ -7413,7 +7634,7 @@
       "file_type": "code",
       "source_file": "app/models/employee.py",
       "source_location": "L59",
-      "community": 96,
+      "community": 11,
       "norm_label": ".approve_pto()",
       "id": "app_models_employee_employee_approve_pto"
     },
@@ -7422,7 +7643,7 @@
       "file_type": "code",
       "source_file": "app/models/employee.py",
       "source_location": "L59",
-      "community": 96,
+      "community": 11,
       "norm_label": "float",
       "id": "app_models_employee_py_float"
     },
@@ -7431,7 +7652,7 @@
       "file_type": "code",
       "source_file": "app/models/employee.py",
       "source_location": "L59",
-      "community": 96,
+      "community": 11,
       "norm_label": "bool",
       "id": "app_models_employee_py_bool"
     },
@@ -7440,7 +7661,7 @@
       "file_type": "code",
       "source_file": "app/models/employee.py",
       "source_location": "L66",
-      "community": 96,
+      "community": 11,
       "norm_label": ".__repr__()",
       "id": "app_models_employee_employee_repr"
     },
@@ -7449,7 +7670,7 @@
       "file_type": "rationale",
       "source_file": "app/models/employee.py",
       "source_location": "L54",
-      "community": 96,
+      "community": 11,
       "norm_label": "prefer the linked user's name when available.",
       "id": "app_models_employee_rationale_54"
     },
@@ -7458,7 +7679,7 @@
       "file_type": "rationale",
       "source_file": "app/models/employee.py",
       "source_location": "L60",
-      "community": 96,
+      "community": 11,
       "norm_label": "deduct *days* from pto_balance if balance is sufficient. returns true on success",
       "id": "app_models_employee_rationale_60"
     },
@@ -7467,7 +7688,7 @@
       "file_type": "code",
       "source_file": "app/models/expense.py",
       "source_location": "L1",
-      "community": 20,
+      "community": 93,
       "norm_label": "expense.py",
       "id": "app_models_expense"
     },
@@ -7530,7 +7751,7 @@
       "file_type": "code",
       "source_file": "app/models/leave_request.py",
       "source_location": "L1",
-      "community": 6,
+      "community": 43,
       "norm_label": "leave_request.py",
       "id": "app_models_leave_request"
     },
@@ -7593,7 +7814,7 @@
       "file_type": "code",
       "source_file": "app/models/ledger_entry.py",
       "source_location": "L1",
-      "community": 35,
+      "community": 6,
       "norm_label": "ledger_entry.py",
       "id": "app_models_ledger_entry"
     },
@@ -7638,7 +7859,7 @@
       "file_type": "rationale",
       "source_file": "app/models/ledger_entry.py",
       "source_location": "L6",
-      "community": 35,
+      "community": 6,
       "norm_label": "a single line in the accounting ledger.  every entry must belong to a     transa",
       "id": "app_models_ledger_entry_rationale_6"
     },
@@ -7665,7 +7886,7 @@
       "file_type": "code",
       "source_file": "app/models/permission.py",
       "source_location": "L13",
-      "community": 32,
+      "community": 6,
       "norm_label": ".__repr__()",
       "id": "app_models_permission_permission_repr"
     },
@@ -7674,7 +7895,7 @@
       "file_type": "code",
       "source_file": "app/models/permission.py",
       "source_location": "L13",
-      "community": 32,
+      "community": 6,
       "norm_label": "str",
       "id": "app_models_permission_py_str"
     },
@@ -7683,7 +7904,7 @@
       "file_type": "code",
       "source_file": "app/models/project.py",
       "source_location": "L1",
-      "community": 6,
+      "community": 32,
       "norm_label": "project.py",
       "id": "app_models_project"
     },
@@ -7692,7 +7913,7 @@
       "file_type": "code",
       "source_file": "app/models/project.py",
       "source_location": "L3",
-      "community": 6,
+      "community": 32,
       "norm_label": "project",
       "id": "app_models_project_project"
     },
@@ -7701,7 +7922,7 @@
       "file_type": "code",
       "source_file": "app/models/project.py",
       "source_location": "L17",
-      "community": 6,
+      "community": 32,
       "norm_label": ".__repr__()",
       "id": "app_models_project_project_repr"
     },
@@ -7710,7 +7931,7 @@
       "file_type": "code",
       "source_file": "app/models/project.py",
       "source_location": "L17",
-      "community": 6,
+      "community": 32,
       "norm_label": "str",
       "id": "app_models_project_py_str"
     },
@@ -7719,7 +7940,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order.py",
       "source_location": "L1",
-      "community": 37,
+      "community": 6,
       "norm_label": "purchase_order.py",
       "id": "app_models_purchase_order"
     },
@@ -7728,7 +7949,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order.py",
       "source_location": "L24",
-      "community": 37,
+      "community": 32,
       "norm_label": ".__repr__()",
       "id": "app_models_purchase_order_purchaseorder_repr"
     },
@@ -7737,7 +7958,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order.py",
       "source_location": "L24",
-      "community": 37,
+      "community": 32,
       "norm_label": "str",
       "id": "app_models_purchase_order_py_str"
     },
@@ -7746,7 +7967,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order_item.py",
       "source_location": "L1",
-      "community": 37,
+      "community": 6,
       "norm_label": "purchase_order_item.py",
       "id": "app_models_purchase_order_item"
     },
@@ -7755,7 +7976,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order_item.py",
       "source_location": "L23",
-      "community": 33,
+      "community": 32,
       "norm_label": ".__repr__()",
       "id": "app_models_purchase_order_item_purchaseorderitem_repr"
     },
@@ -7764,7 +7985,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order_item.py",
       "source_location": "L23",
-      "community": 33,
+      "community": 32,
       "norm_label": "str",
       "id": "app_models_purchase_order_item_py_str"
     },
@@ -7773,7 +7994,7 @@
       "file_type": "code",
       "source_file": "app/models/report.py",
       "source_location": "L1",
-      "community": 110,
+      "community": 32,
       "norm_label": "report.py",
       "id": "app_models_report"
     },
@@ -7782,7 +8003,7 @@
       "file_type": "code",
       "source_file": "app/models/report.py",
       "source_location": "L3",
-      "community": 110,
+      "community": 32,
       "norm_label": "report",
       "id": "app_models_report_report"
     },
@@ -7791,7 +8012,7 @@
       "file_type": "code",
       "source_file": "app/models/report.py",
       "source_location": "L11",
-      "community": 110,
+      "community": 32,
       "norm_label": ".__repr__()",
       "id": "app_models_report_report_repr"
     },
@@ -7800,7 +8021,7 @@
       "file_type": "code",
       "source_file": "app/models/report.py",
       "source_location": "L11",
-      "community": 110,
+      "community": 32,
       "norm_label": "str",
       "id": "app_models_report_py_str"
     },
@@ -7818,7 +8039,7 @@
       "file_type": "code",
       "source_file": "app/models/role.py",
       "source_location": "L4",
-      "community": 6,
+      "community": 27,
       "norm_label": "role",
       "id": "app_models_role_role"
     },
@@ -7989,7 +8210,7 @@
       "file_type": "code",
       "source_file": "app/models/transaction.py",
       "source_location": "L56",
-      "community": 32,
+      "community": 35,
       "norm_label": ".total_amount()",
       "id": "app_models_transaction_transaction_total_amount"
     },
@@ -7998,7 +8219,7 @@
       "file_type": "code",
       "source_file": "app/models/transaction.py",
       "source_location": "L56",
-      "community": 32,
+      "community": 35,
       "norm_label": "float",
       "id": "app_models_transaction_py_float"
     },
@@ -8007,7 +8228,7 @@
       "file_type": "code",
       "source_file": "app/models/transaction.py",
       "source_location": "L60",
-      "community": 32,
+      "community": 35,
       "norm_label": ".__repr__()",
       "id": "app_models_transaction_transaction_repr"
     },
@@ -8016,7 +8237,7 @@
       "file_type": "code",
       "source_file": "app/models/transaction.py",
       "source_location": "L60",
-      "community": 32,
+      "community": 35,
       "norm_label": "str",
       "id": "app_models_transaction_py_str"
     },
@@ -8043,7 +8264,7 @@
       "file_type": "rationale",
       "source_file": "app/models/transaction.py",
       "source_location": "L57",
-      "community": 32,
+      "community": 35,
       "norm_label": "return the transaction amount (sum of debit side).",
       "id": "app_models_transaction_rationale_57"
     },
@@ -8061,7 +8282,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L7",
-      "community": 103,
+      "community": 29,
       "norm_label": "user",
       "id": "app_models_user_user"
     },
@@ -8070,7 +8291,7 @@
       "file_type": "code",
       "source_file": "",
       "source_location": "",
-      "community": 103,
+      "community": 29,
       "norm_label": "usermixin",
       "id": "usermixin"
     },
@@ -8079,7 +8300,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L26",
-      "community": 103,
+      "community": 29,
       "norm_label": ".is_active()",
       "id": "app_models_user_user_is_active"
     },
@@ -8088,7 +8309,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L30",
-      "community": 103,
+      "community": 29,
       "norm_label": ".full_name()",
       "id": "app_models_user_user_full_name"
     },
@@ -8097,7 +8318,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L33",
-      "community": 103,
+      "community": 29,
       "norm_label": ".has_permission()",
       "id": "app_models_user_user_has_permission"
     },
@@ -8106,7 +8327,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L33",
-      "community": 103,
+      "community": 29,
       "norm_label": "str",
       "id": "app_models_user_py_str"
     },
@@ -8115,7 +8336,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L33",
-      "community": 103,
+      "community": 29,
       "norm_label": "bool",
       "id": "app_models_user_py_bool"
     },
@@ -8124,7 +8345,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L44",
-      "community": 103,
+      "community": 29,
       "norm_label": ".is_admin()",
       "id": "app_models_user_user_is_admin"
     },
@@ -8133,7 +8354,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L49",
-      "community": 103,
+      "community": 29,
       "norm_label": ".is_superadmin()",
       "id": "app_models_user_user_is_superadmin"
     },
@@ -8142,7 +8363,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L54",
-      "community": 103,
+      "community": 29,
       "norm_label": ".is_owner()",
       "id": "app_models_user_user_is_owner"
     },
@@ -8151,7 +8372,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L64",
-      "community": 103,
+      "community": 29,
       "norm_label": ".__repr__()",
       "id": "app_models_user_user_repr"
     },
@@ -8160,7 +8381,7 @@
       "file_type": "rationale",
       "source_file": "app/models/user.py",
       "source_location": "L34",
-      "community": 103,
+      "community": 29,
       "norm_label": "return true if the user's role carries *permission_name*.         superadmins (r",
       "id": "app_models_user_rationale_34"
     },
@@ -8169,7 +8390,7 @@
       "file_type": "rationale",
       "source_file": "app/models/user.py",
       "source_location": "L45",
-      "community": 103,
+      "community": 29,
       "norm_label": "shortcut \u2014 true when the user's role is 'superadmin' (platform admin).",
       "id": "app_models_user_rationale_45"
     },
@@ -8178,7 +8399,7 @@
       "file_type": "rationale",
       "source_file": "app/models/user.py",
       "source_location": "L55",
-      "community": 103,
+      "community": 29,
       "norm_label": "true when the user's role is 'owner' (company-level admin).",
       "id": "app_models_user_rationale_55"
     },
@@ -8187,7 +8408,7 @@
       "file_type": "rationale",
       "source_file": "app/models/user.py",
       "source_location": "L60",
-      "community": 100,
+      "community": 29,
       "norm_label": "validate email format.",
       "id": "app_models_user_rationale_60"
     },
@@ -8327,33 +8548,6 @@
       "id": "app_orders_routes_index"
     },
     {
-      "label": "create()",
-      "file_type": "code",
-      "source_file": "app/orders/routes.py",
-      "source_location": "L71",
-      "community": 109,
-      "norm_label": "create()",
-      "id": "app_orders_routes_create"
-    },
-    {
-      "label": "update()",
-      "file_type": "code",
-      "source_file": "app/orders/routes.py",
-      "source_location": "L136",
-      "community": 8,
-      "norm_label": "update()",
-      "id": "app_orders_routes_update"
-    },
-    {
-      "label": "delete()",
-      "file_type": "code",
-      "source_file": "app/orders/routes.py",
-      "source_location": "L164",
-      "community": 109,
-      "norm_label": "delete()",
-      "id": "app_orders_routes_delete"
-    },
-    {
       "label": "get_purchase_orders()",
       "file_type": "code",
       "source_file": "app/orders/services/purchase_order_query_service.py",
@@ -8412,7 +8606,7 @@
       "file_type": "code",
       "source_file": "app/payments/__init__.py",
       "source_location": "L1",
-      "community": 95,
+      "community": 8,
       "norm_label": "__init__.py",
       "id": "app_payments_init"
     },
@@ -8421,7 +8615,7 @@
       "file_type": "code",
       "source_file": "app/payments/routes.py",
       "source_location": "L1",
-      "community": 95,
+      "community": 8,
       "norm_label": "routes.py",
       "id": "app_payments_routes"
     },
@@ -8430,7 +8624,7 @@
       "file_type": "code",
       "source_file": "app/payments/routes.py",
       "source_location": "L14",
-      "community": 95,
+      "community": 8,
       "norm_label": "index()",
       "id": "app_payments_routes_index"
     },
@@ -8439,18 +8633,9 @@
       "file_type": "code",
       "source_file": "app/payments/routes.py",
       "source_location": "L52",
-      "community": 95,
+      "community": 8,
       "norm_label": "search_invoices()",
       "id": "app_payments_routes_search_invoices"
-    },
-    {
-      "label": "edit()",
-      "file_type": "code",
-      "source_file": "app/payments/routes.py",
-      "source_location": "L88",
-      "community": 95,
-      "norm_label": "edit()",
-      "id": "app_payments_routes_edit"
     },
     {
       "label": "__init__.py",
@@ -8682,7 +8867,7 @@
       "file_type": "code",
       "source_file": "app/users/routes.py",
       "source_location": "L142",
-      "community": 111,
+      "community": 33,
       "norm_label": "send_password_reset()",
       "id": "app_users_routes_send_password_reset"
     },
@@ -8691,7 +8876,7 @@
       "file_type": "code",
       "source_file": "app/users/routes.py",
       "source_location": "L159",
-      "community": 8,
+      "community": 11,
       "norm_label": "search()",
       "id": "app_users_routes_search"
     },
@@ -8718,7 +8903,7 @@
       "file_type": "code",
       "source_file": "app/utils.py",
       "source_location": "L5",
-      "community": 22,
+      "community": 12,
       "norm_label": "resolve_company()",
       "id": "app_utils_resolve_company"
     },
@@ -8736,7 +8921,7 @@
       "file_type": "rationale",
       "source_file": "app/utils.py",
       "source_location": "L6",
-      "community": 22,
+      "community": 12,
       "norm_label": "helper to resolve a company from a route parameter that could be an integer id o",
       "id": "app_utils_rationale_6"
     },
@@ -8750,20 +8935,11 @@
       "id": "app_utils_rationale_17"
     },
     {
-      "label": "__init__.py",
-      "file_type": "code",
-      "source_file": "app/warehouses/__init__.py",
-      "source_location": "L1",
-      "community": 95,
-      "norm_label": "__init__.py",
-      "id": "app_warehouses_init"
-    },
-    {
       "label": "routes.py",
       "file_type": "code",
       "source_file": "app/warehouses/routes.py",
       "source_location": "L1",
-      "community": 95,
+      "community": 8,
       "norm_label": "routes.py",
       "id": "app_warehouses_routes"
     },
@@ -8772,7 +8948,7 @@
       "file_type": "code",
       "source_file": "app/warehouses/routes.py",
       "source_location": "L32",
-      "community": 95,
+      "community": 8,
       "norm_label": "index()",
       "id": "app_warehouses_routes_index"
     },
@@ -10275,7 +10451,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/dashboard_service.py",
       "source_location": "L23",
-      "community": 119,
+      "community": 4,
       "norm_label": ".get_dashboard_data()",
       "id": "app_accounting_services_dashboard_service_dashboardservice_get_dashboard_data"
     },
@@ -10665,7 +10841,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Lists leave requests with filters for status, leave type, and employee, plus drawer actions for creating, viewing, and deleting requests.",
-      "community": 43,
+      "community": 100,
       "norm_label": "leave request queue",
       "id": "app_hr_templates_hr_leave_requests_leave_request_queue"
     },
@@ -10693,7 +10869,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Shows leave details, attachment preview, and approve/reject review actions when a leave request is pending.",
-      "community": 43,
+      "community": 100,
       "norm_label": "leave review panel",
       "id": "app_hr_templates_hr_leave_view_leave_review_panel"
     },
@@ -10707,7 +10883,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Uses FullCalendar in Spanish to display schedule events, leave events, and deviation events with week/month/day views.",
-      "community": 43,
+      "community": 100,
       "norm_label": "work schedule calendar",
       "id": "app_hr_templates_hr_schedules_work_schedule_calendar"
     },
@@ -10721,7 +10897,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Creates or edits a one-day work schedule deviation by selecting employee, date, start time, end time, and notes.",
-      "community": 43,
+      "community": 100,
       "norm_label": "schedule deviation form",
       "id": "app_hr_templates_hr_schedule_form_schedule_deviation_form"
     },
@@ -10735,7 +10911,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Drawer detail view for a specific schedule deviation, showing employee, date, start/end times, notes, edit, and delete controls.",
-      "community": 43,
+      "community": 100,
       "norm_label": "schedule deviation detail",
       "id": "app_hr_templates_hr_deviation_view_schedule_deviation_detail"
     },
@@ -11194,19 +11370,6 @@
       "id": "versions_9f8e7d6c5b4a_company_timezone_logo_migration"
     },
     {
-      "label": "Libro Diario",
-      "file_type": "document",
-      "source_file": "app/accounting/templates/accounting/journal.html",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 37,
-      "norm_label": "libro diario",
-      "id": "app_accounting_templates_accounting_journal_libro_diario"
-    },
-    {
       "label": "Libro Mayor",
       "file_type": "document",
       "source_file": "app/accounting/templates/accounting/ledger.html",
@@ -11215,7 +11378,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 37,
+      "community": 112,
       "norm_label": "libro mayor",
       "id": "app_accounting_templates_accounting_ledger_libro_mayor"
     },
@@ -11280,7 +11443,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 112,
+      "community": 37,
       "norm_label": "contact form",
       "id": "app_contacts_templates_contacts_form_contact_form"
     },
@@ -11293,7 +11456,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 112,
+      "community": 37,
       "norm_label": "product form",
       "id": "app_inventory_templates_inventory_form_product_form"
     },
@@ -11306,7 +11469,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 112,
+      "community": 37,
       "norm_label": "inventory navigation",
       "id": "app_inventory_templates_inventory_partials_nav_inventory_navigation"
     },
@@ -11319,7 +11482,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 112,
+      "community": 37,
       "norm_label": "purchase order detail",
       "id": "app_orders_templates_orders_view_purchase_order_detail"
     },
@@ -11345,7 +11508,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 112,
+      "community": 37,
       "norm_label": "global search",
       "id": "app_templates_search_results_global_search"
     },
@@ -11358,7 +11521,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 112,
+      "community": 37,
       "norm_label": "warehouse form",
       "id": "app_warehouses_templates_warehouses_form_warehouse_form"
     },
@@ -11371,23 +11534,9 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 112,
+      "community": 37,
       "norm_label": "warehouse list",
       "id": "app_warehouses_templates_warehouses_index_warehouse_list"
-    },
-    {
-      "label": "Transaction Void Delete Workflow",
-      "file_type": "rationale",
-      "source_file": "app/accounting/templates/accounting/journal.html",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "rationale": "The journal template exposes modal workflows for voiding and deleting accounting transactions with CSRF-protected POST forms.",
-      "community": 37,
-      "norm_label": "transaction void delete workflow",
-      "id": "app_accounting_templates_accounting_journal_transaction_void_delete_workflow"
     },
     {
       "label": "Financial Reporting Workflow",
@@ -11413,7 +11562,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Global search explicitly spans contacts, documents, inventory, orders, payments, projects, expenses, warehouses, and companies.",
-      "community": 112,
+      "community": 37,
       "norm_label": "cross module search",
       "id": "app_templates_search_results_cross_module_search"
     },
@@ -11427,12 +11576,1450 @@
       "author": null,
       "contributor": null,
       "rationale": "Warehouse list shows each warehouse's active state and product count, tying storage locations to inventory quantities.",
-      "community": 112,
+      "community": 37,
       "norm_label": "warehouse stock context",
       "id": "app_warehouses_templates_warehouses_index_warehouse_stock_context"
     }
   ],
   "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L714",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_chart_of_accounts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_company_url_id",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L748",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_create_account",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L119",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_create_expense",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L300",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_create_income",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L501",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_create_journal_entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1126",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_create_loan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1034",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_create_project",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L934",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_create_tag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L801",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_delete_account",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L642",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_delete_attachment",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L232",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_delete_expense",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L413",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_delete_income",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L622",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_delete_journal_entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1087",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_delete_project",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L962",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_delete_tag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L774",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_edit_account",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L172",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_edit_expense",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L350",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_edit_income",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L542",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_edit_journal_entry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1060",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_edit_project",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_expenses_list",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L823",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_generate_default_accounts",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L252",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_income_list",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/users/routes.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_index"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_is_ajax",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L437",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_journal_list",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L662",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_ledger",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1106",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_loans_list",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1168",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_pay_loan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1009",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_project_detail",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L977",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_projects_list",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L873",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_reports",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_sidebar_ctx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L838",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_trial_balance",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1210",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_view_transaction",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L603",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_accounting_routes_void_transaction",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/users/routes.py",
+      "source_location": "L110",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_invoices_routes_delete"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/users/routes.py",
+      "source_location": "L55",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_invoices_routes_store"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/users/routes.py",
+      "source_location": "L95",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_invoices_routes_update"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/users/routes.py",
+      "source_location": "L70",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_invoices_routes_view"
+    },
+    {
+      "relation": "imports_from",
+      "context": "submodule_import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_models_account",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "submodule_import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_models_company",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/users/routes.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_models_company_company"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_models_enums",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "submodule_import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L175",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_models_expense",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "submodule_import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_models_project",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/users/routes.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_models_role_role"
+    },
+    {
+      "relation": "imports_from",
+      "context": "submodule_import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_models_tag",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/users/routes.py",
+      "source_location": "L42",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_invoices_routes_create"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/users/routes.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_users_init"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/users/routes.py",
+      "source_location": "L77",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_users_routes_edit"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/users/routes.py",
+      "source_location": "L159",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_users_routes_search"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/users/routes.py",
+      "source_location": "L142",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_users_routes_send_password_reset"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/users/routes.py",
+      "source_location": "L124",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_users_routes_toggle_status"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/users/routes.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_users_services_user_service"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "app_utils",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "datetime",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "app_accounting_routes",
+      "target": "flask",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L742",
+      "weight": 1.0,
+      "source": "app_accounting_routes_chart_of_accounts",
+      "target": "app_accounting_routes_sidebar_ctx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L162",
+      "weight": 1.0,
+      "source": "app_accounting_routes_create_expense",
+      "target": "app_accounting_routes_sidebar_ctx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L340",
+      "weight": 1.0,
+      "source": "app_accounting_routes_create_income",
+      "target": "app_accounting_routes_sidebar_ctx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L533",
+      "weight": 1.0,
+      "source": "app_accounting_routes_create_journal_entry",
+      "target": "app_accounting_routes_sidebar_ctx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1159",
+      "weight": 1.0,
+      "source": "app_accounting_routes_create_loan",
+      "target": "app_accounting_routes_sidebar_ctx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L222",
+      "weight": 1.0,
+      "source": "app_accounting_routes_edit_expense",
+      "target": "app_accounting_routes_sidebar_ctx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L403",
+      "weight": 1.0,
+      "source": "app_accounting_routes_edit_income",
+      "target": "app_accounting_routes_sidebar_ctx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L594",
+      "weight": 1.0,
+      "source": "app_accounting_routes_edit_journal_entry",
+      "target": "app_accounting_routes_sidebar_ctx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L113",
+      "weight": 1.0,
+      "source": "app_accounting_routes_expenses_list",
+      "target": "app_accounting_routes_sidebar_ctx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L294",
+      "weight": 1.0,
+      "source": "app_accounting_routes_income_list",
+      "target": "app_accounting_routes_sidebar_ctx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L495",
+      "weight": 1.0,
+      "source": "app_accounting_routes_journal_list",
+      "target": "app_accounting_routes_sidebar_ctx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L706",
+      "weight": 1.0,
+      "source": "app_accounting_routes_ledger",
+      "target": "app_accounting_routes_sidebar_ctx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1121",
+      "weight": 1.0,
+      "source": "app_accounting_routes_loans_list",
+      "target": "app_accounting_routes_sidebar_ctx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1199",
+      "weight": 1.0,
+      "source": "app_accounting_routes_pay_loan",
+      "target": "app_accounting_routes_sidebar_ctx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1028",
+      "weight": 1.0,
+      "source": "app_accounting_routes_project_detail",
+      "target": "app_accounting_routes_sidebar_ctx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1003",
+      "weight": 1.0,
+      "source": "app_accounting_routes_projects_list",
+      "target": "app_accounting_routes_sidebar_ctx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L926",
+      "weight": 1.0,
+      "source": "app_accounting_routes_reports",
+      "target": "app_accounting_routes_sidebar_ctx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L865",
+      "weight": 1.0,
+      "source": "app_accounting_routes_trial_balance",
+      "target": "app_accounting_routes_sidebar_ctx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1236",
+      "weight": 1.0,
+      "source": "app_accounting_routes_view_transaction",
+      "target": "app_accounting_routes_sidebar_ctx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L506",
+      "weight": 1.0,
+      "source": "app_accounting_routes_create_journal_entry",
+      "target": "app_accounting_routes_company_url_id",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L547",
+      "weight": 1.0,
+      "source": "app_accounting_routes_edit_journal_entry",
+      "target": "app_accounting_routes_company_url_id",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L487",
+      "weight": 1.0,
+      "source": "app_accounting_routes_journal_list",
+      "target": "app_accounting_routes_company_url_id",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "app_accounting_routes_rationale_22",
+      "target": "app_accounting_routes_company_url_id",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L911",
+      "weight": 1.0,
+      "source": "app_accounting_routes_reports",
+      "target": "app_accounting_routes_company_url_id",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L755",
+      "weight": 1.0,
+      "source": "app_accounting_routes_create_account",
+      "target": "app_accounting_routes_is_ajax",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L126",
+      "weight": 1.0,
+      "source": "app_accounting_routes_create_expense",
+      "target": "app_accounting_routes_is_ajax",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L307",
+      "weight": 1.0,
+      "source": "app_accounting_routes_create_income",
+      "target": "app_accounting_routes_is_ajax",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L509",
+      "weight": 1.0,
+      "source": "app_accounting_routes_create_journal_entry",
+      "target": "app_accounting_routes_is_ajax",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1134",
+      "weight": 1.0,
+      "source": "app_accounting_routes_create_loan",
+      "target": "app_accounting_routes_is_ajax",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1041",
+      "weight": 1.0,
+      "source": "app_accounting_routes_create_project",
+      "target": "app_accounting_routes_is_ajax",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L941",
+      "weight": 1.0,
+      "source": "app_accounting_routes_create_tag",
+      "target": "app_accounting_routes_is_ajax",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L804",
+      "weight": 1.0,
+      "source": "app_accounting_routes_delete_account",
+      "target": "app_accounting_routes_is_ajax",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L652",
+      "weight": 1.0,
+      "source": "app_accounting_routes_delete_attachment",
+      "target": "app_accounting_routes_is_ajax",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L235",
+      "weight": 1.0,
+      "source": "app_accounting_routes_delete_expense",
+      "target": "app_accounting_routes_is_ajax",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L416",
+      "weight": 1.0,
+      "source": "app_accounting_routes_delete_income",
+      "target": "app_accounting_routes_is_ajax",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L625",
+      "weight": 1.0,
+      "source": "app_accounting_routes_delete_journal_entry",
+      "target": "app_accounting_routes_is_ajax",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1090",
+      "weight": 1.0,
+      "source": "app_accounting_routes_delete_project",
+      "target": "app_accounting_routes_is_ajax",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L965",
+      "weight": 1.0,
+      "source": "app_accounting_routes_delete_tag",
+      "target": "app_accounting_routes_is_ajax",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L782",
+      "weight": 1.0,
+      "source": "app_accounting_routes_edit_account",
+      "target": "app_accounting_routes_is_ajax",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L180",
+      "weight": 1.0,
+      "source": "app_accounting_routes_edit_expense",
+      "target": "app_accounting_routes_is_ajax",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L358",
+      "weight": 1.0,
+      "source": "app_accounting_routes_edit_income",
+      "target": "app_accounting_routes_is_ajax",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L555",
+      "weight": 1.0,
+      "source": "app_accounting_routes_edit_journal_entry",
+      "target": "app_accounting_routes_is_ajax",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1068",
+      "weight": 1.0,
+      "source": "app_accounting_routes_edit_project",
+      "target": "app_accounting_routes_is_ajax",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1176",
+      "weight": 1.0,
+      "source": "app_accounting_routes_pay_loan",
+      "target": "app_accounting_routes_is_ajax",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L1228",
+      "weight": 1.0,
+      "source": "app_accounting_routes_view_transaction",
+      "target": "app_accounting_routes_is_ajax",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/routes.py",
+      "source_location": "L606",
+      "weight": 1.0,
+      "source": "app_accounting_routes_void_transaction",
+      "target": "app_accounting_routes_is_ajax",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/hr/routes.py",
+      "source_location": "L19",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_hr_routes",
+      "target": "app_accounting_routes_is_ajax"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/hr/routes.py",
+      "source_location": "L141",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_hr_routes_create_employee",
+      "target": "app_accounting_routes_is_ajax"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/hr/routes.py",
+      "source_location": "L349",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_hr_routes_create_leave",
+      "target": "app_accounting_routes_is_ajax"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/hr/routes.py",
+      "source_location": "L652",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_hr_routes_create_schedule",
+      "target": "app_accounting_routes_is_ajax"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/hr/routes.py",
+      "source_location": "L263",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_hr_routes_delete_employee",
+      "target": "app_accounting_routes_is_ajax"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/hr/routes.py",
+      "source_location": "L502",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_hr_routes_delete_leave",
+      "target": "app_accounting_routes_is_ajax"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/hr/routes.py",
+      "source_location": "L741",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_hr_routes_delete_schedule",
+      "target": "app_accounting_routes_is_ajax"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/hr/routes.py",
+      "source_location": "L226",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_hr_routes_edit_employee",
+      "target": "app_accounting_routes_is_ajax"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/hr/routes.py",
+      "source_location": "L400",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_hr_routes_edit_leave",
+      "target": "app_accounting_routes_is_ajax"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/hr/routes.py",
+      "source_location": "L698",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_hr_routes_edit_schedule",
+      "target": "app_accounting_routes_is_ajax"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/hr/routes.py",
+      "source_location": "L447",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_hr_routes_review_leave",
+      "target": "app_accounting_routes_is_ajax"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "email_implementation_plan",
+      "target": "email_implementation_plan_implementation_plan_shared_company_email_threading",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "email_implementation_plan_implementation_plan_shared_company_email_threading",
+      "target": "email_implementation_plan_open_questions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "email_implementation_plan_implementation_plan_shared_company_email_threading",
+      "target": "email_implementation_plan_proposed_changes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "email_implementation_plan_implementation_plan_shared_company_email_threading",
+      "target": "email_implementation_plan_user_review_required",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L95",
+      "weight": 1.0,
+      "source": "email_implementation_plan_implementation_plan_shared_company_email_threading",
+      "target": "email_implementation_plan_verification_plan",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "email_implementation_plan_proposed_changes",
+      "target": "email_implementation_plan_database_models",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "email_implementation_plan_proposed_changes",
+      "target": "email_implementation_plan_email_service_updates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L79",
+      "weight": 1.0,
+      "source": "email_implementation_plan_proposed_changes",
+      "target": "email_implementation_plan_user_interface_html_templates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L61",
+      "weight": 1.0,
+      "source": "email_implementation_plan_proposed_changes",
+      "target": "email_implementation_plan_webhook_routes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "email_implementation_plan_database_models",
+      "target": "email_implementation_plan_modify_app_models_enums_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "email_implementation_plan_database_models",
+      "target": "email_implementation_plan_modify_app_models_init_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "email_implementation_plan_database_models",
+      "target": "email_implementation_plan_new_app_models_communication_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L55",
+      "weight": 1.0,
+      "source": "email_implementation_plan_email_service_updates",
+      "target": "email_implementation_plan_modify_app_services_email_service_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L63",
+      "weight": 1.0,
+      "source": "email_implementation_plan_webhook_routes",
+      "target": "email_implementation_plan_new_app_communications_routes_py_new_blueprint",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L70",
+      "weight": 1.0,
+      "source": "email_implementation_plan_webhook_routes",
+      "target": "email_implementation_plan_new_app_communications_webhooks_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L90",
+      "weight": 1.0,
+      "source": "email_implementation_plan_user_interface_html_templates",
+      "target": "email_implementation_plan_modify_app_templates_base_html_or_sidebar_navigation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L87",
+      "weight": 1.0,
+      "source": "email_implementation_plan_user_interface_html_templates",
+      "target": "email_implementation_plan_new_app_communications_templates_communications_compose_html",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L81",
+      "weight": 1.0,
+      "source": "email_implementation_plan_user_interface_html_templates",
+      "target": "email_implementation_plan_new_app_communications_templates_communications_inbox_html",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L84",
+      "weight": 1.0,
+      "source": "email_implementation_plan_user_interface_html_templates",
+      "target": "email_implementation_plan_new_app_communications_templates_communications_thread_html",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L97",
+      "weight": 1.0,
+      "source": "email_implementation_plan_verification_plan",
+      "target": "email_implementation_plan_automated_tests",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "email_implementation_plan.md",
+      "source_location": "L100",
+      "weight": 1.0,
+      "source": "email_implementation_plan_verification_plan",
+      "target": "email_implementation_plan_manual_verification",
+      "confidence_score": 1.0
+    },
     {
       "relation": "imports_from",
       "context": "submodule_import",
@@ -11660,17 +13247,6 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "app/cli.py",
       "source_location": "L1",
       "weight": 1.0,
@@ -11798,6 +13374,27 @@
       "confidence_score": 1.0,
       "source": "app_support_init",
       "target": "app_hr_templates_hr_leave_form_leave_request_form"
+    },
+    {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/pdf_layouts/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_support_init",
+      "target": "app_invoices_services_pdf_layouts_ferre_lagos"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/pdf_layouts/__init__.py",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_support_init",
+      "target": "app_invoices_services_pdf_layouts_init_get_layout"
     },
     {
       "relation": "re_exports",
@@ -12328,38 +13925,6 @@
       "target": "app_models_work_schedule"
     },
     {
-      "relation": "re_exports",
-      "context": "export",
-      "confidence": "EXTRACTED",
-      "source_file": "app/models/__init__.py",
-      "source_location": "L23",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_support_init",
-      "target": "transaction"
-    },
-    {
-      "relation": "re_exports",
-      "context": "export",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/pdf_layouts/__init__.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_support_init",
-      "target": "app_invoices_services_pdf_layouts_ferre_lagos"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/pdf_layouts/__init__.py",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_support_init",
-      "target": "app_invoices_services_pdf_layouts_init_get_layout"
-    },
-    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -12380,6 +13945,28 @@
       "confidence_score": 1.0,
       "source": "app_support_init",
       "target": "app_warehouses_services_warehouse_service"
+    },
+    {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "app/models/__init__.py",
+      "source_location": "L23",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_support_init",
+      "target": "transaction"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/warehouses/routes.py",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_warehouses_routes",
+      "target": "app_support_init"
     },
     {
       "relation": "imports_from",
@@ -12813,11 +14400,32 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "app/warehouses/routes.py",
-      "source_location": "L16",
+      "source_file": "app/orders/routes.py",
+      "source_location": "L72",
       "weight": 1.0,
       "source": "app_invoices_routes_create",
       "target": "app_utils_resolve_company"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/orders/routes.py",
+      "source_location": "L71",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_orders_routes",
+      "target": "app_invoices_routes_create"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/orders/routes.py",
+      "source_location": "L80",
+      "weight": 1.0,
+      "source": "app_invoices_routes_create",
+      "target": "purchase_order_create_purchase_order"
     },
     {
       "relation": "contains",
@@ -12838,16 +14446,6 @@
       "confidence_score": 1.0,
       "source": "app_warehouses_routes",
       "target": "app_invoices_routes_create"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/users/routes.py",
-      "source_location": "L55",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_invoices_routes_store"
     },
     {
       "relation": "contains",
@@ -12893,21 +14491,11 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "app/users/routes.py",
-      "source_location": "L70",
+      "source_file": "app/companies/routes.py",
+      "source_location": "L45",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_invoices_routes_view"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/contacts/routes.py",
-      "source_location": "L79",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_contacts_routes",
+      "source": "app_companies_routes",
       "target": "app_invoices_routes_view"
     },
     {
@@ -12920,6 +14508,16 @@
       "weight": 1.0,
       "source": "app_invoices_routes_view",
       "target": "app_utils_resolve_company"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/contacts/routes.py",
+      "source_location": "L79",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_contacts_routes",
+      "target": "app_invoices_routes_view"
     },
     {
       "relation": "contains",
@@ -12950,6 +14548,16 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "app_orders_routes",
+      "target": "app_invoices_routes_view"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/payments/routes.py",
+      "source_location": "L78",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_payments_routes",
       "target": "app_invoices_routes_view"
     },
     {
@@ -12987,11 +14595,21 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "app/warehouses/routes.py",
-      "source_location": "L24",
+      "source_file": "app/payments/routes.py",
+      "source_location": "L89",
       "weight": 1.0,
       "source": "app_invoices_routes_edit",
       "target": "app_utils_resolve_company"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/payments/routes.py",
+      "source_location": "L88",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_payments_routes",
+      "target": "app_invoices_routes_edit"
     },
     {
       "relation": "contains",
@@ -13006,11 +14624,11 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "app/users/routes.py",
-      "source_location": "L95",
+      "source_file": "app/companies/routes.py",
+      "source_location": "L63",
       "weight": 1.0,
       "confidence_score": 1.0,
-      "source": "app_accounting_routes",
+      "source": "app_companies_routes",
       "target": "app_invoices_routes_update"
     },
     {
@@ -13028,11 +14646,32 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "app/payments/routes.py",
-      "source_location": "L105",
+      "source_file": "app/orders/routes.py",
+      "source_location": "L137",
       "weight": 1.0,
       "source": "app_invoices_routes_update",
       "target": "app_utils_resolve_company"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/orders/routes.py",
+      "source_location": "L136",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_orders_routes",
+      "target": "app_invoices_routes_update"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/orders/routes.py",
+      "source_location": "L144",
+      "weight": 1.0,
+      "source": "app_invoices_routes_update",
+      "target": "purchase_order_update_purchase_order"
     },
     {
       "relation": "contains",
@@ -13057,16 +14696,6 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "app/users/routes.py",
-      "source_location": "L110",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_invoices_routes_delete"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "app/companies/routes.py",
       "source_location": "L77",
       "weight": 1.0,
@@ -13085,15 +14714,46 @@
       "target": "app_invoices_routes_delete"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/inventory/routes.py",
+      "source_location": "L244",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_inventory_routes",
+      "target": "app_invoices_routes_delete"
+    },
+    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "app/payments/routes.py",
-      "source_location": "L119",
+      "source_file": "app/orders/routes.py",
+      "source_location": "L165",
       "weight": 1.0,
       "source": "app_invoices_routes_delete",
       "target": "app_utils_resolve_company"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/orders/routes.py",
+      "source_location": "L164",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_orders_routes",
+      "target": "app_invoices_routes_delete"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/orders/routes.py",
+      "source_location": "L168",
+      "weight": 1.0,
+      "source": "app_invoices_routes_delete",
+      "target": "app_orders_services_purchase_order_service_delete_purchase_order"
     },
     {
       "relation": "contains",
@@ -14288,17 +15948,6 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_models_enums"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L5",
       "weight": 1.0,
@@ -14451,50 +16100,6 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_models_enums_accounttype"
-    },
-    {
-      "relation": "indirect_call",
-      "context": "argument",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L768",
-      "weight": 1.0,
-      "source": "app_accounting_routes_create_account",
-      "target": "app_models_enums_accounttype"
-    },
-    {
-      "relation": "indirect_call",
-      "context": "argument",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L795",
-      "weight": 1.0,
-      "source": "app_accounting_routes_edit_account",
-      "target": "app_models_enums_accounttype"
-    },
-    {
-      "relation": "indirect_call",
-      "context": "collection",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L17",
-      "weight": 1.0,
-      "source": "app_accounting_routes_sidebar_ctx",
-      "target": "app_models_enums_accounttype"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L340",
       "weight": 1.0,
@@ -14633,50 +16238,6 @@
       "target": "app_models_enums_userstatus_label_es"
     },
     {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L98",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_models_enums_expensestatus"
-    },
-    {
-      "relation": "indirect_call",
-      "context": "argument",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L159",
-      "weight": 1.0,
-      "source": "app_accounting_routes_create_expense",
-      "target": "app_models_enums_expensestatus"
-    },
-    {
-      "relation": "indirect_call",
-      "context": "argument",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L219",
-      "weight": 1.0,
-      "source": "app_accounting_routes_edit_expense",
-      "target": "app_models_enums_expensestatus"
-    },
-    {
-      "relation": "indirect_call",
-      "context": "argument",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L106",
-      "weight": 1.0,
-      "source": "app_accounting_routes_expenses_list",
-      "target": "app_models_enums_expensestatus"
-    },
-    {
       "relation": "method",
       "confidence": "EXTRACTED",
       "source_file": "app/models/enums.py",
@@ -14685,17 +16246,6 @@
       "confidence_score": 1.0,
       "source": "app_models_enums_expensestatus",
       "target": "app_models_enums_expensestatus_label_es"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_models_enums_transactiontype"
     },
     {
       "relation": "imports",
@@ -15081,1140 +16631,6 @@
       "confidence_score": 1.0,
       "source": "app_init_create_app",
       "target": "app_routes_register_routes"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L714",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_chart_of_accounts"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L21",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_company_url_id"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L748",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_create_account"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L119",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_create_expense"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L300",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_create_income"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L501",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_create_journal_entry"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1126",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_create_loan"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1034",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_create_project"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L934",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_create_tag"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L801",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_delete_account"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L642",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_delete_attachment"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L232",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_delete_expense"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L413",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_delete_income"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L622",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_delete_journal_entry"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1087",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_delete_project"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L962",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_delete_tag"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L774",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_edit_account"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L172",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_edit_expense"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L350",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_edit_income"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L542",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_edit_journal_entry"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1060",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_edit_project"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L45",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_expenses_list"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L823",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_generate_default_accounts"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L252",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_income_list"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/users/routes.py",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_index"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L26",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L437",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_journal_list"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L662",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_ledger"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1106",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_loans_list"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1168",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_pay_loan"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1009",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_project_detail"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L977",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_projects_list"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L873",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_reports"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_sidebar_ctx"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L838",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_trial_balance"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L603",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_accounting_routes_void_transaction"
-    },
-    {
-      "relation": "imports_from",
-      "context": "submodule_import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_models_account"
-    },
-    {
-      "relation": "imports_from",
-      "context": "submodule_import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L48",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_models_company"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/users/routes.py",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_models_company_company"
-    },
-    {
-      "relation": "imports_from",
-      "context": "submodule_import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L175",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_models_expense"
-    },
-    {
-      "relation": "imports_from",
-      "context": "submodule_import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_models_project"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/users/routes.py",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_models_role_role"
-    },
-    {
-      "relation": "imports_from",
-      "context": "submodule_import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_models_tag"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/users/routes.py",
-      "source_location": "L42",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_orders_routes_create"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/users/routes.py",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_users_init"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/users/routes.py",
-      "source_location": "L77",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_users_routes_edit"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/users/routes.py",
-      "source_location": "L159",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_users_routes_search"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/users/routes.py",
-      "source_location": "L142",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_users_routes_send_password_reset"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/users/routes.py",
-      "source_location": "L124",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_users_routes_toggle_status"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/users/routes.py",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_users_services_user_service"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "app_utils"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes",
-      "target": "datetime"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L742",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_chart_of_accounts",
-      "target": "app_accounting_routes_sidebar_ctx"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L162",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_create_expense",
-      "target": "app_accounting_routes_sidebar_ctx"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L340",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_create_income",
-      "target": "app_accounting_routes_sidebar_ctx"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L533",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_create_journal_entry",
-      "target": "app_accounting_routes_sidebar_ctx"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1159",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_create_loan",
-      "target": "app_accounting_routes_sidebar_ctx"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L222",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_edit_expense",
-      "target": "app_accounting_routes_sidebar_ctx"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L403",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_edit_income",
-      "target": "app_accounting_routes_sidebar_ctx"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L594",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_edit_journal_entry",
-      "target": "app_accounting_routes_sidebar_ctx"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L113",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_expenses_list",
-      "target": "app_accounting_routes_sidebar_ctx"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L294",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_income_list",
-      "target": "app_accounting_routes_sidebar_ctx"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L495",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_journal_list",
-      "target": "app_accounting_routes_sidebar_ctx"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L706",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_ledger",
-      "target": "app_accounting_routes_sidebar_ctx"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1121",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_loans_list",
-      "target": "app_accounting_routes_sidebar_ctx"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1199",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_pay_loan",
-      "target": "app_accounting_routes_sidebar_ctx"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1028",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_project_detail",
-      "target": "app_accounting_routes_sidebar_ctx"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1003",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_projects_list",
-      "target": "app_accounting_routes_sidebar_ctx"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L926",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_reports",
-      "target": "app_accounting_routes_sidebar_ctx"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L865",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_trial_balance",
-      "target": "app_accounting_routes_sidebar_ctx"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L506",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_create_journal_entry",
-      "target": "app_accounting_routes_company_url_id"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L547",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_edit_journal_entry",
-      "target": "app_accounting_routes_company_url_id"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L487",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_journal_list",
-      "target": "app_accounting_routes_company_url_id"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L22",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_rationale_22",
-      "target": "app_accounting_routes_company_url_id"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L911",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_reports",
-      "target": "app_accounting_routes_company_url_id"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L755",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_create_account",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L126",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_create_expense",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L307",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_create_income",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L509",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_create_journal_entry",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1134",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_create_loan",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1041",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_create_project",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L941",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_create_tag",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L804",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_delete_account",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L652",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_delete_attachment",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L235",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_delete_expense",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L416",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_delete_income",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L625",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_delete_journal_entry",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1090",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_delete_project",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L965",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_delete_tag",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L782",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_edit_account",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L180",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_edit_expense",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L358",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_edit_income",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L555",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_edit_journal_entry",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1068",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_edit_project",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L1176",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_pay_loan",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/routes.py",
-      "source_location": "L606",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_routes_void_transaction",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/hr/routes.py",
-      "source_location": "L19",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_hr_routes",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/hr/routes.py",
-      "source_location": "L141",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_hr_routes_create_employee",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/hr/routes.py",
-      "source_location": "L349",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_hr_routes_create_leave",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/hr/routes.py",
-      "source_location": "L652",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_hr_routes_create_schedule",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/hr/routes.py",
-      "source_location": "L263",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_hr_routes_delete_employee",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/hr/routes.py",
-      "source_location": "L502",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_hr_routes_delete_leave",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/hr/routes.py",
-      "source_location": "L741",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_hr_routes_delete_schedule",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/hr/routes.py",
-      "source_location": "L226",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_hr_routes_edit_employee",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/hr/routes.py",
-      "source_location": "L400",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_hr_routes_edit_leave",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/hr/routes.py",
-      "source_location": "L698",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_hr_routes_edit_schedule",
-      "target": "app_accounting_routes_is_ajax"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/hr/routes.py",
-      "source_location": "L447",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_hr_routes_review_leave",
-      "target": "app_accounting_routes_is_ajax"
     },
     {
       "relation": "contains",
@@ -16957,16 +17373,6 @@
       "confidence_score": 1.0,
       "source": "app_inventory_routes",
       "target": "app_models_warehouse_item"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/inventory/routes.py",
-      "source_location": "L244",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_inventory_routes",
-      "target": "app_orders_routes_delete"
     },
     {
       "relation": "imports_from",
@@ -26125,17 +26531,6 @@
       "target": "app_orders_services_purchase_order_service_delete_purchase_order"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/orders/routes.py",
-      "source_location": "L168",
-      "weight": 1.0,
-      "source": "app_orders_routes_delete",
-      "target": "app_orders_services_purchase_order_service_delete_purchase_order"
-    },
-    {
       "relation": "references",
       "context": "parameter_type",
       "confidence": "EXTRACTED",
@@ -28240,16 +28635,6 @@
       "target": "app_companies_routes_sequences_index"
     },
     {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/companies/routes.py",
-      "source_location": "L45",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_companies_routes",
-      "target": "app_companies_routes_view"
-    },
-    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -28264,42 +28649,11 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/companies/routes.py",
-      "source_location": "L63",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_companies_routes",
-      "target": "app_orders_routes_update"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/companies/routes.py",
       "source_location": "L91",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "app_companies_routes",
       "target": "app_users_routes_search"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/payments/routes.py",
-      "source_location": "L79",
-      "weight": 1.0,
-      "source": "app_companies_routes_view",
-      "target": "app_utils_resolve_company"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/payments/routes.py",
-      "source_location": "L78",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_payments_routes",
-      "target": "app_companies_routes_view"
     },
     {
       "relation": "rationale_for",
@@ -33242,16 +33596,6 @@
     {
       "relation": "semantically_similar_to",
       "confidence": "INFERRED",
-      "confidence_score": 0.75,
-      "source_file": "app/accounting/templates/accounting/journal.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "app_accounting_templates_accounting_journal_libro_diario",
-      "target": "app_models_stock_movement"
-    },
-    {
-      "relation": "semantically_similar_to",
-      "confidence": "INFERRED",
       "confidence_score": 0.65,
       "source_file": "app/accounting/templates/accounting/reports.html",
       "source_location": null,
@@ -33893,41 +34237,11 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/orders/routes.py",
-      "source_location": "L71",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_orders_routes",
-      "target": "app_orders_routes_create"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/orders/routes.py",
-      "source_location": "L164",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_orders_routes",
-      "target": "app_orders_routes_delete"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/orders/routes.py",
       "source_location": "L22",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "app_orders_routes",
       "target": "app_orders_routes_index"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/orders/routes.py",
-      "source_location": "L136",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_orders_routes",
-      "target": "app_orders_routes_update"
     },
     {
       "relation": "imports",
@@ -34031,61 +34345,6 @@
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/orders/routes.py",
-      "source_location": "L72",
-      "weight": 1.0,
-      "source": "app_orders_routes_create",
-      "target": "app_utils_resolve_company"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/orders/routes.py",
-      "source_location": "L80",
-      "weight": 1.0,
-      "source": "app_orders_routes_create",
-      "target": "purchase_order_create_purchase_order"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/orders/routes.py",
-      "source_location": "L137",
-      "weight": 1.0,
-      "source": "app_orders_routes_update",
-      "target": "app_utils_resolve_company"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/orders/routes.py",
-      "source_location": "L144",
-      "weight": 1.0,
-      "source": "app_orders_routes_update",
-      "target": "purchase_order_update_purchase_order"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/orders/routes.py",
-      "source_location": "L165",
-      "weight": 1.0,
-      "source": "app_orders_routes_delete",
-      "target": "app_utils_resolve_company"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L335",
       "weight": 1.0,
@@ -34143,16 +34402,6 @@
       "confidence_score": 1.0,
       "source": "app_payments_routes",
       "target": "app_payments_init"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/payments/routes.py",
-      "source_location": "L88",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_payments_routes",
-      "target": "app_payments_routes_edit"
     },
     {
       "relation": "contains",
@@ -34227,17 +34476,6 @@
       "source_location": "L53",
       "weight": 1.0,
       "source": "app_payments_routes_search_invoices",
-      "target": "app_utils_resolve_company"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/payments/routes.py",
-      "source_location": "L89",
-      "weight": 1.0,
-      "source": "app_payments_routes_edit",
       "target": "app_utils_resolve_company"
     },
     {
@@ -34560,17 +34798,6 @@
       "confidence_score": 1.0,
       "source": "services_projectservice",
       "target": "app_utils_export_excel_response"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/warehouses/routes.py",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_warehouses_routes",
-      "target": "app_warehouses_init"
     },
     {
       "relation": "contains",
@@ -36382,26 +36609,6 @@
       "target": "app_middleware_audit_log_change"
     },
     {
-      "relation": "implements",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/accounting/templates/accounting/journal.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "app_accounting_templates_accounting_journal_libro_diario",
-      "target": "app_accounting_templates_accounting_journal_transaction_void_delete_workflow"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/accounting/templates/accounting/ledger.html",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "app_accounting_templates_accounting_ledger_libro_mayor",
-      "target": "app_accounting_templates_accounting_journal_libro_diario"
-    },
-    {
       "relation": "conceptually_related_to",
       "confidence": "INFERRED",
       "confidence_score": 0.85,
@@ -36503,5 +36710,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "ae92814616955612e1c67488f096ce6ef411a03a"
+  "built_at_commit": "d46baf6f2ff5804189bfe823a037509c4242125b"
 }

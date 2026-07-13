@@ -15,8 +15,8 @@
     "semantic_hash": "575eea8e049486e005f9383dd12f3b9f"
   },
   "app/accounting/routes.py": {
-    "mtime": 1783656031.0860248,
-    "ast_hash": "35d2eded18e4ce80047267eef956bed7",
+    "mtime": 1783913078.7178316,
+    "ast_hash": "567519832a8abbe77e8030e18b84140f",
     "semantic_hash": ""
   },
   "app/accounting/services/__init__.py": {
@@ -995,9 +995,9 @@
     "semantic_hash": "179f61e338175e4cced14eb37791c527"
   },
   "app/accounting/templates/accounting/journal.html": {
-    "mtime": 1781245365.9677641,
-    "ast_hash": "6b6e67bd49ada073fc5fe5bf6363ff1b",
-    "semantic_hash": "6b6e67bd49ada073fc5fe5bf6363ff1b"
+    "mtime": 1783913128.0845432,
+    "ast_hash": "3b041a11aed8dc934b5accd599d1c0c3",
+    "semantic_hash": ""
   },
   "app/accounting/templates/accounting/partials/_nav.html": {
     "mtime": 1783656618.8908951,
@@ -1322,6 +1322,21 @@
   "app/support/templates/support/record_view.html": {
     "mtime": 1783705479.883913,
     "ast_hash": "2858889fa3d2c076aad1d5c37be73156",
+    "semantic_hash": ""
+  },
+  "app/accounting/templates/accounting/partials/transaction_view.html": {
+    "mtime": 1783914158.3871653,
+    "ast_hash": "dc16e5b78f6fd50fe9ab65d88c5b7cb9",
+    "semantic_hash": ""
+  },
+  "app/accounting/templates/accounting/transaction_view.html": {
+    "mtime": 1783913150.7616546,
+    "ast_hash": "7d9809e4d113c0822bca5beb89379cac",
+    "semantic_hash": ""
+  },
+  "email_implementation_plan.md": {
+    "mtime": 1783831745.0199122,
+    "ast_hash": "44150b50231512a2e77ff4594d6d736a",
     "semantic_hash": ""
   }
 }
