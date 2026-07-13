@@ -73,8 +73,8 @@ class StockMovementType(enum.Enum):
 
 class PaymentMethod(enum.Enum):
     cash = 'cash'
-    bank_transfer = 'bank transfer'
-    credit_card = 'credit card'
+    bank_transfer = 'bank_transfer'
+    credit_card = 'credit_card'
     cheque = 'cheque'
     other = 'other'
 
@@ -82,8 +82,8 @@ class PaymentMethod(enum.Enum):
     def label_es(self):
         return {
             'cash': 'Efectivo',
-            'bank transfer': 'Transferencia',
-            'credit card': 'Tarjeta',
+            'bank_transfer': 'Transferencia',
+            'credit_card': 'Tarjeta',
             'cheque': 'Cheque',
             'other': 'Otro'
         }.get(self.value, self.value.title())

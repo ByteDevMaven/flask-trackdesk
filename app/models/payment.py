@@ -10,7 +10,11 @@ class Payment(BaseModel):
     
     amount = db.Column(db.Numeric(12, 2), nullable=False)
     payment_date = db.Column(db.DateTime, nullable=False, index=True)
-    method = db.Column(db.Enum(PaymentMethod), nullable=False, default=PaymentMethod.cash)
+    method = db.Column(
+        db.Enum(PaymentMethod, values_callable=lambda obj: [e.value for e in obj]), 
+        nullable=False, 
+        default=PaymentMethod.cash
+    )
     notes = db.Column(db.String(1024))
     
     __table_args__ = (
