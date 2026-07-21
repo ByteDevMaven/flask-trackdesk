@@ -1359,11 +1359,6 @@
     "ast_hash": "a5d65bfc2e97db1886fd7b89998fc4d7",
     "semantic_hash": ""
   },
-  "temp.py": {
-    "mtime": 1784162373.6972642,
-    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
-    "semantic_hash": ""
-  },
   "app/inventory/templates/inventory/categories.html": {
     "mtime": 1784611156.8555496,
     "ast_hash": "a582f4bcbcdb911adb570992b3cc0e95",

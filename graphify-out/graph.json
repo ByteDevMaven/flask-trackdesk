@@ -9,9 +9,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "app_inventory_routes",
       "community": 6,
-      "norm_label": "routes.py"
+      "norm_label": "routes.py",
+      "id": "app_inventory_routes"
     },
     {
       "label": "index()",
@@ -19,9 +19,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L18",
       "_origin": "ast",
-      "id": "app_inventory_routes_index",
       "community": 6,
-      "norm_label": "index()"
+      "norm_label": "index()",
+      "id": "app_inventory_routes_index"
     },
     {
       "label": "create()",
@@ -29,9 +29,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L69",
       "_origin": "ast",
-      "id": "app_inventory_routes_create",
       "community": 6,
-      "norm_label": "create()"
+      "norm_label": "create()",
+      "id": "app_inventory_routes_create"
     },
     {
       "label": "categories()",
@@ -39,9 +39,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L113",
       "_origin": "ast",
-      "id": "app_inventory_routes_categories",
       "community": 6,
-      "norm_label": "categories()"
+      "norm_label": "categories()",
+      "id": "app_inventory_routes_categories"
     },
     {
       "label": "create_category()",
@@ -49,9 +49,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L123",
       "_origin": "ast",
-      "id": "app_inventory_routes_create_category",
       "community": 6,
-      "norm_label": "create_category()"
+      "norm_label": "create_category()",
+      "id": "app_inventory_routes_create_category"
     },
     {
       "label": "edit_category()",
@@ -59,9 +59,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L145",
       "_origin": "ast",
-      "id": "app_inventory_routes_edit_category",
       "community": 6,
-      "norm_label": "edit_category()"
+      "norm_label": "edit_category()",
+      "id": "app_inventory_routes_edit_category"
     },
     {
       "label": "delete_category()",
@@ -69,9 +69,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L171",
       "_origin": "ast",
-      "id": "app_inventory_routes_delete_category",
       "community": 6,
-      "norm_label": "delete_category()"
+      "norm_label": "delete_category()",
+      "id": "app_inventory_routes_delete_category"
     },
     {
       "label": "view()",
@@ -79,9 +79,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L190",
       "_origin": "ast",
-      "id": "app_inventory_routes_view",
       "community": 6,
-      "norm_label": "view()"
+      "norm_label": "view()",
+      "id": "app_inventory_routes_view"
     },
     {
       "label": "movements()",
@@ -89,9 +89,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L234",
       "_origin": "ast",
-      "id": "app_inventory_routes_movements",
       "community": 6,
-      "norm_label": "movements()"
+      "norm_label": "movements()",
+      "id": "app_inventory_routes_movements"
     },
     {
       "label": "edit()",
@@ -99,9 +99,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L277",
       "_origin": "ast",
-      "id": "app_inventory_routes_edit",
       "community": 6,
-      "norm_label": "edit()"
+      "norm_label": "edit()",
+      "id": "app_inventory_routes_edit"
     },
     {
       "label": "update()",
@@ -109,9 +109,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L294",
       "_origin": "ast",
-      "id": "app_inventory_routes_update",
       "community": 6,
-      "norm_label": "update()"
+      "norm_label": "update()",
+      "id": "app_inventory_routes_update"
     },
     {
       "label": "delete()",
@@ -119,9 +119,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L337",
       "_origin": "ast",
-      "id": "app_inventory_routes_delete",
       "community": 6,
-      "norm_label": "delete()"
+      "norm_label": "delete()",
+      "id": "app_inventory_routes_delete"
     },
     {
       "label": "export()",
@@ -129,9 +129,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L355",
       "_origin": "ast",
-      "id": "app_inventory_routes_export",
       "community": 6,
-      "norm_label": "export()"
+      "norm_label": "export()",
+      "id": "app_inventory_routes_export"
     },
     {
       "label": "export_movements()",
@@ -139,9 +139,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L384",
       "_origin": "ast",
-      "id": "app_inventory_routes_export_movements",
       "community": 6,
-      "norm_label": "export_movements()"
+      "norm_label": "export_movements()",
+      "id": "app_inventory_routes_export_movements"
     },
     {
       "label": "drawer_adjust()",
@@ -149,9 +149,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L416",
       "_origin": "ast",
-      "id": "app_inventory_routes_drawer_adjust",
       "community": 6,
-      "norm_label": "drawer_adjust()"
+      "norm_label": "drawer_adjust()",
+      "id": "app_inventory_routes_drawer_adjust"
     },
     {
       "label": "drawer_transfer()",
@@ -159,9 +159,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L429",
       "_origin": "ast",
-      "id": "app_inventory_routes_drawer_transfer",
       "community": 6,
-      "norm_label": "drawer_transfer()"
+      "norm_label": "drawer_transfer()",
+      "id": "app_inventory_routes_drawer_transfer"
     },
     {
       "label": "transfer()",
@@ -169,9 +169,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L442",
       "_origin": "ast",
-      "id": "app_inventory_routes_transfer",
       "community": 6,
-      "norm_label": "transfer()"
+      "norm_label": "transfer()",
+      "id": "app_inventory_routes_transfer"
     },
     {
       "label": "api_get_items()",
@@ -179,9 +179,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L488",
       "_origin": "ast",
-      "id": "app_inventory_routes_api_get_items",
       "community": 6,
-      "norm_label": "api_get_items()"
+      "norm_label": "api_get_items()",
+      "id": "app_inventory_routes_api_get_items"
     },
     {
       "label": "api_get_item()",
@@ -189,9 +189,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L531",
       "_origin": "ast",
-      "id": "app_inventory_routes_api_get_item",
       "community": 6,
-      "norm_label": "api_get_item()"
+      "norm_label": "api_get_item()",
+      "id": "app_inventory_routes_api_get_item"
     },
     {
       "label": "api_create_item()",
@@ -199,9 +199,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L550",
       "_origin": "ast",
-      "id": "app_inventory_routes_api_create_item",
       "community": 6,
-      "norm_label": "api_create_item()"
+      "norm_label": "api_create_item()",
+      "id": "app_inventory_routes_api_create_item"
     },
     {
       "label": "api_update_item()",
@@ -209,9 +209,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L591",
       "_origin": "ast",
-      "id": "app_inventory_routes_api_update_item",
       "community": 6,
-      "norm_label": "api_update_item()"
+      "norm_label": "api_update_item()",
+      "id": "app_inventory_routes_api_update_item"
     },
     {
       "label": "api_delete_item()",
@@ -219,9 +219,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L633",
       "_origin": "ast",
-      "id": "app_inventory_routes_api_delete_item",
       "community": 6,
-      "norm_label": "api_delete_item()"
+      "norm_label": "api_delete_item()",
+      "id": "app_inventory_routes_api_delete_item"
     },
     {
       "label": "api_bulk_delete()",
@@ -229,9 +229,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L650",
       "_origin": "ast",
-      "id": "app_inventory_routes_api_bulk_delete",
       "community": 6,
-      "norm_label": "api_bulk_delete()"
+      "norm_label": "api_bulk_delete()",
+      "id": "app_inventory_routes_api_bulk_delete"
     },
     {
       "label": "api_adjust_stock()",
@@ -239,9 +239,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L675",
       "_origin": "ast",
-      "id": "app_inventory_routes_api_adjust_stock",
       "community": 6,
-      "norm_label": "api_adjust_stock()"
+      "norm_label": "api_adjust_stock()",
+      "id": "app_inventory_routes_api_adjust_stock"
     },
     {
       "label": "api_search()",
@@ -249,9 +249,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L710",
       "_origin": "ast",
-      "id": "app_inventory_routes_api_search",
       "community": 6,
-      "norm_label": "api_search()"
+      "norm_label": "api_search()",
+      "id": "app_inventory_routes_api_search"
     },
     {
       "label": "api_stats()",
@@ -259,9 +259,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L734",
       "_origin": "ast",
-      "id": "app_inventory_routes_api_stats",
       "community": 6,
-      "norm_label": "api_stats()"
+      "norm_label": "api_stats()",
+      "id": "app_inventory_routes_api_stats"
     },
     {
       "label": "barcode()",
@@ -269,9 +269,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L744",
       "_origin": "ast",
-      "id": "app_inventory_routes_barcode",
       "community": 6,
-      "norm_label": "barcode()"
+      "norm_label": "barcode()",
+      "id": "app_inventory_routes_barcode"
     },
     {
       "label": "__init__.py",
@@ -279,9 +279,9 @@
       "source_file": "app/inventory/services/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "app_inventory_services_init",
       "community": 6,
-      "norm_label": "__init__.py"
+      "norm_label": "__init__.py",
+      "id": "app_inventory_services_init"
     },
     {
       "label": "category_service.py",
@@ -289,9 +289,9 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "app_inventory_services_category_service",
       "community": 6,
-      "norm_label": "category_service.py"
+      "norm_label": "category_service.py",
+      "id": "app_inventory_services_category_service"
     },
     {
       "label": "CategoryService",
@@ -299,9 +299,9 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L5",
       "_origin": "ast",
-      "id": "app_inventory_services_category_service_categoryservice",
       "community": 6,
-      "norm_label": "categoryservice"
+      "norm_label": "categoryservice",
+      "id": "app_inventory_services_category_service_categoryservice"
     },
     {
       "label": ".get_categories()",
@@ -309,9 +309,9 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "app_inventory_services_category_service_categoryservice_get_categories",
       "community": 6,
-      "norm_label": ".get_categories()"
+      "norm_label": ".get_categories()",
+      "id": "app_inventory_services_category_service_categoryservice_get_categories"
     },
     {
       "label": ".get_category()",
@@ -319,9 +319,9 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L11",
       "_origin": "ast",
-      "id": "app_inventory_services_category_service_categoryservice_get_category",
       "community": 6,
-      "norm_label": ".get_category()"
+      "norm_label": ".get_category()",
+      "id": "app_inventory_services_category_service_categoryservice_get_category"
     },
     {
       "label": ".create_category()",
@@ -329,9 +329,9 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L15",
       "_origin": "ast",
-      "id": "app_inventory_services_category_service_categoryservice_create_category",
       "community": 6,
-      "norm_label": ".create_category()"
+      "norm_label": ".create_category()",
+      "id": "app_inventory_services_category_service_categoryservice_create_category"
     },
     {
       "label": ".update_category()",
@@ -339,9 +339,9 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L34",
       "_origin": "ast",
-      "id": "app_inventory_services_category_service_categoryservice_update_category",
       "community": 6,
-      "norm_label": ".update_category()"
+      "norm_label": ".update_category()",
+      "id": "app_inventory_services_category_service_categoryservice_update_category"
     },
     {
       "label": ".delete_category()",
@@ -349,9 +349,9 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L52",
       "_origin": "ast",
-      "id": "app_inventory_services_category_service_categoryservice_delete_category",
       "community": 6,
-      "norm_label": ".delete_category()"
+      "norm_label": ".delete_category()",
+      "id": "app_inventory_services_category_service_categoryservice_delete_category"
     },
     {
       "label": "inventory_service.py",
@@ -359,9 +359,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "app_inventory_services_inventory_service",
       "community": 6,
-      "norm_label": "inventory_service.py"
+      "norm_label": "inventory_service.py",
+      "id": "app_inventory_services_inventory_service"
     },
     {
       "label": "_item_ids_from_search_tag()",
@@ -369,9 +369,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L11",
       "_origin": "ast",
-      "id": "app_inventory_services_inventory_service_item_ids_from_search_tag",
       "community": 6,
-      "norm_label": "_item_ids_from_search_tag()"
+      "norm_label": "_item_ids_from_search_tag()",
+      "id": "app_inventory_services_inventory_service_item_ids_from_search_tag"
     },
     {
       "label": "InventoryService",
@@ -379,9 +379,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L27",
       "_origin": "ast",
-      "id": "app_inventory_services_inventory_service_inventoryservice",
       "community": 6,
-      "norm_label": "inventoryservice"
+      "norm_label": "inventoryservice",
+      "id": "app_inventory_services_inventory_service_inventoryservice"
     },
     {
       "label": ".get_inventory_items()",
@@ -389,9 +389,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L29",
       "_origin": "ast",
-      "id": "app_inventory_services_inventory_service_inventoryservice_get_inventory_items",
       "community": 6,
-      "norm_label": ".get_inventory_items()"
+      "norm_label": ".get_inventory_items()",
+      "id": "app_inventory_services_inventory_service_inventoryservice_get_inventory_items"
     },
     {
       "label": ".get_inventory_stats()",
@@ -399,9 +399,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L64",
       "_origin": "ast",
-      "id": "app_inventory_services_inventory_service_inventoryservice_get_inventory_stats",
       "community": 6,
-      "norm_label": ".get_inventory_stats()"
+      "norm_label": ".get_inventory_stats()",
+      "id": "app_inventory_services_inventory_service_inventoryservice_get_inventory_stats"
     },
     {
       "label": ".adjust_stock()",
@@ -409,9 +409,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L85",
       "_origin": "ast",
-      "id": "app_inventory_services_inventory_service_inventoryservice_adjust_stock",
       "community": 6,
-      "norm_label": ".adjust_stock()"
+      "norm_label": ".adjust_stock()",
+      "id": "app_inventory_services_inventory_service_inventoryservice_adjust_stock"
     },
     {
       "label": ".transfer_stock()",
@@ -419,9 +419,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L114",
       "_origin": "ast",
-      "id": "app_inventory_services_inventory_service_inventoryservice_transfer_stock",
       "community": 6,
-      "norm_label": ".transfer_stock()"
+      "norm_label": ".transfer_stock()",
+      "id": "app_inventory_services_inventory_service_inventoryservice_transfer_stock"
     },
     {
       "label": ".create_inventory_item()",
@@ -429,9 +429,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L150",
       "_origin": "ast",
-      "id": "app_inventory_services_inventory_service_inventoryservice_create_inventory_item",
       "community": 6,
-      "norm_label": ".create_inventory_item()"
+      "norm_label": ".create_inventory_item()",
+      "id": "app_inventory_services_inventory_service_inventoryservice_create_inventory_item"
     },
     {
       "label": ".get_inventory_item()",
@@ -439,9 +439,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L214",
       "_origin": "ast",
-      "id": "app_inventory_services_inventory_service_inventoryservice_get_inventory_item",
       "community": 6,
-      "norm_label": ".get_inventory_item()"
+      "norm_label": ".get_inventory_item()",
+      "id": "app_inventory_services_inventory_service_inventoryservice_get_inventory_item"
     },
     {
       "label": ".get_item_by_sku()",
@@ -449,9 +449,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L218",
       "_origin": "ast",
-      "id": "app_inventory_services_inventory_service_inventoryservice_get_item_by_sku",
       "community": 6,
-      "norm_label": ".get_item_by_sku()"
+      "norm_label": ".get_item_by_sku()",
+      "id": "app_inventory_services_inventory_service_inventoryservice_get_item_by_sku"
     },
     {
       "label": ".update_inventory_item()",
@@ -459,9 +459,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L223",
       "_origin": "ast",
-      "id": "app_inventory_services_inventory_service_inventoryservice_update_inventory_item",
       "community": 6,
-      "norm_label": ".update_inventory_item()"
+      "norm_label": ".update_inventory_item()",
+      "id": "app_inventory_services_inventory_service_inventoryservice_update_inventory_item"
     },
     {
       "label": ".delete_inventory_item()",
@@ -469,9 +469,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L274",
       "_origin": "ast",
-      "id": "app_inventory_services_inventory_service_inventoryservice_delete_inventory_item",
       "community": 6,
-      "norm_label": ".delete_inventory_item()"
+      "norm_label": ".delete_inventory_item()",
+      "id": "app_inventory_services_inventory_service_inventoryservice_delete_inventory_item"
     },
     {
       "label": ".get_stock_movements()",
@@ -479,9 +479,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L282",
       "_origin": "ast",
-      "id": "app_inventory_services_inventory_service_inventoryservice_get_stock_movements",
       "community": 6,
-      "norm_label": ".get_stock_movements()"
+      "norm_label": ".get_stock_movements()",
+      "id": "app_inventory_services_inventory_service_inventoryservice_get_stock_movements"
     },
     {
       "label": ".bulk_delete_items()",
@@ -489,9 +489,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L332",
       "_origin": "ast",
-      "id": "app_inventory_services_inventory_service_inventoryservice_bulk_delete_items",
       "community": 6,
-      "norm_label": ".bulk_delete_items()"
+      "norm_label": ".bulk_delete_items()",
+      "id": "app_inventory_services_inventory_service_inventoryservice_bulk_delete_items"
     },
     {
       "label": ".search_inventory_items()",
@@ -499,9 +499,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L347",
       "_origin": "ast",
-      "id": "app_inventory_services_inventory_service_inventoryservice_search_inventory_items",
       "community": 6,
-      "norm_label": ".search_inventory_items()"
+      "norm_label": ".search_inventory_items()",
+      "id": "app_inventory_services_inventory_service_inventoryservice_search_inventory_items"
     },
     {
       "label": ".export_inventory_items_xlsx()",
@@ -509,9 +509,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L368",
       "_origin": "ast",
-      "id": "app_inventory_services_inventory_service_inventoryservice_export_inventory_items_xlsx",
       "community": 6,
-      "norm_label": ".export_inventory_items_xlsx()"
+      "norm_label": ".export_inventory_items_xlsx()",
+      "id": "app_inventory_services_inventory_service_inventoryservice_export_inventory_items_xlsx"
     },
     {
       "label": ".export_stock_movements_xlsx()",
@@ -519,9 +519,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L408",
       "_origin": "ast",
-      "id": "app_inventory_services_inventory_service_inventoryservice_export_stock_movements_xlsx",
       "community": 6,
-      "norm_label": ".export_stock_movements_xlsx()"
+      "norm_label": ".export_stock_movements_xlsx()",
+      "id": "app_inventory_services_inventory_service_inventoryservice_export_stock_movements_xlsx"
     },
     {
       "label": "Fetch an item by its SKU within a company.",
@@ -529,9 +529,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L219",
       "_origin": "ast",
-      "id": "app_inventory_services_inventory_service_rationale_219",
       "community": 6,
-      "norm_label": "fetch an item by its sku within a company."
+      "norm_label": "fetch an item by its sku within a company.",
+      "id": "app_inventory_services_inventory_service_rationale_219"
     },
     {
       "label": "__init__.py",
@@ -539,9 +539,9 @@
       "source_file": "app/models/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "app_models_init",
       "community": 6,
-      "norm_label": "__init__.py"
+      "norm_label": "__init__.py",
+      "id": "app_models_init"
     },
     {
       "label": "category.py",
@@ -549,9 +549,9 @@
       "source_file": "app/models/category.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "app_models_category",
       "community": 6,
-      "norm_label": "category.py"
+      "norm_label": "category.py",
+      "id": "app_models_category"
     },
     {
       "label": "Category",
@@ -559,9 +559,9 @@
       "source_file": "app/models/category.py",
       "source_location": "L3",
       "_origin": "ast",
-      "id": "app_models_category_category",
       "community": 6,
-      "norm_label": "category"
+      "norm_label": "category",
+      "id": "app_models_category_category"
     },
     {
       "label": "BaseModel",
@@ -569,9 +569,9 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "id": "app_models_category_py_basemodel",
       "community": 6,
-      "norm_label": "basemodel"
+      "norm_label": "basemodel",
+      "id": "app_models_category_py_basemodel"
     },
     {
       "label": ".__repr__()",
@@ -579,9 +579,9 @@
       "source_file": "app/models/category.py",
       "source_location": "L14",
       "_origin": "ast",
-      "id": "app_models_category_category_repr",
       "community": 6,
-      "norm_label": ".__repr__()"
+      "norm_label": ".__repr__()",
+      "id": "app_models_category_category_repr"
     },
     {
       "label": "inventory_item.py",
@@ -589,9 +589,9 @@
       "source_file": "app/models/inventory_item.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "app_models_inventory_item",
       "community": 6,
-      "norm_label": "inventory_item.py"
+      "norm_label": "inventory_item.py",
+      "id": "app_models_inventory_item"
     },
     {
       "label": "InventoryItem",
@@ -599,9 +599,9 @@
       "source_file": "app/models/inventory_item.py",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "app_models_inventory_item_inventoryitem",
       "community": 6,
-      "norm_label": "inventoryitem"
+      "norm_label": "inventoryitem",
+      "id": "app_models_inventory_item_inventoryitem"
     },
     {
       "label": "BaseModel",
@@ -609,9 +609,9 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "id": "app_models_inventory_item_py_basemodel",
       "community": 6,
-      "norm_label": "basemodel"
+      "norm_label": "basemodel",
+      "id": "app_models_inventory_item_py_basemodel"
     },
     {
       "label": ".build_sku()",
@@ -619,9 +619,9 @@
       "source_file": "app/models/inventory_item.py",
       "source_location": "L34",
       "_origin": "ast",
-      "id": "app_models_inventory_item_inventoryitem_build_sku",
       "community": 6,
-      "norm_label": ".build_sku()"
+      "norm_label": ".build_sku()",
+      "id": "app_models_inventory_item_inventoryitem_build_sku"
     },
     {
       "label": ".build_generated_tag()",
@@ -629,9 +629,9 @@
       "source_file": "app/models/inventory_item.py",
       "source_location": "L44",
       "_origin": "ast",
-      "id": "app_models_inventory_item_inventoryitem_build_generated_tag",
       "community": 6,
-      "norm_label": ".build_generated_tag()"
+      "norm_label": ".build_generated_tag()",
+      "id": "app_models_inventory_item_inventoryitem_build_generated_tag"
     },
     {
       "label": ".generated_tag()",
@@ -639,9 +639,9 @@
       "source_file": "app/models/inventory_item.py",
       "source_location": "L48",
       "_origin": "ast",
-      "id": "app_models_inventory_item_inventoryitem_generated_tag",
       "community": 6,
-      "norm_label": ".generated_tag()"
+      "norm_label": ".generated_tag()",
+      "id": "app_models_inventory_item_inventoryitem_generated_tag"
     },
     {
       "label": ".__repr__()",
@@ -649,9 +649,9 @@
       "source_file": "app/models/inventory_item.py",
       "source_location": "L53",
       "_origin": "ast",
-      "id": "app_models_inventory_item_inventoryitem_repr",
       "community": 6,
-      "norm_label": ".__repr__()"
+      "norm_label": ".__repr__()",
+      "id": "app_models_inventory_item_inventoryitem_repr"
     },
     {
       "label": "Auto-generate a SKU from the item name and its DB id.                  Example:",
@@ -659,9 +659,9 @@
       "source_file": "app/models/inventory_item.py",
       "source_location": "L35",
       "_origin": "ast",
-      "id": "app_models_inventory_item_rationale_35",
       "community": 6,
-      "norm_label": "auto-generate a sku from the item name and its db id.                  example:"
+      "norm_label": "auto-generate a sku from the item name and its db id.                  example:",
+      "id": "app_models_inventory_item_rationale_35"
     },
     {
       "label": "0b33dda190e6_add_category_table_and_is_service_to_.py",
@@ -669,9 +669,9 @@
       "source_file": "migrations/versions/0b33dda190e6_add_category_table_and_is_service_to_.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "migrations_versions_0b33dda190e6_add_category_table_and_is_service_to",
       "community": 110,
-      "norm_label": "0b33dda190e6_add_category_table_and_is_service_to_.py"
+      "norm_label": "0b33dda190e6_add_category_table_and_is_service_to_.py",
+      "id": "migrations_versions_0b33dda190e6_add_category_table_and_is_service_to"
     },
     {
       "label": "upgrade()",
@@ -679,9 +679,9 @@
       "source_file": "migrations/versions/0b33dda190e6_add_category_table_and_is_service_to_.py",
       "source_location": "L19",
       "_origin": "ast",
-      "id": "migrations_versions_0b33dda190e6_add_category_table_and_is_service_to_upgrade",
       "community": 110,
-      "norm_label": "upgrade()"
+      "norm_label": "upgrade()",
+      "id": "migrations_versions_0b33dda190e6_add_category_table_and_is_service_to_upgrade"
     },
     {
       "label": "downgrade()",
@@ -689,19 +689,9 @@
       "source_file": "migrations/versions/0b33dda190e6_add_category_table_and_is_service_to_.py",
       "source_location": "L46",
       "_origin": "ast",
-      "id": "migrations_versions_0b33dda190e6_add_category_table_and_is_service_to_downgrade",
       "community": 110,
-      "norm_label": "downgrade()"
-    },
-    {
-      "label": "temp.py",
-      "file_type": "code",
-      "source_file": "temp.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "temp",
-      "community": 126,
-      "norm_label": "temp.py"
+      "norm_label": "downgrade()",
+      "id": "migrations_versions_0b33dda190e6_add_category_table_and_is_service_to_downgrade"
     },
     {
       "label": "routes.py",
@@ -11838,9 +11828,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_extensions",
-      "confidence_score": 1.0
+      "target": "app_extensions"
     },
     {
       "relation": "contains",
@@ -11848,9 +11838,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L675",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_api_adjust_stock",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_api_adjust_stock"
     },
     {
       "relation": "contains",
@@ -11858,9 +11848,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L650",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_api_bulk_delete",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_api_bulk_delete"
     },
     {
       "relation": "contains",
@@ -11868,9 +11858,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L550",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_api_create_item",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_api_create_item"
     },
     {
       "relation": "contains",
@@ -11878,9 +11868,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L633",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_api_delete_item",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_api_delete_item"
     },
     {
       "relation": "contains",
@@ -11888,9 +11878,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L531",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_api_get_item",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_api_get_item"
     },
     {
       "relation": "contains",
@@ -11898,9 +11888,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L488",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_api_get_items",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_api_get_items"
     },
     {
       "relation": "contains",
@@ -11908,9 +11898,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L710",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_api_search",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_api_search"
     },
     {
       "relation": "contains",
@@ -11918,9 +11908,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L734",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_api_stats",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_api_stats"
     },
     {
       "relation": "contains",
@@ -11928,9 +11918,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L591",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_api_update_item",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_api_update_item"
     },
     {
       "relation": "contains",
@@ -11938,9 +11928,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L744",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_barcode",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_barcode"
     },
     {
       "relation": "contains",
@@ -11948,9 +11938,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L113",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_categories",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_categories"
     },
     {
       "relation": "contains",
@@ -11958,9 +11948,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L69",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_create",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_create"
     },
     {
       "relation": "contains",
@@ -11968,9 +11958,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L123",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_create_category",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_create_category"
     },
     {
       "relation": "contains",
@@ -11978,9 +11968,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L337",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_delete",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_delete"
     },
     {
       "relation": "contains",
@@ -11988,9 +11978,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L171",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_delete_category",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_delete_category"
     },
     {
       "relation": "contains",
@@ -11998,9 +11988,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L416",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_drawer_adjust",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_drawer_adjust"
     },
     {
       "relation": "contains",
@@ -12008,9 +11998,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L429",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_drawer_transfer",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_drawer_transfer"
     },
     {
       "relation": "contains",
@@ -12018,9 +12008,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L277",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_edit",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_edit"
     },
     {
       "relation": "contains",
@@ -12028,9 +12018,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L145",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_edit_category",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_edit_category"
     },
     {
       "relation": "contains",
@@ -12038,9 +12028,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L355",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_export",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_export"
     },
     {
       "relation": "contains",
@@ -12048,9 +12038,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L384",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_export_movements",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_export_movements"
     },
     {
       "relation": "contains",
@@ -12058,9 +12048,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_index",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_index"
     },
     {
       "relation": "contains",
@@ -12068,9 +12058,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L234",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_movements",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_movements"
     },
     {
       "relation": "contains",
@@ -12078,9 +12068,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L442",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_transfer",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_transfer"
     },
     {
       "relation": "contains",
@@ -12088,9 +12078,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L294",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_update",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_update"
     },
     {
       "relation": "contains",
@@ -12098,9 +12088,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L190",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_routes_view",
-      "confidence_score": 1.0
+      "target": "app_inventory_routes_view"
     },
     {
       "relation": "imports",
@@ -12109,9 +12099,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L116",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_services_category_service_categoryservice",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_category_service_categoryservice"
     },
     {
       "relation": "imports",
@@ -12120,9 +12110,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_inventory_services_inventory_service_inventoryservice",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_inventory_service_inventoryservice"
     },
     {
       "relation": "imports_from",
@@ -12131,9 +12121,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L47",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_models_category",
-      "confidence_score": 1.0
+      "target": "app_models_category"
     },
     {
       "relation": "imports_from",
@@ -12142,9 +12132,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L193",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_models_company",
-      "confidence_score": 1.0
+      "target": "app_models_company"
     },
     {
       "relation": "imports_from",
@@ -12153,9 +12143,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_models_contact",
-      "confidence_score": 1.0
+      "target": "app_models_contact"
     },
     {
       "relation": "imports_from",
@@ -12164,9 +12154,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_models_enums",
-      "confidence_score": 1.0
+      "target": "app_models_enums"
     },
     {
       "relation": "imports",
@@ -12175,9 +12165,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_models_inventory_item_inventoryitem",
-      "confidence_score": 1.0
+      "target": "app_models_inventory_item_inventoryitem"
     },
     {
       "relation": "imports_from",
@@ -12186,9 +12176,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L72",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_models_warehouse",
-      "confidence_score": 1.0
+      "target": "app_models_warehouse"
     },
     {
       "relation": "imports_from",
@@ -12197,9 +12187,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "app_utils",
-      "confidence_score": 1.0
+      "target": "app_utils"
     },
     {
       "relation": "imports_from",
@@ -12208,9 +12198,9 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_routes",
-      "target": "flask",
-      "confidence_score": 1.0
+      "target": "flask"
     },
     {
       "relation": "calls",
@@ -12570,9 +12560,9 @@
       "source_file": "app/inventory/services/__init__.py",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_init",
-      "target": "app_inventory_services_category_service",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_category_service"
     },
     {
       "relation": "imports",
@@ -12581,9 +12571,9 @@
       "source_file": "app/inventory/services/__init__.py",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_init",
-      "target": "app_inventory_services_category_service_categoryservice",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_category_service_categoryservice"
     },
     {
       "relation": "re_exports",
@@ -12592,9 +12582,9 @@
       "source_file": "app/inventory/services/__init__.py",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_init",
-      "target": "app_inventory_services_inventory_service",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_inventory_service"
     },
     {
       "relation": "imports",
@@ -12603,9 +12593,9 @@
       "source_file": "app/inventory/services/__init__.py",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_init",
-      "target": "app_inventory_services_inventory_service_inventoryservice",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_inventory_service_inventoryservice"
     },
     {
       "relation": "contains",
@@ -12613,9 +12603,9 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_category_service",
-      "target": "app_inventory_services_category_service_categoryservice",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_category_service_categoryservice"
     },
     {
       "relation": "imports_from",
@@ -12624,9 +12614,9 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_category_service",
-      "target": "app_models_category",
-      "confidence_score": 1.0
+      "target": "app_models_category"
     },
     {
       "relation": "method",
@@ -12634,9 +12624,9 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_category_service_categoryservice",
-      "target": "app_inventory_services_category_service_categoryservice_create_category",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_category_service_categoryservice_create_category"
     },
     {
       "relation": "method",
@@ -12644,9 +12634,9 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L52",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_category_service_categoryservice",
-      "target": "app_inventory_services_category_service_categoryservice_delete_category",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_category_service_categoryservice_delete_category"
     },
     {
       "relation": "method",
@@ -12654,9 +12644,9 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_category_service_categoryservice",
-      "target": "app_inventory_services_category_service_categoryservice_get_categories",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_category_service_categoryservice_get_categories"
     },
     {
       "relation": "method",
@@ -12664,9 +12654,9 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_category_service_categoryservice",
-      "target": "app_inventory_services_category_service_categoryservice_get_category",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_category_service_categoryservice_get_category"
     },
     {
       "relation": "method",
@@ -12674,9 +12664,9 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L34",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_category_service_categoryservice",
-      "target": "app_inventory_services_category_service_categoryservice_update_category",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_category_service_categoryservice_update_category"
     },
     {
       "relation": "calls",
@@ -12695,9 +12685,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_inventory_service",
-      "target": "app_inventory_services_inventory_service_inventoryservice",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_inventory_service_inventoryservice"
     },
     {
       "relation": "contains",
@@ -12705,9 +12695,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_inventory_service",
-      "target": "app_inventory_services_inventory_service_item_ids_from_search_tag",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_inventory_service_item_ids_from_search_tag"
     },
     {
       "relation": "imports_from",
@@ -12716,9 +12706,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L289",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_inventory_service",
-      "target": "app_models_document",
-      "confidence_score": 1.0
+      "target": "app_models_document"
     },
     {
       "relation": "imports",
@@ -12727,9 +12717,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_inventory_service",
-      "target": "app_models_inventory_item_inventoryitem",
-      "confidence_score": 1.0
+      "target": "app_models_inventory_item_inventoryitem"
     },
     {
       "relation": "imports_from",
@@ -12738,9 +12728,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L189",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_inventory_service",
-      "target": "app_models_warehouse",
-      "confidence_score": 1.0
+      "target": "app_models_warehouse"
     },
     {
       "relation": "imports_from",
@@ -12749,9 +12739,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_inventory_service",
-      "target": "datetime",
-      "confidence_score": 1.0
+      "target": "datetime"
     },
     {
       "relation": "calls",
@@ -12760,9 +12750,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L33",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_inventory_service_inventoryservice_get_inventory_items",
-      "target": "app_inventory_services_inventory_service_item_ids_from_search_tag",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_inventory_service_item_ids_from_search_tag"
     },
     {
       "relation": "calls",
@@ -12771,9 +12761,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L351",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_inventory_service_inventoryservice_search_inventory_items",
-      "target": "app_inventory_services_inventory_service_item_ids_from_search_tag",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_inventory_service_item_ids_from_search_tag"
     },
     {
       "relation": "method",
@@ -12781,9 +12771,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L85",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_inventory_service_inventoryservice",
-      "target": "app_inventory_services_inventory_service_inventoryservice_adjust_stock",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_inventory_service_inventoryservice_adjust_stock"
     },
     {
       "relation": "method",
@@ -12791,9 +12781,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L332",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_inventory_service_inventoryservice",
-      "target": "app_inventory_services_inventory_service_inventoryservice_bulk_delete_items",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_inventory_service_inventoryservice_bulk_delete_items"
     },
     {
       "relation": "method",
@@ -12801,9 +12791,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L150",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_inventory_service_inventoryservice",
-      "target": "app_inventory_services_inventory_service_inventoryservice_create_inventory_item",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_inventory_service_inventoryservice_create_inventory_item"
     },
     {
       "relation": "method",
@@ -12811,9 +12801,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L274",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_inventory_service_inventoryservice",
-      "target": "app_inventory_services_inventory_service_inventoryservice_delete_inventory_item",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_inventory_service_inventoryservice_delete_inventory_item"
     },
     {
       "relation": "method",
@@ -12821,9 +12811,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L368",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_inventory_service_inventoryservice",
-      "target": "app_inventory_services_inventory_service_inventoryservice_export_inventory_items_xlsx",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_inventory_service_inventoryservice_export_inventory_items_xlsx"
     },
     {
       "relation": "method",
@@ -12831,9 +12821,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L408",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_inventory_service_inventoryservice",
-      "target": "app_inventory_services_inventory_service_inventoryservice_export_stock_movements_xlsx",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_inventory_service_inventoryservice_export_stock_movements_xlsx"
     },
     {
       "relation": "method",
@@ -12841,9 +12831,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L214",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_inventory_service_inventoryservice",
-      "target": "app_inventory_services_inventory_service_inventoryservice_get_inventory_item",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_inventory_service_inventoryservice_get_inventory_item"
     },
     {
       "relation": "method",
@@ -12851,9 +12841,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_inventory_service_inventoryservice",
-      "target": "app_inventory_services_inventory_service_inventoryservice_get_inventory_items",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_inventory_service_inventoryservice_get_inventory_items"
     },
     {
       "relation": "method",
@@ -12861,9 +12851,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L64",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_inventory_service_inventoryservice",
-      "target": "app_inventory_services_inventory_service_inventoryservice_get_inventory_stats",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_inventory_service_inventoryservice_get_inventory_stats"
     },
     {
       "relation": "method",
@@ -12871,9 +12861,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L218",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_inventory_service_inventoryservice",
-      "target": "app_inventory_services_inventory_service_inventoryservice_get_item_by_sku",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_inventory_service_inventoryservice_get_item_by_sku"
     },
     {
       "relation": "method",
@@ -12881,9 +12871,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L282",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_inventory_service_inventoryservice",
-      "target": "app_inventory_services_inventory_service_inventoryservice_get_stock_movements",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_inventory_service_inventoryservice_get_stock_movements"
     },
     {
       "relation": "method",
@@ -12891,9 +12881,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L347",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_inventory_service_inventoryservice",
-      "target": "app_inventory_services_inventory_service_inventoryservice_search_inventory_items",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_inventory_service_inventoryservice_search_inventory_items"
     },
     {
       "relation": "method",
@@ -12901,9 +12891,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L114",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_inventory_service_inventoryservice",
-      "target": "app_inventory_services_inventory_service_inventoryservice_transfer_stock",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_inventory_service_inventoryservice_transfer_stock"
     },
     {
       "relation": "method",
@@ -12911,9 +12901,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L223",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_inventory_service_inventoryservice",
-      "target": "app_inventory_services_inventory_service_inventoryservice_update_inventory_item",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_inventory_service_inventoryservice_update_inventory_item"
     },
     {
       "relation": "calls",
@@ -12954,9 +12944,9 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L219",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_inventory_services_inventory_service_rationale_219",
-      "target": "app_inventory_services_inventory_service_inventoryservice_get_item_by_sku",
-      "confidence_score": 1.0
+      "target": "app_inventory_services_inventory_service_inventoryservice_get_item_by_sku"
     },
     {
       "relation": "calls",
@@ -12998,9 +12988,9 @@
       "source_file": "app/models/__init__.py",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_models_init",
-      "target": "app_extensions",
-      "confidence_score": 1.0
+      "target": "app_extensions"
     },
     {
       "relation": "re_exports",
@@ -13009,9 +12999,9 @@
       "source_file": "app/models/__init__.py",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_models_init",
-      "target": "app_models_category",
-      "confidence_score": 1.0
+      "target": "app_models_category"
     },
     {
       "relation": "imports",
@@ -13020,9 +13010,9 @@
       "source_file": "app/models/__init__.py",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_models_init",
-      "target": "app_models_category_category",
-      "confidence_score": 1.0
+      "target": "app_models_category_category"
     },
     {
       "relation": "re_exports",
@@ -13031,9 +13021,9 @@
       "source_file": "app/models/__init__.py",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_models_init",
-      "target": "app_models_inventory_item",
-      "confidence_score": 1.0
+      "target": "app_models_inventory_item"
     },
     {
       "relation": "imports",
@@ -13042,9 +13032,9 @@
       "source_file": "app/models/__init__.py",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_models_init",
-      "target": "app_models_inventory_item_inventoryitem",
-      "confidence_score": 1.0
+      "target": "app_models_inventory_item_inventoryitem"
     },
     {
       "relation": "contains",
@@ -13052,9 +13042,9 @@
       "source_file": "app/models/category.py",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_models_category",
-      "target": "app_models_category_category",
-      "confidence_score": 1.0
+      "target": "app_models_category_category"
     },
     {
       "relation": "method",
@@ -13062,9 +13052,9 @@
       "source_file": "app/models/category.py",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_models_category_category",
-      "target": "app_models_category_category_repr",
-      "confidence_score": 1.0
+      "target": "app_models_category_category_repr"
     },
     {
       "relation": "inherits",
@@ -13072,9 +13062,9 @@
       "source_file": "app/models/category.py",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_models_category_category",
-      "target": "app_models_category_py_basemodel",
-      "confidence_score": 1.0
+      "target": "app_models_category_py_basemodel"
     },
     {
       "relation": "imports",
@@ -13104,9 +13094,9 @@
       "source_file": "app/models/inventory_item.py",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_models_inventory_item",
-      "target": "app_models_inventory_item_inventoryitem",
-      "confidence_score": 1.0
+      "target": "app_models_inventory_item_inventoryitem"
     },
     {
       "relation": "imports",
@@ -13147,9 +13137,9 @@
       "source_file": "app/models/inventory_item.py",
       "source_location": "L44",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_models_inventory_item_inventoryitem",
-      "target": "app_models_inventory_item_inventoryitem_build_generated_tag",
-      "confidence_score": 1.0
+      "target": "app_models_inventory_item_inventoryitem_build_generated_tag"
     },
     {
       "relation": "method",
@@ -13157,9 +13147,9 @@
       "source_file": "app/models/inventory_item.py",
       "source_location": "L34",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_models_inventory_item_inventoryitem",
-      "target": "app_models_inventory_item_inventoryitem_build_sku",
-      "confidence_score": 1.0
+      "target": "app_models_inventory_item_inventoryitem_build_sku"
     },
     {
       "relation": "method",
@@ -13167,9 +13157,9 @@
       "source_file": "app/models/inventory_item.py",
       "source_location": "L48",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_models_inventory_item_inventoryitem",
-      "target": "app_models_inventory_item_inventoryitem_generated_tag",
-      "confidence_score": 1.0
+      "target": "app_models_inventory_item_inventoryitem_generated_tag"
     },
     {
       "relation": "method",
@@ -13177,9 +13167,9 @@
       "source_file": "app/models/inventory_item.py",
       "source_location": "L53",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_models_inventory_item_inventoryitem",
-      "target": "app_models_inventory_item_inventoryitem_repr",
-      "confidence_score": 1.0
+      "target": "app_models_inventory_item_inventoryitem_repr"
     },
     {
       "relation": "inherits",
@@ -13187,9 +13177,9 @@
       "source_file": "app/models/inventory_item.py",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_models_inventory_item_inventoryitem",
-      "target": "app_models_inventory_item_py_basemodel",
-      "confidence_score": 1.0
+      "target": "app_models_inventory_item_py_basemodel"
     },
     {
       "relation": "imports",
@@ -13208,9 +13198,9 @@
       "source_file": "app/models/inventory_item.py",
       "source_location": "L35",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_models_inventory_item_rationale_35",
-      "target": "app_models_inventory_item_inventoryitem_build_sku",
-      "confidence_score": 1.0
+      "target": "app_models_inventory_item_inventoryitem_build_sku"
     },
     {
       "relation": "calls",
@@ -13219,9 +13209,9 @@
       "source_file": "app/models/inventory_item.py",
       "source_location": "L51",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_models_inventory_item_inventoryitem_generated_tag",
-      "target": "app_models_inventory_item_inventoryitem_build_generated_tag",
-      "confidence_score": 1.0
+      "target": "app_models_inventory_item_inventoryitem_build_generated_tag"
     },
     {
       "relation": "contains",
@@ -13229,9 +13219,9 @@
       "source_file": "migrations/versions/0b33dda190e6_add_category_table_and_is_service_to_.py",
       "source_location": "L46",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "migrations_versions_0b33dda190e6_add_category_table_and_is_service_to",
-      "target": "migrations_versions_0b33dda190e6_add_category_table_and_is_service_to_downgrade",
-      "confidence_score": 1.0
+      "target": "migrations_versions_0b33dda190e6_add_category_table_and_is_service_to_downgrade"
     },
     {
       "relation": "contains",
@@ -13239,9 +13229,9 @@
       "source_file": "migrations/versions/0b33dda190e6_add_category_table_and_is_service_to_.py",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "migrations_versions_0b33dda190e6_add_category_table_and_is_service_to",
-      "target": "migrations_versions_0b33dda190e6_add_category_table_and_is_service_to_upgrade",
-      "confidence_score": 1.0
+      "target": "migrations_versions_0b33dda190e6_add_category_table_and_is_service_to_upgrade"
     },
     {
       "relation": "imports_from",
@@ -36009,5 +35999,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "de711427f96bb4d71fb4e67e5c5322763b539301"
+  "built_at_commit": "ca30c5459f2d8c8f186df3e1fcf42e4eb3a1f5ab"
 }
