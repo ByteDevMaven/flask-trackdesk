@@ -12,10 +12,20 @@
 {% block page_title %}Inventario{% endblock %}
 
 {% block content %}
+{# Hidden data for filter modals #}
+<script id="inv-index-data" type="application/json">
+{
+  "suppliers": [{% for s in suppliers %}{ "id": {{ s.id }}, "name": {{ s.name | tojson }} }{% if not loop.last %},{% endif %}{% endfor %}],
+  "categories": [{% for c in categories %}{ "id": {{ c.id }}, "name": {{ c.name | tojson }} }{% if not loop.last %},{% endif %}{% endfor %}],
+  "currentSupplierId": {{ supplier_id | tojson if supplier_id else 'null' }},
+  "currentCategoryId": {{ category_id | tojson if category_id else 'null' }}
+}
+</script>
+
 <div class="flex flex-col h-full overflow-hidden bg-slate-50">
 
   <header class="bg-white border-b border-slate-200 px-4 md:px-6 py-3 flex items-center justify-between flex-shrink-0">
-    <form method="GET" action="{{ request.path }}" class="relative">
+    <form method="GET" action="{{ request.path }}" id="search-form" class="relative">
       <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor"
         viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -23,9 +33,26 @@
       </svg>
       <input name="search" value="{{ search }}" type="text" placeholder="Buscar productos, SKU o etiqueta..."
         class="w-72 pl-9 pr-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
+      {# preserve other filters #}
+      {% if supplier_id %}<input type="hidden" name="supplier_id" value="{{ supplier_id }}">{% endif %}
+      {% if category_id %}<input type="hidden" name="category_id" value="{{ category_id }}">{% endif %}
     </form>
 
     <div class="flex items-center gap-2">
+      {# Filter Button #}
+      <button type="button" id="open-filter-modal"
+        class="relative flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors shadow-sm bg-white">
+        <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+        </svg>
+        Filtros
+        {% if supplier_id or category_id %}
+        <span class="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full bg-emerald-500 text-white text-[10px] font-bold flex items-center justify-center">
+          {{ (1 if supplier_id else 0) + (1 if category_id else 0) }}
+        </span>
+        {% endif %}
+      </button>
+
       <a href="{{ url_for('inventory.export', company_id=company_id, search=search, supplier_id=supplier_id) }}"
         class="flex items-center gap-2 px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors shadow-sm bg-white">
         <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -44,6 +71,36 @@
       </button>
     </div>
   </header>
+
+  {# Active filter chips #}
+  {% if supplier_id or category_id %}
+  <div class="bg-white border-b border-slate-100 px-4 md:px-6 py-2 flex items-center gap-2 flex-wrap">
+    <span class="text-xs text-slate-400 font-medium">Filtrando:</span>
+    {% if supplier_id %}
+      {% set active_supplier = suppliers | selectattr('id', 'equalto', supplier_id | int) | first %}
+      {% if active_supplier %}
+      <a href="{{ request.path }}?search={{ search }}{% if category_id %}&category_id={{ category_id }}{% endif %}"
+        class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-sky-50 border border-sky-200 text-sky-700 text-xs font-semibold hover:bg-sky-100 transition-colors">
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+        {{ active_supplier.name }}
+        <svg class="w-3 h-3 ml-0.5 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </a>
+      {% endif %}
+    {% endif %}
+    {% if category_id %}
+      {% set active_cat = categories | selectattr('id', 'equalto', category_id | int) | first %}
+      {% if active_cat %}
+      <a href="{{ request.path }}?search={{ search }}{% if supplier_id %}&supplier_id={{ supplier_id }}{% endif %}"
+        class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-violet-50 border border-violet-200 text-violet-700 text-xs font-semibold hover:bg-violet-100 transition-colors">
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+        {{ active_cat.name }}
+        <svg class="w-3 h-3 ml-0.5 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      </a>
+      {% endif %}
+    {% endif %}
+    <a href="{{ request.path }}" class="text-xs text-rose-500 hover:text-rose-700 font-medium ml-1">Limpiar todo</a>
+  </div>
+  {% endif %}
 
   <div class="flex-1 overflow-y-auto p-4 md:p-6">
 
@@ -103,6 +160,7 @@
         <thead>
           <tr class="border-b border-slate-100 bg-slate-50/50">
             <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Producto</th>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Categoría</th>
             <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Proveedor</th>
             <th class="px-4 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Stock</th>
             <th class="px-4 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wider">Precio</th>
@@ -114,29 +172,53 @@
           <tr class="hover:bg-slate-50/80 transition-colors">
             <td class="px-4 py-3">
               <div class="flex items-center gap-3">
-                <div
-                  class="w-8 h-8 rounded bg-violet-50 border border-violet-100 flex items-center justify-center flex-shrink-0">
+                <div class="w-8 h-8 rounded {% if item.is_service %}bg-amber-50 border border-amber-100{% else %}bg-violet-50 border border-violet-100{% endif %} flex items-center justify-center flex-shrink-0">
+                  {% if item.is_service %}
+                  <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                  </svg>
+                  {% else %}
                   <svg class="w-4 h-4 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                       d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                   </svg>
+                  {% endif %}
                 </div>
                 <div>
                   <a href="{{ url_for('inventory.view', company_id=company_id, sku=item.sku) }}"
                     class="text-sm font-semibold text-slate-800 hover:text-emerald-700 transition-colors block">
                     {{ item.name }}
                   </a>
-                  {% if item.description %}
-                  <p class="text-xs text-slate-400 truncate max-w-[240px] mt-0.5">{{ item.description }}</p>
-                  {% endif %}
+                  <div class="flex items-center gap-1.5 mt-0.5">
+                    {% if item.is_service %}
+                    <span class="text-xs font-semibold text-amber-600 bg-amber-50 px-1.5 py-0.5 rounded">Servicio</span>
+                    {% endif %}
+                    {% if item.description %}
+                    <p class="text-xs text-slate-400 truncate max-w-[200px]">{{ item.description }}</p>
+                    {% endif %}
+                  </div>
                 </div>
               </div>
+            </td>
+            <td class="px-4 py-3">
+              {% if item.category %}
+              <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-violet-50 border border-violet-100 text-xs font-semibold text-violet-700">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>
+                {{ item.category.name }}
+              </span>
+              {% else %}
+              <span class="text-slate-400 text-sm">—</span>
+              {% endif %}
             </td>
             <td class="px-4 py-3 text-sm text-slate-600">
               {{ item.supplier.name if item.supplier else '—' }}
             </td>
             <td class="px-4 py-3 text-right">
-              {% if item.quantity <= 5 %} <span
+              {% if item.is_service %}
+              <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-100">
+                N/A
+              </span>
+              {% elif item.quantity <= 5 %} <span
                 class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-100">
                 <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span>
                 {{ item.quantity }} (Bajo)
@@ -179,7 +261,7 @@
           </tr>
           {% else %}
           <tr>
-            <td colspan="5" class="px-4 py-16 text-center">
+            <td colspan="6" class="px-4 py-16 text-center">
               <div class="flex flex-col items-center gap-3">
                 <div
                   class="w-14 h-14 bg-violet-50 border border-violet-100 rounded-full flex items-center justify-center">
@@ -207,7 +289,7 @@
         </p>
         <div class="flex items-center gap-1">
           {% if pagination.has_prev %}
-          <a href="?page={{ pagination.prev_num }}{% if search %}&search={{ search }}{% endif %}"
+          <a href="?page={{ pagination.prev_num }}{% if search %}&search={{ search }}{% endif %}{% if supplier_id %}&supplier_id={{ supplier_id }}{% endif %}{% if category_id %}&category_id={{ category_id }}{% endif %}"
             class="px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded transition-colors">Anterior</a>
           {% else %}
           <span class="px-3 py-1.5 text-sm font-medium text-slate-400 rounded cursor-not-allowed">Anterior</span>
@@ -218,7 +300,7 @@
           {% if page_num == pagination.page %}
           <span class="px-3 py-1.5 text-sm font-bold text-white bg-emerald-600 rounded shadow-sm">{{ page_num }}</span>
           {% else %}
-          <a href="?page={{ page_num }}{% if search %}&search={{ search }}{% endif %}"
+          <a href="?page={{ page_num }}{% if search %}&search={{ search }}{% endif %}{% if supplier_id %}&supplier_id={{ supplier_id }}{% endif %}{% if category_id %}&category_id={{ category_id }}{% endif %}"
             class="px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded transition-colors">{{
             page_num }}</a>
           {% endif %}
@@ -228,7 +310,7 @@
           {% endfor %}
 
           {% if pagination.has_next %}
-          <a href="?page={{ pagination.next_num }}{% if search %}&search={{ search }}{% endif %}"
+          <a href="?page={{ pagination.next_num }}{% if search %}&search={{ search }}{% endif %}{% if supplier_id %}&supplier_id={{ supplier_id }}{% endif %}{% if category_id %}&category_id={{ category_id }}{% endif %}"
             class="px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded transition-colors">Siguiente</a>
           {% else %}
           <span class="px-3 py-1.5 text-sm font-medium text-slate-400 rounded cursor-not-allowed">Siguiente</span>
@@ -239,4 +321,130 @@
     </div>
   </div>
 </div>
+
+{# ═══════════════ FILTER MODAL ═══════════════ #}
+<div id="filter-modal" class="fixed inset-0 z-50 hidden" aria-modal="true" role="dialog">
+  <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" id="filter-modal-backdrop"></div>
+  <div class="absolute inset-x-0 bottom-0 sm:inset-0 sm:flex sm:items-center sm:justify-center sm:p-4">
+    <div class="relative bg-white rounded-t-2xl sm:rounded-2xl w-full sm:max-w-sm shadow-2xl flex flex-col max-h-[80vh]">
+      <div class="flex items-center justify-between px-5 pt-5 pb-4 border-b border-slate-100 flex-shrink-0">
+        <div>
+          <h3 class="text-sm font-bold text-slate-800">Filtrar Inventario</h3>
+          <p class="text-xs text-slate-400 mt-0.5">Selecciona proveedor o categoría</p>
+        </div>
+        <button type="button" id="filter-modal-close" class="text-slate-400 hover:text-slate-700 transition-colors p-1 rounded-lg hover:bg-slate-100">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="overflow-y-auto flex-1 px-5 py-4 space-y-5">
+        {# Supplier section #}
+        <div>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Proveedor</p>
+          <div id="filter-supplier-list" class="space-y-1 max-h-40 overflow-y-auto pr-1">
+            <button type="button" class="filter-supplier-btn w-full text-left px-3 py-2 rounded-lg text-sm transition-colors" data-id="">
+              <span class="text-slate-500 italic">Todos los proveedores</span>
+            </button>
+          </div>
+        </div>
+
+        {# Category section #}
+        <div>
+          <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Categoría</p>
+          <div id="filter-category-list" class="space-y-1 max-h-40 overflow-y-auto pr-1">
+            <button type="button" class="filter-category-btn w-full text-left px-3 py-2 rounded-lg text-sm transition-colors" data-id="">
+              <span class="text-slate-500 italic">Todas las categorías</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="px-5 py-4 border-t border-slate-100 flex gap-3 flex-shrink-0">
+        <a id="filter-clear-btn" href="{{ request.path }}{% if search %}?search={{ search }}{% endif %}"
+          class="flex-1 text-center px-4 py-2 border border-slate-300 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 transition-colors">
+          Limpiar
+        </a>
+        <button type="button" id="filter-apply-btn"
+          class="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
+          Aplicar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  const raw = document.getElementById('inv-index-data');
+  const data = JSON.parse(raw ? raw.textContent : '{}');
+  const suppliers = data.suppliers || [];
+  const categories = data.categories || [];
+  let selectedSupplierId = data.currentSupplierId ? String(data.currentSupplierId) : '';
+  let selectedCategoryId = data.currentCategoryId ? String(data.currentCategoryId) : '';
+
+  function openModal() { document.getElementById('filter-modal').classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+  function closeModal() { document.getElementById('filter-modal').classList.add('hidden'); document.body.style.overflow = ''; }
+
+  document.getElementById('open-filter-modal').addEventListener('click', openModal);
+  document.getElementById('filter-modal-close').addEventListener('click', closeModal);
+  document.getElementById('filter-modal-backdrop').addEventListener('click', closeModal);
+
+  // Populate supplier list
+  const supplierList = document.getElementById('filter-supplier-list');
+  suppliers.forEach(s => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'filter-supplier-btn w-full text-left px-3 py-2 rounded-lg text-sm transition-colors font-medium text-slate-700 hover:bg-slate-50';
+    btn.dataset.id = s.id;
+    btn.textContent = s.name;
+    supplierList.appendChild(btn);
+  });
+
+  // Populate category list
+  const categoryList = document.getElementById('filter-category-list');
+  categories.forEach(c => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'filter-category-btn w-full text-left px-3 py-2 rounded-lg text-sm transition-colors font-medium text-slate-700 hover:bg-slate-50';
+    btn.dataset.id = c.id;
+    btn.textContent = c.name;
+    categoryList.appendChild(btn);
+  });
+
+  function applyActive() {
+    document.querySelectorAll('.filter-supplier-btn').forEach(btn => {
+      const active = btn.dataset.id === selectedSupplierId;
+      btn.classList.toggle('bg-emerald-50', active);
+      btn.classList.toggle('text-emerald-700', active);
+      btn.classList.toggle('font-semibold', active);
+    });
+    document.querySelectorAll('.filter-category-btn').forEach(btn => {
+      const active = btn.dataset.id === selectedCategoryId;
+      btn.classList.toggle('bg-violet-50', active);
+      btn.classList.toggle('text-violet-700', active);
+      btn.classList.toggle('font-semibold', active);
+    });
+  }
+  applyActive();
+
+  supplierList.addEventListener('click', e => {
+    const btn = e.target.closest('.filter-supplier-btn');
+    if (btn) { selectedSupplierId = btn.dataset.id; applyActive(); }
+  });
+  categoryList.addEventListener('click', e => {
+    const btn = e.target.closest('.filter-category-btn');
+    if (btn) { selectedCategoryId = btn.dataset.id; applyActive(); }
+  });
+
+  document.getElementById('filter-apply-btn').addEventListener('click', () => {
+    const search = new URLSearchParams(window.location.search).get('search') || '';
+    const params = new URLSearchParams();
+    if (search) params.set('search', search);
+    if (selectedSupplierId) params.set('supplier_id', selectedSupplierId);
+    if (selectedCategoryId) params.set('category_id', selectedCategoryId);
+    window.location.href = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+  });
+})();
+</script>
 {% endblock %}

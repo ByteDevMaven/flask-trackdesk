@@ -26,7 +26,7 @@ def _item_ids_from_search_tag(company_id, search):
 
 class InventoryService:
     @staticmethod
-    def get_inventory_items(company_id, page=1, per_page=15, search='', supplier_id=None, sort_by='name', sort_order='asc'):
+    def get_inventory_items(company_id, page=1, per_page=15, search='', supplier_id=None, category_id=None, sort_by='name', sort_order='asc'):
         query = InventoryItem.query.filter_by(company_id=company_id)
         
         if search:
@@ -45,6 +45,9 @@ class InventoryService:
         
         if supplier_id and str(supplier_id).isdigit():
             query = query.filter_by(supplier_id=int(supplier_id))
+            
+        if category_id and str(category_id).isdigit():
+            query = query.filter_by(category_id=int(category_id))
             
         if sort_by == 'name':
             query = query.order_by(asc(InventoryItem.name) if sort_order == 'asc' else desc(InventoryItem.name))
@@ -144,7 +147,7 @@ class InventoryService:
 
 
     @staticmethod
-    def create_inventory_item(company_id, name, description=None, quantity=0, price=0.0, cost_price=0.0, discount=0.0, supplier_id=None, warehouse_id=None, sku=None):
+    def create_inventory_item(company_id, name, description=None, quantity=0, price=0.0, cost_price=0.0, discount=0.0, supplier_id=None, category_id=None, is_service=False, warehouse_id=None, sku=None):
         if not name:
             raise ValueError(_('Name is required'))
         if quantity < 0:
@@ -160,11 +163,13 @@ class InventoryService:
             company_id=company_id,
             name=name,
             description=description,
-            quantity=quantity,
+            quantity=0 if is_service else quantity,
             price=price,
             cost_price=cost_price,
             discount=discount,
-            supplier_id=int(supplier_id) if supplier_id and str(supplier_id).isdigit() else None
+            supplier_id=int(supplier_id) if supplier_id and str(supplier_id).isdigit() else None,
+            category_id=int(category_id) if category_id and str(category_id).isdigit() else None,
+            is_service=is_service
         )
         db.session.add(item)
         db.session.flush() # flush to get item.id
@@ -215,7 +220,7 @@ class InventoryService:
         return InventoryItem.query.filter_by(company_id=company_id, sku=sku).first()
 
     @staticmethod
-    def update_inventory_item(company_id, item_id, name=None, description=None, quantity=None, price=None, cost_price=None, discount=None, supplier_id=None, sku=None):
+    def update_inventory_item(company_id, item_id, name=None, description=None, quantity=None, price=None, cost_price=None, discount=None, supplier_id=None, category_id=None, is_service=None, sku=None):
         item = InventoryItem.query.filter_by(id=item_id, company_id=company_id).first_or_404()
         
         if name is not None:
@@ -226,10 +231,13 @@ class InventoryService:
         if description is not None:
             item.description = description if description else None
             
+        if is_service is not None:
+            item.is_service = is_service
+            
         if quantity is not None:
             if quantity < 0:
                 raise ValueError(_('Quantity cannot be negative'))
-            item.quantity = quantity
+            item.quantity = 0 if item.is_service else quantity
             
         if price is not None:
             if price < 0:
@@ -248,6 +256,9 @@ class InventoryService:
             
         if supplier_id is not None:
             item.supplier_id = int(supplier_id) if str(supplier_id).isdigit() else None
+
+        if category_id is not None:
+            item.category_id = int(category_id) if str(category_id).isdigit() else None
 
         if sku is not None:
             candidate = sku.strip().upper() if sku.strip() else InventoryItem.build_sku(item.name, item.id)

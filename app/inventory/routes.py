@@ -24,6 +24,7 @@ def index(company_id):
                                           
     search = request.args.get('search', '')
     supplier_id = request.args.get('supplier_id', '')
+    category_id_filter = request.args.get('category_id', type=int)
     sort_by = request.args.get('sort', 'name')
     sort_order = request.args.get('order', 'asc')
     
@@ -34,6 +35,7 @@ def index(company_id):
         per_page=per_page,
         search=search,
         supplier_id=supplier_id,
+        category_id=category_id_filter,
         sort_by=sort_by,
         sort_order=sort_order
     )
@@ -42,7 +44,10 @@ def index(company_id):
                     
     suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
     
-           
+    from app.models import Category
+    categories = Category.query.filter_by(company_id=company_id).order_by(Category.name).all()
+    
+       
     stats = InventoryService.get_inventory_stats(company_id)
 
     return render_template('inventory/index.html', 
@@ -50,9 +55,11 @@ def index(company_id):
                           inventory_items=inventory_items, 
                           pagination=pagination,
                           suppliers=suppliers,
+                          categories=categories,
                           stats=stats,
                           search=search,
                           supplier_id=supplier_id,
+                          category_id=category_id_filter,
                           sort_by=sort_by,
                           sort_order=sort_order)
 
@@ -62,8 +69,9 @@ def index(company_id):
 def create(company_id):
     company = resolve_company(company_id)
     company_id = company.id
-    from app.models import Warehouse
+    from app.models import Warehouse, Category
     suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
+    categories = Category.query.filter_by(company_id=company_id).order_by(Category.name).all()
     warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
     selected_id = request.args.get('supplier_id', type=int)
     
@@ -78,6 +86,8 @@ def create(company_id):
                 cost_price=float(request.form.get('cost_price', 0.0) or 0.0),
                 discount=float(request.form.get('discount', 0.0) or 0.0),
                 supplier_id=request.form.get('supplier_id'),
+                category_id=request.form.get('category_id'),
+                is_service=request.form.get('is_service') == 'on',
                 warehouse_id=request.form.get('warehouse_id'),
                 sku=request.form.get('sku', '').strip() or None
             )
@@ -86,14 +96,93 @@ def create(company_id):
             
         except ValueError as e:
             flash(str(e), 'error')
-            return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, warehouses=warehouses, selected_id=selected_id, item=None, form_data=request.form)
+            return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, categories=categories, warehouses=warehouses, selected_id=selected_id, item=None, form_data=request.form)
         except SQLAlchemyError as e:
             db.session.rollback()
             flash(_('An error occurred while creating the inventory item'), 'error')
             current_app.logger.error(f"Database error: {str(e)}")
-            return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, warehouses=warehouses, selected_id=selected_id, item=None, form_data=request.form)
+            return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, categories=categories, warehouses=warehouses, selected_id=selected_id, item=None, form_data=request.form)
     
-    return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, warehouses=warehouses, selected_id=selected_id, item=None, form_data=None)
+    return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, categories=categories, warehouses=warehouses, selected_id=selected_id, item=None, form_data=None)
+
+# --- Category Routes ---
+
+@inventory.route('/<string:company_id>/inventory/categories', methods=['GET'])
+@login_required
+@limiter.exempt
+def categories(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
+    from app.inventory.services.category_service import CategoryService
+    categories = CategoryService.get_categories(company_id)
+    return render_template('inventory/categories.html', company_id=company_id, categories=categories)
+
+@inventory.route('/<string:company_id>/inventory/categories/create', methods=['GET', 'POST'])
+@login_required
+@limiter.exempt
+def create_category(company_id):
+    company = resolve_company(company_id)
+    company_id = company.id
+    from app.inventory.services.category_service import CategoryService
+    
+    if request.method == 'POST':
+        try:
+            name = request.form.get('name', '').strip()
+            description = request.form.get('description', '').strip()
+            
+            CategoryService.create_category(company_id, name, description)
+            flash(_('Category created successfully'), 'success')
+            return redirect(url_for('inventory.categories', company_id=company_id))
+        except ValueError as e:
+            flash(str(e), 'error')
+            return render_template('inventory/category_form.html', company_id=company_id, category=None, form_data=request.form)
+            
+    return render_template('inventory/category_form.html', company_id=company_id, category=None, form_data=None)
+
+@inventory.route('/<string:company_id>/inventory/categories/<int:category_id>/edit', methods=['GET', 'POST'])
+@login_required
+@limiter.exempt
+def edit_category(company_id, category_id):
+    company = resolve_company(company_id)
+    company_id = company.id
+    from app.inventory.services.category_service import CategoryService
+    
+    category = CategoryService.get_category(company_id, category_id)
+    if not category:
+        from flask import abort; abort(404)
+        
+    if request.method == 'POST':
+        try:
+            name = request.form.get('name', '').strip()
+            description = request.form.get('description', '').strip()
+            
+            CategoryService.update_category(company_id, category_id, name, description)
+            flash(_('Category updated successfully'), 'success')
+            return redirect(url_for('inventory.categories', company_id=company_id))
+        except ValueError as e:
+            flash(str(e), 'error')
+            return render_template('inventory/category_form.html', company_id=company_id, category=category, form_data=request.form)
+            
+    return render_template('inventory/category_form.html', company_id=company_id, category=category, form_data=None)
+
+@inventory.route('/<string:company_id>/inventory/categories/<int:category_id>/delete', methods=['POST'])
+@login_required
+@limiter.exempt
+def delete_category(company_id, category_id):
+    company = resolve_company(company_id)
+    company_id = company.id
+    from app.inventory.services.category_service import CategoryService
+    
+    try:
+        CategoryService.delete_category(company_id, category_id)
+        flash(_('Category deleted successfully'), 'success')
+    except ValueError as e:
+        flash(str(e), 'error')
+    except Exception as e:
+        flash(_('An error occurred while deleting the category'), 'error')
+        current_app.logger.error(f"Category delete error: {str(e)}")
+        
+    return redirect(url_for('inventory.categories', company_id=company_id))
 
 @inventory.route('/<string:company_id>/inventory/<string:sku>')
 @login_required
@@ -191,12 +280,13 @@ def edit(company_id, sku):
     item = InventoryService.get_item_by_sku(company_id, sku)
     if not item:
         from flask import abort; abort(404)
-    from app.models import Warehouse
+    from app.models import Warehouse, Category
     suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
+    categories = Category.query.filter_by(company_id=company_id).order_by(Category.name).all()
     warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
     selected_id = request.args.get('supplier_id', type=int)
     
-    return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, warehouses=warehouses, selected_id=selected_id, item=item, form_data=None)
+    return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, categories=categories, warehouses=warehouses, selected_id=selected_id, item=item, form_data=None)
 
 @inventory.route('/<string:company_id>/inventory/<string:sku>/update_item', methods=['POST'])
 @login_required
@@ -207,8 +297,9 @@ def update(company_id, sku):
     item = InventoryService.get_item_by_sku(company_id, sku)
     if not item:
         from flask import abort; abort(404)
-    from app.models import Warehouse
+    from app.models import Warehouse, Category
     suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
+    categories = Category.query.filter_by(company_id=company_id).order_by(Category.name).all()
     warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
     
     try:
@@ -222,6 +313,8 @@ def update(company_id, sku):
             cost_price=float(request.form.get('cost_price', 0.0) or 0.0),
             discount=float(request.form.get('discount', 0.0) or 0.0),
             supplier_id=request.form.get('supplier_id'),
+            category_id=request.form.get('category_id'),
+            is_service=request.form.get('is_service') == 'on',
             sku=request.form.get('sku', '').strip() or None
         )
         
@@ -232,12 +325,12 @@ def update(company_id, sku):
         
     except ValueError as e:
         flash(str(e), 'error')
-        return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, warehouses=warehouses, item=item, form_data=request.form)
+        return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, categories=categories, warehouses=warehouses, item=item, form_data=request.form)
     except SQLAlchemyError as e:
         db.session.rollback()
         flash(_('An error occurred while updating the inventory item'), 'error')
         current_app.logger.error(f"Database error: {str(e)}")
-        return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, warehouses=warehouses, item=item, form_data=request.form)
+        return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, categories=categories, warehouses=warehouses, item=item, form_data=request.form)
 
 @inventory.route('/<string:company_id>/inventory/<string:sku>/delete_item', methods=['POST'])
 @login_required

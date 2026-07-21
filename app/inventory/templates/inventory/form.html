@@ -15,11 +15,32 @@
 {% block page_title %}{{ 'Nuevo' if not item else 'Editar' }} Producto{% endblock %}
 
 {% block content %}
+{# ─────────── hidden data for JS ─────────── #}
+<script id="inv-form-data" type="application/json">
+{
+  "suppliers": [
+    {% for s in suppliers %}
+    { "id": {{ s.id }}, "name": {{ s.name | tojson }} }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ],
+  "categories": [
+    {% for c in categories %}
+    { "id": {{ c.id }}, "name": {{ c.name | tojson }}, "description": {{ (c.description or '') | tojson }} }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ],
+  "initialSupplierId": {{ ((form_data and form_data.get('supplier_id')) or (item.supplier_id if item else '') or '') | tojson }},
+  "initialCategoryId": {{ ((form_data and form_data.get('category_id')) or (item.category_id if item else '') or '') | tojson }},
+  "isService": {{ ((form_data and form_data.get('is_service') == 'on') or (item.is_service if item else false)) | tojson }}
+}
+</script>
+
 <form method="POST"
   action="{{ url_for('inventory.update', company_id=company_id, sku=item.sku) if item else url_for('inventory.create', company_id=company_id) }}"
   data-drawer-form
   data-success-message="{{ 'Producto creado exitosamente' if not item else 'Producto actualizado exitosamente' }}">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <input type="hidden" name="supplier_id" id="supplier_id_hidden">
+  <input type="hidden" name="category_id" id="category_id_hidden">
 
   <div class="p-4 md:p-6 space-y-4">
     <h2 class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Datos del Producto</h2>
@@ -53,12 +74,29 @@
       <p class="mt-1 text-xs text-slate-400">Ej: BOTELLA-500ML-39. Se genera automáticamente a partir del nombre si se deja en blanco.</p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    {# ── is_service toggle ── #}
+    <div class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 bg-slate-50 cursor-pointer" id="service-toggle-row">
+      <div class="relative flex items-center">
+        <input type="checkbox" name="is_service" id="is_service_checkbox"
+          class="sr-only peer">
+        <div id="service-track"
+          class="w-10 h-5 rounded-full transition-colors duration-200 bg-slate-300 peer-checked:bg-emerald-500 cursor-pointer"></div>
+        <div id="service-thumb"
+          class="absolute left-0.5 top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform duration-200 pointer-events-none"></div>
+      </div>
+      <div>
+        <p class="text-sm font-semibold text-slate-700">Es un Servicio</p>
+        <p class="text-xs text-slate-400">Los servicios no tienen control de stock</p>
+      </div>
+    </div>
+
+    {# ── Quantity & Price (hidden when is_service) ── #}
+    <div id="quantity-section" class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div>
         <label class="block text-sm font-medium text-slate-700 mb-1.5">
           Cantidad <span class="text-rose-500">*</span>
         </label>
-        <input type="number" name="quantity" min="0" required
+        <input type="number" name="quantity" min="0" id="quantity-input"
           value="{{ (form_data and form_data.get('quantity')) or (item.quantity if item else '0') }}"
           class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors">
       </div>
@@ -99,31 +137,41 @@
       </div>
     </div>
 
+    {# ── Supplier Picker ── #}
     <div>
       <label class="block text-sm font-medium text-slate-700 mb-1.5">Proveedor</label>
-      <select name="supplier_id"
-        class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors bg-white">
-        <option value="">Sin proveedor</option>
-        {% for supplier in suppliers %}
-        <option value="{{ supplier.id }}" {{ 'selected' if (item and item.supplier_id==supplier.id) or
-          (selected_id==supplier.id) else '' }}>
-          {{ supplier.name }}
-        </option>
-        {% endfor %}
-      </select>
+      <button type="button" id="supplier-picker-btn"
+        class="w-full flex items-center justify-between px-3 py-2 border border-slate-300 rounded-lg text-sm text-left hover:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors bg-white">
+        <span id="supplier-display-label" class="text-slate-500">Sin proveedor</span>
+        <svg class="w-4 h-4 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"/>
+        </svg>
+      </button>
+    </div>
+
+    {# ── Category Picker ── #}
+    <div>
+      <label class="block text-sm font-medium text-slate-700 mb-1.5">Categoría</label>
+      <button type="button" id="category-picker-btn"
+        class="w-full flex items-center justify-between px-3 py-2 border border-slate-300 rounded-lg text-sm text-left hover:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors bg-white">
+        <span id="category-display-label" class="text-slate-500">Sin categoría</span>
+        <svg class="w-4 h-4 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/>
+        </svg>
+      </button>
     </div>
 
     {% if not item %}
-    <div>
+    <div id="warehouse-section">
       <label class="block text-sm font-medium text-slate-700 mb-1.5">Almacén Inicial</label>
-      <select name="warehouse_id"
-        class="w-full px-3 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors bg-white">
-        {% for warehouse in warehouses %}
-        <option value="{{ warehouse.id }}" {{ 'selected' if warehouse.name == 'Sede Principal' else '' }}>
-          {{ warehouse.name }}
-        </option>
-        {% endfor %}
-      </select>
+      <button type="button" id="warehouse-picker-btn"
+        class="w-full flex items-center justify-between px-3 py-2 border border-slate-300 rounded-lg text-sm text-left hover:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-colors bg-white">
+        <span id="warehouse-display-label" class="text-slate-500">Seleccionar almacén</span>
+        <svg class="w-4 h-4 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"/>
+        </svg>
+      </button>
+      <input type="hidden" name="warehouse_id" id="warehouse_id_hidden">
       <p class="mt-1 text-xs text-slate-500">Seleccione el almacén donde se registrará la cantidad inicial.</p>
     </div>
     {% endif %}
@@ -140,4 +188,261 @@
     </button>
   </div>
 </form>
+
+{# ═══════════════ SUPPLIER PICKER MODAL ═══════════════ #}
+<div id="supplier-modal" class="fixed inset-0 z-50 hidden" aria-modal="true" role="dialog">
+  <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" id="supplier-modal-backdrop"></div>
+  <div class="absolute inset-x-0 bottom-0 sm:inset-0 sm:flex sm:items-center sm:justify-center sm:p-4">
+    <div class="relative bg-white rounded-t-2xl sm:rounded-2xl w-full sm:max-w-sm shadow-2xl flex flex-col max-h-[70vh]">
+      <div class="flex items-center justify-between px-5 pt-5 pb-3 border-b border-slate-100 flex-shrink-0">
+        <h3 class="text-sm font-bold text-slate-800">Seleccionar Proveedor</h3>
+        <button type="button" id="supplier-modal-close" class="text-slate-400 hover:text-slate-700 transition-colors p-1 rounded-lg hover:bg-slate-100">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="px-4 py-3 border-b border-slate-100 flex-shrink-0">
+        <div class="relative">
+          <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <input type="text" id="supplier-search-input" placeholder="Buscar proveedor..."
+            class="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+        </div>
+      </div>
+      <div class="overflow-y-auto flex-1 py-2" id="supplier-list">
+        <button type="button" class="supplier-option w-full text-left px-5 py-2.5 text-sm hover:bg-slate-50 transition-colors text-slate-500 italic" data-id="" data-name="">
+          Sin proveedor
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# ═══════════════ CATEGORY PICKER MODAL ═══════════════ #}
+<div id="category-modal" class="fixed inset-0 z-50 hidden" aria-modal="true" role="dialog">
+  <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" id="category-modal-backdrop"></div>
+  <div class="absolute inset-x-0 bottom-0 sm:inset-0 sm:flex sm:items-center sm:justify-center sm:p-4">
+    <div class="relative bg-white rounded-t-2xl sm:rounded-2xl w-full sm:max-w-sm shadow-2xl flex flex-col max-h-[70vh]">
+      <div class="flex items-center justify-between px-5 pt-5 pb-3 border-b border-slate-100 flex-shrink-0">
+        <h3 class="text-sm font-bold text-slate-800">Seleccionar Categoría</h3>
+        <button type="button" id="category-modal-close" class="text-slate-400 hover:text-slate-700 transition-colors p-1 rounded-lg hover:bg-slate-100">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="px-4 py-3 border-b border-slate-100 flex-shrink-0">
+        <div class="relative">
+          <svg class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <input type="text" id="category-search-input" placeholder="Buscar categoría..."
+            class="w-full pl-9 pr-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+        </div>
+      </div>
+      <div class="overflow-y-auto flex-1 py-2" id="category-list">
+        <button type="button" class="category-option w-full text-left px-5 py-2.5 text-sm hover:bg-slate-50 transition-colors text-slate-500 italic" data-id="" data-name="">
+          Sin categoría
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# ═══════════════ WAREHOUSE PICKER MODAL ═══════════════ #}
+{% if not item %}
+<div id="warehouse-modal" class="fixed inset-0 z-50 hidden" aria-modal="true" role="dialog">
+  <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" id="warehouse-modal-backdrop"></div>
+  <div class="absolute inset-x-0 bottom-0 sm:inset-0 sm:flex sm:items-center sm:justify-center sm:p-4">
+    <div class="relative bg-white rounded-t-2xl sm:rounded-2xl w-full sm:max-w-sm shadow-2xl flex flex-col max-h-[60vh]">
+      <div class="flex items-center justify-between px-5 pt-5 pb-3 border-b border-slate-100 flex-shrink-0">
+        <h3 class="text-sm font-bold text-slate-800">Almacén Inicial</h3>
+        <button type="button" id="warehouse-modal-close" class="text-slate-400 hover:text-slate-700 transition-colors p-1 rounded-lg hover:bg-slate-100">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="overflow-y-auto flex-1 py-2" id="warehouse-list">
+        {% for warehouse in warehouses %}
+        <button type="button" class="warehouse-option w-full text-left px-5 py-2.5 text-sm hover:bg-slate-50 transition-colors"
+          data-id="{{ warehouse.id }}" data-name="{{ warehouse.name }}"
+          {% if warehouse.name == 'Sede Principal' %}data-default="true"{% endif %}>
+          <span class="font-medium text-slate-800">{{ warehouse.name }}</span>
+        </button>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<script>
+(function() {
+  'use strict';
+
+  const raw = document.getElementById('inv-form-data');
+  const data = JSON.parse(raw ? raw.textContent : '{}');
+  const suppliers = data.suppliers || [];
+  const categories = data.categories || [];
+  let initialSupplierId = data.initialSupplierId ? String(data.initialSupplierId) : '';
+  let initialCategoryId = data.initialCategoryId ? String(data.initialCategoryId) : '';
+  const isServiceInit = data.isService || false;
+
+  // ── Service Toggle ──
+  const serviceCheckbox = document.getElementById('is_service_checkbox');
+  const serviceTrack    = document.getElementById('service-track');
+  const serviceThumb    = document.getElementById('service-thumb');
+  const quantitySection = document.getElementById('quantity-section');
+  const warehouseSection = document.getElementById('warehouse-section');
+  const toggleRow       = document.getElementById('service-toggle-row');
+
+  function applyServiceState(checked) {
+    serviceCheckbox.checked = checked;
+    if (checked) {
+      serviceTrack.classList.replace('bg-slate-300', 'bg-emerald-500');
+      serviceThumb.style.transform = 'translateX(20px)';
+      if (quantitySection) quantitySection.style.display = 'none';
+      if (warehouseSection) warehouseSection.style.display = 'none';
+    } else {
+      serviceTrack.classList.replace('bg-emerald-500', 'bg-slate-300');
+      serviceThumb.style.transform = '';
+      if (quantitySection) quantitySection.style.display = '';
+      if (warehouseSection) warehouseSection.style.display = '';
+    }
+  }
+  applyServiceState(isServiceInit);
+  toggleRow.addEventListener('click', () => applyServiceState(!serviceCheckbox.checked));
+
+  // ── Generic modal helpers ──
+  function openModal(id) {
+    const m = document.getElementById(id);
+    if (m) { m.classList.remove('hidden'); document.body.style.overflow = 'hidden'; }
+  }
+  function closeModal(id) {
+    const m = document.getElementById(id);
+    if (m) { m.classList.add('hidden'); document.body.style.overflow = ''; }
+  }
+  function makeSearchFilter(inputId, optionClass) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    input.addEventListener('input', () => {
+      const q = input.value.toLowerCase();
+      document.querySelectorAll('.' + optionClass).forEach(btn => {
+        const name = (btn.dataset.name || '').toLowerCase();
+        btn.style.display = name.includes(q) || btn.dataset.id === '' ? '' : 'none';
+      });
+    });
+  }
+
+  // ── Supplier Modal ──
+  const supplierHidden  = document.getElementById('supplier_id_hidden');
+  const supplierDisplay = document.getElementById('supplier-display-label');
+  const supplierList    = document.getElementById('supplier-list');
+
+  suppliers.forEach(s => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'supplier-option w-full text-left px-5 py-2.5 text-sm hover:bg-slate-50 transition-colors font-medium text-slate-800';
+    btn.dataset.id   = s.id;
+    btn.dataset.name = s.name;
+    btn.textContent  = s.name;
+    supplierList.appendChild(btn);
+  });
+
+  function selectSupplier(id, name) {
+    supplierHidden.value = id;
+    supplierDisplay.textContent = name || 'Sin proveedor';
+    supplierDisplay.classList.toggle('text-slate-500', !id);
+    supplierDisplay.classList.toggle('text-slate-800', !!id);
+    closeModal('supplier-modal');
+  }
+
+  supplierList.addEventListener('click', e => {
+    const btn = e.target.closest('.supplier-option');
+    if (btn) selectSupplier(btn.dataset.id, btn.dataset.name);
+  });
+  document.getElementById('supplier-picker-btn').addEventListener('click', () => {
+    document.getElementById('supplier-search-input').value = '';
+    document.querySelectorAll('.supplier-option').forEach(b => b.style.display = '');
+    openModal('supplier-modal');
+  });
+  document.getElementById('supplier-modal-close').addEventListener('click', () => closeModal('supplier-modal'));
+  document.getElementById('supplier-modal-backdrop').addEventListener('click', () => closeModal('supplier-modal'));
+  makeSearchFilter('supplier-search-input', 'supplier-option');
+
+  // Set initial supplier
+  if (initialSupplierId) {
+    const found = suppliers.find(s => String(s.id) === initialSupplierId);
+    if (found) selectSupplier(found.id, found.name);
+  }
+
+  // ── Category Modal ──
+  const categoryHidden  = document.getElementById('category_id_hidden');
+  const categoryDisplay = document.getElementById('category-display-label');
+  const categoryList    = document.getElementById('category-list');
+
+  categories.forEach(c => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'category-option w-full text-left px-5 py-2.5 text-sm hover:bg-slate-50 transition-colors';
+    btn.dataset.id   = c.id;
+    btn.dataset.name = c.name;
+    btn.innerHTML = `<span class="font-medium text-slate-800">${c.name}</span>${c.description ? `<p class="text-xs text-slate-400 mt-0.5">${c.description}</p>` : ''}`;
+    categoryList.appendChild(btn);
+  });
+
+  function selectCategory(id, name) {
+    categoryHidden.value = id;
+    categoryDisplay.textContent = name || 'Sin categoría';
+    categoryDisplay.classList.toggle('text-slate-500', !id);
+    categoryDisplay.classList.toggle('text-slate-800', !!id);
+    closeModal('category-modal');
+  }
+
+  categoryList.addEventListener('click', e => {
+    const btn = e.target.closest('.category-option');
+    if (btn) selectCategory(btn.dataset.id, btn.dataset.name);
+  });
+  document.getElementById('category-picker-btn').addEventListener('click', () => {
+    document.getElementById('category-search-input').value = '';
+    document.querySelectorAll('.category-option').forEach(b => b.style.display = '');
+    openModal('category-modal');
+  });
+  document.getElementById('category-modal-close').addEventListener('click', () => closeModal('category-modal'));
+  document.getElementById('category-modal-backdrop').addEventListener('click', () => closeModal('category-modal'));
+  makeSearchFilter('category-search-input', 'category-option');
+
+  // Set initial category
+  if (initialCategoryId) {
+    const found = categories.find(c => String(c.id) === initialCategoryId);
+    if (found) selectCategory(found.id, found.name);
+  }
+
+  // ── Warehouse Modal ──
+  const whHidden  = document.getElementById('warehouse_id_hidden');
+  const whDisplay = document.getElementById('warehouse-display-label');
+  const whPickerBtn = document.getElementById('warehouse-picker-btn');
+
+  if (whPickerBtn) {
+    // Auto-select default warehouse
+    const defaultWh = document.querySelector('.warehouse-option[data-default="true"]');
+    if (defaultWh) {
+      whHidden.value = defaultWh.dataset.id;
+      whDisplay.textContent = defaultWh.dataset.name;
+      whDisplay.classList.remove('text-slate-500');
+      whDisplay.classList.add('text-slate-800');
+    }
+
+    document.getElementById('warehouse-list').addEventListener('click', e => {
+      const btn = e.target.closest('.warehouse-option');
+      if (!btn) return;
+      whHidden.value = btn.dataset.id;
+      whDisplay.textContent = btn.dataset.name;
+      whDisplay.classList.remove('text-slate-500');
+      whDisplay.classList.add('text-slate-800');
+      closeModal('warehouse-modal');
+    });
+    whPickerBtn.addEventListener('click', () => openModal('warehouse-modal'));
+    document.getElementById('warehouse-modal-close').addEventListener('click', () => closeModal('warehouse-modal'));
+    document.getElementById('warehouse-modal-backdrop').addEventListener('click', () => closeModal('warehouse-modal'));
+  }
+})();
+</script>
 {% endblock %}

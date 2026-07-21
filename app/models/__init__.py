@@ -6,6 +6,7 @@ from .role import Role
 from .permission import Permission
 from .user import User
 from .contact import Contact
+from .category import Category
 from .inventory_item import InventoryItem
 from .purchase_order import PurchaseOrder
 from .purchase_order_item import PurchaseOrderItem
@@ -41,7 +42,7 @@ __all__ = [
     'EmployeeClass', 'PayPeriod', 'LeaveType', 'LeaveStatus', 'PTOAccrualPeriod',
     'ExpenseStatus', 'TransactionType',
     'role_permissions', 'user_companies', 'expense_tags', 'ledger_entry_tags',
-    'Company', 'Role', 'Permission', 'User', 'Contact',
+    'Company', 'Role', 'Permission', 'User', 'Contact', 'Category',
     'InventoryItem', 'PurchaseOrder', 'PurchaseOrderItem',
     'Document', 'DocumentItem', 'Payment', 'Report', 'Notification',
     'StockMovement', 'DocumentSequence',
