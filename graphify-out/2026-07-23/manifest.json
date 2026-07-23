@@ -230,8 +230,8 @@
     "semantic_hash": ""
   },
   "app/middleware/rbac.py": {
-    "mtime": 1784777632.8489985,
-    "ast_hash": "ec3ebbf653f1413e9aa8767d72d4fe10",
+    "mtime": 1784836069.871264,
+    "ast_hash": "a10d9964c307a2ef5db27acf38c7ce91",
     "semantic_hash": ""
   },
   "app/models/__init__.py": {
@@ -1120,8 +1120,8 @@
     "semantic_hash": ""
   },
   "app/accounting/services/project_service.py": {
-    "mtime": 1784826138.4556077,
-    "ast_hash": "6c065db4f8d85f544d327babde342f4c",
+    "mtime": 1784837340.17479,
+    "ast_hash": "6071bb539155b95e519e69fc413b8a31",
     "semantic_hash": ""
   },
   "app/invoices/services/accounting_integration.py": {
@@ -1295,8 +1295,8 @@
     "semantic_hash": ""
   },
   "app/support/routes.py": {
-    "mtime": 1783706423.2959487,
-    "ast_hash": "23995f97a10f0461da63f7ca34ef3429",
+    "mtime": 1784836762.374839,
+    "ast_hash": "222157700b412333e11222ed165abbfc",
     "semantic_hash": ""
   },
   "app/support/templates/support/audit_logs.html": {
@@ -1305,8 +1305,8 @@
     "semantic_hash": ""
   },
   "app/support/templates/support/base_support.html": {
-    "mtime": 1783706550.6425772,
-    "ast_hash": "4b41e78dbb78b79346af17ed5c4a4d54",
+    "mtime": 1784836564.182528,
+    "ast_hash": "c91a18d950a3f3a1dde6601d03678eb9",
     "semantic_hash": ""
   },
   "app/support/templates/support/dashboard.html": {
@@ -1402,6 +1402,16 @@
   "app/approvals/templates/approvals/index.html": {
     "mtime": 1784779121.4853852,
     "ast_hash": "c2ba7db009f2e01308a6558f0b2a673e",
+    "semantic_hash": ""
+  },
+  "app/support/templates/support/database_browser.html": {
+    "mtime": 1784837031.794968,
+    "ast_hash": "40a764c71a51e684921ac17105b73af3",
+    "semantic_hash": ""
+  },
+  "app/support/templates/support/database_record_form.html": {
+    "mtime": 1784836544.6189044,
+    "ast_hash": "299c3c26b15bc9c03da603f290164fca",
     "semantic_hash": ""
   }
 }
