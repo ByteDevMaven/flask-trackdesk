@@ -1,7 +1,13 @@
+import base64
 import json
+from datetime import date, datetime, time
+from decimal import Decimal
+from uuid import UUID
 from flask import render_template, request, redirect, url_for, flash, current_app, abort
 from flask_login import current_user, login_required
-from sqlalchemy import or_, text, inspect
+from sqlalchemy import MetaData, Table, and_, delete, func, insert, inspect, select, update
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.sql.sqltypes import Boolean, Date, DateTime, Float, Integer, JSON, Numeric, Time
 from app.extensions import db
 from . import support
 from app.models.base import BaseModel
@@ -16,6 +22,119 @@ def get_all_models():
         if issubclass(cls, BaseModel) and cls != BaseModel:
             models[cls.__tablename__] = cls
     return models
+
+def get_database_tables():
+    """Return the database's real tables, not just ORM model tables."""
+    return sorted(inspect(db.engine).get_table_names())
+
+
+def get_database_table(table_name):
+    """Reflect one whitelisted table so user input can never name arbitrary SQL."""
+    if table_name not in get_database_tables():
+        abort(404)
+    return Table(table_name, MetaData(), autoload_with=db.engine)
+
+
+def serialize_value(value):
+    if isinstance(value, (datetime, date, time)):
+        return value.isoformat()
+    if isinstance(value, Decimal):
+        return str(value)
+    if isinstance(value, UUID):
+        return str(value)
+    return value
+
+
+def field_value(value):
+    value = serialize_value(value)
+    if isinstance(value, (dict, list)):
+        return json.dumps(value, ensure_ascii=False, indent=2)
+    return '' if value is None else str(value)
+
+
+def input_kind(column):
+    if isinstance(column.type, Boolean):
+        return 'boolean'
+    if isinstance(column.type, JSON):
+        return 'json'
+    if isinstance(column.type, DateTime):
+        return 'datetime'
+    return 'text'
+
+
+def coerce_value(column, raw_value, force_null=False):
+    """Convert browser input using the reflected column type before binding it."""
+    if force_null:
+        if column.nullable:
+            return None
+        raise ValueError(f'"{column.name}" no permite valores nulos.')
+    if raw_value == '' and column.nullable:
+        return None
+    if isinstance(column.type, Boolean):
+        return raw_value in ('1', 'true', 'True', 'on', 'yes')
+    if isinstance(column.type, JSON):
+        return json.loads(raw_value) if raw_value else None
+    if isinstance(column.type, DateTime):
+        return datetime.fromisoformat(raw_value)
+    if isinstance(column.type, Date):
+        return date.fromisoformat(raw_value)
+    if isinstance(column.type, Time):
+        return time.fromisoformat(raw_value)
+    if isinstance(column.type, Integer):
+        return int(raw_value)
+    if isinstance(column.type, (Float, Numeric)):
+        return Decimal(raw_value) if isinstance(column.type, Numeric) else float(raw_value)
+    try:
+        if column.type.python_type is UUID:
+            return UUID(raw_value)
+    except NotImplementedError:
+        pass
+    return raw_value
+
+
+def encode_primary_key(table, row):
+    values = [serialize_value(row[column.name]) for column in table.primary_key.columns]
+    return base64.urlsafe_b64encode(json.dumps(values).encode()).decode().rstrip('=')
+
+
+def primary_key_filters(table, key):
+    if len(table.primary_key.columns) == 0:
+        abort(400, 'Esta tabla no tiene clave primaria y no puede editarse de forma segura.')
+    try:
+        padded = key + '=' * (-len(key) % 4)
+        values = json.loads(base64.urlsafe_b64decode(padded.encode()).decode())
+    except (ValueError, UnicodeDecodeError, json.JSONDecodeError):
+        abort(400, 'Clave de registro no v?lida.')
+    columns = list(table.primary_key.columns)
+    if not isinstance(values, list) or len(values) != len(columns):
+        abort(400, 'Clave de registro no v?lida.')
+    return and_(*(column == coerce_value(column, str(value)) for column, value in zip(columns, values)))
+
+
+def database_fields(table, record=None, include_primary_key=False):
+    fields = []
+    for column in table.columns:
+        if column.computed or (column.primary_key and (not include_primary_key or column.autoincrement)):
+            continue
+        fields.append({
+            'column': column,
+            'value': field_value(record[column.name]) if record else '',
+            'kind': input_kind(column),
+            'required': not column.nullable and column.default is None and column.server_default is None,
+        })
+    return fields
+
+
+def support_audit(table_name, action, record_key, old_data=None, new_data=None):
+    """Core/reflected writes do not trigger ORM listeners, so record them explicitly."""
+    db.session.add(AuditLog(
+        user_id=current_user.id,
+        action=action,
+        table_name=table_name,
+        record_id=None,
+        old_data={'primary_key': record_key, **(old_data or {})},
+        new_data={'primary_key': record_key, **(new_data or {})},
+    ))
 
 @support.before_request
 @login_required
@@ -233,3 +352,107 @@ def record_view(table_name, record_id):
         record_data=record_data,
         audits=audits
     )
+
+@support.route('/database')
+def database_browser():
+    table_name = request.args.get('table_name', '')
+    page = max(request.args.get('page', 1, type=int), 1)
+    per_page = 50
+    tables = get_database_tables()
+    table = get_database_table(table_name) if table_name else None
+    rows, columns, total, can_modify = [], [], 0, False
+
+    if table is not None:
+        columns, can_modify = list(table.columns), len(table.primary_key.columns) > 0
+        total = db.session.execute(select(func.count()).select_from(table)).scalar_one()
+        result = db.session.execute(select(table).limit(per_page).offset((page - 1) * per_page)).mappings()
+        for row in result:
+            values = {column.name: serialize_value(row[column.name]) for column in columns}
+            rows.append({'values': values, 'key': encode_primary_key(table, row) if can_modify else None})
+
+    return render_template('support/database_browser.html', tables=tables, selected_table=table_name,
+                           table=table, columns=columns, rows=rows, total=total, page=page,
+                           per_page=per_page, can_modify=can_modify)
+
+
+@support.route('/database/<string:table_name>/new', methods=['GET', 'POST'])
+def database_new_record(table_name):
+    table = get_database_table(table_name)
+    if len(table.primary_key.columns) == 0:
+        abort(400, 'Esta tabla no tiene clave primaria y no puede modificarse de forma segura.')
+    fields = database_fields(table, include_primary_key=True)
+
+    if request.method == 'POST':
+        try:
+            values = {}
+            for field in fields:
+                column = field['column']
+                raw = request.form.get(column.name, '')
+                if column.primary_key and not raw and column.autoincrement:
+                    continue
+                values[column.name] = coerce_value(column, raw, f'null__{column.name}' in request.form)
+            result = db.session.execute(insert(table).values(**values))
+            key = list(result.inserted_primary_key) if result.inserted_primary_key else []
+            support_audit(table_name, 'SUPPORT_CREATE', key, new_data=values)
+            db.session.commit()
+            flash('Registro creado y registrado en auditor?a.', 'success')
+            return redirect(url_for('support.database_browser', table_name=table_name))
+        except (ValueError, SQLAlchemyError, json.JSONDecodeError) as error:
+            db.session.rollback()
+            flash(f'No se pudo crear el registro: {error}', 'error')
+
+    return render_template('support/database_record_form.html', table=table, table_name=table_name,
+                           fields=fields, record=None, record_key=None, mode='create')
+
+
+@support.route('/database/<string:table_name>/record/<string:record_key>', methods=['GET', 'POST'])
+def database_edit_record(table_name, record_key):
+    table = get_database_table(table_name)
+    filters = primary_key_filters(table, record_key)
+    record = db.session.execute(select(table).where(filters)).mappings().first()
+    if record is None:
+        abort(404)
+    fields = database_fields(table, record)
+
+    if request.method == 'POST':
+        try:
+            values = {
+                field['column'].name: coerce_value(field['column'], request.form.get(field['column'].name, ''),
+                                                    f"null__{field['column'].name}" in request.form)
+                for field in fields
+            }
+            old_data = {name: serialize_value(record[name]) for name in values}
+            db.session.execute(update(table).where(filters).values(**values))
+            support_audit(table_name, 'SUPPORT_UPDATE', record_key, old_data=old_data, new_data=values)
+            db.session.commit()
+            flash('Registro actualizado y registrado en auditor?a.', 'success')
+            return redirect(url_for('support.database_edit_record', table_name=table_name, record_key=record_key))
+        except (ValueError, SQLAlchemyError, json.JSONDecodeError) as error:
+            db.session.rollback()
+            flash(f'No se pudo actualizar el registro: {error}', 'error')
+
+    return render_template('support/database_record_form.html', table=table, table_name=table_name,
+                           fields=fields, record=record, record_key=record_key, mode='edit')
+
+
+@support.route('/database/<string:table_name>/record/<string:record_key>/delete', methods=['POST'])
+def database_delete_record(table_name, record_key):
+    table = get_database_table(table_name)
+    if request.form.get('confirmation') != table_name:
+        flash('Escribe el nombre exacto de la tabla para confirmar la eliminaci?n.', 'error')
+        return redirect(url_for('support.database_edit_record', table_name=table_name, record_key=record_key))
+    filters = primary_key_filters(table, record_key)
+    record = db.session.execute(select(table).where(filters)).mappings().first()
+    if record is None:
+        abort(404)
+    try:
+        old_data = {column.name: serialize_value(record[column.name]) for column in table.columns}
+        db.session.execute(delete(table).where(filters))
+        support_audit(table_name, 'SUPPORT_DELETE', record_key, old_data=old_data)
+        db.session.commit()
+        flash('Registro eliminado y registrado en auditor?a.', 'success')
+    except SQLAlchemyError as error:
+        db.session.rollback()
+        flash(f'No se pudo eliminar el registro: {error}', 'error')
+        return redirect(url_for('support.database_edit_record', table_name=table_name, record_key=record_key))
+    return redirect(url_for('support.database_browser', table_name=table_name))

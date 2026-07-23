@@ -1,0 +1,45 @@
+{% extends "support/base_support.html" %}
+{% block page_title %}Editor de Base de Datos{% endblock %}
+{% block content %}
+<div class="p-6 max-w-screen-2xl mx-auto space-y-6 overflow-y-auto h-full">
+  <div class="flex flex-col lg:flex-row gap-4 lg:items-end justify-between">
+    <div>
+      <h1 class="text-2xl font-bold text-slate-900">Editor de Base de Datos</h1>
+      <p class="text-sm text-slate-500 mt-1">Acceso directo para superadministradores. Cada cambio queda en auditor?a.</p>
+    </div>
+    {% if can_modify %}
+      <a href="{{ url_for('support.database_new_record', table_name=selected_table) }}" class="px-4 py-2 bg-rose-600 text-white rounded-lg text-sm font-semibold hover:bg-rose-700">Nuevo registro</a>
+    {% endif %}
+  </div>
+
+  <form method="GET" class="bg-white p-4 rounded-xl border border-slate-200 flex gap-3 items-end">
+    <div class="flex-1 max-w-md">
+      <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Tabla</label>
+      <select name="table_name" onchange="this.form.submit()" class="w-full rounded-lg border-slate-300">
+        <option value="">Selecciona una tabla</option>
+        {% for name in tables %}<option value="{{ name }}" {% if name == selected_table %}selected{% endif %}>{{ name }}</option>{% endfor %}
+      </select>
+    </div>
+  </form>
+
+  {% if selected_table %}
+  <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
+    Las tablas sin clave primaria se muestran como solo lectura. Las eliminaciones son permanentes y requieren confirmaci?n escrita.
+  </div>
+  <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+    <div class="p-4 border-b border-slate-200 flex justify-between text-sm text-slate-600"><span><strong>{{ selected_table }}</strong></span><span>{{ total }} registros</span></div>
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-sm"><thead class="bg-slate-50 text-left text-xs uppercase text-slate-500"><tr>
+        {% for column in columns %}<th class="px-4 py-3 whitespace-nowrap">{{ column.name }}</th>{% endfor %}<th class="px-4 py-3">Acciones</th>
+      </tr></thead><tbody class="divide-y divide-slate-100">
+        {% for row in rows %}<tr class="hover:bg-slate-50">
+          {% for column in columns %}<td class="px-4 py-3 max-w-xs truncate" title="{{ row.values[column.name] }}">{{ row.values[column.name] if row.values[column.name] is not none else 'null' }}</td>{% endfor %}
+          <td class="px-4 py-3">{% if row.key %}<a class="text-rose-700 font-semibold hover:underline" href="{{ url_for('support.database_edit_record', table_name=selected_table, record_key=row.key) }}">Editar</a>{% else %}<span class="text-slate-400">Solo lectura</span>{% endif %}</td>
+        </tr>{% else %}<tr><td colspan="{{ columns|length + 1 }}" class="px-4 py-10 text-center text-slate-400">No hay registros.</td></tr>{% endfor %}
+      </tbody></table>
+    </div>
+    {% if total > per_page %}<div class="p-4 border-t border-slate-200 flex justify-between text-sm"><a class="{{ 'pointer-events-none text-slate-300' if page == 1 else 'text-rose-700 font-semibold' }}" href="{{ url_for('support.database_browser', table_name=selected_table, page=page-1) }}">? Anterior</a><span>P?gina {{ page }}</span><a class="{{ 'pointer-events-none text-slate-300' if page * per_page >= total else 'text-rose-700 font-semibold' }}" href="{{ url_for('support.database_browser', table_name=selected_table, page=page+1) }}">Siguiente ?</a></div>{% endif %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

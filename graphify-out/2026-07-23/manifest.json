@@ -75,8 +75,8 @@
     "semantic_hash": "8e7082785fa69badea7ef5502dafe154"
   },
   "app/companies/services/company_service.py": {
-    "mtime": 1781668909.5713081,
-    "ast_hash": "3112ece71e80e1304b2490607bc48894",
+    "mtime": 1784826104.6545856,
+    "ast_hash": "f601d90ee4757caf55964baee03ceeab",
     "semantic_hash": ""
   },
   "app/contacts/__init__.py": {
@@ -160,8 +160,8 @@
     "semantic_hash": ""
   },
   "app/inventory/services/inventory_service.py": {
-    "mtime": 1784776623.6494105,
-    "ast_hash": "1fb731bb474bcb6a0373e949fdd350ec",
+    "mtime": 1784826494.166291,
+    "ast_hash": "cdf3d1221194a7c4d6b41e9a609ac00d",
     "semantic_hash": ""
   },
   "app/inventory/static/js/barcode.js": {
@@ -690,8 +690,8 @@
     "semantic_hash": "678e680ea706aec9ba48089373dbabe5"
   },
   "app/accounting/templates/accounting/partials/account_form.html": {
-    "mtime": 1781668934.5144181,
-    "ast_hash": "774bfd29984c0e62c72634e63509a5dd",
+    "mtime": 1784826293.7316084,
+    "ast_hash": "7ff57db6cf18ce2289657fe419c7ff02",
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/partials/expense_form.html": {
@@ -1085,9 +1085,9 @@
     "semantic_hash": "9292f2a033a717d20f76d7ad34d585b1"
   },
   "app/accounting/services/_balance.py": {
-    "mtime": 1781494341.9393077,
-    "ast_hash": "d5c19d482509bee2acb94e6392678482",
-    "semantic_hash": "d5c19d482509bee2acb94e6392678482"
+    "mtime": 1784826121.1810544,
+    "ast_hash": "5c3ffedff0e891a3725c9ca4c07d5215",
+    "semantic_hash": ""
   },
   "app/accounting/services/_helpers.py": {
     "mtime": 1781752278.402134,
@@ -1095,8 +1095,8 @@
     "semantic_hash": ""
   },
   "app/accounting/services/account_service.py": {
-    "mtime": 1781668893.0535326,
-    "ast_hash": "583eb984c8b1168cc4983348354d6e20",
+    "mtime": 1784826046.3892534,
+    "ast_hash": "55bc53f7ae0562dcc6330fbfcaadefb5",
     "semantic_hash": ""
   },
   "app/accounting/services/dashboard_service.py": {
@@ -1120,9 +1120,9 @@
     "semantic_hash": ""
   },
   "app/accounting/services/project_service.py": {
-    "mtime": 1781494351.7227635,
-    "ast_hash": "3eff98f328136dd78fee373395d73e5c",
-    "semantic_hash": "3eff98f328136dd78fee373395d73e5c"
+    "mtime": 1784826138.4556077,
+    "ast_hash": "6c065db4f8d85f544d327babde342f4c",
+    "semantic_hash": ""
   },
   "app/invoices/services/accounting_integration.py": {
     "mtime": 1783571687.0786428,
