@@ -374,6 +374,20 @@ class ProjectService:
                 report_data['equity'].get(retained_key, 0.0) + net_income
             )
 
+            # Offset AR (Unpaid Revenue) -> Increases Equity to balance Assets
+            receivable_accounts = [k for k, v in report_data['asset'].items() if 'cobrar' in k.lower() or 'receivable' in k.lower()]
+            if receivable_accounts:
+                receivable_val = sum(report_data['asset'][k] for k in receivable_accounts)
+                if receivable_val != 0:
+                    report_data['equity']['Ingresos Devengados (Cuentas por Cobrar)'] = receivable_val
+
+            # Offset Inventory -> Increases Equity to balance Assets
+            inventory_accounts = [k for k, v in report_data['asset'].items() if 'inventario' in k.lower() or 'inventory' in k.lower()]
+            if inventory_accounts:
+                inventory_val = sum(report_data['asset'][k] for k in inventory_accounts)
+                if inventory_val != 0:
+                    report_data['equity']['Ajuste de Capital (Inventario)'] = inventory_val
+
             total_asset = sum(report_data['asset'].values())
             total_liability = sum(report_data['liability'].values())
             total_equity = sum(report_data['equity'].values())

@@ -415,7 +415,7 @@ def seed_default_roles_and_permissions(db, Role, Permission):
             'contacts.view',   'contacts.manage',
             'inventory.view',  'inventory.manage',
             'orders.view',     'orders.manage',
-            'invoices.view',
+            'invoices.view',   'invoices.manage',
             'payments.view',
             'companies.view',
         ],
