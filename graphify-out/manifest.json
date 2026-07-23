@@ -805,8 +805,8 @@
     "semantic_hash": "009dd26e17ea098a5e69ddd0ba335f55"
   },
   "app/inventory/templates/inventory/drawer_adjust.html": {
-    "mtime": 1784777646.7878835,
-    "ast_hash": "537d4fc02a9abde83af40cd1d808b35b",
+    "mtime": 1784783904.5838394,
+    "ast_hash": "79730123ba5b7c2dfc94dd2b764d7790",
     "semantic_hash": ""
   },
   "app/inventory/templates/inventory/drawer_transfer.html": {
