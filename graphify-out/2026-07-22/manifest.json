@@ -85,9 +85,9 @@
     "semantic_hash": "1b5857bbfb98168997d1b06f54d02e82"
   },
   "app/contacts/routes.py": {
-    "mtime": 1784776408.948289,
-    "ast_hash": "6df3272d07dde3007a812b9c67f2500e",
-    "semantic_hash": ""
+    "mtime": 1780890076.3905945,
+    "ast_hash": "569562a4197c80d44212d94bc01fa144",
+    "semantic_hash": "569562a4197c80d44212d94bc01fa144"
   },
   "app/contacts/services/__init__.py": {
     "mtime": 1780276555.2401526,
@@ -100,9 +100,9 @@
     "semantic_hash": "046f05c8913958b2a682ba0b509ceba8"
   },
   "app/context_processors.py": {
-    "mtime": 1784776736.0323844,
-    "ast_hash": "40ca503c7c026e5b3a0acd9112e9d69c",
-    "semantic_hash": ""
+    "mtime": 1780966305.6913683,
+    "ast_hash": "46c92af8b636029c7b71a9f5783b4bb1",
+    "semantic_hash": "46c92af8b636029c7b71a9f5783b4bb1"
   },
   "app/dashboard/__init__.py": {
     "mtime": 1779222751.1728835,
@@ -110,9 +110,9 @@
     "semantic_hash": "1be4f6021705660567d58e82a81eb03d"
   },
   "app/dashboard/routes.py": {
-    "mtime": 1784776408.9515798,
-    "ast_hash": "4a182dec606442f40a1f1de5059d48ad",
-    "semantic_hash": ""
+    "mtime": 1780890388.0287528,
+    "ast_hash": "884ba9eacdf3e7081ba5f38a0bee9cbc",
+    "semantic_hash": "884ba9eacdf3e7081ba5f38a0bee9cbc"
   },
   "app/dashboard/services/__init__.py": {
     "mtime": 1780277032.6266155,
@@ -125,9 +125,9 @@
     "semantic_hash": "b63519bf200c7415d0bc05b135a8e386"
   },
   "app/extensions.py": {
-    "mtime": 1784776418.4457116,
-    "ast_hash": "cf63864fc8826d9b861255f5df211938",
-    "semantic_hash": ""
+    "mtime": 1780883361.7441647,
+    "ast_hash": "f805dea88a1504f4e8281567c7c895b1",
+    "semantic_hash": "f805dea88a1504f4e8281567c7c895b1"
   },
   "app/hooks.py": {
     "mtime": 1780890498.9617517,
@@ -150,8 +150,8 @@
     "semantic_hash": "b6bc215a7a633d7c4529f241b8046022"
   },
   "app/inventory/routes.py": {
-    "mtime": 1784776408.9568813,
-    "ast_hash": "fe881bb72dfa324fd77f77a4a7f11184",
+    "mtime": 1784610975.0688653,
+    "ast_hash": "512dc7ebe98c8d5152ca058e51fc76e7",
     "semantic_hash": ""
   },
   "app/inventory/services/__init__.py": {
@@ -160,8 +160,8 @@
     "semantic_hash": ""
   },
   "app/inventory/services/inventory_service.py": {
-    "mtime": 1784776623.6494105,
-    "ast_hash": "1fb731bb474bcb6a0373e949fdd350ec",
+    "mtime": 1784162511.019488,
+    "ast_hash": "cd20371c36afe01ebff8daf9e4c15c6a",
     "semantic_hash": ""
   },
   "app/inventory/static/js/barcode.js": {
@@ -175,8 +175,8 @@
     "semantic_hash": "3eb0159e2b400a5e34e6b92c5da8d806"
   },
   "app/invoices/routes.py": {
-    "mtime": 1784776408.9642055,
-    "ast_hash": "315e79c731833e9eecaceac912890e76",
+    "mtime": 1783916760.3666239,
+    "ast_hash": "fa1ee8b221d9f457b2fd57025edc9f46",
     "semantic_hash": ""
   },
   "app/invoices/services/__init__.py": {
@@ -185,13 +185,13 @@
     "semantic_hash": ""
   },
   "app/invoices/services/invoice_create_service.py": {
-    "mtime": 1784776408.9662,
-    "ast_hash": "3dd5ad575896328e49167ae1add6157b",
-    "semantic_hash": ""
+    "mtime": 1781569870.393467,
+    "ast_hash": "5040a3980acf0bcccea0c0545e958577",
+    "semantic_hash": "5040a3980acf0bcccea0c0545e958577"
   },
   "app/invoices/services/invoice_pdf_service.py": {
-    "mtime": 1784776603.2452393,
-    "ast_hash": "86ac55131048972c9166336919de3a04",
+    "mtime": 1783669505.7207925,
+    "ast_hash": "ee5a00602ba26e9d730dd1d104b9a0e8",
     "semantic_hash": ""
   },
   "app/invoices/services/invoice_query_service.py": {
@@ -230,8 +230,8 @@
     "semantic_hash": ""
   },
   "app/middleware/rbac.py": {
-    "mtime": 1784612329.093462,
-    "ast_hash": "56f3ca9cd77fc37aa93f2e2a3db5c945",
+    "mtime": 1781835353.584521,
+    "ast_hash": "fb646194bd336b70b184456d89552618",
     "semantic_hash": ""
   },
   "app/models/__init__.py": {
@@ -360,9 +360,9 @@
     "semantic_hash": "bd6e7af21e979492a231f7bad3af48b7"
   },
   "app/models/stock_movement.py": {
-    "mtime": 1784767959.7847123,
-    "ast_hash": "9800437979b59000ccfdcfef48685828",
-    "semantic_hash": ""
+    "mtime": 1780708510.4396791,
+    "ast_hash": "96e9a8a27c13abd87f27d87d60806d6f",
+    "semantic_hash": "96e9a8a27c13abd87f27d87d60806d6f"
   },
   "app/models/tag.py": {
     "mtime": 1780025212.9518473,
@@ -395,9 +395,9 @@
     "semantic_hash": "68d6c392b6812987cc0f80c932ddfa6f"
   },
   "app/orders/routes.py": {
-    "mtime": 1784776408.9843454,
-    "ast_hash": "ea97ccc161dd12d7e4933ee0c53cdd57",
-    "semantic_hash": ""
+    "mtime": 1780890076.412776,
+    "ast_hash": "66e6cfbf62eee82d4603973f18e7eabb",
+    "semantic_hash": "66e6cfbf62eee82d4603973f18e7eabb"
   },
   "app/orders/services/__init__.py": {
     "mtime": 1780711781.4755902,
@@ -410,9 +410,9 @@
     "semantic_hash": "c5450b19683de25083f330beaf957cea"
   },
   "app/orders/services/purchase_order_service.py": {
-    "mtime": 1784776408.9867055,
-    "ast_hash": "b4953c9a6e754c82172c8125b6d63f5f",
-    "semantic_hash": ""
+    "mtime": 1781568616.1353414,
+    "ast_hash": "ed051adf5283a3e9dd3c87a49ca00126",
+    "semantic_hash": "ed051adf5283a3e9dd3c87a49ca00126"
   },
   "app/orders/services/purchase_order_stats_service.py": {
     "mtime": 1779222751.2649171,
@@ -430,9 +430,9 @@
     "semantic_hash": "0bca208f663e1f5bd87a7fabb84dcd3d"
   },
   "app/payments/routes.py": {
-    "mtime": 1784776408.9883986,
-    "ast_hash": "a540916cbc419b19cba7961ddf60677b",
-    "semantic_hash": ""
+    "mtime": 1780890076.4157495,
+    "ast_hash": "94815b508bdf4cc0dabc53e858a48d30",
+    "semantic_hash": "94815b508bdf4cc0dabc53e858a48d30"
   },
   "app/payments/services/__init__.py": {
     "mtime": 1780276952.848003,
@@ -440,8 +440,8 @@
     "semantic_hash": "3ad686de10fcb31d4f58e596eaa337ec"
   },
   "app/payments/services/payment_service.py": {
-    "mtime": 1784776408.990435,
-    "ast_hash": "4b0e920daaa3701dbc6933d106a8aee4",
+    "mtime": 1783571701.176751,
+    "ast_hash": "0e638039ace433065f763db2331d0fca",
     "semantic_hash": ""
   },
   "app/routes.py": {
@@ -495,9 +495,9 @@
     "semantic_hash": "1cabadcfd2144e0fe96879c4e70aae6b"
   },
   "app/warehouses/routes.py": {
-    "mtime": 1784776408.999947,
-    "ast_hash": "612f268bec5f5ec423dfb692f0e2b80d",
-    "semantic_hash": ""
+    "mtime": 1780890076.420397,
+    "ast_hash": "cf890e064335fc7fdb8ab6e35438f2b2",
+    "semantic_hash": "cf890e064335fc7fdb8ab6e35438f2b2"
   },
   "app/warehouses/services/__init__.py": {
     "mtime": 1780276770.8212483,
@@ -505,9 +505,9 @@
     "semantic_hash": "f5d9f1fdd12b769d25a3776cc2a61730"
   },
   "app/warehouses/services/warehouse_service.py": {
-    "mtime": 1784776409.0014603,
-    "ast_hash": "96fd82859d8855638fe88266c5491788",
-    "semantic_hash": ""
+    "mtime": 1780281701.1143417,
+    "ast_hash": "2eea571313cf1f2b73a56f3c38bae588",
+    "semantic_hash": "2eea571313cf1f2b73a56f3c38bae588"
   },
   "config.py": {
     "mtime": 1781670795.5590658,
@@ -825,9 +825,9 @@
     "semantic_hash": ""
   },
   "app/inventory/templates/inventory/movements.html": {
-    "mtime": 1784776743.1187224,
-    "ast_hash": "0c7894ba848ea77ab4a0dd0d6b26de97",
-    "semantic_hash": ""
+    "mtime": 1781248280.3412995,
+    "ast_hash": "7bd1e2f945ec203958b4bddba4f23f9c",
+    "semantic_hash": "7bd1e2f945ec203958b4bddba4f23f9c"
   },
   "app/inventory/templates/inventory/view.html": {
     "mtime": 1780891625.4810784,
@@ -925,8 +925,8 @@
     "semantic_hash": "2d81ff9b410a7829c919ee2f2974844c"
   },
   "requirements.txt": {
-    "mtime": 1784776440.4803283,
-    "ast_hash": "1fc602457750d235af5f27c110841535",
+    "mtime": 1783227355.397473,
+    "ast_hash": "d7e68eff2e9dfc54c1ff791b5416243b",
     "semantic_hash": ""
   },
   "app/static/templates/Factura Ferre-lagos.pdf": {
@@ -1345,8 +1345,8 @@
     "semantic_hash": ""
   },
   "app/inventory/services/category_service.py": {
-    "mtime": 1784776408.9578874,
-    "ast_hash": "3154739e4f17719829548fe5ad303eda",
+    "mtime": 1784609578.4735136,
+    "ast_hash": "d5f4e4744b1d76ccd8f84438e2b87989",
     "semantic_hash": ""
   },
   "app/models/category.py": {
@@ -1355,8 +1355,8 @@
     "semantic_hash": ""
   },
   "migrations/versions/0b33dda190e6_add_category_table_and_is_service_to_.py": {
-    "mtime": 1784768306.9788814,
-    "ast_hash": "999e361cc0aa64b2d3402bfe3db44dff",
+    "mtime": 1784162825.260673,
+    "ast_hash": "a5d65bfc2e97db1886fd7b89998fc4d7",
     "semantic_hash": ""
   },
   "app/inventory/templates/inventory/categories.html": {
@@ -1367,11 +1367,6 @@
   "app/inventory/templates/inventory/category_form.html": {
     "mtime": 1784611149.1943488,
     "ast_hash": "0e43e248a1c0735f9fabb7ea81c48c52",
-    "semantic_hash": ""
-  },
-  "migrations/versions/6b073511a0f5_allow_signed_adjustment_quantity.py": {
-    "mtime": 1784768054.271083,
-    "ast_hash": "a56f95463596bbe5fcf4279ee1fa797a",
     "semantic_hash": ""
   }
 }
