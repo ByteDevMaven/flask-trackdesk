@@ -36,8 +36,11 @@
         <option value="invoice_payment_revenue" {{ 'selected' if account and account.default_purpose == 'invoice_payment_revenue' else '' }}>
           Ingresos por pagos de factura
         </option>
+        <option value="inventory_asset" {{ 'selected' if account and account.default_purpose == 'inventory_asset' else '' }}>
+          Inventario
+        </option>
       </select>
-      <p class="text-xs text-slate-400 mt-1">Use esta opcion en una cuenta de ingresos, por ejemplo Ventas de Productos.</p>
+      <p class="text-xs text-slate-400 mt-1">Asigna un uso específico a la cuenta (ej. Ingresos por ventas, Valor del inventario).</p>
     </div>
     {% if account %}
     <div class="flex items-center gap-3">

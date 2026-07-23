@@ -128,7 +128,6 @@ class CompanyService:
         if user_ids:
             users = User.query.filter(User.id.in_(user_ids)).all()
             company.users.extend(users)
-            
         if not current_user.is_admin and current_user not in company.users:
             company.users.append(current_user)
 
@@ -138,7 +137,7 @@ class CompanyService:
         default_accounts = [
             Account(company_id=company.id, name='Cash/Bank', type=AccountType.asset, is_default=True),
             Account(company_id=company.id, name='Accounts Receivable', type=AccountType.asset, is_default=True),
-            Account(company_id=company.id, name='Inventory', type=AccountType.asset, is_default=True),
+            Account(company_id=company.id, name='Inventory', type=AccountType.asset, is_default=True, default_purpose='inventory_asset'),
             Account(company_id=company.id, name='Accounts Payable', type=AccountType.liability, is_default=True),
             Account(company_id=company.id, name='Sales Revenue', type=AccountType.revenue, is_default=True, default_purpose='invoice_payment_revenue'),
             Account(company_id=company.id, name='Cost of Goods Sold (COGS)', type=AccountType.expense, is_default=True),

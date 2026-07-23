@@ -9,6 +9,7 @@ from ._balance import _active_ledger_conditions
 
 class AccountService:
     INVOICE_PAYMENT_REVENUE_PURPOSE = 'invoice_payment_revenue'
+    INVENTORY_ASSET_PURPOSE = 'inventory_asset'
 
     @staticmethod
     def _clean_default_purpose(account_type: AccountType, data) -> str | None:
@@ -16,6 +17,10 @@ class AccountService:
         if default_purpose == AccountService.INVOICE_PAYMENT_REVENUE_PURPOSE:
             if account_type != AccountType.revenue:
                 raise ValueError('Solo una cuenta de ingresos puede ser predeterminada para pagos de factura.')
+            return default_purpose
+        if default_purpose == AccountService.INVENTORY_ASSET_PURPOSE:
+            if account_type != AccountType.asset:
+                raise ValueError('Solo una cuenta de activo puede ser predeterminada para inventario.')
             return default_purpose
         return None
 
@@ -111,7 +116,7 @@ class AccountService:
         default_accounts = [
             {'code': '1100', 'name': 'Caja y Bancos',          'type': AccountType.asset,     'description': 'Efectivo y saldos bancarios.'},
             {'code': '1200', 'name': 'Cuentas por Cobrar',     'type': AccountType.asset,     'description': 'Derechos de cobro a clientes.'},
-            {'code': '1300', 'name': 'Inventario',             'type': AccountType.asset,     'description': 'Mercancías para la venta.'},
+            {'code': '1300', 'name': 'Inventario',             'type': AccountType.asset,     'description': 'Mercancías para la venta.', 'default_purpose': AccountService.INVENTORY_ASSET_PURPOSE},
             {'code': '1400', 'name': 'Activos Fijos',          'type': AccountType.asset,     'description': 'Maquinaria, equipos y mobiliario.'},
             {'code': '2100', 'name': 'Cuentas por Pagar',      'type': AccountType.liability, 'description': 'Obligaciones con proveedores.'},
             {'code': '2200', 'name': 'Obligaciones Fiscales',  'type': AccountType.liability, 'description': 'Impuestos pendientes.'},

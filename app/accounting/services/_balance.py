@@ -297,6 +297,40 @@ def _replace_receivable_asset_balance(
     return result
 
 
+def _inventory_balance(company_id: int) -> float:
+    from app.models.inventory_item import InventoryItem
+    q = db.session.query(
+        func.coalesce(func.sum(InventoryItem.quantity * InventoryItem.cost_price), 0)
+    ).filter(
+        InventoryItem.company_id == company_id,
+        InventoryItem.is_service.is_(False)
+    )
+    return round(float(q.scalar()), 2)
+
+
+def _replace_inventory_asset_balance(
+    company_id: int,
+    asset_balances_by_name: dict[str, float],
+) -> dict[str, float]:
+    """Return asset balances with Inventory replaced by calculated inventory value."""
+    result = dict(asset_balances_by_name or {})
+    inventory_accounts = (
+        Account.query
+        .filter_by(company_id=company_id, is_active=True, type=AccountType.asset, default_purpose='inventory_asset')
+        .order_by(Account.is_default.desc(), Account.code, Account.name)
+        .all()
+    )
+    if not inventory_accounts:
+        return result
+
+    for account in inventory_accounts:
+        result.pop(account.name, None)
+
+    inventory_val = _inventory_balance(company_id)
+    result[inventory_accounts[0].name] = inventory_val
+    return result
+
+
 def _recent_active_expenses(company_id: int, limit: int = 10) -> list[Expense]:
     return (
         db.session.execute(
@@ -331,6 +365,18 @@ def _compute_account_balance(account: Account, as_of: datetime = None) -> float:
         if preferred and preferred.id != account.id:
             return 0.0
         return _open_invoice_receivable_balance(account.company_id, as_of=as_of)
+
+    if account.default_purpose == 'inventory_asset':
+        inventory_accounts = (
+            Account.query
+            .filter_by(company_id=account.company_id, is_active=True, type=AccountType.asset, default_purpose='inventory_asset')
+            .order_by(Account.is_default.desc(), Account.code, Account.name)
+            .all()
+        )
+        if inventory_accounts and inventory_accounts[0].id != account.id:
+            return 0.0
+        if account.type == AccountType.asset:
+            return _inventory_balance(account.company_id)
 
     q = (
         db.session.query(
@@ -409,6 +455,24 @@ def _compute_balances_bulk(
         result[preferred.id] = receivable_balance
         for account in receivable_accounts[1:]:
             result[account.id] = 0.0
+
+    inventory_accounts = (
+        Account.query
+        .filter_by(company_id=company_id, is_active=True, type=AccountType.asset, default_purpose='inventory_asset')
+        .order_by(Account.is_default.desc(), Account.code, Account.name)
+        .all()
+    )
+    if inventory_accounts and (
+        account_type_filter is None
+        or account_type_filter == AccountType.asset
+        or (isinstance(account_type_filter, (list, tuple)) and AccountType.asset in account_type_filter)
+    ):
+        inventory_val = _inventory_balance(company_id)
+        preferred_inv = inventory_accounts[0]
+        result[preferred_inv.id] = inventory_val
+        for account in inventory_accounts[1:]:
+            result[account.id] = 0.0
+
     return result
 
 

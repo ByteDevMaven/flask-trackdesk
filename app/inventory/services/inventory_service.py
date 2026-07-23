@@ -68,8 +68,9 @@ class InventoryService:
         out_of_stock_items = InventoryItem.query.filter(
             and_(InventoryItem.company_id == company_id, InventoryItem.quantity == 0)
         ).count()
-        total_value = db.session.query(func.sum(InventoryItem.quantity * InventoryItem.price))\
-            .filter_by(company_id=company_id).scalar() or 0
+        total_value = db.session.query(func.sum(InventoryItem.quantity * InventoryItem.cost_price))\
+            .filter(InventoryItem.company_id == company_id, InventoryItem.is_service.is_(False))\
+            .scalar() or 0
         
         return {
             'total_items': total_items,

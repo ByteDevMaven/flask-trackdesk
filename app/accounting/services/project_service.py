@@ -27,6 +27,7 @@ from ._balance import (
     _period_expense_total,
     _period_revenue_total,
     _replace_receivable_asset_balance,
+    _replace_inventory_asset_balance,
 )
 
 
@@ -355,6 +356,11 @@ class ProjectService:
                 company_id,
                 report_data['asset'],
                 as_of=end_dt,
+            )
+
+            report_data['asset'] = _replace_inventory_asset_balance(
+                company_id,
+                report_data['asset'],
             )
 
             net_income = round(
