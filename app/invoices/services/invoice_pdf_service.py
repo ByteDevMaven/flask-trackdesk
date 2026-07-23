@@ -345,7 +345,7 @@ def _draw_header(c, document, page_num, total_pages, height,
                          document.due_date.strftime("%d/%m/%Y"))
         else:
             payment_condition = (
-                _(PaymentMethod(document.payments.first().method).value)
+                PaymentMethod(document.payments.first().method).value
                 if document.payments and document.payments.first()
                 else "N/A"
             )

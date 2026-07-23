@@ -39,13 +39,8 @@ def format_date(value):
 
 @dashboard.app_template_filter('locale_date')
 def locale_date(value):
-    """Format date according to the current locale"""
-    from flask_babel import format_datetime
-
+    """Format date"""
     if value is None:
         return ""
-
-    try:
-        return format_datetime(value, format='medium')
-    except Exception:
-        return value.strftime("%b %d, %Y")
+    
+    return value.strftime("%b %d, %Y")
