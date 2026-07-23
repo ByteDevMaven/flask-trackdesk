@@ -1,6 +1,5 @@
 from datetime import datetime, date, UTC
 from flask import session
-from flask_babel import _
 from app.models import (
     db, Document, DocumentItem, InventoryItem, DocumentSequence,
     DocumentType, Payment, PaymentMethod, StockMovement, StockMovementType, Company
@@ -16,13 +15,13 @@ def _generate_document_number(company_id, doc_type):
         ).with_for_update().first()
 
         if not seq:
-            raise Exception(_("No active CAI configuration found for this company."))
+            raise Exception("No active CAI configuration found for this company.")
         
         if seq.expiration_date < date.today():
             raise Exception(_("The CAI sequence has expired (Limit date: %(date)s).", date=seq.expiration_date))
 
         if seq.current >= seq.range_end:
-            raise Exception(_("The CAI sequence range has been exhausted."))
+            raise Exception("The CAI sequence range has been exhausted.")
 
                                                    
         seq.current += 1

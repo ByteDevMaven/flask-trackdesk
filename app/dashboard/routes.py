@@ -1,7 +1,6 @@
 from app.utils import resolve_company
 from flask import render_template, session
 from flask_login import login_required
-from flask_babel import _
 
 from . import dashboard
 from .services import DashboardService

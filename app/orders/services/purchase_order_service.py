@@ -1,7 +1,6 @@
 from datetime import datetime, UTC
 from app.models import db, PurchaseOrder, PurchaseOrderItem, InventoryItem, StockMovement, StockMovementType
 from sqlalchemy import func
-from flask_babel import _
 from flask import current_app
 from sqlalchemy.exc import SQLAlchemyError
 
@@ -17,7 +16,7 @@ def create_purchase_order(company_id, form_data):
     try:
         supplier_id = form_data.get('supplier_id')
         if not supplier_id or not supplier_id.isdigit():
-            return {'success': False, 'error': _('Contact is required')}
+            return {'success': False, 'error': 'Contact is required'}
         
         last_id = db.session.query(func.max(PurchaseOrder.id)).filter_by(company_id=company_id).scalar() or 0
         next_seq = int(last_id) + 1
@@ -119,7 +118,7 @@ def create_purchase_order(company_id, form_data):
         
         if item_count == 0:
             db.session.rollback()
-            return {'success': False, 'error': _('At least one item is required')}
+            return {'success': False, 'error': 'At least one item is required'}
         
         po.total_amount = total_amount
         db.session.commit()
@@ -128,7 +127,7 @@ def create_purchase_order(company_id, form_data):
     except Exception as e:
         db.session.rollback()
         current_app.logger.error(f"Error creating purchase order: {str(e)}")
-        return {'success': False, 'error': _('An error occurred while creating the purchase order')}
+        return {'success': False, 'error': 'An error occurred while creating the purchase order'}
     
 def update_purchase_order(company_id, order_id, form_data):
     try:
@@ -138,11 +137,11 @@ def update_purchase_order(company_id, order_id, form_data):
         ).first()
 
         if not purchase_order:
-            return {'success': False, 'error': _('Purchase order not found')}
+            return {'success': False, 'error': 'Purchase order not found'}
 
         supplier_id = form_data.get('supplier_id')
         if not supplier_id or not supplier_id.isdigit():
-            return {'success': False, 'error': _('Contact is required')}
+            return {'success': False, 'error': 'Contact is required'}
 
         # Parse new items first
         indices = []
@@ -190,7 +189,7 @@ def update_purchase_order(company_id, order_id, form_data):
             })
 
         if not parsed_items:
-            return {'success': False, 'error': _('At least one item is required')}
+            return {'success': False, 'error': 'At least one item is required'}
 
         # Collect existing movements to calculate net stock deltas
         movements = StockMovement.query.filter_by(
@@ -298,7 +297,7 @@ def update_purchase_order(company_id, order_id, form_data):
 
         if item_count == 0:
             db.session.rollback()
-            return {'success': False, 'error': _('At least one valid item is required')}
+            return {'success': False, 'error': 'At least one valid item is required'}
 
         # Remove unused items and movements
         for po_item in available_po_items:
@@ -333,7 +332,7 @@ def update_purchase_order(company_id, order_id, form_data):
     except SQLAlchemyError as e:
         db.session.rollback()
         current_app.logger.error(f"Error updating purchase order: {str(e)}")
-        return {'success': False, 'error': _('An error occurred while updating the purchase order')}
+        return {'success': False, 'error': 'An error occurred while updating the purchase order'}
 
 
 def delete_purchase_order(company_id: int, order_id: int) -> None:
@@ -348,7 +347,6 @@ def export_purchase_orders_xlsx(company_id: int, search: str = None, supplier_id
     """Return (workbook, filename) tuple for all purchase orders matching criteria."""
     from openpyxl import Workbook
     from openpyxl.styles import Font, Alignment
-    from flask_babel import _
     from app.orders.services.purchase_order_query_service import get_purchase_orders
 
     pagination = get_purchase_orders(
@@ -362,9 +360,9 @@ def export_purchase_orders_xlsx(company_id: int, search: str = None, supplier_id
 
     wb = Workbook()
     ws = wb.active
-    ws.title = _('Ordenes de Compra')
+    ws.title = 'Ordenes de Compra'
 
-    headers = [_('Número de Orden'), _('Proveedor'), _('Monto Total'), _('Cantidad de Productos'), _('Fecha de Creación')]
+    headers = ['Número de Orden', 'Proveedor', 'Monto Total', 'Cantidad de Productos', 'Fecha de Creación']
     ws.append(headers)
 
     for col in range(1, len(headers) + 1):

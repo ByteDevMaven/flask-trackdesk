@@ -1,4 +1,3 @@
-from flask_babel import _
 from app.models import db, Warehouse
 
 class WarehouseService:
@@ -21,11 +20,11 @@ class WarehouseService:
         is_active = data.get('is_active') == 'on'
         
         if not name:
-            raise ValueError(_('El nombre del almacén es obligatorio'))
+            raise ValueError('El nombre del almacén es obligatorio')
             
         exists = Warehouse.query.filter_by(company_id=company_id, name=name).first()
         if exists:
-            raise ValueError(_('Ya existe un almacén con este nombre'))
+            raise ValueError('Ya existe un almacén con este nombre')
             
         warehouse = Warehouse(
             company_id=company_id,
@@ -47,11 +46,11 @@ class WarehouseService:
         is_active = data.get('is_active') == 'on'
         
         if not name:
-            raise ValueError(_('El nombre del almacén es obligatorio'))
+            raise ValueError('El nombre del almacén es obligatorio')
             
         exists = Warehouse.query.filter(Warehouse.company_id == company_id, Warehouse.name == name, Warehouse.id != warehouse_id).first()
         if exists:
-            raise ValueError(_('Ya existe otro almacén con este nombre'))
+            raise ValueError('Ya existe otro almacén con este nombre')
             
         warehouse.name = name
         warehouse.location = location

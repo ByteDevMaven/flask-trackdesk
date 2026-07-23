@@ -1,7 +1,6 @@
 from datetime import datetime, UTC
 
 from flask import current_app
-from flask_babel import _
 from sqlalchemy import or_, desc
 
 from app.models import db, Payment, Document, DocumentType, Contact

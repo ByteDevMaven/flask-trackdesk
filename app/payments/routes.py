@@ -1,7 +1,6 @@
 from app.utils import resolve_company
 from flask import current_app, render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required
-from flask_babel import _
 
 from . import payments
 from app.extensions import limiter
@@ -65,10 +64,10 @@ def store(company_id):
     company_id = company.id
     try:
         payment = PaymentService.create_payment(company_id, request.form)
-        flash(_('Payment recorded successfully'), 'success')
+        flash('Payment recorded successfully', 'success')
         return redirect(url_for('payments.view', company_id=company_id, id=payment.id))
     except Exception as e:
-        flash(_('Error recording payment: %(error)s', error=str(e)), 'error')
+        flash('Error recording payment: %(error)s', error=str(e)), 'error'
         return redirect(url_for('payments.create', company_id=company_id))
 
 
@@ -106,10 +105,10 @@ def update(company_id, id):
     company_id = company.id
     try:
         payment = PaymentService.update_payment(company_id, id, request.form)
-        flash(_('Payment updated successfully'), 'success')
+        flash('Payment updated successfully', 'success')
         return redirect(url_for('payments.view', company_id=company_id, id=payment.id))
     except Exception as e:
-        flash(_('Error updating payment: %(error)s', error=str(e)), 'error')
+        flash('Error updating payment: %(error)s', error=str(e)), 'error'
         return redirect(url_for('payments.edit', company_id=company_id, id=id))
 
 
@@ -120,8 +119,8 @@ def delete(company_id, id):
     company_id = company.id
     try:
         PaymentService.delete_payment(company_id, id)
-        flash(_('Payment deleted successfully'), 'success')
+        flash('Payment deleted successfully', 'success')
     except Exception as e:
-        flash(_('Error deleting payment: %(error)s', error=str(e)), 'error')
+        flash('Error deleting payment: %(error)s', error=str(e)), 'error'
 
     return redirect(url_for('payments.index', company_id=company_id))

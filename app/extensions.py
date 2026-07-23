@@ -5,7 +5,6 @@ from flask_wtf.csrf import CSRFProtect
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
-from flask_babel import Babel
 from flask_cors import CORS
 from flask_mail import Mail
 from flask import session, request
@@ -21,7 +20,6 @@ csrf = CSRFProtect()
 db = SQLAlchemy()
 migrate = Migrate()
 login_manager = LoginManager()
-babel = Babel()
 cors = CORS()
 mail = Mail()
 
@@ -37,7 +35,6 @@ def register_extensions(app):
     login_manager.init_app(app)
     limiter.init_app(app)
     csrf.init_app(app)
-    babel.init_app(app, locale_selector=get_locale)
     cors.init_app(app)
     mail.init_app(app)
 

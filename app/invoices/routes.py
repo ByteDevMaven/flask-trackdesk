@@ -2,7 +2,6 @@ from app.utils import resolve_company
 from flask import render_template, request, redirect, session, url_for, flash, make_response, send_file, jsonify
 from flask_login import login_required, current_user
 from flask_wtf.csrf import validate_csrf
-from flask_babel import _
 from sqlalchemy import or_
 from datetime import datetime, UTC
 from wtforms import ValidationError
@@ -85,7 +84,7 @@ def item_row():
     try:
         validate_csrf(csrf_token)
     except ValidationError:
-        flash(_("Invalid CSRF token. Please try again."), "error")
+        flash("Invalid CSRF token. Please try again.", "error")
         return redirect(url_for("auth.login")) 
 
     inventory_items = InventoryItem.query.filter(
@@ -136,7 +135,7 @@ def store(company_id):
     try:
         validate_csrf(csrf_token)
     except ValidationError:
-        flash(_("Invalid CSRF token. Please try again."), "error")
+        flash("Invalid CSRF token. Please try again.", "error")
         return redirect(url_for("auth.login"))
 
     try:
@@ -147,9 +146,9 @@ def store(company_id):
         )
 
         doc_type_name = (
-            _('Invoice') if document.type == DocumentType.invoice else _('Quote')
+            'Invoice' if document.type == DocumentType.invoice else 'Quote'
         )
-        flash(_(f'{doc_type_name} created successfully'), 'success')
+        flash(f'{doc_type_name} created successfully', 'success')
 
         return redirect(
             url_for('invoices.view', company_id=company_id, id=document.id)
@@ -157,7 +156,7 @@ def store(company_id):
 
     except Exception as e:
         db.session.rollback()
-        flash(_('Error creating document: %(error)s', error=str(e)), 'error')
+        flash('Error creating document: %(error)s', error=str(e)), 'error'
         return redirect(url_for('invoices.create', company_id=company_id))
 
 
@@ -243,13 +242,13 @@ def add_payment(company_id, id):
     try:
         validate_csrf(csrf_token)
     except ValidationError:
-        flash(_("Invalid CSRF token. Please try again."), "error")
+        flash("Invalid CSRF token. Please try again.", "error")
         return redirect(url_for("auth.login"))
 
     try:
         from .services import add_invoice_payment
         add_invoice_payment(document, request.form, request.files)
-        flash(_('Payment recorded successfully'), 'success')
+        flash('Payment recorded successfully', 'success')
         
         is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
         if is_ajax:
@@ -257,14 +256,14 @@ def add_payment(company_id, id):
         return redirect(url_for('invoices.view', company_id=company_id, id=id))
 
     except ValueError as e:
-        flash(_('Invalid payment data: %(error)s', error=str(e)), 'error')
+        flash('Invalid payment data: %(error)s', error=str(e)), 'error'
         is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
         if is_ajax:
             return {"success": False, "message": str(e)}, 400
 
         return redirect(url_for('invoices.view', company_id=company_id, id=id))
     except Exception as e:
-        flash(_('Error recording payment: %(error)s', error=str(e)), 'error')
+        flash('Error recording payment: %(error)s', error=str(e)), 'error'
         return redirect(url_for('invoices.view', company_id=company_id, id=id))
 
 
@@ -326,7 +325,7 @@ def update(company_id, id):
     try:
         validate_csrf(csrf_token)
     except ValidationError:
-        flash(_("Invalid CSRF token. Please try again."), "error")
+        flash("Invalid CSRF token. Please try again.", "error")
         return redirect(url_for("auth.login"))
 
     document = Document.query.filter(
@@ -380,11 +379,11 @@ def update(company_id, id):
         db.session.commit()
 
         doc_type_name = (
-            _('Invoice')
+            'Invoice'
             if document.type == DocumentType.invoice
-            else _('Quote')
+            else 'Quote'
         )
-        flash(doc_type_name + ' ' + _('updated successfully'), 'success')
+        flash(doc_type_name + ' ' + 'updated successfully', 'success')
 
         return redirect(
             url_for('invoices.view', company_id=company_id, id=document.id)
@@ -392,7 +391,7 @@ def update(company_id, id):
 
     except Exception as e:
         db.session.rollback()
-        flash(_('Error updating document: %(error)s', error=str(e)), 'error')
+        flash('Error updating document: %(error)s', error=str(e)), 'error'
         return redirect(
             url_for('invoices.edit', company_id=company_id, id=id)
         )
@@ -408,7 +407,7 @@ def delete(company_id, id):
     try:
         validate_csrf(csrf_token)
     except ValidationError:
-        flash(_("Invalid CSRF token. Please try again."), "error")
+        flash("Invalid CSRF token. Please try again.", "error")
         return redirect(url_for("auth.login")) 
     
     document = Document.query.filter(
@@ -420,10 +419,10 @@ def delete(company_id, id):
     try:
         from .services import delete_invoice_or_quote
         delete_invoice_or_quote(document)
-        doc_type_name = _('Invoice') if document.type == DocumentType.invoice else _('Quote')
-        flash(_(f'{doc_type_name} deleted successfully'), 'success')
+        doc_type_name = 'Invoice' if document.type == DocumentType.invoice else 'Quote'
+        flash(f'{doc_type_name} deleted successfully', 'success')
     except Exception as e:
-        flash(_('Error deleting document: %(error)s', error=str(e)), 'error')
+        flash('Error deleting document: %(error)s', error=str(e)), 'error'
     
     return redirect(url_for('invoices.index', company_id=company_id))
 

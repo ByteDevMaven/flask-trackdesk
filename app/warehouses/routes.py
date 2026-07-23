@@ -2,7 +2,6 @@ from app.utils import resolve_company
 from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required
 from flask_wtf.csrf import validate_csrf
-from flask_babel import _
 from wtforms import ValidationError
 
 from . import warehouses
@@ -52,7 +51,7 @@ def store(company_id):
     try:
         validate_csrf(csrf_token)
     except ValidationError:
-        flash(_("Token CSRF inválido. Por favor, inténtelo de nuevo."), "error")
+        flash("Token CSRF inválido. Por favor, inténtelo de nuevo.", "error")
         return redirect(url_for("warehouses.index", company_id=company_id))
         
     is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
@@ -63,10 +62,10 @@ def store(company_id):
         if is_ajax:
             return jsonify({
                 'success': True,
-                'message': _('Almacén creado con éxito')
+                'message': 'Almacén creado con éxito'
             })
             
-        flash(_('Almacén creado con éxito'), 'success')
+        flash('Almacén creado con éxito', 'success')
         return redirect(url_for('warehouses.index', company_id=company_id))
     except ValueError as e:
         if is_ajax:
@@ -83,7 +82,7 @@ def update(company_id, id):
     try:
         validate_csrf(csrf_token)
     except ValidationError:
-        flash(_("Token CSRF inválido. Por favor, inténtelo de nuevo."), "error")
+        flash("Token CSRF inválido. Por favor, inténtelo de nuevo.", "error")
         return redirect(url_for("warehouses.index", company_id=company_id))
         
     is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
@@ -94,10 +93,10 @@ def update(company_id, id):
         if is_ajax:
             return jsonify({
                 'success': True,
-                'message': _('Almacén actualizado con éxito')
+                'message': 'Almacén actualizado con éxito'
             })
             
-        flash(_('Almacén actualizado con éxito'), 'success')
+        flash('Almacén actualizado con éxito', 'success')
         return redirect(url_for('warehouses.index', company_id=company_id))
     except ValueError as e:
         if is_ajax:

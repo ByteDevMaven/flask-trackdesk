@@ -4,7 +4,6 @@ from datetime import datetime, UTC
 from flask import render_template, request, redirect, url_for, flash, current_app, Response
 from flask_login import login_required
 from sqlalchemy.exc import SQLAlchemyError
-from flask_babel import _
 
 from app.models import Contact, InventoryItem, PurchaseOrder
 from app.models.enums import ContactType
@@ -79,7 +78,7 @@ def create(company_id):
     if request.method == 'POST':
         result = create_purchase_order(company_id, request.form)
         if result['success']:
-            flash(_('Purchase order created successfully'), 'success')
+            flash('Purchase order created successfully', 'success')
             return redirect(url_for('orders.view', company_id=company_id, id=result['order'].id))
         else:
             flash(result['error'], 'error')
@@ -144,7 +143,7 @@ def update(company_id, id):
     result = update_purchase_order(company_id, id, request.form)
 
     if result['success']:
-        flash(_('Purchase order updated successfully'), 'success')
+        flash('Purchase order updated successfully', 'success')
         return redirect(url_for('orders.view', company_id=company_id, id=id))
     else:
         flash(result['error'], 'error')
@@ -166,9 +165,9 @@ def delete(company_id, id):
     company_id = company.id
     try:
         delete_purchase_order(company_id, id)
-        flash(_('Purchase order deleted successfully'), 'success')
+        flash('Purchase order deleted successfully', 'success')
     except SQLAlchemyError as e:
-        flash(_('An error occurred while deleting the purchase order'), 'error')
+        flash('An error occurred while deleting the purchase order', 'error')
         current_app.logger.error(f"Database error: {str(e)}")
 
     return redirect(url_for('orders.index', company_id=company_id))

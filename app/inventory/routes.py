@@ -3,7 +3,6 @@ import io
 from flask import render_template, request, redirect, session, url_for, flash, current_app, jsonify, Response, send_file
 from flask_login import login_required
 from sqlalchemy.exc import SQLAlchemyError
-from flask_babel import _
 
 from app.models import db, InventoryItem, Contact
 from app.extensions import limiter
@@ -91,7 +90,7 @@ def create(company_id):
                 warehouse_id=request.form.get('warehouse_id'),
                 sku=request.form.get('sku', '').strip() or None
             )
-            flash(_('Inventory item created successfully'), 'success')
+            flash('Inventory item created successfully', 'success')
             return redirect(url_for('inventory.view', company_id=company_id, sku=item.sku))
             
         except ValueError as e:
@@ -99,7 +98,7 @@ def create(company_id):
             return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, categories=categories, warehouses=warehouses, selected_id=selected_id, item=None, form_data=request.form)
         except SQLAlchemyError as e:
             db.session.rollback()
-            flash(_('An error occurred while creating the inventory item'), 'error')
+            flash('An error occurred while creating the inventory item', 'error')
             current_app.logger.error(f"Database error: {str(e)}")
             return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, categories=categories, warehouses=warehouses, selected_id=selected_id, item=None, form_data=request.form)
     
@@ -131,7 +130,7 @@ def create_category(company_id):
             description = request.form.get('description', '').strip()
             
             CategoryService.create_category(company_id, name, description)
-            flash(_('Category created successfully'), 'success')
+            flash('Category created successfully', 'success')
             return redirect(url_for('inventory.categories', company_id=company_id))
         except ValueError as e:
             flash(str(e), 'error')
@@ -157,7 +156,7 @@ def edit_category(company_id, category_id):
             description = request.form.get('description', '').strip()
             
             CategoryService.update_category(company_id, category_id, name, description)
-            flash(_('Category updated successfully'), 'success')
+            flash('Category updated successfully', 'success')
             return redirect(url_for('inventory.categories', company_id=company_id))
         except ValueError as e:
             flash(str(e), 'error')
@@ -175,11 +174,11 @@ def delete_category(company_id, category_id):
     
     try:
         CategoryService.delete_category(company_id, category_id)
-        flash(_('Category deleted successfully'), 'success')
+        flash('Category deleted successfully', 'success')
     except ValueError as e:
         flash(str(e), 'error')
     except Exception as e:
-        flash(_('An error occurred while deleting the category'), 'error')
+        flash('An error occurred while deleting the category', 'error')
         current_app.logger.error(f"Category delete error: {str(e)}")
         
     return redirect(url_for('inventory.categories', company_id=company_id))
@@ -320,7 +319,7 @@ def update(company_id, sku):
         
         # Reload item to get potentially updated SKU
         item = InventoryItem.query.get(item.id)
-        flash(_('Inventory item updated successfully'), 'success')
+        flash('Inventory item updated successfully', 'success')
         return redirect(url_for('inventory.view', company_id=company_id, sku=item.sku))
         
     except ValueError as e:
@@ -328,7 +327,7 @@ def update(company_id, sku):
         return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, categories=categories, warehouses=warehouses, item=item, form_data=request.form)
     except SQLAlchemyError as e:
         db.session.rollback()
-        flash(_('An error occurred while updating the inventory item'), 'error')
+        flash('An error occurred while updating the inventory item', 'error')
         current_app.logger.error(f"Database error: {str(e)}")
         return render_template('inventory/form.html', company_id=company_id, suppliers=suppliers, categories=categories, warehouses=warehouses, item=item, form_data=request.form)
 
@@ -342,9 +341,9 @@ def delete(company_id, sku):
         from flask import abort; abort(404)
     try:
         InventoryService.delete_inventory_item(company_id, item.id)
-        flash(_('Inventory item deleted successfully'), 'success')
+        flash('Inventory item deleted successfully', 'success')
     except Exception as e:
-        flash(_('An error occurred while deleting the inventory item'), 'error')
+        flash('An error occurred while deleting the inventory item', 'error')
         current_app.logger.error(f"Delete error: {str(e)}")
     
     return redirect(url_for('inventory.index', company_id=company_id))
@@ -451,13 +450,13 @@ def transfer(company_id, sku):
     quantity = request.form.get('quantity', type=int)
     
     if not from_warehouse_id or not to_warehouse_id or not quantity:
-        if is_ajax: return jsonify({'success': False, 'error': _('All fields are required for transfer')})
-        flash(_('All fields are required for transfer'), 'error')
+        if is_ajax: return jsonify({'success': False, 'error': 'All fields are required for transfer'})
+        flash('All fields are required for transfer', 'error')
         return redirect(url_for('inventory.view', company_id=company_id, sku=sku))
         
     if from_warehouse_id == to_warehouse_id:
-        if is_ajax: return jsonify({'success': False, 'error': _('Source and destination warehouses must be different')})
-        flash(_('Source and destination warehouses must be different'), 'error')
+        if is_ajax: return jsonify({'success': False, 'error': 'Source and destination warehouses must be different'})
+        flash('Source and destination warehouses must be different', 'error')
         return redirect(url_for('inventory.view', company_id=company_id, sku=sku))
         
     try:
@@ -468,18 +467,18 @@ def transfer(company_id, sku):
             to_warehouse_id=to_warehouse_id,
             quantity=quantity
         )
-        if is_ajax: return jsonify({'success': True, 'message': _('Stock transferred successfully')})
-        flash(_('Stock transferred successfully'), 'success')
+        if is_ajax: return jsonify({'success': True, 'message': 'Stock transferred successfully'})
+        flash('Stock transferred successfully', 'success')
     except ValueError as e:
         if is_ajax: return jsonify({'success': False, 'error': str(e)})
         flash(str(e), 'error')
     except SQLAlchemyError as e:
         db.session.rollback()
         current_app.logger.error(f"Transfer error: {str(e)}")
-        if is_ajax: return jsonify({'success': False, 'error': _('An error occurred during transfer')})
-        flash(_('An error occurred during transfer'), 'error')
+        if is_ajax: return jsonify({'success': False, 'error': 'An error occurred during transfer'})
+        flash('An error occurred during transfer', 'error')
         
-    if is_ajax: return jsonify({'success': False, 'error': _('Unknown error')})
+    if is_ajax: return jsonify({'success': False, 'error': 'Unknown error'})
     return redirect(url_for('inventory.view', company_id=company_id, sku=sku))
 
 @inventory.route('/api/<string:company_id>/inventory/items', methods=['GET'])
@@ -696,7 +695,7 @@ def api_adjust_stock(company_id, id):
             'id': id,
             'new_quantity': new_quantity,
             'adjustment': adjustment,
-            'message': _('Stock adjusted successfully')
+            'message': 'Stock adjusted successfully'
         })
         
     except SQLAlchemyError as e:

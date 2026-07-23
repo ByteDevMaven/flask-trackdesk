@@ -147,14 +147,14 @@
               </div>
             </td>
             <td class="px-4 py-3 text-sm text-slate-600">
-              {{ m.reference or '—' }}
+              {{ m.reference | translate_ref_es if m.reference else '—' }}
               {% if m.notes %}
               <p class="text-xs text-slate-400 mt-0.5">{{ m.notes }}</p>
               {% endif %}
             </td>
             <td
-              class="px-4 py-3 text-sm font-medium text-right {{ 'text-emerald-600' if m.qty_change > 0 else 'text-red-600' }}">
-              {{ '+' if m.qty_change > 0 else '' }}{{ m.qty_change }}
+              class="px-4 py-3 text-sm font-medium text-right {{ 'text-emerald-600' if m.quantity > 0 else 'text-red-600' }}">
+              {{ '+' if m.quantity > 0 else '' }}{{ m.quantity }}
             </td>
             <td class="px-4 py-3">
               <button class="p-1 text-slate-400 hover:text-slate-600 transition-colors">

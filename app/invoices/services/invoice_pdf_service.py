@@ -16,9 +16,8 @@ import os
 from dataclasses import dataclass, field
 from io import BytesIO
 
+from app.extensions import get_locale
 from flask import current_app, render_template_string
-from flask_babel import _, get_locale
-
 from reportlab.lib.pagesizes import A4
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
@@ -320,7 +319,7 @@ def _draw_header(c, document, page_num, total_pages, height,
                  font_name, font_bold, seller_name, coords: HeaderCoords):
     h = coords
     doc_label = (
-        _("COTIZACIÓN") + ":" if document.type == DocumentType.quote else _("FACTURA") + ":"
+        "COTIZACIÓN" + ":" if document.type == DocumentType.quote else "FACTURA" + ":"
     )
 
     rx, r_off, rw, rh = h.whiteout_rect
@@ -348,7 +347,7 @@ def _draw_header(c, document, page_num, total_pages, height,
             payment_condition = (
                 _(PaymentMethod(document.payments.first().method).value)
                 if document.payments and document.payments.first()
-                else _("N/A")
+                else "N/A"
             )
             c.drawString(h.due_date_x, height - h.payment_condition_y_from_top,
                          payment_condition)
@@ -369,7 +368,7 @@ def _draw_client_info(c, client, height, font_name, coords: ClientCoords):
         if client.address:
             c.drawString(cl.x, y - cl.line_gap * 3, client.address[:40])
     else:
-        c.drawString(cl.fallback_x, y,                   _("CLIENTE GENERAL"))
+        c.drawString(cl.fallback_x, y,                   "CLIENTE GENERAL")
         c.drawString(cl.fallback_x, y - cl.line_gap * 2, "CLI-0000")
 
 
@@ -384,7 +383,7 @@ def _draw_items(c, page_items, height, font_name, currency, coords: ItemsCoords)
         codigo   = str(item.inventory_item_id) if item.inventory_item_id else f"ART-{item.id}"
         articulo = (
             item.inventory_item.name if item.inventory_item
-            else (item.description or _("Artículo personalizado"))
+            else (item.description or "Artículo personalizado")
         )
         discount   = float(item.unit_price or 0) * float(item.discount or 0) / 100
         total_item = float(item.quantity or 0) * float(item.unit_price or 0) - discount * float(item.quantity or 0)

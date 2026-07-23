@@ -76,6 +76,11 @@ ROUTE_PERMISSIONS: dict[str, str] = {
     'inventory.export_movements': 'inventory.view',
     'inventory.movements':        'inventory.view',
     'inventory.transfer':         'inventory.manage',
+    'inventory.categories':       'inventory.view',
+    'inventory.create_category':  'inventory.manage',
+    'inventory.edit_category':    'inventory.manage',
+    'inventory.delete_category':  'inventory.delete',
+
 
     # ── Warehouses (using inventory perms) ────────────────────────────────
     'warehouses.index':  'inventory.view',

@@ -36,3 +36,16 @@ def register_context_processors(app: Flask):
             'viewer': 'Auditor / Lector',
         }
         return mapping.get(role_name, role_name.title())
+
+    @app.template_filter('translate_ref_es')
+    def translate_ref_es(reference):
+        if not reference:
+            return reference
+        mapping = {
+            'Manual Adjustment': 'Ajuste Manual',
+            'Stock Transfer': 'Transferencia de Stock',
+            'Initial Stock': 'Stock Inicial',
+            'Purchase Order': 'Orden de Compra',
+            'Invoice': 'Factura'
+        }
+        return mapping.get(reference, reference)

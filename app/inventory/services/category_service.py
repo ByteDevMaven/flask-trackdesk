@@ -1,5 +1,4 @@
 from sqlalchemy.exc import IntegrityError
-from flask_babel import _
 from app.models import db, Category
 
 class CategoryService:
@@ -15,11 +14,11 @@ class CategoryService:
     def create_category(company_id, name, description=None):
         name = name.strip()
         if not name:
-            raise ValueError(_("Name is required"))
+            raise ValueError("Name is required")
         
         existing = Category.query.filter_by(company_id=company_id, name=name).first()
         if existing:
-            raise ValueError(_("A category with this name already exists"))
+            raise ValueError("A category with this name already exists")
 
         category = Category(
             company_id=company_id,
@@ -36,11 +35,11 @@ class CategoryService:
         
         name = name.strip()
         if not name:
-            raise ValueError(_("Name is required"))
+            raise ValueError("Name is required")
             
         existing = Category.query.filter_by(company_id=company_id, name=name).first()
         if existing and existing.id != category.id:
-            raise ValueError(_("A category with this name already exists"))
+            raise ValueError("A category with this name already exists")
             
         category.name = name
         category.description = description.strip() if description else None
@@ -58,4 +57,4 @@ class CategoryService:
             return True
         except IntegrityError:
             db.session.rollback()
-            raise ValueError(_("Cannot delete this category because it is being used by one or more inventory items."))
+            raise ValueError("Cannot delete this category because it is being used by one or more inventory items.")

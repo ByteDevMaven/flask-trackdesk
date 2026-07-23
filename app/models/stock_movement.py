@@ -24,12 +24,18 @@ class StockMovement(BaseModel):
     destination_warehouse = db.relationship('Warehouse', foreign_keys=[destination_warehouse_id], backref='incoming_transfers', lazy='select')
     
     __table_args__ = (
-        db.CheckConstraint("quantity > 0", name='check_movement_quantity_positive'),
+        db.CheckConstraint("quantity != 0", name='check_movement_quantity_nonzero'),
     )
 
     @property
     def qty_change(self) -> int:
-        """Return signed quantity: negative for outgoing, positive for incoming/adjustment."""
+        """Return signed quantity change.
+        - incoming: always positive
+        - outgoing: always negative
+        - adjustment: signed as stored (positive = add stock, negative = remove stock)
+        """
+        if self.type == StockMovementType.adjustment:
+            return self.quantity  # already signed
         if self.type == StockMovementType.outgoing:
             return -abs(self.quantity)
         return abs(self.quantity)

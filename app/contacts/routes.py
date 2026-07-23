@@ -2,7 +2,6 @@ from app.utils import resolve_company
 import math
 from flask import render_template, request, redirect, url_for, flash, jsonify
 from flask_login import login_required
-from flask_babel import _
 from . import contacts
 from app.models.enums import ContactType
 from sqlalchemy import exc
@@ -47,22 +46,22 @@ def create(company_id):
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
                 return jsonify({
                     'success': True, 
-                    'message': _('Contact created successfully'),
+                    'message': 'Contact created successfully',
                     'contact': {
                         'id': contact.id,
                         'name': contact.name,
                         'email': contact.email
                     }
                 })
-            flash(_('Contact created successfully'), 'success')
+            flash('Contact created successfully', 'success')
             return redirect(url_for('contacts.index', company_id=company_id))
         except ValueError as e:
             flash(_(str(e)), 'error')
             return redirect(url_for('contacts.create', company_id=company_id))
         except exc.IntegrityError:
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-                return jsonify({'success': False, 'error': _('A database error occurred.')})
-            flash(_('Error creating contact'), 'error')
+                return jsonify({'success': False, 'error': 'A database error occurred.'})
+            flash('Error creating contact', 'error')
             return redirect(url_for('contacts.create', company_id=company_id))
 
     is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
@@ -105,16 +104,16 @@ def edit(company_id, contact_id):
         try:
             ContactService.update_contact(company_id, contact_id, request.form)
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-                return jsonify({'success': True, 'message': _('Contact updated successfully')})
-            flash(_('Contact updated successfully'), 'success')
+                return jsonify({'success': True, 'message': 'Contact updated successfully'})
+            flash('Contact updated successfully', 'success')
             return redirect(url_for('contacts.index', company_id=company_id))
         except ValueError as e:
             flash(_(str(e)), 'error')
             return redirect(url_for('contacts.edit', company_id=company_id, contact_id=contact_id))
         except exc.IntegrityError:
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-                return jsonify({'success': False, 'error': _('A database error occurred.')})
-            flash(_('Error updating contact'), 'error')
+                return jsonify({'success': False, 'error': 'A database error occurred.'})
+            flash('Error updating contact', 'error')
             return redirect(url_for('contacts.edit', company_id=company_id, contact_id=contact_id))
 
     is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
@@ -134,16 +133,16 @@ def delete(company_id, contact_id):
     try:
         ContactService.delete_contact(company_id, contact_id)
         if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-            return jsonify({'success': True, 'message': _('Contact deleted successfully')})
-        flash(_('Contact deleted successfully'), 'success')
+            return jsonify({'success': True, 'message': 'Contact deleted successfully'})
+        flash('Contact deleted successfully', 'success')
         return redirect(url_for('contacts.index', company_id=company_id))
     except exc.IntegrityError:
         if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
             return jsonify({
                 'success': False, 
-                'error': _('Cannot delete contact because it has related records (invoices, items, etc).')
+                'error': 'Cannot delete contact because it has related records (invoices, items, etc).'
             })
-        flash(_('Cannot delete contact because it has related records (invoices, items, etc).'), 'error')
+        flash('Cannot delete contact because it has related records (invoices, items, etc).', 'error')
         return redirect(url_for('contacts.index', company_id=company_id))
 
 @contacts.route('/<string:company_id>/contacts/api/search', methods=['GET'])

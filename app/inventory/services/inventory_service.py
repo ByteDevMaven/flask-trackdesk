@@ -1,7 +1,6 @@
 from datetime import datetime, timedelta, UTC
 
 from sqlalchemy import or_, and_, desc, asc, func
-from flask_babel import _
 from flask_login import current_user
 
 from app.models import db, InventoryItem, StockMovement, StockMovementType
@@ -98,8 +97,8 @@ class InventoryService:
             warehouse_id=warehouse_id,
             user_id=current_user.id if current_user.is_authenticated else None,
             type=StockMovementType.adjustment,
-            quantity=adjustment,
-            reference=reference or _('Manual Adjustment'),
+            quantity=adjustment,  # signed: positive = add, negative = remove
+            reference=reference or 'Manual Adjustment',
             date=datetime.now(UTC)
         )
         db.session.add(movement)
@@ -113,14 +112,14 @@ class InventoryService:
     @staticmethod
     def transfer_stock(company_id, item_id, from_warehouse_id, to_warehouse_id, quantity, reference=None):
         if quantity <= 0:
-            raise ValueError(_("Quantity must be positive"))
+            raise ValueError("Quantity must be positive")
             
         item = InventoryItem.query.filter_by(id=item_id, company_id=company_id).first_or_404()
         from app.models import WarehouseItem
         
         from_item = WarehouseItem.query.filter_by(warehouse_id=from_warehouse_id, inventory_item_id=item_id).first()
         if not from_item or from_item.quantity < quantity:
-            raise ValueError(_("Not enough stock in source warehouse"))
+            raise ValueError("Not enough stock in source warehouse")
             
         to_item = WarehouseItem.query.filter_by(warehouse_id=to_warehouse_id, inventory_item_id=item_id).first()
         if not to_item:
@@ -138,7 +137,7 @@ class InventoryService:
             user_id=current_user.id if current_user.is_authenticated else None,
             type=StockMovementType.outgoing,
             quantity=quantity,
-            reference=reference or _('Stock Transfer'),
+            reference=reference or 'Stock Transfer',
             date=datetime.now(UTC)
         )
         db.session.add(movement)
@@ -149,15 +148,15 @@ class InventoryService:
     @staticmethod
     def create_inventory_item(company_id, name, description=None, quantity=0, price=0.0, cost_price=0.0, discount=0.0, supplier_id=None, category_id=None, is_service=False, warehouse_id=None, sku=None):
         if not name:
-            raise ValueError(_('Name is required'))
+            raise ValueError('Name is required')
         if quantity < 0:
-            raise ValueError(_('Quantity cannot be negative'))
+            raise ValueError('Quantity cannot be negative')
         if price < 0:
-            raise ValueError(_('Price cannot be negative'))
+            raise ValueError('Price cannot be negative')
         if cost_price < 0:
-            raise ValueError(_('Cost price cannot be negative'))
+            raise ValueError('Cost price cannot be negative')
         if discount < 0 or discount > 100:
-            raise ValueError(_('Discount must be between 0 and 100'))
+            raise ValueError('Discount must be between 0 and 100')
 
         item = InventoryItem(
             company_id=company_id,
@@ -179,7 +178,7 @@ class InventoryService:
             candidate = sku.strip().upper()
             existing = InventoryItem.query.filter_by(company_id=company_id, sku=candidate).first()
             if existing and existing.id != item.id:
-                raise ValueError(_('A product with this SKU already exists'))
+                raise ValueError('A product with this SKU already exists')
             item.sku = candidate
         else:
             item.sku = InventoryItem.build_sku(name, item.id)
@@ -202,7 +201,7 @@ class InventoryService:
                     user_id=current_user.id if current_user.is_authenticated else None,
                     type=StockMovementType.incoming,
                     quantity=quantity,
-                    reference=_('Initial Stock'),
+                    reference='Initial Stock',
                     date=datetime.now(UTC)
                 )
                 db.session.add(movement)
@@ -225,7 +224,7 @@ class InventoryService:
         
         if name is not None:
             if not name.strip():
-                raise ValueError(_('Name is required'))
+                raise ValueError('Name is required')
             item.name = name.strip()
             
         if description is not None:
@@ -236,22 +235,22 @@ class InventoryService:
             
         if quantity is not None:
             if quantity < 0:
-                raise ValueError(_('Quantity cannot be negative'))
+                raise ValueError('Quantity cannot be negative')
             item.quantity = 0 if item.is_service else quantity
             
         if price is not None:
             if price < 0:
-                raise ValueError(_('Price cannot be negative'))
+                raise ValueError('Price cannot be negative')
             item.price = price
 
         if cost_price is not None:
             if cost_price < 0:
-                raise ValueError(_('Cost price cannot be negative'))
+                raise ValueError('Cost price cannot be negative')
             item.cost_price = cost_price
 
         if discount is not None:
             if discount < 0 or discount > 100:
-                raise ValueError(_('Discount must be between 0 and 100'))
+                raise ValueError('Discount must be between 0 and 100')
             item.discount = discount
             
         if supplier_id is not None:
@@ -264,7 +263,7 @@ class InventoryService:
             candidate = sku.strip().upper() if sku.strip() else InventoryItem.build_sku(item.name, item.id)
             existing = InventoryItem.query.filter_by(company_id=company_id, sku=candidate).first()
             if existing and existing.id != item.id:
-                raise ValueError(_('A product with this SKU already exists'))
+                raise ValueError('A product with this SKU already exists')
             item.sku = candidate
             
         db.session.commit()
@@ -368,7 +367,6 @@ class InventoryService:
     def export_inventory_items_xlsx(company_id, search='', supplier_id=None):
         from openpyxl import Workbook
         from openpyxl.styles import Font, Alignment
-        from flask_babel import _
         
         pagination = InventoryService.get_inventory_items(
             company_id=company_id,
@@ -381,9 +379,9 @@ class InventoryService:
         
         wb = Workbook()
         ws = wb.active
-        ws.title = _('Inventario')
+        ws.title = 'Inventario'
         
-        headers = [_('Nombre'), _('Descripción'), _('Cantidad'), _('Precio'), _('Costo'), _('Proveedor')]
+        headers = ['Nombre', 'Descripción', 'Cantidad', 'Precio', 'Costo', 'Proveedor']
         ws.append(headers)
         
         for col in range(1, len(headers) + 1):
@@ -408,7 +406,6 @@ class InventoryService:
     def export_stock_movements_xlsx(company_id, movement_type=None, period='all', search='', client_id=None, supplier_id=None):
         from openpyxl import Workbook
         from openpyxl.styles import Font, Alignment
-        from flask_babel import _
         
         # Get all movements without pagination
         pagination = InventoryService.get_stock_movements(
@@ -425,9 +422,9 @@ class InventoryService:
         
         wb = Workbook()
         ws = wb.active
-        ws.title = _('Movimientos de Inventario')
+        ws.title = 'Movimientos de Inventario'
         
-        headers = [_('Fecha'), _('Tipo'), _('Producto'), _('Referencia'), _('Cantidad'), _('Notas')]
+        headers = ['Fecha', 'Tipo', 'Producto', 'Referencia', 'Cantidad', 'Notas']
         ws.append(headers)
         
         for col in range(1, len(headers) + 1):
@@ -438,11 +435,11 @@ class InventoryService:
         for m in movements:
             type_str = ''
             if m.type == StockMovementType.incoming:
-                type_str = _('Entrada')
+                type_str = 'Entrada'
             elif m.type == StockMovementType.outgoing:
-                type_str = _('Salida')
+                type_str = 'Salida'
             else:
-                type_str = _('Ajuste')
+                type_str = 'Ajuste'
                 
             date_str = m.date.strftime('%Y-%m-%d %H:%M') if m.date else ''
             prod_name = m.inventory_item.name if m.inventory_item else ''
