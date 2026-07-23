@@ -10,7 +10,7 @@
 
 {% block content %}
 <form onsubmit="submitAdjustment(event)"
-  data-drawer-form data-success-message="Stock ajustado exitosamente">
+  data-success-message="Stock ajustado exitosamente">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
   <div class="p-4 md:p-6 space-y-4">
     <div>
@@ -61,23 +61,36 @@ function submitAdjustment(e) {
       warehouse_id: warehouseId,
       adjustment: qty
     })
-  }).then(res => res.json()).then(data => {
+  }).then(async res => {
+    if (!res.ok) {
+      if (res.status === 403) {
+        return Promise.reject('No tienes permiso para realizar esta acción.');
+      }
+      try {
+        const errData = await res.json();
+        return Promise.reject(errData.error || 'Error ajustando stock (Status ' + res.status + ')');
+      } catch (e) {
+        return Promise.reject('Error en el servidor (HTTP ' + res.status + ')');
+      }
+    }
+    return res.json();
+  }).then(data => {
     if (data.success) {
-      if (typeof window.showToast === 'function') {
+      if (typeof window.triggerToast === 'function') {
         if (data.pending_approval) {
-          window.showToast(data.message || 'Ajuste enviado para aprobación', 'warning');
+          window.triggerToast(data.message || 'Ajuste enviado para aprobación', true);
         } else {
-          window.showToast(form.dataset.successMessage || 'Guardado exitosamente', 'success');
+          window.triggerToast(form.dataset.successMessage || 'Guardado exitosamente', true);
         }
       }
+      if (typeof window.closeDrawer === 'function') window.closeDrawer();
       setTimeout(() => window.location.reload(), 1500);
     } else {
-      alert(data.error || 'Error ajustando stock');
-      button.disabled = false;
-      button.innerHTML = 'Guardar Ajuste';
+      return Promise.reject(data.error || 'Error del servidor: success=false');
     }
-  }).catch(() => {
-    alert('Error de conexión');
+  }).catch(err => {
+    let msg = err instanceof Error ? err.message : String(err);
+    alert("DEBUG INFO: " + msg);
     button.disabled = false;
     button.innerHTML = 'Guardar Ajuste';
   });
