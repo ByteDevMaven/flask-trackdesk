@@ -5,9 +5,9 @@
     "semantic_hash": "57ae4c3f0125c46d3c65c735f77c1174"
   },
   "app/__init__.py": {
-    "mtime": 1780882101.761564,
-    "ast_hash": "c6ca50f46d7be76712e0c468474f00cd",
-    "semantic_hash": "c6ca50f46d7be76712e0c468474f00cd"
+    "mtime": 1784777456.0343485,
+    "ast_hash": "d9c22c5bb6425b43bebcebf1dd9446ac",
+    "semantic_hash": ""
   },
   "app/accounting/__init__.py": {
     "mtime": 1779668445.127662,
@@ -35,9 +35,9 @@
     "semantic_hash": "f8cee64ca8894edd8c6a62a484b655fe"
   },
   "app/auth/routes.py": {
-    "mtime": 1780886009.084948,
-    "ast_hash": "399abff0a4b1c9bd1abdfacf163dcb7a",
-    "semantic_hash": "399abff0a4b1c9bd1abdfacf163dcb7a"
+    "mtime": 1784779966.6677377,
+    "ast_hash": "579c8b14f05345317489b74e3b951670",
+    "semantic_hash": ""
   },
   "app/auth/services/__init__.py": {
     "mtime": 1780277031.8392506,
@@ -50,8 +50,8 @@
     "semantic_hash": "3a8f9141da0f560d8b3a00dc0b81289b"
   },
   "app/blueprints.py": {
-    "mtime": 1783705384.9263773,
-    "ast_hash": "90d3c6cf2c110e012a674c1a6be5ed32",
+    "mtime": 1784777607.5896394,
+    "ast_hash": "8343822b551e0e3dc2eb583877268126",
     "semantic_hash": ""
   },
   "app/cli.py": {
@@ -150,8 +150,8 @@
     "semantic_hash": "b6bc215a7a633d7c4529f241b8046022"
   },
   "app/inventory/routes.py": {
-    "mtime": 1784776408.9568813,
-    "ast_hash": "fe881bb72dfa324fd77f77a4a7f11184",
+    "mtime": 1784778833.9673302,
+    "ast_hash": "9be922a1f9b0692939351d4807dbf143",
     "semantic_hash": ""
   },
   "app/inventory/services/__init__.py": {
@@ -230,13 +230,13 @@
     "semantic_hash": ""
   },
   "app/middleware/rbac.py": {
-    "mtime": 1784612329.093462,
-    "ast_hash": "56f3ca9cd77fc37aa93f2e2a3db5c945",
+    "mtime": 1784777632.8489985,
+    "ast_hash": "ec3ebbf653f1413e9aa8767d72d4fe10",
     "semantic_hash": ""
   },
   "app/models/__init__.py": {
-    "mtime": 1784162251.54082,
-    "ast_hash": "e41bfe0aaf4f0017c38e225959bdbbee",
+    "mtime": 1784777545.5424795,
+    "ast_hash": "578994e96e0c9e8490847df89c8acb3f",
     "semantic_hash": ""
   },
   "app/models/account.py": {
@@ -295,8 +295,8 @@
     "semantic_hash": "e5a7414b5820a2e6546c0cb98dad9a3c"
   },
   "app/models/enums.py": {
-    "mtime": 1783980409.2134778,
-    "ast_hash": "7660254d835e52c8af7557b3c5020757",
+    "mtime": 1784777381.9119692,
+    "ast_hash": "998eb30f05b6bf6584f5095df214358f",
     "semantic_hash": ""
   },
   "app/models/expense.py": {
@@ -720,9 +720,9 @@
     "semantic_hash": "39ccbb0bede9475fa183f41e3cd557f7"
   },
   "app/auth/templates/auth/login.html": {
-    "mtime": 1780891625.413078,
-    "ast_hash": "43c325d48d7aa276eb6532a750219d11",
-    "semantic_hash": "43c325d48d7aa276eb6532a750219d11"
+    "mtime": 1784779958.6430597,
+    "ast_hash": "41181d83fc722c1aec3ae9cd436318f5",
+    "semantic_hash": ""
   },
   "app/companies/templates/companies/form.html": {
     "mtime": 1781322912.7352567,
@@ -805,9 +805,9 @@
     "semantic_hash": "009dd26e17ea098a5e69ddd0ba335f55"
   },
   "app/inventory/templates/inventory/drawer_adjust.html": {
-    "mtime": 1780891625.4693458,
-    "ast_hash": "f7a90fd073249417ab8240668f212ecc",
-    "semantic_hash": "f7a90fd073249417ab8240668f212ecc"
+    "mtime": 1784777646.7878835,
+    "ast_hash": "537d4fc02a9abde83af40cd1d808b35b",
+    "semantic_hash": ""
   },
   "app/inventory/templates/inventory/drawer_transfer.html": {
     "mtime": 1780891625.4708316,
@@ -885,8 +885,8 @@
     "semantic_hash": "2baa6c504f7d59476b7e01e517ded6a7"
   },
   "app/templates/base.html": {
-    "mtime": 1783706888.4357686,
-    "ast_hash": "3b113ae294b061e5b81b74bf6278add0",
+    "mtime": 1784777703.9803028,
+    "ast_hash": "6ed2f3c1271aeb5f0bbf7a21ababf280",
     "semantic_hash": ""
   },
   "app/templates/blank.html": {
@@ -1372,6 +1372,36 @@
   "migrations/versions/6b073511a0f5_allow_signed_adjustment_quantity.py": {
     "mtime": 1784768054.271083,
     "ast_hash": "a56f95463596bbe5fcf4279ee1fa797a",
+    "semantic_hash": ""
+  },
+  "app/approvals/__init__.py": {
+    "mtime": 1784777599.4017508,
+    "ast_hash": "75288b0954865f429988b6209b0cd4b9",
+    "semantic_hash": ""
+  },
+  "app/approvals/routes.py": {
+    "mtime": 1784778594.4805887,
+    "ast_hash": "b95f4d8fb04fdfe01dfabb31669ed354",
+    "semantic_hash": ""
+  },
+  "app/models/approval_request.py": {
+    "mtime": 1784777395.2008538,
+    "ast_hash": "bd1472cdd20917b88f09f8059eb88f3a",
+    "semantic_hash": ""
+  },
+  "app/services/approval_service.py": {
+    "mtime": 1784778586.2397456,
+    "ast_hash": "254751789b1892ca6de957608ae6760e",
+    "semantic_hash": ""
+  },
+  "migrations/versions/a63c2982be42_add_approval_requests_table.py": {
+    "mtime": 1784777412.5301452,
+    "ast_hash": "9eaf23e47410d5e30bd65162ad2b99d6",
+    "semantic_hash": ""
+  },
+  "app/approvals/templates/approvals/index.html": {
+    "mtime": 1784779121.4853852,
+    "ast_hash": "c2ba7db009f2e01308a6558f0b2a673e",
     "semantic_hash": ""
   }
 }
