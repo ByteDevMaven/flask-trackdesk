@@ -207,6 +207,11 @@ ROUTE_PERMISSIONS: dict[str, str] = {
     'hr.delete_schedule':                 'hr.delete',
     'hr.view_deviation':                  'hr.view',
 
+    # ── Approvals ─────────────────────────────────────────────────────────
+    'approvals.index':   'approvals.manage',
+    'approvals.approve': 'approvals.manage',
+    'approvals.reject':  'approvals.manage',
+
     # ── Global search ─────────────────────────────────────────────────────
     'search': 'dashboard.view',
 
@@ -303,7 +308,7 @@ def seed_default_roles_and_permissions(db, Role, Permission):
     role_definitions: dict[str, list[str]] = {
         # Platform admin — bypasses has_permission in code, but we still assign all
         # permissions so the seed is consistent and the role table is complete.
-        'superadmin': list(all_permission_names),
+        'superadmin': list(all_permission_names) + ['approvals.manage'],
 
         # Company owner — full control within their companies
         'owner': [
@@ -318,6 +323,7 @@ def seed_default_roles_and_permissions(db, Role, Permission):
             'users.view',      'users.manage',       # manage users within their company
             'accounting.view', 'accounting.manage', 'accounting.delete',
             'hr.view',         'hr.manage',         'hr.delete',
+            'approvals.manage',
         ],
 
         # Senior Manager — oversees operations, full access except deleting company
@@ -332,6 +338,7 @@ def seed_default_roles_and_permissions(db, Role, Permission):
             'users.view',      'users.manage',
             'accounting.view', 'accounting.manage', 'accounting.delete',
             'hr.view',         'hr.manage',         'hr.delete',
+            'approvals.manage',
         ],
 
         # General Manager — oversees operations, no destructive actions.
@@ -399,6 +406,7 @@ def seed_default_roles_and_permissions(db, Role, Permission):
             'invoices.view',   'invoices.manage',
             'payments.view',   'payments.manage',
             'companies.view',
+            'approvals.manage',
         ],
 
         # Inventory Staff — manages inventory data, no destructive actions.

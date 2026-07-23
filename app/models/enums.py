@@ -218,3 +218,16 @@ class TransactionType(enum.Enum):
             'payment': 'Pago',
             'transfer': 'Transferencia'
         }.get(self.value, self.value.title())
+
+class ApprovalStatus(enum.Enum):
+    pending = 'pending'
+    approved = 'approved'
+    rejected = 'rejected'
+
+    @property
+    def label_es(self):
+        return {
+            'pending': 'Pendiente',
+            'approved': 'Aprobado',
+            'rejected': 'Rechazado'
+        }.get(self.value, self.value.title())

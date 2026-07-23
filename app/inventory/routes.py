@@ -1,7 +1,7 @@
 from app.utils import resolve_company
 import io
 from flask import render_template, request, redirect, session, url_for, flash, current_app, jsonify, Response, send_file
-from flask_login import login_required
+from flask_login import login_required, current_user
 from sqlalchemy.exc import SQLAlchemyError
 
 from app.models import db, InventoryItem, Contact
@@ -683,6 +683,28 @@ def api_adjust_stock(company_id, id):
         return jsonify({'error': 'Warehouse ID is required'}), 400
         
     try:
+        if not current_user.has_permission('approvals.manage'):
+            from app.services.approval_service import ApprovalService
+            item = InventoryItem.query.get(id)
+            ApprovalService.create_request(
+                company_id=company_id,
+                requester_id=current_user.id,
+                action_type='adjust_stock',
+                payload={
+                    'company_id': company_id,
+                    'item_id': id,
+                    'item_name': item.name if item else None,
+                    'item_sku': item.sku if item else None,
+                    'warehouse_id': int(warehouse_id),
+                    'adjustment': adjustment
+                }
+            )
+            return jsonify({
+                'success': True,
+                'pending_approval': True,
+                'message': 'Ajuste enviado para aprobación'
+            })
+
         new_quantity = InventoryService.adjust_stock(
             company_id=company_id,
             item_id=id,

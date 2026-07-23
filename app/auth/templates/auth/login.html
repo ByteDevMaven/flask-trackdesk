@@ -38,7 +38,7 @@
     </div>
 
     <div class="bg-white rounded-xl border border-slate-200 shadow-sm p-4 md:p-8">
-      <form method="POST" action="{{ url_for('auth.login') }}">
+      <form method="POST" action="{{ url_for('auth.login', next=request.args.get('next')) }}">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
         <div class="mb-5">

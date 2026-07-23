@@ -21,6 +21,8 @@ def create_app():
     
     with app.app_context():
         register_audit_listeners()
+        from app.services.approval_service import init_action_handlers
+        init_action_handlers()
 
     register_blueprints(app)
     register_context_processors(app)

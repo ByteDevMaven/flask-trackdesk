@@ -1,5 +1,5 @@
 from app.extensions import db, migrate
-from .enums import DocumentType, DocumentStatus, InvoiceType, StockMovementType, PaymentMethod, AccountType, UserStatus, ContactType, EmployeeClass, PayPeriod, LeaveType, LeaveStatus, PTOAccrualPeriod, ExpenseStatus, TransactionType
+from .enums import DocumentType, DocumentStatus, InvoiceType, StockMovementType, PaymentMethod, AccountType, UserStatus, ContactType, EmployeeClass, PayPeriod, LeaveType, LeaveStatus, PTOAccrualPeriod, ExpenseStatus, TransactionType, ApprovalStatus
 from .associations import role_permissions, user_companies, expense_tags, ledger_entry_tags
 from .company import Company
 from .role import Role
@@ -35,12 +35,13 @@ from .leave_request import LeaveRequest
 from .work_schedule import WorkSchedule
 from .token import Token
 from .accounting_attachment import AccountingAttachment
+from .approval_request import ApprovalRequest
 
 __all__ = [
     'db', 'migrate',
     'DocumentType', 'DocumentStatus', 'InvoiceType', 'StockMovementType', 'PaymentMethod', 'AccountType', 'UserStatus', 'ContactType', 'DocumentTemplateType',
     'EmployeeClass', 'PayPeriod', 'LeaveType', 'LeaveStatus', 'PTOAccrualPeriod',
-    'ExpenseStatus', 'TransactionType',
+    'ExpenseStatus', 'TransactionType', 'ApprovalStatus',
     'role_permissions', 'user_companies', 'expense_tags', 'ledger_entry_tags',
     'Company', 'Role', 'Permission', 'User', 'Contact', 'Category',
     'InventoryItem', 'PurchaseOrder', 'PurchaseOrderItem',

@@ -18,7 +18,7 @@ def login():
             validate_csrf(csrf_token)
         except ValidationError:
             flash("Token CSRF inválido. Por favor, inténtalo de nuevo.", "error")
-            return redirect(url_for("auth.login"))
+            return redirect(url_for("auth.login", next=request.args.get('next')))
 
         email = request.form.get("email")
         password = request.form.get("password")

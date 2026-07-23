@@ -1,0 +1,350 @@
+{% extends "base.html" %}
+
+{% block title %}Aprobaciones – TrackDesk{% endblock %}
+{% block sidebar_title %}Aprobaciones{% endblock %}
+{% block page_title %}Aprobaciones{% endblock %}
+
+{% block content %}
+{% set cid = session.get('selected_company_slug') or company_id %}
+<div class="flex flex-col h-full overflow-hidden bg-slate-50">
+
+  {# ── Header ─────────────────────────────────────────────────────── #}
+  <header class="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between flex-shrink-0">
+    <div>
+      <h1 class="text-lg font-semibold text-slate-800">Aprobaciones</h1>
+      <p class="text-xs text-slate-400 mt-0.5">Solicitudes que requieren tu autorización</p>
+    </div>
+    <span id="pending-badge" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold
+      {{ 'bg-amber-100 text-amber-700' if requests else 'bg-slate-100 text-slate-500' }}">
+      <span class="w-1.5 h-1.5 rounded-full {{ 'bg-amber-500' if requests else 'bg-slate-400' }}"></span>
+      {{ requests | length }} pendiente{{ 's' if requests | length != 1 else '' }}
+    </span>
+  </header>
+
+  {# ── Tabs ────────────────────────────────────────────────────────── #}
+  <div class="bg-white border-b border-slate-200 px-6 flex-shrink-0">
+    <div class="flex gap-0" role="tablist">
+      <button role="tab" id="tab-pending" onclick="switchTab('pending')"
+        class="tab-btn px-5 py-3 text-sm font-medium border-b-2 transition-colors border-emerald-500 text-emerald-700">
+        Pendientes
+        {% if requests %}
+        <span class="ml-1.5 inline-flex items-center justify-center w-5 h-5 rounded-full bg-amber-100 text-amber-700 text-xs font-bold">{{ requests | length }}</span>
+        {% endif %}
+      </button>
+      <button role="tab" id="tab-history" onclick="switchTab('history')"
+        class="tab-btn px-5 py-3 text-sm font-medium border-b-2 border-transparent text-slate-500 hover:text-slate-700 transition-colors">
+        Historial
+        {% if history %}
+        <span class="ml-1.5 inline-flex items-center justify-center w-5 h-5 rounded-full bg-slate-100 text-slate-500 text-xs font-bold">{{ history | length }}</span>
+        {% endif %}
+      </button>
+    </div>
+  </div>
+
+  <div class="flex-1 overflow-y-auto p-6">
+
+    {# ── Pending Panel ──────────────────────────────────────────────── #}
+    <div id="panel-pending" class="tab-panel">
+      <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-50 border-b border-slate-200">
+                <th class="px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Fecha</th>
+                <th class="px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Solicitante</th>
+                <th class="px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Acción</th>
+                <th class="px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Item / Detalles</th>
+                <th class="px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider text-right">Opciones</th>
+              </tr>
+            </thead>
+            <tbody id="pending-tbody" class="divide-y divide-slate-100">
+              {% for req in requests %}
+              <tr class="hover:bg-slate-50 transition-colors" id="req-{{ req.id }}">
+                <td class="px-5 py-4 text-sm text-slate-500 whitespace-nowrap">
+                  {{ req.created_at.strftime('%d/%m/%Y') }}<br>
+                  <span class="text-xs text-slate-400">{{ req.created_at.strftime('%H:%M') }}</span>
+                </td>
+                <td class="px-5 py-4">
+                  <div class="text-sm font-medium text-slate-800">{{ req.requester.name }}</div>
+                  <div class="text-xs text-slate-400">{{ req.requester.email }}</div>
+                </td>
+                <td class="px-5 py-4">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700">
+                    {% if req.action_type == 'adjust_stock' %}Ajuste de Inventario
+                    {% else %}{{ req.action_type }}{% endif %}
+                  </span>
+                </td>
+                <td class="px-5 py-4 text-sm">
+                  {% if req.action_type == 'adjust_stock' %}
+                    {% if req.payload.get('item_sku') %}
+                    <a href="{{ url_for('inventory.view', company_id=cid, sku=req.payload.item_sku) }}"
+                      class="font-semibold text-emerald-700 hover:text-emerald-900 hover:underline transition-colors">
+                      {{ req.payload.get('item_name') or req.payload.item_sku }}
+                    </a>
+                    <div class="text-xs text-slate-400 font-mono mt-0.5">{{ req.payload.item_sku }}</div>
+                    {% else %}
+                    <span class="text-slate-600">Item ID: {{ req.payload.item_id }}</span>
+                    {% endif %}
+                    <div class="mt-1">
+                      <span class="text-slate-400 text-xs">Ajuste:</span>
+                      <span class="font-semibold text-sm {{ 'text-emerald-600' if req.payload.adjustment > 0 else 'text-red-600' }}">
+                        {{ '+' if req.payload.adjustment > 0 else '' }}{{ req.payload.adjustment }}
+                      </span>
+                    </div>
+                  {% else %}
+                    <code class="text-xs text-slate-500">{{ req.payload | tojson }}</code>
+                  {% endif %}
+                </td>
+                <td class="px-5 py-4 text-right whitespace-nowrap space-x-2">
+                  <button onclick="openModal({{ req.id }}, 'approve')"
+                    class="px-3 py-1.5 text-xs font-semibold bg-emerald-50 text-emerald-700 rounded-lg border border-emerald-200 hover:bg-emerald-100 transition-colors">
+                    Aprobar
+                  </button>
+                  <button onclick="openModal({{ req.id }}, 'reject')"
+                    class="px-3 py-1.5 text-xs font-semibold bg-rose-50 text-rose-700 rounded-lg border border-rose-200 hover:bg-rose-100 transition-colors">
+                    Rechazar
+                  </button>
+                </td>
+              </tr>
+              {% else %}
+              <tr id="empty-pending">
+                <td colspan="5" class="px-5 py-14 text-center">
+                  <svg class="w-8 h-8 text-slate-200 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                  <p class="text-sm text-slate-400">No hay solicitudes pendientes.</p>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    {# ── History Panel ──────────────────────────────────────────────── #}
+    <div id="panel-history" class="tab-panel hidden">
+      <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-50 border-b border-slate-200">
+                <th class="px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Fecha</th>
+                <th class="px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Solicitante</th>
+                <th class="px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Acción</th>
+                <th class="px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Item / Detalles</th>
+                <th class="px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Aprobado por</th>
+                <th class="px-5 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Estado</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              {% for req in history %}
+              <tr class="hover:bg-slate-50/50 transition-colors">
+                <td class="px-5 py-4 text-sm text-slate-500 whitespace-nowrap">
+                  {{ req.created_at.strftime('%d/%m/%Y') }}<br>
+                  <span class="text-xs text-slate-400">{{ req.created_at.strftime('%H:%M') }}</span>
+                </td>
+                <td class="px-5 py-4">
+                  <div class="text-sm font-medium text-slate-700">{{ req.requester.name }}</div>
+                  <div class="text-xs text-slate-400">{{ req.requester.email }}</div>
+                </td>
+                <td class="px-5 py-4">
+                  <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-slate-100 text-slate-600">
+                    {% if req.action_type == 'adjust_stock' %}Ajuste de Inventario
+                    {% else %}{{ req.action_type }}{% endif %}
+                  </span>
+                </td>
+                <td class="px-5 py-4 text-sm">
+                  {% if req.action_type == 'adjust_stock' %}
+                    {% if req.payload.get('item_sku') %}
+                    <a href="{{ url_for('inventory.view', company_id=cid, sku=req.payload.item_sku) }}"
+                      class="font-semibold text-emerald-700 hover:underline">
+                      {{ req.payload.get('item_name') or req.payload.item_sku }}
+                    </a>
+                    <div class="text-xs text-slate-400 font-mono mt-0.5">{{ req.payload.item_sku }}</div>
+                    {% else %}
+                    <span class="text-slate-600">Item ID: {{ req.payload.item_id }}</span>
+                    {% endif %}
+                    <div class="mt-1">
+                      <span class="text-slate-400 text-xs">Ajuste:</span>
+                      <span class="font-semibold text-sm {{ 'text-emerald-600' if req.payload.adjustment > 0 else 'text-red-600' }}">
+                        {{ '+' if req.payload.adjustment > 0 else '' }}{{ req.payload.adjustment }}
+                      </span>
+                    </div>
+                  {% else %}
+                    <code class="text-xs text-slate-500">{{ req.payload | tojson }}</code>
+                  {% endif %}
+                </td>
+                <td class="px-5 py-4">
+                  {% if req.approver %}
+                  <div class="flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-full bg-slate-200 flex items-center justify-center text-xs font-bold text-slate-600 flex-shrink-0">
+                      {{ req.approver.name[0] | upper }}
+                    </div>
+                    <div>
+                      <div class="text-sm font-medium text-slate-700">{{ req.approver.name }}</div>
+                      {% if req.resolved_at %}
+                      <div class="text-xs text-slate-400">{{ req.resolved_at.strftime('%d/%m/%Y %H:%M') }}</div>
+                      {% endif %}
+                    </div>
+                  </div>
+                  {% else %}—{% endif %}
+                </td>
+                <td class="px-5 py-4">
+                  {% if req.status.value == 'approved' %}
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Aprobado
+                  </span>
+                  {% else %}
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-rose-50 text-rose-700 border border-rose-100">
+                    <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span> Rechazado
+                  </span>
+                  {% endif %}
+                </td>
+              </tr>
+              {% else %}
+              <tr>
+                <td colspan="6" class="px-5 py-14 text-center text-sm text-slate-400">
+                  Sin historial de aprobaciones aún.
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{# ── Confirmation Modal ────────────────────────────────────────────── #}
+<div id="approval-modal" class="fixed inset-0 z-50 hidden" aria-modal="true" role="dialog">
+  <div class="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onclick="closeModal()"></div>
+  <div class="relative flex items-center justify-center min-h-screen p-4">
+    <div id="modal-panel" class="bg-white rounded-2xl shadow-2xl w-full max-w-md transform transition-all duration-200 scale-95 opacity-0">
+      <div class="p-6">
+        <div id="modal-icon" class="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4"></div>
+        <h3 id="modal-title" class="text-lg font-semibold text-slate-800 text-center mb-2"></h3>
+        <p id="modal-body" class="text-sm text-slate-500 text-center mb-6"></p>
+        <div class="flex gap-3">
+          <button onclick="closeModal()"
+            class="flex-1 px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 transition-colors">
+            Cancelar
+          </button>
+          <button id="modal-confirm-btn" onclick="confirmAction()"
+            class="flex-1 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-colors">
+            Confirmar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Tabs ────────────────────────────────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+  document.querySelectorAll('.tab-btn').forEach(b => {
+    b.classList.remove('border-emerald-500', 'text-emerald-700');
+    b.classList.add('border-transparent', 'text-slate-500');
+  });
+  document.getElementById('panel-' + name).classList.remove('hidden');
+  const activeBtn = document.getElementById('tab-' + name);
+  activeBtn.classList.remove('border-transparent', 'text-slate-500');
+  activeBtn.classList.add('border-emerald-500', 'text-emerald-700');
+  sessionStorage.setItem('approvals_tab', name);
+}
+
+// Restore last tab
+const savedTab = sessionStorage.getItem('approvals_tab');
+if (savedTab) switchTab(savedTab);
+
+// ── Modal ────────────────────────────────────────────────────────────
+let _currentId = null;
+let _currentAction = null;
+
+function openModal(id, action) {
+  _currentId = id;
+  _currentAction = action;
+  const isApprove = action === 'approve';
+  const icon = document.getElementById('modal-icon');
+  const btn = document.getElementById('modal-confirm-btn');
+
+  icon.className = `w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 ${isApprove ? 'bg-emerald-100' : 'bg-rose-100'}`;
+  icon.innerHTML = isApprove
+    ? `<svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>`
+    : `<svg class="w-6 h-6 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>`;
+  document.getElementById('modal-title').textContent = isApprove ? 'Aprobar solicitud' : 'Rechazar solicitud';
+  document.getElementById('modal-body').textContent = isApprove
+    ? '¿Confirmas que deseas aprobar esta solicitud? La acción se ejecutará de inmediato.'
+    : '¿Confirmas que deseas rechazar esta solicitud? No se realizará ningún cambio en el inventario.';
+  btn.className = `flex-1 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-colors ${isApprove ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-rose-600 hover:bg-rose-700'}`;
+  btn.textContent = 'Confirmar';
+  btn.disabled = false;
+
+  const modal = document.getElementById('approval-modal');
+  const panel = document.getElementById('modal-panel');
+  modal.classList.remove('hidden');
+  requestAnimationFrame(() => {
+    panel.classList.remove('scale-95', 'opacity-0');
+    panel.classList.add('scale-100', 'opacity-100');
+  });
+}
+
+function closeModal() {
+  const panel = document.getElementById('modal-panel');
+  panel.classList.add('scale-95', 'opacity-0');
+  panel.classList.remove('scale-100', 'opacity-100');
+  setTimeout(() => document.getElementById('approval-modal').classList.add('hidden'), 150);
+}
+
+function confirmAction() {
+  const btn = document.getElementById('modal-confirm-btn');
+  btn.disabled = true;
+  btn.textContent = 'Procesando...';
+
+  fetch(`/api/{{ company_id }}/approvals/${_currentId}/${_currentAction}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'X-CSRFToken': '{{ csrf_token() }}' }
+  })
+  .then(r => r.json())
+  .then(data => {
+    closeModal();
+    if (data.success) {
+      if (typeof window.showToast === 'function') window.showToast(data.message, 'success');
+      const row = document.getElementById(`req-${_currentId}`);
+      if (row) {
+        row.style.transition = 'opacity 0.3s, transform 0.3s';
+        row.style.opacity = '0';
+        row.style.transform = 'translateX(20px)';
+        setTimeout(() => {
+          row.remove();
+          const tbody = document.getElementById('pending-tbody');
+          if (tbody && !tbody.querySelector('tr[id^="req-"]')) {
+            tbody.innerHTML = `<tr id="empty-pending"><td colspan="5" class="px-5 py-14 text-center"><svg class="w-8 h-8 text-slate-200 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><p class="text-sm text-slate-400">No hay solicitudes pendientes.</p></td></tr>`;
+            const badge = document.getElementById('pending-badge');
+            badge.className = 'inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-500';
+            badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span> 0 pendientes';
+          }
+          // Switch to history and reload to show the resolved entry
+          sessionStorage.setItem('approvals_tab', 'history');
+          setTimeout(() => window.location.reload(), 800);
+        }, 300);
+      }
+    } else {
+      if (typeof window.showToast === 'function') window.showToast(data.error || 'Ocurrió un error.', 'error');
+      btn.disabled = false;
+      btn.textContent = 'Confirmar';
+    }
+  })
+  .catch(() => {
+    closeModal();
+    if (typeof window.showToast === 'function') window.showToast('Error de conexión.', 'error');
+  });
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+{% endblock %}

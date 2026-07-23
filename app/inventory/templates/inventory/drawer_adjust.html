@@ -64,9 +64,13 @@ function submitAdjustment(e) {
   }).then(res => res.json()).then(data => {
     if (data.success) {
       if (typeof window.showToast === 'function') {
-        window.showToast(form.dataset.successMessage || 'Guardado exitosamente', 'success');
+        if (data.pending_approval) {
+          window.showToast(data.message || 'Ajuste enviado para aprobación', 'warning');
+        } else {
+          window.showToast(form.dataset.successMessage || 'Guardado exitosamente', 'success');
+        }
       }
-      setTimeout(() => window.location.reload(), 1000);
+      setTimeout(() => window.location.reload(), 1500);
     } else {
       alert(data.error || 'Error ajustando stock');
       button.disabled = false;

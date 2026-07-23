@@ -17,12 +17,16 @@ from app.pos import pos as pos_bp
 from app.support import support as support_bp
 
 def register_blueprints(app: Flask):
+    from app.invoices import invoices as invoices_bp
+    from app.approvals import approvals_bp
+
     app.register_blueprint(auth_bp)
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(contacts_bp)
     app.register_blueprint(inventory_bp)
     app.register_blueprint(orders_bp)
     app.register_blueprint(invoices_bp)
+    app.register_blueprint(approvals_bp)
     app.register_blueprint(payments_bp)
     app.register_blueprint(users_bp)
     app.register_blueprint(companies_bp)
