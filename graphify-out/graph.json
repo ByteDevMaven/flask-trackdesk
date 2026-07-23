@@ -6,12 +6,302 @@
     {
       "label": "routes.py",
       "file_type": "code",
+      "source_file": "app/dashboard/routes.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_dashboard_routes",
+      "community": 19,
+      "norm_label": "routes.py"
+    },
+    {
+      "label": "index()",
+      "file_type": "code",
+      "source_file": "app/dashboard/routes.py",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "app_dashboard_routes_index",
+      "community": 19,
+      "norm_label": "index()"
+    },
+    {
+      "label": "format_currency()",
+      "file_type": "code",
+      "source_file": "app/dashboard/routes.py",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "app_dashboard_routes_format_currency",
+      "community": 19,
+      "norm_label": "format_currency()"
+    },
+    {
+      "label": "format_date()",
+      "file_type": "code",
+      "source_file": "app/dashboard/routes.py",
+      "source_location": "L33",
+      "_origin": "ast",
+      "id": "app_dashboard_routes_format_date",
+      "community": 19,
+      "norm_label": "format_date()"
+    },
+    {
+      "label": "locale_date()",
+      "file_type": "code",
+      "source_file": "app/dashboard/routes.py",
+      "source_location": "L41",
+      "_origin": "ast",
+      "id": "app_dashboard_routes_locale_date",
+      "community": 19,
+      "norm_label": "locale_date()"
+    },
+    {
+      "label": "Format a number as currency",
+      "file_type": "rationale",
+      "source_file": "app/dashboard/routes.py",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "app_dashboard_routes_rationale_26",
+      "community": 19,
+      "norm_label": "format a number as currency"
+    },
+    {
+      "label": "Format a date in a readable format",
+      "file_type": "rationale",
+      "source_file": "app/dashboard/routes.py",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "app_dashboard_routes_rationale_34",
+      "community": 19,
+      "norm_label": "format a date in a readable format"
+    },
+    {
+      "label": "invoice_create_service.py",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_invoices_services_invoice_create_service",
+      "community": 33,
+      "norm_label": "invoice_create_service.py"
+    },
+    {
+      "label": "_generate_document_number()",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "app_invoices_services_invoice_create_service_generate_document_number",
+      "community": 8,
+      "norm_label": "_generate_document_number()"
+    },
+    {
+      "label": "create_invoice_or_quote()",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L52",
+      "_origin": "ast",
+      "id": "app_invoices_services_invoice_create_service_create_invoice_or_quote",
+      "community": 8,
+      "norm_label": "create_invoice_or_quote()"
+    },
+    {
+      "label": "invoice_pdf_service.py",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_invoices_services_invoice_pdf_service",
+      "community": 2,
+      "norm_label": "invoice_pdf_service.py"
+    },
+    {
+      "label": "HeaderCoords",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L43",
+      "_origin": "ast",
+      "id": "app_invoices_services_invoice_pdf_service_headercoords",
+      "community": 2,
+      "norm_label": "headercoords"
+    },
+    {
+      "label": "ClientCoords",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L65",
+      "_origin": "ast",
+      "id": "app_invoices_services_invoice_pdf_service_clientcoords",
+      "community": 2,
+      "norm_label": "clientcoords"
+    },
+    {
+      "label": "ItemsCoords",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L73",
+      "_origin": "ast",
+      "id": "app_invoices_services_invoice_pdf_service_itemscoords",
+      "community": 2,
+      "norm_label": "itemscoords"
+    },
+    {
+      "label": "TotalsCoords",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L92",
+      "_origin": "ast",
+      "id": "app_invoices_services_invoice_pdf_service_totalscoords",
+      "community": 2,
+      "norm_label": "totalscoords"
+    },
+    {
+      "label": "PdfTemplateLayout",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L111",
+      "_origin": "ast",
+      "id": "app_invoices_services_invoice_pdf_service_pdftemplatelayout",
+      "community": 2,
+      "norm_label": "pdftemplatelayout"
+    },
+    {
+      "label": "generate_invoice_pdf()",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L123",
+      "_origin": "ast",
+      "id": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf",
+      "community": 2,
+      "norm_label": "generate_invoice_pdf()"
+    },
+    {
+      "label": "_generate_html_pdf()",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L143",
+      "_origin": "ast",
+      "id": "app_invoices_services_invoice_pdf_service_generate_html_pdf",
+      "community": 2,
+      "norm_label": "_generate_html_pdf()"
+    },
+    {
+      "label": "_generate_overlay_pdf()",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L219",
+      "_origin": "ast",
+      "id": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
+      "community": 2,
+      "norm_label": "_generate_overlay_pdf()"
+    },
+    {
+      "label": "_draw_header()",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L318",
+      "_origin": "ast",
+      "id": "app_invoices_services_invoice_pdf_service_draw_header",
+      "community": 2,
+      "norm_label": "_draw_header()"
+    },
+    {
+      "label": "_draw_client_info()",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L359",
+      "_origin": "ast",
+      "id": "app_invoices_services_invoice_pdf_service_draw_client_info",
+      "community": 2,
+      "norm_label": "_draw_client_info()"
+    },
+    {
+      "label": "_draw_items()",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L375",
+      "_origin": "ast",
+      "id": "app_invoices_services_invoice_pdf_service_draw_items",
+      "community": 2,
+      "norm_label": "_draw_items()"
+    },
+    {
+      "label": "_draw_totals()",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L399",
+      "_origin": "ast",
+      "id": "app_invoices_services_invoice_pdf_service_draw_totals",
+      "community": 2,
+      "norm_label": "_draw_totals()"
+    },
+    {
+      "label": "generate_invoice_pdf_from_request()",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L426",
+      "_origin": "ast",
+      "id": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf_from_request",
+      "community": 2,
+      "norm_label": "generate_invoice_pdf_from_request()"
+    },
+    {
+      "label": "invoice_pdf_service.py ====================== Database-driven PDF and HTML eng",
+      "file_type": "rationale",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_invoices_services_invoice_pdf_service_rationale_1",
+      "community": 2,
+      "norm_label": "invoice_pdf_service.py ====================== database-driven pdf and html eng"
+    },
+    {
+      "label": "Generate the PDF based on the document template type.",
+      "file_type": "rationale",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L132",
+      "_origin": "ast",
+      "id": "app_invoices_services_invoice_pdf_service_rationale_132",
+      "community": 2,
+      "norm_label": "generate the pdf based on the document template type."
+    },
+    {
+      "label": "Generates PDF using xhtml2pdf and Jinja2 based on database html template",
+      "file_type": "rationale",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L144",
+      "_origin": "ast",
+      "id": "app_invoices_services_invoice_pdf_service_rationale_144",
+      "community": 2,
+      "norm_label": "generates pdf using xhtml2pdf and jinja2 based on database html template"
+    },
+    {
+      "label": "Generates PDF using ReportLab overlay based on database JSON coordinates",
+      "file_type": "rationale",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L220",
+      "_origin": "ast",
+      "id": "app_invoices_services_invoice_pdf_service_rationale_220",
+      "community": 2,
+      "norm_label": "generates pdf using reportlab overlay based on database json coordinates"
+    },
+    {
+      "label": "Used by the existing invoice route. Resolves the layout automatically     from",
+      "file_type": "rationale",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L427",
+      "_origin": "ast",
+      "id": "app_invoices_services_invoice_pdf_service_rationale_427",
+      "community": 2,
+      "norm_label": "used by the existing invoice route. resolves the layout automatically     from"
+    },
+    {
+      "label": "routes.py",
+      "file_type": "code",
       "source_file": "app/support/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "app_support_routes",
       "community": 128,
-      "norm_label": "routes.py"
+      "norm_label": "routes.py",
+      "id": "app_support_routes"
     },
     {
       "label": "get_all_models()",
@@ -19,9 +309,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L17",
       "_origin": "ast",
-      "id": "app_support_routes_get_all_models",
       "community": 128,
-      "norm_label": "get_all_models()"
+      "norm_label": "get_all_models()",
+      "id": "app_support_routes_get_all_models"
     },
     {
       "label": "get_database_tables()",
@@ -29,9 +319,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L26",
       "_origin": "ast",
-      "id": "app_support_routes_get_database_tables",
       "community": 128,
-      "norm_label": "get_database_tables()"
+      "norm_label": "get_database_tables()",
+      "id": "app_support_routes_get_database_tables"
     },
     {
       "label": "get_database_table()",
@@ -39,9 +329,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L31",
       "_origin": "ast",
-      "id": "app_support_routes_get_database_table",
       "community": 128,
-      "norm_label": "get_database_table()"
+      "norm_label": "get_database_table()",
+      "id": "app_support_routes_get_database_table"
     },
     {
       "label": "serialize_value()",
@@ -49,9 +339,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L38",
       "_origin": "ast",
-      "id": "app_support_routes_serialize_value",
       "community": 128,
-      "norm_label": "serialize_value()"
+      "norm_label": "serialize_value()",
+      "id": "app_support_routes_serialize_value"
     },
     {
       "label": "field_value()",
@@ -59,9 +349,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L48",
       "_origin": "ast",
-      "id": "app_support_routes_field_value",
       "community": 128,
-      "norm_label": "field_value()"
+      "norm_label": "field_value()",
+      "id": "app_support_routes_field_value"
     },
     {
       "label": "input_kind()",
@@ -69,9 +359,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L55",
       "_origin": "ast",
-      "id": "app_support_routes_input_kind",
       "community": 128,
-      "norm_label": "input_kind()"
+      "norm_label": "input_kind()",
+      "id": "app_support_routes_input_kind"
     },
     {
       "label": "coerce_value()",
@@ -79,9 +369,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L65",
       "_origin": "ast",
-      "id": "app_support_routes_coerce_value",
       "community": 128,
-      "norm_label": "coerce_value()"
+      "norm_label": "coerce_value()",
+      "id": "app_support_routes_coerce_value"
     },
     {
       "label": "encode_primary_key()",
@@ -89,9 +379,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L95",
       "_origin": "ast",
-      "id": "app_support_routes_encode_primary_key",
       "community": 128,
-      "norm_label": "encode_primary_key()"
+      "norm_label": "encode_primary_key()",
+      "id": "app_support_routes_encode_primary_key"
     },
     {
       "label": "primary_key_filters()",
@@ -99,9 +389,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L100",
       "_origin": "ast",
-      "id": "app_support_routes_primary_key_filters",
       "community": 128,
-      "norm_label": "primary_key_filters()"
+      "norm_label": "primary_key_filters()",
+      "id": "app_support_routes_primary_key_filters"
     },
     {
       "label": "database_fields()",
@@ -109,9 +399,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L114",
       "_origin": "ast",
-      "id": "app_support_routes_database_fields",
       "community": 128,
-      "norm_label": "database_fields()"
+      "norm_label": "database_fields()",
+      "id": "app_support_routes_database_fields"
     },
     {
       "label": "support_audit()",
@@ -119,9 +409,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L128",
       "_origin": "ast",
-      "id": "app_support_routes_support_audit",
       "community": 128,
-      "norm_label": "support_audit()"
+      "norm_label": "support_audit()",
+      "id": "app_support_routes_support_audit"
     },
     {
       "label": "restrict_to_superadmins()",
@@ -129,9 +419,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L141",
       "_origin": "ast",
-      "id": "app_support_routes_restrict_to_superadmins",
       "community": 128,
-      "norm_label": "restrict_to_superadmins()"
+      "norm_label": "restrict_to_superadmins()",
+      "id": "app_support_routes_restrict_to_superadmins"
     },
     {
       "label": "dashboard()",
@@ -139,9 +429,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L146",
       "_origin": "ast",
-      "id": "app_support_routes_dashboard",
       "community": 128,
-      "norm_label": "dashboard()"
+      "norm_label": "dashboard()",
+      "id": "app_support_routes_dashboard"
     },
     {
       "label": "audit_logs()",
@@ -149,9 +439,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L173",
       "_origin": "ast",
-      "id": "app_support_routes_audit_logs",
       "community": 128,
-      "norm_label": "audit_logs()"
+      "norm_label": "audit_logs()",
+      "id": "app_support_routes_audit_logs"
     },
     {
       "label": "deleted_items()",
@@ -159,9 +449,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L256",
       "_origin": "ast",
-      "id": "app_support_routes_deleted_items",
       "community": 128,
-      "norm_label": "deleted_items()"
+      "norm_label": "deleted_items()",
+      "id": "app_support_routes_deleted_items"
     },
     {
       "label": "restore_item()",
@@ -169,9 +459,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L307",
       "_origin": "ast",
-      "id": "app_support_routes_restore_item",
       "community": 128,
-      "norm_label": "restore_item()"
+      "norm_label": "restore_item()",
+      "id": "app_support_routes_restore_item"
     },
     {
       "label": "record_view()",
@@ -179,9 +469,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L327",
       "_origin": "ast",
-      "id": "app_support_routes_record_view",
       "community": 128,
-      "norm_label": "record_view()"
+      "norm_label": "record_view()",
+      "id": "app_support_routes_record_view"
     },
     {
       "label": "database_browser()",
@@ -189,9 +479,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L357",
       "_origin": "ast",
-      "id": "app_support_routes_database_browser",
       "community": 128,
-      "norm_label": "database_browser()"
+      "norm_label": "database_browser()",
+      "id": "app_support_routes_database_browser"
     },
     {
       "label": "database_new_record()",
@@ -199,9 +489,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L379",
       "_origin": "ast",
-      "id": "app_support_routes_database_new_record",
       "community": 128,
-      "norm_label": "database_new_record()"
+      "norm_label": "database_new_record()",
+      "id": "app_support_routes_database_new_record"
     },
     {
       "label": "database_edit_record()",
@@ -209,9 +499,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L409",
       "_origin": "ast",
-      "id": "app_support_routes_database_edit_record",
       "community": 128,
-      "norm_label": "database_edit_record()"
+      "norm_label": "database_edit_record()",
+      "id": "app_support_routes_database_edit_record"
     },
     {
       "label": "database_delete_record()",
@@ -219,9 +509,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L439",
       "_origin": "ast",
-      "id": "app_support_routes_database_delete_record",
       "community": 128,
-      "norm_label": "database_delete_record()"
+      "norm_label": "database_delete_record()",
+      "id": "app_support_routes_database_delete_record"
     },
     {
       "label": "Return the database's real tables, not just ORM model tables.",
@@ -229,9 +519,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L27",
       "_origin": "ast",
-      "id": "app_support_routes_rationale_27",
       "community": 128,
-      "norm_label": "return the database's real tables, not just orm model tables."
+      "norm_label": "return the database's real tables, not just orm model tables.",
+      "id": "app_support_routes_rationale_27"
     },
     {
       "label": "Reflect one whitelisted table so user input can never name arbitrary SQL.",
@@ -239,9 +529,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L32",
       "_origin": "ast",
-      "id": "app_support_routes_rationale_32",
       "community": 128,
-      "norm_label": "reflect one whitelisted table so user input can never name arbitrary sql."
+      "norm_label": "reflect one whitelisted table so user input can never name arbitrary sql.",
+      "id": "app_support_routes_rationale_32"
     },
     {
       "label": "Convert browser input using the reflected column type before binding it.",
@@ -249,9 +539,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L66",
       "_origin": "ast",
-      "id": "app_support_routes_rationale_66",
       "community": 128,
-      "norm_label": "convert browser input using the reflected column type before binding it."
+      "norm_label": "convert browser input using the reflected column type before binding it.",
+      "id": "app_support_routes_rationale_66"
     },
     {
       "label": "Core/reflected writes do not trigger ORM listeners, so record them explicitly.",
@@ -259,9 +549,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L129",
       "_origin": "ast",
-      "id": "app_support_routes_rationale_129",
       "community": 128,
-      "norm_label": "core/reflected writes do not trigger orm listeners, so record them explicitly."
+      "norm_label": "core/reflected writes do not trigger orm listeners, so record them explicitly.",
+      "id": "app_support_routes_rationale_129"
     },
     {
       "label": "project_service.py",
@@ -469,7 +759,7 @@
       "source_file": "app/middleware/rbac.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 20,
+      "community": 104,
       "norm_label": "rbac.py",
       "id": "app_middleware_rbac"
     },
@@ -479,7 +769,7 @@
       "source_file": "app/middleware/rbac.py",
       "source_location": "L242",
       "_origin": "ast",
-      "community": 20,
+      "community": 104,
       "norm_label": "init_rbac()",
       "id": "app_middleware_rbac_init_rbac"
     },
@@ -489,7 +779,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 20,
+      "community": 33,
       "norm_label": "flask",
       "id": "flask"
     },
@@ -499,7 +789,7 @@
       "source_file": "app/middleware/rbac.py",
       "source_location": "L278",
       "_origin": "ast",
-      "community": 20,
+      "community": 104,
       "norm_label": "seed_default_roles_and_permissions()",
       "id": "app_middleware_rbac_seed_default_roles_and_permissions"
     },
@@ -509,7 +799,7 @@
       "source_file": "app/middleware/rbac.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 20,
+      "community": 104,
       "norm_label": "rbac middleware =============== plugged into the app via ``init_rbac(app)`` in `",
       "id": "app_middleware_rbac_rationale_1"
     },
@@ -519,7 +809,7 @@
       "source_file": "app/middleware/rbac.py",
       "source_location": "L243",
       "_origin": "ast",
-      "community": 20,
+      "community": 104,
       "norm_label": "register the rbac ``before_request`` hook on *app*.",
       "id": "app_middleware_rbac_rationale_243"
     },
@@ -529,7 +819,7 @@
       "source_file": "app/middleware/rbac.py",
       "source_location": "L279",
       "_origin": "ast",
-      "community": 20,
+      "community": 104,
       "norm_label": "seed the database with default roles and their permissions.      roles     -----",
       "id": "app_middleware_rbac_rationale_279"
     },
@@ -1419,7 +1709,7 @@
       "source_file": "app/approvals/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 20,
+      "community": 36,
       "norm_label": "__init__.py",
       "id": "app_approvals_init"
     },
@@ -1429,7 +1719,7 @@
       "source_file": "app/approvals/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 18,
+      "community": 36,
       "norm_label": "routes.py",
       "id": "app_approvals_routes"
     },
@@ -1999,7 +2289,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L91",
       "_origin": "ast",
-      "community": 6,
+      "community": 18,
       "norm_label": "contacttype",
       "id": "app_models_enums_contacttype"
     },
@@ -2009,7 +2299,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L99",
       "_origin": "ast",
-      "community": 6,
+      "community": 18,
       "norm_label": ".label_es()",
       "id": "app_models_enums_contacttype_label_es"
     },
@@ -2199,7 +2489,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 18,
+      "community": 36,
       "norm_label": "approval_service.py",
       "id": "app_services_approval_service"
     },
@@ -2429,7 +2719,7 @@
       "source_file": "app/context_processors.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 42,
+      "community": 23,
       "norm_label": "context_processors.py",
       "id": "app_context_processors"
     },
@@ -2439,7 +2729,7 @@
       "source_file": "app/context_processors.py",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 42,
+      "community": 23,
       "norm_label": "register_context_processors()",
       "id": "app_context_processors_register_context_processors"
     },
@@ -2449,89 +2739,9 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 42,
+      "community": 23,
       "norm_label": "flask",
       "id": "app_context_processors_py_flask"
-    },
-    {
-      "label": "routes.py",
-      "file_type": "code",
-      "source_file": "app/dashboard/routes.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 19,
-      "norm_label": "routes.py",
-      "id": "app_dashboard_routes"
-    },
-    {
-      "label": "index()",
-      "file_type": "code",
-      "source_file": "app/dashboard/routes.py",
-      "source_location": "L12",
-      "_origin": "ast",
-      "community": 19,
-      "norm_label": "index()",
-      "id": "app_dashboard_routes_index"
-    },
-    {
-      "label": "format_currency()",
-      "file_type": "code",
-      "source_file": "app/dashboard/routes.py",
-      "source_location": "L25",
-      "_origin": "ast",
-      "community": 19,
-      "norm_label": "format_currency()",
-      "id": "app_dashboard_routes_format_currency"
-    },
-    {
-      "label": "format_date()",
-      "file_type": "code",
-      "source_file": "app/dashboard/routes.py",
-      "source_location": "L33",
-      "_origin": "ast",
-      "community": 19,
-      "norm_label": "format_date()",
-      "id": "app_dashboard_routes_format_date"
-    },
-    {
-      "label": "locale_date()",
-      "file_type": "code",
-      "source_file": "app/dashboard/routes.py",
-      "source_location": "L41",
-      "_origin": "ast",
-      "community": 19,
-      "norm_label": "locale_date()",
-      "id": "app_dashboard_routes_locale_date"
-    },
-    {
-      "label": "Format a number as currency",
-      "file_type": "rationale",
-      "source_file": "app/dashboard/routes.py",
-      "source_location": "L26",
-      "_origin": "ast",
-      "community": 19,
-      "norm_label": "format a number as currency",
-      "id": "app_dashboard_routes_rationale_26"
-    },
-    {
-      "label": "Format a date in a readable format",
-      "file_type": "rationale",
-      "source_file": "app/dashboard/routes.py",
-      "source_location": "L34",
-      "_origin": "ast",
-      "community": 19,
-      "norm_label": "format a date in a readable format",
-      "id": "app_dashboard_routes_rationale_34"
-    },
-    {
-      "label": "Format date according to the current locale",
-      "file_type": "rationale",
-      "source_file": "app/dashboard/routes.py",
-      "source_location": "L42",
-      "_origin": "ast",
-      "community": 19,
-      "norm_label": "format date according to the current locale",
-      "id": "app_dashboard_routes_rationale_42"
     },
     {
       "label": "extensions.py",
@@ -2549,7 +2759,7 @@
       "source_file": "app/extensions.py",
       "source_location": "L26",
       "_origin": "ast",
-      "community": 42,
+      "community": 23,
       "norm_label": "get_locale()",
       "id": "app_extensions_get_locale"
     },
@@ -2569,7 +2779,7 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 63,
+      "community": 20,
       "norm_label": "category_service.py",
       "id": "app_inventory_services_category_service"
     },
@@ -2579,7 +2789,7 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 63,
+      "community": 20,
       "norm_label": "categoryservice",
       "id": "app_inventory_services_category_service_categoryservice"
     },
@@ -2589,7 +2799,7 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 63,
+      "community": 20,
       "norm_label": ".get_categories()",
       "id": "app_inventory_services_category_service_categoryservice_get_categories"
     },
@@ -2599,7 +2809,7 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 63,
+      "community": 20,
       "norm_label": ".get_category()",
       "id": "app_inventory_services_category_service_categoryservice_get_category"
     },
@@ -2609,7 +2819,7 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 63,
+      "community": 20,
       "norm_label": ".create_category()",
       "id": "app_inventory_services_category_service_categoryservice_create_category"
     },
@@ -2619,7 +2829,7 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L33",
       "_origin": "ast",
-      "community": 63,
+      "community": 20,
       "norm_label": ".update_category()",
       "id": "app_inventory_services_category_service_categoryservice_update_category"
     },
@@ -2629,7 +2839,7 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L51",
       "_origin": "ast",
-      "community": 63,
+      "community": 20,
       "norm_label": ".delete_category()",
       "id": "app_inventory_services_category_service_categoryservice_delete_category"
     },
@@ -2862,226 +3072,6 @@
       "community": 8,
       "norm_label": "generate a pdf on the fly using the submitted form data for a live preview.",
       "id": "app_invoices_routes_rationale_622"
-    },
-    {
-      "label": "invoice_create_service.py",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 33,
-      "norm_label": "invoice_create_service.py",
-      "id": "app_invoices_services_invoice_create_service"
-    },
-    {
-      "label": "_generate_document_number()",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L9",
-      "_origin": "ast",
-      "community": 8,
-      "norm_label": "_generate_document_number()",
-      "id": "app_invoices_services_invoice_create_service_generate_document_number"
-    },
-    {
-      "label": "create_invoice_or_quote()",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L52",
-      "_origin": "ast",
-      "community": 8,
-      "norm_label": "create_invoice_or_quote()",
-      "id": "app_invoices_services_invoice_create_service_create_invoice_or_quote"
-    },
-    {
-      "label": "invoice_pdf_service.py",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "invoice_pdf_service.py",
-      "id": "app_invoices_services_invoice_pdf_service"
-    },
-    {
-      "label": "HeaderCoords",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L43",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "headercoords",
-      "id": "app_invoices_services_invoice_pdf_service_headercoords"
-    },
-    {
-      "label": "ClientCoords",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L65",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "clientcoords",
-      "id": "app_invoices_services_invoice_pdf_service_clientcoords"
-    },
-    {
-      "label": "ItemsCoords",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L73",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "itemscoords",
-      "id": "app_invoices_services_invoice_pdf_service_itemscoords"
-    },
-    {
-      "label": "TotalsCoords",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L92",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "totalscoords",
-      "id": "app_invoices_services_invoice_pdf_service_totalscoords"
-    },
-    {
-      "label": "PdfTemplateLayout",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L111",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "pdftemplatelayout",
-      "id": "app_invoices_services_invoice_pdf_service_pdftemplatelayout"
-    },
-    {
-      "label": "generate_invoice_pdf()",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L123",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "generate_invoice_pdf()",
-      "id": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf"
-    },
-    {
-      "label": "_generate_html_pdf()",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L143",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "_generate_html_pdf()",
-      "id": "app_invoices_services_invoice_pdf_service_generate_html_pdf"
-    },
-    {
-      "label": "_generate_overlay_pdf()",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L219",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "_generate_overlay_pdf()",
-      "id": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf"
-    },
-    {
-      "label": "_draw_header()",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L318",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "_draw_header()",
-      "id": "app_invoices_services_invoice_pdf_service_draw_header"
-    },
-    {
-      "label": "_draw_client_info()",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L359",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "_draw_client_info()",
-      "id": "app_invoices_services_invoice_pdf_service_draw_client_info"
-    },
-    {
-      "label": "_draw_items()",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L375",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "_draw_items()",
-      "id": "app_invoices_services_invoice_pdf_service_draw_items"
-    },
-    {
-      "label": "_draw_totals()",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L399",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "_draw_totals()",
-      "id": "app_invoices_services_invoice_pdf_service_draw_totals"
-    },
-    {
-      "label": "generate_invoice_pdf_from_request()",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L426",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "generate_invoice_pdf_from_request()",
-      "id": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf_from_request"
-    },
-    {
-      "label": "invoice_pdf_service.py ====================== Database-driven PDF and HTML eng",
-      "file_type": "rationale",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "invoice_pdf_service.py ====================== database-driven pdf and html eng",
-      "id": "app_invoices_services_invoice_pdf_service_rationale_1"
-    },
-    {
-      "label": "Generate the PDF based on the document template type.",
-      "file_type": "rationale",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L132",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "generate the pdf based on the document template type.",
-      "id": "app_invoices_services_invoice_pdf_service_rationale_132"
-    },
-    {
-      "label": "Generates PDF using xhtml2pdf and Jinja2 based on database html template",
-      "file_type": "rationale",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L144",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "generates pdf using xhtml2pdf and jinja2 based on database html template",
-      "id": "app_invoices_services_invoice_pdf_service_rationale_144"
-    },
-    {
-      "label": "Generates PDF using ReportLab overlay based on database JSON coordinates",
-      "file_type": "rationale",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L220",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "generates pdf using reportlab overlay based on database json coordinates",
-      "id": "app_invoices_services_invoice_pdf_service_rationale_220"
-    },
-    {
-      "label": "Used by the existing invoice route. Resolves the layout automatically     from",
-      "file_type": "rationale",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L427",
-      "_origin": "ast",
-      "community": 2,
-      "norm_label": "used by the existing invoice route. resolves the layout automatically     from",
-      "id": "app_invoices_services_invoice_pdf_service_rationale_427"
     },
     {
       "label": "stock_movement.py",
@@ -3519,7 +3509,7 @@
       "source_file": "app/warehouses/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 104,
+      "community": 42,
       "norm_label": "routes.py",
       "id": "app_warehouses_routes"
     },
@@ -3529,7 +3519,7 @@
       "source_file": "app/warehouses/routes.py",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 104,
+      "community": 42,
       "norm_label": "create()",
       "id": "app_warehouses_routes_create"
     },
@@ -3699,7 +3689,7 @@
       "source_file": "app/inventory/services/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 63,
+      "community": 20,
       "norm_label": "__init__.py",
       "id": "app_inventory_services_init"
     },
@@ -3709,7 +3699,7 @@
       "source_file": "app/models/category.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 63,
+      "community": 111,
       "norm_label": "category.py",
       "id": "app_models_category"
     },
@@ -3719,7 +3709,7 @@
       "source_file": "app/models/category.py",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 63,
+      "community": 111,
       "norm_label": "category",
       "id": "app_models_category_category"
     },
@@ -3729,7 +3719,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 63,
+      "community": 111,
       "norm_label": "basemodel",
       "id": "app_models_category_py_basemodel"
     },
@@ -3739,7 +3729,7 @@
       "source_file": "app/models/category.py",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 63,
+      "community": 111,
       "norm_label": ".__repr__()",
       "id": "app_models_category_category_repr"
     },
@@ -4509,7 +4499,7 @@
       "source_file": "app/support/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 126,
+      "community": 104,
       "norm_label": "__init__.py",
       "id": "app_support_init"
     },
@@ -4809,7 +4799,7 @@
       "source_file": "app/routes.py",
       "source_location": "L94",
       "_origin": "ast",
-      "community": 20,
+      "community": 16,
       "norm_label": "register_routes()",
       "id": "app_routes_register_routes"
     },
@@ -5038,7 +5028,7 @@
       "file_type": "code",
       "source_file": "app/cli.py",
       "source_location": "L1",
-      "community": 20,
+      "community": 33,
       "norm_label": "cli.py",
       "id": "app_cli"
     },
@@ -5047,7 +5037,7 @@
       "file_type": "code",
       "source_file": "app/cli.py",
       "source_location": "L5",
-      "community": 20,
+      "community": 33,
       "norm_label": "register_cli()",
       "id": "app_cli_register_cli"
     },
@@ -5056,7 +5046,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/low_stock_notifications.py",
       "source_location": "L8",
-      "community": 127,
+      "community": 23,
       "norm_label": "_inventory_link()",
       "id": "app_inventory_services_low_stock_notifications_inventory_link"
     },
@@ -5065,7 +5055,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/low_stock_notifications.py",
       "source_location": "L14",
-      "community": 127,
+      "community": 23,
       "norm_label": "_active_company_users()",
       "id": "app_inventory_services_low_stock_notifications_active_company_users"
     },
@@ -5074,7 +5064,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/low_stock_notifications.py",
       "source_location": "L26",
-      "community": 127,
+      "community": 23,
       "norm_label": "_notification_exists()",
       "id": "app_inventory_services_low_stock_notifications_notification_exists"
     },
@@ -5083,7 +5073,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/low_stock_notifications.py",
       "source_location": "L35",
-      "community": 127,
+      "community": 23,
       "norm_label": "send_low_stock_notifications()",
       "id": "app_inventory_services_low_stock_notifications_send_low_stock_notifications"
     },
@@ -5488,7 +5478,7 @@
       "file_type": "code",
       "source_file": "app/pos/routes.py",
       "source_location": "L309",
-      "community": 111,
+      "community": 11,
       "norm_label": "str",
       "id": "app_pos_routes_py_str"
     },
@@ -5947,7 +5937,7 @@
       "file_type": "code",
       "source_file": "low_stock_notifications.py",
       "source_location": "L1",
-      "community": 127,
+      "community": 23,
       "norm_label": "low_stock_notifications.py",
       "id": "low_stock_notifications"
     },
@@ -5956,7 +5946,7 @@
       "file_type": "code",
       "source_file": "low_stock_notifications.py",
       "source_location": "L17",
-      "community": 127,
+      "community": 23,
       "norm_label": "run_task()",
       "id": "low_stock_notifications_run_task"
     },
@@ -6721,7 +6711,7 @@
       "file_type": "code",
       "source_file": "config.py",
       "source_location": "L1",
-      "community": 42,
+      "community": 23,
       "norm_label": "config.py",
       "id": "config"
     },
@@ -6730,7 +6720,7 @@
       "file_type": "code",
       "source_file": "config.py",
       "source_location": "L4",
-      "community": 42,
+      "community": 23,
       "norm_label": "config",
       "id": "config_config"
     },
@@ -6739,7 +6729,7 @@
       "file_type": "code",
       "source_file": "config.py",
       "source_location": "L48",
-      "community": 42,
+      "community": 23,
       "norm_label": ".init_app()",
       "id": "config_config_init_app"
     },
@@ -6838,7 +6828,7 @@
       "file_type": "code",
       "source_file": "app/models/account.py",
       "source_location": "L1",
-      "community": 33,
+      "community": 22,
       "norm_label": "account.py",
       "id": "app_models_account"
     },
@@ -6847,7 +6837,7 @@
       "file_type": "code",
       "source_file": "app/models/account.py",
       "source_location": "L5",
-      "community": 46,
+      "community": 22,
       "norm_label": "account",
       "id": "app_models_account_account"
     },
@@ -6856,7 +6846,7 @@
       "file_type": "code",
       "source_file": "app/models/account.py",
       "source_location": "L32",
-      "community": 46,
+      "community": 22,
       "norm_label": ".normal_balance()",
       "id": "app_models_account_account_normal_balance"
     },
@@ -6865,7 +6855,7 @@
       "file_type": "code",
       "source_file": "app/models/account.py",
       "source_location": "L32",
-      "community": 46,
+      "community": 22,
       "norm_label": "str",
       "id": "app_models_account_py_str"
     },
@@ -6874,7 +6864,7 @@
       "file_type": "code",
       "source_file": "app/models/account.py",
       "source_location": "L38",
-      "community": 46,
+      "community": 22,
       "norm_label": ".__repr__()",
       "id": "app_models_account_account_repr"
     },
@@ -6883,7 +6873,7 @@
       "file_type": "rationale",
       "source_file": "app/models/account.py",
       "source_location": "L6",
-      "community": 46,
+      "community": 22,
       "norm_label": "chart of accounts entry.      important: balance is not stored here \u2014 it is alwa",
       "id": "app_models_account_rationale_6"
     },
@@ -6892,7 +6882,7 @@
       "file_type": "rationale",
       "source_file": "app/models/account.py",
       "source_location": "L33",
-      "community": 46,
+      "community": 22,
       "norm_label": "accounts that normally carry a debit balance vs credit balance.",
       "id": "app_models_account_rationale_33"
     },
@@ -7171,7 +7161,7 @@
       "file_type": "code",
       "source_file": "expire_documents.py",
       "source_location": "L1",
-      "community": 118,
+      "community": 23,
       "norm_label": "expire_documents.py",
       "id": "expire_documents"
     },
@@ -7180,7 +7170,7 @@
       "file_type": "code",
       "source_file": "expire_documents.py",
       "source_location": "L18",
-      "community": 118,
+      "community": 23,
       "norm_label": "_invoice_link()",
       "id": "expire_documents_invoice_link"
     },
@@ -7189,7 +7179,7 @@
       "file_type": "code",
       "source_file": "expire_documents.py",
       "source_location": "L22",
-      "community": 118,
+      "community": 23,
       "norm_label": "_notification_exists()",
       "id": "expire_documents_notification_exists"
     },
@@ -7198,7 +7188,7 @@
       "file_type": "code",
       "source_file": "expire_documents.py",
       "source_location": "L31",
-      "community": 118,
+      "community": 23,
       "norm_label": "_create_expired_invoice_notification()",
       "id": "expire_documents_create_expired_invoice_notification"
     },
@@ -7207,7 +7197,7 @@
       "file_type": "code",
       "source_file": "expire_documents.py",
       "source_location": "L65",
-      "community": 118,
+      "community": 23,
       "norm_label": "run_task()",
       "id": "expire_documents_run_task"
     },
@@ -7468,7 +7458,7 @@
       "file_type": "code",
       "source_file": "app/middleware/audit.py",
       "source_location": "L15",
-      "community": 60,
+      "community": 42,
       "norm_label": "alchemyencoder",
       "id": "app_middleware_audit_alchemyencoder"
     },
@@ -7477,7 +7467,7 @@
       "file_type": "code",
       "source_file": "app/middleware/audit.py",
       "source_location": "L16",
-      "community": 60,
+      "community": 42,
       "norm_label": ".default()",
       "id": "app_middleware_audit_alchemyencoder_default"
     },
@@ -7495,7 +7485,7 @@
       "file_type": "code",
       "source_file": "app/middleware/audit.py",
       "source_location": "L93",
-      "community": 60,
+      "community": 42,
       "norm_label": "get_model_changes()",
       "id": "app_middleware_audit_get_model_changes"
     },
@@ -7513,7 +7503,7 @@
       "file_type": "rationale",
       "source_file": "app/middleware/audit.py",
       "source_location": "L94",
-      "community": 60,
+      "community": 42,
       "norm_label": "helper to detect changed attributes and their values.",
       "id": "app_middleware_audit_rationale_94"
     },
@@ -7522,7 +7512,7 @@
       "file_type": "rationale",
       "source_file": "app/middleware/audit.py",
       "source_location": "L106",
-      "community": 126,
+      "community": 104,
       "norm_label": "registers global sqlalchemy listeners for all models inheriting from base.",
       "id": "app_middleware_audit_rationale_106"
     },
@@ -7742,7 +7732,7 @@
       "file_type": "code",
       "source_file": "app.py",
       "source_location": "L1",
-      "community": 118,
+      "community": 23,
       "norm_label": "app.py",
       "id": "app"
     },
@@ -8120,7 +8110,7 @@
       "file_type": "code",
       "source_file": "app/hooks.py",
       "source_location": "L1",
-      "community": 129,
+      "community": 23,
       "norm_label": "hooks.py",
       "id": "app_hooks"
     },
@@ -8129,7 +8119,7 @@
       "file_type": "code",
       "source_file": "app/hooks.py",
       "source_location": "L5",
-      "community": 129,
+      "community": 23,
       "norm_label": "register_request_hooks()",
       "id": "app_hooks_register_request_hooks"
     },
@@ -8138,7 +8128,7 @@
       "file_type": "code",
       "source_file": "app/hooks.py",
       "source_location": "L5",
-      "community": 129,
+      "community": 23,
       "norm_label": "flask",
       "id": "app_hooks_py_flask"
     },
@@ -8156,7 +8146,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L1",
-      "community": 111,
+      "community": 11,
       "norm_label": "routes.py",
       "id": "app_hr_routes"
     },
@@ -8165,7 +8155,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L23",
-      "community": 111,
+      "community": 11,
       "norm_label": "_allowed_file()",
       "id": "app_hr_routes_allowed_file"
     },
@@ -8174,7 +8164,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L23",
-      "community": 111,
+      "community": 11,
       "norm_label": "bool",
       "id": "app_hr_routes_py_bool"
     },
@@ -8183,7 +8173,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L27",
-      "community": 111,
+      "community": 11,
       "norm_label": "_save_attachment()",
       "id": "app_hr_routes_save_attachment"
     },
@@ -8192,7 +8182,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L46",
-      "community": 111,
+      "community": 11,
       "norm_label": "employees()",
       "id": "app_hr_routes_employees"
     },
@@ -8201,7 +8191,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L87",
-      "community": 111,
+      "community": 11,
       "norm_label": "create_employee()",
       "id": "app_hr_routes_create_employee"
     },
@@ -8210,7 +8200,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L171",
-      "community": 111,
+      "community": 11,
       "norm_label": "edit_employee()",
       "id": "app_hr_routes_edit_employee"
     },
@@ -8219,7 +8209,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L256",
-      "community": 111,
+      "community": 11,
       "norm_label": "delete_employee()",
       "id": "app_hr_routes_delete_employee"
     },
@@ -8228,7 +8218,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L281",
-      "community": 111,
+      "community": 11,
       "norm_label": "leaves()",
       "id": "app_hr_routes_leaves"
     },
@@ -8237,7 +8227,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L322",
-      "community": 111,
+      "community": 11,
       "norm_label": "create_leave()",
       "id": "app_hr_routes_create_leave"
     },
@@ -8246,7 +8236,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L377",
-      "community": 111,
+      "community": 11,
       "norm_label": "edit_leave()",
       "id": "app_hr_routes_edit_leave"
     },
@@ -8255,7 +8245,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L437",
-      "community": 111,
+      "community": 11,
       "norm_label": "review_leave()",
       "id": "app_hr_routes_review_leave"
     },
@@ -8264,7 +8254,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L481",
-      "community": 111,
+      "community": 11,
       "norm_label": "view_leave()",
       "id": "app_hr_routes_view_leave"
     },
@@ -8273,7 +8263,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L494",
-      "community": 111,
+      "community": 11,
       "norm_label": "delete_leave()",
       "id": "app_hr_routes_delete_leave"
     },
@@ -8282,7 +8272,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L521",
-      "community": 111,
+      "community": 11,
       "norm_label": "schedules()",
       "id": "app_hr_routes_schedules"
     },
@@ -8291,7 +8281,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L533",
-      "community": 111,
+      "community": 11,
       "norm_label": "schedule_events()",
       "id": "app_hr_routes_schedule_events"
     },
@@ -8300,7 +8290,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L633",
-      "community": 111,
+      "community": 11,
       "norm_label": "create_schedule()",
       "id": "app_hr_routes_create_schedule"
     },
@@ -8309,7 +8299,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L680",
-      "community": 111,
+      "community": 11,
       "norm_label": "edit_schedule()",
       "id": "app_hr_routes_edit_schedule"
     },
@@ -8318,7 +8308,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L734",
-      "community": 111,
+      "community": 11,
       "norm_label": "delete_schedule()",
       "id": "app_hr_routes_delete_schedule"
     },
@@ -8327,7 +8317,7 @@
       "file_type": "code",
       "source_file": "app/hr/routes.py",
       "source_location": "L755",
-      "community": 111,
+      "community": 11,
       "norm_label": "view_deviation()",
       "id": "app_hr_routes_view_deviation"
     },
@@ -8570,7 +8560,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/pdf_layouts/__init__.py",
       "source_location": "L14",
-      "community": 126,
+      "community": 104,
       "norm_label": "get_layout()",
       "id": "app_invoices_services_pdf_layouts_init_get_layout"
     },
@@ -8579,7 +8569,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/pdf_layouts/__init__.py",
       "source_location": "L14",
-      "community": 126,
+      "community": 104,
       "norm_label": "int",
       "id": "app_invoices_services_pdf_layouts_init_py_int"
     },
@@ -8588,7 +8578,7 @@
       "file_type": "rationale",
       "source_file": "app/invoices/services/pdf_layouts/__init__.py",
       "source_location": "L15",
-      "community": 126,
+      "community": 104,
       "norm_label": "retrieve the pdftemplatelayout for the given company_id.",
       "id": "app_invoices_services_pdf_layouts_init_rationale_15"
     },
@@ -8597,7 +8587,7 @@
       "file_type": "code",
       "source_file": "app/invoices/services/pdf_layouts/ferre_lagos.py",
       "source_location": "L1",
-      "community": 126,
+      "community": 104,
       "norm_label": "ferre_lagos.py",
       "id": "app_invoices_services_pdf_layouts_ferre_lagos"
     },
@@ -8606,7 +8596,7 @@
       "file_type": "code",
       "source_file": "app/middleware/error_handler.py",
       "source_location": "L1",
-      "community": 126,
+      "community": 104,
       "norm_label": "error_handler.py",
       "id": "app_middleware_error_handler"
     },
@@ -8615,7 +8605,7 @@
       "file_type": "code",
       "source_file": "app/middleware/error_handler.py",
       "source_location": "L5",
-      "community": 126,
+      "community": 104,
       "norm_label": "init_error_handlers()",
       "id": "app_middleware_error_handler_init_error_handlers"
     },
@@ -8624,7 +8614,7 @@
       "file_type": "code",
       "source_file": "app/models/associations.py",
       "source_location": "L1",
-      "community": 32,
+      "community": 42,
       "norm_label": "associations.py",
       "id": "app_models_associations"
     },
@@ -8633,7 +8623,7 @@
       "file_type": "code",
       "source_file": "app/models/audit.py",
       "source_location": "L1",
-      "community": 60,
+      "community": 42,
       "norm_label": "audit.py",
       "id": "app_models_audit"
     },
@@ -8669,7 +8659,7 @@
       "file_type": "code",
       "source_file": "app/models/base.py",
       "source_location": "L1",
-      "community": 32,
+      "community": 42,
       "norm_label": "base.py",
       "id": "app_models_base"
     },
@@ -8687,7 +8677,7 @@
       "file_type": "code",
       "source_file": "app/models/base.py",
       "source_location": "L17",
-      "community": 32,
+      "community": 42,
       "norm_label": "_add_filtering_criteria()",
       "id": "app_models_base_add_filtering_criteria"
     },
@@ -8759,7 +8749,7 @@
       "file_type": "code",
       "source_file": "app/models/document.py",
       "source_location": "L1",
-      "community": 33,
+      "community": 46,
       "norm_label": "document.py",
       "id": "app_models_document"
     },
@@ -8912,7 +8902,7 @@
       "file_type": "code",
       "source_file": "app/models/document_item.py",
       "source_location": "L1",
-      "community": 33,
+      "community": 46,
       "norm_label": "document_item.py",
       "id": "app_models_document_item"
     },
@@ -8921,7 +8911,7 @@
       "file_type": "code",
       "source_file": "app/models/document_item.py",
       "source_location": "L22",
-      "community": 33,
+      "community": 46,
       "norm_label": ".line_total()",
       "id": "app_models_document_item_documentitem_line_total"
     },
@@ -8930,7 +8920,7 @@
       "file_type": "code",
       "source_file": "app/models/document_item.py",
       "source_location": "L27",
-      "community": 33,
+      "community": 46,
       "norm_label": ".__repr__()",
       "id": "app_models_document_item_documentitem_repr"
     },
@@ -8939,7 +8929,7 @@
       "file_type": "code",
       "source_file": "app/models/document_item.py",
       "source_location": "L27",
-      "community": 33,
+      "community": 46,
       "norm_label": "str",
       "id": "app_models_document_item_py_str"
     },
@@ -9002,7 +8992,7 @@
       "file_type": "code",
       "source_file": "app/models/employee.py",
       "source_location": "L1",
-      "community": 100,
+      "community": 32,
       "norm_label": "employee.py",
       "id": "app_models_employee"
     },
@@ -9164,7 +9154,7 @@
       "file_type": "code",
       "source_file": "app/models/leave_request.py",
       "source_location": "L1",
-      "community": 32,
+      "community": 42,
       "norm_label": "leave_request.py",
       "id": "app_models_leave_request"
     },
@@ -9290,7 +9280,7 @@
       "file_type": "code",
       "source_file": "app/models/permission.py",
       "source_location": "L1",
-      "community": 32,
+      "community": 42,
       "norm_label": "permission.py",
       "id": "app_models_permission"
     },
@@ -9299,7 +9289,7 @@
       "file_type": "code",
       "source_file": "app/models/permission.py",
       "source_location": "L13",
-      "community": 32,
+      "community": 42,
       "norm_label": ".__repr__()",
       "id": "app_models_permission_permission_repr"
     },
@@ -9308,7 +9298,7 @@
       "file_type": "code",
       "source_file": "app/models/permission.py",
       "source_location": "L13",
-      "community": 32,
+      "community": 42,
       "norm_label": "str",
       "id": "app_models_permission_py_str"
     },
@@ -9443,7 +9433,7 @@
       "file_type": "code",
       "source_file": "app/models/role.py",
       "source_location": "L1",
-      "community": 27,
+      "community": 42,
       "norm_label": "role.py",
       "id": "app_models_role"
     },
@@ -9632,7 +9622,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L1",
-      "community": 32,
+      "community": 42,
       "norm_label": "user.py",
       "id": "app_models_user"
     },
@@ -9830,7 +9820,7 @@
       "file_type": "code",
       "source_file": "app/models/work_schedule.py",
       "source_location": "L1",
-      "community": 132,
+      "community": 11,
       "norm_label": "work_schedule.py",
       "id": "app_models_work_schedule"
     },
@@ -9839,7 +9829,7 @@
       "file_type": "code",
       "source_file": "app/models/work_schedule.py",
       "source_location": "L22",
-      "community": 132,
+      "community": 11,
       "norm_label": ".hours_worked()",
       "id": "app_models_work_schedule_workschedule_hours_worked"
     },
@@ -9848,7 +9838,7 @@
       "file_type": "code",
       "source_file": "app/models/work_schedule.py",
       "source_location": "L22",
-      "community": 132,
+      "community": 11,
       "norm_label": "float",
       "id": "app_models_work_schedule_py_float"
     },
@@ -9857,7 +9847,7 @@
       "file_type": "code",
       "source_file": "app/models/work_schedule.py",
       "source_location": "L32",
-      "community": 132,
+      "community": 11,
       "norm_label": ".__repr__()",
       "id": "app_models_work_schedule_workschedule_repr"
     },
@@ -9866,7 +9856,7 @@
       "file_type": "code",
       "source_file": "app/models/work_schedule.py",
       "source_location": "L32",
-      "community": 132,
+      "community": 11,
       "norm_label": "str",
       "id": "app_models_work_schedule_py_str"
     },
@@ -9875,7 +9865,7 @@
       "file_type": "rationale",
       "source_file": "app/models/work_schedule.py",
       "source_location": "L23",
-      "community": 132,
+      "community": 11,
       "norm_label": "total hours for this schedule entry.",
       "id": "app_models_work_schedule_rationale_23"
     },
@@ -10082,7 +10072,7 @@
       "file_type": "code",
       "source_file": "app/utils.py",
       "source_location": "L1",
-      "community": 111,
+      "community": 11,
       "norm_label": "utils.py",
       "id": "app_utils"
     },
@@ -10091,7 +10081,7 @@
       "file_type": "code",
       "source_file": "app/utils.py",
       "source_location": "L5",
-      "community": 111,
+      "community": 11,
       "norm_label": "resolve_company()",
       "id": "app_utils_resolve_company"
     },
@@ -10109,7 +10099,7 @@
       "file_type": "rationale",
       "source_file": "app/utils.py",
       "source_location": "L6",
-      "community": 111,
+      "community": 11,
       "norm_label": "helper to resolve a company from a route parameter that could be an integer id o",
       "id": "app_utils_rationale_6"
     },
@@ -11901,7 +11891,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Lists leave requests with filters for status, leave type, and employee, plus drawer actions for creating, viewing, and deleting requests.",
-      "community": 133,
+      "community": 43,
       "norm_label": "leave request queue",
       "id": "app_hr_templates_hr_leave_requests_leave_request_queue"
     },
@@ -11929,7 +11919,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Shows leave details, attachment preview, and approve/reject review actions when a leave request is pending.",
-      "community": 133,
+      "community": 43,
       "norm_label": "leave review panel",
       "id": "app_hr_templates_hr_leave_view_leave_review_panel"
     },
@@ -11943,7 +11933,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Uses FullCalendar in Spanish to display schedule events, leave events, and deviation events with week/month/day views.",
-      "community": 133,
+      "community": 43,
       "norm_label": "work schedule calendar",
       "id": "app_hr_templates_hr_schedules_work_schedule_calendar"
     },
@@ -11957,7 +11947,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Creates or edits a one-day work schedule deviation by selecting employee, date, start time, end time, and notes.",
-      "community": 133,
+      "community": 43,
       "norm_label": "schedule deviation form",
       "id": "app_hr_templates_hr_schedule_form_schedule_deviation_form"
     },
@@ -11971,7 +11961,7 @@
       "author": null,
       "contributor": null,
       "rationale": "Drawer detail view for a specific schedule deviation, showing employee, date, start/end times, notes, edit, and delete controls.",
-      "community": 133,
+      "community": 43,
       "norm_label": "schedule deviation detail",
       "id": "app_hr_templates_hr_deviation_view_schedule_deviation_detail"
     },
@@ -12216,7 +12206,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 126,
+      "community": 104,
       "norm_label": "auditmiddleware.log_change",
       "id": "app_middleware_audit_log_change"
     },
@@ -12229,7 +12219,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 126,
+      "community": 104,
       "norm_label": "register_audit_listeners",
       "id": "app_middleware_audit_register_audit_listeners"
     },
@@ -12460,6 +12450,790 @@
   ],
   "links": [
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/dashboard/routes.py",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "app_dashboard_routes",
+      "target": "app_dashboard_routes_format_currency",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/dashboard/routes.py",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "app_dashboard_routes",
+      "target": "app_dashboard_routes_format_date",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/dashboard/routes.py",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "app_dashboard_routes",
+      "target": "app_dashboard_routes_index",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/dashboard/routes.py",
+      "source_location": "L41",
+      "weight": 1.0,
+      "source": "app_dashboard_routes",
+      "target": "app_dashboard_routes_locale_date",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/dashboard/routes.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "app_dashboard_routes",
+      "target": "app_utils",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/dashboard/routes.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "app_dashboard_routes",
+      "target": "flask",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "app/dashboard/routes.py",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "app_dashboard_routes_rationale_26",
+      "target": "app_dashboard_routes_format_currency",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "app/dashboard/routes.py",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "app_dashboard_routes_rationale_34",
+      "target": "app_dashboard_routes_format_date",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_routes",
+      "target": "app_invoices_services_invoice_create_service"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L52",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_create_service",
+      "target": "app_invoices_services_invoice_create_service_create_invoice_or_quote",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_create_service",
+      "target": "app_invoices_services_invoice_create_service_generate_document_number",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "submodule_import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_create_service",
+      "target": "app_models_company",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "submodule_import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_create_service",
+      "target": "app_models_document",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "submodule_import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_create_service",
+      "target": "app_models_payment",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_create_service",
+      "target": "datetime",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_create_service",
+      "target": "flask",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_routes",
+      "target": "app_invoices_services_invoice_create_service_generate_document_number"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L351",
+      "weight": 1.0,
+      "source": "app_invoices_routes_update",
+      "target": "app_invoices_services_invoice_create_service_generate_document_number"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L57",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_create_service_create_invoice_or_quote",
+      "target": "app_invoices_services_invoice_create_service_generate_document_number",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L142",
+      "weight": 1.0,
+      "source": "app_invoices_routes_store",
+      "target": "app_invoices_services_invoice_create_service_create_invoice_or_quote"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L19",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service",
+      "target": "app_extensions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L65",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service",
+      "target": "app_invoices_services_invoice_pdf_service_clientcoords",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L359",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service",
+      "target": "app_invoices_services_invoice_pdf_service_draw_client_info",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L318",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service",
+      "target": "app_invoices_services_invoice_pdf_service_draw_header",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L375",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service",
+      "target": "app_invoices_services_invoice_pdf_service_draw_items",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L399",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service",
+      "target": "app_invoices_services_invoice_pdf_service_draw_totals",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L143",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service",
+      "target": "app_invoices_services_invoice_pdf_service_generate_html_pdf",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L123",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service",
+      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L426",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service",
+      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf_from_request",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L219",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service",
+      "target": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service",
+      "target": "app_invoices_services_invoice_pdf_service_headercoords",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L73",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service",
+      "target": "app_invoices_services_invoice_pdf_service_itemscoords",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L111",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service",
+      "target": "app_invoices_services_invoice_pdf_service_pdftemplatelayout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L92",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service",
+      "target": "app_invoices_services_invoice_pdf_service_totalscoords",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "submodule_import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service",
+      "target": "app_models_contact",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service",
+      "target": "flask",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service_rationale_1",
+      "target": "app_invoices_services_invoice_pdf_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L318",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service_draw_header",
+      "target": "app_invoices_services_invoice_pdf_service_headercoords",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L222",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
+      "target": "app_invoices_services_invoice_pdf_service_headercoords",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/template_service.py",
+      "source_location": "L201",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_template_service",
+      "target": "app_invoices_services_invoice_pdf_service_headercoords"
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "app/invoices/services/template_service.py",
+      "source_location": "L201",
+      "weight": 0.8,
+      "confidence_score": 0.5,
+      "source": "app_invoices_services_template_service_templateservice",
+      "target": "app_invoices_services_invoice_pdf_service_headercoords"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/invoices/services/template_service.py",
+      "source_location": "L206",
+      "weight": 1.0,
+      "source": "app_invoices_services_template_service_templateservice_get_default_coords",
+      "target": "app_invoices_services_invoice_pdf_service_headercoords"
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L359",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service_draw_client_info",
+      "target": "app_invoices_services_invoice_pdf_service_clientcoords",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L223",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
+      "target": "app_invoices_services_invoice_pdf_service_clientcoords",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/template_service.py",
+      "source_location": "L201",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_template_service",
+      "target": "app_invoices_services_invoice_pdf_service_clientcoords"
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "app/invoices/services/template_service.py",
+      "source_location": "L201",
+      "weight": 0.8,
+      "confidence_score": 0.5,
+      "source": "app_invoices_services_template_service_templateservice",
+      "target": "app_invoices_services_invoice_pdf_service_clientcoords"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/invoices/services/template_service.py",
+      "source_location": "L207",
+      "weight": 1.0,
+      "source": "app_invoices_services_template_service_templateservice_get_default_coords",
+      "target": "app_invoices_services_invoice_pdf_service_clientcoords"
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L375",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service_draw_items",
+      "target": "app_invoices_services_invoice_pdf_service_itemscoords",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L224",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
+      "target": "app_invoices_services_invoice_pdf_service_itemscoords",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/template_service.py",
+      "source_location": "L201",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_template_service",
+      "target": "app_invoices_services_invoice_pdf_service_itemscoords"
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "app/invoices/services/template_service.py",
+      "source_location": "L201",
+      "weight": 0.8,
+      "confidence_score": 0.5,
+      "source": "app_invoices_services_template_service_templateservice",
+      "target": "app_invoices_services_invoice_pdf_service_itemscoords"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/invoices/services/template_service.py",
+      "source_location": "L208",
+      "weight": 1.0,
+      "source": "app_invoices_services_template_service_templateservice_get_default_coords",
+      "target": "app_invoices_services_invoice_pdf_service_itemscoords"
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L399",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service_draw_totals",
+      "target": "app_invoices_services_invoice_pdf_service_totalscoords",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L225",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
+      "target": "app_invoices_services_invoice_pdf_service_totalscoords",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/template_service.py",
+      "source_location": "L201",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_template_service",
+      "target": "app_invoices_services_invoice_pdf_service_totalscoords"
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "app/invoices/services/template_service.py",
+      "source_location": "L201",
+      "weight": 0.8,
+      "confidence_score": 0.5,
+      "source": "app_invoices_services_template_service_templateservice",
+      "target": "app_invoices_services_invoice_pdf_service_totalscoords"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/invoices/services/template_service.py",
+      "source_location": "L209",
+      "weight": 1.0,
+      "source": "app_invoices_services_template_service_templateservice_get_default_coords",
+      "target": "app_invoices_services_invoice_pdf_service_totalscoords"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L227",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
+      "target": "app_invoices_services_invoice_pdf_service_pdftemplatelayout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/pdf_layouts/ferre_lagos.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_pdf_layouts_ferre_lagos",
+      "target": "app_invoices_services_invoice_pdf_service_pdftemplatelayout"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L594",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_routes",
+      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L678",
+      "weight": 1.0,
+      "source": "app_invoices_routes_templates_live_preview",
+      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L602",
+      "weight": 1.0,
+      "source": "app_invoices_routes_templates_preview",
+      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L138",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf",
+      "target": "app_invoices_services_invoice_pdf_service_generate_html_pdf",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L140",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf",
+      "target": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L468",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf_from_request",
+      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L132",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service_rationale_132",
+      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L144",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service_rationale_144",
+      "target": "app_invoices_services_invoice_pdf_service_generate_html_pdf",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L291",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
+      "target": "app_invoices_services_invoice_pdf_service_draw_client_info",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L289",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
+      "target": "app_invoices_services_invoice_pdf_service_draw_header",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L292",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
+      "target": "app_invoices_services_invoice_pdf_service_draw_items",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L295",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
+      "target": "app_invoices_services_invoice_pdf_service_draw_totals",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L220",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service_rationale_220",
+      "target": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/invoices/routes.py",
+      "source_location": "L454",
+      "weight": 1.0,
+      "source": "app_invoices_routes_print_invoice",
+      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf_from_request"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L427",
+      "weight": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service_rationale_427",
+      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf_from_request",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "imports_from",
       "context": "submodule_import",
       "confidence": "EXTRACTED",
@@ -12477,9 +13251,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_extensions",
-      "confidence_score": 1.0
+      "target": "app_extensions"
     },
     {
       "relation": "imports_from",
@@ -12488,9 +13262,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_models_audit",
-      "confidence_score": 1.0
+      "target": "app_models_audit"
     },
     {
       "relation": "imports_from",
@@ -12499,9 +13273,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_models_base",
-      "confidence_score": 1.0
+      "target": "app_models_base"
     },
     {
       "relation": "contains",
@@ -12509,9 +13283,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L173",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_support_routes_audit_logs",
-      "confidence_score": 1.0
+      "target": "app_support_routes_audit_logs"
     },
     {
       "relation": "contains",
@@ -12519,9 +13293,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L65",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_support_routes_coerce_value",
-      "confidence_score": 1.0
+      "target": "app_support_routes_coerce_value"
     },
     {
       "relation": "contains",
@@ -12529,9 +13303,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L146",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_support_routes_dashboard",
-      "confidence_score": 1.0
+      "target": "app_support_routes_dashboard"
     },
     {
       "relation": "contains",
@@ -12539,9 +13313,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L357",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_support_routes_database_browser",
-      "confidence_score": 1.0
+      "target": "app_support_routes_database_browser"
     },
     {
       "relation": "contains",
@@ -12549,9 +13323,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L439",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_support_routes_database_delete_record",
-      "confidence_score": 1.0
+      "target": "app_support_routes_database_delete_record"
     },
     {
       "relation": "contains",
@@ -12559,9 +13333,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L409",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_support_routes_database_edit_record",
-      "confidence_score": 1.0
+      "target": "app_support_routes_database_edit_record"
     },
     {
       "relation": "contains",
@@ -12569,9 +13343,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L114",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_support_routes_database_fields",
-      "confidence_score": 1.0
+      "target": "app_support_routes_database_fields"
     },
     {
       "relation": "contains",
@@ -12579,9 +13353,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L379",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_support_routes_database_new_record",
-      "confidence_score": 1.0
+      "target": "app_support_routes_database_new_record"
     },
     {
       "relation": "contains",
@@ -12589,9 +13363,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L256",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_support_routes_deleted_items",
-      "confidence_score": 1.0
+      "target": "app_support_routes_deleted_items"
     },
     {
       "relation": "contains",
@@ -12599,9 +13373,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L95",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_support_routes_encode_primary_key",
-      "confidence_score": 1.0
+      "target": "app_support_routes_encode_primary_key"
     },
     {
       "relation": "contains",
@@ -12609,9 +13383,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L48",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_support_routes_field_value",
-      "confidence_score": 1.0
+      "target": "app_support_routes_field_value"
     },
     {
       "relation": "contains",
@@ -12619,9 +13393,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_support_routes_get_all_models",
-      "confidence_score": 1.0
+      "target": "app_support_routes_get_all_models"
     },
     {
       "relation": "contains",
@@ -12629,9 +13403,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_support_routes_get_database_table",
-      "confidence_score": 1.0
+      "target": "app_support_routes_get_database_table"
     },
     {
       "relation": "contains",
@@ -12639,9 +13413,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_support_routes_get_database_tables",
-      "confidence_score": 1.0
+      "target": "app_support_routes_get_database_tables"
     },
     {
       "relation": "contains",
@@ -12649,9 +13423,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L55",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_support_routes_input_kind",
-      "confidence_score": 1.0
+      "target": "app_support_routes_input_kind"
     },
     {
       "relation": "contains",
@@ -12659,9 +13433,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L100",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_support_routes_primary_key_filters",
-      "confidence_score": 1.0
+      "target": "app_support_routes_primary_key_filters"
     },
     {
       "relation": "contains",
@@ -12669,9 +13443,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L327",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_support_routes_record_view",
-      "confidence_score": 1.0
+      "target": "app_support_routes_record_view"
     },
     {
       "relation": "contains",
@@ -12679,9 +13453,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L307",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_support_routes_restore_item",
-      "confidence_score": 1.0
+      "target": "app_support_routes_restore_item"
     },
     {
       "relation": "contains",
@@ -12689,9 +13463,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L141",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_support_routes_restrict_to_superadmins",
-      "confidence_score": 1.0
+      "target": "app_support_routes_restrict_to_superadmins"
     },
     {
       "relation": "contains",
@@ -12699,9 +13473,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L38",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_support_routes_serialize_value",
-      "confidence_score": 1.0
+      "target": "app_support_routes_serialize_value"
     },
     {
       "relation": "contains",
@@ -12709,9 +13483,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L128",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "app_support_routes_support_audit",
-      "confidence_score": 1.0
+      "target": "app_support_routes_support_audit"
     },
     {
       "relation": "imports_from",
@@ -12720,9 +13494,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "datetime",
-      "confidence_score": 1.0
+      "target": "datetime"
     },
     {
       "relation": "imports_from",
@@ -12731,9 +13505,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes",
-      "target": "flask",
-      "confidence_score": 1.0
+      "target": "flask"
     },
     {
       "relation": "calls",
@@ -12742,9 +13516,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L224",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_audit_logs",
-      "target": "app_support_routes_get_all_models",
-      "confidence_score": 1.0
+      "target": "app_support_routes_get_all_models"
     },
     {
       "relation": "calls",
@@ -12753,9 +13527,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L148",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_dashboard",
-      "target": "app_support_routes_get_all_models",
-      "confidence_score": 1.0
+      "target": "app_support_routes_get_all_models"
     },
     {
       "relation": "calls",
@@ -12764,9 +13538,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L262",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_deleted_items",
-      "target": "app_support_routes_get_all_models",
-      "confidence_score": 1.0
+      "target": "app_support_routes_get_all_models"
     },
     {
       "relation": "calls",
@@ -12775,9 +13549,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L328",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_record_view",
-      "target": "app_support_routes_get_all_models",
-      "confidence_score": 1.0
+      "target": "app_support_routes_get_all_models"
     },
     {
       "relation": "calls",
@@ -12786,9 +13560,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L308",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_restore_item",
-      "target": "app_support_routes_get_all_models",
-      "confidence_score": 1.0
+      "target": "app_support_routes_get_all_models"
     },
     {
       "relation": "calls",
@@ -12797,9 +13571,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L361",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_database_browser",
-      "target": "app_support_routes_get_database_tables",
-      "confidence_score": 1.0
+      "target": "app_support_routes_get_database_tables"
     },
     {
       "relation": "calls",
@@ -12808,9 +13582,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L33",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_get_database_table",
-      "target": "app_support_routes_get_database_tables",
-      "confidence_score": 1.0
+      "target": "app_support_routes_get_database_tables"
     },
     {
       "relation": "rationale_for",
@@ -12818,9 +13592,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_rationale_27",
-      "target": "app_support_routes_get_database_tables",
-      "confidence_score": 1.0
+      "target": "app_support_routes_get_database_tables"
     },
     {
       "relation": "calls",
@@ -12829,9 +13603,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L362",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_database_browser",
-      "target": "app_support_routes_get_database_table",
-      "confidence_score": 1.0
+      "target": "app_support_routes_get_database_table"
     },
     {
       "relation": "calls",
@@ -12840,9 +13614,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L440",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_database_delete_record",
-      "target": "app_support_routes_get_database_table",
-      "confidence_score": 1.0
+      "target": "app_support_routes_get_database_table"
     },
     {
       "relation": "calls",
@@ -12851,9 +13625,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L410",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_database_edit_record",
-      "target": "app_support_routes_get_database_table",
-      "confidence_score": 1.0
+      "target": "app_support_routes_get_database_table"
     },
     {
       "relation": "calls",
@@ -12862,9 +13636,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L380",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_database_new_record",
-      "target": "app_support_routes_get_database_table",
-      "confidence_score": 1.0
+      "target": "app_support_routes_get_database_table"
     },
     {
       "relation": "rationale_for",
@@ -12872,9 +13646,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L32",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_rationale_32",
-      "target": "app_support_routes_get_database_table",
-      "confidence_score": 1.0
+      "target": "app_support_routes_get_database_table"
     },
     {
       "relation": "calls",
@@ -12883,9 +13657,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L370",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_database_browser",
-      "target": "app_support_routes_serialize_value",
-      "confidence_score": 1.0
+      "target": "app_support_routes_serialize_value"
     },
     {
       "relation": "calls",
@@ -12894,9 +13668,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L449",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_database_delete_record",
-      "target": "app_support_routes_serialize_value",
-      "confidence_score": 1.0
+      "target": "app_support_routes_serialize_value"
     },
     {
       "relation": "calls",
@@ -12905,9 +13679,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L424",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_database_edit_record",
-      "target": "app_support_routes_serialize_value",
-      "confidence_score": 1.0
+      "target": "app_support_routes_serialize_value"
     },
     {
       "relation": "calls",
@@ -12916,9 +13690,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L96",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_encode_primary_key",
-      "target": "app_support_routes_serialize_value",
-      "confidence_score": 1.0
+      "target": "app_support_routes_serialize_value"
     },
     {
       "relation": "calls",
@@ -12927,9 +13701,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L49",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_field_value",
-      "target": "app_support_routes_serialize_value",
-      "confidence_score": 1.0
+      "target": "app_support_routes_serialize_value"
     },
     {
       "relation": "calls",
@@ -12938,9 +13712,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L121",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_database_fields",
-      "target": "app_support_routes_field_value",
-      "confidence_score": 1.0
+      "target": "app_support_routes_field_value"
     },
     {
       "relation": "calls",
@@ -12949,9 +13723,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L122",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_database_fields",
-      "target": "app_support_routes_input_kind",
-      "confidence_score": 1.0
+      "target": "app_support_routes_input_kind"
     },
     {
       "relation": "calls",
@@ -12960,9 +13734,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L420",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_database_edit_record",
-      "target": "app_support_routes_coerce_value",
-      "confidence_score": 1.0
+      "target": "app_support_routes_coerce_value"
     },
     {
       "relation": "calls",
@@ -12971,9 +13745,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L393",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_database_new_record",
-      "target": "app_support_routes_coerce_value",
-      "confidence_score": 1.0
+      "target": "app_support_routes_coerce_value"
     },
     {
       "relation": "calls",
@@ -12982,9 +13756,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L111",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_primary_key_filters",
-      "target": "app_support_routes_coerce_value",
-      "confidence_score": 1.0
+      "target": "app_support_routes_coerce_value"
     },
     {
       "relation": "rationale_for",
@@ -12992,9 +13766,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L66",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_rationale_66",
-      "target": "app_support_routes_coerce_value",
-      "confidence_score": 1.0
+      "target": "app_support_routes_coerce_value"
     },
     {
       "relation": "calls",
@@ -13003,9 +13777,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L371",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_database_browser",
-      "target": "app_support_routes_encode_primary_key",
-      "confidence_score": 1.0
+      "target": "app_support_routes_encode_primary_key"
     },
     {
       "relation": "calls",
@@ -13014,9 +13788,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L444",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_database_delete_record",
-      "target": "app_support_routes_primary_key_filters",
-      "confidence_score": 1.0
+      "target": "app_support_routes_primary_key_filters"
     },
     {
       "relation": "calls",
@@ -13025,9 +13799,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L411",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_database_edit_record",
-      "target": "app_support_routes_primary_key_filters",
-      "confidence_score": 1.0
+      "target": "app_support_routes_primary_key_filters"
     },
     {
       "relation": "calls",
@@ -13036,9 +13810,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L415",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_database_edit_record",
-      "target": "app_support_routes_database_fields",
-      "confidence_score": 1.0
+      "target": "app_support_routes_database_fields"
     },
     {
       "relation": "calls",
@@ -13047,9 +13821,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L383",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_database_new_record",
-      "target": "app_support_routes_database_fields",
-      "confidence_score": 1.0
+      "target": "app_support_routes_database_fields"
     },
     {
       "relation": "calls",
@@ -13058,9 +13832,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L451",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_database_delete_record",
-      "target": "app_support_routes_support_audit",
-      "confidence_score": 1.0
+      "target": "app_support_routes_support_audit"
     },
     {
       "relation": "calls",
@@ -13069,9 +13843,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L426",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_database_edit_record",
-      "target": "app_support_routes_support_audit",
-      "confidence_score": 1.0
+      "target": "app_support_routes_support_audit"
     },
     {
       "relation": "calls",
@@ -13080,9 +13854,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L396",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_database_new_record",
-      "target": "app_support_routes_support_audit",
-      "confidence_score": 1.0
+      "target": "app_support_routes_support_audit"
     },
     {
       "relation": "rationale_for",
@@ -13090,9 +13864,9 @@
       "source_file": "app/support/routes.py",
       "source_location": "L129",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_support_routes_rationale_129",
-      "target": "app_support_routes_support_audit",
-      "confidence_score": 1.0
+      "target": "app_support_routes_support_audit"
     },
     {
       "relation": "contains",
@@ -13648,17 +14422,6 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "app/dashboard/routes.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_dashboard_routes",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "app/extensions.py",
       "source_location": "L10",
       "weight": 1.0,
@@ -13697,28 +14460,6 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "app_invoices_routes",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_create_service",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L20",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service",
       "target": "flask"
     },
     {
@@ -14575,17 +15316,6 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "app_invoices_routes",
-      "target": "datetime"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_create_service",
       "target": "datetime"
     },
     {
@@ -18317,87 +19047,6 @@
       "target": "app_extensions_get_locale"
     },
     {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/dashboard/routes.py",
-      "source_location": "L25",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_dashboard_routes",
-      "target": "app_dashboard_routes_format_currency"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/dashboard/routes.py",
-      "source_location": "L33",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_dashboard_routes",
-      "target": "app_dashboard_routes_format_date"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/dashboard/routes.py",
-      "source_location": "L12",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_dashboard_routes",
-      "target": "app_dashboard_routes_index"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/dashboard/routes.py",
-      "source_location": "L41",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_dashboard_routes",
-      "target": "app_dashboard_routes_locale_date"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/dashboard/routes.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_dashboard_routes",
-      "target": "app_utils"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "app/dashboard/routes.py",
-      "source_location": "L26",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_dashboard_routes_rationale_26",
-      "target": "app_dashboard_routes_format_currency"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "app/dashboard/routes.py",
-      "source_location": "L34",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_dashboard_routes_rationale_34",
-      "target": "app_dashboard_routes_format_date"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "app/dashboard/routes.py",
-      "source_location": "L42",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_dashboard_routes_rationale_42",
-      "target": "app_dashboard_routes_locale_date"
-    },
-    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -18498,17 +19147,6 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L19",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_extensions"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "app/invoices/services/template_service.py",
       "source_location": "L17",
       "weight": 1.0,
@@ -18581,17 +19219,6 @@
       "confidence_score": 1.0,
       "source": "app_warehouses_routes",
       "target": "app_extensions"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L19",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_extensions_get_locale"
     },
     {
       "relation": "contains",
@@ -18888,39 +19515,6 @@
     },
     {
       "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L16",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_routes",
-      "target": "app_invoices_services_invoice_create_service"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L16",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_routes",
-      "target": "app_invoices_services_invoice_create_service_generate_document_number"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L594",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_routes",
-      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf"
-    },
-    {
-      "relation": "imports_from",
       "context": "submodule_import",
       "confidence": "EXTRACTED",
       "source_file": "app/invoices/routes.py",
@@ -19026,17 +19620,6 @@
       "target": "app_invoices_routes_store"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L142",
-      "weight": 1.0,
-      "source": "app_invoices_routes_store",
-      "target": "app_invoices_services_invoice_create_service_create_invoice_or_quote"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/users/routes.py",
@@ -19097,17 +19680,6 @@
       "target": "app_invoices_routes_update"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L351",
-      "weight": 1.0,
-      "source": "app_invoices_routes_update",
-      "target": "app_invoices_services_invoice_create_service_generate_document_number"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/users/routes.py",
@@ -19128,17 +19700,6 @@
       "target": "app_invoices_routes_delete"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L454",
-      "weight": 1.0,
-      "source": "app_invoices_routes_print_invoice",
-      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf_from_request"
-    },
-    {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "app/invoices/routes.py",
@@ -19149,17 +19710,6 @@
       "target": "app_invoices_routes_templates_preview"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L602",
-      "weight": 1.0,
-      "source": "app_invoices_routes_templates_preview",
-      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf"
-    },
-    {
       "relation": "rationale_for",
       "confidence": "EXTRACTED",
       "source_file": "app/invoices/routes.py",
@@ -19168,598 +19718,6 @@
       "confidence_score": 1.0,
       "source": "app_invoices_routes_rationale_622",
       "target": "app_invoices_routes_templates_live_preview"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/invoices/routes.py",
-      "source_location": "L678",
-      "weight": 1.0,
-      "source": "app_invoices_routes_templates_live_preview",
-      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L52",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_create_service",
-      "target": "app_invoices_services_invoice_create_service_create_invoice_or_quote"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_create_service",
-      "target": "app_invoices_services_invoice_create_service_generate_document_number"
-    },
-    {
-      "relation": "imports_from",
-      "context": "submodule_import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_create_service",
-      "target": "app_models_company"
-    },
-    {
-      "relation": "imports_from",
-      "context": "submodule_import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_create_service",
-      "target": "app_models_document"
-    },
-    {
-      "relation": "imports_from",
-      "context": "submodule_import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_create_service",
-      "target": "app_models_payment"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L57",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_create_service_create_invoice_or_quote",
-      "target": "app_invoices_services_invoice_create_service_generate_document_number"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L127",
-      "weight": 1.0,
-      "source": "app_invoices_services_invoice_create_service_create_invoice_or_quote",
-      "target": "app_models_stock_movement_stockmovement"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L65",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_clientcoords"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L359",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_draw_client_info"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L318",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_draw_header"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L375",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_draw_items"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L399",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_draw_totals"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L143",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_generate_html_pdf"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L123",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L426",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf_from_request"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L219",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L43",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_headercoords"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L73",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_itemscoords"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L111",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_pdftemplatelayout"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L92",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_totalscoords"
-    },
-    {
-      "relation": "imports_from",
-      "context": "submodule_import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L29",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_models_contact"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service_rationale_1",
-      "target": "app_invoices_services_invoice_pdf_service"
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L318",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service_draw_header",
-      "target": "app_invoices_services_invoice_pdf_service_headercoords"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L222",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
-      "target": "app_invoices_services_invoice_pdf_service_headercoords"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/template_service.py",
-      "source_location": "L201",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_template_service",
-      "target": "app_invoices_services_invoice_pdf_service_headercoords"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "app/invoices/services/template_service.py",
-      "source_location": "L201",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "app_invoices_services_template_service_templateservice",
-      "target": "app_invoices_services_invoice_pdf_service_headercoords"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/invoices/services/template_service.py",
-      "source_location": "L206",
-      "weight": 1.0,
-      "source": "app_invoices_services_template_service_templateservice_get_default_coords",
-      "target": "app_invoices_services_invoice_pdf_service_headercoords"
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L359",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service_draw_client_info",
-      "target": "app_invoices_services_invoice_pdf_service_clientcoords"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L223",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
-      "target": "app_invoices_services_invoice_pdf_service_clientcoords"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/template_service.py",
-      "source_location": "L201",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_template_service",
-      "target": "app_invoices_services_invoice_pdf_service_clientcoords"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "app/invoices/services/template_service.py",
-      "source_location": "L201",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "app_invoices_services_template_service_templateservice",
-      "target": "app_invoices_services_invoice_pdf_service_clientcoords"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/invoices/services/template_service.py",
-      "source_location": "L207",
-      "weight": 1.0,
-      "source": "app_invoices_services_template_service_templateservice_get_default_coords",
-      "target": "app_invoices_services_invoice_pdf_service_clientcoords"
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L375",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service_draw_items",
-      "target": "app_invoices_services_invoice_pdf_service_itemscoords"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L224",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
-      "target": "app_invoices_services_invoice_pdf_service_itemscoords"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/template_service.py",
-      "source_location": "L201",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_template_service",
-      "target": "app_invoices_services_invoice_pdf_service_itemscoords"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "app/invoices/services/template_service.py",
-      "source_location": "L201",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "app_invoices_services_template_service_templateservice",
-      "target": "app_invoices_services_invoice_pdf_service_itemscoords"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/invoices/services/template_service.py",
-      "source_location": "L208",
-      "weight": 1.0,
-      "source": "app_invoices_services_template_service_templateservice_get_default_coords",
-      "target": "app_invoices_services_invoice_pdf_service_itemscoords"
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L399",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service_draw_totals",
-      "target": "app_invoices_services_invoice_pdf_service_totalscoords"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L225",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
-      "target": "app_invoices_services_invoice_pdf_service_totalscoords"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/template_service.py",
-      "source_location": "L201",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_template_service",
-      "target": "app_invoices_services_invoice_pdf_service_totalscoords"
-    },
-    {
-      "relation": "uses",
-      "confidence": "INFERRED",
-      "source_file": "app/invoices/services/template_service.py",
-      "source_location": "L201",
-      "weight": 0.8,
-      "confidence_score": 0.5,
-      "source": "app_invoices_services_template_service_templateservice",
-      "target": "app_invoices_services_invoice_pdf_service_totalscoords"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/invoices/services/template_service.py",
-      "source_location": "L209",
-      "weight": 1.0,
-      "source": "app_invoices_services_template_service_templateservice_get_default_coords",
-      "target": "app_invoices_services_invoice_pdf_service_totalscoords"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L227",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
-      "target": "app_invoices_services_invoice_pdf_service_pdftemplatelayout"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/pdf_layouts/ferre_lagos.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_pdf_layouts_ferre_lagos",
-      "target": "app_invoices_services_invoice_pdf_service_pdftemplatelayout"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L138",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf",
-      "target": "app_invoices_services_invoice_pdf_service_generate_html_pdf"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L140",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf",
-      "target": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L468",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf_from_request",
-      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L132",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service_rationale_132",
-      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L144",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service_rationale_144",
-      "target": "app_invoices_services_invoice_pdf_service_generate_html_pdf"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L291",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
-      "target": "app_invoices_services_invoice_pdf_service_draw_client_info"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L289",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
-      "target": "app_invoices_services_invoice_pdf_service_draw_header"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L292",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
-      "target": "app_invoices_services_invoice_pdf_service_draw_items"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L295",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
-      "target": "app_invoices_services_invoice_pdf_service_draw_totals"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L220",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service_rationale_220",
-      "target": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L427",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service_rationale_427",
-      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf_from_request"
     },
     {
       "relation": "semantically_similar_to",
@@ -35653,5 +35611,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "0ed3bc02da7d5c990f2e76225392e4649e3180e4"
+  "built_at_commit": "e8e06e93af8500ce3843a1aa3cf804b722608276"
 }
