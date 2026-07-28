@@ -22,7 +22,7 @@ def approve(company_id, id):
         abort(403)
     company = resolve_company(company_id)
     try:
-        req = ApprovalService.approve_request(id, current_user.id)
+        req = ApprovalService.approve_request(id, current_user.id, company.id)
         return jsonify({'success': True, 'message': 'Aprobado correctamente.'})
     except Exception as e:
         db.session.rollback()
@@ -35,7 +35,7 @@ def reject(company_id, id):
         abort(403)
     company = resolve_company(company_id)
     try:
-        req = ApprovalService.reject_request(id, current_user.id)
+        req = ApprovalService.reject_request(id, current_user.id, company.id)
         return jsonify({'success': True, 'message': 'Rechazado correctamente.'})
     except Exception as e:
         db.session.rollback()

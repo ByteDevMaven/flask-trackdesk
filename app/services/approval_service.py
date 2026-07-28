@@ -1,4 +1,5 @@
 from datetime import datetime, UTC
+import inspect
 from app.models import db, ApprovalRequest, ApprovalStatus
 
 class ActionRegistry:
@@ -14,7 +15,21 @@ class ActionRegistry:
         """Execute a registered action with the given payload."""
         if name not in cls._handlers:
             raise ValueError(f"No handler registered for action: {name}")
-        return cls._handlers[name](**payload)
+        handler = cls._handlers[name]
+        payload = payload or {}
+        parameters = inspect.signature(handler).parameters
+        if any(parameter.kind == inspect.Parameter.VAR_KEYWORD for parameter in parameters.values()):
+            return handler(**payload)
+        accepted = {key: value for key, value in payload.items() if key in parameters}
+        missing = [
+            parameter.name for parameter in parameters.values()
+            if parameter.kind in (inspect.Parameter.POSITIONAL_OR_KEYWORD, inspect.Parameter.KEYWORD_ONLY)
+            and parameter.default is inspect.Parameter.empty
+            and parameter.name not in accepted
+        ]
+        if missing:
+            raise ValueError(f"Missing required action parameters: {', '.join(missing)}")
+        return handler(**accepted)
 
 class ApprovalService:
     @staticmethod
@@ -31,8 +46,11 @@ class ApprovalService:
         return req
 
     @staticmethod
-    def approve_request(request_id, approver_id):
-        req = ApprovalRequest.query.get_or_404(request_id)
+    def approve_request(request_id, approver_id, company_id=None):
+        query = ApprovalRequest.query.filter_by(id=request_id)
+        if company_id is not None:
+            query = query.filter_by(company_id=company_id)
+        req = query.first_or_404()
         if req.status != ApprovalStatus.pending:
             raise ValueError("Request is not pending")
         
@@ -46,8 +64,11 @@ class ApprovalService:
         return req
 
     @staticmethod
-    def reject_request(request_id, approver_id):
-        req = ApprovalRequest.query.get_or_404(request_id)
+    def reject_request(request_id, approver_id, company_id=None):
+        query = ApprovalRequest.query.filter_by(id=request_id)
+        if company_id is not None:
+            query = query.filter_by(company_id=company_id)
+        req = query.first_or_404()
         if req.status != ApprovalStatus.pending:
             raise ValueError("Request is not pending")
         
