@@ -6,12 +6,182 @@
     {
       "label": "routes.py",
       "file_type": "code",
+      "source_file": "app/approvals/routes.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_approvals_routes",
+      "community": 36,
+      "norm_label": "routes.py"
+    },
+    {
+      "label": "index()",
+      "file_type": "code",
+      "source_file": "app/approvals/routes.py",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "app_approvals_routes_index",
+      "community": 36,
+      "norm_label": "index()"
+    },
+    {
+      "label": "approve()",
+      "file_type": "code",
+      "source_file": "app/approvals/routes.py",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "app_approvals_routes_approve",
+      "community": 36,
+      "norm_label": "approve()"
+    },
+    {
+      "label": "reject()",
+      "file_type": "code",
+      "source_file": "app/approvals/routes.py",
+      "source_location": "L33",
+      "_origin": "ast",
+      "id": "app_approvals_routes_reject",
+      "community": 36,
+      "norm_label": "reject()"
+    },
+    {
+      "label": "approval_service.py",
+      "file_type": "code",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_services_approval_service",
+      "community": 36,
+      "norm_label": "approval_service.py"
+    },
+    {
+      "label": "ActionRegistry",
+      "file_type": "code",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "app_services_approval_service_actionregistry",
+      "community": 129,
+      "norm_label": "actionregistry"
+    },
+    {
+      "label": ".register()",
+      "file_type": "code",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "app_services_approval_service_actionregistry_register",
+      "community": 129,
+      "norm_label": ".register()"
+    },
+    {
+      "label": ".execute()",
+      "file_type": "code",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "app_services_approval_service_actionregistry_execute",
+      "community": 129,
+      "norm_label": ".execute()"
+    },
+    {
+      "label": "ApprovalService",
+      "file_type": "code",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "app_services_approval_service_approvalservice",
+      "community": 36,
+      "norm_label": "approvalservice"
+    },
+    {
+      "label": ".create_request()",
+      "file_type": "code",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "app_services_approval_service_approvalservice_create_request",
+      "community": 36,
+      "norm_label": ".create_request()"
+    },
+    {
+      "label": ".approve_request()",
+      "file_type": "code",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L49",
+      "_origin": "ast",
+      "id": "app_services_approval_service_approvalservice_approve_request",
+      "community": 36,
+      "norm_label": ".approve_request()"
+    },
+    {
+      "label": ".reject_request()",
+      "file_type": "code",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L67",
+      "_origin": "ast",
+      "id": "app_services_approval_service_approvalservice_reject_request",
+      "community": 36,
+      "norm_label": ".reject_request()"
+    },
+    {
+      "label": ".get_pending_requests()",
+      "file_type": "code",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L82",
+      "_origin": "ast",
+      "id": "app_services_approval_service_approvalservice_get_pending_requests",
+      "community": 36,
+      "norm_label": ".get_pending_requests()"
+    },
+    {
+      "label": ".get_resolved_requests()",
+      "file_type": "code",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L89",
+      "_origin": "ast",
+      "id": "app_services_approval_service_approvalservice_get_resolved_requests",
+      "community": 36,
+      "norm_label": ".get_resolved_requests()"
+    },
+    {
+      "label": "init_action_handlers()",
+      "file_type": "code",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L95",
+      "_origin": "ast",
+      "id": "app_services_approval_service_init_action_handlers",
+      "community": 23,
+      "norm_label": "init_action_handlers()"
+    },
+    {
+      "label": "Register a function to handle an approval action.",
+      "file_type": "rationale",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "app_services_approval_service_rationale_10",
+      "community": 129,
+      "norm_label": "register a function to handle an approval action."
+    },
+    {
+      "label": "Execute a registered action with the given payload.",
+      "file_type": "rationale",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "app_services_approval_service_rationale_15",
+      "community": 129,
+      "norm_label": "execute a registered action with the given payload."
+    },
+    {
+      "label": "routes.py",
+      "file_type": "code",
       "source_file": "app/dashboard/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "app_dashboard_routes",
       "community": 19,
-      "norm_label": "routes.py"
+      "norm_label": "routes.py",
+      "id": "app_dashboard_routes"
     },
     {
       "label": "index()",
@@ -19,9 +189,9 @@
       "source_file": "app/dashboard/routes.py",
       "source_location": "L12",
       "_origin": "ast",
-      "id": "app_dashboard_routes_index",
       "community": 19,
-      "norm_label": "index()"
+      "norm_label": "index()",
+      "id": "app_dashboard_routes_index"
     },
     {
       "label": "format_currency()",
@@ -29,9 +199,9 @@
       "source_file": "app/dashboard/routes.py",
       "source_location": "L25",
       "_origin": "ast",
-      "id": "app_dashboard_routes_format_currency",
       "community": 19,
-      "norm_label": "format_currency()"
+      "norm_label": "format_currency()",
+      "id": "app_dashboard_routes_format_currency"
     },
     {
       "label": "format_date()",
@@ -39,9 +209,9 @@
       "source_file": "app/dashboard/routes.py",
       "source_location": "L33",
       "_origin": "ast",
-      "id": "app_dashboard_routes_format_date",
       "community": 19,
-      "norm_label": "format_date()"
+      "norm_label": "format_date()",
+      "id": "app_dashboard_routes_format_date"
     },
     {
       "label": "locale_date()",
@@ -49,9 +219,9 @@
       "source_file": "app/dashboard/routes.py",
       "source_location": "L41",
       "_origin": "ast",
-      "id": "app_dashboard_routes_locale_date",
       "community": 19,
-      "norm_label": "locale_date()"
+      "norm_label": "locale_date()",
+      "id": "app_dashboard_routes_locale_date"
     },
     {
       "label": "Format a number as currency",
@@ -59,9 +229,9 @@
       "source_file": "app/dashboard/routes.py",
       "source_location": "L26",
       "_origin": "ast",
-      "id": "app_dashboard_routes_rationale_26",
       "community": 19,
-      "norm_label": "format a number as currency"
+      "norm_label": "format a number as currency",
+      "id": "app_dashboard_routes_rationale_26"
     },
     {
       "label": "Format a date in a readable format",
@@ -69,9 +239,9 @@
       "source_file": "app/dashboard/routes.py",
       "source_location": "L34",
       "_origin": "ast",
-      "id": "app_dashboard_routes_rationale_34",
       "community": 19,
-      "norm_label": "format a date in a readable format"
+      "norm_label": "format a date in a readable format",
+      "id": "app_dashboard_routes_rationale_34"
     },
     {
       "label": "invoice_create_service.py",
@@ -79,9 +249,9 @@
       "source_file": "app/invoices/services/invoice_create_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "app_invoices_services_invoice_create_service",
       "community": 33,
-      "norm_label": "invoice_create_service.py"
+      "norm_label": "invoice_create_service.py",
+      "id": "app_invoices_services_invoice_create_service"
     },
     {
       "label": "_generate_document_number()",
@@ -89,9 +259,9 @@
       "source_file": "app/invoices/services/invoice_create_service.py",
       "source_location": "L9",
       "_origin": "ast",
-      "id": "app_invoices_services_invoice_create_service_generate_document_number",
       "community": 8,
-      "norm_label": "_generate_document_number()"
+      "norm_label": "_generate_document_number()",
+      "id": "app_invoices_services_invoice_create_service_generate_document_number"
     },
     {
       "label": "create_invoice_or_quote()",
@@ -99,9 +269,9 @@
       "source_file": "app/invoices/services/invoice_create_service.py",
       "source_location": "L52",
       "_origin": "ast",
-      "id": "app_invoices_services_invoice_create_service_create_invoice_or_quote",
       "community": 8,
-      "norm_label": "create_invoice_or_quote()"
+      "norm_label": "create_invoice_or_quote()",
+      "id": "app_invoices_services_invoice_create_service_create_invoice_or_quote"
     },
     {
       "label": "invoice_pdf_service.py",
@@ -109,9 +279,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "app_invoices_services_invoice_pdf_service",
       "community": 2,
-      "norm_label": "invoice_pdf_service.py"
+      "norm_label": "invoice_pdf_service.py",
+      "id": "app_invoices_services_invoice_pdf_service"
     },
     {
       "label": "HeaderCoords",
@@ -119,9 +289,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L43",
       "_origin": "ast",
-      "id": "app_invoices_services_invoice_pdf_service_headercoords",
       "community": 2,
-      "norm_label": "headercoords"
+      "norm_label": "headercoords",
+      "id": "app_invoices_services_invoice_pdf_service_headercoords"
     },
     {
       "label": "ClientCoords",
@@ -129,9 +299,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L65",
       "_origin": "ast",
-      "id": "app_invoices_services_invoice_pdf_service_clientcoords",
       "community": 2,
-      "norm_label": "clientcoords"
+      "norm_label": "clientcoords",
+      "id": "app_invoices_services_invoice_pdf_service_clientcoords"
     },
     {
       "label": "ItemsCoords",
@@ -139,9 +309,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L73",
       "_origin": "ast",
-      "id": "app_invoices_services_invoice_pdf_service_itemscoords",
       "community": 2,
-      "norm_label": "itemscoords"
+      "norm_label": "itemscoords",
+      "id": "app_invoices_services_invoice_pdf_service_itemscoords"
     },
     {
       "label": "TotalsCoords",
@@ -149,9 +319,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L92",
       "_origin": "ast",
-      "id": "app_invoices_services_invoice_pdf_service_totalscoords",
       "community": 2,
-      "norm_label": "totalscoords"
+      "norm_label": "totalscoords",
+      "id": "app_invoices_services_invoice_pdf_service_totalscoords"
     },
     {
       "label": "PdfTemplateLayout",
@@ -159,9 +329,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L111",
       "_origin": "ast",
-      "id": "app_invoices_services_invoice_pdf_service_pdftemplatelayout",
       "community": 2,
-      "norm_label": "pdftemplatelayout"
+      "norm_label": "pdftemplatelayout",
+      "id": "app_invoices_services_invoice_pdf_service_pdftemplatelayout"
     },
     {
       "label": "generate_invoice_pdf()",
@@ -169,9 +339,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L123",
       "_origin": "ast",
-      "id": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf",
       "community": 2,
-      "norm_label": "generate_invoice_pdf()"
+      "norm_label": "generate_invoice_pdf()",
+      "id": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf"
     },
     {
       "label": "_generate_html_pdf()",
@@ -179,9 +349,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L143",
       "_origin": "ast",
-      "id": "app_invoices_services_invoice_pdf_service_generate_html_pdf",
       "community": 2,
-      "norm_label": "_generate_html_pdf()"
+      "norm_label": "_generate_html_pdf()",
+      "id": "app_invoices_services_invoice_pdf_service_generate_html_pdf"
     },
     {
       "label": "_generate_overlay_pdf()",
@@ -189,9 +359,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L219",
       "_origin": "ast",
-      "id": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
       "community": 2,
-      "norm_label": "_generate_overlay_pdf()"
+      "norm_label": "_generate_overlay_pdf()",
+      "id": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf"
     },
     {
       "label": "_draw_header()",
@@ -199,9 +369,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L318",
       "_origin": "ast",
-      "id": "app_invoices_services_invoice_pdf_service_draw_header",
       "community": 2,
-      "norm_label": "_draw_header()"
+      "norm_label": "_draw_header()",
+      "id": "app_invoices_services_invoice_pdf_service_draw_header"
     },
     {
       "label": "_draw_client_info()",
@@ -209,9 +379,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L359",
       "_origin": "ast",
-      "id": "app_invoices_services_invoice_pdf_service_draw_client_info",
       "community": 2,
-      "norm_label": "_draw_client_info()"
+      "norm_label": "_draw_client_info()",
+      "id": "app_invoices_services_invoice_pdf_service_draw_client_info"
     },
     {
       "label": "_draw_items()",
@@ -219,9 +389,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L375",
       "_origin": "ast",
-      "id": "app_invoices_services_invoice_pdf_service_draw_items",
       "community": 2,
-      "norm_label": "_draw_items()"
+      "norm_label": "_draw_items()",
+      "id": "app_invoices_services_invoice_pdf_service_draw_items"
     },
     {
       "label": "_draw_totals()",
@@ -229,9 +399,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L399",
       "_origin": "ast",
-      "id": "app_invoices_services_invoice_pdf_service_draw_totals",
       "community": 2,
-      "norm_label": "_draw_totals()"
+      "norm_label": "_draw_totals()",
+      "id": "app_invoices_services_invoice_pdf_service_draw_totals"
     },
     {
       "label": "generate_invoice_pdf_from_request()",
@@ -239,9 +409,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L426",
       "_origin": "ast",
-      "id": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf_from_request",
       "community": 2,
-      "norm_label": "generate_invoice_pdf_from_request()"
+      "norm_label": "generate_invoice_pdf_from_request()",
+      "id": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf_from_request"
     },
     {
       "label": "invoice_pdf_service.py ====================== Database-driven PDF and HTML eng",
@@ -249,9 +419,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "app_invoices_services_invoice_pdf_service_rationale_1",
       "community": 2,
-      "norm_label": "invoice_pdf_service.py ====================== database-driven pdf and html eng"
+      "norm_label": "invoice_pdf_service.py ====================== database-driven pdf and html eng",
+      "id": "app_invoices_services_invoice_pdf_service_rationale_1"
     },
     {
       "label": "Generate the PDF based on the document template type.",
@@ -259,9 +429,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L132",
       "_origin": "ast",
-      "id": "app_invoices_services_invoice_pdf_service_rationale_132",
       "community": 2,
-      "norm_label": "generate the pdf based on the document template type."
+      "norm_label": "generate the pdf based on the document template type.",
+      "id": "app_invoices_services_invoice_pdf_service_rationale_132"
     },
     {
       "label": "Generates PDF using xhtml2pdf and Jinja2 based on database html template",
@@ -269,9 +439,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L144",
       "_origin": "ast",
-      "id": "app_invoices_services_invoice_pdf_service_rationale_144",
       "community": 2,
-      "norm_label": "generates pdf using xhtml2pdf and jinja2 based on database html template"
+      "norm_label": "generates pdf using xhtml2pdf and jinja2 based on database html template",
+      "id": "app_invoices_services_invoice_pdf_service_rationale_144"
     },
     {
       "label": "Generates PDF using ReportLab overlay based on database JSON coordinates",
@@ -279,9 +449,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L220",
       "_origin": "ast",
-      "id": "app_invoices_services_invoice_pdf_service_rationale_220",
       "community": 2,
-      "norm_label": "generates pdf using reportlab overlay based on database json coordinates"
+      "norm_label": "generates pdf using reportlab overlay based on database json coordinates",
+      "id": "app_invoices_services_invoice_pdf_service_rationale_220"
     },
     {
       "label": "Used by the existing invoice route. Resolves the layout automatically     from",
@@ -289,9 +459,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L427",
       "_origin": "ast",
-      "id": "app_invoices_services_invoice_pdf_service_rationale_427",
       "community": 2,
-      "norm_label": "used by the existing invoice route. resolves the layout automatically     from"
+      "norm_label": "used by the existing invoice route. resolves the layout automatically     from",
+      "id": "app_invoices_services_invoice_pdf_service_rationale_427"
     },
     {
       "label": "routes.py",
@@ -1716,46 +1886,6 @@
     {
       "label": "routes.py",
       "file_type": "code",
-      "source_file": "app/approvals/routes.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 36,
-      "norm_label": "routes.py",
-      "id": "app_approvals_routes"
-    },
-    {
-      "label": "index()",
-      "file_type": "code",
-      "source_file": "app/approvals/routes.py",
-      "source_location": "L10",
-      "_origin": "ast",
-      "community": 36,
-      "norm_label": "index()",
-      "id": "app_approvals_routes_index"
-    },
-    {
-      "label": "approve()",
-      "file_type": "code",
-      "source_file": "app/approvals/routes.py",
-      "source_location": "L20",
-      "_origin": "ast",
-      "community": 36,
-      "norm_label": "approve()",
-      "id": "app_approvals_routes_approve"
-    },
-    {
-      "label": "reject()",
-      "file_type": "code",
-      "source_file": "app/approvals/routes.py",
-      "source_location": "L33",
-      "_origin": "ast",
-      "community": 36,
-      "norm_label": "reject()",
-      "id": "app_approvals_routes_reject"
-    },
-    {
-      "label": "routes.py",
-      "file_type": "code",
       "source_file": "app/auth/routes.py",
       "source_location": "L1",
       "_origin": "ast",
@@ -2189,7 +2319,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 30,
+      "community": 118,
       "norm_label": "accounttype",
       "id": "app_models_enums_accounttype"
     },
@@ -2199,7 +2329,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 30,
+      "community": 118,
       "norm_label": ".label_es()",
       "id": "app_models_enums_accounttype_label_es"
     },
@@ -2329,7 +2459,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L125",
       "_origin": "ast",
-      "community": 18,
+      "community": 132,
       "norm_label": "payperiod",
       "id": "app_models_enums_payperiod"
     },
@@ -2339,7 +2469,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L131",
       "_origin": "ast",
-      "community": 18,
+      "community": 132,
       "norm_label": ".label_es()",
       "id": "app_models_enums_payperiod_label_es"
     },
@@ -2429,7 +2559,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L190",
       "_origin": "ast",
-      "community": 18,
+      "community": 132,
       "norm_label": "expensestatus",
       "id": "app_models_enums_expensestatus"
     },
@@ -2439,7 +2569,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L197",
       "_origin": "ast",
-      "community": 18,
+      "community": 132,
       "norm_label": ".label_es()",
       "id": "app_models_enums_expensestatus_label_es"
     },
@@ -2449,7 +2579,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L205",
       "_origin": "ast",
-      "community": 30,
+      "community": 118,
       "norm_label": "transactiontype",
       "id": "app_models_enums_transactiontype"
     },
@@ -2459,7 +2589,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L213",
       "_origin": "ast",
-      "community": 30,
+      "community": 118,
       "norm_label": ".label_es()",
       "id": "app_models_enums_transactiontype_label_es"
     },
@@ -2482,136 +2612,6 @@
       "community": 18,
       "norm_label": ".label_es()",
       "id": "app_models_enums_approvalstatus_label_es"
-    },
-    {
-      "label": "approval_service.py",
-      "file_type": "code",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 36,
-      "norm_label": "approval_service.py",
-      "id": "app_services_approval_service"
-    },
-    {
-      "label": "ActionRegistry",
-      "file_type": "code",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L4",
-      "_origin": "ast",
-      "community": 36,
-      "norm_label": "actionregistry",
-      "id": "app_services_approval_service_actionregistry"
-    },
-    {
-      "label": ".register()",
-      "file_type": "code",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L8",
-      "_origin": "ast",
-      "community": 23,
-      "norm_label": ".register()",
-      "id": "app_services_approval_service_actionregistry_register"
-    },
-    {
-      "label": ".execute()",
-      "file_type": "code",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L13",
-      "_origin": "ast",
-      "community": 36,
-      "norm_label": ".execute()",
-      "id": "app_services_approval_service_actionregistry_execute"
-    },
-    {
-      "label": "ApprovalService",
-      "file_type": "code",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L19",
-      "_origin": "ast",
-      "community": 36,
-      "norm_label": "approvalservice",
-      "id": "app_services_approval_service_approvalservice"
-    },
-    {
-      "label": ".create_request()",
-      "file_type": "code",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L21",
-      "_origin": "ast",
-      "community": 36,
-      "norm_label": ".create_request()",
-      "id": "app_services_approval_service_approvalservice_create_request"
-    },
-    {
-      "label": ".approve_request()",
-      "file_type": "code",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L34",
-      "_origin": "ast",
-      "community": 36,
-      "norm_label": ".approve_request()",
-      "id": "app_services_approval_service_approvalservice_approve_request"
-    },
-    {
-      "label": ".reject_request()",
-      "file_type": "code",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L49",
-      "_origin": "ast",
-      "community": 36,
-      "norm_label": ".reject_request()",
-      "id": "app_services_approval_service_approvalservice_reject_request"
-    },
-    {
-      "label": ".get_pending_requests()",
-      "file_type": "code",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L61",
-      "_origin": "ast",
-      "community": 36,
-      "norm_label": ".get_pending_requests()",
-      "id": "app_services_approval_service_approvalservice_get_pending_requests"
-    },
-    {
-      "label": ".get_resolved_requests()",
-      "file_type": "code",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L68",
-      "_origin": "ast",
-      "community": 36,
-      "norm_label": ".get_resolved_requests()",
-      "id": "app_services_approval_service_approvalservice_get_resolved_requests"
-    },
-    {
-      "label": "init_action_handlers()",
-      "file_type": "code",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L74",
-      "_origin": "ast",
-      "community": 23,
-      "norm_label": "init_action_handlers()",
-      "id": "app_services_approval_service_init_action_handlers"
-    },
-    {
-      "label": "Register a function to handle an approval action.",
-      "file_type": "rationale",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L9",
-      "_origin": "ast",
-      "community": 23,
-      "norm_label": "register a function to handle an approval action.",
-      "id": "app_services_approval_service_rationale_9"
-    },
-    {
-      "label": "Execute a registered action with the given payload.",
-      "file_type": "rationale",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L14",
-      "_origin": "ast",
-      "community": 36,
-      "norm_label": "execute a registered action with the given payload.",
-      "id": "app_services_approval_service_rationale_14"
     },
     {
       "label": "a63c2982be42_add_approval_requests_table.py",
@@ -2719,7 +2719,7 @@
       "source_file": "app/context_processors.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 23,
+      "community": 20,
       "norm_label": "context_processors.py",
       "id": "app_context_processors"
     },
@@ -2729,7 +2729,7 @@
       "source_file": "app/context_processors.py",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 23,
+      "community": 20,
       "norm_label": "register_context_processors()",
       "id": "app_context_processors_register_context_processors"
     },
@@ -2739,7 +2739,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 23,
+      "community": 20,
       "norm_label": "flask",
       "id": "app_context_processors_py_flask"
     },
@@ -2759,7 +2759,7 @@
       "source_file": "app/extensions.py",
       "source_location": "L26",
       "_origin": "ast",
-      "community": 23,
+      "community": 20,
       "norm_label": "get_locale()",
       "id": "app_extensions_get_locale"
     },
@@ -2779,7 +2779,7 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 20,
+      "community": 63,
       "norm_label": "category_service.py",
       "id": "app_inventory_services_category_service"
     },
@@ -2789,7 +2789,7 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 20,
+      "community": 63,
       "norm_label": "categoryservice",
       "id": "app_inventory_services_category_service_categoryservice"
     },
@@ -2799,7 +2799,7 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 20,
+      "community": 63,
       "norm_label": ".get_categories()",
       "id": "app_inventory_services_category_service_categoryservice_get_categories"
     },
@@ -2809,7 +2809,7 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 20,
+      "community": 63,
       "norm_label": ".get_category()",
       "id": "app_inventory_services_category_service_categoryservice_get_category"
     },
@@ -2819,7 +2819,7 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 20,
+      "community": 63,
       "norm_label": ".create_category()",
       "id": "app_inventory_services_category_service_categoryservice_create_category"
     },
@@ -2829,7 +2829,7 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L33",
       "_origin": "ast",
-      "community": 20,
+      "community": 63,
       "norm_label": ".update_category()",
       "id": "app_inventory_services_category_service_categoryservice_update_category"
     },
@@ -2839,7 +2839,7 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L51",
       "_origin": "ast",
-      "community": 20,
+      "community": 63,
       "norm_label": ".delete_category()",
       "id": "app_inventory_services_category_service_categoryservice_delete_category"
     },
@@ -3689,7 +3689,7 @@
       "source_file": "app/inventory/services/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 20,
+      "community": 63,
       "norm_label": "__init__.py",
       "id": "app_inventory_services_init"
     },
@@ -3699,7 +3699,7 @@
       "source_file": "app/models/category.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 111,
+      "community": 63,
       "norm_label": "category.py",
       "id": "app_models_category"
     },
@@ -3709,7 +3709,7 @@
       "source_file": "app/models/category.py",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 111,
+      "community": 63,
       "norm_label": "category",
       "id": "app_models_category_category"
     },
@@ -3719,7 +3719,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 111,
+      "community": 63,
       "norm_label": "basemodel",
       "id": "app_models_category_py_basemodel"
     },
@@ -3729,7 +3729,7 @@
       "source_file": "app/models/category.py",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 111,
+      "community": 63,
       "norm_label": ".__repr__()",
       "id": "app_models_category_category_repr"
     },
@@ -4809,7 +4809,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 30,
+      "community": 118,
       "norm_label": "journal_service.py",
       "id": "app_accounting_services_journal_service"
     },
@@ -4819,7 +4819,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 30,
+      "community": 126,
       "norm_label": "_parse_journal_lines()",
       "id": "app_accounting_services_journal_service_parse_journal_lines"
     },
@@ -4839,7 +4839,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L63",
       "_origin": "ast",
-      "community": 30,
+      "community": 126,
       "norm_label": ".create_journal_entry()",
       "id": "app_accounting_services_journal_service_journalservice_create_journal_entry"
     },
@@ -4849,7 +4849,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L103",
       "_origin": "ast",
-      "community": 30,
+      "community": 126,
       "norm_label": ".update_journal_entry()",
       "id": "app_accounting_services_journal_service_journalservice_update_journal_entry"
     },
@@ -4939,7 +4939,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 30,
+      "community": 118,
       "norm_label": "journal entries, ledger, and trial balance service.",
       "id": "app_accounting_services_journal_service_rationale_1"
     },
@@ -4949,7 +4949,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 30,
+      "community": 126,
       "norm_label": "parse and validate multi-line journal form data into entry dicts.",
       "id": "app_accounting_services_journal_service_rationale_16"
     },
@@ -4959,7 +4959,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L64",
       "_origin": "ast",
-      "community": 30,
+      "community": 126,
       "norm_label": "manual multi-line journal entry.         expects form fields: memo, date, refere",
       "id": "app_accounting_services_journal_service_rationale_64"
     },
@@ -4969,7 +4969,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L104",
       "_origin": "ast",
-      "community": 30,
+      "community": 126,
       "norm_label": "void old entry and post a corrected replacement.",
       "id": "app_accounting_services_journal_service_rationale_104"
     },
@@ -5046,7 +5046,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/low_stock_notifications.py",
       "source_location": "L8",
-      "community": 23,
+      "community": 127,
       "norm_label": "_inventory_link()",
       "id": "app_inventory_services_low_stock_notifications_inventory_link"
     },
@@ -5055,7 +5055,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/low_stock_notifications.py",
       "source_location": "L14",
-      "community": 23,
+      "community": 127,
       "norm_label": "_active_company_users()",
       "id": "app_inventory_services_low_stock_notifications_active_company_users"
     },
@@ -5064,7 +5064,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/low_stock_notifications.py",
       "source_location": "L26",
-      "community": 23,
+      "community": 127,
       "norm_label": "_notification_exists()",
       "id": "app_inventory_services_low_stock_notifications_notification_exists"
     },
@@ -5073,7 +5073,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/low_stock_notifications.py",
       "source_location": "L35",
-      "community": 23,
+      "community": 127,
       "norm_label": "send_low_stock_notifications()",
       "id": "app_inventory_services_low_stock_notifications_send_low_stock_notifications"
     },
@@ -5937,7 +5937,7 @@
       "file_type": "code",
       "source_file": "low_stock_notifications.py",
       "source_location": "L1",
-      "community": 23,
+      "community": 127,
       "norm_label": "low_stock_notifications.py",
       "id": "low_stock_notifications"
     },
@@ -5946,7 +5946,7 @@
       "file_type": "code",
       "source_file": "low_stock_notifications.py",
       "source_location": "L17",
-      "community": 23,
+      "community": 127,
       "norm_label": "run_task()",
       "id": "low_stock_notifications_run_task"
     },
@@ -6711,7 +6711,7 @@
       "file_type": "code",
       "source_file": "config.py",
       "source_location": "L1",
-      "community": 23,
+      "community": 20,
       "norm_label": "config.py",
       "id": "config"
     },
@@ -6720,7 +6720,7 @@
       "file_type": "code",
       "source_file": "config.py",
       "source_location": "L4",
-      "community": 23,
+      "community": 20,
       "norm_label": "config",
       "id": "config_config"
     },
@@ -6729,7 +6729,7 @@
       "file_type": "code",
       "source_file": "config.py",
       "source_location": "L48",
-      "community": 23,
+      "community": 20,
       "norm_label": ".init_app()",
       "id": "config_config_init_app"
     },
@@ -7161,7 +7161,7 @@
       "file_type": "code",
       "source_file": "expire_documents.py",
       "source_location": "L1",
-      "community": 23,
+      "community": 111,
       "norm_label": "expire_documents.py",
       "id": "expire_documents"
     },
@@ -7170,7 +7170,7 @@
       "file_type": "code",
       "source_file": "expire_documents.py",
       "source_location": "L18",
-      "community": 23,
+      "community": 111,
       "norm_label": "_invoice_link()",
       "id": "expire_documents_invoice_link"
     },
@@ -7179,7 +7179,7 @@
       "file_type": "code",
       "source_file": "expire_documents.py",
       "source_location": "L22",
-      "community": 23,
+      "community": 111,
       "norm_label": "_notification_exists()",
       "id": "expire_documents_notification_exists"
     },
@@ -7188,7 +7188,7 @@
       "file_type": "code",
       "source_file": "expire_documents.py",
       "source_location": "L31",
-      "community": 23,
+      "community": 111,
       "norm_label": "_create_expired_invoice_notification()",
       "id": "expire_documents_create_expired_invoice_notification"
     },
@@ -7197,7 +7197,7 @@
       "file_type": "code",
       "source_file": "expire_documents.py",
       "source_location": "L65",
-      "community": 23,
+      "community": 111,
       "norm_label": "run_task()",
       "id": "expire_documents_run_task"
     },
@@ -7732,7 +7732,7 @@
       "file_type": "code",
       "source_file": "app.py",
       "source_location": "L1",
-      "community": 23,
+      "community": 111,
       "norm_label": "app.py",
       "id": "app"
     },
@@ -12450,14 +12450,351 @@
   ],
   "links": [
     {
+      "relation": "imports_from",
+      "context": "submodule_import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/approvals/__init__.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_approvals_init",
+      "target": "app_approvals_routes"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/approvals/routes.py",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "app_approvals_routes",
+      "target": "app_approvals_routes_approve",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/approvals/routes.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "app_approvals_routes",
+      "target": "app_approvals_routes_index",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/approvals/routes.py",
+      "source_location": "L33",
+      "weight": 1.0,
+      "source": "app_approvals_routes",
+      "target": "app_approvals_routes_reject",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/approvals/routes.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "app_approvals_routes",
+      "target": "app_services_approval_service",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/approvals/routes.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "app_approvals_routes",
+      "target": "app_services_approval_service_approvalservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/approvals/routes.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "app_approvals_routes",
+      "target": "app_utils",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/approvals/routes.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "app_approvals_routes",
+      "target": "flask",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/approvals/routes.py",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "app_approvals_routes_index",
+      "target": "app_services_approval_service_approvalservice_get_pending_requests"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/approvals/routes.py",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "app_approvals_routes_index",
+      "target": "app_services_approval_service_approvalservice_get_resolved_requests"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/approvals/routes.py",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "app_approvals_routes_approve",
+      "target": "app_services_approval_service_approvalservice_approve_request"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/approvals/routes.py",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "app_approvals_routes_reject",
+      "target": "app_services_approval_service_approvalservice_reject_request"
+    },
+    {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "app/__init__.py",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_init",
+      "target": "app_services_approval_service"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "app_services_approval_service",
+      "target": "app_services_approval_service_actionregistry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "app_services_approval_service",
+      "target": "app_services_approval_service_approvalservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L95",
+      "weight": 1.0,
+      "source": "app_services_approval_service",
+      "target": "app_services_approval_service_init_action_handlers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "app_services_approval_service",
+      "target": "datetime",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "app_services_approval_service_actionregistry",
+      "target": "app_services_approval_service_actionregistry_execute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "app_services_approval_service_actionregistry",
+      "target": "app_services_approval_service_actionregistry_register",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L99",
+      "weight": 1.0,
+      "source": "app_services_approval_service_init_action_handlers",
+      "target": "app_services_approval_service_actionregistry_register"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "app_services_approval_service_rationale_10",
+      "target": "app_services_approval_service_actionregistry_register",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "app_services_approval_service_approvalservice_approve_request",
+      "target": "app_services_approval_service_actionregistry_execute"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "app_services_approval_service_rationale_15",
+      "target": "app_services_approval_service_actionregistry_execute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/inventory/routes.py",
+      "source_location": "L687",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_inventory_routes",
+      "target": "app_services_approval_service_approvalservice"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "app_services_approval_service_approvalservice",
+      "target": "app_services_approval_service_approvalservice_approve_request",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "app_services_approval_service_approvalservice",
+      "target": "app_services_approval_service_approvalservice_create_request",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L82",
+      "weight": 1.0,
+      "source": "app_services_approval_service_approvalservice",
+      "target": "app_services_approval_service_approvalservice_get_pending_requests",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L89",
+      "weight": 1.0,
+      "source": "app_services_approval_service_approvalservice",
+      "target": "app_services_approval_service_approvalservice_get_resolved_requests",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L67",
+      "weight": 1.0,
+      "source": "app_services_approval_service_approvalservice",
+      "target": "app_services_approval_service_approvalservice_reject_request",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/inventory/routes.py",
+      "source_location": "L689",
+      "weight": 1.0,
+      "source": "app_inventory_routes_api_adjust_stock",
+      "target": "app_services_approval_service_approvalservice_create_request"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/__init__.py",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_init",
+      "target": "app_services_approval_service_init_action_handlers"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/__init__.py",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_init_create_app",
+      "target": "app_services_approval_service_init_action_handlers"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/dashboard/routes.py",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_dashboard_routes",
-      "target": "app_dashboard_routes_format_currency",
-      "confidence_score": 1.0
+      "target": "app_dashboard_routes_format_currency"
     },
     {
       "relation": "contains",
@@ -12465,9 +12802,9 @@
       "source_file": "app/dashboard/routes.py",
       "source_location": "L33",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_dashboard_routes",
-      "target": "app_dashboard_routes_format_date",
-      "confidence_score": 1.0
+      "target": "app_dashboard_routes_format_date"
     },
     {
       "relation": "contains",
@@ -12475,9 +12812,9 @@
       "source_file": "app/dashboard/routes.py",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_dashboard_routes",
-      "target": "app_dashboard_routes_index",
-      "confidence_score": 1.0
+      "target": "app_dashboard_routes_index"
     },
     {
       "relation": "contains",
@@ -12485,9 +12822,9 @@
       "source_file": "app/dashboard/routes.py",
       "source_location": "L41",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_dashboard_routes",
-      "target": "app_dashboard_routes_locale_date",
-      "confidence_score": 1.0
+      "target": "app_dashboard_routes_locale_date"
     },
     {
       "relation": "imports_from",
@@ -12496,9 +12833,9 @@
       "source_file": "app/dashboard/routes.py",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_dashboard_routes",
-      "target": "app_utils",
-      "confidence_score": 1.0
+      "target": "app_utils"
     },
     {
       "relation": "imports_from",
@@ -12507,9 +12844,9 @@
       "source_file": "app/dashboard/routes.py",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_dashboard_routes",
-      "target": "flask",
-      "confidence_score": 1.0
+      "target": "flask"
     },
     {
       "relation": "rationale_for",
@@ -12517,9 +12854,9 @@
       "source_file": "app/dashboard/routes.py",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_dashboard_routes_rationale_26",
-      "target": "app_dashboard_routes_format_currency",
-      "confidence_score": 1.0
+      "target": "app_dashboard_routes_format_currency"
     },
     {
       "relation": "rationale_for",
@@ -12527,9 +12864,9 @@
       "source_file": "app/dashboard/routes.py",
       "source_location": "L34",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_dashboard_routes_rationale_34",
-      "target": "app_dashboard_routes_format_date",
-      "confidence_score": 1.0
+      "target": "app_dashboard_routes_format_date"
     },
     {
       "relation": "imports_from",
@@ -12548,9 +12885,9 @@
       "source_file": "app/invoices/services/invoice_create_service.py",
       "source_location": "L52",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_create_service",
-      "target": "app_invoices_services_invoice_create_service_create_invoice_or_quote",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_create_service_create_invoice_or_quote"
     },
     {
       "relation": "contains",
@@ -12558,9 +12895,9 @@
       "source_file": "app/invoices/services/invoice_create_service.py",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_create_service",
-      "target": "app_invoices_services_invoice_create_service_generate_document_number",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_create_service_generate_document_number"
     },
     {
       "relation": "imports_from",
@@ -12569,9 +12906,9 @@
       "source_file": "app/invoices/services/invoice_create_service.py",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_create_service",
-      "target": "app_models_company",
-      "confidence_score": 1.0
+      "target": "app_models_company"
     },
     {
       "relation": "imports_from",
@@ -12580,9 +12917,9 @@
       "source_file": "app/invoices/services/invoice_create_service.py",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_create_service",
-      "target": "app_models_document",
-      "confidence_score": 1.0
+      "target": "app_models_document"
     },
     {
       "relation": "imports_from",
@@ -12591,9 +12928,9 @@
       "source_file": "app/invoices/services/invoice_create_service.py",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_create_service",
-      "target": "app_models_payment",
-      "confidence_score": 1.0
+      "target": "app_models_payment"
     },
     {
       "relation": "imports_from",
@@ -12602,9 +12939,9 @@
       "source_file": "app/invoices/services/invoice_create_service.py",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_create_service",
-      "target": "datetime",
-      "confidence_score": 1.0
+      "target": "datetime"
     },
     {
       "relation": "imports_from",
@@ -12613,9 +12950,9 @@
       "source_file": "app/invoices/services/invoice_create_service.py",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_create_service",
-      "target": "flask",
-      "confidence_score": 1.0
+      "target": "flask"
     },
     {
       "relation": "imports",
@@ -12646,9 +12983,9 @@
       "source_file": "app/invoices/services/invoice_create_service.py",
       "source_location": "L57",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_create_service_create_invoice_or_quote",
-      "target": "app_invoices_services_invoice_create_service_generate_document_number",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_create_service_generate_document_number"
     },
     {
       "relation": "calls",
@@ -12668,9 +13005,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_extensions",
-      "confidence_score": 1.0
+      "target": "app_extensions"
     },
     {
       "relation": "contains",
@@ -12678,9 +13015,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L65",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_clientcoords",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_clientcoords"
     },
     {
       "relation": "contains",
@@ -12688,9 +13025,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L359",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_draw_client_info",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_draw_client_info"
     },
     {
       "relation": "contains",
@@ -12698,9 +13035,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L318",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_draw_header",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_draw_header"
     },
     {
       "relation": "contains",
@@ -12708,9 +13045,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L375",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_draw_items",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_draw_items"
     },
     {
       "relation": "contains",
@@ -12718,9 +13055,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L399",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_draw_totals",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_draw_totals"
     },
     {
       "relation": "contains",
@@ -12728,9 +13065,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L143",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_generate_html_pdf",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_generate_html_pdf"
     },
     {
       "relation": "contains",
@@ -12738,9 +13075,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L123",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf"
     },
     {
       "relation": "contains",
@@ -12748,9 +13085,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L426",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf_from_request",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf_from_request"
     },
     {
       "relation": "contains",
@@ -12758,9 +13095,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L219",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf"
     },
     {
       "relation": "contains",
@@ -12768,9 +13105,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L43",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_headercoords",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_headercoords"
     },
     {
       "relation": "contains",
@@ -12778,9 +13115,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L73",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_itemscoords",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_itemscoords"
     },
     {
       "relation": "contains",
@@ -12788,9 +13125,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L111",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_pdftemplatelayout",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_pdftemplatelayout"
     },
     {
       "relation": "contains",
@@ -12798,9 +13135,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L92",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_invoices_services_invoice_pdf_service_totalscoords",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_totalscoords"
     },
     {
       "relation": "imports_from",
@@ -12809,9 +13146,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service",
-      "target": "app_models_contact",
-      "confidence_score": 1.0
+      "target": "app_models_contact"
     },
     {
       "relation": "imports_from",
@@ -12820,9 +13157,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service",
-      "target": "flask",
-      "confidence_score": 1.0
+      "target": "flask"
     },
     {
       "relation": "rationale_for",
@@ -12830,9 +13167,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service_rationale_1",
-      "target": "app_invoices_services_invoice_pdf_service",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service"
     },
     {
       "relation": "references",
@@ -12841,9 +13178,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L318",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service_draw_header",
-      "target": "app_invoices_services_invoice_pdf_service_headercoords",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_headercoords"
     },
     {
       "relation": "calls",
@@ -12852,9 +13189,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L222",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
-      "target": "app_invoices_services_invoice_pdf_service_headercoords",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_headercoords"
     },
     {
       "relation": "imports",
@@ -12895,9 +13232,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L359",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service_draw_client_info",
-      "target": "app_invoices_services_invoice_pdf_service_clientcoords",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_clientcoords"
     },
     {
       "relation": "calls",
@@ -12906,9 +13243,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L223",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
-      "target": "app_invoices_services_invoice_pdf_service_clientcoords",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_clientcoords"
     },
     {
       "relation": "imports",
@@ -12949,9 +13286,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L375",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service_draw_items",
-      "target": "app_invoices_services_invoice_pdf_service_itemscoords",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_itemscoords"
     },
     {
       "relation": "calls",
@@ -12960,9 +13297,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L224",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
-      "target": "app_invoices_services_invoice_pdf_service_itemscoords",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_itemscoords"
     },
     {
       "relation": "imports",
@@ -13003,9 +13340,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L399",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service_draw_totals",
-      "target": "app_invoices_services_invoice_pdf_service_totalscoords",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_totalscoords"
     },
     {
       "relation": "calls",
@@ -13014,9 +13351,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L225",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
-      "target": "app_invoices_services_invoice_pdf_service_totalscoords",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_totalscoords"
     },
     {
       "relation": "imports",
@@ -13057,9 +13394,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L227",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
-      "target": "app_invoices_services_invoice_pdf_service_pdftemplatelayout",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_pdftemplatelayout"
     },
     {
       "relation": "imports",
@@ -13112,9 +13449,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L138",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf",
-      "target": "app_invoices_services_invoice_pdf_service_generate_html_pdf",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_generate_html_pdf"
     },
     {
       "relation": "calls",
@@ -13123,9 +13460,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L140",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf",
-      "target": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf"
     },
     {
       "relation": "calls",
@@ -13134,9 +13471,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L468",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf_from_request",
-      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf"
     },
     {
       "relation": "rationale_for",
@@ -13144,9 +13481,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L132",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service_rationale_132",
-      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf"
     },
     {
       "relation": "rationale_for",
@@ -13154,9 +13491,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L144",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service_rationale_144",
-      "target": "app_invoices_services_invoice_pdf_service_generate_html_pdf",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_generate_html_pdf"
     },
     {
       "relation": "calls",
@@ -13165,9 +13502,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L291",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
-      "target": "app_invoices_services_invoice_pdf_service_draw_client_info",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_draw_client_info"
     },
     {
       "relation": "calls",
@@ -13176,9 +13513,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L289",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
-      "target": "app_invoices_services_invoice_pdf_service_draw_header",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_draw_header"
     },
     {
       "relation": "calls",
@@ -13187,9 +13524,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L292",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
-      "target": "app_invoices_services_invoice_pdf_service_draw_items",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_draw_items"
     },
     {
       "relation": "calls",
@@ -13198,9 +13535,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L295",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
-      "target": "app_invoices_services_invoice_pdf_service_draw_totals",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_draw_totals"
     },
     {
       "relation": "rationale_for",
@@ -13208,9 +13545,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L220",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service_rationale_220",
-      "target": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_generate_overlay_pdf"
     },
     {
       "relation": "calls",
@@ -13229,9 +13566,9 @@
       "source_file": "app/invoices/services/invoice_pdf_service.py",
       "source_location": "L427",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_invoices_services_invoice_pdf_service_rationale_427",
-      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf_from_request",
-      "confidence_score": 1.0
+      "target": "app_invoices_services_invoice_pdf_service_generate_invoice_pdf_from_request"
     },
     {
       "relation": "imports_from",
@@ -14356,17 +14693,6 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "app/approvals/routes.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_approvals_routes",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "app/auth/routes.py",
       "source_location": "L1",
       "weight": 1.0,
@@ -15459,17 +15785,6 @@
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "datetime"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service",
       "target": "datetime"
     },
     {
@@ -17174,28 +17489,6 @@
       "target": "app_routes"
     },
     {
-      "relation": "re_exports",
-      "context": "export",
-      "confidence": "EXTRACTED",
-      "source_file": "app/__init__.py",
-      "source_location": "L24",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_init",
-      "target": "app_services_approval_service"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/__init__.py",
-      "source_location": "L24",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_init",
-      "target": "app_services_approval_service_init_action_handlers"
-    },
-    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -17240,17 +17533,6 @@
       "target": "app_blueprints_register_blueprints"
     },
     {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/__init__.py",
-      "source_location": "L25",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_init_create_app",
-      "target": "app_services_approval_service_init_action_handlers"
-    },
-    {
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -17271,146 +17553,6 @@
       "confidence_score": 1.0,
       "source": "app_approvals_init",
       "target": "app_approvals_init"
-    },
-    {
-      "relation": "imports_from",
-      "context": "submodule_import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/approvals/__init__.py",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_approvals_init",
-      "target": "app_approvals_routes"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/approvals/routes.py",
-      "source_location": "L20",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_approvals_routes",
-      "target": "app_approvals_routes_approve"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/approvals/routes.py",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_approvals_routes",
-      "target": "app_approvals_routes_index"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/approvals/routes.py",
-      "source_location": "L33",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_approvals_routes",
-      "target": "app_approvals_routes_reject"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/approvals/routes.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_approvals_routes",
-      "target": "app_models_approval_request_approvalrequest"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/approvals/routes.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_approvals_routes",
-      "target": "app_models_enums_approvalstatus"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/approvals/routes.py",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_approvals_routes",
-      "target": "app_services_approval_service"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/approvals/routes.py",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_approvals_routes",
-      "target": "app_services_approval_service_approvalservice"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/approvals/routes.py",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_approvals_routes",
-      "target": "app_utils"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/approvals/routes.py",
-      "source_location": "L14",
-      "weight": 1.0,
-      "source": "app_approvals_routes_index",
-      "target": "app_services_approval_service_approvalservice_get_pending_requests"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/approvals/routes.py",
-      "source_location": "L15",
-      "weight": 1.0,
-      "source": "app_approvals_routes_index",
-      "target": "app_services_approval_service_approvalservice_get_resolved_requests"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/approvals/routes.py",
-      "source_location": "L25",
-      "weight": 1.0,
-      "source": "app_approvals_routes_approve",
-      "target": "app_services_approval_service_approvalservice_approve_request"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/approvals/routes.py",
-      "source_location": "L38",
-      "weight": 1.0,
-      "source": "app_approvals_routes_reject",
-      "target": "app_services_approval_service_approvalservice_reject_request"
     },
     {
       "relation": "contains",
@@ -17843,17 +17985,6 @@
       "target": "app_models_warehouse"
     },
     {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/inventory/routes.py",
-      "source_location": "L687",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_inventory_routes",
-      "target": "app_services_approval_service_approvalservice"
-    },
-    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -17863,17 +17994,6 @@
       "confidence_score": 1.0,
       "source": "app_inventory_routes",
       "target": "app_utils"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/inventory/routes.py",
-      "source_location": "L689",
-      "weight": 1.0,
-      "source": "app_inventory_routes_api_adjust_stock",
-      "target": "app_services_approval_service_approvalservice_create_request"
     },
     {
       "relation": "imports_from",
@@ -18145,28 +18265,6 @@
       "confidence_score": 1.0,
       "source": "app_models_approval_request_approvalrequest",
       "target": "basemodel"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service",
-      "target": "app_models_approval_request_approvalrequest"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L22",
-      "weight": 1.0,
-      "source": "app_services_approval_service_approvalservice_create_request",
-      "target": "app_models_approval_request_approvalrequest"
     },
     {
       "relation": "inherits",
@@ -18725,159 +18823,6 @@
       "confidence_score": 1.0,
       "source": "app_models_enums_approvalstatus",
       "target": "app_models_enums_approvalstatus_label_es"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service",
-      "target": "app_models_enums_approvalstatus"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service",
-      "target": "app_services_approval_service_actionregistry"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L19",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service",
-      "target": "app_services_approval_service_approvalservice"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L74",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service",
-      "target": "app_services_approval_service_init_action_handlers"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service_actionregistry",
-      "target": "app_services_approval_service_actionregistry_execute"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service_actionregistry",
-      "target": "app_services_approval_service_actionregistry_register"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L78",
-      "weight": 1.0,
-      "source": "app_services_approval_service_init_action_handlers",
-      "target": "app_services_approval_service_actionregistry_register"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service_rationale_9",
-      "target": "app_services_approval_service_actionregistry_register"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L40",
-      "weight": 1.0,
-      "source": "app_services_approval_service_approvalservice_approve_request",
-      "target": "app_services_approval_service_actionregistry_execute"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service_rationale_14",
-      "target": "app_services_approval_service_actionregistry_execute"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L34",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service_approvalservice",
-      "target": "app_services_approval_service_approvalservice_approve_request"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L21",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service_approvalservice",
-      "target": "app_services_approval_service_approvalservice_create_request"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L61",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service_approvalservice",
-      "target": "app_services_approval_service_approvalservice_get_pending_requests"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L68",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service_approvalservice",
-      "target": "app_services_approval_service_approvalservice_get_resolved_requests"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L49",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service_approvalservice",
-      "target": "app_services_approval_service_approvalservice_reject_request"
     },
     {
       "relation": "contains",
@@ -35611,5 +35556,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "e8e06e93af8500ce3843a1aa3cf804b722608276"
+  "built_at_commit": "f595e47d0a024ce0bcd8b0686374eb052739eec5"
 }
