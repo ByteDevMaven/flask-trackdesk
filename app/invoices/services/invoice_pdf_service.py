@@ -151,10 +151,9 @@ def _generate_html_pdf(document, template, currency, tax_rate, include_tax, sell
             if item.inventory_item_id else None
         )
 
-    total_amount = float(document.total_amount or 0)
-    subtotal     = round(total_amount / (1 + tax_rate), 2)
-    imp_15       = round(subtotal * tax_rate, 2) if include_tax else 0.0
-    total_final  = round(total_amount, 2) if include_tax else subtotal
+    subtotal = round(float(document.subtotal or 0), 2)
+    imp_15 = round(float(document.tax_amount or 0), 2) if include_tax else 0.0
+    total_final = round(float(document.total_amount or (subtotal + imp_15)), 2) if include_tax else subtotal
 
     tax_data = {
         "vta_exenta":       subtotal,
@@ -259,10 +258,9 @@ def _generate_overlay_pdf(document, template, currency, tax_rate, include_tax, s
     total_pages = math.ceil(len(document_items) / items_per_page) or 1
     output_pdf = PdfWriter()
 
-    total_amount = float(document.total_amount or 0)
-    subtotal     = round(total_amount / (1 + tax_rate), 2)
-    imp_15       = round(subtotal * tax_rate, 2) if include_tax else 0.0
-    total_final  = round(total_amount, 2) if include_tax else subtotal
+    subtotal = round(float(document.subtotal or 0), 2)
+    imp_15 = round(float(document.tax_amount or 0), 2) if include_tax else 0.0
+    total_final = round(float(document.total_amount or (subtotal + imp_15)), 2) if include_tax else subtotal
 
     tax_data = {
         "vta_exenta":       subtotal,

@@ -118,6 +118,7 @@ def create(company_id):
                          customer_id=selected_client_id, 
                          doc_type=selected_type,
                          invoice=None, 
+                         company=company,
                          clients=clients, 
                          inventory_items=inventory_items,
                          warehouses=warehouses,
@@ -307,6 +308,7 @@ def edit(company_id, id):
     
     return render_template('invoices/form.html', 
                          invoice=document, 
+                         company=company,
                          clients=clients, 
                          inventory_items=inventory_items,
                          warehouses=warehouses,

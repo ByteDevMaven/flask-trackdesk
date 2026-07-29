@@ -119,8 +119,8 @@ def export_invoice_report_xlsx(company_id, filters):
     }
 
     for document in documents:
-        subtotal = float(document.subtotal_cache or document.subtotal or 0)
-        tax = float(document.tax_cache or document.tax_amount or 0)
+        subtotal = float(document.subtotal or 0)
+        tax = float(document.tax_amount or 0)
         total = float(document.total_amount or 0)
         paid = document.calculate_paid_amount()
         balance = document.calculate_balance_due()

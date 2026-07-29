@@ -1,5 +1,6 @@
 from datetime import datetime, date, UTC
 from flask import session
+from app.models.document import calculate_document_totals
 from app.models import (
     db, Document, DocumentItem, InventoryItem, DocumentSequence,
     DocumentType, Payment, PaymentMethod, StockMovement, StockMovementType, Company
@@ -94,8 +95,6 @@ def create_invoice_or_quote(company_id, form, user_id):
             field = key.split("][")[1][:-1]
             items_data.setdefault(idx, {})[field] = value
 
-    total = 0
-
     for item in items_data.values():
         if not (item.get("inventory_item_id") or item.get("description")):
             continue
@@ -145,18 +144,23 @@ def create_invoice_or_quote(company_id, form, user_id):
             discount=discount
         ))
 
-        total += qty * price * (1 - discount / 100)
+
 
     company = Company.query.get(company_id)
     try:
         tax_rate = float(company.tax_rate if company else session.get("tax_rate", 0))
     except (TypeError, ValueError):
         tax_rate = 0.0
-    subtotal = round(total, 2)
-    tax_amount = round(subtotal * (tax_rate / 100), 2)
-    document.subtotal_cache = subtotal
-    document.tax_cache = tax_amount
-    document.total_amount = round(subtotal + tax_amount, 2)
+    try:
+        general_discount = float(form.get("discount_amount") or 0)
+    except (TypeError, ValueError):
+        general_discount = 0.0
+    db.session.flush()
+    totals = calculate_document_totals(DocumentItem.query.filter_by(document_id=document.id).all(), general_discount, tax_rate)
+    document.discount_amount = totals['discount_amount']
+    document.subtotal_cache = totals['subtotal']
+    document.tax_cache = totals['tax']
+    document.total_amount = totals['total']
 
     if document.status == "paid":
         db.session.add(Payment(

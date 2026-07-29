@@ -1,3 +1,4 @@
+from app.models.document import calculate_document_totals
 from app.models import db, DocumentItem, InventoryItem, DocumentType, StockMovement, StockMovementType
 from datetime import datetime, UTC
 
@@ -37,7 +38,6 @@ def update_invoice_or_quote(document, form):
     # Reconcile DocumentItems
     existing_items = DocumentItem.query.filter_by(document_id=document.id).order_by(DocumentItem.id).all()
     
-    total = 0
     
     for i, item_data in enumerate(incoming_items):
         qty = item_data["quantity"]
@@ -62,9 +62,6 @@ def update_invoice_or_quote(document, form):
             )
             db.session.add(doc_item)
             
-        item_total = qty * unit_price
-        item_discount = item_total * (discount / 100)
-        total += item_total - item_discount
         
     # Delete excess items
     for i in range(len(incoming_items), len(existing_items)):
@@ -141,14 +138,16 @@ def update_invoice_or_quote(document, form):
                     )
                     db.session.add(m)
 
-    subtotal = round(total, 2)
+    try:
+        general_discount = float(form.get("discount_amount") or 0)
+    except (TypeError, ValueError):
+        general_discount = 0.0
     tax_rate = _company_tax_rate(document)
-    tax_amount = round(subtotal * (tax_rate / 100), 2)
-    total_amount = round(subtotal + tax_amount, 2)
-
-    document.subtotal_cache = subtotal
-    document.tax_cache = tax_amount
-    document.total_amount = total_amount
+    totals = calculate_document_totals(incoming_items, general_discount, tax_rate)
+    document.discount_amount = totals['discount_amount']
+    document.subtotal_cache = totals['subtotal']
+    document.tax_cache = totals['tax']
+    document.total_amount = totals['total']
 
     # Update project association
     project_id_raw = form.get("project_id")

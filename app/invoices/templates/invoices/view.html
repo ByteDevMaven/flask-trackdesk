@@ -235,16 +235,27 @@
     </div>
 
     <div class="flex justify-end pt-4 border-t border-slate-100">
+      {% set item_discount = invoice.item_discount_amount or 0 %}
+      {% set general_discount = invoice.discount_amount or 0 %}
+      {% set total_discount = item_discount + general_discount %}
       <div class="w-80 space-y-2">
-        {% if invoice.discount_amount and invoice.discount_amount > 0 %}
+        {% if total_discount > 0 %}
         <div class="flex justify-between text-sm text-slate-600">
           <span class="font-medium">Subtotal (Bruto)</span>
-          <span class="font-semibold text-slate-800">{{ session.get('currency','L') }} {{ (invoice.subtotal + invoice.discount_amount) | format_currency }}</span>
+          <span class="font-semibold text-slate-800">{{ session.get('currency','L') }} {{ (invoice.subtotal + total_discount) | format_currency }}</span>
         </div>
+        {% if item_discount > 0 %}
         <div class="flex justify-between text-sm text-slate-600">
-          <span class="font-medium">Descuento aplicado</span>
-          <span class="font-semibold text-rose-600">-{{ session.get('currency','L') }} {{ invoice.discount_amount | format_currency }}</span>
+          <span class="font-medium">Descuento de ítems</span>
+          <span class="font-semibold text-rose-600">-{{ session.get('currency','L') }} {{ item_discount | format_currency }}</span>
         </div>
+        {% endif %}
+        {% if general_discount > 0 %}
+        <div class="flex justify-between text-sm text-slate-600">
+          <span class="font-medium">Descuento adicional</span>
+          <span class="font-semibold text-rose-600">-{{ session.get('currency','L') }} {{ general_discount | format_currency }}</span>
+        </div>
+        {% endif %}
         <div class="flex justify-between text-sm text-slate-600 border-t border-slate-100 pt-1 mt-1">
           <span class="font-medium">Subtotal (Neto)</span>
           <span class="font-semibold text-slate-800">{{ session.get('currency','L') }} {{ (invoice.subtotal or 0) | format_currency }}</span>

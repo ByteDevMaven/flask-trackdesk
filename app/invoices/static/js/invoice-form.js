@@ -365,23 +365,31 @@
       const qty = Number(row.querySelector('.item-qty')?.value) || 0;
       const price = Number(row.querySelector('.item-price')?.value) || 0;
       const discount = Number(row.querySelector('.item-discount')?.value) || 0;
-      const sub = qty * price * (1 - discount / 100);
+      const lineGross = Math.round((qty * price + Number.EPSILON) * 100) / 100;
+      const lineDiscount = Math.round((lineGross * discount / 100 + Number.EPSILON) * 100) / 100;
+      const sub = Math.max(0, lineGross - lineDiscount);
       const subtotalCell = row.querySelector('.item-subtotal');
       if (subtotalCell) subtotalCell.textContent = sub.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
       subtotal += sub;
     });
 
-    const generalDiscount = Number(document.getElementById('discount-input')?.value) || 0;
-    const total = Math.max(0, subtotal - generalDiscount);
+    const generalDiscount = Math.max(0, Number(document.getElementById('discount-input')?.value) || 0);
+    const netSubtotal = Math.max(0, subtotal - generalDiscount);
+    const taxRate = Math.max(0, Number(formData.taxRate) || 0);
+    const tax = Math.round((netSubtotal * taxRate + Number.EPSILON) * 100) / 100;
+    const total = Math.round((netSubtotal + tax + Number.EPSILON) * 100) / 100;
 
     const subtotalDisplay = document.getElementById('subtotal-display');
+    const taxDisplay = document.getElementById('tax-display');
+    const taxRateLabel = document.getElementById('tax-rate-label');
     const totalDisplay = document.getElementById('total-display');
     const sidebarTotalDisplay = document.getElementById('sidebar-total-display');
-    if (subtotalDisplay) subtotalDisplay.textContent = subtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (subtotalDisplay) subtotalDisplay.textContent = netSubtotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (taxDisplay) taxDisplay.textContent = tax.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    if (taxRateLabel) taxRateLabel.textContent = taxRate.toLocaleString(undefined, { maximumFractionDigits: 2 });
     if (totalDisplay) totalDisplay.textContent = total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     if (sidebarTotalDisplay) sidebarTotalDisplay.textContent = total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
-
   function bindRowEvents(row) {
     row.querySelector('.remove-item')?.addEventListener('click', () => {
       row.remove();

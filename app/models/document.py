@@ -1,6 +1,32 @@
 from .base import db, BaseModel
 from .enums import DocumentType, DocumentStatus
-from functools import cached_property
+from decimal import Decimal, ROUND_HALF_UP
+
+_CENT = Decimal('0.01')
+
+def _money(value):
+    return Decimal(str(value or 0)).quantize(_CENT, rounding=ROUND_HALF_UP)
+
+def calculate_document_totals(items, general_discount=0, tax_rate=0):
+    """Calculate invoice totals consistently using decimal, cent-rounded arithmetic."""
+    gross = Decimal('0')
+    item_discount = Decimal('0')
+    for item in items or []:
+        get = item.get if isinstance(item, dict) else lambda key, default=0: getattr(item, key, default)
+        quantity = _money(get('quantity', 0))
+        unit_price = _money(get('unit_price', 0))
+        discount_rate = _money(get('discount', 0))
+        line_gross = quantity * unit_price
+        gross += line_gross
+        item_discount += line_gross * discount_rate / Decimal('100')
+    gross = _money(gross)
+    item_discount = _money(item_discount)
+    available = max(Decimal('0'), gross - item_discount)
+    additional_discount = min(max(Decimal('0'), _money(general_discount)), available)
+    subtotal = _money(available - additional_discount)
+    tax = _money(subtotal * _money(tax_rate) / Decimal('100'))
+    return {'gross_subtotal': gross, 'item_discount': item_discount, 'discount_amount': additional_discount, 'subtotal': subtotal, 'tax': tax, 'total': _money(subtotal + tax)}
+
 
 class Document(BaseModel):
     __tablename__ = 'documents'
@@ -22,6 +48,7 @@ class Document(BaseModel):
     
     # Cache subtotal to avoid N+1 queries
     subtotal_cache = db.Column(db.Numeric(12, 2), nullable=True)
+    discount_amount = db.Column(db.Numeric(12, 2), nullable=False, default=0.0)
     tax_cache = db.Column(db.Numeric(12, 2), nullable=True)
 
     client = db.relationship('Contact', backref='documents', lazy='select')
@@ -36,33 +63,19 @@ class Document(BaseModel):
         db.CheckConstraint("total_amount >= 0", name='check_total_amount_non_negative'),
     )
 
-    @cached_property
+    @property
     def subtotal(self) -> float:
-        """Calculate subtotal from document items (before tax). Cached."""
-        if self.subtotal_cache is not None:
-            return float(self.subtotal_cache)
-        
-        from .document_item import DocumentItem
-        items = self.items or []
-        total = 0
-        for item in items:
-            item_total = float(item.quantity or 0) * float(item.unit_price or 0)
-            item_total -= item_total * (float(item.discount or 0) / 100.0)
-            total += item_total
-        return round(total, 2)
+        """Return the net subtotal before tax using the current line items."""
+        company = self.company
+        totals = calculate_document_totals(self.items or [], self.discount_amount or 0, company.tax_rate if company else 0)
+        return float(totals['subtotal'])
     
-    @cached_property
+    @property
     def tax_amount(self) -> float:
-        """Calculate tax amount based on subtotal and company tax rate. Cached."""
-        if self.tax_cache is not None:
-            return float(self.tax_cache)
-        
-        from .company import Company
-        company = Company.query.get(self.company_id)
-        if company and company.tax_rate:
-            return round(self.subtotal * (float(company.tax_rate) / 100.0), 2)
-        return 0.0
-
+        """Return tax calculated from the current subtotal and company rate."""
+        company = self.company
+        totals = calculate_document_totals(self.items or [], self.discount_amount or 0, company.tax_rate if company else 0)
+        return float(totals['tax'])
     def calculate_paid_amount(self) -> float:
         """Calculate total amount paid via payments"""
         paid = sum(float(p.amount or 0) for p in self.payments)
@@ -73,32 +86,18 @@ class Document(BaseModel):
         paid = self.calculate_paid_amount()
         return round(float(self.total_amount or 0) - paid, 2)
 
-    @cached_property
-    def discount_amount(self) -> float:
-        """Calculate total discount amount from document items. Cached."""
-        items = self.items or []
-        total_discount = 0
-        for item in items:
-            item_total = float(item.quantity or 0) * float(item.unit_price or 0)
-            discount = item_total * (float(item.discount or 0) / 100.0)
-            total_discount += discount
-        return round(total_discount, 2)
+    @property
+    def item_discount_amount(self) -> float:
+        """Return the total of percentage discounts applied to individual lines."""
+        totals = calculate_document_totals(self.items or [], 0, 0)
+        return float(totals['item_discount'])
 
     def refresh_cache(self):
-        """Refresh subtotal and tax caches"""
-        subtotal = 0
-        for item in self.items:
-            item_total = float(item.quantity or 0) * float(item.unit_price or 0)
-            item_total -= item_total * (float(item.discount or 0) / 100.0)
-            subtotal += item_total
-        self.subtotal_cache = round(subtotal, 2)
-        
-        from .company import Company
-        company = Company.query.get(self.company_id)
-        if company and company.tax_rate:
-            self.tax_cache = round(float(self.subtotal_cache) * (float(company.tax_rate) / 100.0), 2)
-        else:
-            self.tax_cache = 0.0
-
+        """Refresh all persisted total caches from current items."""
+        company = self.company
+        totals = calculate_document_totals(self.items or [], self.discount_amount or 0, company.tax_rate if company else 0)
+        self.subtotal_cache = totals['subtotal']
+        self.tax_cache = totals['tax']
+        self.total_amount = totals['total']
     def __repr__(self) -> str:
         return f'<Document {self.id} {self.document_number} ({self.type.value}, {self.status.value})'

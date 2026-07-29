@@ -4,7 +4,7 @@ from datetime import UTC, datetime
 from sqlalchemy import func, select
 from sqlalchemy.orm import joinedload
 
-from app.models import db, Account, Company, Expense, Project, Transaction
+from app.models import db, Account, Company, Expense, LedgerEntry, Project, Transaction
 from app.models.enums import AccountType
 
 from ._helpers import _make_naive
@@ -128,14 +128,18 @@ class DashboardService:
             'tag_totals': tag_totals,
             'project_spent': project_spent,
             'expense_counts': {row[0]: row[1] for row in (
-                db.session.query(Expense.project_id, func.count(Expense.id))
-                .outerjoin(Transaction, Expense.transaction_id == Transaction.id)
-                .filter(
-                    Expense.company_id == company_id,
-                    Expense.project_id.isnot(None),
-                    _active_expense_conditions(),
+                db.session.query(
+                    LedgerEntry.project_id,
+                    func.count(func.distinct(LedgerEntry.transaction_id)),
                 )
-                .group_by(Expense.project_id)
+                .join(Transaction, LedgerEntry.transaction_id == Transaction.id)
+                .filter(
+                    LedgerEntry.company_id == company_id,
+                    LedgerEntry.project_id.isnot(None),
+                    LedgerEntry.transaction_id.isnot(None),
+                    Transaction.is_voided.is_(False),
+                )
+                .group_by(LedgerEntry.project_id)
                 .all()
             )},
         }

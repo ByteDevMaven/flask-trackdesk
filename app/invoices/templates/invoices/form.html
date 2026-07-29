@@ -293,6 +293,11 @@ TrackDesk{% endblock %}
             </div>
           </div>
 
+          <div class="flex justify-between items-center text-slate-600 font-medium">
+            <span>ISV (<span id="tax-rate-label">0</span>%)</span>
+            <span id="tax-display">0.00</span>
+          </div>
+
           <div
             class="flex justify-between items-center text-slate-900 border-t border-slate-200 pt-3 text-base font-bold">
             <span>Total Facturado</span>
@@ -419,6 +424,7 @@ TrackDesk{% endblock %}
 {
   "docType": {{ (doc_type or 'invoice')|tojson|safe }},
   "itemIndex": {{ (document_items|length if document_items else 0)|tojson|safe }},
+  "taxRate": {{ (company.tax_rate if company else 0)|tojson|safe }},
   "clients": [
     {% for c in clients %}
     {
