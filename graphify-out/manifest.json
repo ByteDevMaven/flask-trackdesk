@@ -665,8 +665,8 @@
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/dashboard.html": {
-    "mtime": 1785384081.8043685,
-    "ast_hash": "e404a4e26a5678e05a408bebad9194c1",
+    "mtime": 1785384898.0686698,
+    "ast_hash": "b297271c4185bf8ec91bafa4ad65eb8c",
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/expense_form.html": {
@@ -1090,8 +1090,8 @@
     "semantic_hash": ""
   },
   "app/accounting/services/dashboard_service.py": {
-    "mtime": 1785384111.2517376,
-    "ast_hash": "d3eb527a6ecb3ed3a798370ecba53353",
+    "mtime": 1785384748.6040087,
+    "ast_hash": "4fe9809d3b579e69953695ebc474f71d",
     "semantic_hash": ""
   },
   "app/accounting/services/expense_service.py": {
