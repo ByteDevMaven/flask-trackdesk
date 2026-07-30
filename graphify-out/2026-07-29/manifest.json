@@ -175,8 +175,8 @@
     "semantic_hash": "3eb0159e2b400a5e34e6b92c5da8d806"
   },
   "app/invoices/routes.py": {
-    "mtime": 1785383566.8852203,
-    "ast_hash": "dbe9d58b99cf8c3d930eb7a78cab6cee",
+    "mtime": 1785284705.3182316,
+    "ast_hash": "ddcc1b206c1500f4a302ee3e6a93f9ed",
     "semantic_hash": ""
   },
   "app/invoices/services/__init__.py": {
@@ -420,8 +420,8 @@
     "semantic_hash": "0bca208f663e1f5bd87a7fabb84dcd3d"
   },
   "app/payments/routes.py": {
-    "mtime": 1785383566.8875155,
-    "ast_hash": "e9a34d5793dc0fbda4e59de3e2e19cce",
+    "mtime": 1784776408.9883986,
+    "ast_hash": "a540916cbc419b19cba7961ddf60677b",
     "semantic_hash": ""
   },
   "app/payments/services/__init__.py": {
@@ -665,9 +665,9 @@
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/dashboard.html": {
-    "mtime": 1785384081.8043685,
-    "ast_hash": "e404a4e26a5678e05a408bebad9194c1",
-    "semantic_hash": ""
+    "mtime": 1781147636.5033512,
+    "ast_hash": "d9e9e388ad9d20f3310de32c158624af",
+    "semantic_hash": "d9e9e388ad9d20f3310de32c158624af"
   },
   "app/accounting/templates/accounting/expense_form.html": {
     "mtime": 1780891625.38196,
@@ -1090,8 +1090,8 @@
     "semantic_hash": ""
   },
   "app/accounting/services/dashboard_service.py": {
-    "mtime": 1785384111.2517376,
-    "ast_hash": "d3eb527a6ecb3ed3a798370ecba53353",
+    "mtime": 1785283168.7518282,
+    "ast_hash": "aeda7962e48fbf011897b30a556ada4d",
     "semantic_hash": ""
   },
   "app/accounting/services/expense_service.py": {
