@@ -1,10 +1,10 @@
 """Dashboard aggregation service."""
 from datetime import UTC, datetime
 
-from sqlalchemy import func, select
+from sqlalchemy import select
 from sqlalchemy.orm import joinedload
 
-from app.models import db, Account, Company, Expense, LedgerEntry, Project, Transaction
+from app.models import db, Account, Company, Expense, Transaction
 from app.models.enums import AccountType
 
 from ._helpers import _make_naive
@@ -52,6 +52,18 @@ class DashboardService:
         net_income_all = round(total_revenue - total_expenses, 2)
 
         account_map = {acc.id: acc for acc in accounts}
+        account_chart = [
+            {
+                'name': account.name,
+                'balance': round(float(balances.get(account.id, 0.0)), 2),
+            }
+            for account in sorted(
+                accounts,
+                key=lambda account: abs(float(balances.get(account.id, 0.0))),
+                reverse=True,
+            )
+            if abs(float(balances.get(account.id, 0.0))) > 0
+        ][:10]
 
         cash_balance = sum(
             balances.get(acc.id, 0.0) for acc in accounts
@@ -65,57 +77,6 @@ class DashboardService:
             balances.get(acc.id, 0.0) for acc in accounts
             if 'pagar' in acc.name.lower() or 'payable' in acc.name.lower()
         )
-
-        expense_stats = (
-            db.session.query(Expense.project_id, func.sum(Expense.amount))
-            .outerjoin(Transaction, Expense.transaction_id == Transaction.id)
-            .filter(
-                Expense.company_id == company_id,
-                Expense.project_id.isnot(None),
-                _active_expense_conditions(),
-            )
-            .group_by(Expense.project_id)
-            .all()
-        )
-        project_spent = {row[0]: float(row[1] or 0) for row in expense_stats}
-        transaction_count_rows = (
-            db.session.query(
-                LedgerEntry.project_id,
-                func.count(func.distinct(LedgerEntry.transaction_id)),
-            )
-            .join(Transaction, LedgerEntry.transaction_id == Transaction.id)
-            .filter(
-                LedgerEntry.company_id == company_id,
-                LedgerEntry.project_id.isnot(None),
-                LedgerEntry.transaction_id.isnot(None),
-                Transaction.is_voided.is_(False),
-            )
-            .group_by(LedgerEntry.project_id)
-            .all()
-        )
-        project_transaction_counts = {
-            project_id: transaction_count
-            for project_id, transaction_count in transaction_count_rows
-        }
-        top_project_ids = [
-            project_id
-            for project_id, _ in sorted(
-                transaction_count_rows,
-                key=lambda row: (-row[1], row[0]),
-            )[:5]
-        ]
-        projects_by_id = {
-            project.id: project
-            for project in Project.query.filter(
-                Project.company_id == company_id,
-                Project.id.in_(top_project_ids),
-            ).all()
-        } if top_project_ids else {}
-        projects = [
-            projects_by_id[project_id]
-            for project_id in top_project_ids
-            if project_id in projects_by_id
-        ]
 
         tag_totals: dict[str, float] = {}
         active_expense_rows = (
@@ -143,7 +104,6 @@ class DashboardService:
             'accounts': accounts,
             'expenses': expenses,
             'recent_transactions': recent_transactions,
-            'projects': projects,
             'balances': balances,
             'total_revenue': total_revenue,
             'total_expenses': total_expenses,
@@ -163,6 +123,5 @@ class DashboardService:
                 ),
             },
             'tag_totals': tag_totals,
-            'project_spent': project_spent,
-            'expense_counts': project_transaction_counts,
+            'account_chart': account_chart,
         }

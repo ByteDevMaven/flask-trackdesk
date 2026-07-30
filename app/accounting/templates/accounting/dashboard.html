@@ -220,55 +220,86 @@
         </div>
       </div>
 
-      {# Projects sidebar #}
-      <div class="space-y-5">
-        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-          <div class="px-5 py-4 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
-            <h2 class="text-sm font-semibold text-slate-800">Centro de Costos</h2>
-            <button data-action="open-drawer" data-url="{{ url_for('accounting.create_project', company_id=company.id) }}" data-title="Nuevo Proyecto"
-              class="text-xs font-semibold text-emerald-600 hover:text-emerald-700 uppercase tracking-wider">+ Añadir</button>
+      {# Account balances chart #}
+      <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+        <div class="px-5 py-4 border-b border-slate-100 bg-slate-50">
+          <h2 class="text-sm font-semibold text-slate-800">Saldos por Cuenta</h2>
+          <p class="text-xs text-slate-500 mt-0.5">Las 10 cuentas con mayor saldo absoluto</p>
+        </div>
+        <div class="relative min-h-[320px] p-4">
+          {% if account_chart %}
+          <canvas id="accountBalancesChart" aria-label="Gráfico de saldos por cuenta" role="img"></canvas>
+          {% else %}
+          <div class="h-[288px] flex items-center justify-center text-sm text-slate-400">
+            No hay saldos de cuentas para mostrar.
           </div>
-          <div class="p-2 max-h-[360px] overflow-y-auto">
-            {% for proj in projects %}
-            {% set spent = project_spent.get(proj.id, 0.0) %}
-            {% set budget = proj.budget|float if proj.budget else 0.0 %}
-            {% set pct = [((spent / budget * 100) if budget > 0 else 0), 100]|min %}
-            {% set over = spent > budget and budget > 0 %}
-            <div class="p-3 rounded-lg hover:bg-slate-50 transition-colors">
-              <div class="flex items-center gap-3 mb-2">
-                <div class="w-8 h-8 rounded-full {{ 'bg-rose-100 text-rose-700' if over else 'bg-emerald-100 text-emerald-700' }} flex items-center justify-center text-xs font-bold flex-shrink-0">
-                  {{ proj.name[:2]|upper }}
-                </div>
-                <div class="flex-1 min-w-0">
-                  <a href="{{ url_for('accounting.project_detail', company_id=company.id, project_id=proj.id) }}"
-                    class="block text-sm font-semibold text-slate-800 hover:text-emerald-700 truncate transition-colors">
-                    {{ proj.name }}
-                  </a>
-                  <p class="text-[10px] text-slate-400">{{ expense_counts.get(proj.id, 0) }} transacciones</p>
-                </div>
-              </div>
-              {% if budget > 0 %}
-              <div class="pl-11">
-                <div class="flex justify-between text-[10px] font-semibold mb-1">
-                  <span class="text-slate-500">Gastado: {{ company.currency }}{{ "{:,.2f}".format(spent) }}</span>
-                  <span class="{{ 'text-rose-600' if over else 'text-emerald-600' }}">
-                    {% if over %}Excedido: {{ company.currency }}{{ "{:,.2f}".format(spent - budget) }}{% else %}Restante: {{ company.currency }}{{ "{:,.2f}".format(budget - spent) }}{% endif %}
-                  </span>
-                </div>
-                <div class="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
-                  <div class="h-full rounded-full {{ 'bg-rose-500' if over else 'bg-emerald-500' if pct < 80 else 'bg-amber-500' }}" style="width: {{ pct }}%"></div>
-                </div>
-              </div>
-              {% endif %}
-            </div>
-            {% else %}
-            <p class="text-sm text-slate-400 text-center py-8">No hay proyectos.</p>
-            {% endfor %}
-          </div>
+          {% endif %}
         </div>
       </div>
     </div>
 
   </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{% if account_chart %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.5.1/dist/chart.umd.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const canvas = document.getElementById('accountBalancesChart');
+    if (!canvas || typeof Chart === 'undefined') return;
+
+    const accounts = {{ account_chart | tojson }};
+    const currency = {{ company.currency | tojson }};
+    const values = accounts.map(account => account.balance);
+
+    new Chart(canvas, {
+      type: 'bar',
+      data: {
+        labels: accounts.map(account => account.name),
+        datasets: [{
+          label: 'Saldo',
+          data: values,
+          backgroundColor: values.map(value => value >= 0 ? 'rgba(5, 150, 105, 0.72)' : 'rgba(225, 29, 72, 0.72)'),
+          borderColor: values.map(value => value >= 0 ? 'rgb(5, 150, 105)' : 'rgb(225, 29, 72)'),
+          borderWidth: 1,
+          borderRadius: 5,
+          borderSkipped: false,
+        }],
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: context => `${currency}${Number(context.raw).toLocaleString(undefined, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}`,
+            },
+          },
+        },
+        scales: {
+          x: {
+            grid: { color: 'rgba(148, 163, 184, 0.16)' },
+            ticks: {
+              color: '#64748b',
+              callback: value => `${currency}${Number(value).toLocaleString()}`,
+            },
+          },
+          y: {
+            grid: { display: false },
+            ticks: { color: '#334155', font: { size: 11 } },
+          },
+        },
+      },
+    });
+  });
+</script>
+{% endif %}
 {% endblock %}
