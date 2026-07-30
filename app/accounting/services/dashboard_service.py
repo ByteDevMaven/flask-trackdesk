@@ -29,7 +29,6 @@ class DashboardService:
             .order_by(Account.type, Account.name)
             .all()
         )
-        projects = Project.query.filter_by(company_id=company_id).all()
         expenses = _recent_active_expenses(company_id, limit=10)
         recent_transactions = (
             Transaction.query
@@ -79,6 +78,44 @@ class DashboardService:
             .all()
         )
         project_spent = {row[0]: float(row[1] or 0) for row in expense_stats}
+        transaction_count_rows = (
+            db.session.query(
+                LedgerEntry.project_id,
+                func.count(func.distinct(LedgerEntry.transaction_id)),
+            )
+            .join(Transaction, LedgerEntry.transaction_id == Transaction.id)
+            .filter(
+                LedgerEntry.company_id == company_id,
+                LedgerEntry.project_id.isnot(None),
+                LedgerEntry.transaction_id.isnot(None),
+                Transaction.is_voided.is_(False),
+            )
+            .group_by(LedgerEntry.project_id)
+            .all()
+        )
+        project_transaction_counts = {
+            project_id: transaction_count
+            for project_id, transaction_count in transaction_count_rows
+        }
+        top_project_ids = [
+            project_id
+            for project_id, _ in sorted(
+                transaction_count_rows,
+                key=lambda row: (-row[1], row[0]),
+            )[:5]
+        ]
+        projects_by_id = {
+            project.id: project
+            for project in Project.query.filter(
+                Project.company_id == company_id,
+                Project.id.in_(top_project_ids),
+            ).all()
+        } if top_project_ids else {}
+        projects = [
+            projects_by_id[project_id]
+            for project_id in top_project_ids
+            if project_id in projects_by_id
+        ]
 
         tag_totals: dict[str, float] = {}
         active_expense_rows = (
@@ -127,19 +164,5 @@ class DashboardService:
             },
             'tag_totals': tag_totals,
             'project_spent': project_spent,
-            'expense_counts': {row[0]: row[1] for row in (
-                db.session.query(
-                    LedgerEntry.project_id,
-                    func.count(func.distinct(LedgerEntry.transaction_id)),
-                )
-                .join(Transaction, LedgerEntry.transaction_id == Transaction.id)
-                .filter(
-                    LedgerEntry.company_id == company_id,
-                    LedgerEntry.project_id.isnot(None),
-                    LedgerEntry.transaction_id.isnot(None),
-                    Transaction.is_voided.is_(False),
-                )
-                .group_by(LedgerEntry.project_id)
-                .all()
-            )},
+            'expense_counts': project_transaction_counts,
         }

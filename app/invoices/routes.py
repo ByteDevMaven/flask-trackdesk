@@ -157,7 +157,7 @@ def store(company_id):
 
     except Exception as e:
         db.session.rollback()
-        flash('Error creating document: %(error)s', error=str(e)), 'error'
+        flash(f'Error creating document: {e}', 'error')
         return redirect(url_for('invoices.create', company_id=company_id))
 
 
@@ -257,14 +257,14 @@ def add_payment(company_id, id):
         return redirect(url_for('invoices.view', company_id=company_id, id=id))
 
     except ValueError as e:
-        flash('Invalid payment data: %(error)s', error=str(e)), 'error'
+        flash(f'Invalid payment data: {e}', 'error')
         is_ajax = request.headers.get('X-Requested-With') == 'XMLHttpRequest'
         if is_ajax:
             return {"success": False, "message": str(e)}, 400
 
         return redirect(url_for('invoices.view', company_id=company_id, id=id))
     except Exception as e:
-        flash('Error recording payment: %(error)s', error=str(e)), 'error'
+        flash(f'Error recording payment: {e}', 'error')
         return redirect(url_for('invoices.view', company_id=company_id, id=id))
 
 
@@ -393,7 +393,7 @@ def update(company_id, id):
 
     except Exception as e:
         db.session.rollback()
-        flash('Error updating document: %(error)s', error=str(e)), 'error'
+        flash(f'Error updating document: {e}', 'error')
         return redirect(
             url_for('invoices.edit', company_id=company_id, id=id)
         )
@@ -424,7 +424,7 @@ def delete(company_id, id):
         doc_type_name = 'Invoice' if document.type == DocumentType.invoice else 'Quote'
         flash(f'{doc_type_name} deleted successfully', 'success')
     except Exception as e:
-        flash('Error deleting document: %(error)s', error=str(e)), 'error'
+        flash(f'Error deleting document: {e}', 'error')
     
     return redirect(url_for('invoices.index', company_id=company_id))
 

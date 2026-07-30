@@ -240,7 +240,10 @@
                   {{ proj.name[:2]|upper }}
                 </div>
                 <div class="flex-1 min-w-0">
-                  <p class="text-sm font-semibold text-slate-800 truncate">{{ proj.name }}</p>
+                  <a href="{{ url_for('accounting.project_detail', company_id=company.id, project_id=proj.id) }}"
+                    class="block text-sm font-semibold text-slate-800 hover:text-emerald-700 truncate transition-colors">
+                    {{ proj.name }}
+                  </a>
                   <p class="text-[10px] text-slate-400">{{ expense_counts.get(proj.id, 0) }} transacciones</p>
                 </div>
               </div>

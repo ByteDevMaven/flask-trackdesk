@@ -67,7 +67,7 @@ def store(company_id):
         flash('Payment recorded successfully', 'success')
         return redirect(url_for('payments.view', company_id=company_id, id=payment.id))
     except Exception as e:
-        flash('Error recording payment: %(error)s', error=str(e)), 'error'
+        flash(f'Error recording payment: {e}', 'error')
         return redirect(url_for('payments.create', company_id=company_id))
 
 
@@ -108,7 +108,7 @@ def update(company_id, id):
         flash('Payment updated successfully', 'success')
         return redirect(url_for('payments.view', company_id=company_id, id=payment.id))
     except Exception as e:
-        flash('Error updating payment: %(error)s', error=str(e)), 'error'
+        flash(f'Error updating payment: {e}', 'error')
         return redirect(url_for('payments.edit', company_id=company_id, id=id))
 
 
@@ -121,6 +121,6 @@ def delete(company_id, id):
         PaymentService.delete_payment(company_id, id)
         flash('Payment deleted successfully', 'success')
     except Exception as e:
-        flash('Error deleting payment: %(error)s', error=str(e)), 'error'
+        flash(f'Error deleting payment: {e}', 'error')
 
     return redirect(url_for('payments.index', company_id=company_id))
