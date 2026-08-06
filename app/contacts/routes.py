@@ -56,7 +56,7 @@ def create(company_id):
             flash('Contact created successfully', 'success')
             return redirect(url_for('contacts.index', company_id=company_id))
         except ValueError as e:
-            flash(_(str(e)), 'error')
+            flash(str(e), 'error')
             return redirect(url_for('contacts.create', company_id=company_id))
         except exc.IntegrityError:
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
@@ -108,7 +108,7 @@ def edit(company_id, contact_id):
             flash('Contact updated successfully', 'success')
             return redirect(url_for('contacts.index', company_id=company_id))
         except ValueError as e:
-            flash(_(str(e)), 'error')
+            flash(str(e), 'error')
             return redirect(url_for('contacts.edit', company_id=company_id, contact_id=contact_id))
         except exc.IntegrityError:
             if request.headers.get('X-Requested-With') == 'XMLHttpRequest':

@@ -42,7 +42,7 @@ def movements(company_id):
     from app.models import Contact
     from app.models.enums import ContactType
     clients = Contact.query.filter_by(company_id=company_id, type=ContactType.customer).order_by(Contact.name).all()
-    suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
+    suppliers = Contact.query.filter(Contact.company_id == company_id, Contact.type.in_([ContactType.supplier, ContactType.customer_supplier])).order_by(Contact.name).all()
     
     return render_template('inventory/movements.html',
                           company_id=company_id,

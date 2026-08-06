@@ -213,9 +213,12 @@ def api_adjust_stock(company_id, id):
     company = resolve_company(company_id)
     company_id = company.id
     """Adjust stock quantity for an item"""
-    data = request.get_json()
-    adjustment = int(data.get('adjustment', 0)) if data else 0
-    warehouse_id = data.get('warehouse_id')
+    data = request.get_json(silent=True) or {}
+    try:
+        adjustment = int(data.get('adjustment', 0))
+        warehouse_id = int(data.get('warehouse_id'))
+    except (TypeError, ValueError):
+        return jsonify({'error': 'Adjustment and warehouse ID must be integers'}), 400
     
     if not warehouse_id:
         return jsonify({'error': 'Warehouse ID is required'}), 400
@@ -223,7 +226,7 @@ def api_adjust_stock(company_id, id):
     try:
         if not current_user.has_permission('approvals.manage'):
             from app.services.approval_service import ApprovalService
-            item = InventoryItem.query.get(id)
+            item = InventoryItem.query.filter_by(id=id, company_id=company_id).first_or_404()
             ApprovalService.create_request(
                 company_id=company_id,
                 requester_id=current_user.id,
@@ -233,7 +236,7 @@ def api_adjust_stock(company_id, id):
                     'item_id': id,
                     'item_name': item.name if item else None,
                     'item_sku': item.sku if item else None,
-                    'warehouse_id': int(warehouse_id),
+                    'warehouse_id': warehouse_id,
                     'adjustment': adjustment
                 }
             )
@@ -246,7 +249,7 @@ def api_adjust_stock(company_id, id):
         new_quantity = InventoryService.adjust_stock(
             company_id=company_id,
             item_id=id,
-            warehouse_id=int(warehouse_id),
+            warehouse_id=warehouse_id,
             adjustment=adjustment
         )
 

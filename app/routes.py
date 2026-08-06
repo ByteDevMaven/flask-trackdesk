@@ -116,7 +116,12 @@ def register_routes(app: Flask):
     def set_language(language):
         if language in Config.LANGUAGES:
             session['language'] = language
-        return redirect(request.referrer or url_for('dashboard.index'))
+        fallback = (
+            url_for('dashboard.index', company_id=session.get('selected_company_slug'))
+            if session.get('selected_company_slug')
+            else url_for('index')
+        )
+        return redirect(request.referrer or fallback)
 
     @app.route('/search')
     @login_required

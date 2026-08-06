@@ -39,9 +39,7 @@ def index(company_id):
         sort_order=sort_order,
     )
 
-    suppliers = Contact.query.filter_by(
-        company_id=company_id, type=ContactType.supplier
-    ).order_by(Contact.name).all()
+    suppliers = Contact.query.filter(Contact.company_id == company_id, Contact.type.in_([ContactType.supplier, ContactType.customer_supplier])).order_by(Contact.name).all()
 
     stats = get_purchase_order_stats(company_id)
 
@@ -71,7 +69,7 @@ def create(company_id):
     company = resolve_company(company_id)
     company_id = company.id
     from app.models import Warehouse
-    suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
+    suppliers = Contact.query.filter(Contact.company_id == company_id, Contact.type.in_([ContactType.supplier, ContactType.customer_supplier])).order_by(Contact.name).all()
     inventory_items = InventoryItem.query.filter_by(company_id=company_id).order_by(InventoryItem.name).all()
     warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
 
@@ -116,7 +114,7 @@ def edit(company_id, id):
     company_id = company.id
     from app.models import Warehouse
     purchase_order = PurchaseOrder.query.filter_by(id=id, company_id=company_id).first_or_404()
-    suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
+    suppliers = Contact.query.filter(Contact.company_id == company_id, Contact.type.in_([ContactType.supplier, ContactType.customer_supplier])).order_by(Contact.name).all()
     inventory_items = InventoryItem.query.filter_by(company_id=company_id).order_by(InventoryItem.name).all()
     warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
 
@@ -136,7 +134,7 @@ def update(company_id, id):
     company = resolve_company(company_id)
     company_id = company.id
     from app.models import Warehouse
-    suppliers = Contact.query.filter_by(company_id=company_id, type=ContactType.supplier).order_by(Contact.name).all()
+    suppliers = Contact.query.filter(Contact.company_id == company_id, Contact.type.in_([ContactType.supplier, ContactType.customer_supplier])).order_by(Contact.name).all()
     inventory_items = InventoryItem.query.filter_by(company_id=company_id).order_by(InventoryItem.name).all()
     warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
 

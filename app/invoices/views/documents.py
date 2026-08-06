@@ -78,7 +78,7 @@ def export(company_id):
 @login_required
 @limiter.exempt
 def item_row():
-    index = int(request.form.get('index', 0))
+    index = request.form.get('index', 0, type=int)
     csrf_token = request.form.get("csrf_token") 
 
     try:
@@ -111,7 +111,7 @@ def create(company_id):
     warehouses = Warehouse.query.filter_by(company_id=company_id, is_active=True).order_by(Warehouse.name).all()
     projects = Project.query.filter_by(company_id=company_id, status='active').order_by(Project.name).all()
 
-    selected_client_id = int(request.args.get('client_id', 0))
+    selected_client_id = request.args.get('client_id', 0, type=int)
     selected_type = request.args.get('type', 'invoice')
     if selected_type not in {'invoice', 'quote'}:
         selected_type = 'invoice'

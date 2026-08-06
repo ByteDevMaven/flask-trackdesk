@@ -44,7 +44,8 @@ def logout():
 
 @auth.route('/register')
 def register():
-    pass
+    flash('El registro público no está habilitado.', 'info')
+    return redirect(url_for('auth.login'))
 
 
 @auth.route('/forgot_password', methods=["GET", "POST"])

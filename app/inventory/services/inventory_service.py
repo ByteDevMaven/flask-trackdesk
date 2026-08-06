@@ -101,13 +101,16 @@ class InventoryService:
     @staticmethod
     def adjust_stock(company_id, item_id, warehouse_id, adjustment, reference=None):
         item = InventoryItem.query.filter_by(id=item_id, company_id=company_id).first_or_404()
-        from app.models import WarehouseItem
+        from app.models import Warehouse, WarehouseItem
+        Warehouse.query.filter_by(id=warehouse_id, company_id=company_id, is_active=True).first_or_404()
         warehouse_item = WarehouseItem.query.filter_by(warehouse_id=warehouse_id, inventory_item_id=item_id).first()
         if not warehouse_item:
             warehouse_item = WarehouseItem(warehouse_id=warehouse_id, inventory_item_id=item_id, quantity=0)
             db.session.add(warehouse_item)
             
-        new_quantity = max(0, warehouse_item.quantity + adjustment)
+        old_quantity = warehouse_item.quantity or 0
+        new_quantity = max(0, old_quantity + adjustment)
+        applied_adjustment = new_quantity - old_quantity
         
         movement = StockMovement(
             company_id=company_id,
@@ -115,14 +118,14 @@ class InventoryService:
             warehouse_id=warehouse_id,
             user_id=current_user.id if current_user.is_authenticated else None,
             type=StockMovementType.adjustment,
-            quantity=adjustment,  # signed: positive = add, negative = remove
+            quantity=applied_adjustment,  # signed amount actually applied
             reference=reference or 'Manual Adjustment',
             date=datetime.now(UTC)
         )
         db.session.add(movement)
         
         warehouse_item.quantity = new_quantity
-        item.quantity = max(0, item.quantity + adjustment)
+        item.quantity = max(0, item.quantity + applied_adjustment)
         
         db.session.commit()
         return new_quantity
@@ -133,7 +136,9 @@ class InventoryService:
             raise ValueError("Quantity must be positive")
             
         item = InventoryItem.query.filter_by(id=item_id, company_id=company_id).first_or_404()
-        from app.models import WarehouseItem
+        from app.models import Warehouse, WarehouseItem
+        Warehouse.query.filter_by(id=from_warehouse_id, company_id=company_id, is_active=True).first_or_404()
+        Warehouse.query.filter_by(id=to_warehouse_id, company_id=company_id, is_active=True).first_or_404()
         
         from_item = WarehouseItem.query.filter_by(warehouse_id=from_warehouse_id, inventory_item_id=item_id).first()
         if not from_item or from_item.quantity < quantity:
