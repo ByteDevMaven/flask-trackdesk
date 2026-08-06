@@ -6,6 +6,49 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const sidebarWrapper = document.getElementById('sidebar-wrapper');
+  const mobileBackdrop = document.getElementById('mobile-backdrop');
+
+  function setMobileMenu(open) {
+    if (!sidebarWrapper || !mobileBackdrop) return;
+    sidebarWrapper.classList.toggle('-translate-x-full', !open);
+    mobileBackdrop.classList.toggle('hidden', !open);
+    requestAnimationFrame(() => mobileBackdrop.classList.toggle('opacity-0', !open));
+    mobileMenuBtn?.setAttribute('aria-expanded', String(open));
+    mobileMenuBtn?.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
+    if (window.innerWidth < 768) document.body.classList.toggle('overflow-hidden', open);
+  }
+
+  mobileMenuBtn?.addEventListener('click', () => {
+    setMobileMenu(sidebarWrapper?.classList.contains('-translate-x-full'));
+  });
+  mobileBackdrop?.addEventListener('click', () => setMobileMenu(false));
+  sidebarWrapper?.querySelector('nav')?.addEventListener('click', event => {
+    if (event.target.closest('a') && window.innerWidth < 768) setMobileMenu(false);
+  });
+  window.addEventListener('resize', () => {
+    if (window.innerWidth >= 768) setMobileMenu(false);
+  });
+
+  function setPopupMenu(button, menu, open) {
+    if (!button || !menu) return;
+    menu.classList.toggle('hidden', !open);
+    button.setAttribute('aria-expanded', String(open));
+  }
+
+  function closePopupMenus() {
+    setPopupMenu(document.getElementById('company-menu-btn'), document.getElementById('company-menu'), false);
+    setPopupMenu(document.getElementById('user-settings-btn'), document.getElementById('user-settings-menu'), false);
+    setPopupMenu(document.getElementById('notification-menu-btn'), document.getElementById('notification-menu'), false);
+  }
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      setMobileMenu(false);
+      closePopupMenus();
+    }
+  });
 
   const collapseBtn = document.getElementById('collapse-sidebar-btn');
   const expandBtn = document.getElementById('expand-sidebar-btn');
@@ -37,12 +80,14 @@ document.addEventListener('DOMContentLoaded', () => {
   if (companyBtn && companyMenu) {
     companyBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      companyMenu.classList.toggle('hidden');
+      const opening = companyMenu.classList.contains('hidden');
+      closePopupMenus();
+      setPopupMenu(companyBtn, companyMenu, opening);
     });
 
     document.addEventListener('click', (e) => {
       if (!companyBtn.contains(e.target) && !companyMenu.contains(e.target)) {
-        companyMenu.classList.add('hidden');
+        setPopupMenu(companyBtn, companyMenu, false);
       }
     });
   }
@@ -53,12 +98,14 @@ document.addEventListener('DOMContentLoaded', () => {
   if (userSettingsBtn && userSettingsMenu) {
     userSettingsBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      userSettingsMenu.classList.toggle('hidden');
+      const opening = userSettingsMenu.classList.contains('hidden');
+      closePopupMenus();
+      setPopupMenu(userSettingsBtn, userSettingsMenu, opening);
     });
 
     document.addEventListener('click', (e) => {
       if (!userSettingsBtn.contains(e.target) && !userSettingsMenu.contains(e.target)) {
-        userSettingsMenu.classList.add('hidden');
+        setPopupMenu(userSettingsBtn, userSettingsMenu, false);
       }
     });
   }
@@ -286,14 +333,16 @@ document.addEventListener('DOMContentLoaded', () => {
   if (notificationBtn && notificationMenu) {
     notificationBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      notificationMenu.classList.toggle('hidden');
+      const opening = notificationMenu.classList.contains('hidden');
+      closePopupMenus();
+      setPopupMenu(notificationBtn, notificationMenu, opening);
       loadNotifications();
     });
 
     notificationMenu.addEventListener('click', (e) => e.stopPropagation());
 
     document.addEventListener('click', () => {
-      notificationMenu.classList.add('hidden');
+      setPopupMenu(notificationBtn, notificationMenu, false);
     });
 
     notificationMarkAllBtn?.addEventListener('click', () => {

@@ -39,8 +39,9 @@ def _generate_document_number(company_id, doc_type):
 
     last_doc = Document.query.filter(
         Document.company_id == company_id,
-        Document.document_number.like(f"%-{company_id_str}-%")
-    ).order_by(Document.id.desc()).first()
+        Document.type == doc_type,
+        Document.document_number.like(f"{prefix}%")
+    ).order_by(Document.document_number.desc()).first()
 
     try:
         last_seq = int(last_doc.document_number.split('-')[-1]) if last_doc else 0
@@ -50,7 +51,27 @@ def _generate_document_number(company_id, doc_type):
     return f"{prefix}{last_seq + 1:06d}"
 
 
-def create_invoice_or_quote(company_id, form, user_id):
+def _release_latest_invoice_number(company_id, document):
+    """Return the latest CAI number when its invoice is converted to a quote."""
+    if document.type != DocumentType.invoice or not document.document_number:
+        return False
+
+    try:
+        number = int(document.document_number.rsplit('-', 1)[-1])
+    except (TypeError, ValueError):
+        return False
+
+    seq = db.session.query(DocumentSequence).filter(
+        DocumentSequence.company_id == company_id
+    ).with_for_update().first()
+
+    if not seq or number != seq.current or seq.current <= seq.range_start:
+        return False
+
+    seq.current -= 1
+    db.session.add(seq)
+    return True
+def create_invoice_or_quote(company_id, form, user_id, *, commit=True):
     doc_type = DocumentType[form.get("type", "invoice")]
 
     document_number = form.get("document_number")
@@ -110,7 +131,7 @@ def create_invoice_or_quote(company_id, form, user_id):
         inv_id = item.get("inventory_item_id")
 
         if inv_id and doc_type == DocumentType.invoice:
-            inv = InventoryItem.query.get(int(inv_id))
+            inv = InventoryItem.query.filter_by(id=int(inv_id), company_id=company_id).first()
             if inv:
                 inv.quantity = max((inv.quantity or 0) - qty, 0)
                 
@@ -172,5 +193,8 @@ def create_invoice_or_quote(company_id, form, user_id):
             notes=form.get("notes", "")
         ))
 
-    db.session.commit()
+    if commit:
+        db.session.commit()
+    else:
+        db.session.flush()
     return document

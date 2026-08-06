@@ -1,16 +1,13 @@
 {% extends "base.html" %}
+{% from "components/ui.html" import nav_link %}
 {% block title %}Contactos – TrackDesk{% endblock %}
 {% block sidebar_title %}Contactos{% endblock %}
 {% block sidebar_nav %}
 {% set cid = selected_company_id or session.get('selected_company_slug') %}
-<a href="{{ url_for('contacts.index', company_id=cid) }}"
-  class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'contacts.index' else 'text-slate-600 hover:bg-slate-50' }} text-sm"><span
-    class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if request.endpoint == 'contacts.index' else 'bg-slate-300' }}"></span>Todos
-  los Contactos</a>
-<a href="{{ url_for('contacts.create', company_id=cid) }}"
-  class="flex items-center gap-3 px-3 py-2 rounded-md {{ 'bg-emerald-50 text-emerald-700 font-medium' if request.endpoint == 'contacts.create' else 'text-slate-600 hover:bg-slate-50' }} text-sm"><span
-    class="w-1.5 h-1.5 rounded-full {{ 'bg-emerald-500' if request.endpoint == 'contacts.create' else 'bg-slate-300' }}"></span>Nuevo
-  Contacto</a>
+<div class="space-y-0.5">
+  {{ nav_link('Todos los contactos', 'contacts.index', cid) }}
+  {{ nav_link('Nuevo contacto', 'contacts.create', cid) }}
+</div>
 {% endblock %}
 {% block page_title %}Contactos{% endblock %}
 
@@ -32,7 +29,7 @@
       </form>
       <button type="button" data-action="open-drawer"
         data-url="{{ url_for('contacts.create', company_id=selected_company_id) }}" data-title="Nuevo Contacto"
-        class="flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
+        class="ui-btn ui-btn-primary">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
         </svg>
@@ -56,7 +53,7 @@
   </header>
 
   <div class="flex-1 overflow-y-auto p-4 md:p-6 bg-slate-50">
-    <div class="bg-white rounded-lg border border-slate-200 overflow-hidden">
+    <div class="ui-card">
       <div class="px-4 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-end">
         <div class="flex items-center gap-2">
           <span class="text-sm text-slate-500">{{ contacts.total }} contacto{{ 's' if contacts.total != 1 else ''
@@ -64,7 +61,7 @@
         </div>
       </div>
 
-      <table class="w-full">
+      <table class="ui-table">
         <thead>
           <tr class="border-b border-slate-100">
             <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Contacto</th>

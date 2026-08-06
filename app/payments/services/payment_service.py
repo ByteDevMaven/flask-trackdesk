@@ -1,69 +1,112 @@
-from datetime import datetime, UTC
+from datetime import UTC, datetime, timedelta
+from decimal import Decimal, InvalidOperation
 
-from flask import current_app
-from sqlalchemy import or_, desc
+from sqlalchemy import desc, or_
+from sqlalchemy.orm import joinedload
 
-from app.models import db, Payment, Document, DocumentType, Contact
+from app.models import Contact, Document, DocumentType, Payment, PaymentMethod, db
+from app.models.enums import DocumentStatus
+
+_METHOD_ALIASES = {
+    'credit card': PaymentMethod.credit_card,
+    'credit_card': PaymentMethod.credit_card,
+    'bank transfer': PaymentMethod.bank_transfer,
+    'bank_transfer': PaymentMethod.bank_transfer,
+    'cash': PaymentMethod.cash,
+    'cheque': PaymentMethod.cheque,
+    'other': PaymentMethod.other,
+}
 
 
-def _recalculate_invoice_status(invoice_id: int) -> None:
-    """Recalculate and update the status of the invoice based on total payments."""
-    invoice = Document.query.get(invoice_id)
+def _parse_amount(value) -> Decimal:
+    try:
+        amount = Decimal(str(value))
+    except (InvalidOperation, TypeError, ValueError) as exc:
+        raise ValueError('Enter a valid payment amount') from exc
+    if not amount.is_finite() or amount <= 0:
+        raise ValueError('Payment amount must be greater than zero')
+    return amount.quantize(Decimal('0.01'))
+
+
+def _parse_method(value) -> PaymentMethod:
+    method = _METHOD_ALIASES.get(str(value or '').strip().lower())
+    if method is None:
+        raise ValueError('Select a valid payment method')
+    return method
+
+
+def _parse_payment_date(value, fallback=None) -> datetime:
+    if not value:
+        return fallback or datetime.now(UTC)
+    try:
+        return datetime.strptime(value, '%Y-%m-%d')
+    except ValueError as exc:
+        raise ValueError('Enter a valid payment date') from exc
+
+
+def _company_invoice(company_id: int, invoice_id: int | None, required=False):
+    if not invoice_id:
+        if required:
+            raise ValueError('Select an invoice')
+        return None
+    invoice = Document.query.filter_by(
+        id=invoice_id,
+        company_id=company_id,
+        type=DocumentType.invoice,
+    ).first()
+    if not invoice:
+        raise ValueError('The selected invoice is not available')
+    return invoice
+
+
+def _recalculate_invoice_status(invoice_id: int, company_id: int) -> None:
+    invoice = Document.query.filter_by(id=invoice_id, company_id=company_id).first()
     if not invoice:
         return
     total_paid = db.session.query(db.func.sum(Payment.amount)).filter(
         Payment.document_id == invoice_id,
-        Payment.is_deleted.is_(False) if hasattr(Payment, 'is_deleted') else True
+        Payment.company_id == company_id,
+        Payment.is_deleted.is_(False) if hasattr(Payment, 'is_deleted') else True,
     ).scalar() or 0
-
     if total_paid >= (invoice.total_amount or 0):
-        invoice.status = 'paid'
+        invoice.status = DocumentStatus.paid
     elif total_paid > 0:
-        invoice.status = 'partial'
+        invoice.status = DocumentStatus.partial
     else:
-        invoice.status = 'sent'
+        invoice.status = DocumentStatus.sent
 
 
 class PaymentService:
     @staticmethod
     def get_paginated_payments(company_id, page, per_page, search, method, date_from, date_to):
-        query = db.session.query(Payment).filter(
-            Payment.company_id == company_id
-        ).join(Document, Payment.document_id == Document.id, isouter=True)\
-         .join(Contact, Document.client_id == Contact.id, isouter=True)
-
+        query = Payment.query.options(
+            joinedload(Payment.document).joinedload(Document.client)
+        ).filter(Payment.company_id == company_id)
         if search:
-            query = query.filter(
-                or_(
-                    Document.document_number.ilike(f'%{search}%'),
-                    Contact.name.ilike(f'%{search}%'),
-                    Payment.notes.ilike(f'%{search}%')
-                )
-            )
-
+            query = query.join(Document, Payment.document_id == Document.id, isouter=True).join(
+                Contact, Document.client_id == Contact.id, isouter=True
+            ).filter(or_(
+                Document.document_number.ilike(f'%{search}%'),
+                Contact.name.ilike(f'%{search}%'),
+                Payment.notes.ilike(f'%{search}%'),
+            ))
         if method:
-            query = query.filter(Payment.method == method)
-
+            normalized = _METHOD_ALIASES.get(method.strip().lower())
+            if normalized:
+                query = query.filter(Payment.method == normalized)
         if date_from:
             try:
-                date_from_obj = datetime.strptime(date_from, '%Y-%m-%d')
-                query = query.filter(Payment.payment_date >= date_from_obj)
+                query = query.filter(Payment.payment_date >= datetime.strptime(date_from, '%Y-%m-%d'))
             except ValueError:
                 pass
-
         if date_to:
             try:
-                date_to_obj = datetime.strptime(date_to, '%Y-%m-%d')
-                query = query.filter(Payment.payment_date <= date_to_obj)
+                exclusive_end = datetime.strptime(date_to, '%Y-%m-%d') + timedelta(days=1)
+                query = query.filter(Payment.payment_date < exclusive_end)
             except ValueError:
                 pass
-
-        query = query.order_by(desc(Payment.payment_date))
-
-        return query.paginate(  # type: ignore
-            page=page,
-            per_page=per_page,
-            error_out=False
+        return query.order_by(desc(Payment.payment_date)).paginate(
+            page=page, per_page=per_page, error_out=False
         )
 
     @staticmethod
@@ -74,189 +117,132 @@ class PaymentService:
 
     @staticmethod
     def get_payment(company_id, payment_id):
-        payment = Payment.query.filter(
-            Payment.id == payment_id,
-            Payment.company_id == company_id
-        ).first_or_404()
-
-        if payment.document_id:
-            payment.document = Document.query.get(payment.document_id)
-            if payment.document and payment.document.client_id:
-                payment.document.client = Contact.query.get(payment.document.client_id)
-
-        return payment
+        return Payment.query.options(
+            joinedload(Payment.document).joinedload(Document.client)
+        ).filter_by(id=payment_id, company_id=company_id).first_or_404()
 
     @staticmethod
     def get_selected_invoice(company_id, invoice_id):
         if not invoice_id:
             return None
-        invoice = Document.query.filter(
-            Document.id == invoice_id,
-            Document.company_id == company_id,
-            Document.type == DocumentType.invoice
+        return Document.query.options(joinedload(Document.client)).filter_by(
+            id=invoice_id, company_id=company_id, type=DocumentType.invoice
         ).first()
-        if invoice and invoice.client_id:
-            invoice.client = Contact.query.get(invoice.client_id)
-        return invoice
 
     @staticmethod
     def search_invoices(company_id, search, limit=10):
-        query = db.session.query(Document).filter(
+        query = Document.query.options(joinedload(Document.client)).filter(
             Document.company_id == company_id,
-            or_(
-                Document.status == 'sent',
-                Document.status == 'overdue',
-                Document.status == 'pending'
-            )
-        ).join(Contact, Document.client_id == Contact.id, isouter=True)
-
+            Document.type == DocumentType.invoice,
+            Document.status.in_([
+                DocumentStatus.sent,
+                DocumentStatus.overdue,
+                DocumentStatus.pending,
+                DocumentStatus.partial,
+            ]),
+        )
         if search:
-            query = query.filter(
-                or_(
-                    Document.document_number.ilike(f'%{search}%'),
-                    Contact.name.ilike(f'%{search}%')
-                )
-            )
-
-        invoices = query.limit(limit).all()
+            query = query.join(Contact, Document.client_id == Contact.id, isouter=True).filter(or_(
+                Document.document_number.ilike(f'%{search}%'),
+                Contact.name.ilike(f'%{search}%'),
+            ))
         results = []
-        for invoice in invoices:
+        for invoice in query.limit(limit).all():
             total_paid = db.session.query(db.func.sum(Payment.amount)).filter(
-                Payment.document_id == invoice.id
+                Payment.company_id == company_id,
+                Payment.document_id == invoice.id,
             ).scalar() or 0
-
-            remaining_balance = (invoice.total_amount or 0) - total_paid
-
-            client_name = ''
-            if invoice.client_id:
-                client = Contact.query.get(invoice.client_id)
-                client_name = client.name if client else ''
-
             results.append({
                 'id': invoice.id,
                 'document_number': invoice.document_number,
-                'client_name': client_name,
-                'total_amount': invoice.total_amount or 0,
-                'remaining_balance': remaining_balance,
+                'client_name': invoice.client.name if invoice.client else '',
+                'total_amount': float(invoice.total_amount or 0),
+                'remaining_balance': float((invoice.total_amount or 0) - total_paid),
                 'due_date': invoice.due_date.strftime('%Y-%m-%d') if invoice.due_date else '',
-                'status': invoice.status
+                'status': invoice.status.value if hasattr(invoice.status, 'value') else invoice.status,
             })
-
         return results
 
     @staticmethod
     def create_payment(company_id, data):
-        payment = Payment(
-            company_id=company_id,  # type: ignore
-            document_id=int(data.get('document_id')) if data.get('document_id') else None,  # type: ignore
-            amount=float(data.get('amount', 0)),  # type: ignore
-            payment_date=datetime.strptime(data.get('payment_date'), '%Y-%m-%d') if data.get('payment_date') else datetime.now(UTC),  # type: ignore
-            method=data.get('method', ''),  # type: ignore
-            notes=data.get('notes', '')  # type: ignore
-        )
-
-        db.session.add(payment)
-        db.session.flush()
-
-        # Update invoice status and post accounting entry after adding payment
-        if payment.document_id:
-            invoice = Document.query.get(payment.document_id)
+        try:
+            document_id = int(data.get('document_id')) if data.get('document_id') else None
+            invoice = _company_invoice(company_id, document_id)
+            payment = Payment(
+                company_id=company_id,
+                document_id=document_id,
+                amount=_parse_amount(data.get('amount')),
+                payment_date=_parse_payment_date(data.get('payment_date')),
+                method=_parse_method(data.get('method')),
+                notes=(data.get('notes') or '').strip(),
+            )
+            db.session.add(payment)
+            db.session.flush()
             if invoice:
                 from app.invoices.services.accounting_integration import post_invoice_payment_income
                 post_invoice_payment_income(payment, invoice)
-
-                total_paid = db.session.query(db.func.sum(Payment.amount)).filter(
-                    Payment.document_id == invoice.id
-                ).scalar() or 0
-
-                if total_paid >= (invoice.total_amount or 0):
-                    invoice.status = 'paid'
-                elif total_paid > 0:
-                    invoice.status = 'pending'
-
-        db.session.commit()
-        return payment
+                _recalculate_invoice_status(invoice.id, company_id)
+            db.session.commit()
+            return payment
+        except Exception:
+            db.session.rollback()
+            raise
 
     @staticmethod
     def update_payment(company_id, payment_id, data):
-        payment = Payment.query.filter(
-            Payment.id == payment_id,
-            Payment.company_id == company_id
-        ).first_or_404()
-
-        old_document_id = payment.document_id
-
-        # Find and void old transaction if it exists
-        from app.models import LedgerEntry, Transaction
-        old_txn = (
-            Transaction.query.join(LedgerEntry)
-            .filter(
+        try:
+            payment = Payment.query.filter_by(id=payment_id, company_id=company_id).first_or_404()
+            old_document_id = payment.document_id
+            from app.models import LedgerEntry, Transaction
+            old_txn = Transaction.query.join(LedgerEntry).filter(
                 LedgerEntry.company_id == company_id,
                 LedgerEntry.reference_type == 'Payment',
                 LedgerEntry.reference_id == payment.id,
-                Transaction.is_voided.is_(False)
-            )
-            .first()
-        )
-        if old_txn:
-            old_txn.is_voided = True
-            old_txn.voided_reason = f'Replaced by edit of Payment #{payment.id}'
+                Transaction.is_voided.is_(False),
+            ).first()
+            if old_txn:
+                old_txn.is_voided = True
+                old_txn.voided_reason = f'Replaced by edit of Payment #{payment.id}'
 
-        payment.document_id = int(data.get('document_id')) if data.get('document_id') else None  # type: ignore
-        payment.amount = float(data.get('amount', 0))
-        payment.payment_date = datetime.strptime(data.get('payment_date'), '%Y-%m-%d') if data.get('payment_date') else payment.payment_date  # type: ignore
-        payment.method = data.get('method', payment.method)
-        payment.notes = data.get('notes', payment.notes)
-
-        # Update invoice status and post new accounting entry
-        if payment.document_id:
-            invoice = Document.query.get(payment.document_id)
-            if invoice:
+            new_document_id = int(data.get('document_id')) if data.get('document_id') else None
+            new_invoice = _company_invoice(company_id, new_document_id)
+            payment.document_id = new_document_id
+            payment.amount = _parse_amount(data.get('amount'))
+            payment.payment_date = _parse_payment_date(data.get('payment_date'), payment.payment_date)
+            payment.method = _parse_method(data.get('method'))
+            payment.notes = (data.get('notes') or '').strip()
+            if new_invoice:
                 from app.invoices.services.accounting_integration import post_invoice_payment_income
-                post_invoice_payment_income(payment, invoice)
-
-        invoices_to_update = set()
-        if old_document_id:
-            invoices_to_update.add(old_document_id)
-        if payment.document_id:
-            invoices_to_update.add(payment.document_id)
-
-        for invoice_id in invoices_to_update:
-            _recalculate_invoice_status(invoice_id)
-
-        db.session.commit()
-        return payment
+                post_invoice_payment_income(payment, new_invoice)
+            for invoice_id in {old_document_id, new_document_id} - {None}:
+                _recalculate_invoice_status(invoice_id, company_id)
+            db.session.commit()
+            return payment
+        except Exception:
+            db.session.rollback()
+            raise
 
     @staticmethod
     def delete_payment(company_id, payment_id):
-        payment = Payment.query.filter(
-            Payment.id == payment_id,
-            Payment.company_id == company_id
-        ).first_or_404()
-
-        document_id = payment.document_id
-
-        # Void related transaction
-        from app.models import LedgerEntry, Transaction
-        old_txn = (
-            Transaction.query.join(LedgerEntry)
-            .filter(
+        try:
+            payment = Payment.query.filter_by(id=payment_id, company_id=company_id).first_or_404()
+            document_id = payment.document_id
+            from app.models import LedgerEntry, Transaction
+            old_txn = Transaction.query.join(LedgerEntry).filter(
                 LedgerEntry.company_id == company_id,
                 LedgerEntry.reference_type == 'Payment',
                 LedgerEntry.reference_id == payment.id,
-                Transaction.is_voided.is_(False)
-            )
-            .first()
-        )
-        if old_txn:
-            old_txn.is_voided = True
-            old_txn.voided_reason = f'Payment #{payment.id} deleted'
-
-        payment.is_deleted = True
-        payment.deleted_at = datetime.now(UTC)
-
-        if document_id:
-            _recalculate_invoice_status(document_id)
-
-        db.session.commit()
-        return True
+                Transaction.is_voided.is_(False),
+            ).first()
+            if old_txn:
+                old_txn.is_voided = True
+                old_txn.voided_reason = f'Payment #{payment.id} deleted'
+            payment.is_deleted = True
+            payment.deleted_at = datetime.now(UTC)
+            if document_id:
+                _recalculate_invoice_status(document_id, company_id)
+            db.session.commit()
+            return True
+        except Exception:
+            db.session.rollback()
+            raise

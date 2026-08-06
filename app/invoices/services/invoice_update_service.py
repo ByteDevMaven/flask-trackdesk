@@ -101,7 +101,7 @@ def update_invoice_or_quote(document, form):
         if current_qty != target_qty:
             delta = target_qty - current_qty # positive means we need to deduct more
             
-            inv = InventoryItem.query.get(inv_id)
+            inv = InventoryItem.query.filter_by(id=inv_id, company_id=document.company_id).first()
             if not inv:
                 continue
                 

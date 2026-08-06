@@ -1,0 +1,13 @@
+{% macro field(name, label, value='', type='text', required=false, placeholder='', help=none, error=none) %}
+<div class="ui-field"><label for="{{ name }}" class="ui-label">{{ label }}{% if required %}<span class="text-rose-500"> *</span>{% endif %}</label><input id="{{ name }}" name="{{ name }}" type="{{ type }}" value="{{ value if value is not none else '' }}" placeholder="{{ placeholder }}" class="ui-input {{ 'border-rose-300 focus:border-rose-500 focus:ring-rose-500/20' if error else '' }}" {% if required %}required{% endif %}>{% if error %}<p class="ui-error">{{ error }}</p>{% elif help %}<p class="ui-help">{{ help }}</p>{% endif %}</div>
+{% endmacro %}
+
+{% macro textarea(name, label, value='', rows=4, required=false, placeholder='', help=none) %}
+<div class="ui-field"><label for="{{ name }}" class="ui-label">{{ label }}{% if required %}<span class="text-rose-500"> *</span>{% endif %}</label><textarea id="{{ name }}" name="{{ name }}" rows="{{ rows }}" placeholder="{{ placeholder }}" class="ui-input resize-y" {% if required %}required{% endif %}>{{ value if value is not none else '' }}</textarea>{% if help %}<p class="ui-help">{{ help }}</p>{% endif %}</div>
+{% endmacro %}
+
+{% macro select(name, label, options, selected=none, required=false, placeholder=none) %}
+<div class="ui-field"><label for="{{ name }}" class="ui-label">{{ label }}{% if required %}<span class="text-rose-500"> *</span>{% endif %}</label><select id="{{ name }}" name="{{ name }}" class="ui-input" {% if required %}required{% endif %}>{% if placeholder %}<option value="">{{ placeholder }}</option>{% endif %}{% for value, text in options %}<option value="{{ value }}" {% if value|string == selected|string %}selected{% endif %}>{{ text }}</option>{% endfor %}</select></div>
+{% endmacro %}
+
+{% macro form_actions(cancel_url, submit_label='Guardar') %}<div class="flex flex-col-reverse gap-2 border-t border-slate-100 pt-5 sm:flex-row sm:justify-end"><a href="{{ cancel_url }}" class="ui-btn ui-btn-secondary">Cancelar</a><button type="submit" class="ui-btn ui-btn-primary">{{ submit_label }}</button></div>{% endmacro %}

@@ -1,0 +1,54 @@
+{# Shared application UI primitives. Keep styling and accessibility decisions here. #}
+{% macro nav_link(label, endpoint, company_id=none, active=false, active_contains=none, badge=none) %}
+{% set selected = active or request.endpoint == endpoint or (active_contains and active_contains in (request.endpoint or '')) %}
+<a href="{{ url_for(endpoint, company_id=company_id) if company_id is not none else url_for(endpoint) }}"
+  class="ui-nav-link {{ 'ui-nav-link-active' if selected else '' }}" {% if selected %}aria-current="page"{% endif %}>
+  <span class="ui-nav-dot"></span><span class="min-w-0 flex-1 truncate">{{ label }}</span>
+  {% if badge is not none %}<span class="ui-count-badge">{{ badge }}</span>{% endif %}
+</a>
+{% endmacro %}
+
+{% macro drawer_action(label, endpoint, company_id=none, title=none, tone='emerald') %}
+<button type="button" data-action="open-drawer"
+  data-url="{{ url_for(endpoint, company_id=company_id) if company_id is not none else url_for(endpoint) }}"
+  data-title="{{ title or label }}" class="ui-nav-link w-full text-left">
+  <span class="h-1.5 w-1.5 rounded-full {{ {'emerald':'bg-emerald-400','rose':'bg-rose-400','violet':'bg-violet-400','sky':'bg-sky-400','amber':'bg-amber-400'}.get(tone, 'bg-slate-400') }}"></span>
+  <span class="min-w-0 flex-1 truncate">{{ label }}</span>
+</button>
+{% endmacro %}
+
+{% macro nav_section(label) %}<div class="ui-nav-section">{{ label }}</div>{% endmacro %}
+
+{% macro button(label, href=none, variant='primary', type='button', attrs='') %}
+{% set classes = {'primary':'ui-btn-primary','secondary':'ui-btn-secondary','danger':'ui-btn-danger','ghost':'ui-btn-ghost'}.get(variant, 'ui-btn-secondary') %}
+{% if href %}<a href="{{ href }}" class="ui-btn {{ classes }}" {{ attrs|safe }}>{{ caller() if caller is defined else '' }}{{ label }}</a>
+{% else %}<button type="{{ type }}" class="ui-btn {{ classes }}" {{ attrs|safe }}>{{ caller() if caller is defined else '' }}{{ label }}</button>{% endif %}
+{% endmacro %}
+
+{% macro page_header(title, subtitle=none) %}
+<header class="ui-page-header"><div class="min-w-0"><h2 class="ui-page-title">{{ title }}</h2>{% if subtitle %}<p class="ui-page-subtitle">{{ subtitle }}</p>{% endif %}</div>
+{% if caller is defined %}<div class="flex w-full flex-wrap items-center gap-2 sm:w-auto sm:justify-end">{{ caller() }}</div>{% endif %}</header>
+{% endmacro %}
+
+{% macro search_input(name='search', value='', placeholder='Buscar…') %}
+<div class="relative"><svg class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg><input name="{{ name }}" value="{{ value }}" type="search" placeholder="{{ placeholder }}" class="ui-input w-full pl-9 sm:w-72"></div>
+{% endmacro %}
+
+{% macro stat_card(label, value, detail=none, tone='emerald', growth=none) %}
+{% set tone_class = {'emerald':'bg-emerald-500','amber':'bg-amber-500','sky':'bg-sky-500','violet':'bg-violet-500','rose':'bg-rose-500'}.get(tone, 'bg-slate-500') %}
+<article class="ui-stat-card"><div class="flex items-start justify-between gap-4"><div class="min-w-0"><p class="ui-stat-label">{{ label }}</p><p class="ui-stat-value">{{ value }}</p></div><span class="h-10 w-1.5 rounded-full {{ tone_class }}"></span></div>
+{% if growth is not none %}<p class="mt-4 text-xs font-medium {{ 'text-emerald-700' if growth >= 0 else 'text-rose-700' }}">{{ '+' if growth > 0 else '' }}{{ growth }}% vs. mes anterior</p>{% elif detail %}<p class="mt-4 text-xs text-slate-500">{{ detail }}</p>{% endif %}</article>
+{% endmacro %}
+
+{% macro status_badge(label, tone='slate') %}
+{% set cls = {'emerald':'bg-emerald-50 text-emerald-700 ring-emerald-600/10','amber':'bg-amber-50 text-amber-700 ring-amber-600/10','rose':'bg-rose-50 text-rose-700 ring-rose-600/10','sky':'bg-sky-50 text-sky-700 ring-sky-600/10','violet':'bg-violet-50 text-violet-700 ring-violet-600/10','slate':'bg-slate-100 text-slate-600 ring-slate-500/10'}.get(tone, 'bg-slate-100 text-slate-600 ring-slate-500/10') %}
+<span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset {{ cls }}">{{ label }}</span>
+{% endmacro %}
+
+{% macro empty_state(title, description=none, colspan=1) %}
+<tr><td colspan="{{ colspan }}" class="px-6 py-14 text-center"><div class="mx-auto max-w-sm"><div class="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-slate-400">—</div><p class="text-sm font-semibold text-slate-700">{{ title }}</p>{% if description %}<p class="mt-1 text-xs text-slate-500">{{ description }}</p>{% endif %}</div></td></tr>
+{% endmacro %}
+
+{% macro pagination(pagination, endpoint, company_id=none) %}
+{% if pagination and pagination.pages > 1 %}<nav class="ui-pagination" aria-label="Paginación"><span class="text-xs text-slate-500">Página {{ pagination.page }} de {{ pagination.pages }}</span><div class="flex gap-1">{% if pagination.has_prev %}<a class="ui-btn ui-btn-secondary px-3 py-1.5" href="{{ page_url(pagination.prev_num, endpoint, company_id=company_id) if company_id is not none else page_url(pagination.prev_num, endpoint) }}">Anterior</a>{% endif %}{% if pagination.has_next %}<a class="ui-btn ui-btn-secondary px-3 py-1.5" href="{{ page_url(pagination.next_num, endpoint, company_id=company_id) if company_id is not none else page_url(pagination.next_num, endpoint) }}">Siguiente</a>{% endif %}</div></nav>{% endif %}
+{% endmacro %}

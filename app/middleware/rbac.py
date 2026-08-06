@@ -111,6 +111,15 @@ ROUTE_PERMISSIONS: dict[str, str] = {
     'invoices.export':        'invoices.view',
     'invoices.item_row':      'invoices.manage',
     'invoices.print_invoice': 'invoices.view',
+    'invoices.templates_index':        'invoices.view',
+    'invoices.templates_preview':      'invoices.view',
+    'invoices.templates_new':          'invoices.manage',
+    'invoices.templates_store':        'invoices.manage',
+    'invoices.templates_edit':         'invoices.manage',
+    'invoices.templates_update':       'invoices.manage',
+    'invoices.templates_set_default':  'invoices.manage',
+    'invoices.templates_delete':       'invoices.delete',
+    'invoices.templates_live_preview': 'invoices.manage',
 
     # POS uses invoice creation/payment permissions because each checkout creates
     # an invoice and may record a payment with accounting impact.
@@ -188,6 +197,11 @@ ROUTE_PERMISSIONS: dict[str, str] = {
     'accounting.generate_default_accounts': 'accounting.manage',
     'accounting.create_tag':                'accounting.manage',
     'accounting.delete_tag':                'accounting.manage',
+    'accounting.delete_attachment':         'accounting.delete',
+    'accounting.loans_list':                'accounting.view',
+    'accounting.view_transaction':          'accounting.view',
+    'accounting.create_loan':               'accounting.manage',
+    'accounting.pay_loan':                  'accounting.manage',
 
     # ── HR ────────────────────────────────────────────────────────────────
     'hr.employees':                       'hr.view',

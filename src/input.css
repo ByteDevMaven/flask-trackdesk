@@ -110,3 +110,47 @@
         @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2;
     }
 }
+@layer components {
+    .ui-page { @apply min-h-full bg-slate-50 p-4 md:p-6; }
+    .ui-page-header { @apply flex flex-col gap-3 border-b border-slate-200 bg-white px-4 py-4 sm:flex-row sm:items-center sm:justify-between md:px-6; }
+    .ui-page-title { @apply truncate text-lg font-semibold tracking-tight text-slate-950; }
+    .ui-page-subtitle { @apply mt-1 text-sm text-slate-500; }
+    .ui-card { @apply overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm; }
+    .ui-card:has(> .ui-table) { @apply overflow-x-auto; }
+    .ui-card > .ui-table { @apply min-w-[44rem]; }
+    .ui-card-header { @apply flex items-center justify-between gap-3 border-b border-slate-100 px-4 py-3; }
+    .ui-card-body { @apply p-4 md:p-5; }
+    .ui-stat-card { @apply rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md; }
+    .ui-stat-label { @apply text-xs font-semibold uppercase tracking-wide text-slate-500; }
+    .ui-stat-value { @apply mt-2 truncate text-2xl font-bold tracking-tight text-slate-950; }
+    .ui-btn { @apply inline-flex min-h-9 items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50; }
+    .ui-btn-primary { @apply bg-emerald-600 text-white shadow-sm hover:bg-emerald-700; }
+    .ui-btn-secondary { @apply border border-slate-300 bg-white text-slate-700 shadow-sm hover:bg-slate-50; }
+    .ui-btn-danger { @apply bg-rose-600 text-white shadow-sm hover:bg-rose-700; }
+    .ui-btn-ghost { @apply text-slate-600 hover:bg-slate-100 hover:text-slate-900; }
+    .ui-input { @apply w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20; }
+    .ui-field { @apply space-y-1.5; }
+    .ui-label { @apply block text-sm font-semibold text-slate-700; }
+    .ui-help { @apply text-xs text-slate-500; }
+    .ui-error { @apply text-xs font-medium text-rose-600; }
+    .ui-nav-link { @apply flex min-h-9 items-center gap-3 rounded-lg px-3 py-2 text-sm text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900; }
+    .ui-nav-link-active { @apply bg-emerald-50 font-semibold text-emerald-700 hover:bg-emerald-50 hover:text-emerald-700; }
+    .ui-nav-dot { @apply h-1.5 w-1.5 flex-none rounded-full bg-slate-300; }
+    .ui-nav-link-active .ui-nav-dot { @apply bg-emerald-500; }
+    .ui-nav-section { @apply mb-1 mt-4 px-3 text-[11px] font-bold uppercase tracking-wider text-slate-400; }
+    .ui-count-badge { @apply rounded-full bg-slate-100 px-2 py-0.5 text-xs font-semibold text-slate-600; }
+    .ui-table-wrap { @apply w-full overflow-x-auto; }
+    .ui-table { @apply w-full min-w-max text-left; }
+    .ui-table thead { @apply border-b border-slate-200 bg-slate-50/80; }
+    .ui-table th { @apply px-4 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500; }
+    .ui-table tbody { @apply divide-y divide-slate-100; }
+    .ui-table td { @apply px-4 py-3 text-sm text-slate-700; }
+    .ui-table tbody tr { @apply transition-colors hover:bg-slate-50; }
+    .ui-pagination { @apply flex flex-wrap items-center justify-between gap-3 border-t border-slate-100 bg-white px-4 py-3; }
+}
+
+@layer base {
+    :focus-visible { @apply outline-none ring-2 ring-emerald-500 ring-offset-2; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    input, select, textarea, button { font: inherit; }
+}

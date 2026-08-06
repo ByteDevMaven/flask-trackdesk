@@ -1,9 +1,16 @@
-from flask import Flask, session
+from flask import Flask, request, session, url_for
 from flask_login import current_user
 from app.extensions import get_locale
 from config import Config
 
 def register_context_processors(app: Flask):
+    def page_url(page, endpoint=None, **values):
+        """Build a pagination URL while preserving the active filters."""
+        args = request.args.to_dict(flat=True)
+        args.update(values)
+        args['page'] = page
+        return url_for(endpoint or request.endpoint, **args)
+
     @app.context_processor
     def inject_conf_var():
         from datetime import datetime, UTC
@@ -12,7 +19,8 @@ def register_context_processors(app: Flask):
             CURRENT_LANGUAGE=get_locale(),
             now=datetime.now(UTC),
             company_id=session.get('selected_company_slug'),
-            current_user=current_user
+            current_user=current_user,
+            page_url=page_url
         )
 
     @app.template_filter('role_name_es')

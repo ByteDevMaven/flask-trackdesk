@@ -12,8 +12,7 @@
     return;
   }
 
-  const docType = formData.docType || 'invoice';
-  const isInvoice = docType === 'invoice';
+  let currentDocType = formData.docType || 'invoice';
   const clients = Array.isArray(formData.clients) ? formData.clients : [];
   const inventoryItems = Array.isArray(formData.inventoryItems) ? formData.inventoryItems : [];
   let itemIndex = Number(formData.itemIndex) || 0;
@@ -260,7 +259,7 @@
     filtered.forEach(p => {
       const stockVal = Number(p.stock) || 0;
       const isOutOfStock = stockVal <= 0;
-      const isBlocked = isInvoice && isOutOfStock;
+      const isBlocked = currentDocType === 'invoice' && isOutOfStock;
 
       const div = document.createElement('div');
       div.className = `flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 cursor-pointer transition-colors ${isBlocked ? 'opacity-50 cursor-not-allowed' : ''}`;
@@ -376,7 +375,7 @@
     const generalDiscount = Math.max(0, Number(document.getElementById('discount-input')?.value) || 0);
     const netSubtotal = Math.max(0, subtotal - generalDiscount);
     const taxRate = Math.max(0, Number(formData.taxRate) || 0);
-    const tax = Math.round((netSubtotal * taxRate + Number.EPSILON) * 100) / 100;
+    const tax = Math.round((netSubtotal * taxRate / 100 + Number.EPSILON) * 100) / 100;
     const total = Math.round((netSubtotal + tax + Number.EPSILON) * 100) / 100;
 
     const subtotalDisplay = document.getElementById('subtotal-display');
@@ -390,6 +389,29 @@
     if (totalDisplay) totalDisplay.textContent = total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     if (sidebarTotalDisplay) sidebarTotalDisplay.textContent = total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   }
+  const documentTypeInput = document.getElementById('document-type-input');
+  const changeDocumentTypeBtn = document.getElementById('change-document-type-btn');
+  const saveDocumentBtn = document.getElementById('save-document-btn');
+
+  function renderDocumentType() {
+    const isInvoice = currentDocType === 'invoice';
+    if (documentTypeInput) documentTypeInput.value = currentDocType;
+    if (changeDocumentTypeBtn) {
+      changeDocumentTypeBtn.textContent = isInvoice ? 'Cambiar a Cotización' : 'Cambiar a Factura';
+    }
+    if (saveDocumentBtn) {
+      saveDocumentBtn.textContent = formData.isEditing
+        ? (isInvoice ? 'Guardar como Factura' : 'Guardar como Cotización')
+        : (isInvoice ? 'Crear Factura' : 'Crear Cotización');
+    }
+  }
+
+  changeDocumentTypeBtn?.addEventListener('click', () => {
+    currentDocType = currentDocType === 'invoice' ? 'quote' : 'invoice';
+    renderDocumentType();
+  });
+
+  renderDocumentType();
   function bindRowEvents(row) {
     row.querySelector('.remove-item')?.addEventListener('click', () => {
       row.remove();

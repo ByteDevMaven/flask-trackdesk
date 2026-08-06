@@ -52,7 +52,7 @@ TrackDesk{% endblock %}
     action="{{ url_for('invoices.update', company_id=cid, id=invoice.id) if invoice else url_for('invoices.store', company_id=cid) }}"
     id="invoice-form" class="space-y-6 max-w-7xl mx-auto">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <input type="hidden" name="type" value="{{ doc_type or 'invoice' }}">
+    <input type="hidden" name="type" id="document-type-input" value="{{ doc_type or 'invoice' }}">
 
     <div class="bg-white rounded-lg border border-slate-200 p-4 md:p-6 shadow-sm">
       <h3 class="text-sm font-bold text-slate-900 mb-4 flex items-center gap-2">
@@ -204,7 +204,7 @@ TrackDesk{% endblock %}
       </div>
 
       <div class="overflow-x-auto">
-        <table class="w-full" id="items-table">
+        <table class="ui-table" id="items-table">
           <thead>
             <tr
               class="border-b border-slate-150 text-xs font-bold text-slate-500 uppercase tracking-wider bg-slate-50/30">
@@ -312,7 +312,11 @@ TrackDesk{% endblock %}
         class="px-4 py-2.5 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-colors bg-white shadow-sm">
         Cancelar
       </a>
-      <button type="submit"
+      <button type="button" id="change-document-type-btn"
+        class="px-4 py-2.5 border border-sky-200 rounded-lg text-sm font-semibold text-sky-700 hover:bg-sky-50 transition-colors bg-white shadow-sm">
+        Cambiar a {{ 'Factura' if doc_type == 'quote' else 'Cotización' }}
+      </button>
+      <button type="submit" id="save-document-btn"
         class="flex-1 px-5 py-2.5 bg-emerald-600 text-white rounded-lg text-sm font-bold hover:bg-emerald-700 transition-colors shadow-sm">
         {{ 'Guardar Cambios' if invoice else ('Crear Cotización' if doc_type == 'quote' else 'Crear Factura') }}
       </button>
@@ -423,6 +427,7 @@ TrackDesk{% endblock %}
 <script id="invoice-form-data" type="application/json">
 {
   "docType": {{ (doc_type or 'invoice')|tojson|safe }},
+  "isEditing": {{ (invoice is not none)|tojson|safe }},
   "itemIndex": {{ (document_items|length if document_items else 0)|tojson|safe }},
   "taxRate": {{ (company.tax_rate if company else 0)|tojson|safe }},
   "clients": [

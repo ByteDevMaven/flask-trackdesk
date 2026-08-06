@@ -142,12 +142,12 @@ def generate_invoice_pdf(
 
 def _generate_html_pdf(document, template, currency, tax_rate, include_tax, seller_name):
     """Generates PDF using xhtml2pdf and Jinja2 based on database html template"""
-    client = Contact.query.get(document.client_id) if document.client_id else None
+    client = Contact.query.filter_by(id=document.client_id, company_id=document.company_id).first() if document.client_id else None
 
     document_items = DocumentItem.query.filter_by(document_id=document.id).all()
     for item in document_items:
         item.inventory_item = (
-            InventoryItem.query.get(item.inventory_item_id)
+            InventoryItem.query.filter_by(id=item.inventory_item_id, company_id=document.company_id).first()
             if item.inventory_item_id else None
         )
 
@@ -228,12 +228,12 @@ def _generate_overlay_pdf(document, template, currency, tax_rate, include_tax, s
         header=h, client=cl, items=it, totals=tot
     )
 
-    client = Contact.query.get(document.client_id) if document.client_id else None
+    client = Contact.query.filter_by(id=document.client_id, company_id=document.company_id).first() if document.client_id else None
 
     document_items = DocumentItem.query.filter_by(document_id=document.id).all()
     for item in document_items:
         item.inventory_item = (
-            InventoryItem.query.get(item.inventory_item_id)
+            InventoryItem.query.filter_by(id=item.inventory_item_id, company_id=document.company_id).first()
             if item.inventory_item_id else None
         )
 

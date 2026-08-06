@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 
 <head>
   <meta charset="UTF-8">
@@ -22,6 +22,7 @@
 </head>
 
 <body class="bg-slate-50 text-slate-800 antialiased">
+  <a href="#main-content" class="sr-only fixed left-4 top-4 z-[100] rounded-lg bg-white px-4 py-2 font-semibold text-emerald-700 shadow-lg focus:not-sr-only">Saltar al contenido</a>
 
   {% with messages = get_flashed_messages(with_categories=true) %}
   {% for category, message in messages %}
@@ -34,7 +35,7 @@
     <div id="mobile-backdrop" class="fixed inset-0 bg-slate-900/50 z-40 hidden md:hidden transition-opacity duration-300 opacity-0"></div>
 
     <!-- Sidebar Wrapper -->
-    <div id="sidebar-wrapper" class="fixed inset-y-0 left-0 z-50 flex flex-col md:flex-row transform -translate-x-full md:relative md:translate-x-0 transition-transform duration-300 ease-in-out shadow-2xl md:shadow-none w-64 md:w-auto bg-white">
+    <div id="sidebar-wrapper" role="navigation" aria-label="Navegación principal" class="fixed inset-y-0 left-0 z-50 flex w-[min(20rem,calc(100vw-2rem))] -translate-x-full flex-col bg-white shadow-2xl transition-transform duration-300 ease-in-out md:relative md:w-auto md:translate-x-0 md:flex-row md:shadow-none">
       <aside id="primary-sidebar" class="w-full md:w-16 h-16 md:h-auto bg-slate-800 flex flex-row md:flex-col items-center justify-between md:justify-start px-2 py-0 md:py-4 md:px-0 flex-shrink-0 z-30 overflow-x-auto md:overflow-visible">
 
       <a href="{{ url_for('dashboard.index', company_id=session.get('selected_company_slug')) }}"
@@ -189,11 +190,11 @@
       <div class="relative mt-0 md:mt-auto mb-0 md:mb-2 ml-2 md:ml-0 flex-shrink-0" id="user-settings-wrapper">
         <button id="user-settings-btn"
           class="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center text-white text-sm font-semibold cursor-pointer hover:bg-emerald-700 transition-colors focus:outline-none"
-          title="{{ current_user.name }}">
+          title="{{ current_user.name }}" aria-label="Abrir menú de usuario" aria-expanded="false" aria-controls="user-settings-menu">
           {{ current_user.name[:2]|upper }}
         </button>
         <div id="user-settings-menu"
-          class="hidden absolute bottom-0 left-full ml-4 w-48 bg-white rounded-lg border border-slate-200 shadow-lg z-50 py-1 origin-bottom-left">
+          class="hidden absolute bottom-full right-0 mb-2 w-56 rounded-xl border border-slate-200 bg-white py-1 shadow-xl z-50 md:bottom-0 md:left-full md:right-auto md:mb-0 md:ml-4">
           <div class="px-4 py-2 border-b border-slate-100">
             <p class="text-sm font-medium text-slate-800 truncate">{{ current_user.name }}</p>
             <p class="text-xs text-slate-500 truncate">{{ current_user.email }}</p>
@@ -237,7 +238,7 @@
       <div class="p-4 border-b border-slate-100 flex items-center justify-between">
         <h2 class="text-sm font-semibold text-slate-900">{% block sidebar_title %}Menú{% endblock %}</h2>
         <button id="collapse-sidebar-btn"
-          class="p-1 rounded hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors" title="Colapsar">
+          class="p-2 rounded-lg hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors" title="Colapsar" aria-label="Colapsar navegación secundaria" aria-controls="secondary-sidebar">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
           </svg>
@@ -274,7 +275,7 @@
     </aside>
 
     <button id="expand-sidebar-btn" title="Expandir" type="button"
-      class="hidden md:hidden w-6 bg-white border-r border-slate-200 flex-shrink-0 items-center justify-center hover:bg-slate-50 transition-colors z-20">
+      class="hidden md:hidden w-8 bg-white border-r border-slate-200 flex-shrink-0 items-center justify-center hover:bg-slate-50 transition-colors z-20" aria-label="Expandir navegación secundaria" aria-controls="secondary-sidebar">
       <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7" />
       </svg>
@@ -285,7 +286,7 @@
 
       <header class="h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 md:px-6 flex-shrink-0 z-10 w-full">
         <div class="flex items-center gap-3 md:gap-4">
-          <button id="mobile-menu-btn" class="md:hidden p-1.5 -ml-1.5 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors">
+          <button id="mobile-menu-btn" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="sidebar-wrapper" class="md:hidden p-2 -ml-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
@@ -314,8 +315,8 @@
             data-mark-all-url="{{ url_for('notifications.mark_all_read') }}"
             data-center-url="{{ url_for('notifications.index') }}">
             <button id="notification-menu-btn" type="button"
-              class="relative w-9 h-9 rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-500 hover:text-slate-700 transition-colors"
-              title="Notificaciones">
+              class="relative w-10 h-10 rounded-lg hover:bg-slate-100 flex items-center justify-center text-slate-500 hover:text-slate-700 transition-colors"
+              title="Notificaciones" aria-label="Abrir notificaciones" aria-expanded="false" aria-controls="notification-menu">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                   d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
@@ -324,7 +325,7 @@
                 class="hidden absolute -right-1 -top-1 min-w-4 h-4 rounded-full bg-emerald-500 px-1 text-[10px] font-bold leading-4 text-white text-center"></span>
             </button>
             <div id="notification-menu"
-              class="hidden absolute right-0 top-full mt-2 w-80 overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xl z-50">
+              class="hidden absolute right-0 top-full mt-2 w-[min(20rem,calc(100vw-2rem))] overflow-hidden rounded-xl border border-slate-200 bg-white shadow-xl z-50">
               <div class="flex items-center justify-between border-b border-slate-100 px-4 py-3">
                 <div>
                   <p class="text-sm font-semibold text-slate-900">Notificaciones</p>
@@ -348,13 +349,13 @@
 
           {% if current_user.is_authenticated and current_user.companies|length > 1 %}
           <div class="relative" id="company-menu-wrapper">
-            <button id="company-menu-btn"
-              class="flex items-center gap-2 px-3 h-9 rounded-lg text-sm text-slate-600 hover:bg-slate-100 transition-colors border border-slate-200">
+            <button id="company-menu-btn" type="button" aria-label="Cambiar empresa" aria-expanded="false" aria-controls="company-menu"
+              class="flex h-10 items-center gap-2 rounded-lg border border-slate-200 px-2 text-sm text-slate-600 transition-colors hover:bg-slate-100 sm:px-3">
               <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                   d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
-              <span class="max-w-[120px] truncate">
+              <span class="hidden max-w-[120px] truncate sm:inline">
                 {{ current_user.companies|selectattr('id', 'equalto',
                 session.get('selected_company_id')|int)|map(attribute='name')|first|default('Empresa') }}
               </span>
@@ -396,13 +397,13 @@
 
       </header>
 
-      <main class="{% block main_class %}flex-1 overflow-y-auto bg-slate-50{% endblock %}">
+      <main id="main-content" tabindex="-1" class="{% block main_class %}flex-1 overflow-y-auto bg-slate-50{% endblock %}">
         {% block content %}{% endblock %}
       </main>
     </div>
   </div>
 
-  <div id="confirm-modal" class="fixed inset-0 z-[90] hidden">
+  <div id="confirm-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-title" class="fixed inset-0 z-[90] hidden">
     <div id="confirm-modal-backdrop" class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm"></div>
     <div class="relative flex items-center justify-center min-h-screen p-4">
       <div class="bg-white rounded-xl shadow-xl max-w-sm w-full p-4 md:p-6">
@@ -430,7 +431,7 @@
     </div>
   </div>
 
-  <div id="notification-popup-modal" class="fixed inset-0 z-[95] hidden">
+  <div id="notification-popup-modal" role="dialog" aria-modal="true" aria-labelledby="notification-popup-title" class="fixed inset-0 z-[95] hidden">
     <div class="absolute inset-0 bg-slate-900/50 backdrop-blur-sm"></div>
     <div class="relative flex min-h-screen items-center justify-center p-4">
       <div class="w-full max-w-md rounded-lg bg-white shadow-xl">
@@ -476,40 +477,12 @@
     <div id="drawer-body" class="flex-1 overflow-y-auto"></div>
   </aside>
 
-  <div id="toast-container" class="fixed top-4 right-4 z-[80] flex flex-col gap-2 w-80 pointer-events-none">
+  <div id="toast-container" aria-live="polite" aria-atomic="true" class="fixed left-4 right-4 top-4 z-[80] flex flex-col gap-2 pointer-events-none sm:left-auto sm:w-80">
   </div>
 
   <script src="{{ url_for('static', filename='js/modals.js') }}"></script>
   <script src="{{ url_for('static', filename='js/drawer.js') }}"></script>
   <script src="{{ url_for('static', filename='js/index.js') }}"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-      const sidebarWrapper = document.getElementById('sidebar-wrapper');
-      const mobileBackdrop = document.getElementById('mobile-backdrop');
-
-      function toggleMobileMenu() {
-        const isClosed = sidebarWrapper.classList.contains('-translate-x-full');
-        if (isClosed) {
-          sidebarWrapper.classList.remove('-translate-x-full');
-          mobileBackdrop.classList.remove('hidden');
-          // small delay to allow display block to apply before opacity transition
-          setTimeout(() => mobileBackdrop.classList.remove('opacity-0'), 10);
-        } else {
-          sidebarWrapper.classList.add('-translate-x-full');
-          mobileBackdrop.classList.add('opacity-0');
-          setTimeout(() => mobileBackdrop.classList.add('hidden'), 300);
-        }
-      }
-
-      if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-      }
-      if (mobileBackdrop) {
-        mobileBackdrop.addEventListener('click', toggleMobileMenu);
-      }
-    });
-  </script>
   {% block scripts %}{% endblock %}
 </body>
 

@@ -147,7 +147,7 @@ def update(company_id, id):
         return redirect(url_for('orders.view', company_id=company_id, id=id))
     else:
         flash(result['error'], 'error')
-        purchase_order = PurchaseOrder.query.get(id)
+        purchase_order = PurchaseOrder.query.filter_by(id=id, company_id=company_id).first_or_404()
         return render_template('orders/form.html',
                                company_id=company_id,
                                suppliers=suppliers,

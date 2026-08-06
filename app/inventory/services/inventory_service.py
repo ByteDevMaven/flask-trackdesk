@@ -3,7 +3,8 @@ from datetime import datetime, timedelta, UTC
 from sqlalchemy import or_, and_, desc, asc, func
 from flask_login import current_user
 
-from app.models import db, InventoryItem, StockMovement, StockMovementType
+from app.models import Contact, db, InventoryItem, StockMovement, StockMovementType
+from app.models.enums import ContactType
 from .low_stock_notifications import LOW_STOCK_THRESHOLD
 
 
@@ -21,6 +22,22 @@ def _item_ids_from_search_tag(company_id, search):
 
     candidates.add(int(digits.lstrip('0') or '0'))
     return [item_id for item_id in candidates if item_id > 0]
+
+
+def _validated_supplier_id(company_id, supplier_id):
+    if supplier_id in (None, ''):
+        return None
+    if not str(supplier_id).isdigit():
+        raise ValueError('Invalid supplier')
+
+    supplier = Contact.query.filter(
+        Contact.id == int(supplier_id),
+        Contact.company_id == company_id,
+        Contact.type.in_([ContactType.supplier, ContactType.customer_supplier]),
+    ).first()
+    if not supplier:
+        raise ValueError('Supplier not found for this company')
+    return supplier.id
 
 
 class InventoryService:
@@ -167,7 +184,7 @@ class InventoryService:
             price=price,
             cost_price=cost_price,
             discount=discount,
-            supplier_id=int(supplier_id) if supplier_id and str(supplier_id).isdigit() else None,
+            supplier_id=_validated_supplier_id(company_id, supplier_id),
             category_id=int(category_id) if category_id and str(category_id).isdigit() else None,
             is_service=is_service
         )
@@ -255,7 +272,7 @@ class InventoryService:
             item.discount = discount
             
         if supplier_id is not None:
-            item.supplier_id = int(supplier_id) if str(supplier_id).isdigit() else None
+            item.supplier_id = _validated_supplier_id(company_id, supplier_id)
 
         if category_id is not None:
             item.category_id = int(category_id) if str(category_id).isdigit() else None

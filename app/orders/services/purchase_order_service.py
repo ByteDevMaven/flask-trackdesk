@@ -70,7 +70,7 @@ def create_purchase_order(company_id, form_data):
                 try:
                     quantity = int(quantity)
                     
-                    inventory_item = InventoryItem.query.get(int(item_id))
+                    inventory_item = InventoryItem.query.filter_by(id=int(item_id), company_id=company_id).first()
                     if not inventory_item or inventory_item.company_id != company_id:
                         continue
 
@@ -168,7 +168,7 @@ def update_purchase_order(company_id, order_id, form_data):
             except (ValueError, TypeError):
                 continue
 
-            inventory_item = InventoryItem.query.get(item_id)
+            inventory_item = InventoryItem.query.filter_by(id=item_id, company_id=company_id).first()
             if not inventory_item or inventory_item.company_id != company_id:
                 continue
 
@@ -311,7 +311,7 @@ def update_purchase_order(company_id, order_id, form_data):
         
         for item_id, delta in inventory_deltas.items():
             if delta != 0:
-                inv = InventoryItem.query.get(item_id)
+                inv = InventoryItem.query.filter_by(id=item_id, company_id=company_id).first()
                 if inv:
                     inv.quantity = (inv.quantity or 0) + delta
                     db.session.add(inv)
