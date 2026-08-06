@@ -15,8 +15,8 @@
     "semantic_hash": "575eea8e049486e005f9383dd12f3b9f"
   },
   "app/accounting/routes.py": {
-    "mtime": 1785911580.7106345,
-    "ast_hash": "a58be342f06fb59f6aeaf76d3d049965",
+    "mtime": 1783914660.7735963,
+    "ast_hash": "e42a802963cd5ece40f48be85cf7346c",
     "semantic_hash": ""
   },
   "app/accounting/services/__init__.py": {
@@ -100,8 +100,8 @@
     "semantic_hash": "046f05c8913958b2a682ba0b509ceba8"
   },
   "app/context_processors.py": {
-    "mtime": 1785911320.8621814,
-    "ast_hash": "da539db5b8f9937b84090db050783eda",
+    "mtime": 1784776736.0323844,
+    "ast_hash": "40ca503c7c026e5b3a0acd9112e9d69c",
     "semantic_hash": ""
   },
   "app/dashboard/__init__.py": {
@@ -120,9 +120,9 @@
     "semantic_hash": "c12c8028cf27765592a92b36d577bd84"
   },
   "app/dashboard/services/dashboard_service.py": {
-    "mtime": 1785910358.828354,
-    "ast_hash": "89fe2eeaea303ffa39485ddc16ac7431",
-    "semantic_hash": ""
+    "mtime": 1780277055.7364671,
+    "ast_hash": "b63519bf200c7415d0bc05b135a8e386",
+    "semantic_hash": "b63519bf200c7415d0bc05b135a8e386"
   },
   "app/extensions.py": {
     "mtime": 1784776418.4457116,
@@ -140,9 +140,9 @@
     "semantic_hash": "970186455043bd01ec3381a298b63471"
   },
   "app/hr/routes.py": {
-    "mtime": 1785911695.8307533,
-    "ast_hash": "b3a00342cdadb0ad65b653f0c4e0e2db",
-    "semantic_hash": ""
+    "mtime": 1780890076.40532,
+    "ast_hash": "2a1544c928904bca45f2136caf58c496",
+    "semantic_hash": "2a1544c928904bca45f2136caf58c496"
   },
   "app/inventory/__init__.py": {
     "mtime": 1779222751.186567,
@@ -150,8 +150,8 @@
     "semantic_hash": "b6bc215a7a633d7c4529f241b8046022"
   },
   "app/inventory/routes.py": {
-    "mtime": 1785911663.7780087,
-    "ast_hash": "c3579eaafa921ed6892f08ff02344906",
+    "mtime": 1784778833.9673302,
+    "ast_hash": "9be922a1f9b0692939351d4807dbf143",
     "semantic_hash": ""
   },
   "app/inventory/services/__init__.py": {
@@ -160,8 +160,8 @@
     "semantic_hash": ""
   },
   "app/inventory/services/inventory_service.py": {
-    "mtime": 1785981823.7730045,
-    "ast_hash": "50091d4fcf899c556032aaa399530d28",
+    "mtime": 1784826494.166291,
+    "ast_hash": "cdf3d1221194a7c4d6b41e9a609ac00d",
     "semantic_hash": ""
   },
   "app/inventory/static/js/barcode.js": {
@@ -175,8 +175,8 @@
     "semantic_hash": "3eb0159e2b400a5e34e6b92c5da8d806"
   },
   "app/invoices/routes.py": {
-    "mtime": 1785911732.372191,
-    "ast_hash": "6ac1bdd0a98d5ed8afefbe3c1757f502",
+    "mtime": 1785383566.8852203,
+    "ast_hash": "dbe9d58b99cf8c3d930eb7a78cab6cee",
     "semantic_hash": ""
   },
   "app/invoices/services/__init__.py": {
@@ -185,13 +185,13 @@
     "semantic_hash": ""
   },
   "app/invoices/services/invoice_create_service.py": {
-    "mtime": 1785981167.0656824,
-    "ast_hash": "691b1e774b72f30199b03fa619d3377b",
+    "mtime": 1785284705.316232,
+    "ast_hash": "ca82a3c2551d22f91fbb4f00f1a99818",
     "semantic_hash": ""
   },
   "app/invoices/services/invoice_pdf_service.py": {
-    "mtime": 1785911017.058066,
-    "ast_hash": "f1c612df4f34e901adc8870704aad909",
+    "mtime": 1785284705.3192315,
+    "ast_hash": "8ebd1172ea91138bd8c1241bea1a7752",
     "semantic_hash": ""
   },
   "app/invoices/services/invoice_query_service.py": {
@@ -200,13 +200,13 @@
     "semantic_hash": ""
   },
   "app/invoices/services/invoice_update_service.py": {
-    "mtime": 1785911006.784194,
-    "ast_hash": "d83736ff6839481567cf2aae80751791",
+    "mtime": 1785284705.3172326,
+    "ast_hash": "0e38ec158cccb137841eb5c269ec4ac2",
     "semantic_hash": ""
   },
   "app/invoices/static/js/invoice-form.js": {
-    "mtime": 1785981526.1267378,
-    "ast_hash": "66a2e1f7ac114a3548b99bb592929337",
+    "mtime": 1785284810.8702097,
+    "ast_hash": "d33a6dde4676c08d0720c26a9cc4b71b",
     "semantic_hash": ""
   },
   "app/middleware/__init__.py": {
@@ -220,8 +220,8 @@
     "semantic_hash": ""
   },
   "app/middleware/rbac.py": {
-    "mtime": 1785911289.814881,
-    "ast_hash": "c22a4f6ba497502a42f0552a3a91fef8",
+    "mtime": 1784836069.871264,
+    "ast_hash": "a10d9964c307a2ef5db27acf38c7ce91",
     "semantic_hash": ""
   },
   "app/models/__init__.py": {
@@ -385,8 +385,8 @@
     "semantic_hash": "68d6c392b6812987cc0f80c932ddfa6f"
   },
   "app/orders/routes.py": {
-    "mtime": 1785911006.7868123,
-    "ast_hash": "98b20b38085d72a66a0c11a06ea3218b",
+    "mtime": 1784776408.9843454,
+    "ast_hash": "ea97ccc161dd12d7e4933ee0c53cdd57",
     "semantic_hash": ""
   },
   "app/orders/services/__init__.py": {
@@ -400,8 +400,8 @@
     "semantic_hash": "c5450b19683de25083f330beaf957cea"
   },
   "app/orders/services/purchase_order_service.py": {
-    "mtime": 1785911006.785312,
-    "ast_hash": "693287a61320405be2320966283a3113",
+    "mtime": 1784776408.9867055,
+    "ast_hash": "b4953c9a6e754c82172c8125b6d63f5f",
     "semantic_hash": ""
   },
   "app/orders/services/purchase_order_stats_service.py": {
@@ -430,8 +430,8 @@
     "semantic_hash": "3ad686de10fcb31d4f58e596eaa337ec"
   },
   "app/payments/services/payment_service.py": {
-    "mtime": 1785910979.746342,
-    "ast_hash": "46db8a4695fc3d4782a65642b9d20c94",
+    "mtime": 1784776408.990435,
+    "ast_hash": "4b0e920daaa3701dbc6933d106a8aee4",
     "semantic_hash": ""
   },
   "app/routes.py": {
@@ -450,8 +450,8 @@
     "semantic_hash": "bff28f54832832719b349ff639abd587"
   },
   "app/static/js/index.js": {
-    "mtime": 1785912309.6729457,
-    "ast_hash": "d7fc24b3f1f1c068abca1691346f495c",
+    "mtime": 1781895285.1279533,
+    "ast_hash": "6b874eb220e087a47df3193cbb59b031",
     "semantic_hash": ""
   },
   "app/static/js/modals.js": {
@@ -660,13 +660,13 @@
     "semantic_hash": "637776aa6f7496d069afe7520c845c8a"
   },
   "app/accounting/templates/accounting/chart_of_accounts.html": {
-    "mtime": 1785910825.9546876,
-    "ast_hash": "4a36ea66e92f122be7636db3ab9b63c1",
+    "mtime": 1781668942.0255673,
+    "ast_hash": "868170e0cec03b18441a44e1ccfffeac",
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/dashboard.html": {
-    "mtime": 1785910825.9629767,
-    "ast_hash": "9a50fcd0438adebb1bfce09555e1d8eb",
+    "mtime": 1785384898.0686698,
+    "ast_hash": "b297271c4185bf8ec91bafa4ad65eb8c",
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/expense_form.html": {
@@ -675,9 +675,9 @@
     "semantic_hash": "997166f0ade003229fab0d9da4ee82a3"
   },
   "app/accounting/templates/accounting/ledger.html": {
-    "mtime": 1785912328.090998,
-    "ast_hash": "c54db18b74692cbd4c811806ee865968",
-    "semantic_hash": ""
+    "mtime": 1781245366.1533275,
+    "ast_hash": "678e680ea706aec9ba48089373dbabe5",
+    "semantic_hash": "678e680ea706aec9ba48089373dbabe5"
   },
   "app/accounting/templates/accounting/partials/account_form.html": {
     "mtime": 1784826293.7316084,
@@ -720,9 +720,9 @@
     "semantic_hash": "f76bfa56a5c54573180058c2de8fa14e"
   },
   "app/companies/templates/companies/index.html": {
-    "mtime": 1785912328.0841587,
-    "ast_hash": "bf7e200a1afae245092cb2254d8b35c3",
-    "semantic_hash": ""
+    "mtime": 1781322953.7225041,
+    "ast_hash": "708b73135d21b95bbde838ff0140098e",
+    "semantic_hash": "708b73135d21b95bbde838ff0140098e"
   },
   "app/companies/templates/companies/sequences/form.html": {
     "mtime": 1780891625.4270804,
@@ -730,9 +730,9 @@
     "semantic_hash": "a48bf05cf0939109c49825663a96110b"
   },
   "app/companies/templates/companies/sequences/index.html": {
-    "mtime": 1785910825.980151,
-    "ast_hash": "07538f1b5b656cde59a14e93d0d46148",
-    "semantic_hash": ""
+    "mtime": 1780891663.7013736,
+    "ast_hash": "da8540ff885ba0efdd72c2270761eed7",
+    "semantic_hash": "da8540ff885ba0efdd72c2270761eed7"
   },
   "app/companies/templates/companies/view.html": {
     "mtime": 1783663754.4123075,
@@ -745,19 +745,19 @@
     "semantic_hash": "992be443dfa16c3235257f2b79a24407"
   },
   "app/contacts/templates/contacts/index.html": {
-    "mtime": 1785911225.3752708,
-    "ast_hash": "fa1487a609c465db1ba6299125c408e7",
-    "semantic_hash": ""
+    "mtime": 1780891625.4360857,
+    "ast_hash": "df9492a915d3e78dac305cd2470e00e0",
+    "semantic_hash": "df9492a915d3e78dac305cd2470e00e0"
   },
   "app/contacts/templates/contacts/view.html": {
-    "mtime": 1785910825.9888291,
-    "ast_hash": "2e26757dd081f41d8f7846d64664d957",
-    "semantic_hash": ""
+    "mtime": 1780891663.7033732,
+    "ast_hash": "0afe142e4d13bb0b723ee2493176b469",
+    "semantic_hash": "0afe142e4d13bb0b723ee2493176b469"
   },
   "app/dashboard/templates/dashboard/index.html": {
-    "mtime": 1785910825.990574,
-    "ast_hash": "e6385ab0c1782d69975f3cf9ddd447dc",
-    "semantic_hash": ""
+    "mtime": 1780891849.2225096,
+    "ast_hash": "39700153ae40f10e0080e1287005e05b",
+    "semantic_hash": "39700153ae40f10e0080e1287005e05b"
   },
   "app/hr/templates/hr/employee_form.html": {
     "mtime": 1780891625.449608,
@@ -765,9 +765,9 @@
     "semantic_hash": "39be3fa42bb616156c892f7f98e254ba"
   },
   "app/hr/templates/hr/employees.html": {
-    "mtime": 1785910825.990574,
-    "ast_hash": "118b576dc0d8e79d259f752c212d4459",
-    "semantic_hash": ""
+    "mtime": 1780891663.7063718,
+    "ast_hash": "44704df7c6db9bdbe4c69989890fce1d",
+    "semantic_hash": "44704df7c6db9bdbe4c69989890fce1d"
   },
   "app/hr/templates/hr/leave_form.html": {
     "mtime": 1780891625.4537592,
@@ -775,9 +775,9 @@
     "semantic_hash": "3e424db0c8ff9c427c44cab76d9bfbc9"
   },
   "app/hr/templates/hr/leave_requests.html": {
-    "mtime": 1785910825.990574,
-    "ast_hash": "92791397def292bb2b58bafc5843aef6",
-    "semantic_hash": ""
+    "mtime": 1780891663.7073727,
+    "ast_hash": "7101e69eaf9e87d5e92d629cd13b0829",
+    "semantic_hash": "7101e69eaf9e87d5e92d629cd13b0829"
   },
   "app/hr/templates/hr/schedule_form.html": {
     "mtime": 1780891625.4635897,
@@ -785,9 +785,9 @@
     "semantic_hash": "1ca3764e4edcd4b1941b20a8fea4f977"
   },
   "app/hr/templates/hr/schedules.html": {
-    "mtime": 1785910825.990574,
-    "ast_hash": "80d103243f58ea4307b2ea8e2e0e9184",
-    "semantic_hash": ""
+    "mtime": 1780891625.462589,
+    "ast_hash": "34608bcf07f3714b2e4dca31c483f041",
+    "semantic_hash": "34608bcf07f3714b2e4dca31c483f041"
   },
   "app/inventory/templates/inventory/barcode.html": {
     "mtime": 1780275853.208333,
@@ -810,49 +810,49 @@
     "semantic_hash": ""
   },
   "app/inventory/templates/inventory/index.html": {
-    "mtime": 1785910826.0018954,
-    "ast_hash": "1ff120df820b6d4601f9a36635a02b59",
+    "mtime": 1784612104.7065327,
+    "ast_hash": "bb7fcbeeb64b99f15dd3f1b0f1f0284e",
     "semantic_hash": ""
   },
   "app/inventory/templates/inventory/movements.html": {
-    "mtime": 1785910826.0018954,
-    "ast_hash": "67f65aba3d4ddbe8c27867aef1b5e88f",
+    "mtime": 1784776743.1187224,
+    "ast_hash": "0c7894ba848ea77ab4a0dd0d6b26de97",
     "semantic_hash": ""
   },
   "app/inventory/templates/inventory/view.html": {
-    "mtime": 1785910826.0018954,
-    "ast_hash": "236ff555612f6315cbe3593d5f071001",
-    "semantic_hash": ""
+    "mtime": 1780891625.4810784,
+    "ast_hash": "c5e4e95da4b0b4c9417a4502280aebc2",
+    "semantic_hash": "c5e4e95da4b0b4c9417a4502280aebc2"
   },
   "app/invoices/templates/invoices/form.html": {
-    "mtime": 1785981526.1236713,
-    "ast_hash": "4683de9471524bac512bea11ce31b100",
+    "mtime": 1785284705.3212326,
+    "ast_hash": "e26d4db486066e5f1e2fed8e07ef31fe",
     "semantic_hash": ""
   },
   "app/invoices/templates/invoices/index.html": {
-    "mtime": 1785910826.0120494,
-    "ast_hash": "0ce17386403328a7f56a9769e61f2e3a",
+    "mtime": 1783229599.621625,
+    "ast_hash": "8fe8e4fef2c876f993ab5eb321a38a87",
     "semantic_hash": ""
   },
   "app/invoices/templates/invoices/view.html": {
-    "mtime": 1785910826.0120494,
-    "ast_hash": "59022a96bca0625adedc9e9ebfb57b69",
+    "mtime": 1785284739.9693246,
+    "ast_hash": "e041118a268c0cadb7e7dfaa039a02e7",
     "semantic_hash": ""
   },
   "app/orders/templates/orders/form.html": {
-    "mtime": 1785910826.0189545,
-    "ast_hash": "b95ef3f362a1a770d62b24b9b7f3d7e5",
+    "mtime": 1781895873.785242,
+    "ast_hash": "8d38b96f872cf6bbfb928ab3452fd371",
     "semantic_hash": ""
   },
   "app/orders/templates/orders/index.html": {
-    "mtime": 1785912328.08562,
-    "ast_hash": "f8d65c0e11ecace7ff71ccf32b643b60",
-    "semantic_hash": ""
+    "mtime": 1780891663.7205486,
+    "ast_hash": "805535c67875be9c2f902c97762a33f9",
+    "semantic_hash": "805535c67875be9c2f902c97762a33f9"
   },
   "app/orders/templates/orders/view.html": {
-    "mtime": 1785910826.0189545,
-    "ast_hash": "bdad505ca0040fc703d84f873dd76bf2",
-    "semantic_hash": ""
+    "mtime": 1781568578.2246501,
+    "ast_hash": "6fb1abbd2b3148a18cc28e067046763e",
+    "semantic_hash": "6fb1abbd2b3148a18cc28e067046763e"
   },
   "app/payments/templates/payments/form.html": {
     "mtime": 1783657828.0682347,
@@ -860,8 +860,8 @@
     "semantic_hash": ""
   },
   "app/payments/templates/payments/index.html": {
-    "mtime": 1785912328.087965,
-    "ast_hash": "adc8f456e2706fe9a3201a3e339ca889",
+    "mtime": 1783657851.1069248,
+    "ast_hash": "eaf840f5f8ece1d237b7d6686cc75378",
     "semantic_hash": ""
   },
   "app/payments/templates/payments/view.html": {
@@ -875,8 +875,8 @@
     "semantic_hash": "2baa6c504f7d59476b7e01e517ded6a7"
   },
   "app/templates/base.html": {
-    "mtime": 1785912260.657547,
-    "ast_hash": "3c88d782fef25899e8127ad16ea05af5",
+    "mtime": 1784777703.9803028,
+    "ast_hash": "6ed2f3c1271aeb5f0bbf7a21ababf280",
     "semantic_hash": ""
   },
   "app/templates/blank.html": {
@@ -895,14 +895,14 @@
     "semantic_hash": ""
   },
   "app/users/templates/users/index.html": {
-    "mtime": 1785912328.0899017,
-    "ast_hash": "5b5307d43f9cc089903c5489357349d5",
-    "semantic_hash": ""
+    "mtime": 1780967743.8005202,
+    "ast_hash": "7f73577f54e3286e0b560280086f0fed",
+    "semantic_hash": "7f73577f54e3286e0b560280086f0fed"
   },
   "app/users/templates/users/view.html": {
-    "mtime": 1785910826.0425508,
-    "ast_hash": "0fe56b4749c8e6b2bda8ecd1069c96ab",
-    "semantic_hash": ""
+    "mtime": 1780967769.0519538,
+    "ast_hash": "a1e9f814d857748beeec6428f224623e",
+    "semantic_hash": "a1e9f814d857748beeec6428f224623e"
   },
   "app/warehouses/templates/warehouses/form.html": {
     "mtime": 1781248310.162762,
@@ -910,9 +910,9 @@
     "semantic_hash": "2d162676e61aafc5fe71c3a3b160bd7a"
   },
   "app/warehouses/templates/warehouses/index.html": {
-    "mtime": 1785910826.0470533,
-    "ast_hash": "ae968acfedc9d24a1dc54cd8a29c8d03",
-    "semantic_hash": ""
+    "mtime": 1781248300.4486268,
+    "ast_hash": "2d81ff9b410a7829c919ee2f2974844c",
+    "semantic_hash": "2d81ff9b410a7829c919ee2f2974844c"
   },
   "requirements.txt": {
     "mtime": 1784776440.4803283,
@@ -975,23 +975,23 @@
     "semantic_hash": "0c8b8d61923ed1e42002375179671c58"
   },
   "app/accounting/templates/accounting/expenses.html": {
-    "mtime": 1785910825.9629767,
-    "ast_hash": "447535d801df4d5a6f831384ec4617e8",
-    "semantic_hash": ""
+    "mtime": 1781245365.6326466,
+    "ast_hash": "cd73afd94fdf1f5fa18425b7c299cbbc",
+    "semantic_hash": "cd73afd94fdf1f5fa18425b7c299cbbc"
   },
   "app/accounting/templates/accounting/income.html": {
-    "mtime": 1785910825.9649842,
-    "ast_hash": "cb74c6d7c31eb89f2bebbf46ef4a40d2",
-    "semantic_hash": ""
+    "mtime": 1781245365.8088627,
+    "ast_hash": "179f61e338175e4cced14eb37791c527",
+    "semantic_hash": "179f61e338175e4cced14eb37791c527"
   },
   "app/accounting/templates/accounting/journal.html": {
-    "mtime": 1785910825.9649842,
-    "ast_hash": "b8f947f00b0615b7210af2b6c7335071",
+    "mtime": 1783913128.0845432,
+    "ast_hash": "3b041a11aed8dc934b5accd599d1c0c3",
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/partials/_nav.html": {
-    "mtime": 1785910789.1054535,
-    "ast_hash": "560b4a48ab51bb3ed265a343aa2bf4ca",
+    "mtime": 1783656618.8908951,
+    "ast_hash": "1f2d6b2b25dd48721becd46170fadbf9",
     "semantic_hash": ""
   },
   "app/accounting/templates/accounting/partials/income_form.html": {
@@ -1020,9 +1020,9 @@
     "semantic_hash": "5dae8350b9ee3a0f0d1fac3802aa1692"
   },
   "app/accounting/templates/accounting/projects.html": {
-    "mtime": 1785910825.9649842,
-    "ast_hash": "cdac79a206a6143b73fc0b6340beb0eb",
-    "semantic_hash": ""
+    "mtime": 1781146813.2387125,
+    "ast_hash": "449c8d728f442392e3fb95a4a9bc5088",
+    "semantic_hash": "449c8d728f442392e3fb95a4a9bc5088"
   },
   "migrations/versions/e635f316840c_update_po_models_to_4_decimal_places.py": {
     "mtime": 1780712393.0705214,
@@ -1075,8 +1075,8 @@
     "semantic_hash": "9292f2a033a717d20f76d7ad34d585b1"
   },
   "app/accounting/services/_balance.py": {
-    "mtime": 1785911980.2984817,
-    "ast_hash": "fb3c9c119f3832ee6a446eadb634bd12",
+    "mtime": 1784826121.1810544,
+    "ast_hash": "5c3ffedff0e891a3725c9ca4c07d5215",
     "semantic_hash": ""
   },
   "app/accounting/services/_helpers.py": {
@@ -1120,8 +1120,8 @@
     "semantic_hash": ""
   },
   "app/inventory/templates/inventory/partials/_nav.html": {
-    "mtime": 1785910789.1054535,
-    "ast_hash": "eb4367fde2742c869f45ed9eff8c7fe2",
+    "mtime": 1784609623.0269835,
+    "ast_hash": "4b02618130ab8f28f1b1431164879055",
     "semantic_hash": ""
   },
   "migrations/versions/9f8e7d6c5b4a_add_company_timezone_and_logo.py": {
@@ -1190,8 +1190,8 @@
     "semantic_hash": ""
   },
   "app/pos/routes.py": {
-    "mtime": 1785911784.311819,
-    "ast_hash": "b7987f0e0cde08f7619229d59e912ed7",
+    "mtime": 1781895763.2423708,
+    "ast_hash": "dfbd5885787cbfa74a3b3dd2fb4b4552",
     "semantic_hash": ""
   },
   "app/pos/static/js/pos.js": {
@@ -1285,8 +1285,8 @@
     "semantic_hash": ""
   },
   "app/support/routes.py": {
-    "mtime": 1785911843.1534028,
-    "ast_hash": "debb46e6cffb76df55db7851b1186869",
+    "mtime": 1784836762.374839,
+    "ast_hash": "222157700b412333e11222ed165abbfc",
     "semantic_hash": ""
   },
   "app/support/templates/support/audit_logs.html": {
@@ -1350,8 +1350,8 @@
     "semantic_hash": ""
   },
   "app/inventory/templates/inventory/categories.html": {
-    "mtime": 1785910825.9986334,
-    "ast_hash": "1a86f15a4d229cc00f6f3e333aae783c",
+    "mtime": 1784611156.8555496,
+    "ast_hash": "a582f4bcbcdb911adb570992b3cc0e95",
     "semantic_hash": ""
   },
   "app/inventory/templates/inventory/category_form.html": {
@@ -1407,206 +1407,6 @@
   "migrations/versions/b7c8d9e0f1a2_add_document_discount_amount.py": {
     "mtime": 1785284537.2873359,
     "ast_hash": "673a0d9a5aa20bf567b676311132aaf0",
-    "semantic_hash": ""
-  },
-  "app/accounting/services/_balance_assets.py": {
-    "mtime": 1785911980.2960727,
-    "ast_hash": "b379938994e375c10f8efd8a4235fdf0",
-    "semantic_hash": ""
-  },
-  "app/accounting/services/_balance_compute.py": {
-    "mtime": 1785911980.297483,
-    "ast_hash": "497b411179e4e0906c43b45f87fc3853",
-    "semantic_hash": ""
-  },
-  "app/accounting/services/_balance_predicates.py": {
-    "mtime": 1785911980.2960727,
-    "ast_hash": "61609998e33cabd71ab3e5b9e9da23ad",
-    "semantic_hash": ""
-  },
-  "app/accounting/services/_balance_queries.py": {
-    "mtime": 1785911980.2960727,
-    "ast_hash": "9d6660fe225a4dc0e87252974f1f5cf2",
-    "semantic_hash": ""
-  },
-  "app/accounting/services/_balance_transactions.py": {
-    "mtime": 1785911980.297483,
-    "ast_hash": "00db30dc7b498ee229eb819530b572ef",
-    "semantic_hash": ""
-  },
-  "app/accounting/views/__init__.py": {
-    "mtime": 1785911580.7106345,
-    "ast_hash": "48fb1635818646a3a1bda1961ddbf054",
-    "semantic_hash": ""
-  },
-  "app/accounting/views/accounts.py": {
-    "mtime": 1785911618.7042222,
-    "ast_hash": "14590c2a205750e647c7037d2066859a",
-    "semantic_hash": ""
-  },
-  "app/accounting/views/common.py": {
-    "mtime": 1785911618.7052207,
-    "ast_hash": "33cb0012297fa30fec625ead2e706a4e",
-    "semantic_hash": ""
-  },
-  "app/accounting/views/dashboard.py": {
-    "mtime": 1785911618.7029085,
-    "ast_hash": "bb7512f4ef9a22ebfc2e536815c5d416",
-    "semantic_hash": ""
-  },
-  "app/accounting/views/expenses.py": {
-    "mtime": 1785911618.7029085,
-    "ast_hash": "732edca5c1f6d4050ff5599ad1e97de3",
-    "semantic_hash": ""
-  },
-  "app/accounting/views/income.py": {
-    "mtime": 1785911618.7042222,
-    "ast_hash": "49a1382272fc0c48199b1fd725a78eda",
-    "semantic_hash": ""
-  },
-  "app/accounting/views/journal.py": {
-    "mtime": 1785911618.7042222,
-    "ast_hash": "64efc6cfc3caf10b29186438825b1c6f",
-    "semantic_hash": ""
-  },
-  "app/accounting/views/loans.py": {
-    "mtime": 1785911618.7052207,
-    "ast_hash": "a65c5d3f571b9bd284838ee2d32dd02e",
-    "semantic_hash": ""
-  },
-  "app/accounting/views/projects.py": {
-    "mtime": 1785911618.7052207,
-    "ast_hash": "e9f03c7d0cba00e7b939ba30030a33de",
-    "semantic_hash": ""
-  },
-  "app/hr/views/__init__.py": {
-    "mtime": 1785911695.8307533,
-    "ast_hash": "8a5c1cb1c69094f4224b47f3546c96df",
-    "semantic_hash": ""
-  },
-  "app/hr/views/common.py": {
-    "mtime": 1785911695.8307533,
-    "ast_hash": "e1453309224f68bbb97249baa3e489cc",
-    "semantic_hash": ""
-  },
-  "app/hr/views/employees.py": {
-    "mtime": 1785911695.8307533,
-    "ast_hash": "dbc728a7421411c60cdc92051b50414e",
-    "semantic_hash": ""
-  },
-  "app/hr/views/leave.py": {
-    "mtime": 1785911695.8307533,
-    "ast_hash": "ee6166495d9badddceebbb86417dd94e",
-    "semantic_hash": ""
-  },
-  "app/hr/views/schedules.py": {
-    "mtime": 1785911695.8307533,
-    "ast_hash": "98c744f12a4464e77a3fe6541e4ddad3",
-    "semantic_hash": ""
-  },
-  "app/inventory/views/__init__.py": {
-    "mtime": 1785911663.7780087,
-    "ast_hash": "9ab096f289ba6bcbe7def7de8582d2db",
-    "semantic_hash": ""
-  },
-  "app/inventory/views/api.py": {
-    "mtime": 1785911663.7780087,
-    "ast_hash": "efceaa5ff9d9ef1e1865f20230d4c1e3",
-    "semantic_hash": ""
-  },
-  "app/inventory/views/barcode.py": {
-    "mtime": 1785911663.7780087,
-    "ast_hash": "dccb3453c1d16b005d38ed223f7b09cd",
-    "semantic_hash": ""
-  },
-  "app/inventory/views/catalog.py": {
-    "mtime": 1785981823.7674556,
-    "ast_hash": "1a8a5bfedc0ca83565fad296da86eaa3",
-    "semantic_hash": ""
-  },
-  "app/inventory/views/categories.py": {
-    "mtime": 1785911663.7770088,
-    "ast_hash": "e1e56e75959b19a86913f8441a1b562b",
-    "semantic_hash": ""
-  },
-  "app/inventory/views/movements.py": {
-    "mtime": 1785911663.7770088,
-    "ast_hash": "05af845a9da78d3482aa4bc1c019daac",
-    "semantic_hash": ""
-  },
-  "app/invoices/views/__init__.py": {
-    "mtime": 1785911898.555956,
-    "ast_hash": "795f5d8cdbd52dea8ac91d0d4fa62e9b",
-    "semantic_hash": ""
-  },
-  "app/invoices/views/documents.py": {
-    "mtime": 1785981190.3936772,
-    "ast_hash": "aa7a903051f9b4caa507eab6014e87f5",
-    "semantic_hash": ""
-  },
-  "app/invoices/views/payments.py": {
-    "mtime": 1785911898.5539477,
-    "ast_hash": "05f83a2076bbfac9a594fc90b538b0c1",
-    "semantic_hash": ""
-  },
-  "app/invoices/views/templates.py": {
-    "mtime": 1785911898.554953,
-    "ast_hash": "a7a044476b6efb1538dbc6950e6a1bd7",
-    "semantic_hash": ""
-  },
-  "app/pos/services/__init__.py": {
-    "mtime": 1785911784.311819,
-    "ast_hash": "9875f1ececc162c8c83aca7e6773c157",
-    "semantic_hash": ""
-  },
-  "app/pos/services/pos_service.py": {
-    "mtime": 1785911784.3108108,
-    "ast_hash": "05c3a895d02a877d6522ed3756ac4eb9",
-    "semantic_hash": ""
-  },
-  "app/support/views/__init__.py": {
-    "mtime": 1785911843.1534028,
-    "ast_hash": "78fc3c5893ed38d879a6d6d0a7b04a7b",
-    "semantic_hash": ""
-  },
-  "app/support/views/audit.py": {
-    "mtime": 1785911843.1514044,
-    "ast_hash": "b48f0418b789fb5a8c91f4d82f271cfc",
-    "semantic_hash": ""
-  },
-  "app/support/views/common.py": {
-    "mtime": 1785911843.1524024,
-    "ast_hash": "691eaea168d61f0f85a09216c0ac70e3",
-    "semantic_hash": ""
-  },
-  "app/support/views/dashboard.py": {
-    "mtime": 1785911843.1503952,
-    "ast_hash": "4dcc57948ffb1c0adb0d304022d37743",
-    "semantic_hash": ""
-  },
-  "app/support/views/database.py": {
-    "mtime": 1785911843.1524024,
-    "ast_hash": "b098b9ac8e854389b66471a79a76fb68",
-    "semantic_hash": ""
-  },
-  "app/support/views/recovery.py": {
-    "mtime": 1785911843.1514044,
-    "ast_hash": "84e4f594f5ee4755a4e141c53838346f",
-    "semantic_hash": ""
-  },
-  "app/ARCHITECTURE.md": {
-    "mtime": 1785911929.9413826,
-    "ast_hash": "ae94802eb5306869cb93c761e3991355",
-    "semantic_hash": ""
-  },
-  "app/templates/components/forms.html": {
-    "mtime": 1785910723.2087946,
-    "ast_hash": "9185cfd38417691df88f153af40e4a32",
-    "semantic_hash": ""
-  },
-  "app/templates/components/ui.html": {
-    "mtime": 1785912260.638448,
-    "ast_hash": "91a6ddb8eeeb2695a5f0ecc82df23fbf",
     "semantic_hash": ""
   }
 }
