@@ -321,7 +321,9 @@ def update(company_id, id):
                     action_type='edit_document_number',
                     payload={
                         'document_id': document.id,
-                        'new_number': submitted_doc_num
+                        'old_number': document.document_number,
+                        'new_number': submitted_doc_num,
+                        'document_type': document.type.name if hasattr(document.type, 'name') else str(document.type)
                     }
                 )
                 flash('Se ha enviado una solicitud de aprobación para cambiar el número de documento.', 'info')

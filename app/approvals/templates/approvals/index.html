@@ -71,6 +71,7 @@
                 <td class="px-5 py-4">
                   <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-50 text-blue-700">
                     {% if req.action_type == 'adjust_stock' %}Ajuste de Inventario
+                    {% elif req.action_type == 'edit_document_number' %}Cambio Número de Documento
                     {% else %}{{ req.action_type }}{% endif %}
                   </span>
                 </td>
@@ -89,6 +90,17 @@
                       <span class="text-slate-400 text-xs">Ajuste:</span>
                       <span class="font-semibold text-sm {{ 'text-emerald-600' if req.payload.adjustment > 0 else 'text-red-600' }}">
                         {{ '+' if req.payload.adjustment > 0 else '' }}{{ req.payload.adjustment }}
+                      </span>
+                    </div>
+                  {% elif req.action_type == 'edit_document_number' %}
+                    <a href="{{ url_for('invoices.view', company_id=cid, id=req.payload.document_id) }}"
+                      class="font-semibold text-emerald-700 hover:text-emerald-900 hover:underline transition-colors">
+                      {{ req.payload.get('old_number') or ('Documento #' ~ (req.payload.document_id|string)) }}
+                    </a>
+                    <div class="mt-1">
+                      <span class="text-slate-400 text-xs">Nuevo número:</span>
+                      <span class="font-semibold text-sm text-slate-700">
+                        {{ req.payload.new_number }}
                       </span>
                     </div>
                   {% else %}
@@ -151,6 +163,7 @@
                 <td class="px-5 py-4">
                   <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-slate-100 text-slate-600">
                     {% if req.action_type == 'adjust_stock' %}Ajuste de Inventario
+                    {% elif req.action_type == 'edit_document_number' %}Cambio Número de Documento
                     {% else %}{{ req.action_type }}{% endif %}
                   </span>
                 </td>
@@ -169,6 +182,17 @@
                       <span class="text-slate-400 text-xs">Ajuste:</span>
                       <span class="font-semibold text-sm {{ 'text-emerald-600' if req.payload.adjustment > 0 else 'text-red-600' }}">
                         {{ '+' if req.payload.adjustment > 0 else '' }}{{ req.payload.adjustment }}
+                      </span>
+                    </div>
+                  {% elif req.action_type == 'edit_document_number' %}
+                    <a href="{{ url_for('invoices.view', company_id=cid, id=req.payload.document_id) }}"
+                      class="font-semibold text-emerald-700 hover:underline">
+                      {{ req.payload.get('old_number') or ('Documento #' ~ (req.payload.document_id|string)) }}
+                    </a>
+                    <div class="mt-1">
+                      <span class="text-slate-400 text-xs">Nuevo número:</span>
+                      <span class="font-semibold text-sm text-slate-700">
+                        {{ req.payload.new_number }}
                       </span>
                     </div>
                   {% else %}
