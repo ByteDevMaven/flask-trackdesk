@@ -1390,8 +1390,8 @@
     "semantic_hash": ""
   },
   "app/approvals/templates/approvals/index.html": {
-    "mtime": 1786065216.8933873,
-    "ast_hash": "c2ba7db009f2e01308a6558f0b2a673e",
+    "mtime": 1786065554.5857785,
+    "ast_hash": "f37aee435707e76f7fb3203a73f53161",
     "semantic_hash": ""
   },
   "app/support/templates/support/database_browser.html": {
@@ -1540,8 +1540,8 @@
     "semantic_hash": ""
   },
   "app/invoices/views/documents.py": {
-    "mtime": 1786064149.6877317,
-    "ast_hash": "bf2437e3d9988951ae1724c04ae1d0f9",
+    "mtime": 1786065544.2793784,
+    "ast_hash": "e4565db47e8daeae643d1ec78633ab24",
     "semantic_hash": ""
   },
   "app/invoices/views/payments.py": {
