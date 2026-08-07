@@ -306,6 +306,7 @@ def update(company_id, id):
 
         submitted_doc_num = request.form.get('document_number')
 
+        number_changed = False
         if new_doc_type != document.type:
             if document.type == DocumentType.invoice and new_doc_type == DocumentType.quote:
                 _release_latest_invoice_number(company_id, document)
@@ -313,6 +314,7 @@ def update(company_id, id):
         elif submitted_doc_num and submitted_doc_num != document.document_number:
             if current_user.has_permission('documents.edit_number'):
                 document.document_number = submitted_doc_num
+                number_changed = True
             else:
                 from app.services.approval_service import ApprovalService
                 ApprovalService.create_request(
@@ -353,6 +355,10 @@ def update(company_id, id):
         )
 
         db.session.commit()
+        
+        if number_changed and document.type == DocumentType.invoice:
+            from app.invoices.services import sync_document_sequence
+            sync_document_sequence(company_id)
 
         doc_type_name = (
             'Invoice'

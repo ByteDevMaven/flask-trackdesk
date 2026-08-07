@@ -98,12 +98,15 @@ def init_action_handlers():
     # We map the kwargs from the ApprovalRequest payload directly to the service method
     ActionRegistry.register('adjust_stock', InventoryService.adjust_stock)
 
-    def edit_document_number(document_id, new_number):
+    def edit_document_number(document_id, new_number, old_number=None, document_type=None):
         from app.models import Document, db
+        from app.invoices.services import sync_document_sequence
         doc = Document.query.get(document_id)
         if doc:
             doc.document_number = new_number
             db.session.commit()
+            if doc.type.name == 'invoice':
+                sync_document_sequence(doc.company_id)
             
     ActionRegistry.register('edit_document_number', edit_document_number)
 

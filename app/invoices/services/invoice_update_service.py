@@ -156,6 +156,8 @@ def update_invoice_or_quote(document, form):
 
 def delete_invoice_or_quote(document):
     """Soft delete an invoice or quote and its items."""
+    from app.invoices.services import sync_document_sequence
+    
     items = DocumentItem.query.filter_by(document_id=document.id).all()
     for item in items:
         item.is_deleted = True
@@ -164,6 +166,9 @@ def delete_invoice_or_quote(document):
     document.is_deleted = True
     document.deleted_at = datetime.now(UTC)
     db.session.commit()
+    
+    if document.type == DocumentType.invoice:
+        sync_document_sequence(document.company_id)
 
 
 def add_invoice_payment(document, form, files=None):

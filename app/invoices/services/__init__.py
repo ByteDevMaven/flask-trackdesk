@@ -1,6 +1,6 @@
 from .invoice_query_service import get_invoice_list, export_invoice_report_xlsx
 
-from .invoice_create_service import create_invoice_or_quote
+from .invoice_create_service import create_invoice_or_quote, sync_document_sequence
 
 from .invoice_update_service import update_invoice_or_quote, delete_invoice_or_quote, add_invoice_payment
 
@@ -10,6 +10,7 @@ __all__ = [
     "get_invoice_list",
     "export_invoice_report_xlsx",
     "create_invoice_or_quote",
+    "sync_document_sequence",
     "update_invoice_or_quote",
     "delete_invoice_or_quote",
     "add_invoice_payment",

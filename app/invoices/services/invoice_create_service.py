@@ -71,6 +71,47 @@ def _release_latest_invoice_number(company_id, document):
     seq.current -= 1
     db.session.add(seq)
     return True
+
+
+def sync_document_sequence(company_id):
+    """
+    Recalculate the active sequence's current value based on the maximum document 
+    number matching the CAI prefix in the database.
+    This handles gaps when invoices are deleted or numbers are manually edited.
+    """
+    seq = db.session.query(DocumentSequence).filter(
+        DocumentSequence.company_id == company_id
+    ).with_for_update().first()
+
+    if not seq:
+        return
+
+    # Prefix format: 000-001-01- (assuming standard CAI format, len=11)
+    # The prefix can be inferred from the last generated document or we use the standard:
+    # Actually, the prefix depends on how it was generated, but it's typically 3-3-2 format.
+    # We can just fetch all invoice document numbers for the company that have '-'
+    docs = Document.query.filter(
+        Document.company_id == company_id,
+        Document.type == DocumentType.invoice,
+        Document.document_number.isnot(None),
+        Document.is_deleted == False
+    ).all()
+
+    max_val = seq.range_start - 1
+    for doc in docs:
+        try:
+            # Assumes format XXX-XXX-XX-00000000
+            parts = doc.document_number.split('-')
+            if len(parts) >= 4:
+                val = int(parts[-1])
+                if val > max_val:
+                    max_val = val
+        except (ValueError, TypeError):
+            continue
+
+    seq.current = max_val
+    db.session.add(seq)
+    db.session.flush()
 def create_invoice_or_quote(company_id, form, user_id, *, commit=True):
     doc_type = DocumentType[form.get("type", "invoice")]
 
