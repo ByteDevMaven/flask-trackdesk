@@ -4,14 +4,314 @@
   "graph": {},
   "nodes": [
     {
+      "label": "documents.py",
+      "file_type": "code",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_invoices_views_documents",
+      "community": 104,
+      "norm_label": "documents.py"
+    },
+    {
+      "label": "index()",
+      "file_type": "code",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "app_invoices_views_documents_index",
+      "community": 104,
+      "norm_label": "index()"
+    },
+    {
+      "label": "export()",
+      "file_type": "code",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L59",
+      "_origin": "ast",
+      "id": "app_invoices_views_documents_export",
+      "community": 104,
+      "norm_label": "export()"
+    },
+    {
+      "label": "item_row()",
+      "file_type": "code",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L80",
+      "_origin": "ast",
+      "id": "app_invoices_views_documents_item_row",
+      "community": 104,
+      "norm_label": "item_row()"
+    },
+    {
+      "label": "create()",
+      "file_type": "code",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L101",
+      "_origin": "ast",
+      "id": "app_invoices_views_documents_create",
+      "community": 104,
+      "norm_label": "create()"
+    },
+    {
+      "label": "store()",
+      "file_type": "code",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L134",
+      "_origin": "ast",
+      "id": "app_invoices_views_documents_store",
+      "community": 104,
+      "norm_label": "store()"
+    },
+    {
+      "label": "view()",
+      "file_type": "code",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L170",
+      "_origin": "ast",
+      "id": "app_invoices_views_documents_view",
+      "community": 104,
+      "norm_label": "view()"
+    },
+    {
+      "label": "edit()",
+      "file_type": "code",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L230",
+      "_origin": "ast",
+      "id": "app_invoices_views_documents_edit",
+      "community": 104,
+      "norm_label": "edit()"
+    },
+    {
+      "label": "update()",
+      "file_type": "code",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L279",
+      "_origin": "ast",
+      "id": "app_invoices_views_documents_update",
+      "community": 46,
+      "norm_label": "update()"
+    },
+    {
+      "label": "delete()",
+      "file_type": "code",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L376",
+      "_origin": "ast",
+      "id": "app_invoices_views_documents_delete",
+      "community": 104,
+      "norm_label": "delete()"
+    },
+    {
+      "label": "rbac.py",
+      "file_type": "code",
+      "source_file": "app/middleware/rbac.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_middleware_rbac",
+      "community": 36,
+      "norm_label": "rbac.py"
+    },
+    {
+      "label": "init_rbac()",
+      "file_type": "code",
+      "source_file": "app/middleware/rbac.py",
+      "source_location": "L260",
+      "_origin": "ast",
+      "id": "app_middleware_rbac_init_rbac",
+      "community": 36,
+      "norm_label": "init_rbac()"
+    },
+    {
+      "label": "Flask",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "flask",
+      "community": 6,
+      "norm_label": "flask"
+    },
+    {
+      "label": "seed_default_roles_and_permissions()",
+      "file_type": "code",
+      "source_file": "app/middleware/rbac.py",
+      "source_location": "L296",
+      "_origin": "ast",
+      "id": "app_middleware_rbac_seed_default_roles_and_permissions",
+      "community": 36,
+      "norm_label": "seed_default_roles_and_permissions()"
+    },
+    {
+      "label": "RBAC Middleware =============== Plugged into the app via ``init_rbac(app)`` in `",
+      "file_type": "rationale",
+      "source_file": "app/middleware/rbac.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_middleware_rbac_rationale_1",
+      "community": 36,
+      "norm_label": "rbac middleware =============== plugged into the app via ``init_rbac(app)`` in `"
+    },
+    {
+      "label": "Register the RBAC ``before_request`` hook on *app*.",
+      "file_type": "rationale",
+      "source_file": "app/middleware/rbac.py",
+      "source_location": "L261",
+      "_origin": "ast",
+      "id": "app_middleware_rbac_rationale_261",
+      "community": 36,
+      "norm_label": "register the rbac ``before_request`` hook on *app*."
+    },
+    {
+      "label": "Seed the database with default roles and their permissions.      Roles     -----",
+      "file_type": "rationale",
+      "source_file": "app/middleware/rbac.py",
+      "source_location": "L297",
+      "_origin": "ast",
+      "id": "app_middleware_rbac_rationale_297",
+      "community": 36,
+      "norm_label": "seed the database with default roles and their permissions.      roles     -----"
+    },
+    {
+      "label": "approval_service.py",
+      "file_type": "code",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "app_services_approval_service",
+      "community": 46,
+      "norm_label": "approval_service.py"
+    },
+    {
+      "label": "ActionRegistry",
+      "file_type": "code",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L5",
+      "_origin": "ast",
+      "id": "app_services_approval_service_actionregistry",
+      "community": 46,
+      "norm_label": "actionregistry"
+    },
+    {
+      "label": ".register()",
+      "file_type": "code",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "app_services_approval_service_actionregistry_register",
+      "community": 46,
+      "norm_label": ".register()"
+    },
+    {
+      "label": ".execute()",
+      "file_type": "code",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "app_services_approval_service_actionregistry_execute",
+      "community": 46,
+      "norm_label": ".execute()"
+    },
+    {
+      "label": "ApprovalService",
+      "file_type": "code",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "app_services_approval_service_approvalservice",
+      "community": 46,
+      "norm_label": "approvalservice"
+    },
+    {
+      "label": ".create_request()",
+      "file_type": "code",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "app_services_approval_service_approvalservice_create_request",
+      "community": 46,
+      "norm_label": ".create_request()"
+    },
+    {
+      "label": ".approve_request()",
+      "file_type": "code",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L49",
+      "_origin": "ast",
+      "id": "app_services_approval_service_approvalservice_approve_request",
+      "community": 46,
+      "norm_label": ".approve_request()"
+    },
+    {
+      "label": ".reject_request()",
+      "file_type": "code",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L67",
+      "_origin": "ast",
+      "id": "app_services_approval_service_approvalservice_reject_request",
+      "community": 46,
+      "norm_label": ".reject_request()"
+    },
+    {
+      "label": ".get_pending_requests()",
+      "file_type": "code",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L82",
+      "_origin": "ast",
+      "id": "app_services_approval_service_approvalservice_get_pending_requests",
+      "community": 46,
+      "norm_label": ".get_pending_requests()"
+    },
+    {
+      "label": ".get_resolved_requests()",
+      "file_type": "code",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L89",
+      "_origin": "ast",
+      "id": "app_services_approval_service_approvalservice_get_resolved_requests",
+      "community": 46,
+      "norm_label": ".get_resolved_requests()"
+    },
+    {
+      "label": "init_action_handlers()",
+      "file_type": "code",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L95",
+      "_origin": "ast",
+      "id": "app_services_approval_service_init_action_handlers",
+      "community": 46,
+      "norm_label": "init_action_handlers()"
+    },
+    {
+      "label": "Register a function to handle an approval action.",
+      "file_type": "rationale",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "app_services_approval_service_rationale_10",
+      "community": 46,
+      "norm_label": "register a function to handle an approval action."
+    },
+    {
+      "label": "Execute a registered action with the given payload.",
+      "file_type": "rationale",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "app_services_approval_service_rationale_15",
+      "community": 46,
+      "norm_label": "execute a registered action with the given payload."
+    },
+    {
       "label": "drawer.js",
       "file_type": "code",
       "source_file": "app/static/js/drawer.js",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "app_static_js_drawer",
       "community": 47,
-      "norm_label": "drawer.js"
+      "norm_label": "drawer.js",
+      "id": "app_static_js_drawer"
     },
     {
       "label": "openDrawer()",
@@ -19,9 +319,9 @@
       "source_file": "app/static/js/drawer.js",
       "source_location": "L10",
       "_origin": "ast",
-      "id": "app_static_js_drawer_opendrawer",
       "community": 47,
-      "norm_label": "opendrawer()"
+      "norm_label": "opendrawer()",
+      "id": "app_static_js_drawer_opendrawer"
     },
     {
       "label": "closeDrawer()",
@@ -29,9 +329,9 @@
       "source_file": "app/static/js/drawer.js",
       "source_location": "L23",
       "_origin": "ast",
-      "id": "app_static_js_drawer_closedrawer",
       "community": 47,
-      "norm_label": "closedrawer()"
+      "norm_label": "closedrawer()",
+      "id": "app_static_js_drawer_closedrawer"
     },
     {
       "label": "loadDrawerContent()",
@@ -39,9 +339,9 @@
       "source_file": "app/static/js/drawer.js",
       "source_location": "L41",
       "_origin": "ast",
-      "id": "app_static_js_drawer_loaddrawercontent",
       "community": 47,
-      "norm_label": "loaddrawercontent()"
+      "norm_label": "loaddrawercontent()",
+      "id": "app_static_js_drawer_loaddrawercontent"
     },
     {
       "label": "attachDrawerFormSubmit()",
@@ -49,9 +349,9 @@
       "source_file": "app/static/js/drawer.js",
       "source_location": "L128",
       "_origin": "ast",
-      "id": "app_static_js_drawer_attachdrawerformsubmit",
       "community": 47,
-      "norm_label": "attachdrawerformsubmit()"
+      "norm_label": "attachdrawerformsubmit()",
+      "id": "app_static_js_drawer_attachdrawerformsubmit"
     },
     {
       "label": "reloadSection()",
@@ -59,9 +359,9 @@
       "source_file": "app/static/js/drawer.js",
       "source_location": "L205",
       "_origin": "ast",
-      "id": "app_static_js_drawer_reloadsection",
       "community": 47,
-      "norm_label": "reloadsection()"
+      "norm_label": "reloadsection()",
+      "id": "app_static_js_drawer_reloadsection"
     },
     {
       "label": "routes.py",
@@ -199,7 +499,7 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 98,
+      "community": 18,
       "norm_label": "inventory_service.py",
       "id": "app_inventory_services_inventory_service"
     },
@@ -219,7 +519,7 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 127,
+      "community": 63,
       "norm_label": "_validated_supplier_id()",
       "id": "app_inventory_services_inventory_service_validated_supplier_id"
     },
@@ -269,7 +569,7 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L134",
       "_origin": "ast",
-      "community": 20,
+      "community": 63,
       "norm_label": ".transfer_stock()",
       "id": "app_inventory_services_inventory_service_inventoryservice_transfer_stock"
     },
@@ -279,7 +579,7 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L172",
       "_origin": "ast",
-      "community": 127,
+      "community": 63,
       "norm_label": ".create_inventory_item()",
       "id": "app_inventory_services_inventory_service_inventoryservice_create_inventory_item"
     },
@@ -299,7 +599,7 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L240",
       "_origin": "ast",
-      "community": 20,
+      "community": 63,
       "norm_label": ".get_item_by_sku()",
       "id": "app_inventory_services_inventory_service_inventoryservice_get_item_by_sku"
     },
@@ -309,7 +609,7 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L245",
       "_origin": "ast",
-      "community": 127,
+      "community": 63,
       "norm_label": ".update_inventory_item()",
       "id": "app_inventory_services_inventory_service_inventoryservice_update_inventory_item"
     },
@@ -329,7 +629,7 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L304",
       "_origin": "ast",
-      "community": 20,
+      "community": 63,
       "norm_label": ".get_stock_movements()",
       "id": "app_inventory_services_inventory_service_inventoryservice_get_stock_movements"
     },
@@ -369,7 +669,7 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L429",
       "_origin": "ast",
-      "community": 20,
+      "community": 63,
       "norm_label": ".export_stock_movements_xlsx()",
       "id": "app_inventory_services_inventory_service_inventoryservice_export_stock_movements_xlsx"
     },
@@ -379,7 +679,7 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L241",
       "_origin": "ast",
-      "community": 20,
+      "community": 63,
       "norm_label": "fetch an item by its sku within a company.",
       "id": "app_inventory_services_inventory_service_rationale_241"
     },
@@ -389,7 +689,7 @@
       "source_file": "app/inventory/views/api.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 63,
+      "community": 18,
       "norm_label": "api.py",
       "id": "app_inventory_views_api"
     },
@@ -409,7 +709,7 @@
       "source_file": "app/inventory/views/api.py",
       "source_location": "L63",
       "_origin": "ast",
-      "community": 63,
+      "community": 18,
       "norm_label": "api_get_item()",
       "id": "app_inventory_views_api_api_get_item"
     },
@@ -419,7 +719,7 @@
       "source_file": "app/inventory/views/api.py",
       "source_location": "L83",
       "_origin": "ast",
-      "community": 127,
+      "community": 63,
       "norm_label": "api_create_item()",
       "id": "app_inventory_views_api_api_create_item"
     },
@@ -429,7 +729,7 @@
       "source_file": "app/inventory/views/api.py",
       "source_location": "L125",
       "_origin": "ast",
-      "community": 127,
+      "community": 63,
       "norm_label": "api_update_item()",
       "id": "app_inventory_views_api_api_update_item"
     },
@@ -489,7 +789,7 @@
       "source_file": "app/inventory/views/movements.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 20,
+      "community": 63,
       "norm_label": "movements.py",
       "id": "app_inventory_views_movements"
     },
@@ -499,7 +799,7 @@
       "source_file": "app/inventory/views/movements.py",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 20,
+      "community": 63,
       "norm_label": "movements()",
       "id": "app_inventory_views_movements_movements"
     },
@@ -519,7 +819,7 @@
       "source_file": "app/inventory/views/movements.py",
       "source_location": "L93",
       "_origin": "ast",
-      "community": 20,
+      "community": 63,
       "norm_label": "export_movements()",
       "id": "app_inventory_views_movements_export_movements"
     },
@@ -529,7 +829,7 @@
       "source_file": "app/inventory/views/movements.py",
       "source_location": "L126",
       "_origin": "ast",
-      "community": 20,
+      "community": 63,
       "norm_label": "drawer_adjust()",
       "id": "app_inventory_views_movements_drawer_adjust"
     },
@@ -539,7 +839,7 @@
       "source_file": "app/inventory/views/movements.py",
       "source_location": "L140",
       "_origin": "ast",
-      "community": 20,
+      "community": 63,
       "norm_label": "drawer_transfer()",
       "id": "app_inventory_views_movements_drawer_transfer"
     },
@@ -549,109 +849,9 @@
       "source_file": "app/inventory/views/movements.py",
       "source_location": "L154",
       "_origin": "ast",
-      "community": 20,
+      "community": 63,
       "norm_label": "transfer()",
       "id": "app_inventory_views_movements_transfer"
-    },
-    {
-      "label": "documents.py",
-      "file_type": "code",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 104,
-      "norm_label": "documents.py",
-      "id": "app_invoices_views_documents"
-    },
-    {
-      "label": "index()",
-      "file_type": "code",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L24",
-      "_origin": "ast",
-      "community": 104,
-      "norm_label": "index()",
-      "id": "app_invoices_views_documents_index"
-    },
-    {
-      "label": "export()",
-      "file_type": "code",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L59",
-      "_origin": "ast",
-      "community": 104,
-      "norm_label": "export()",
-      "id": "app_invoices_views_documents_export"
-    },
-    {
-      "label": "item_row()",
-      "file_type": "code",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L80",
-      "_origin": "ast",
-      "community": 104,
-      "norm_label": "item_row()",
-      "id": "app_invoices_views_documents_item_row"
-    },
-    {
-      "label": "create()",
-      "file_type": "code",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L101",
-      "_origin": "ast",
-      "community": 104,
-      "norm_label": "create()",
-      "id": "app_invoices_views_documents_create"
-    },
-    {
-      "label": "store()",
-      "file_type": "code",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L134",
-      "_origin": "ast",
-      "community": 104,
-      "norm_label": "store()",
-      "id": "app_invoices_views_documents_store"
-    },
-    {
-      "label": "view()",
-      "file_type": "code",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L170",
-      "_origin": "ast",
-      "community": 104,
-      "norm_label": "view()",
-      "id": "app_invoices_views_documents_view"
-    },
-    {
-      "label": "edit()",
-      "file_type": "code",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L230",
-      "_origin": "ast",
-      "community": 104,
-      "norm_label": "edit()",
-      "id": "app_invoices_views_documents_edit"
-    },
-    {
-      "label": "update()",
-      "file_type": "code",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L279",
-      "_origin": "ast",
-      "community": 104,
-      "norm_label": "update()",
-      "id": "app_invoices_views_documents_update"
-    },
-    {
-      "label": "delete()",
-      "file_type": "code",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L363",
-      "_origin": "ast",
-      "community": 104,
-      "norm_label": "delete()",
-      "id": "app_invoices_views_documents_delete"
     },
     {
       "label": "routes.py",
@@ -822,16 +1022,6 @@
       "community": 46,
       "norm_label": "register_routes()",
       "id": "app_routes_register_routes"
-    },
-    {
-      "label": "Flask",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "community": 19,
-      "norm_label": "flask",
-      "id": "flask"
     },
     {
       "label": "ARCHITECTURE.md",
@@ -1329,7 +1519,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 98,
+      "community": 30,
       "norm_label": "transaction",
       "id": "transaction"
     },
@@ -1349,7 +1539,7 @@
       "source_file": "app/accounting/views/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 42,
+      "community": 6,
       "norm_label": "__init__.py",
       "id": "app_accounting_views_init"
     },
@@ -1519,7 +1709,7 @@
       "source_file": "app/accounting/views/dashboard.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 42,
+      "community": 6,
       "norm_label": "dashboard.py",
       "id": "app_accounting_views_dashboard"
     },
@@ -1529,7 +1719,7 @@
       "source_file": "app/accounting/views/dashboard.py",
       "source_location": "L17",
       "_origin": "ast",
-      "community": 42,
+      "community": 6,
       "norm_label": "index()",
       "id": "app_accounting_views_dashboard_index"
     },
@@ -1539,7 +1729,7 @@
       "source_file": "app/accounting/views/expenses.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 42,
+      "community": 6,
       "norm_label": "expenses.py",
       "id": "app_accounting_views_expenses"
     },
@@ -1549,7 +1739,7 @@
       "source_file": "app/accounting/views/expenses.py",
       "source_location": "L17",
       "_origin": "ast",
-      "community": 42,
+      "community": 6,
       "norm_label": "expenses_list()",
       "id": "app_accounting_views_expenses_expenses_list"
     },
@@ -1559,7 +1749,7 @@
       "source_file": "app/accounting/views/expenses.py",
       "source_location": "L91",
       "_origin": "ast",
-      "community": 42,
+      "community": 6,
       "norm_label": "create_expense()",
       "id": "app_accounting_views_expenses_create_expense"
     },
@@ -1569,7 +1759,7 @@
       "source_file": "app/accounting/views/expenses.py",
       "source_location": "L144",
       "_origin": "ast",
-      "community": 42,
+      "community": 6,
       "norm_label": "edit_expense()",
       "id": "app_accounting_views_expenses_edit_expense"
     },
@@ -1579,7 +1769,7 @@
       "source_file": "app/accounting/views/expenses.py",
       "source_location": "L204",
       "_origin": "ast",
-      "community": 42,
+      "community": 6,
       "norm_label": "delete_expense()",
       "id": "app_accounting_views_expenses_delete_expense"
     },
@@ -1589,7 +1779,7 @@
       "source_file": "app/accounting/views/income.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 137,
+      "community": 6,
       "norm_label": "income.py",
       "id": "app_accounting_views_income"
     },
@@ -1599,7 +1789,7 @@
       "source_file": "app/accounting/views/income.py",
       "source_location": "L17",
       "_origin": "ast",
-      "community": 137,
+      "community": 6,
       "norm_label": "income_list()",
       "id": "app_accounting_views_income_income_list"
     },
@@ -1609,7 +1799,7 @@
       "source_file": "app/accounting/views/income.py",
       "source_location": "L65",
       "_origin": "ast",
-      "community": 137,
+      "community": 6,
       "norm_label": "create_income()",
       "id": "app_accounting_views_income_create_income"
     },
@@ -1619,7 +1809,7 @@
       "source_file": "app/accounting/views/income.py",
       "source_location": "L115",
       "_origin": "ast",
-      "community": 137,
+      "community": 6,
       "norm_label": "edit_income()",
       "id": "app_accounting_views_income_edit_income"
     },
@@ -1629,7 +1819,7 @@
       "source_file": "app/accounting/views/income.py",
       "source_location": "L178",
       "_origin": "ast",
-      "community": 137,
+      "community": 6,
       "norm_label": "delete_income()",
       "id": "app_accounting_views_income_delete_income"
     },
@@ -2169,7 +2359,7 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 16,
+      "community": 63,
       "norm_label": "routes.py",
       "id": "app_inventory_routes"
     },
@@ -2179,7 +2369,7 @@
       "source_file": "app/inventory/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 16,
+      "community": 63,
       "norm_label": "compatibility loader for inventory route modules.",
       "id": "app_inventory_routes_rationale_1"
     },
@@ -2189,7 +2379,7 @@
       "source_file": "app/inventory/views/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 16,
+      "community": 63,
       "norm_label": "__init__.py",
       "id": "app_inventory_views_init"
     },
@@ -2199,7 +2389,7 @@
       "source_file": "app/inventory/views/barcode.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 19,
+      "community": 18,
       "norm_label": "barcode.py",
       "id": "app_inventory_views_barcode"
     },
@@ -2209,7 +2399,7 @@
       "source_file": "app/inventory/views/barcode.py",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 20,
+      "community": 63,
       "norm_label": "barcode()",
       "id": "app_inventory_views_barcode_barcode"
     },
@@ -2219,7 +2409,7 @@
       "source_file": "app/inventory/views/catalog.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 117,
+      "community": 63,
       "norm_label": "catalog.py",
       "id": "app_inventory_views_catalog"
     },
@@ -2229,7 +2419,7 @@
       "source_file": "app/inventory/views/catalog.py",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 117,
+      "community": 63,
       "norm_label": "_get_suppliers()",
       "id": "app_inventory_views_catalog_get_suppliers"
     },
@@ -2239,7 +2429,7 @@
       "source_file": "app/inventory/views/catalog.py",
       "source_location": "L26",
       "_origin": "ast",
-      "community": 117,
+      "community": 63,
       "norm_label": "index()",
       "id": "app_inventory_views_catalog_index"
     },
@@ -2249,7 +2439,7 @@
       "source_file": "app/inventory/views/catalog.py",
       "source_location": "L78",
       "_origin": "ast",
-      "community": 117,
+      "community": 63,
       "norm_label": "create()",
       "id": "app_inventory_views_catalog_create"
     },
@@ -2259,7 +2449,7 @@
       "source_file": "app/inventory/views/catalog.py",
       "source_location": "L121",
       "_origin": "ast",
-      "community": 20,
+      "community": 63,
       "norm_label": "view()",
       "id": "app_inventory_views_catalog_view"
     },
@@ -2269,7 +2459,7 @@
       "source_file": "app/inventory/views/catalog.py",
       "source_location": "L166",
       "_origin": "ast",
-      "community": 117,
+      "community": 63,
       "norm_label": "edit()",
       "id": "app_inventory_views_catalog_edit"
     },
@@ -2279,7 +2469,7 @@
       "source_file": "app/inventory/views/catalog.py",
       "source_location": "L184",
       "_origin": "ast",
-      "community": 117,
+      "community": 63,
       "norm_label": "update()",
       "id": "app_inventory_views_catalog_update"
     },
@@ -2299,7 +2489,7 @@
       "source_file": "app/inventory/views/categories.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 16,
+      "community": 19,
       "norm_label": "categories.py",
       "id": "app_inventory_views_categories"
     },
@@ -2309,7 +2499,7 @@
       "source_file": "app/inventory/views/categories.py",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 16,
+      "community": 19,
       "norm_label": "categories()",
       "id": "app_inventory_views_categories_categories"
     },
@@ -2319,7 +2509,7 @@
       "source_file": "app/inventory/views/categories.py",
       "source_location": "L30",
       "_origin": "ast",
-      "community": 16,
+      "community": 19,
       "norm_label": "create_category()",
       "id": "app_inventory_views_categories_create_category"
     },
@@ -2329,7 +2519,7 @@
       "source_file": "app/inventory/views/categories.py",
       "source_location": "L53",
       "_origin": "ast",
-      "community": 16,
+      "community": 19,
       "norm_label": "edit_category()",
       "id": "app_inventory_views_categories_edit_category"
     },
@@ -2339,7 +2529,7 @@
       "source_file": "app/inventory/views/categories.py",
       "source_location": "L80",
       "_origin": "ast",
-      "community": 16,
+      "community": 19,
       "norm_label": "delete_category()",
       "id": "app_inventory_views_categories_delete_category"
     },
@@ -3054,74 +3244,14 @@
       "id": "app_invoices_views_templates_rationale_166"
     },
     {
-      "label": "rbac.py",
-      "file_type": "code",
-      "source_file": "app/middleware/rbac.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 36,
-      "norm_label": "rbac.py",
-      "id": "app_middleware_rbac"
-    },
-    {
-      "label": "init_rbac()",
-      "file_type": "code",
-      "source_file": "app/middleware/rbac.py",
-      "source_location": "L256",
-      "_origin": "ast",
-      "community": 36,
-      "norm_label": "init_rbac()",
-      "id": "app_middleware_rbac_init_rbac"
-    },
-    {
       "label": "Flask",
       "file_type": "code",
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 36,
+      "community": 42,
       "norm_label": "flask",
       "id": "app_middleware_rbac_py_flask"
-    },
-    {
-      "label": "seed_default_roles_and_permissions()",
-      "file_type": "code",
-      "source_file": "app/middleware/rbac.py",
-      "source_location": "L292",
-      "_origin": "ast",
-      "community": 36,
-      "norm_label": "seed_default_roles_and_permissions()",
-      "id": "app_middleware_rbac_seed_default_roles_and_permissions"
-    },
-    {
-      "label": "RBAC Middleware =============== Plugged into the app via ``init_rbac(app)`` in `",
-      "file_type": "rationale",
-      "source_file": "app/middleware/rbac.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 36,
-      "norm_label": "rbac middleware =============== plugged into the app via ``init_rbac(app)`` in `",
-      "id": "app_middleware_rbac_rationale_1"
-    },
-    {
-      "label": "Register the RBAC ``before_request`` hook on *app*.",
-      "file_type": "rationale",
-      "source_file": "app/middleware/rbac.py",
-      "source_location": "L257",
-      "_origin": "ast",
-      "community": 36,
-      "norm_label": "register the rbac ``before_request`` hook on *app*.",
-      "id": "app_middleware_rbac_rationale_257"
-    },
-    {
-      "label": "Seed the database with default roles and their permissions.      Roles     -----",
-      "file_type": "rationale",
-      "source_file": "app/middleware/rbac.py",
-      "source_location": "L293",
-      "_origin": "ast",
-      "community": 36,
-      "norm_label": "seed the database with default roles and their permissions.      roles     -----",
-      "id": "app_middleware_rbac_rationale_293"
     },
     {
       "label": "purchase_order_service.py",
@@ -4589,7 +4719,7 @@
       "source_file": "app/approvals/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 19,
+      "community": 46,
       "norm_label": "routes.py",
       "id": "app_approvals_routes"
     },
@@ -4624,142 +4754,12 @@
       "id": "app_approvals_routes_reject"
     },
     {
-      "label": "approval_service.py",
-      "file_type": "code",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 46,
-      "norm_label": "approval_service.py",
-      "id": "app_services_approval_service"
-    },
-    {
-      "label": "ActionRegistry",
-      "file_type": "code",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L5",
-      "_origin": "ast",
-      "community": 46,
-      "norm_label": "actionregistry",
-      "id": "app_services_approval_service_actionregistry"
-    },
-    {
-      "label": ".register()",
-      "file_type": "code",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L9",
-      "_origin": "ast",
-      "community": 46,
-      "norm_label": ".register()",
-      "id": "app_services_approval_service_actionregistry_register"
-    },
-    {
-      "label": ".execute()",
-      "file_type": "code",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L14",
-      "_origin": "ast",
-      "community": 46,
-      "norm_label": ".execute()",
-      "id": "app_services_approval_service_actionregistry_execute"
-    },
-    {
-      "label": "ApprovalService",
-      "file_type": "code",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L34",
-      "_origin": "ast",
-      "community": 46,
-      "norm_label": "approvalservice",
-      "id": "app_services_approval_service_approvalservice"
-    },
-    {
-      "label": ".create_request()",
-      "file_type": "code",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L36",
-      "_origin": "ast",
-      "community": 46,
-      "norm_label": ".create_request()",
-      "id": "app_services_approval_service_approvalservice_create_request"
-    },
-    {
-      "label": ".approve_request()",
-      "file_type": "code",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L49",
-      "_origin": "ast",
-      "community": 46,
-      "norm_label": ".approve_request()",
-      "id": "app_services_approval_service_approvalservice_approve_request"
-    },
-    {
-      "label": ".reject_request()",
-      "file_type": "code",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L67",
-      "_origin": "ast",
-      "community": 46,
-      "norm_label": ".reject_request()",
-      "id": "app_services_approval_service_approvalservice_reject_request"
-    },
-    {
-      "label": ".get_pending_requests()",
-      "file_type": "code",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L82",
-      "_origin": "ast",
-      "community": 46,
-      "norm_label": ".get_pending_requests()",
-      "id": "app_services_approval_service_approvalservice_get_pending_requests"
-    },
-    {
-      "label": ".get_resolved_requests()",
-      "file_type": "code",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L89",
-      "_origin": "ast",
-      "community": 46,
-      "norm_label": ".get_resolved_requests()",
-      "id": "app_services_approval_service_approvalservice_get_resolved_requests"
-    },
-    {
-      "label": "init_action_handlers()",
-      "file_type": "code",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L95",
-      "_origin": "ast",
-      "community": 46,
-      "norm_label": "init_action_handlers()",
-      "id": "app_services_approval_service_init_action_handlers"
-    },
-    {
-      "label": "Register a function to handle an approval action.",
-      "file_type": "rationale",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L10",
-      "_origin": "ast",
-      "community": 46,
-      "norm_label": "register a function to handle an approval action.",
-      "id": "app_services_approval_service_rationale_10"
-    },
-    {
-      "label": "Execute a registered action with the given payload.",
-      "file_type": "rationale",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L15",
-      "_origin": "ast",
-      "community": 46,
-      "norm_label": "execute a registered action with the given payload.",
-      "id": "app_services_approval_service_rationale_15"
-    },
-    {
       "label": "routes.py",
       "file_type": "code",
       "source_file": "app/dashboard/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 19,
+      "community": 20,
       "norm_label": "routes.py",
       "id": "app_dashboard_routes"
     },
@@ -4769,7 +4769,7 @@
       "source_file": "app/dashboard/routes.py",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 19,
+      "community": 20,
       "norm_label": "index()",
       "id": "app_dashboard_routes_index"
     },
@@ -4779,7 +4779,7 @@
       "source_file": "app/dashboard/routes.py",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 19,
+      "community": 20,
       "norm_label": "format_currency()",
       "id": "app_dashboard_routes_format_currency"
     },
@@ -4789,7 +4789,7 @@
       "source_file": "app/dashboard/routes.py",
       "source_location": "L33",
       "_origin": "ast",
-      "community": 19,
+      "community": 20,
       "norm_label": "format_date()",
       "id": "app_dashboard_routes_format_date"
     },
@@ -4799,7 +4799,7 @@
       "source_file": "app/dashboard/routes.py",
       "source_location": "L41",
       "_origin": "ast",
-      "community": 19,
+      "community": 20,
       "norm_label": "locale_date()",
       "id": "app_dashboard_routes_locale_date"
     },
@@ -4809,7 +4809,7 @@
       "source_file": "app/dashboard/routes.py",
       "source_location": "L26",
       "_origin": "ast",
-      "community": 19,
+      "community": 20,
       "norm_label": "format a number as currency",
       "id": "app_dashboard_routes_rationale_26"
     },
@@ -4819,7 +4819,7 @@
       "source_file": "app/dashboard/routes.py",
       "source_location": "L34",
       "_origin": "ast",
-      "community": 19,
+      "community": 20,
       "norm_label": "format a date in a readable format",
       "id": "app_dashboard_routes_rationale_34"
     },
@@ -4829,7 +4829,7 @@
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 42,
+      "community": 6,
       "norm_label": "project_service.py",
       "id": "app_accounting_services_project_service"
     },
@@ -5009,7 +5009,7 @@
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 42,
+      "community": 6,
       "norm_label": "project crud, tagging, and reporting service.",
       "id": "app_accounting_services_project_service_rationale_1"
     },
@@ -5169,7 +5169,7 @@
       "source_file": "app/companies/services/company_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 137,
+      "community": 18,
       "norm_label": "company_service.py",
       "id": "app_companies_services_company_service"
     },
@@ -5369,7 +5369,7 @@
       "source_file": "app/approvals/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 19,
+      "community": 46,
       "norm_label": "__init__.py",
       "id": "app_approvals_init"
     },
@@ -5459,7 +5459,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 118,
+      "community": 18,
       "norm_label": "accounttype",
       "id": "app_models_enums_accounttype"
     },
@@ -5469,7 +5469,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 118,
+      "community": 18,
       "norm_label": ".label_es()",
       "id": "app_models_enums_accounttype_label_es"
     },
@@ -5599,7 +5599,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L125",
       "_origin": "ast",
-      "community": 132,
+      "community": 18,
       "norm_label": "payperiod",
       "id": "app_models_enums_payperiod"
     },
@@ -5609,7 +5609,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L131",
       "_origin": "ast",
-      "community": 132,
+      "community": 18,
       "norm_label": ".label_es()",
       "id": "app_models_enums_payperiod_label_es"
     },
@@ -5699,7 +5699,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L190",
       "_origin": "ast",
-      "community": 132,
+      "community": 18,
       "norm_label": "expensestatus",
       "id": "app_models_enums_expensestatus"
     },
@@ -5709,7 +5709,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L197",
       "_origin": "ast",
-      "community": 132,
+      "community": 18,
       "norm_label": ".label_es()",
       "id": "app_models_enums_expensestatus_label_es"
     },
@@ -5719,7 +5719,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L205",
       "_origin": "ast",
-      "community": 118,
+      "community": 18,
       "norm_label": "transactiontype",
       "id": "app_models_enums_transactiontype"
     },
@@ -5729,7 +5729,7 @@
       "source_file": "app/models/enums.py",
       "source_location": "L213",
       "_origin": "ast",
-      "community": 118,
+      "community": 18,
       "norm_label": ".label_es()",
       "id": "app_models_enums_transactiontype_label_es"
     },
@@ -5819,7 +5819,7 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 60,
+      "community": 63,
       "norm_label": "category_service.py",
       "id": "app_inventory_services_category_service"
     },
@@ -5829,7 +5829,7 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 60,
+      "community": 63,
       "norm_label": "categoryservice",
       "id": "app_inventory_services_category_service_categoryservice"
     },
@@ -5839,7 +5839,7 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 60,
+      "community": 63,
       "norm_label": ".get_categories()",
       "id": "app_inventory_services_category_service_categoryservice_get_categories"
     },
@@ -5849,7 +5849,7 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 60,
+      "community": 63,
       "norm_label": ".get_category()",
       "id": "app_inventory_services_category_service_categoryservice_get_category"
     },
@@ -5859,7 +5859,7 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 60,
+      "community": 63,
       "norm_label": ".create_category()",
       "id": "app_inventory_services_category_service_categoryservice_create_category"
     },
@@ -5869,7 +5869,7 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L33",
       "_origin": "ast",
-      "community": 60,
+      "community": 63,
       "norm_label": ".update_category()",
       "id": "app_inventory_services_category_service_categoryservice_update_category"
     },
@@ -5879,7 +5879,7 @@
       "source_file": "app/inventory/services/category_service.py",
       "source_location": "L51",
       "_origin": "ast",
-      "community": 60,
+      "community": 63,
       "norm_label": ".delete_category()",
       "id": "app_inventory_services_category_service_categoryservice_delete_category"
     },
@@ -5939,7 +5939,7 @@
       "source_file": "app/warehouses/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 19,
+      "community": 36,
       "norm_label": "routes.py",
       "id": "app_warehouses_routes"
     },
@@ -5949,7 +5949,7 @@
       "source_file": "app/warehouses/routes.py",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 19,
+      "community": 36,
       "norm_label": "create()",
       "id": "app_warehouses_routes_create"
     },
@@ -6119,7 +6119,7 @@
       "source_file": "app/inventory/services/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 60,
+      "community": 63,
       "norm_label": "__init__.py",
       "id": "app_inventory_services_init"
     },
@@ -6129,7 +6129,7 @@
       "source_file": "app/models/category.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 60,
+      "community": 63,
       "norm_label": "category.py",
       "id": "app_models_category"
     },
@@ -6139,7 +6139,7 @@
       "source_file": "app/models/category.py",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 60,
+      "community": 63,
       "norm_label": "category",
       "id": "app_models_category_category"
     },
@@ -6149,7 +6149,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 60,
+      "community": 63,
       "norm_label": "basemodel",
       "id": "app_models_category_py_basemodel"
     },
@@ -6159,7 +6159,7 @@
       "source_file": "app/models/category.py",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 60,
+      "community": 63,
       "norm_label": ".__repr__()",
       "id": "app_models_category_category_repr"
     },
@@ -6689,7 +6689,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 118,
+      "community": 137,
       "norm_label": "journal_service.py",
       "id": "app_accounting_services_journal_service"
     },
@@ -6699,7 +6699,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 126,
+      "community": 30,
       "norm_label": "_parse_journal_lines()",
       "id": "app_accounting_services_journal_service_parse_journal_lines"
     },
@@ -6719,7 +6719,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L63",
       "_origin": "ast",
-      "community": 126,
+      "community": 30,
       "norm_label": ".create_journal_entry()",
       "id": "app_accounting_services_journal_service_journalservice_create_journal_entry"
     },
@@ -6729,7 +6729,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L103",
       "_origin": "ast",
-      "community": 126,
+      "community": 30,
       "norm_label": ".update_journal_entry()",
       "id": "app_accounting_services_journal_service_journalservice_update_journal_entry"
     },
@@ -6819,7 +6819,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 118,
+      "community": 137,
       "norm_label": "journal entries, ledger, and trial balance service.",
       "id": "app_accounting_services_journal_service_rationale_1"
     },
@@ -6829,7 +6829,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 126,
+      "community": 30,
       "norm_label": "parse and validate multi-line journal form data into entry dicts.",
       "id": "app_accounting_services_journal_service_rationale_16"
     },
@@ -6839,7 +6839,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L64",
       "_origin": "ast",
-      "community": 126,
+      "community": 30,
       "norm_label": "manual multi-line journal entry.         expects form fields: memo, date, refere",
       "id": "app_accounting_services_journal_service_rationale_64"
     },
@@ -6849,7 +6849,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L104",
       "_origin": "ast",
-      "community": 126,
+      "community": 30,
       "norm_label": "void old entry and post a corrected replacement.",
       "id": "app_accounting_services_journal_service_rationale_104"
     },
@@ -7853,7 +7853,7 @@
       "file_type": "code",
       "source_file": "app/models/accounting_attachment.py",
       "source_location": "L41",
-      "community": 123,
+      "community": 3,
       "norm_label": ".extension()",
       "id": "app_models_accounting_attachment_accountingattachment_extension"
     },
@@ -7862,7 +7862,7 @@
       "file_type": "code",
       "source_file": "app/models/accounting_attachment.py",
       "source_location": "L41",
-      "community": 123,
+      "community": 3,
       "norm_label": "str",
       "id": "app_models_accounting_attachment_py_str"
     },
@@ -7889,7 +7889,7 @@
       "file_type": "code",
       "source_file": "app/models/accounting_attachment.py",
       "source_location": "L50",
-      "community": 123,
+      "community": 3,
       "norm_label": ".size_display()",
       "id": "app_models_accounting_attachment_accountingattachment_size_display"
     },
@@ -7898,7 +7898,7 @@
       "file_type": "code",
       "source_file": "app/models/accounting_attachment.py",
       "source_location": "L59",
-      "community": 123,
+      "community": 3,
       "norm_label": ".__repr__()",
       "id": "app_models_accounting_attachment_accountingattachment_repr"
     },
@@ -7916,7 +7916,7 @@
       "file_type": "rationale",
       "source_file": "app/models/accounting_attachment.py",
       "source_location": "L42",
-      "community": 123,
+      "community": 3,
       "norm_label": "lowercase file extension without leading dot (e.g. 'pdf', 'jpg').",
       "id": "app_models_accounting_attachment_rationale_42"
     },
@@ -7925,7 +7925,7 @@
       "file_type": "rationale",
       "source_file": "app/models/accounting_attachment.py",
       "source_location": "L51",
-      "community": 123,
+      "community": 3,
       "norm_label": "human-readable file size.",
       "id": "app_models_accounting_attachment_rationale_51"
     },
@@ -8492,7 +8492,7 @@
       "file_type": "code",
       "source_file": "app/models/notification.py",
       "source_location": "L1",
-      "community": 40,
+      "community": 9,
       "norm_label": "notification.py",
       "id": "app_models_notification"
     },
@@ -8501,7 +8501,7 @@
       "file_type": "code",
       "source_file": "app/models/notification.py",
       "source_location": "L5",
-      "community": 40,
+      "community": 9,
       "norm_label": "notification",
       "id": "app_models_notification_notification"
     },
@@ -8510,7 +8510,7 @@
       "file_type": "code",
       "source_file": "app/models/notification.py",
       "source_location": "L30",
-      "community": 40,
+      "community": 9,
       "norm_label": ".display_body()",
       "id": "app_models_notification_notification_display_body"
     },
@@ -8519,7 +8519,7 @@
       "file_type": "code",
       "source_file": "app/models/notification.py",
       "source_location": "L34",
-      "community": 40,
+      "community": 9,
       "norm_label": ".is_unread()",
       "id": "app_models_notification_notification_is_unread"
     },
@@ -8528,7 +8528,7 @@
       "file_type": "code",
       "source_file": "app/models/notification.py",
       "source_location": "L37",
-      "community": 40,
+      "community": 9,
       "norm_label": ".__repr__()",
       "id": "app_models_notification_notification_repr"
     },
@@ -8762,7 +8762,7 @@
       "file_type": "code",
       "source_file": "app/middleware/audit.py",
       "source_location": "L30",
-      "community": 96,
+      "community": 16,
       "norm_label": ".log_change()",
       "id": "app_middleware_audit_auditmiddleware_log_change"
     },
@@ -8780,7 +8780,7 @@
       "file_type": "rationale",
       "source_file": "app/middleware/audit.py",
       "source_location": "L31",
-      "community": 96,
+      "community": 16,
       "norm_label": "manually log a change. useful if automated listeners are not enough.",
       "id": "app_middleware_audit_rationale_31"
     },
@@ -9657,7 +9657,7 @@
       "file_type": "code",
       "source_file": "app/models/audit.py",
       "source_location": "L4",
-      "community": 96,
+      "community": 16,
       "norm_label": "auditlog",
       "id": "app_models_audit_auditlog"
     },
@@ -9666,7 +9666,7 @@
       "file_type": "code",
       "source_file": "app/models/audit.py",
       "source_location": "L20",
-      "community": 96,
+      "community": 16,
       "norm_label": ".__repr__()",
       "id": "app_models_audit_auditlog_repr"
     },
@@ -9675,7 +9675,7 @@
       "file_type": "code",
       "source_file": "app/models/audit.py",
       "source_location": "L20",
-      "community": 96,
+      "community": 16,
       "norm_label": "str",
       "id": "app_models_audit_py_str"
     },
@@ -9711,7 +9711,7 @@
       "file_type": "code",
       "source_file": "app/models/contact.py",
       "source_location": "L1",
-      "community": 98,
+      "community": 18,
       "norm_label": "contact.py",
       "id": "app_models_contact"
     },
@@ -9837,7 +9837,7 @@
       "file_type": "code",
       "source_file": "app/models/document_template.py",
       "source_location": "L1",
-      "community": 32,
+      "community": 98,
       "norm_label": "document_template.py",
       "id": "app_models_document_template"
     },
@@ -9846,7 +9846,7 @@
       "file_type": "code",
       "source_file": "app/models/document_template.py",
       "source_location": "L26",
-      "community": 32,
+      "community": 98,
       "norm_label": ".__repr__()",
       "id": "app_models_document_template_documenttemplate_repr"
     },
@@ -9855,7 +9855,7 @@
       "file_type": "code",
       "source_file": "app/models/document_template.py",
       "source_location": "L26",
-      "community": 32,
+      "community": 98,
       "norm_label": "str",
       "id": "app_models_document_template_py_str"
     },
@@ -9972,7 +9972,7 @@
       "file_type": "code",
       "source_file": "app/models/expense.py",
       "source_location": "L6",
-      "community": 128,
+      "community": 40,
       "norm_label": "expense",
       "id": "app_models_expense_expense"
     },
@@ -9981,7 +9981,7 @@
       "file_type": "code",
       "source_file": "app/models/expense.py",
       "source_location": "L58",
-      "community": 128,
+      "community": 40,
       "norm_label": ".vendor_display()",
       "id": "app_models_expense_expense_vendor_display"
     },
@@ -9990,7 +9990,7 @@
       "file_type": "code",
       "source_file": "app/models/expense.py",
       "source_location": "L58",
-      "community": 128,
+      "community": 40,
       "norm_label": "str",
       "id": "app_models_expense_py_str"
     },
@@ -9999,7 +9999,7 @@
       "file_type": "code",
       "source_file": "app/models/expense.py",
       "source_location": "L64",
-      "community": 128,
+      "community": 40,
       "norm_label": ".__repr__()",
       "id": "app_models_expense_expense_repr"
     },
@@ -10008,7 +10008,7 @@
       "file_type": "rationale",
       "source_file": "app/models/expense.py",
       "source_location": "L7",
-      "community": 128,
+      "community": 40,
       "norm_label": "represents a business expense (outflow of money).      income / revenue is recor",
       "id": "app_models_expense_rationale_7"
     },
@@ -10017,7 +10017,7 @@
       "file_type": "rationale",
       "source_file": "app/models/expense.py",
       "source_location": "L59",
-      "community": 128,
+      "community": 40,
       "norm_label": "resolve vendor name from supplier relation or vendor_name field.",
       "id": "app_models_expense_rationale_59"
     },
@@ -10179,7 +10179,7 @@
       "file_type": "code",
       "source_file": "app/models/project.py",
       "source_location": "L1",
-      "community": 42,
+      "community": 6,
       "norm_label": "project.py",
       "id": "app_models_project"
     },
@@ -10215,7 +10215,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order.py",
       "source_location": "L1",
-      "community": 133,
+      "community": 32,
       "norm_label": "purchase_order.py",
       "id": "app_models_purchase_order"
     },
@@ -10224,7 +10224,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order.py",
       "source_location": "L24",
-      "community": 133,
+      "community": 32,
       "norm_label": ".__repr__()",
       "id": "app_models_purchase_order_purchaseorder_repr"
     },
@@ -10233,7 +10233,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order.py",
       "source_location": "L24",
-      "community": 133,
+      "community": 32,
       "norm_label": "str",
       "id": "app_models_purchase_order_py_str"
     },
@@ -10242,7 +10242,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order_item.py",
       "source_location": "L1",
-      "community": 40,
+      "community": 32,
       "norm_label": "purchase_order_item.py",
       "id": "app_models_purchase_order_item"
     },
@@ -10251,7 +10251,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order_item.py",
       "source_location": "L23",
-      "community": 40,
+      "community": 32,
       "norm_label": ".__repr__()",
       "id": "app_models_purchase_order_item_purchaseorderitem_repr"
     },
@@ -10260,7 +10260,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order_item.py",
       "source_location": "L23",
-      "community": 40,
+      "community": 32,
       "norm_label": "str",
       "id": "app_models_purchase_order_item_py_str"
     },
@@ -10368,7 +10368,7 @@
       "file_type": "code",
       "source_file": "app/models/tag.py",
       "source_location": "L1",
-      "community": 42,
+      "community": 6,
       "norm_label": "tag.py",
       "id": "app_models_tag"
     },
@@ -10377,7 +10377,7 @@
       "file_type": "code",
       "source_file": "app/models/tag.py",
       "source_location": "L3",
-      "community": 136,
+      "community": 35,
       "norm_label": "tag",
       "id": "app_models_tag_tag"
     },
@@ -10386,7 +10386,7 @@
       "file_type": "code",
       "source_file": "app/models/tag.py",
       "source_location": "L15",
-      "community": 136,
+      "community": 35,
       "norm_label": ".__repr__()",
       "id": "app_models_tag_tag_repr"
     },
@@ -10395,7 +10395,7 @@
       "file_type": "code",
       "source_file": "app/models/tag.py",
       "source_location": "L15",
-      "community": 136,
+      "community": 35,
       "norm_label": "str",
       "id": "app_models_tag_py_str"
     },
@@ -10638,7 +10638,7 @@
       "file_type": "code",
       "source_file": "app/models/warehouse.py",
       "source_location": "L1",
-      "community": 98,
+      "community": 0,
       "norm_label": "warehouse.py",
       "id": "app_models_warehouse"
     },
@@ -10647,7 +10647,7 @@
       "file_type": "code",
       "source_file": "app/models/warehouse.py",
       "source_location": "L17",
-      "community": 98,
+      "community": 0,
       "norm_label": ".__repr__()",
       "id": "app_models_warehouse_warehouse_repr"
     },
@@ -10656,7 +10656,7 @@
       "file_type": "code",
       "source_file": "app/models/warehouse.py",
       "source_location": "L17",
-      "community": 98,
+      "community": 0,
       "norm_label": "str",
       "id": "app_models_warehouse_py_str"
     },
@@ -12597,7 +12597,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 96,
+      "community": 16,
       "norm_label": "company routes",
       "id": "app_companies_routes_company_routes"
     },
@@ -12662,7 +12662,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 96,
+      "community": 16,
       "norm_label": "auditmiddleware",
       "id": "app_middleware_audit_auditmiddleware"
     },
@@ -12827,14 +12827,1121 @@
   ],
   "links": [
     {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "app_invoices_views_documents",
+      "target": "app_extensions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L101",
+      "weight": 1.0,
+      "source": "app_invoices_views_documents",
+      "target": "app_invoices_views_documents_create",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L376",
+      "weight": 1.0,
+      "source": "app_invoices_views_documents",
+      "target": "app_invoices_views_documents_delete",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L230",
+      "weight": 1.0,
+      "source": "app_invoices_views_documents",
+      "target": "app_invoices_views_documents_edit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L59",
+      "weight": 1.0,
+      "source": "app_invoices_views_documents",
+      "target": "app_invoices_views_documents_export",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L24",
+      "weight": 1.0,
+      "source": "app_invoices_views_documents",
+      "target": "app_invoices_views_documents_index",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L80",
+      "weight": 1.0,
+      "source": "app_invoices_views_documents",
+      "target": "app_invoices_views_documents_item_row",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L134",
+      "weight": 1.0,
+      "source": "app_invoices_views_documents",
+      "target": "app_invoices_views_documents_store",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L279",
+      "weight": 1.0,
+      "source": "app_invoices_views_documents",
+      "target": "app_invoices_views_documents_update",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L170",
+      "weight": 1.0,
+      "source": "app_invoices_views_documents",
+      "target": "app_invoices_views_documents_view",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "submodule_import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "app_invoices_views_documents",
+      "target": "app_models_contact",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "submodule_import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "app_invoices_views_documents",
+      "target": "app_models_document",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "app_invoices_views_documents",
+      "target": "app_models_enums",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "submodule_import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "app_invoices_views_documents",
+      "target": "app_models_payment",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "submodule_import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "app_invoices_views_documents",
+      "target": "app_models_project",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "submodule_import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L105",
+      "weight": 1.0,
+      "source": "app_invoices_views_documents",
+      "target": "app_models_warehouse",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L317",
+      "weight": 1.0,
+      "source": "app_invoices_views_documents",
+      "target": "app_services_approval_service_approvalservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "app_invoices_views_documents",
+      "target": "app_utils",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "app_invoices_views_documents",
+      "target": "datetime",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "app_invoices_views_documents",
+      "target": "flask",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "submodule_import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_views_init",
+      "target": "app_invoices_views_documents"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L318",
+      "weight": 1.0,
+      "source": "app_invoices_views_documents_update",
+      "target": "app_services_approval_service_approvalservice_create_request"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/middleware/rbac.py",
+      "source_location": "L260",
+      "weight": 1.0,
+      "source": "app_middleware_rbac",
+      "target": "app_middleware_rbac_init_rbac",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/middleware/rbac.py",
+      "source_location": "L296",
+      "weight": 1.0,
+      "source": "app_middleware_rbac",
+      "target": "app_middleware_rbac_seed_default_roles_and_permissions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/middleware/rbac.py",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "app_middleware_rbac",
+      "target": "flask",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "app/middleware/rbac.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "app_middleware_rbac_rationale_1",
+      "target": "app_middleware_rbac",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "app/middleware/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_support_init",
+      "target": "app_middleware_rbac"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/__init__.py",
+      "source_location": "L32",
+      "weight": 1.0,
+      "source": "app_init_create_app",
+      "target": "app_middleware_rbac_init_rbac"
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "app/middleware/rbac.py",
+      "source_location": "L260",
+      "weight": 1.0,
+      "source": "app_middleware_rbac_init_rbac",
+      "target": "flask",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "app/middleware/rbac.py",
+      "source_location": "L261",
+      "weight": 1.0,
+      "source": "app_middleware_rbac_rationale_261",
+      "target": "app_middleware_rbac_init_rbac",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/services/project_service.py",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_accounting_services_project_service",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/views/accounts.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_accounting_views_accounts",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/views/common.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_accounting_views_common",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/views/dashboard.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_accounting_views_dashboard",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/views/expenses.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_accounting_views_expenses",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/views/income.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_accounting_views_income",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/views/journal.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_accounting_views_journal",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/views/loans.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_accounting_views_loans",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/accounting/views/projects.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_accounting_views_projects",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/approvals/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_approvals_init",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/approvals/routes.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_approvals_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/auth/routes.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_auth_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/cli.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_cli",
+      "target": "flask"
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "app/cli.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_cli_register_cli",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/companies/services/company_service.py",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_companies_services_company_service",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/contacts/routes.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_contacts_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/dashboard/routes.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_dashboard_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/extensions.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_extensions",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/hr/views/common.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_hr_views_common",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/hr/views/employees.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_hr_views_employees",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/hr/views/leave.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_hr_views_leave",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/hr/views/schedules.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_hr_views_schedules",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_init",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/inventory/views/api.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_inventory_views_api",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/inventory/views/barcode.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_inventory_views_barcode",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/inventory/views/catalog.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_inventory_views_catalog",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/inventory/views/categories.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_inventory_views_categories",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/inventory/views/movements.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_inventory_views_movements",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_create_service.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_invoice_create_service",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_pdf_service.py",
+      "source_location": "L20",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_invoice_pdf_service",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_query_service.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_invoice_query_service",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/template_service.py",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_template_service",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/payments.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_views_payments",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/templates.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_views_templates",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/orders/routes.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_orders_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/orders/services/purchase_order_service.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_orders_services_purchase_order_service",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/payments/routes.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_payments_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/pos/routes.py",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_pos_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/routes.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "app/routes.py",
+      "source_location": "L94",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_routes_register_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/support/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_support_init",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/support/views/audit.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_support_views_audit",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/support/views/common.py",
+      "source_location": "L7",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_support_views_common",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/support/views/dashboard.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_support_views_dashboard",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/support/views/database.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_support_views_database",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/support/views/recovery.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_support_views_recovery",
+      "target": "flask"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/warehouses/routes.py",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_warehouses_routes",
+      "target": "flask"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "app/middleware/rbac.py",
+      "source_location": "L297",
+      "weight": 1.0,
+      "source": "app_middleware_rbac_rationale_297",
+      "target": "app_middleware_rbac_seed_default_roles_and_permissions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/approvals/routes.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_approvals_routes",
+      "target": "app_services_approval_service"
+    },
+    {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "app/__init__.py",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_init",
+      "target": "app_services_approval_service"
+    },
+    {
+      "relation": "imports_from",
+      "context": "submodule_import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L102",
+      "weight": 1.0,
+      "source": "app_services_approval_service",
+      "target": "app_models_document",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "app_services_approval_service",
+      "target": "app_services_approval_service_actionregistry",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "app_services_approval_service",
+      "target": "app_services_approval_service_approvalservice",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L95",
+      "weight": 1.0,
+      "source": "app_services_approval_service",
+      "target": "app_services_approval_service_init_action_handlers",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "source": "app_services_approval_service",
+      "target": "datetime",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "app_services_approval_service_actionregistry",
+      "target": "app_services_approval_service_actionregistry_execute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L9",
+      "weight": 1.0,
+      "source": "app_services_approval_service_actionregistry",
+      "target": "app_services_approval_service_actionregistry_register",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L99",
+      "weight": 1.0,
+      "source": "app_services_approval_service_init_action_handlers",
+      "target": "app_services_approval_service_actionregistry_register"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "app_services_approval_service_rationale_10",
+      "target": "app_services_approval_service_actionregistry_register",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "app_services_approval_service_approvalservice_approve_request",
+      "target": "app_services_approval_service_actionregistry_execute"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "app_services_approval_service_rationale_15",
+      "target": "app_services_approval_service_actionregistry_execute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/approvals/routes.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_approvals_routes",
+      "target": "app_services_approval_service_approvalservice"
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "app_services_approval_service_approvalservice",
+      "target": "app_services_approval_service_approvalservice_approve_request",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "app_services_approval_service_approvalservice",
+      "target": "app_services_approval_service_approvalservice_create_request",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L82",
+      "weight": 1.0,
+      "source": "app_services_approval_service_approvalservice",
+      "target": "app_services_approval_service_approvalservice_get_pending_requests",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L89",
+      "weight": 1.0,
+      "source": "app_services_approval_service_approvalservice",
+      "target": "app_services_approval_service_approvalservice_get_resolved_requests",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "app/services/approval_service.py",
+      "source_location": "L67",
+      "weight": 1.0,
+      "source": "app_services_approval_service_approvalservice",
+      "target": "app_services_approval_service_approvalservice_reject_request",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/approvals/routes.py",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "app_approvals_routes_approve",
+      "target": "app_services_approval_service_approvalservice_approve_request"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/approvals/routes.py",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "app_approvals_routes_reject",
+      "target": "app_services_approval_service_approvalservice_reject_request"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/approvals/routes.py",
+      "source_location": "L14",
+      "weight": 1.0,
+      "source": "app_approvals_routes_index",
+      "target": "app_services_approval_service_approvalservice_get_pending_requests"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/approvals/routes.py",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "app_approvals_routes_index",
+      "target": "app_services_approval_service_approvalservice_get_resolved_requests"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/__init__.py",
+      "source_location": "L24",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_init",
+      "target": "app_services_approval_service_init_action_handlers"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/__init__.py",
+      "source_location": "L25",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_init_create_app",
+      "target": "app_services_approval_service_init_action_handlers"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/static/js/drawer.js",
       "source_location": "L128",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_static_js_drawer",
-      "target": "app_static_js_drawer_attachdrawerformsubmit",
-      "confidence_score": 1.0
+      "target": "app_static_js_drawer_attachdrawerformsubmit"
     },
     {
       "relation": "contains",
@@ -12842,9 +13949,9 @@
       "source_file": "app/static/js/drawer.js",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_static_js_drawer",
-      "target": "app_static_js_drawer_closedrawer",
-      "confidence_score": 1.0
+      "target": "app_static_js_drawer_closedrawer"
     },
     {
       "relation": "contains",
@@ -12852,9 +13959,9 @@
       "source_file": "app/static/js/drawer.js",
       "source_location": "L41",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_static_js_drawer",
-      "target": "app_static_js_drawer_loaddrawercontent",
-      "confidence_score": 1.0
+      "target": "app_static_js_drawer_loaddrawercontent"
     },
     {
       "relation": "contains",
@@ -12862,9 +13969,9 @@
       "source_file": "app/static/js/drawer.js",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_static_js_drawer",
-      "target": "app_static_js_drawer_opendrawer",
-      "confidence_score": 1.0
+      "target": "app_static_js_drawer_opendrawer"
     },
     {
       "relation": "contains",
@@ -12872,9 +13979,9 @@
       "source_file": "app/static/js/drawer.js",
       "source_location": "L205",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_static_js_drawer",
-      "target": "app_static_js_drawer_reloadsection",
-      "confidence_score": 1.0
+      "target": "app_static_js_drawer_reloadsection"
     },
     {
       "relation": "calls",
@@ -12883,9 +13990,9 @@
       "source_file": "app/static/js/drawer.js",
       "source_location": "L56",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_static_js_drawer_loaddrawercontent",
-      "target": "app_static_js_drawer_opendrawer",
-      "confidence_score": 1.0
+      "target": "app_static_js_drawer_opendrawer"
     },
     {
       "relation": "calls",
@@ -12894,9 +14001,9 @@
       "source_file": "app/static/js/drawer.js",
       "source_location": "L157",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_static_js_drawer_attachdrawerformsubmit",
-      "target": "app_static_js_drawer_closedrawer",
-      "confidence_score": 1.0
+      "target": "app_static_js_drawer_closedrawer"
     },
     {
       "relation": "indirect_call",
@@ -12905,9 +14012,9 @@
       "source_file": "app/static/js/drawer.js",
       "source_location": "L123",
       "weight": 1.0,
+      "confidence_score": 0.5,
       "source": "app_static_js_drawer_loaddrawercontent",
-      "target": "app_static_js_drawer_closedrawer",
-      "confidence_score": 0.5
+      "target": "app_static_js_drawer_closedrawer"
     },
     {
       "relation": "calls",
@@ -12916,9 +14023,9 @@
       "source_file": "app/static/js/drawer.js",
       "source_location": "L96",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_static_js_drawer_loaddrawercontent",
-      "target": "app_static_js_drawer_attachdrawerformsubmit",
-      "confidence_score": 1.0
+      "target": "app_static_js_drawer_attachdrawerformsubmit"
     },
     {
       "relation": "calls",
@@ -12927,9 +14034,9 @@
       "source_file": "app/static/js/drawer.js",
       "source_location": "L166",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_static_js_drawer_attachdrawerformsubmit",
-      "target": "app_static_js_drawer_reloadsection",
-      "confidence_score": 1.0
+      "target": "app_static_js_drawer_reloadsection"
     },
     {
       "relation": "contains",
@@ -12991,17 +14098,6 @@
       "confidence_score": 1.0,
       "source": "app_auth_routes",
       "target": "app_extensions"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/auth/routes.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_auth_routes",
-      "target": "flask"
     },
     {
       "relation": "contains",
@@ -13084,17 +14180,6 @@
       "confidence_score": 1.0,
       "source": "app_contacts_routes",
       "target": "app_utils"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/contacts/routes.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_contacts_routes",
-      "target": "flask"
     },
     {
       "relation": "re_exports",
@@ -13841,17 +14926,6 @@
     },
     {
       "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/inventory/views/api.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_inventory_views_api",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
       "context": "submodule_import",
       "confidence": "EXTRACTED",
       "source_file": "app/inventory/views/__init__.py",
@@ -13989,228 +15063,6 @@
     },
     {
       "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/inventory/views/movements.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_inventory_views_movements",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_documents",
-      "target": "app_extensions"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L101",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_documents",
-      "target": "app_invoices_views_documents_create"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L363",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_documents",
-      "target": "app_invoices_views_documents_delete"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L230",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_documents",
-      "target": "app_invoices_views_documents_edit"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L59",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_documents",
-      "target": "app_invoices_views_documents_export"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L24",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_documents",
-      "target": "app_invoices_views_documents_index"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L80",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_documents",
-      "target": "app_invoices_views_documents_item_row"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L134",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_documents",
-      "target": "app_invoices_views_documents_store"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L279",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_documents",
-      "target": "app_invoices_views_documents_update"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L170",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_documents",
-      "target": "app_invoices_views_documents_view"
-    },
-    {
-      "relation": "imports_from",
-      "context": "submodule_import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_documents",
-      "target": "app_models_contact"
-    },
-    {
-      "relation": "imports_from",
-      "context": "submodule_import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_documents",
-      "target": "app_models_document"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_documents",
-      "target": "app_models_enums"
-    },
-    {
-      "relation": "imports_from",
-      "context": "submodule_import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_documents",
-      "target": "app_models_payment"
-    },
-    {
-      "relation": "imports_from",
-      "context": "submodule_import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_documents",
-      "target": "app_models_project"
-    },
-    {
-      "relation": "imports_from",
-      "context": "submodule_import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L105",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_documents",
-      "target": "app_models_warehouse"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L12",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_documents",
-      "target": "app_utils"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_documents",
-      "target": "datetime"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_documents",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "submodule_import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/__init__.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_init",
-      "target": "app_invoices_views_documents"
-    },
-    {
-      "relation": "imports_from",
       "context": "submodule_import",
       "confidence": "EXTRACTED",
       "source_file": "app/orders/routes.py",
@@ -14333,17 +15185,6 @@
       "confidence_score": 1.0,
       "source": "app_orders_routes",
       "target": "datetime"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/orders/routes.py",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_orders_routes",
-      "target": "flask"
     },
     {
       "relation": "imports_from",
@@ -14525,17 +15366,6 @@
       "target": "config"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/routes.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_routes",
-      "target": "flask"
-    },
-    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
@@ -14556,457 +15386,6 @@
       "confidence_score": 1.0,
       "source": "app_routes_result",
       "target": "app_routes_match_context"
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "app/routes.py",
-      "source_location": "L94",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_routes_register_routes",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/services/project_service.py",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_services_project_service",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/views/accounts.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_views_accounts",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/views/common.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_views_common",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/views/dashboard.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_views_dashboard",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/views/expenses.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_views_expenses",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/views/income.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_views_income",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/views/journal.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_views_journal",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/views/loans.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_views_loans",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/accounting/views/projects.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_accounting_views_projects",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/approvals/__init__.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_approvals_init",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/approvals/routes.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_approvals_routes",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/cli.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_cli",
-      "target": "flask"
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "app/cli.py",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_cli_register_cli",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/companies/services/company_service.py",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_companies_services_company_service",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/dashboard/routes.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_dashboard_routes",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/extensions.py",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_extensions",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/hr/views/common.py",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_hr_views_common",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/hr/views/employees.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_hr_views_employees",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/hr/views/leave.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_hr_views_leave",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/hr/views/schedules.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_hr_views_schedules",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/__init__.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_init",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/inventory/views/barcode.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_inventory_views_barcode",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/inventory/views/catalog.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_inventory_views_catalog",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/inventory/views/categories.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_inventory_views_categories",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_create_service.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_create_service",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_pdf_service.py",
-      "source_location": "L20",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_pdf_service",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_query_service.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_invoice_query_service",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/template_service.py",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_template_service",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/payments.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_payments",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/templates.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_templates",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/orders/services/purchase_order_service.py",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_orders_services_purchase_order_service",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/payments/routes.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_payments_routes",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/pos/routes.py",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_pos_routes",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/support/__init__.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_support_init",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/support/views/audit.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_support_views_audit",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/support/views/common.py",
-      "source_location": "L7",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_support_views_common",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/support/views/dashboard.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_support_views_dashboard",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/support/views/database.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_support_views_database",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/support/views/recovery.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_support_views_recovery",
-      "target": "flask"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/warehouses/routes.py",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_warehouses_routes",
-      "target": "flask"
     },
     {
       "relation": "contains",
@@ -21505,100 +21884,6 @@
       "target": "app_invoices_views_templates_templates_live_preview"
     },
     {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/middleware/rbac.py",
-      "source_location": "L256",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_middleware_rbac",
-      "target": "app_middleware_rbac_init_rbac"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/middleware/rbac.py",
-      "source_location": "L26",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_middleware_rbac",
-      "target": "app_middleware_rbac_py_flask"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/middleware/rbac.py",
-      "source_location": "L292",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_middleware_rbac",
-      "target": "app_middleware_rbac_seed_default_roles_and_permissions"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "app/middleware/rbac.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_middleware_rbac_rationale_1",
-      "target": "app_middleware_rbac"
-    },
-    {
-      "relation": "re_exports",
-      "context": "export",
-      "confidence": "EXTRACTED",
-      "source_file": "app/middleware/__init__.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_support_init",
-      "target": "app_middleware_rbac"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "app/__init__.py",
-      "source_location": "L32",
-      "weight": 1.0,
-      "source": "app_init_create_app",
-      "target": "app_middleware_rbac_init_rbac"
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "app/middleware/rbac.py",
-      "source_location": "L256",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_middleware_rbac_init_rbac",
-      "target": "app_middleware_rbac_py_flask"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "app/middleware/rbac.py",
-      "source_location": "L257",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_middleware_rbac_rationale_257",
-      "target": "app_middleware_rbac_init_rbac"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "app/middleware/rbac.py",
-      "source_location": "L293",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_middleware_rbac_rationale_293",
-      "target": "app_middleware_rbac_seed_default_roles_and_permissions"
-    },
-    {
       "relation": "re_exports",
       "context": "export",
       "confidence": "EXTRACTED",
@@ -25846,263 +26131,11 @@
       "context": "import",
       "confidence": "EXTRACTED",
       "source_file": "app/approvals/routes.py",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_approvals_routes",
-      "target": "app_services_approval_service"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/approvals/routes.py",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_approvals_routes",
-      "target": "app_services_approval_service_approvalservice"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/approvals/routes.py",
       "source_location": "L4",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "app_approvals_routes",
       "target": "app_utils"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/approvals/routes.py",
-      "source_location": "L14",
-      "weight": 1.0,
-      "source": "app_approvals_routes_index",
-      "target": "app_services_approval_service_approvalservice_get_pending_requests"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/approvals/routes.py",
-      "source_location": "L15",
-      "weight": 1.0,
-      "source": "app_approvals_routes_index",
-      "target": "app_services_approval_service_approvalservice_get_resolved_requests"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/approvals/routes.py",
-      "source_location": "L25",
-      "weight": 1.0,
-      "source": "app_approvals_routes_approve",
-      "target": "app_services_approval_service_approvalservice_approve_request"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/approvals/routes.py",
-      "source_location": "L38",
-      "weight": 1.0,
-      "source": "app_approvals_routes_reject",
-      "target": "app_services_approval_service_approvalservice_reject_request"
-    },
-    {
-      "relation": "re_exports",
-      "context": "export",
-      "confidence": "EXTRACTED",
-      "source_file": "app/__init__.py",
-      "source_location": "L24",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_init",
-      "target": "app_services_approval_service"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service",
-      "target": "app_services_approval_service_actionregistry"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L34",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service",
-      "target": "app_services_approval_service_approvalservice"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L95",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service",
-      "target": "app_services_approval_service_init_action_handlers"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service",
-      "target": "datetime"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service_actionregistry",
-      "target": "app_services_approval_service_actionregistry_execute"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service_actionregistry",
-      "target": "app_services_approval_service_actionregistry_register"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L99",
-      "weight": 1.0,
-      "source": "app_services_approval_service_init_action_handlers",
-      "target": "app_services_approval_service_actionregistry_register"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service_rationale_10",
-      "target": "app_services_approval_service_actionregistry_register"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L58",
-      "weight": 1.0,
-      "source": "app_services_approval_service_approvalservice_approve_request",
-      "target": "app_services_approval_service_actionregistry_execute"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L15",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service_rationale_15",
-      "target": "app_services_approval_service_actionregistry_execute"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L49",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service_approvalservice",
-      "target": "app_services_approval_service_approvalservice_approve_request"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L36",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service_approvalservice",
-      "target": "app_services_approval_service_approvalservice_create_request"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L82",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service_approvalservice",
-      "target": "app_services_approval_service_approvalservice_get_pending_requests"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L89",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service_approvalservice",
-      "target": "app_services_approval_service_approvalservice_get_resolved_requests"
-    },
-    {
-      "relation": "method",
-      "confidence": "EXTRACTED",
-      "source_file": "app/services/approval_service.py",
-      "source_location": "L67",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_services_approval_service_approvalservice",
-      "target": "app_services_approval_service_approvalservice_reject_request"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/__init__.py",
-      "source_location": "L24",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_init",
-      "target": "app_services_approval_service_init_action_handlers"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/__init__.py",
-      "source_location": "L25",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_init_create_app",
-      "target": "app_services_approval_service_init_action_handlers"
     },
     {
       "relation": "contains",
@@ -38984,5 +39017,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "eef98c6c4cc0f313a5a171251dc60f6ae323bc38"
+  "built_at_commit": "6006dee0c213e2cc14be85cb62e1f5b09836f752"
 }
