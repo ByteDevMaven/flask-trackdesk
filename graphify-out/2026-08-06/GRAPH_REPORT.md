@@ -1,16 +1,16 @@
-# Graph Report - flask-trackdesk  (2026-08-06)
+# Graph Report - flask-trackdesk  (2026-08-05)
 
 ## Corpus Check
-- 223 files · ~159,264 words
+- 223 files · ~159,186 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1331 nodes · 2482 edges · 146 communities (121 shown, 25 thin omitted)
-- Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 128 edges (avg confidence: 0.56)
+- 1331 nodes · 2479 edges · 146 communities (121 shown, 25 thin omitted)
+- Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 127 edges (avg confidence: 0.56)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `eef98c6c`
+- Built from commit: `b23f4dc0`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -327,8 +327,8 @@ Cohesion: 0.06
 Nodes (30): approve(), index(), reject(), Flask, register_blueprints(), register_cli(), Flask, register_context_processors() (+22 more)
 
 ### Community 47 - "Community 47"
-Cohesion: 0.67
-Nodes (5): attachDrawerFormSubmit(), closeDrawer(), loadDrawerContent(), openDrawer(), reloadSection()
+Cohesion: 0.47
+Nodes (3): attachDrawerFormSubmit(), loadDrawerContent(), openDrawer()
 
 ### Community 48 - "Community 48"
 Cohesion: 0.33
@@ -467,11 +467,11 @@ Nodes (5): Dashboard aggregation service., create_income(), delete_income(), edi
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `BaseModel` connect `Warehouses Migration` to `document_sequence.py`, `.hours_worked`, `.build_slug`, `api_adjust_stock`, `Tag`, `project.py`, `Unify Contacts Migration`, `Auto Migration 2`, `Budget Migration`, `Accounting Migration`, `Community 37`, `Index UI JS`, `routes.py`, `Community 43`, `Community 93`, `post_invoice_payment_income`, `Community 98`, `Community 100`, `account.py`, `Transaction`?**
-  _High betweenness centrality (0.079) - this node is a cross-community bridge._
+  _High betweenness centrality (0.074) - this node is a cross-community bridge._
 - **Why does `Document` connect `Community 95` to `Budget Migration`, `Index UI JS`, `__init__.py`, `Account`, `Community 116`?**
-  _High betweenness centrality (0.036) - this node is a cross-community bridge._
-- **Why does `User` connect `Community 93` to `Warehouses Migration`, `Community 98`, `Accounting Migration`, `Inventory Routes`, `Index UI JS`, `__init__.py`, `Community 87`, `Models Update Migration`?**
-  _High betweenness centrality (0.027) - this node is a cross-community bridge._
+  _High betweenness centrality (0.030) - this node is a cross-community bridge._
+- **Why does `AccountService` connect `Order Form JS` to `Community 35`?**
+  _High betweenness centrality (0.019) - this node is a cross-community bridge._
 - **Are the 61 inferred relationships involving `BaseModel` (e.g. with `Leave Request Form` and `AlchemyEncoder`) actually correct?**
   _`BaseModel` has 61 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `Fetch an item by its SKU within a company.`, `Application structure`, `Compatibility loader for accounting route modules.  Routes are grouped by doma` to the rest of the system?**

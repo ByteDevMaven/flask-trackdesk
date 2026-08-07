@@ -440,9 +440,9 @@
     "semantic_hash": ""
   },
   "app/static/js/drawer.js": {
-    "mtime": 1786063446.7278397,
-    "ast_hash": "af2d01050c64096a5538407af04e4a27",
-    "semantic_hash": ""
+    "mtime": 1780535767.1571376,
+    "ast_hash": "af2bd5f36e7a9c92d54da13b6928e6ed",
+    "semantic_hash": "af2bd5f36e7a9c92d54da13b6928e6ed"
   },
   "app/static/js/flash.js": {
     "mtime": 1779222808.4738624,
@@ -805,8 +805,8 @@
     "semantic_hash": "ff9b7809e1e029721b30423542b6eef6"
   },
   "app/inventory/templates/inventory/form.html": {
-    "mtime": 1786063466.9061277,
-    "ast_hash": "be374e1cdf200d58bb29bba5c71deb89",
+    "mtime": 1784162691.9094226,
+    "ast_hash": "c06bfd89bbeac84bf70a4da66d1ac0e7",
     "semantic_hash": ""
   },
   "app/inventory/templates/inventory/index.html": {
