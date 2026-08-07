@@ -1,7 +1,7 @@
 <div class="h-full flex flex-col">
   <form
     method="POST"
-    action="{{ url_for('accounting.create_tag', company_id=company.id) }}"
+    action="{{ url_for('accounting.create_tag', company_id=(company.slug or company.id)) }}"
     data-drawer-form
     data-success-message="Etiqueta creada exitosamente"
     class="flex-shrink-0">
@@ -45,7 +45,7 @@
         <span class="inline-flex items-center px-2 py-1 rounded text-xs font-medium {{ tag.color_code }} border">
           {{ tag.name }}
         </span>
-        <form method="POST" action="{{ url_for('accounting.delete_tag', company_id=company.id, tag_id=tag.id) }}" 
+        <form method="POST" action="{{ url_for('accounting.delete_tag', company_id=(company.slug or company.id), tag_id=tag.id) }}" 
               data-drawer-form data-success-message="Etiqueta eliminada"
               onsubmit="return confirm('¿Seguro que deseas eliminar esta etiqueta?');">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">

@@ -163,7 +163,7 @@
             </td>
             <td class="px-4 py-3">
               {% if log.company %}
-              <a href="{{ url_for('support.audit_logs', company_id=log.company_id) }}"
+              <a href="{{ url_for('support.audit_logs', company_id=company_id) }}"
                  class="text-slate-600 text-xs hover:text-emerald-600 hover:underline">{{ log.company.name }}</a>
               {% else %}
               <span class="text-slate-400 text-xs">-</span>

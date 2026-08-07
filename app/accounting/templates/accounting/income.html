@@ -13,12 +13,12 @@
       <p class="text-xs text-slate-500 mt-0.5">{{ pagination.total }} registro{{ 's' if pagination.total != 1 }}</p>
     </div>
     <div class="flex items-center gap-2">
-      <a href="{{ url_for('accounting.income_list', company_id=company.id, export='excel', **request.args) }}"
+      <a href="{{ url_for('accounting.income_list', company_id=(company.slug or company.id), export='excel', **request.args) }}"
         class="flex items-center gap-2 px-4 py-2 border border-slate-200 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors shadow-sm">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         Exportar a Excel
       </a>
-      <button data-action="open-drawer" data-url="{{ url_for('accounting.create_income', company_id=company.id) }}" data-title="Registrar Ingreso"
+      <button data-action="open-drawer" data-url="{{ url_for('accounting.create_income', company_id=(company.slug or company.id)) }}" data-title="Registrar Ingreso"
         class="ui-btn ui-btn-primary">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         Registrar Ingreso
@@ -37,7 +37,7 @@
         class="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
       <button type="submit" class="px-4 py-2 bg-slate-800 text-white rounded-lg text-sm font-medium hover:bg-slate-700 transition-colors">Filtrar</button>
       {% if search or start_date or end_date %}
-      <a href="{{ url_for('accounting.income_list', company_id=company.id) }}" class="px-3 py-2 text-sm text-slate-500 hover:text-slate-700">Limpiar</a>
+      <a href="{{ url_for('accounting.income_list', company_id=(company.slug or company.id)) }}" class="px-3 py-2 text-sm text-slate-500 hover:text-slate-700">Limpiar</a>
       {% endif %}
     </form>
   </div>
@@ -70,12 +70,12 @@
           <td class="px-4 py-3">
             <div class="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-all">
               <button data-action="open-drawer"
-                data-url="{{ url_for('accounting.edit_income', company_id=company.id, txn_id=txn.id) }}"
+                data-url="{{ url_for('accounting.edit_income', company_id=(company.slug or company.id), txn_id=txn.id) }}"
                 data-title="Editar Ingreso"
                 class="text-slate-400 hover:text-sky-600 hover:bg-sky-50 transition-all p-1.5 rounded" title="Editar">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
               </button>
-              <form method="POST" action="{{ url_for('accounting.delete_income', company_id=company.id, txn_id=txn.id) }}"
+              <form method="POST" action="{{ url_for('accounting.delete_income', company_id=(company.slug or company.id), txn_id=txn.id) }}"
                 onsubmit="return confirm('¿Eliminar este ingreso y anular su asiento?')" class="inline">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <button type="submit" class="text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-all p-1.5 rounded" title="Eliminar">
@@ -90,7 +90,7 @@
           <div class="flex flex-col items-center gap-2">
             <svg class="w-8 h-8 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             <p class="text-sm font-medium text-slate-500">No hay ingresos registrados.</p>
-            <button data-action="open-drawer" data-url="{{ url_for('accounting.create_income', company_id=company.id) }}" data-title="Registrar Ingreso"
+            <button data-action="open-drawer" data-url="{{ url_for('accounting.create_income', company_id=(company.slug or company.id)) }}" data-title="Registrar Ingreso"
               class="mt-1 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">Registrar Primer Ingreso</button>
           </div>
         </td></tr>
@@ -107,7 +107,7 @@
     <p class="text-sm text-slate-500">Mostrando {{ first_item }} a {{ last_item }} de {{ pagination.total }} resultados</p>
     <div class="flex items-center gap-1">
       {% if pagination.has_prev %}
-      <a href="{{ url_for('accounting.income_list', company_id=company.id, page=pagination.prev_num, search=search, start_date=start_date, end_date=end_date) }}"
+      <a href="{{ url_for('accounting.income_list', company_id=(company.slug or company.id), page=pagination.prev_num, search=search, start_date=start_date, end_date=end_date) }}"
         class="px-3 py-1.5 text-sm text-slate-500 hover:bg-slate-100 rounded transition-colors">Anterior</a>
       {% else %}
       <button class="px-3 py-1.5 text-sm text-slate-500 hover:bg-slate-100 rounded transition-colors disabled:opacity-50 disabled:hover:bg-transparent" disabled>Anterior</button>
@@ -117,7 +117,7 @@
           {% if page_num == pagination.page %}
           <span class="px-3 py-1.5 text-sm font-medium text-white bg-emerald-600 rounded">{{ page_num }}</span>
           {% else %}
-          <a href="{{ url_for('accounting.income_list', company_id=company.id, page=page_num, search=search, start_date=start_date, end_date=end_date) }}"
+          <a href="{{ url_for('accounting.income_list', company_id=(company.slug or company.id), page=page_num, search=search, start_date=start_date, end_date=end_date) }}"
             class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">{{ page_num }}</a>
           {% endif %}
         {% else %}
@@ -125,7 +125,7 @@
         {% endif %}
       {% endfor %}
       {% if pagination.has_next %}
-      <a href="{{ url_for('accounting.income_list', company_id=company.id, page=pagination.next_num, search=search, start_date=start_date, end_date=end_date) }}"
+      <a href="{{ url_for('accounting.income_list', company_id=(company.slug or company.id), page=pagination.next_num, search=search, start_date=start_date, end_date=end_date) }}"
         class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">Siguiente</a>
       {% else %}
       <button class="px-3 py-1.5 text-sm text-slate-500 hover:bg-slate-100 rounded transition-colors disabled:opacity-50 disabled:hover:bg-transparent" disabled>Siguiente</button>

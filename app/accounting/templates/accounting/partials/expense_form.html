@@ -1,5 +1,5 @@
 <form method="POST"
-  action="{{ url_for('accounting.edit_expense', company_id=company.id, expense_id=expense.id) if expense else url_for('accounting.create_expense', company_id=company.id) }}"
+  action="{{ url_for('accounting.edit_expense', company_id=(company.slug or company.id), expense_id=expense.id) if expense else url_for('accounting.create_expense', company_id=(company.slug or company.id)) }}"
   enctype="multipart/form-data"
   data-drawer-form
   data-success-message="{{ 'Gasto actualizado exitosamente' if expense else 'Gasto registrado exitosamente' }}">

@@ -1,5 +1,5 @@
 <form method="POST"
-  action="{{ url_for('accounting.edit_income', company_id=company.id, txn_id=transaction.id) if transaction else url_for('accounting.create_income', company_id=company.id) }}"
+  action="{{ url_for('accounting.edit_income', company_id=(company.slug or company.id), txn_id=transaction.id) if transaction else url_for('accounting.create_income', company_id=(company.slug or company.id)) }}"
   data-drawer-form
   data-success-message="{{ 'Ingreso actualizado exitosamente' if transaction else 'Ingreso registrado exitosamente' }}"
   enctype="multipart/form-data">

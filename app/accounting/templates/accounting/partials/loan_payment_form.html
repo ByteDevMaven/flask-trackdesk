@@ -1,5 +1,5 @@
 <form method="POST"
-  action="{{ url_for('accounting.pay_loan', company_id=company.id, account_id=account.id) }}"
+  action="{{ url_for('accounting.pay_loan', company_id=(company.slug or company.id), account_id=account.id) }}"
   data-drawer-form
   data-success-message="Pago registrado exitosamente"
   enctype="multipart/form-data">

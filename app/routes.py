@@ -91,6 +91,11 @@ def _selected_company_scope():
     return user_company_ids
 
 
+def _slug_map():
+    """Return a dict mapping company_id -> slug for all companies the user can access."""
+    return {c.id: (c.slug or str(c.id)) for c in current_user.companies}
+
+
 def register_routes(app: Flask):
     @app.route('/')
     def index():
@@ -137,6 +142,8 @@ def register_routes(app: Flask):
         if query_text:
             search_term = f"%{query_text}%"
 
+            slugs = _slug_map()
+
             contacts = Contact.query.filter(Contact.company_id.in_(company_ids)).filter(
                 or_(
                     Contact.name.ilike(search_term),
@@ -152,7 +159,7 @@ def register_routes(app: Flask):
                     'Contactos',
                     c.name,
                     ' - '.join(_field_values(c.type.label_es if hasattr(c.type, 'label_es') else c.type.name.replace('_', ' ').title(), c.email or c.phone or c.identifier)),
-                    url_for('contacts.view', company_id=c.company_id, contact_id=c.id),
+                    url_for('contacts.view', company_id=slugs.get(c.company_id, c.company_id), contact_id=c.id),
                     query_text,
                     (
                         ('Nombre', c.name, 5),
@@ -181,7 +188,7 @@ def register_routes(app: Flask):
                     'Facturas',
                     d.document_number,
                     ' - '.join(_field_values(_enum_label(d.type).title(), _enum_label(d.status).title(), d.client.name if d.client else None)),
-                    url_for('invoices.view', company_id=d.company_id, id=d.id),
+                    url_for('invoices.view', company_id=slugs.get(d.company_id, d.company_id), id=d.id),
                     query_text,
                     (
                         ('Numero', d.document_number, 6),
@@ -208,7 +215,7 @@ def register_routes(app: Flask):
                     'Inventario',
                     i.name,
                     ' - '.join(_field_values(i.sku, i.description, i.supplier.name if i.supplier else None)),
-                    url_for('inventory.view', company_id=i.company_id, sku=i.sku) if i.sku else url_for('inventory.index', company_id=i.company_id, search=i.name),
+                    url_for('inventory.view', company_id=slugs.get(i.company_id, i.company_id), sku=i.sku) if i.sku else url_for('inventory.index', company_id=slugs.get(i.company_id, i.company_id), search=i.name),
                     query_text,
                     (
                         ('SKU', i.sku, 6),
@@ -234,7 +241,7 @@ def register_routes(app: Flask):
                     'Ordenes de compra',
                     p.order_number,
                     ' - '.join(_field_values(p.supplier.name if p.supplier else None, p.buy_date.strftime('%d/%m/%Y') if p.buy_date else None)),
-                    url_for('orders.view', company_id=p.company_id, id=p.id),
+                    url_for('orders.view', company_id=slugs.get(p.company_id, p.company_id), id=p.id),
                     query_text,
                     (
                         ('Numero', p.order_number, 6),
@@ -261,7 +268,7 @@ def register_routes(app: Flask):
                     'Pagos',
                     f"Pago #{p.id}",
                     ' - '.join(_field_values(p.document.document_number if p.document else None, p.document.client.name if p.document and p.document.client else None, _enum_label(p.method).title())),
-                    url_for('payments.view', company_id=p.company_id, id=p.id),
+                    url_for('payments.view', company_id=slugs.get(p.company_id, p.company_id), id=p.id),
                     query_text,
                     (
                         ('Notas', p.notes, 2),
@@ -287,7 +294,7 @@ def register_routes(app: Flask):
                     'Proyectos',
                     p.name,
                     ' - '.join(_field_values(p.status.title() if p.status else None, p.description)),
-                    url_for('accounting.project_detail', company_id=p.company_id, project_id=p.id),
+                    url_for('accounting.project_detail', company_id=slugs.get(p.company_id, p.company_id), project_id=p.id),
                     query_text,
                     (
                         ('Proyecto', p.name, 6),
@@ -314,7 +321,7 @@ def register_routes(app: Flask):
                     'Gastos',
                     e.description or f"Gasto #{e.id}",
                     ' - '.join(_field_values(e.vendor_display, e.category, _enum_label(e.status).title())),
-                    url_for('accounting.edit_expense', company_id=e.company_id, expense_id=e.id),
+                    url_for('accounting.edit_expense', company_id=slugs.get(e.company_id, e.company_id), expense_id=e.id),
                     query_text,
                     (
                         ('Descripcion', e.description, 5),
@@ -339,7 +346,7 @@ def register_routes(app: Flask):
                     'Almacenes',
                     w.name,
                     w.location or '',
-                    url_for('warehouses.index', company_id=w.company_id, search=w.name),
+                    url_for('warehouses.index', company_id=slugs.get(w.company_id, w.company_id), search=w.name),
                     query_text,
                     (
                         ('Almacen', w.name, 6),

@@ -10,18 +10,18 @@
   <header class="bg-white border-b border-slate-200 px-4 md:px-6 py-3 flex items-center justify-between flex-shrink-0">
     <h1 class="text-base font-semibold text-slate-800">Plan de Cuentas</h1>
     <div class="flex items-center gap-2">
-      <a href="{{ url_for('accounting.chart_of_accounts', company_id=company.id, export='excel') }}"
+      <a href="{{ url_for('accounting.chart_of_accounts', company_id=(company.slug or company.id), export='excel') }}"
         class="flex items-center gap-2 px-4 py-2 border border-slate-200 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors shadow-sm">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
         Exportar a Excel
       </a>
-      <form method="POST" action="{{ url_for('accounting.generate_default_accounts', company_id=company.id) }}" class="inline">
+      <form method="POST" action="{{ url_for('accounting.generate_default_accounts', company_id=(company.slug or company.id)) }}" class="inline">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <button type="submit" class="px-3 py-2 border border-slate-200 rounded-lg text-sm text-slate-600 hover:bg-slate-50 transition-colors">
           Generar Cuentas Base
         </button>
       </form>
-      <button data-action="open-drawer" data-url="{{ url_for('accounting.create_account', company_id=company.id) }}" data-title="Nueva Cuenta"
+      <button data-action="open-drawer" data-url="{{ url_for('accounting.create_account', company_id=(company.slug or company.id)) }}" data-title="Nueva Cuenta"
         class="ui-btn ui-btn-primary">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         Nueva Cuenta
@@ -78,12 +78,12 @@
             <td class="px-4 py-3">
               <div class="flex items-center justify-end gap-1 opacity-0 group-hover/row:opacity-100 transition-opacity">
                 <button data-action="open-drawer"
-                  data-url="{{ url_for('accounting.edit_account', company_id=company.id, account_id=acct.id) }}"
+                  data-url="{{ url_for('accounting.edit_account', company_id=(company.slug or company.id), account_id=acct.id) }}"
                   data-title="Editar Cuenta"
                   class="p-1.5 text-slate-400 hover:text-sky-600 hover:bg-sky-50 rounded-lg transition-all" title="Editar">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg>
                 </button>
-                <form method="POST" action="{{ url_for('accounting.delete_account', company_id=company.id, account_id=acct.id) }}"
+                <form method="POST" action="{{ url_for('accounting.delete_account', company_id=(company.slug or company.id), account_id=acct.id) }}"
                   onsubmit="return confirm('¿Está seguro de eliminar esta cuenta? No debe tener movimientos.')" class="inline">
                   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                   <button type="submit" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-all" title="Eliminar">
@@ -105,7 +105,7 @@
     <div class="flex flex-col items-center justify-center py-24 gap-3">
       <svg class="w-10 h-10 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
       <p class="text-slate-500 font-medium">No hay cuentas configuradas.</p>
-      <form method="POST" action="{{ url_for('accounting.generate_default_accounts', company_id=company.id) }}">
+      <form method="POST" action="{{ url_for('accounting.generate_default_accounts', company_id=(company.slug or company.id)) }}">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <button type="submit" class="ui-btn ui-btn-primary">
           Generar Plan de Cuentas Base

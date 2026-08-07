@@ -13,7 +13,7 @@
       <p class="text-xs text-slate-500 mt-0.5">Transacción #{{ transaction.id }}</p>
     </div>
     <div class="flex items-center gap-2">
-      <a href="{{ url_for('accounting.journal_list', company_id=company.id) }}"
+      <a href="{{ url_for('accounting.journal_list', company_id=(company.slug or company.id)) }}"
         class="flex items-center gap-2 px-4 py-2 border border-slate-200 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors shadow-sm">
         Volver
       </a>

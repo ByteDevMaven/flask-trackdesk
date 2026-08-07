@@ -14,7 +14,7 @@
     </div>
     <div class="flex items-center gap-2">
       {% if account %}
-      <a href="{{ url_for('accounting.ledger', company_id=company.id, export='excel', **request.args) }}"
+      <a href="{{ url_for('accounting.ledger', company_id=(company.slug or company.id), export='excel', **request.args) }}"
         class="flex items-center gap-2 px-4 py-2 border border-slate-200 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors shadow-sm">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
         Exportar a Excel
@@ -92,7 +92,7 @@
             <td class="px-4 py-3 font-medium text-slate-800">{{ entry.description or '—' }}</td>
             <td class="px-4 py-3 text-slate-500 text-xs">
               {% if entry.transaction %}
-              <a href="{{ url_for('accounting.journal_list', company_id=company.id, search=entry.transaction.memo) }}" class="text-emerald-600 hover:underline">
+              <a href="{{ url_for('accounting.journal_list', company_id=(company.slug or company.id), search=entry.transaction.memo) }}" class="text-emerald-600 hover:underline">
                 {{ entry.transaction.transaction_type.label_es }} #{{ entry.transaction.id }}
               </a>
               {% else %}
@@ -122,7 +122,7 @@
         <p class="text-sm text-slate-500">Mostrando {{ first_item }} a {{ last_item }} de {{ pagination.total }} resultados</p>
         <div class="flex items-center gap-1">
           {% if pagination.has_prev %}
-          <a href="{{ url_for('accounting.ledger', company_id=company.id, account_id=account.id, page=pagination.prev_num, start_date=start_date, end_date=end_date) }}"
+          <a href="{{ url_for('accounting.ledger', company_id=(company.slug or company.id), account_id=account.id, page=pagination.prev_num, start_date=start_date, end_date=end_date) }}"
             class="px-3 py-1.5 text-sm text-slate-500 hover:bg-slate-100 rounded transition-colors">Anterior</a>
           {% else %}
           <button class="px-3 py-1.5 text-sm text-slate-500 hover:bg-slate-100 rounded transition-colors disabled:opacity-50 disabled:hover:bg-transparent" disabled>Anterior</button>
@@ -132,7 +132,7 @@
               {% if page_num == pagination.page %}
               <span class="px-3 py-1.5 text-sm font-medium text-white bg-emerald-600 rounded">{{ page_num }}</span>
               {% else %}
-              <a href="{{ url_for('accounting.ledger', company_id=company.id, account_id=account.id, page=page_num, start_date=start_date, end_date=end_date) }}"
+              <a href="{{ url_for('accounting.ledger', company_id=(company.slug or company.id), account_id=account.id, page=page_num, start_date=start_date, end_date=end_date) }}"
                 class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">{{ page_num }}</a>
               {% endif %}
             {% else %}
@@ -140,7 +140,7 @@
             {% endif %}
           {% endfor %}
           {% if pagination.has_next %}
-          <a href="{{ url_for('accounting.ledger', company_id=company.id, account_id=account.id, page=pagination.next_num, start_date=start_date, end_date=end_date) }}"
+          <a href="{{ url_for('accounting.ledger', company_id=(company.slug or company.id), account_id=account.id, page=pagination.next_num, start_date=start_date, end_date=end_date) }}"
             class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">Siguiente</a>
           {% else %}
           <button class="px-3 py-1.5 text-sm text-slate-500 hover:bg-slate-100 rounded transition-colors disabled:opacity-50 disabled:hover:bg-transparent" disabled>Siguiente</button>

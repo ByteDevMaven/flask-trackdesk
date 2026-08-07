@@ -1,5 +1,5 @@
 <form method="POST"
-  action="{{ url_for('accounting.edit_project', company_id=company.id, project_id=project.id) if project else url_for('accounting.create_project', company_id=company.id) }}"
+  action="{{ url_for('accounting.edit_project', company_id=(company.slug or company.id), project_id=project.id) if project else url_for('accounting.create_project', company_id=(company.slug or company.id)) }}"
   data-drawer-form
   data-success-message="{{ 'Proyecto actualizado exitosamente' if project else 'Proyecto creado exitosamente' }}">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">

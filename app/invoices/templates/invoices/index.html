@@ -389,7 +389,7 @@ block content %}
             <tr class="hover:bg-slate-50/80 transition-colors">
               <td class="px-4 py-3">
                 <a
-                  href="{{ url_for('invoices.view', company_id=invoice.company_id, id=invoice.id) }}"
+                  href="{{ url_for('invoices.view', company_id=company_id, id=invoice.id) }}"
                   class="text-sm font-semibold text-emerald-600 hover:text-emerald-700 transition-colors block"
                 >
                   {{ invoice.document_number }}
@@ -464,7 +464,7 @@ block content %}
               <td class="px-4 py-3">
                 <div class="flex items-center gap-1 justify-end">
                   <a
-                    href="{{ url_for('invoices.edit', company_id=invoice.company_id, id=invoice.id) }}"
+                    href="{{ url_for('invoices.edit', company_id=company_id, id=invoice.id) }}"
                     class="p-1.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
                     title="Editar"
                   >
@@ -485,7 +485,7 @@ block content %}
                   <button
                     type="button"
                     data-action="confirm-delete"
-                    data-url="{{ url_for('invoices.delete', company_id=invoice.company_id, id=invoice.id) }}"
+                    data-url="{{ url_for('invoices.delete', company_id=company_id, id=invoice.id) }}"
                     data-name="{{ invoice.document_number }}"
                     class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
                     title="Eliminar"

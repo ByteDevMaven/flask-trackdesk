@@ -13,12 +13,12 @@
       <p class="text-xs text-slate-500 mt-0.5">{{ pagination.total }} registro{{ 's' if pagination.total != 1 }}</p>
     </div>
     <div class="flex items-center gap-2">
-      <a href="{{ url_for('accounting.expenses_list', company_id=company.id, export='excel', **request.args) }}"
+      <a href="{{ url_for('accounting.expenses_list', company_id=(company.slug or company.id), export='excel', **request.args) }}"
         class="flex items-center gap-2 px-4 py-2 border border-slate-200 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50 transition-colors shadow-sm">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         Exportar a Excel
       </a>
-      <button data-action="open-drawer" data-url="{{ url_for('accounting.create_expense', company_id=company.id) }}" data-title="Registrar Gasto"
+      <button data-action="open-drawer" data-url="{{ url_for('accounting.create_expense', company_id=(company.slug or company.id)) }}" data-title="Registrar Gasto"
         class="ui-btn ui-btn-primary">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         Registrar Gasto
@@ -53,7 +53,7 @@
         class="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
       <button type="submit" class="px-4 py-2 bg-slate-800 text-white rounded-lg text-sm font-medium hover:bg-slate-700 transition-colors">Filtrar</button>
       {% if search or account_id or status or start_date or end_date %}
-      <a href="{{ url_for('accounting.expenses_list', company_id=company.id) }}" class="px-3 py-2 text-sm text-slate-500 hover:text-slate-700">Limpiar</a>
+      <a href="{{ url_for('accounting.expenses_list', company_id=(company.slug or company.id)) }}" class="px-3 py-2 text-sm text-slate-500 hover:text-slate-700">Limpiar</a>
       {% endif %}
     </form>
   </div>
@@ -99,12 +99,12 @@
           <td class="px-4 py-3">
             <div class="flex items-center gap-1 justify-end opacity-0 group-hover:opacity-100 transition-all">
               <button data-action="open-drawer"
-                data-url="{{ url_for('accounting.edit_expense', company_id=company.id, expense_id=exp.id) }}"
+                data-url="{{ url_for('accounting.edit_expense', company_id=(company.slug or company.id), expense_id=exp.id) }}"
                 data-title="Editar Gasto"
                 class="text-slate-400 hover:text-sky-600 hover:bg-sky-50 transition-all p-1.5 rounded" title="Editar">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
               </button>
-              <form method="POST" action="{{ url_for('accounting.delete_expense', company_id=company.id, expense_id=exp.id) }}"
+              <form method="POST" action="{{ url_for('accounting.delete_expense', company_id=(company.slug or company.id), expense_id=exp.id) }}"
                 onsubmit="return confirm('¿Eliminar este gasto y anular su asiento?')" class="inline">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <button type="submit" class="text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-all p-1.5 rounded" title="Eliminar">
@@ -119,7 +119,7 @@
           <div class="flex flex-col items-center gap-2">
             <svg class="w-8 h-8 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"/></svg>
             <p class="text-sm font-medium">No hay gastos registrados.</p>
-            <button data-action="open-drawer" data-url="{{ url_for('accounting.create_expense', company_id=company.id) }}" data-title="Registrar Gasto"
+            <button data-action="open-drawer" data-url="{{ url_for('accounting.create_expense', company_id=(company.slug or company.id)) }}" data-title="Registrar Gasto"
               class="mt-1 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">Registrar Primer Gasto</button>
           </div>
         </td></tr>
@@ -137,7 +137,7 @@
     <p class="text-sm text-slate-500">Mostrando {{ first_item }} a {{ last_item }} de {{ pagination.total }} resultados</p>
     <div class="flex items-center gap-1">
       {% if pagination.has_prev %}
-      <a href="{{ url_for('accounting.expenses_list', company_id=company.id, page=pagination.prev_num, search=search, account_id=account_id, status=status, category=category, start_date=start_date, end_date=end_date) }}"
+      <a href="{{ url_for('accounting.expenses_list', company_id=(company.slug or company.id), page=pagination.prev_num, search=search, account_id=account_id, status=status, category=category, start_date=start_date, end_date=end_date) }}"
         class="px-3 py-1.5 text-sm text-slate-500 hover:bg-slate-100 rounded transition-colors">Anterior</a>
       {% else %}
       <button class="px-3 py-1.5 text-sm text-slate-500 hover:bg-slate-100 rounded transition-colors disabled:opacity-50 disabled:hover:bg-transparent" disabled>Anterior</button>
@@ -147,7 +147,7 @@
           {% if page_num == pagination.page %}
           <span class="px-3 py-1.5 text-sm font-medium text-white bg-emerald-600 rounded">{{ page_num }}</span>
           {% else %}
-          <a href="{{ url_for('accounting.expenses_list', company_id=company.id, page=page_num, search=search, account_id=account_id, status=status, category=category, start_date=start_date, end_date=end_date) }}"
+          <a href="{{ url_for('accounting.expenses_list', company_id=(company.slug or company.id), page=page_num, search=search, account_id=account_id, status=status, category=category, start_date=start_date, end_date=end_date) }}"
             class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">{{ page_num }}</a>
           {% endif %}
         {% else %}
@@ -155,7 +155,7 @@
         {% endif %}
       {% endfor %}
       {% if pagination.has_next %}
-      <a href="{{ url_for('accounting.expenses_list', company_id=company.id, page=pagination.next_num, search=search, account_id=account_id, status=status, category=category, start_date=start_date, end_date=end_date) }}"
+      <a href="{{ url_for('accounting.expenses_list', company_id=(company.slug or company.id), page=pagination.next_num, search=search, account_id=account_id, status=status, category=category, start_date=start_date, end_date=end_date) }}"
         class="px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-100 rounded transition-colors">Siguiente</a>
       {% else %}
       <button class="px-3 py-1.5 text-sm text-slate-500 hover:bg-slate-100 rounded transition-colors disabled:opacity-50 disabled:hover:bg-transparent" disabled>Siguiente</button>

@@ -21,7 +21,7 @@
       <svg class="w-10 h-10 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
       <p class="text-sm font-medium text-slate-500">No hay cuentas de pasivo activas.</p>
       <p class="text-xs text-slate-400">Cree una cuenta de tipo <strong>Pasivo</strong> en el Plan de Cuentas para registrar préstamos.</p>
-      <a href="{{ url_for('accounting.chart_of_accounts', company_id=company.id) }}"
+      <a href="{{ url_for('accounting.chart_of_accounts', company_id=(company.slug or company.id)) }}"
         class="mt-1 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors">
         Ir al Plan de Cuentas
       </a>
@@ -61,7 +61,7 @@
 
         <div class="border-t border-slate-100 px-5 py-3 bg-slate-50/50 flex items-center gap-2 flex-wrap">
           <button data-action="open-drawer"
-            data-url="{{ url_for('accounting.create_loan', company_id=company.id, account_id=account.id) }}"
+            data-url="{{ url_for('accounting.create_loan', company_id=(company.slug or company.id), account_id=account.id) }}"
             data-title="Registrar Crédito / Préstamo — {{ account.name }}"
             class="flex items-center gap-2 px-3 py-1.5 bg-slate-800 text-white rounded-lg text-xs font-medium hover:bg-slate-700 transition-colors">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
@@ -69,14 +69,14 @@
           </button>
           {% if balance > 0 %}
           <button data-action="open-drawer"
-            data-url="{{ url_for('accounting.pay_loan', company_id=company.id, account_id=account.id) }}"
+            data-url="{{ url_for('accounting.pay_loan', company_id=(company.slug or company.id), account_id=account.id) }}"
             data-title="Registrar Pago — {{ account.name }}"
             class="flex items-center gap-2 px-3 py-1.5 bg-emerald-600 text-white rounded-lg text-xs font-medium hover:bg-emerald-700 transition-colors">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
             Registrar Pago
           </button>
           {% endif %}
-          <a href="{{ url_for('accounting.ledger', company_id=company.id, account_id=account.id) }}"
+          <a href="{{ url_for('accounting.ledger', company_id=(company.slug or company.id), account_id=account.id) }}"
             class="flex items-center gap-2 px-3 py-1.5 border border-slate-200 text-slate-600 rounded-lg text-xs font-medium hover:bg-white transition-colors">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
             Ver movimientos
@@ -91,7 +91,7 @@
         <span class="font-semibold">💡 ¿No aparece tu cuenta?</span>
         Solo se muestran las cuentas de tipo <strong>Pasivo</strong> activas.
         Crea o activa la cuenta en el
-        <a href="{{ url_for('accounting.chart_of_accounts', company_id=company.id) }}" class="underline font-semibold">Plan de Cuentas</a>.
+        <a href="{{ url_for('accounting.chart_of_accounts', company_id=(company.slug or company.id)) }}" class="underline font-semibold">Plan de Cuentas</a>.
       </p>
     </div>
     {% endif %}
