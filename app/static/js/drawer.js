@@ -70,12 +70,18 @@ async function loadDrawerContent(url, title) {
     
     // Clear spinner and append parsed HTML nodes safely
     body.replaceChildren();
+    while (doc.head.firstChild) {
+      body.appendChild(doc.head.firstChild);
+    }
     while (doc.body.firstChild) {
       body.appendChild(doc.body.firstChild);
     }
 
     // Evaluate injected scripts so form-specific JS (like receipt previews) runs perfectly
     body.querySelectorAll('script').forEach(script => {
+      if (script.type && script.type !== 'text/javascript' && script.type !== 'module') {
+        return; // Skip JSON data blocks and other non-executable scripts
+      }
       const newScript = document.createElement('script');
       if (script.src) {
         newScript.src = script.src;
