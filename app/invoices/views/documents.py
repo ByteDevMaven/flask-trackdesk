@@ -310,8 +310,21 @@ def update(company_id, id):
             if document.type == DocumentType.invoice and new_doc_type == DocumentType.quote:
                 _release_latest_invoice_number(company_id, document)
             document.document_number = _generate_document_number(company_id, new_doc_type)
-        elif submitted_doc_num:
-            document.document_number = submitted_doc_num
+        elif submitted_doc_num and submitted_doc_num != document.document_number:
+            if current_user.has_permission('documents.edit_number'):
+                document.document_number = submitted_doc_num
+            else:
+                from app.services.approval_service import ApprovalService
+                ApprovalService.create_request(
+                    company_id=company_id,
+                    requester_id=current_user.id,
+                    action_type='edit_document_number',
+                    payload={
+                        'document_id': document.id,
+                        'new_number': submitted_doc_num
+                    }
+                )
+                flash('Se ha enviado una solicitud de aprobación para cambiar el número de documento.', 'info')
 
         document.type = new_doc_type
         document.client_id = (

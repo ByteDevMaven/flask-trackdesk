@@ -237,6 +237,10 @@ ROUTE_PERMISSIONS: dict[str, str] = {
     'notifications.mark_all_read': 'dashboard.view',
     'notifications.archive': 'dashboard.view',
     'notifications.send': 'users.manage',
+
+    # ── Special Permissions ───────────────────────────────────────────────
+    # Dummy routes to ensure special permissions are picked up by the seeder
+    'dummy.edit_document_number': 'documents.edit_number',
 }
 
 # Endpoints that are always public (no login / permission required).
@@ -338,6 +342,7 @@ def seed_default_roles_and_permissions(db, Role, Permission):
             'accounting.view', 'accounting.manage', 'accounting.delete',
             'hr.view',         'hr.manage',         'hr.delete',
             'approvals.manage',
+            'documents.edit_number',
         ],
 
         # Senior Manager — oversees operations, full access except deleting company
@@ -380,6 +385,7 @@ def seed_default_roles_and_permissions(db, Role, Permission):
             'companies.view',
             'users.view',
             'accounting.view', 'accounting.manage', 'accounting.delete',
+            'documents.edit_number'
         ],
 
         # Accountant — financial operations and billing, no destructive actions.
