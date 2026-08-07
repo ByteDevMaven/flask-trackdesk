@@ -220,8 +220,8 @@
     "semantic_hash": ""
   },
   "app/middleware/rbac.py": {
-    "mtime": 1785911289.814881,
-    "ast_hash": "c22a4f6ba497502a42f0552a3a91fef8",
+    "mtime": 1786064517.013396,
+    "ast_hash": "f541d7daeb574ac401134ee2f4c6c609",
     "semantic_hash": ""
   },
   "app/models/__init__.py": {
@@ -825,8 +825,8 @@
     "semantic_hash": ""
   },
   "app/invoices/templates/invoices/form.html": {
-    "mtime": 1785981526.1236713,
-    "ast_hash": "4683de9471524bac512bea11ce31b100",
+    "mtime": 1786064137.727213,
+    "ast_hash": "bfbf9be100b76c1fe85cd1a4b7be6cd7",
     "semantic_hash": ""
   },
   "app/invoices/templates/invoices/index.html": {
@@ -1380,8 +1380,8 @@
     "semantic_hash": ""
   },
   "app/services/approval_service.py": {
-    "mtime": 1785282452.7940073,
-    "ast_hash": "f96f67e990ede0e88c65514e2d92c82e",
+    "mtime": 1786064157.3579745,
+    "ast_hash": "87091da00bf8e2b472e642a339472fe5",
     "semantic_hash": ""
   },
   "migrations/versions/a63c2982be42_add_approval_requests_table.py": {
@@ -1540,8 +1540,8 @@
     "semantic_hash": ""
   },
   "app/invoices/views/documents.py": {
-    "mtime": 1785982603.7018385,
-    "ast_hash": "d8ef4552825b73156a50b7c982b91738",
+    "mtime": 1786064149.6877317,
+    "ast_hash": "bf2437e3d9988951ae1724c04ae1d0f9",
     "semantic_hash": ""
   },
   "app/invoices/views/payments.py": {
