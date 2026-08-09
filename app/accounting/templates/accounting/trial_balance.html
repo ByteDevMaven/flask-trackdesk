@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "components/layout.html" import page_toolbar, filter_bar, table_scroll %}
 {% from "accounting/partials/_nav.html" import accounting_nav %}
 {% block title %}Balanza de Comprobación · {{ company.name }}{% endblock %}
 {% block page_title %}Contabilidad{% endblock %}
@@ -6,8 +7,8 @@
 {% block sidebar_nav %}{{ accounting_nav(company.id, request.endpoint) }}{% endblock %}
 
 {% block content %}
-<div class="flex flex-col h-full overflow-hidden bg-slate-50">
-  <header class="bg-white border-b border-slate-200 px-4 md:px-6 py-3 flex items-center justify-between flex-shrink-0">
+<div class="ui-page-shell">
+  {% call page_toolbar() %}
     <div>
       <h1 class="text-base font-semibold text-slate-800">Balanza de Comprobación</h1>
       <p class="text-xs text-slate-500 mt-0.5">Al {{ as_of.strftime('%d/%m/%Y') }}</p>
@@ -35,7 +36,7 @@
         Exportar a Excel
       </a>
     </div>
-  </header>
+  {% endcall %}
 
   <div class="flex-1 overflow-y-auto">
     {% set type_groups = [
@@ -53,7 +54,7 @@
       <div class="px-4 md:px-6 py-2 bg-slate-50 border-b border-slate-100">
         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border {{ type_style }}">{{ type_label }}</span>
       </div>
-      <div class="w-full overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+      {% call table_scroll() %}
 <table class="w-full text-sm">
         <tbody class="divide-y divide-slate-50">
           {% for row in group_rows %}
@@ -74,7 +75,7 @@
           {% endfor %}
         </tbody>
       </table>
-</div>
+{% endcall %}
     </div>
     {% endif %}
     {% endfor %}
@@ -82,7 +83,7 @@
     {# Totals #}
     <div class="sticky bottom-0 bg-white border-t-2 border-slate-300 shadow-lg">
       <div class="px-4 md:px-6 py-3">
-        <div class="w-full overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+        {% call table_scroll() %}
 <table class="w-full text-sm">
           <colgroup><col class="w-24"><col><col class="w-36"><col class="w-36"></colgroup>
           <tbody>
@@ -102,7 +103,7 @@
             {% endif %}
           </tbody>
         </table>
-</div>
+{% endcall %}
       </div>
     </div>
   </div>

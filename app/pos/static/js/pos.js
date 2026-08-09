@@ -73,7 +73,53 @@
   const checkoutBtn = $("checkoutBtn");
   const drawerRegisterName = $("drawerRegisterName");
   const drawerCashierName = $("drawerCashierName");
+  const heldSalesKey = `trackdesk-pos-held-${config.companyRouteId || "default"}-${warehouseInput?.value || "all"}`;
   let pendingDrawerPrint = false;
+
+  function getHeldSales() {
+    try { return JSON.parse(localStorage.getItem(heldSalesKey) || "[]"); } catch (error) { return []; }
+  }
+
+  function saveHeldSales(sales) {
+    localStorage.setItem(heldSalesKey, JSON.stringify(sales.slice(0, 20)));
+    renderHeldSales();
+  }
+
+  function renderHeldSales() {
+    const sales = getHeldSales();
+    const count = $("heldSalesCount");
+    const list = $("heldSalesList");
+    if (count) count.textContent = String(sales.length);
+    if (!list) return;
+    list.innerHTML = sales.length ? sales.map((sale) => `
+      <article class="held-sale" data-held-id="${escapeHtml(sale.id)}">
+        <div><p><strong>${escapeHtml(sale.label)}</strong></p><p class="held-sale-meta">${sale.items.length} productos · ${formatAmount(sale.total)} · ${escapeHtml(sale.time)}</p></div>
+        <div class="held-sale-actions"><button class="btn" type="button" data-held-action="restore">Recuperar</button><button class="btn btn-danger" type="button" data-held-action="delete">Eliminar</button></div>
+      </article>`).join("") : '<div class="empty">No hay ventas en espera.</div>';
+  }
+
+  function holdSale() {
+    if (!state.cart.size) return showLocalFlash("El carrito esta vacio.", "error");
+    const totals = calcTotals();
+    const sales = getHeldSales();
+    sales.unshift({ id: String(Date.now()), label: state.client?.name || "Consumidor final", clientId: state.client?.id || null, items: Array.from(state.cart.values()), total: totals.total, time: new Date().toLocaleString(locale) });
+    saveHeldSales(sales);
+    clearCart();
+    selectClient(null);
+    showLocalFlash("Venta puesta en espera.", "success");
+  }
+
+  function restoreHeldSale(id) {
+    const sales = getHeldSales();
+    const sale = sales.find((entry) => entry.id === id);
+    if (!sale) return;
+    state.cart = new Map(sale.items.filter((item) => products.some((product) => Number(product.id) === Number(item.id))).map((item) => [item.id, item]));
+    selectClient(customers.find((customer) => Number(customer.id) === Number(sale.clientId)) || null);
+    saveHeldSales(sales.filter((entry) => entry.id !== id));
+    renderCart();
+    closeModal($("heldSalesModal"));
+    showLocalFlash("Venta recuperada.", "success");
+  }
 
   function formatAmount(value) {
     return money.format(Number(value || 0));
@@ -244,6 +290,8 @@
 
   function renderCart() {
     cartList.innerHTML = "";
+    const units = Array.from(state.cart.values()).reduce((sum, item) => sum + Number(item.quantity || 0), 0);
+    if ($("cartItemCount")) $("cartItemCount").textContent = String(units);
 
     if (!state.cart.size) {
       cartList.innerHTML = '<div class="empty">Carrito vacio.</div>';
@@ -339,6 +387,7 @@
     const query = normalizeSearch(term);
     if (!term) {
       renderProducts(products);
+  renderHeldSales();
       return products;
     }
 
@@ -619,7 +668,18 @@
     }
   });
 
-  $("clearCartBtn").addEventListener("click", clearCart);
+  $("clearCartBtn").addEventListener("click", () => {
+    if (state.cart.size && !window.confirm("¿Vaciar todos los productos del carrito?")) return;
+    clearCart();
+  });
+  $("holdSaleBtn").addEventListener("click", holdSale);
+  $("heldSalesList").addEventListener("click", (event) => {
+    const card = event.target.closest("[data-held-id]");
+    const action = event.target.closest("[data-held-action]")?.dataset.heldAction;
+    if (!card || !action) return;
+    if (action === "restore") restoreHeldSale(card.dataset.heldId);
+    if (action === "delete") saveHeldSales(getHeldSales().filter((entry) => entry.id !== card.dataset.heldId));
+  });
   $("newSaleBtn").addEventListener("click", () => {
     window.location.href = config.newSaleUrl || window.location.pathname;
   });
@@ -649,6 +709,14 @@
         closeModal(backdrop);
       }
     });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") document.querySelectorAll(".modal-backdrop.is-open").forEach(closeModal);
+    if (event.key === "F2") { event.preventDefault(); productSearch.focus(); productSearch.select(); }
+    if (event.key === "F4") { event.preventDefault(); clientSearch.focus(); clientSearch.select(); }
+    if (event.key === "F8") { event.preventDefault(); holdSale(); }
+    if (event.key === "F9") { event.preventDefault(); if (!checkoutBtn.disabled) checkoutForm.requestSubmit(); }
   });
 
   window.addEventListener("afterprint", () => {

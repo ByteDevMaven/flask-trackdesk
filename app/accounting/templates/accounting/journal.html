@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "components/layout.html" import page_toolbar, filter_bar, table_scroll %}
 {% from "accounting/partials/_nav.html" import accounting_nav %}
 {% block title %}Libro Diario · {{ company.name }}{% endblock %}
 {% block page_title %}Contabilidad{% endblock %}
@@ -6,8 +7,8 @@
 {% block sidebar_nav %}{{ accounting_nav(company.id, request.endpoint) }}{% endblock %}
 
 {% block content %}
-<div class="flex flex-col h-full overflow-hidden bg-slate-50">
-  <header class="bg-white border-b border-slate-200 px-4 md:px-6 py-3 flex items-center justify-between flex-shrink-0">
+<div class="ui-page-shell">
+  {% call page_toolbar() %}
     <div>
       <h1 class="text-base font-semibold text-slate-800">Libro Diario</h1>
       <p class="text-xs text-slate-500 mt-0.5">{{ pagination.total }} transacciones</p>
@@ -24,11 +25,10 @@
         Asiento Manual
       </button>
     </div>
-  </header>
+  {% endcall %}
 
   {# Filters #}
-  <div class="bg-white border-b border-slate-200 px-4 md:px-6 py-3 flex-shrink-0">
-    <form method="GET" class="flex flex-wrap items-center gap-3">
+  {% call filter_bar() %}
       <input type="text" name="search" value="{{ search }}" placeholder="Buscar memo, referencia..."
         class="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 w-56 bg-white">
       <input type="date" name="start_date" value="{{ start_date }}"
@@ -39,11 +39,10 @@
       {% if search or start_date or end_date %}
       <a href="{{ url_for('accounting.journal_list', company_id=(company.slug or company.id)) }}" class="px-3 py-2 text-sm text-slate-500 hover:text-slate-700">Limpiar</a>
       {% endif %}
-    </form>
-  </div>
+    {% endcall %}
 
   <div class="flex-1 overflow-y-auto">
-    <div class="w-full overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+    {% call table_scroll() %}
       <table class="ui-table">
         <thead>
           <tr class="border-b border-slate-100 bg-slate-50/50">
@@ -150,7 +149,7 @@
           {% endfor %}
         </tbody>
       </table>
-    </div>
+    {% endcall %}
 
     {% if pagination.pages > 1 %}
     {% set first_item = ((pagination.page - 1) * pagination.per_page) + 1 if pagination.total else 0 %}

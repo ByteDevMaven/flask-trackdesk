@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "components/layout.html" import page_toolbar, filter_bar, table_scroll %}
 {% block title %}Secuencias CAI – {{ company.name }}{% endblock %}
 {% block sidebar_title %}Empresas{% endblock %}
 
@@ -25,10 +26,10 @@
 {% block page_title %}Secuencias CAI – {{ company.name }}{% endblock %}
 
 {% block content %}
-<div class="flex flex-col h-full overflow-hidden bg-slate-50">
+<div class="ui-page-shell">
 
   <!-- Sub Header -->
-  <header class="bg-white border-b border-slate-200 px-4 md:px-6 py-3 flex items-center justify-between flex-shrink-0">
+  {% call page_toolbar() %}
     <div class="flex items-center gap-2">
       <nav class="flex items-center gap-2 text-xs text-slate-500">
         <a href="{{ url_for('companies.index') }}" class="hover:text-slate-700">Empresas</a>
@@ -45,9 +46,9 @@
         Nueva Secuencia
       </a>
     </div>
-  </header>
+  {% endcall %}
 
-  <div class="flex-1 overflow-y-auto p-4 md:p-6">
+  <div class="ui-content">
 
     <!-- Mini Stats Grid -->
     <div class="grid grid-cols-1 md:grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -85,12 +86,12 @@
     </div>
 
     <!-- Table Card -->
-    <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+    <div class="ui-card">
       <div class="px-5 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-between">
         <span class="text-sm font-semibold text-slate-700">Secuencias Autorizadas por el SAR / Ente Fiscal</span>
       </div>
 
-      <div class="w-full overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+      {% call table_scroll() %}
 <table class="w-full text-sm">
         <thead>
           <tr class="border-b border-slate-100 bg-slate-50/50 text-slate-550 font-bold text-xs uppercase text-left">
@@ -158,7 +159,7 @@
           {% endfor %}
         </tbody>
       </table>
-</div>
+{% endcall %}
     </div>
 
   </div>

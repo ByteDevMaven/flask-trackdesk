@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "components/layout.html" import page_toolbar, filter_bar, table_scroll %}
 {% from "inventory/partials/_nav.html" import inventory_nav %}
 
 {% block title %}Categorías – TrackDesk{% endblock %}
@@ -12,8 +13,8 @@
 {% block page_title %}Categorías{% endblock %}
 
 {% block content %}
-<div class="flex flex-col h-full overflow-hidden bg-slate-50">
-  <header class="bg-white border-b border-slate-200 px-4 md:px-6 py-3 flex items-center justify-between flex-shrink-0">
+<div class="ui-page-shell">
+  {% call page_toolbar() %}
     <div class="flex items-center gap-2">
       <h2 class="text-lg font-bold text-slate-800">Categorías</h2>
     </div>
@@ -28,17 +29,17 @@
         Nueva Categoría
       </button>
     </div>
-  </header>
+  {% endcall %}
 
-  <div class="flex-1 overflow-y-auto p-4 md:p-6">
-    <div class="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-sm">
+  <div class="ui-content">
+    <div class="ui-card">
       <div class="px-4 py-3 border-b border-slate-100 bg-slate-50 flex items-center justify-end">
         <div class="flex items-center gap-2">
           <span class="text-sm text-slate-500 font-medium">{{ categories|length }} categoría{{ 's' if categories|length != 1 else '' }}</span>
         </div>
       </div>
 
-      <div class="w-full overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+      {% call table_scroll() %}
         <table class="ui-table">
           <thead>
             <tr class="border-b border-slate-100 bg-slate-50/50">
@@ -103,7 +104,7 @@
             {% endfor %}
           </tbody>
         </table>
-      </div>
+      {% endcall %}
     </div>
   </div>
 </div>

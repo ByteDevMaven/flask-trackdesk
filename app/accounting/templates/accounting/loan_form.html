@@ -6,7 +6,7 @@
 {% block sidebar_nav %}{{ accounting_nav(company.id, request.endpoint) }}{% endblock %}
 
 {% block content %}
-<div class="flex flex-col h-full overflow-hidden bg-slate-50">
+<div class="ui-page-shell">
   <header class="bg-white border-b border-slate-200 px-4 md:px-6 py-3 flex items-center gap-3 flex-shrink-0">
     <a href="{{ url_for('accounting.loans_list', company_id=(company.slug or company.id)) }}"
       class="text-slate-400 hover:text-slate-600 transition-colors">
@@ -17,7 +17,7 @@
       <p class="text-xs text-slate-500 mt-0.5">En cuenta: {{ account.name }}</p>
     </div>
   </header>
-  <div class="flex-1 overflow-y-auto p-4 md:p-6">
+  <div class="ui-content">
     <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-sm border border-slate-200">
       {% include 'accounting/partials/loan_form.html' %}
     </div>

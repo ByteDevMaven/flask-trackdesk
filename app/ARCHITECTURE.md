@@ -4,7 +4,10 @@ Each Flask feature owns its blueprint, templates, static assets, services, and r
 
 - `views/` contains thin HTTP handlers grouped by domain. A feature's legacy `routes.py` remains a small compatibility loader so blueprint imports stay stable.
 - `services/` contains reusable business rules, validation, queries, and transaction boundaries.
-- `templates/components/` contains shared Jinja UI and form primitives.
+- `templates/components/` contains shared Jinja primitives:
+  - `ui.html` for buttons, navigation, status, statistics, empty states, and pagination.
+  - `forms.html` for fields, selects, text areas, and form actions.
+  - `layout.html` for page toolbars, filter bars, content regions, cards, and responsive tables.
 - `models/` contains persistence only; route-specific formatting belongs in services or template components.
 
 Large blueprint splits:

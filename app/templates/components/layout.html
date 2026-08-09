@@ -1,0 +1,18 @@
+{# Reusable structural components for application pages. #}
+{% macro page_shell(class='') %}<div class="ui-page-shell {{ class }}">{{ caller() }}</div>{% endmacro %}
+
+{% macro page_toolbar(class='') %}<header class="ui-toolbar {{ class }}">{{ caller() }}</header>{% endmacro %}
+
+{% macro filter_bar(action=none, method='GET', class='') %}
+<div class="ui-filter-bar {{ class }}"><form method="{{ method }}"{% if action %} action="{{ action }}"{% endif %} class="ui-filter-form">{{ caller() }}</form></div>
+{% endmacro %}
+
+{% macro content_area(class='') %}<div class="ui-content {{ class }}">{{ caller() }}</div>{% endmacro %}
+
+{% macro card(class='') %}<section class="ui-card {{ class }}">{{ caller() }}</section>{% endmacro %}
+
+{% macro card_header(title=none, subtitle=none, class='') %}
+<header class="ui-card-header {{ class }}"><div class="min-w-0">{% if title %}<h3 class="text-sm font-semibold text-slate-900">{{ title }}</h3>{% endif %}{% if subtitle %}<p class="mt-0.5 text-xs text-slate-500">{{ subtitle }}</p>{% endif %}</div>{% if caller is defined %}<div class="flex flex-wrap items-center gap-2">{{ caller() }}</div>{% endif %}</header>
+{% endmacro %}
+
+{% macro table_scroll(class='') %}<div class="ui-table-wrap {{ class }}">{{ caller() }}</div>{% endmacro %}

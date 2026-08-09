@@ -353,15 +353,12 @@ def _build_invoice_form(company_id: int, user_id: int, source_form, cart_payload
         if quantity > available:
             raise ValueError(f"No hay stock suficiente para {item.name}. Disponible: {available}.")
 
-        unit_price = _required_decimal(
-            row.get("unit_price", item.price), f"El precio de {item.name}"
-        ).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+        # Browser cart data is untrusted; pricing remains authoritative here.
+        unit_price = _money(item.price)
         if unit_price < 0:
             raise ValueError(f"El precio de {item.name} no puede ser negativo.")
 
-        discount = _required_decimal(
-            row.get("discount", item.discount), f"El descuento de {item.name}"
-        ).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+        discount = _money(item.discount)
         if discount < 0 or discount > 100:
             raise ValueError(f"El descuento de {item.name} debe estar entre 0 y 100.")
 

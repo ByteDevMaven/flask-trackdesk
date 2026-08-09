@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from "components/layout.html" import page_toolbar, filter_bar, table_scroll %}
 {% from "accounting/partials/_nav.html" import accounting_nav %}
 {% block title %}Reportes · {{ company.name }}{% endblock %}
 {% block page_title %}Contabilidad{% endblock %}
@@ -6,8 +7,8 @@
 {% block sidebar_nav %}{{ accounting_nav(company.id, request.endpoint) }}{% endblock %}
 
 {% block content %}
-<div class="flex flex-col h-full overflow-hidden bg-slate-50">
-  <header class="bg-white border-b border-slate-200 px-4 md:px-6 py-3 flex items-center justify-between flex-shrink-0">
+<div class="ui-page-shell">
+  {% call page_toolbar() %}
     <h1 class="text-base font-semibold text-slate-800">Reportes Financieros</h1>
     <div class="flex items-center gap-2">
       {% set pdf_params = request.args.copy() %}
@@ -25,11 +26,10 @@
         Excel
       </a>
     </div>
-  </header>
+  {% endcall %}
 
   {# Filters + report selector #}
-  <div class="bg-white border-b border-slate-200 px-4 md:px-6 py-3 flex-shrink-0">
-    <form method="GET" class="flex flex-wrap items-center gap-3">
+  {% call filter_bar() %}
       <select name="report_type" onchange="this.form.submit()"
         class="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white font-medium">
         <option value="income_statement" {{ 'selected' if report_type == 'income_statement' }}>Estado de Resultados</option>
@@ -42,10 +42,9 @@
       <input type="date" name="end_date" value="{{ end_date }}"
         class="border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white">
       <button type="submit" class="px-4 py-2 bg-slate-800 text-white rounded-lg text-sm font-medium hover:bg-slate-700 transition-colors">Generar</button>
-    </form>
-  </div>
+    {% endcall %}
 
-  <div class="flex-1 overflow-y-auto p-4 md:p-6">
+  <div class="ui-content">
 
     {# ── Income Statement ──────────────────────────────────────────────── #}
     {% if report_type == 'income_statement' %}
@@ -54,7 +53,7 @@
         <h2 class="text-base font-bold text-slate-800">Estado de Resultados</h2>
         <p class="text-xs text-slate-500 mt-0.5">{{ start_date }} al {{ end_date }}</p>
       </div>
-      <div class="w-full overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+      {% call table_scroll() %}
 <table class="w-full text-sm">
         <tbody>
           <tr class="border-b border-slate-100"><td colspan="2" class="px-4 md:px-6 py-2 text-xs font-bold text-slate-500 uppercase tracking-wider bg-emerald-50">Ingresos</td></tr>
@@ -93,7 +92,7 @@
           </tr>
         </tbody>
       </table>
-</div>
+{% endcall %}
     </div>
 
     {# ── Balance Sheet ─────────────────────────────────────────────────── #}
@@ -103,7 +102,7 @@
         <h2 class="text-base font-bold text-slate-800">Balance General</h2>
         <p class="text-xs text-slate-500 mt-0.5">Al {{ end_date }}</p>
       </div>
-      <div class="w-full overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+      {% call table_scroll() %}
 <table class="w-full text-sm">
         <tbody>
           <tr><td colspan="2" class="px-4 md:px-6 py-2 text-xs font-bold text-slate-500 uppercase tracking-wider bg-sky-50">Activos</td></tr>
@@ -150,7 +149,7 @@
           {% endif %}
         </tbody>
       </table>
-</div>
+{% endcall %}
     </div>
 
     {# ── Cash Flow ─────────────────────────────────────────────────────── #}
@@ -160,7 +159,7 @@
         <h2 class="text-base font-bold text-slate-800">Estado de Flujo de Efectivo</h2>
         <p class="text-xs text-slate-500 mt-0.5">{{ start_date }} al {{ end_date }}</p>
       </div>
-      <div class="w-full overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+      {% call table_scroll() %}
 <table class="w-full text-sm">
         <tbody>
           {% set section_styles = {'operating': ('Actividades Operativas', 'bg-emerald-50 text-emerald-700'), 'investing': ('Actividades de Inversión', 'bg-sky-50 text-sky-700'), 'financing': ('Actividades de Financiamiento', 'bg-indigo-50 text-indigo-700')} %}
@@ -186,7 +185,7 @@
           </tr>
         </tbody>
       </table>
-</div>
+{% endcall %}
     </div>
     {% endif %}
 

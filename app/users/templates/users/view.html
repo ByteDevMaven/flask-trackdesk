@@ -108,7 +108,7 @@
 
 {% block content %}
 {% set is_protected = user.role and user.role.name == 'superadmin' and not current_user.is_superadmin %}
-<div class="flex flex-col h-full overflow-hidden bg-slate-50">
+<div class="ui-page-shell">
 
   <!-- Profile Banner Header -->
   <div class="bg-white border-b border-slate-200 flex-shrink-0">
@@ -215,7 +215,7 @@
   </div>
 
   <!-- Main content scrollable area -->
-  <div class="flex-1 overflow-y-auto p-4 md:p-6">
+  <div class="ui-content">
     <div class="grid grid-cols-12 gap-6">
 
       <!-- Left column: Account Details -->

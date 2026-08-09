@@ -21,6 +21,7 @@ from .services.pos_service import (
     _load_receipt,
     _money,
     _parse_cart_payload,
+    _product_payload,
     _receipt_payload,
     _register_payload,
     _register_totals,
