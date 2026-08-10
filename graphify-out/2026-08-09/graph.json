@@ -4,154 +4,14 @@
   "graph": {},
   "nodes": [
     {
-      "label": "index.js",
-      "file_type": "code",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_static_js_index",
-      "community": 39,
-      "norm_label": "index.js"
-    },
-    {
-      "label": "setMobileMenu()",
-      "file_type": "code",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L15",
-      "_origin": "ast",
-      "id": "app_static_js_index_setmobilemenu",
-      "community": 39,
-      "norm_label": "setmobilemenu()"
-    },
-    {
-      "label": "setPopupMenu()",
-      "file_type": "code",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L42",
-      "_origin": "ast",
-      "id": "app_static_js_index_setpopupmenu",
-      "community": 39,
-      "norm_label": "setpopupmenu()"
-    },
-    {
-      "label": "closePopupMenus()",
-      "file_type": "code",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L48",
-      "_origin": "ast",
-      "id": "app_static_js_index_closepopupmenus",
-      "community": 39,
-      "norm_label": "closepopupmenus()"
-    },
-    {
-      "label": "enhanceMobileTables()",
-      "file_type": "code",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L125",
-      "_origin": "ast",
-      "id": "app_static_js_index_enhancemobiletables",
-      "community": 39,
-      "norm_label": "enhancemobiletables()"
-    },
-    {
-      "label": "endpoint()",
-      "file_type": "code",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L170",
-      "_origin": "ast",
-      "id": "app_static_js_index_endpoint",
-      "community": 39,
-      "norm_label": "endpoint()"
-    },
-    {
-      "label": "notificationTypeClass()",
-      "file_type": "code",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L175",
-      "_origin": "ast",
-      "id": "app_static_js_index_notificationtypeclass",
-      "community": 39,
-      "norm_label": "notificationtypeclass()"
-    },
-    {
-      "label": "notificationTypeLabel()",
-      "file_type": "code",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L188",
-      "_origin": "ast",
-      "id": "app_static_js_index_notificationtypelabel",
-      "community": 39,
-      "norm_label": "notificationtypelabel()"
-    },
-    {
-      "label": "postNotificationAction()",
-      "file_type": "code",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L201",
-      "_origin": "ast",
-      "id": "app_static_js_index_postnotificationaction",
-      "community": 39,
-      "norm_label": "postnotificationaction()"
-    },
-    {
-      "label": "updateNotificationBadge()",
-      "file_type": "code",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L211",
-      "_origin": "ast",
-      "id": "app_static_js_index_updatenotificationbadge",
-      "community": 39,
-      "norm_label": "updatenotificationbadge()"
-    },
-    {
-      "label": "renderNotificationList()",
-      "file_type": "code",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L222",
-      "_origin": "ast",
-      "id": "app_static_js_index_rendernotificationlist",
-      "community": 39,
-      "norm_label": "rendernotificationlist()"
-    },
-    {
-      "label": "loadNotifications()",
-      "file_type": "code",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L305",
-      "_origin": "ast",
-      "id": "app_static_js_index_loadnotifications",
-      "community": 39,
-      "norm_label": "loadnotifications()"
-    },
-    {
-      "label": "showNotificationPopup()",
-      "file_type": "code",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L318",
-      "_origin": "ast",
-      "id": "app_static_js_index_shownotificationpopup",
-      "community": 39,
-      "norm_label": "shownotificationpopup()"
-    },
-    {
-      "label": "loadPopupNotifications()",
-      "file_type": "code",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L362",
-      "_origin": "ast",
-      "id": "app_static_js_index_loadpopupnotifications",
-      "community": 39,
-      "norm_label": "loadpopupnotifications()"
-    },
-    {
       "label": "ARCHITECTURE.md",
       "file_type": "document",
       "source_file": "app/ARCHITECTURE.md",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "app_architecture",
       "community": 142,
-      "norm_label": "architecture.md",
-      "id": "app_architecture"
+      "norm_label": "architecture.md"
     },
     {
       "label": "Application structure",
@@ -159,9 +19,9 @@
       "source_file": "app/ARCHITECTURE.md",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "app_architecture_application_structure",
       "community": 142,
-      "norm_label": "application structure",
-      "id": "app_architecture_application_structure"
+      "norm_label": "application structure"
     },
     {
       "label": "routes.py",
@@ -169,9 +29,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "app_pos_routes",
       "community": 0,
-      "norm_label": "routes.py",
-      "id": "app_pos_routes"
+      "norm_label": "routes.py"
     },
     {
       "label": "index()",
@@ -179,9 +39,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L36",
       "_origin": "ast",
+      "id": "app_pos_routes_index",
       "community": 0,
-      "norm_label": "index()",
-      "id": "app_pos_routes_index"
+      "norm_label": "index()"
     },
     {
       "label": "checkout()",
@@ -189,9 +49,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L109",
       "_origin": "ast",
+      "id": "app_pos_routes_checkout",
       "community": 0,
-      "norm_label": "checkout()",
-      "id": "app_pos_routes_checkout"
+      "norm_label": "checkout()"
     },
     {
       "label": "open_register()",
@@ -199,9 +59,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L177",
       "_origin": "ast",
+      "id": "app_pos_routes_open_register",
       "community": 0,
-      "norm_label": "open_register()",
-      "id": "app_pos_routes_open_register"
+      "norm_label": "open_register()"
     },
     {
       "label": "close_register()",
@@ -209,9 +69,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L219",
       "_origin": "ast",
+      "id": "app_pos_routes_close_register",
       "community": 0,
-      "norm_label": "close_register()",
-      "id": "app_pos_routes_close_register"
+      "norm_label": "close_register()"
     },
     {
       "label": "cash_movement()",
@@ -219,9 +79,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L253",
       "_origin": "ast",
+      "id": "app_pos_routes_cash_movement",
       "community": 0,
-      "norm_label": "cash_movement()",
-      "id": "app_pos_routes_cash_movement"
+      "norm_label": "cash_movement()"
     },
     {
       "label": "pos_service.py",
@@ -229,9 +89,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "app_pos_services_pos_service",
       "community": 0,
-      "norm_label": "pos_service.py",
-      "id": "app_pos_services_pos_service"
+      "norm_label": "pos_service.py"
     },
     {
       "label": "_decimal()",
@@ -239,9 +99,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L19",
       "_origin": "ast",
+      "id": "app_pos_services_pos_service_decimal",
       "community": 0,
-      "norm_label": "_decimal()",
-      "id": "app_pos_services_pos_service_decimal"
+      "norm_label": "_decimal()"
     },
     {
       "label": "_money()",
@@ -249,9 +109,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L26",
       "_origin": "ast",
+      "id": "app_pos_services_pos_service_money",
       "community": 0,
-      "norm_label": "_money()",
-      "id": "app_pos_services_pos_service_money"
+      "norm_label": "_money()"
     },
     {
       "label": "_required_decimal()",
@@ -259,9 +119,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L30",
       "_origin": "ast",
+      "id": "app_pos_services_pos_service_required_decimal",
       "community": 0,
-      "norm_label": "_required_decimal()",
-      "id": "app_pos_services_pos_service_required_decimal"
+      "norm_label": "_required_decimal()"
     },
     {
       "label": "_company_route_id()",
@@ -269,9 +129,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L43",
       "_origin": "ast",
+      "id": "app_pos_services_pos_service_company_route_id",
       "community": 0,
-      "norm_label": "_company_route_id()",
-      "id": "app_pos_services_pos_service_company_route_id"
+      "norm_label": "_company_route_id()"
     },
     {
       "label": "_warehouse_for_company()",
@@ -279,9 +139,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L47",
       "_origin": "ast",
+      "id": "app_pos_services_pos_service_warehouse_for_company",
       "community": 0,
-      "norm_label": "_warehouse_for_company()",
-      "id": "app_pos_services_pos_service_warehouse_for_company"
+      "norm_label": "_warehouse_for_company()"
     },
     {
       "label": "_available_stock()",
@@ -289,9 +149,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L58",
       "_origin": "ast",
+      "id": "app_pos_services_pos_service_available_stock",
       "community": 0,
-      "norm_label": "_available_stock()",
-      "id": "app_pos_services_pos_service_available_stock"
+      "norm_label": "_available_stock()"
     },
     {
       "label": "InventoryItem",
@@ -299,9 +159,9 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
+      "id": "inventoryitem",
       "community": 0,
-      "norm_label": "inventoryitem",
-      "id": "inventoryitem"
+      "norm_label": "inventoryitem"
     },
     {
       "label": "_product_payload()",
@@ -309,9 +169,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L70",
       "_origin": "ast",
+      "id": "app_pos_services_pos_service_product_payload",
       "community": 0,
-      "norm_label": "_product_payload()",
-      "id": "app_pos_services_pos_service_product_payload"
+      "norm_label": "_product_payload()"
     },
     {
       "label": "_format_hn_number()",
@@ -319,9 +179,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L93",
       "_origin": "ast",
+      "id": "app_pos_services_pos_service_format_hn_number",
       "community": 0,
-      "norm_label": "_format_hn_number()",
-      "id": "app_pos_services_pos_service_format_hn_number"
+      "norm_label": "_format_hn_number()"
     },
     {
       "label": "_document_sequence_for_receipt()",
@@ -329,9 +189,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L105",
       "_origin": "ast",
+      "id": "app_pos_services_pos_service_document_sequence_for_receipt",
       "community": 0,
-      "norm_label": "_document_sequence_for_receipt()",
-      "id": "app_pos_services_pos_service_document_sequence_for_receipt"
+      "norm_label": "_document_sequence_for_receipt()"
     },
     {
       "label": "Document",
@@ -339,9 +199,9 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
+      "id": "document",
       "community": 0,
-      "norm_label": "document",
-      "id": "document"
+      "norm_label": "document"
     },
     {
       "label": "_sequence_payload()",
@@ -349,9 +209,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L127",
       "_origin": "ast",
+      "id": "app_pos_services_pos_service_sequence_payload",
       "community": 0,
-      "norm_label": "_sequence_payload()",
-      "id": "app_pos_services_pos_service_sequence_payload"
+      "norm_label": "_sequence_payload()"
     },
     {
       "label": "DocumentSequence",
@@ -359,9 +219,9 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
+      "id": "documentsequence",
       "community": 0,
-      "norm_label": "documentsequence",
-      "id": "documentsequence"
+      "norm_label": "documentsequence"
     },
     {
       "label": "_company_payload()",
@@ -369,9 +229,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L149",
       "_origin": "ast",
+      "id": "app_pos_services_pos_service_company_payload",
       "community": 0,
-      "norm_label": "_company_payload()",
-      "id": "app_pos_services_pos_service_company_payload"
+      "norm_label": "_company_payload()"
     },
     {
       "label": "_customer_payload()",
@@ -379,9 +239,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L159",
       "_origin": "ast",
+      "id": "app_pos_services_pos_service_customer_payload",
       "community": 0,
-      "norm_label": "_customer_payload()",
-      "id": "app_pos_services_pos_service_customer_payload"
+      "norm_label": "_customer_payload()"
     },
     {
       "label": "Contact",
@@ -389,9 +249,9 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
+      "id": "contact",
       "community": 0,
-      "norm_label": "contact",
-      "id": "contact"
+      "norm_label": "contact"
     },
     {
       "label": "_current_register_session()",
@@ -399,9 +259,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L169",
       "_origin": "ast",
+      "id": "app_pos_services_pos_service_current_register_session",
       "community": 0,
-      "norm_label": "_current_register_session()",
-      "id": "app_pos_services_pos_service_current_register_session"
+      "norm_label": "_current_register_session()"
     },
     {
       "label": "_register_totals()",
@@ -409,9 +269,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L177",
       "_origin": "ast",
+      "id": "app_pos_services_pos_service_register_totals",
       "community": 0,
-      "norm_label": "_register_totals()",
-      "id": "app_pos_services_pos_service_register_totals"
+      "norm_label": "_register_totals()"
     },
     {
       "label": "PosRegisterSession",
@@ -419,9 +279,9 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
+      "id": "posregistersession",
       "community": 0,
-      "norm_label": "posregistersession",
-      "id": "posregistersession"
+      "norm_label": "posregistersession"
     },
     {
       "label": "_register_payload()",
@@ -429,9 +289,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L216",
       "_origin": "ast",
+      "id": "app_pos_services_pos_service_register_payload",
       "community": 0,
-      "norm_label": "_register_payload()",
-      "id": "app_pos_services_pos_service_register_payload"
+      "norm_label": "_register_payload()"
     },
     {
       "label": "_receipt_payload()",
@@ -439,9 +299,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L246",
       "_origin": "ast",
+      "id": "app_pos_services_pos_service_receipt_payload",
       "community": 0,
-      "norm_label": "_receipt_payload()",
-      "id": "app_pos_services_pos_service_receipt_payload"
+      "norm_label": "_receipt_payload()"
     },
     {
       "label": "_load_receipt()",
@@ -449,9 +309,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L291",
       "_origin": "ast",
+      "id": "app_pos_services_pos_service_load_receipt",
       "community": 0,
-      "norm_label": "_load_receipt()",
-      "id": "app_pos_services_pos_service_load_receipt"
+      "norm_label": "_load_receipt()"
     },
     {
       "label": "_parse_cart_payload()",
@@ -459,9 +319,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L302",
       "_origin": "ast",
+      "id": "app_pos_services_pos_service_parse_cart_payload",
       "community": 0,
-      "norm_label": "_parse_cart_payload()",
-      "id": "app_pos_services_pos_service_parse_cart_payload"
+      "norm_label": "_parse_cart_payload()"
     },
     {
       "label": "_build_invoice_form()",
@@ -469,9 +329,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L314",
       "_origin": "ast",
+      "id": "app_pos_services_pos_service_build_invoice_form",
       "community": 0,
-      "norm_label": "_build_invoice_form()",
-      "id": "app_pos_services_pos_service_build_invoice_form"
+      "norm_label": "_build_invoice_form()"
     },
     {
       "label": "Parse user input without silently turning malformed values into zero.",
@@ -479,9 +339,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L31",
       "_origin": "ast",
+      "id": "app_pos_services_pos_service_rationale_31",
       "community": 0,
-      "norm_label": "parse user input without silently turning malformed values into zero.",
-      "id": "app_pos_services_pos_service_rationale_31"
+      "norm_label": "parse user input without silently turning malformed values into zero."
     },
     {
       "label": "pos.js",
@@ -489,9 +349,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos",
       "community": 7,
-      "norm_label": "pos.js",
-      "id": "app_pos_static_js_pos"
+      "norm_label": "pos.js"
     },
     {
       "label": "format()",
@@ -499,9 +359,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L38",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_format",
       "community": 7,
-      "norm_label": "format()",
-      "id": "app_pos_static_js_pos_format"
+      "norm_label": "format()"
     },
     {
       "label": "getHeldSales()",
@@ -509,9 +369,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L79",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_getheldsales",
       "community": 7,
-      "norm_label": "getheldsales()",
-      "id": "app_pos_static_js_pos_getheldsales"
+      "norm_label": "getheldsales()"
     },
     {
       "label": "saveHeldSales()",
@@ -519,9 +379,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L83",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_saveheldsales",
       "community": 7,
-      "norm_label": "saveheldsales()",
-      "id": "app_pos_static_js_pos_saveheldsales"
+      "norm_label": "saveheldsales()"
     },
     {
       "label": "renderHeldSales()",
@@ -529,9 +389,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L88",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_renderheldsales",
       "community": 7,
-      "norm_label": "renderheldsales()",
-      "id": "app_pos_static_js_pos_renderheldsales"
+      "norm_label": "renderheldsales()"
     },
     {
       "label": "holdSale()",
@@ -539,9 +399,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L101",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_holdsale",
       "community": 7,
-      "norm_label": "holdsale()",
-      "id": "app_pos_static_js_pos_holdsale"
+      "norm_label": "holdsale()"
     },
     {
       "label": "restoreHeldSale()",
@@ -549,9 +409,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L112",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_restoreheldsale",
       "community": 7,
-      "norm_label": "restoreheldsale()",
-      "id": "app_pos_static_js_pos_restoreheldsale"
+      "norm_label": "restoreheldsale()"
     },
     {
       "label": "formatAmount()",
@@ -559,9 +419,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L124",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_formatamount",
       "community": 7,
-      "norm_label": "formatamount()",
-      "id": "app_pos_static_js_pos_formatamount"
+      "norm_label": "formatamount()"
     },
     {
       "label": "formatPlain()",
@@ -569,9 +429,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L128",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_formatplain",
       "community": 7,
-      "norm_label": "formatplain()",
-      "id": "app_pos_static_js_pos_formatplain"
+      "norm_label": "formatplain()"
     },
     {
       "label": "formatReceiptAmount()",
@@ -579,9 +439,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L132",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_formatreceiptamount",
       "community": 7,
-      "norm_label": "formatreceiptamount()",
-      "id": "app_pos_static_js_pos_formatreceiptamount"
+      "norm_label": "formatreceiptamount()"
     },
     {
       "label": "escapeHtml()",
@@ -589,9 +449,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L137",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_escapehtml",
       "community": 7,
-      "norm_label": "escapehtml()",
-      "id": "app_pos_static_js_pos_escapehtml"
+      "norm_label": "escapehtml()"
     },
     {
       "label": "normalizeSearch()",
@@ -599,9 +459,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L146",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_normalizesearch",
       "community": 7,
-      "norm_label": "normalizesearch()",
-      "id": "app_pos_static_js_pos_normalizesearch"
+      "norm_label": "normalizesearch()"
     },
     {
       "label": "productSearchTerms()",
@@ -609,9 +469,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L150",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_productsearchterms",
       "community": 7,
-      "norm_label": "productsearchterms()",
-      "id": "app_pos_static_js_pos_productsearchterms"
+      "norm_label": "productsearchterms()"
     },
     {
       "label": "findExactProduct()",
@@ -619,9 +479,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L163",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_findexactproduct",
       "community": 7,
-      "norm_label": "findexactproduct()",
-      "id": "app_pos_static_js_pos_findexactproduct"
+      "norm_label": "findexactproduct()"
     },
     {
       "label": "calcTotals()",
@@ -629,9 +489,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L181",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_calctotals",
       "community": 7,
-      "norm_label": "calctotals()",
-      "id": "app_pos_static_js_pos_calctotals"
+      "norm_label": "calctotals()"
     },
     {
       "label": "syncAmountDefault()",
@@ -639,9 +499,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L191",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_syncamountdefault",
       "community": 7,
-      "norm_label": "syncamountdefault()",
-      "id": "app_pos_static_js_pos_syncamountdefault"
+      "norm_label": "syncamountdefault()"
     },
     {
       "label": "renderRegisterSummary()",
@@ -649,9 +509,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L199",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_renderregistersummary",
       "community": 7,
-      "norm_label": "renderregistersummary()",
-      "id": "app_pos_static_js_pos_renderregistersummary"
+      "norm_label": "renderregistersummary()"
     },
     {
       "label": "customerLabel()",
@@ -659,9 +519,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L214",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_customerlabel",
       "community": 7,
-      "norm_label": "customerlabel()",
-      "id": "app_pos_static_js_pos_customerlabel"
+      "norm_label": "customerlabel()"
     },
     {
       "label": "renderClientResults()",
@@ -669,9 +529,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L219",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_renderclientresults",
       "community": 7,
-      "norm_label": "renderclientresults()",
-      "id": "app_pos_static_js_pos_renderclientresults"
+      "norm_label": "renderclientresults()"
     },
     {
       "label": "filterClients()",
@@ -679,9 +539,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L239",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_filterclients",
       "community": 7,
-      "norm_label": "filterclients()",
-      "id": "app_pos_static_js_pos_filterclients"
+      "norm_label": "filterclients()"
     },
     {
       "label": "selectClient()",
@@ -689,9 +549,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L253",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_selectclient",
       "community": 7,
-      "norm_label": "selectclient()",
-      "id": "app_pos_static_js_pos_selectclient"
+      "norm_label": "selectclient()"
     },
     {
       "label": "renderProducts()",
@@ -699,9 +559,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L264",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_renderproducts",
       "community": 7,
-      "norm_label": "renderproducts()",
-      "id": "app_pos_static_js_pos_renderproducts"
+      "norm_label": "renderproducts()"
     },
     {
       "label": "renderCart()",
@@ -709,9 +569,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L291",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_rendercart",
       "community": 7,
-      "norm_label": "rendercart()",
-      "id": "app_pos_static_js_pos_rendercart"
+      "norm_label": "rendercart()"
     },
     {
       "label": "addProduct()",
@@ -719,9 +579,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L333",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_addproduct",
       "community": 7,
-      "norm_label": "addproduct()",
-      "id": "app_pos_static_js_pos_addproduct"
+      "norm_label": "addproduct()"
     },
     {
       "label": "setQuantity()",
@@ -729,9 +589,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L354",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_setquantity",
       "community": 7,
-      "norm_label": "setquantity()",
-      "id": "app_pos_static_js_pos_setquantity"
+      "norm_label": "setquantity()"
     },
     {
       "label": "removeProduct()",
@@ -739,9 +599,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L365",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_removeproduct",
       "community": 7,
-      "norm_label": "removeproduct()",
-      "id": "app_pos_static_js_pos_removeproduct"
+      "norm_label": "removeproduct()"
     },
     {
       "label": "clearCart()",
@@ -749,9 +609,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L370",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_clearcart",
       "community": 7,
-      "norm_label": "clearcart()",
-      "id": "app_pos_static_js_pos_clearcart"
+      "norm_label": "clearcart()"
     },
     {
       "label": "updatePaymentSummary()",
@@ -759,9 +619,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L377",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_updatepaymentsummary",
       "community": 7,
-      "norm_label": "updatepaymentsummary()",
-      "id": "app_pos_static_js_pos_updatepaymentsummary"
+      "norm_label": "updatepaymentsummary()"
     },
     {
       "label": "filterProducts()",
@@ -769,9 +629,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L385",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_filterproducts",
       "community": 7,
-      "norm_label": "filterproducts()",
-      "id": "app_pos_static_js_pos_filterproducts"
+      "norm_label": "filterproducts()"
     },
     {
       "label": "setPaymentMethod()",
@@ -779,9 +639,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L401",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_setpaymentmethod",
       "community": 7,
-      "norm_label": "setpaymentmethod()",
-      "id": "app_pos_static_js_pos_setpaymentmethod"
+      "norm_label": "setpaymentmethod()"
     },
     {
       "label": "renderReceipt()",
@@ -789,9 +649,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L410",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_renderreceipt",
       "community": 7,
-      "norm_label": "renderreceipt()",
-      "id": "app_pos_static_js_pos_renderreceipt"
+      "norm_label": "renderreceipt()"
     },
     {
       "label": "liveReceipt()",
@@ -799,9 +659,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L468",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_livereceipt",
       "community": 7,
-      "norm_label": "livereceipt()",
-      "id": "app_pos_static_js_pos_livereceipt"
+      "norm_label": "livereceipt()"
     },
     {
       "label": "prepareCheckout()",
@@ -809,9 +669,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L493",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_preparecheckout",
       "community": 7,
-      "norm_label": "preparecheckout()",
-      "id": "app_pos_static_js_pos_preparecheckout"
+      "norm_label": "preparecheckout()"
     },
     {
       "label": "printReceipt()",
@@ -819,9 +679,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L526",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_printreceipt",
       "community": 7,
-      "norm_label": "printreceipt()",
-      "id": "app_pos_static_js_pos_printreceipt"
+      "norm_label": "printreceipt()"
     },
     {
       "label": "openDrawer()",
@@ -829,9 +689,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L546",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_opendrawer",
       "community": 7,
-      "norm_label": "opendrawer()",
-      "id": "app_pos_static_js_pos_opendrawer"
+      "norm_label": "opendrawer()"
     },
     {
       "label": "showLocalFlash()",
@@ -839,9 +699,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L554",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_showlocalflash",
       "community": 7,
-      "norm_label": "showlocalflash()",
-      "id": "app_pos_static_js_pos_showlocalflash"
+      "norm_label": "showlocalflash()"
     },
     {
       "label": "openModal()",
@@ -849,9 +709,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L568",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_openmodal",
       "community": 7,
-      "norm_label": "openmodal()",
-      "id": "app_pos_static_js_pos_openmodal"
+      "norm_label": "openmodal()"
     },
     {
       "label": "closeModal()",
@@ -859,9 +719,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L581",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_closemodal",
       "community": 7,
-      "norm_label": "closemodal()",
-      "id": "app_pos_static_js_pos_closemodal"
+      "norm_label": "closemodal()"
     },
     {
       "label": "setMovementType()",
@@ -869,9 +729,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L589",
       "_origin": "ast",
+      "id": "app_pos_static_js_pos_setmovementtype",
       "community": 7,
-      "norm_label": "setmovementtype()",
-      "id": "app_pos_static_js_pos_setmovementtype"
+      "norm_label": "setmovementtype()"
     },
     {
       "label": "__init__.py",
@@ -1129,7 +989,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
+      "community": 113,
       "norm_label": "approval_service.py",
       "id": "app_services_approval_service"
     },
@@ -1139,7 +999,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 4,
+      "community": 113,
       "norm_label": "actionregistry",
       "id": "app_services_approval_service_actionregistry"
     },
@@ -1149,7 +1009,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 33,
+      "community": 36,
       "norm_label": ".register()",
       "id": "app_services_approval_service_actionregistry_register"
     },
@@ -1159,7 +1019,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 4,
+      "community": 113,
       "norm_label": ".execute()",
       "id": "app_services_approval_service_actionregistry_execute"
     },
@@ -1169,7 +1029,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L34",
       "_origin": "ast",
-      "community": 4,
+      "community": 113,
       "norm_label": "approvalservice",
       "id": "app_services_approval_service_approvalservice"
     },
@@ -1179,7 +1039,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L36",
       "_origin": "ast",
-      "community": 4,
+      "community": 113,
       "norm_label": ".create_request()",
       "id": "app_services_approval_service_approvalservice_create_request"
     },
@@ -1189,7 +1049,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L49",
       "_origin": "ast",
-      "community": 4,
+      "community": 113,
       "norm_label": ".approve_request()",
       "id": "app_services_approval_service_approvalservice_approve_request"
     },
@@ -1199,7 +1059,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L67",
       "_origin": "ast",
-      "community": 4,
+      "community": 113,
       "norm_label": ".reject_request()",
       "id": "app_services_approval_service_approvalservice_reject_request"
     },
@@ -1209,7 +1069,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L82",
       "_origin": "ast",
-      "community": 4,
+      "community": 113,
       "norm_label": ".get_pending_requests()",
       "id": "app_services_approval_service_approvalservice_get_pending_requests"
     },
@@ -1219,7 +1079,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L89",
       "_origin": "ast",
-      "community": 4,
+      "community": 113,
       "norm_label": ".get_resolved_requests()",
       "id": "app_services_approval_service_approvalservice_get_resolved_requests"
     },
@@ -1229,7 +1089,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L95",
       "_origin": "ast",
-      "community": 33,
+      "community": 36,
       "norm_label": "init_action_handlers()",
       "id": "app_services_approval_service_init_action_handlers"
     },
@@ -1239,7 +1099,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 33,
+      "community": 36,
       "norm_label": "register a function to handle an approval action.",
       "id": "app_services_approval_service_rationale_10"
     },
@@ -1249,7 +1109,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 4,
+      "community": 113,
       "norm_label": "execute a registered action with the given payload.",
       "id": "app_services_approval_service_rationale_15"
     },
@@ -1259,7 +1119,7 @@
       "source_file": "app/hooks.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 33,
+      "community": 36,
       "norm_label": "hooks.py",
       "id": "app_hooks"
     },
@@ -1269,7 +1129,7 @@
       "source_file": "app/hooks.py",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 33,
+      "community": 36,
       "norm_label": "register_request_hooks()",
       "id": "app_hooks_register_request_hooks"
     },
@@ -1279,7 +1139,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 33,
+      "community": 36,
       "norm_label": "flask",
       "id": "app_hooks_py_flask"
     },
@@ -1409,7 +1269,7 @@
       "source_file": "app/middleware/rbac.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 19,
+      "community": 29,
       "norm_label": "rbac.py",
       "id": "app_middleware_rbac"
     },
@@ -1419,7 +1279,7 @@
       "source_file": "app/middleware/rbac.py",
       "source_location": "L260",
       "_origin": "ast",
-      "community": 19,
+      "community": 29,
       "norm_label": "init_rbac()",
       "id": "app_middleware_rbac_init_rbac"
     },
@@ -1429,7 +1289,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 19,
+      "community": 23,
       "norm_label": "flask",
       "id": "flask"
     },
@@ -1439,7 +1299,7 @@
       "source_file": "app/middleware/rbac.py",
       "source_location": "L296",
       "_origin": "ast",
-      "community": 19,
+      "community": 29,
       "norm_label": "seed_default_roles_and_permissions()",
       "id": "app_middleware_rbac_seed_default_roles_and_permissions"
     },
@@ -1449,7 +1309,7 @@
       "source_file": "app/middleware/rbac.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 19,
+      "community": 29,
       "norm_label": "rbac middleware =============== plugged into the app via ``init_rbac(app)`` in `",
       "id": "app_middleware_rbac_rationale_1"
     },
@@ -1459,7 +1319,7 @@
       "source_file": "app/middleware/rbac.py",
       "source_location": "L261",
       "_origin": "ast",
-      "community": 19,
+      "community": 29,
       "norm_label": "register the rbac ``before_request`` hook on *app*.",
       "id": "app_middleware_rbac_rationale_261"
     },
@@ -1469,7 +1329,7 @@
       "source_file": "app/middleware/rbac.py",
       "source_location": "L297",
       "_origin": "ast",
-      "community": 19,
+      "community": 29,
       "norm_label": "seed the database with default roles and their permissions.      roles     -----",
       "id": "app_middleware_rbac_rationale_297"
     },
@@ -1539,7 +1399,7 @@
       "source_file": "app/auth/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 98,
+      "community": 23,
       "norm_label": "routes.py",
       "id": "app_auth_routes"
     },
@@ -1549,7 +1409,7 @@
       "source_file": "app/auth/routes.py",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 98,
+      "community": 23,
       "norm_label": "login()",
       "id": "app_auth_routes_login"
     },
@@ -1559,7 +1419,7 @@
       "source_file": "app/auth/routes.py",
       "source_location": "L39",
       "_origin": "ast",
-      "community": 98,
+      "community": 23,
       "norm_label": "logout()",
       "id": "app_auth_routes_logout"
     },
@@ -1569,7 +1429,7 @@
       "source_file": "app/auth/routes.py",
       "source_location": "L46",
       "_origin": "ast",
-      "community": 98,
+      "community": 23,
       "norm_label": "register()",
       "id": "app_auth_routes_register"
     },
@@ -1579,7 +1439,7 @@
       "source_file": "app/auth/routes.py",
       "source_location": "L53",
       "_origin": "ast",
-      "community": 98,
+      "community": 23,
       "norm_label": "forgot_password()",
       "id": "app_auth_routes_forgot_password"
     },
@@ -1589,7 +1449,7 @@
       "source_file": "app/auth/routes.py",
       "source_location": "L68",
       "_origin": "ast",
-      "community": 98,
+      "community": 23,
       "norm_label": "reset_password()",
       "id": "app_auth_routes_reset_password"
     },
@@ -1739,7 +1599,7 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L134",
       "_origin": "ast",
-      "community": 63,
+      "community": 19,
       "norm_label": ".transfer_stock()",
       "id": "app_inventory_services_inventory_service_inventoryservice_transfer_stock"
     },
@@ -1769,7 +1629,7 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L240",
       "_origin": "ast",
-      "community": 63,
+      "community": 19,
       "norm_label": ".get_item_by_sku()",
       "id": "app_inventory_services_inventory_service_inventoryservice_get_item_by_sku"
     },
@@ -1799,7 +1659,7 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L304",
       "_origin": "ast",
-      "community": 63,
+      "community": 19,
       "norm_label": ".get_stock_movements()",
       "id": "app_inventory_services_inventory_service_inventoryservice_get_stock_movements"
     },
@@ -1839,7 +1699,7 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L429",
       "_origin": "ast",
-      "community": 63,
+      "community": 19,
       "norm_label": ".export_stock_movements_xlsx()",
       "id": "app_inventory_services_inventory_service_inventoryservice_export_stock_movements_xlsx"
     },
@@ -1849,7 +1709,7 @@
       "source_file": "app/inventory/services/inventory_service.py",
       "source_location": "L241",
       "_origin": "ast",
-      "community": 63,
+      "community": 19,
       "norm_label": "fetch an item by its sku within a company.",
       "id": "app_inventory_services_inventory_service_rationale_241"
     },
@@ -1959,7 +1819,7 @@
       "source_file": "app/inventory/views/movements.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 63,
+      "community": 19,
       "norm_label": "movements.py",
       "id": "app_inventory_views_movements"
     },
@@ -1969,7 +1829,7 @@
       "source_file": "app/inventory/views/movements.py",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 63,
+      "community": 19,
       "norm_label": "movements()",
       "id": "app_inventory_views_movements_movements"
     },
@@ -1989,7 +1849,7 @@
       "source_file": "app/inventory/views/movements.py",
       "source_location": "L93",
       "_origin": "ast",
-      "community": 63,
+      "community": 19,
       "norm_label": "export_movements()",
       "id": "app_inventory_views_movements_export_movements"
     },
@@ -1999,7 +1859,7 @@
       "source_file": "app/inventory/views/movements.py",
       "source_location": "L126",
       "_origin": "ast",
-      "community": 63,
+      "community": 19,
       "norm_label": "drawer_adjust()",
       "id": "app_inventory_views_movements_drawer_adjust"
     },
@@ -2009,7 +1869,7 @@
       "source_file": "app/inventory/views/movements.py",
       "source_location": "L140",
       "_origin": "ast",
-      "community": 63,
+      "community": 19,
       "norm_label": "drawer_transfer()",
       "id": "app_inventory_views_movements_drawer_transfer"
     },
@@ -2019,7 +1879,7 @@
       "source_file": "app/inventory/views/movements.py",
       "source_location": "L154",
       "_origin": "ast",
-      "community": 63,
+      "community": 19,
       "norm_label": "transfer()",
       "id": "app_inventory_views_movements_transfer"
     },
@@ -2029,7 +1889,7 @@
       "source_file": "app/orders/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 46,
+      "community": 0,
       "norm_label": "routes.py",
       "id": "app_orders_routes"
     },
@@ -2039,7 +1899,7 @@
       "source_file": "app/orders/routes.py",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 46,
+      "community": 0,
       "norm_label": "index()",
       "id": "app_orders_routes_index"
     },
@@ -2049,7 +1909,7 @@
       "source_file": "app/orders/routes.py",
       "source_location": "L68",
       "_origin": "ast",
-      "community": 46,
+      "community": 0,
       "norm_label": "create()",
       "id": "app_orders_routes_create"
     },
@@ -2059,7 +1919,7 @@
       "source_file": "app/orders/routes.py",
       "source_location": "L103",
       "_origin": "ast",
-      "community": 46,
+      "community": 0,
       "norm_label": "view()",
       "id": "app_orders_routes_view"
     },
@@ -2069,7 +1929,7 @@
       "source_file": "app/orders/routes.py",
       "source_location": "L112",
       "_origin": "ast",
-      "community": 46,
+      "community": 0,
       "norm_label": "edit()",
       "id": "app_orders_routes_edit"
     },
@@ -2079,7 +1939,7 @@
       "source_file": "app/orders/routes.py",
       "source_location": "L133",
       "_origin": "ast",
-      "community": 46,
+      "community": 0,
       "norm_label": "update()",
       "id": "app_orders_routes_update"
     },
@@ -2089,7 +1949,7 @@
       "source_file": "app/orders/routes.py",
       "source_location": "L161",
       "_origin": "ast",
-      "community": 46,
+      "community": 0,
       "norm_label": "delete()",
       "id": "app_orders_routes_delete"
     },
@@ -2099,7 +1959,7 @@
       "source_file": "app/orders/routes.py",
       "source_location": "L176",
       "_origin": "ast",
-      "community": 46,
+      "community": 0,
       "norm_label": "export()",
       "id": "app_orders_routes_export"
     },
@@ -2149,7 +2009,7 @@
       "source_file": "app/accounting/services/_balance_assets.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 12,
+      "community": 17,
       "norm_label": "_balance_assets.py",
       "id": "app_accounting_services_balance_assets"
     },
@@ -2159,7 +2019,7 @@
       "source_file": "app/accounting/services/_balance_assets.py",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 12,
+      "community": 17,
       "norm_label": "_is_receivable_account()",
       "id": "app_accounting_services_balance_assets_is_receivable_account"
     },
@@ -2169,7 +2029,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 12,
+      "community": 17,
       "norm_label": "account",
       "id": "app_accounting_services_balance_assets_py_account"
     },
@@ -2179,7 +2039,7 @@
       "source_file": "app/accounting/services/_balance_assets.py",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 12,
+      "community": 17,
       "norm_label": "_receivable_accounts()",
       "id": "app_accounting_services_balance_assets_receivable_accounts"
     },
@@ -2189,7 +2049,7 @@
       "source_file": "app/accounting/services/_balance_assets.py",
       "source_location": "L37",
       "_origin": "ast",
-      "community": 12,
+      "community": 17,
       "norm_label": "_preferred_receivable_account()",
       "id": "app_accounting_services_balance_assets_preferred_receivable_account"
     },
@@ -2199,7 +2059,7 @@
       "source_file": "app/accounting/services/_balance_assets.py",
       "source_location": "L42",
       "_origin": "ast",
-      "community": 12,
+      "community": 17,
       "norm_label": "_open_invoice_receivable_balance()",
       "id": "app_accounting_services_balance_assets_open_invoice_receivable_balance"
     },
@@ -2209,7 +2069,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 12,
+      "community": 17,
       "norm_label": "datetime",
       "id": "app_accounting_services_balance_assets_py_datetime"
     },
@@ -2219,7 +2079,7 @@
       "source_file": "app/accounting/services/_balance_assets.py",
       "source_location": "L101",
       "_origin": "ast",
-      "community": 12,
+      "community": 17,
       "norm_label": "_replace_receivable_asset_balance()",
       "id": "app_accounting_services_balance_assets_replace_receivable_asset_balance"
     },
@@ -2229,7 +2089,7 @@
       "source_file": "app/accounting/services/_balance_assets.py",
       "source_location": "L120",
       "_origin": "ast",
-      "community": 12,
+      "community": 17,
       "norm_label": "_inventory_balance()",
       "id": "app_accounting_services_balance_assets_inventory_balance"
     },
@@ -2239,7 +2099,7 @@
       "source_file": "app/accounting/services/_balance_assets.py",
       "source_location": "L131",
       "_origin": "ast",
-      "community": 12,
+      "community": 17,
       "norm_label": "_replace_inventory_asset_balance()",
       "id": "app_accounting_services_balance_assets_replace_inventory_asset_balance"
     },
@@ -2269,7 +2129,7 @@
       "source_file": "app/accounting/services/_balance_assets.py",
       "source_location": "L43",
       "_origin": "ast",
-      "community": 12,
+      "community": 17,
       "norm_label": "ar is the unpaid balance of invoices that are still collectible.      it is in",
       "id": "app_accounting_services_balance_assets_rationale_43"
     },
@@ -2279,7 +2139,7 @@
       "source_file": "app/accounting/services/_balance_assets.py",
       "source_location": "L106",
       "_origin": "ast",
-      "community": 12,
+      "community": 17,
       "norm_label": "return asset balances with ar replaced by open invoice balance.",
       "id": "app_accounting_services_balance_assets_rationale_106"
     },
@@ -2289,7 +2149,7 @@
       "source_file": "app/accounting/services/_balance_assets.py",
       "source_location": "L135",
       "_origin": "ast",
-      "community": 12,
+      "community": 17,
       "norm_label": "return asset balances with inventory replaced by calculated inventory value.",
       "id": "app_accounting_services_balance_assets_rationale_135"
     },
@@ -2299,7 +2159,7 @@
       "source_file": "app/accounting/services/_balance_compute.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 12,
+      "community": 17,
       "norm_label": "_balance_compute.py",
       "id": "app_accounting_services_balance_compute"
     },
@@ -2309,7 +2169,7 @@
       "source_file": "app/accounting/services/_balance_compute.py",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 12,
+      "community": 17,
       "norm_label": "_compute_account_balance()",
       "id": "app_accounting_services_balance_compute_compute_account_balance"
     },
@@ -2319,7 +2179,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 12,
+      "community": 17,
       "norm_label": "account",
       "id": "app_accounting_services_balance_compute_py_account"
     },
@@ -2329,7 +2189,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 12,
+      "community": 17,
       "norm_label": "datetime",
       "id": "app_accounting_services_balance_compute_py_datetime"
     },
@@ -2339,7 +2199,7 @@
       "source_file": "app/accounting/services/_balance_compute.py",
       "source_location": "L68",
       "_origin": "ast",
-      "community": 12,
+      "community": 17,
       "norm_label": "_compute_balances_bulk()",
       "id": "app_accounting_services_balance_compute_compute_balances_bulk"
     },
@@ -2349,7 +2209,7 @@
       "source_file": "app/accounting/services/_balance_compute.py",
       "source_location": "L17",
       "_origin": "ast",
-      "community": 12,
+      "community": 17,
       "norm_label": "compute the current balance of an account from ledgerentry rows.      normal b",
       "id": "app_accounting_services_balance_compute_rationale_17"
     },
@@ -2359,7 +2219,7 @@
       "source_file": "app/accounting/services/_balance_compute.py",
       "source_location": "L73",
       "_origin": "ast",
-      "community": 12,
+      "community": 17,
       "norm_label": "compute balances for all accounts of a company in one query.     returns {accou",
       "id": "app_accounting_services_balance_compute_rationale_73"
     },
@@ -2539,7 +2399,7 @@
       "source_file": "app/accounting/services/_balance_transactions.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 36,
+      "community": 137,
       "norm_label": "_balance_transactions.py",
       "id": "app_accounting_services_balance_transactions"
     },
@@ -2549,7 +2409,7 @@
       "source_file": "app/accounting/services/_balance_transactions.py",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 36,
+      "community": 137,
       "norm_label": "_create_balanced_transaction()",
       "id": "app_accounting_services_balance_transactions_create_balanced_transaction"
     },
@@ -2559,7 +2419,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 36,
+      "community": 137,
       "norm_label": "datetime",
       "id": "app_accounting_services_balance_transactions_py_datetime"
     },
@@ -2569,7 +2429,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 36,
+      "community": 137,
       "norm_label": "transactiontype",
       "id": "transactiontype"
     },
@@ -2589,7 +2449,7 @@
       "source_file": "app/accounting/services/_balance_transactions.py",
       "source_location": "L24",
       "_origin": "ast",
-      "community": 36,
+      "community": 137,
       "norm_label": "create a transaction + ledgerentry rows atomically.     raises valueerror if en",
       "id": "app_accounting_services_balance_transactions_rationale_24"
     },
@@ -2769,7 +2629,7 @@
       "source_file": "app/accounting/views/dashboard.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 137,
+      "community": 6,
       "norm_label": "dashboard.py",
       "id": "app_accounting_views_dashboard"
     },
@@ -2779,7 +2639,7 @@
       "source_file": "app/accounting/views/dashboard.py",
       "source_location": "L17",
       "_origin": "ast",
-      "community": 137,
+      "community": 6,
       "norm_label": "index()",
       "id": "app_accounting_views_dashboard_index"
     },
@@ -3069,7 +2929,7 @@
       "source_file": "app/context_processors.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 33,
+      "community": 116,
       "norm_label": "context_processors.py",
       "id": "app_context_processors"
     },
@@ -3079,7 +2939,7 @@
       "source_file": "app/context_processors.py",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 33,
+      "community": 116,
       "norm_label": "register_context_processors()",
       "id": "app_context_processors_register_context_processors"
     },
@@ -3089,7 +2949,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 33,
+      "community": 116,
       "norm_label": "flask",
       "id": "app_context_processors_py_flask"
     },
@@ -3099,7 +2959,7 @@
       "source_file": "app/dashboard/services/dashboard_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 118,
+      "community": 137,
       "norm_label": "dashboard_service.py",
       "id": "app_dashboard_services_dashboard_service"
     },
@@ -3469,7 +3329,7 @@
       "source_file": "app/inventory/views/catalog.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 63,
+      "community": 19,
       "norm_label": "catalog.py",
       "id": "app_inventory_views_catalog"
     },
@@ -3479,7 +3339,7 @@
       "source_file": "app/inventory/views/catalog.py",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 63,
+      "community": 19,
       "norm_label": "_get_suppliers()",
       "id": "app_inventory_views_catalog_get_suppliers"
     },
@@ -3489,7 +3349,7 @@
       "source_file": "app/inventory/views/catalog.py",
       "source_location": "L26",
       "_origin": "ast",
-      "community": 63,
+      "community": 19,
       "norm_label": "index()",
       "id": "app_inventory_views_catalog_index"
     },
@@ -3499,7 +3359,7 @@
       "source_file": "app/inventory/views/catalog.py",
       "source_location": "L78",
       "_origin": "ast",
-      "community": 63,
+      "community": 19,
       "norm_label": "create()",
       "id": "app_inventory_views_catalog_create"
     },
@@ -3509,7 +3369,7 @@
       "source_file": "app/inventory/views/catalog.py",
       "source_location": "L121",
       "_origin": "ast",
-      "community": 63,
+      "community": 19,
       "norm_label": "view()",
       "id": "app_inventory_views_catalog_view"
     },
@@ -3519,7 +3379,7 @@
       "source_file": "app/inventory/views/catalog.py",
       "source_location": "L166",
       "_origin": "ast",
-      "community": 63,
+      "community": 19,
       "norm_label": "edit()",
       "id": "app_inventory_views_catalog_edit"
     },
@@ -3529,7 +3389,7 @@
       "source_file": "app/inventory/views/catalog.py",
       "source_location": "L184",
       "_origin": "ast",
-      "community": 63,
+      "community": 19,
       "norm_label": "update()",
       "id": "app_inventory_views_catalog_update"
     },
@@ -3539,7 +3399,7 @@
       "source_file": "app/inventory/views/catalog.py",
       "source_location": "L228",
       "_origin": "ast",
-      "community": 63,
+      "community": 19,
       "norm_label": "delete()",
       "id": "app_inventory_views_catalog_delete"
     },
@@ -3599,7 +3459,7 @@
       "source_file": "app/invoices/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 137,
+      "community": 2,
       "norm_label": "routes.py",
       "id": "app_invoices_routes"
     },
@@ -3609,7 +3469,7 @@
       "source_file": "app/invoices/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 137,
+      "community": 2,
       "norm_label": "compatibility loader for invoice route modules.",
       "id": "app_invoices_routes_rationale_1"
     },
@@ -4029,7 +3889,7 @@
       "source_file": "app/invoices/views/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 137,
+      "community": 2,
       "norm_label": "__init__.py",
       "id": "app_invoices_views_init"
     },
@@ -4069,7 +3929,7 @@
       "source_file": "app/invoices/views/templates.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 137,
+      "community": 2,
       "norm_label": "templates.py",
       "id": "app_invoices_views_templates"
     },
@@ -4079,7 +3939,7 @@
       "source_file": "app/invoices/views/templates.py",
       "source_location": "L24",
       "_origin": "ast",
-      "community": 137,
+      "community": 2,
       "norm_label": "templates_index()",
       "id": "app_invoices_views_templates_templates_index"
     },
@@ -4089,7 +3949,7 @@
       "source_file": "app/invoices/views/templates.py",
       "source_location": "L35",
       "_origin": "ast",
-      "community": 137,
+      "community": 2,
       "norm_label": "templates_new()",
       "id": "app_invoices_views_templates_templates_new"
     },
@@ -4099,7 +3959,7 @@
       "source_file": "app/invoices/views/templates.py",
       "source_location": "L49",
       "_origin": "ast",
-      "community": 137,
+      "community": 2,
       "norm_label": "templates_store()",
       "id": "app_invoices_views_templates_templates_store"
     },
@@ -4109,7 +3969,7 @@
       "source_file": "app/invoices/views/templates.py",
       "source_location": "L64",
       "_origin": "ast",
-      "community": 137,
+      "community": 2,
       "norm_label": "templates_edit()",
       "id": "app_invoices_views_templates_templates_edit"
     },
@@ -4119,7 +3979,7 @@
       "source_file": "app/invoices/views/templates.py",
       "source_location": "L80",
       "_origin": "ast",
-      "community": 137,
+      "community": 2,
       "norm_label": "templates_update()",
       "id": "app_invoices_views_templates_templates_update"
     },
@@ -4129,7 +3989,7 @@
       "source_file": "app/invoices/views/templates.py",
       "source_location": "L94",
       "_origin": "ast",
-      "community": 137,
+      "community": 2,
       "norm_label": "templates_set_default()",
       "id": "app_invoices_views_templates_templates_set_default"
     },
@@ -4139,7 +3999,7 @@
       "source_file": "app/invoices/views/templates.py",
       "source_location": "L106",
       "_origin": "ast",
-      "community": 137,
+      "community": 2,
       "norm_label": "templates_delete()",
       "id": "app_invoices_views_templates_templates_delete"
     },
@@ -4239,7 +4099,7 @@
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L338",
       "_origin": "ast",
-      "community": 112,
+      "community": 12,
       "norm_label": "delete_purchase_order()",
       "id": "app_orders_services_purchase_order_service_delete_purchase_order"
     },
@@ -4269,7 +4129,7 @@
       "source_file": "app/orders/services/purchase_order_service.py",
       "source_location": "L339",
       "_origin": "ast",
-      "community": 112,
+      "community": 12,
       "norm_label": "soft-delete a purchase order.",
       "id": "app_orders_services_purchase_order_service_rationale_339"
     },
@@ -4474,12 +4334,142 @@
       "id": "app_pos_services_init"
     },
     {
+      "label": "index.js",
+      "file_type": "code",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 39,
+      "norm_label": "index.js",
+      "id": "app_static_js_index"
+    },
+    {
+      "label": "setMobileMenu()",
+      "file_type": "code",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L13",
+      "_origin": "ast",
+      "community": 39,
+      "norm_label": "setmobilemenu()",
+      "id": "app_static_js_index_setmobilemenu"
+    },
+    {
+      "label": "setPopupMenu()",
+      "file_type": "code",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L34",
+      "_origin": "ast",
+      "community": 39,
+      "norm_label": "setpopupmenu()",
+      "id": "app_static_js_index_setpopupmenu"
+    },
+    {
+      "label": "closePopupMenus()",
+      "file_type": "code",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L40",
+      "_origin": "ast",
+      "community": 39,
+      "norm_label": "closepopupmenus()",
+      "id": "app_static_js_index_closepopupmenus"
+    },
+    {
+      "label": "endpoint()",
+      "file_type": "code",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L130",
+      "_origin": "ast",
+      "community": 39,
+      "norm_label": "endpoint()",
+      "id": "app_static_js_index_endpoint"
+    },
+    {
+      "label": "notificationTypeClass()",
+      "file_type": "code",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L135",
+      "_origin": "ast",
+      "community": 39,
+      "norm_label": "notificationtypeclass()",
+      "id": "app_static_js_index_notificationtypeclass"
+    },
+    {
+      "label": "notificationTypeLabel()",
+      "file_type": "code",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L148",
+      "_origin": "ast",
+      "community": 39,
+      "norm_label": "notificationtypelabel()",
+      "id": "app_static_js_index_notificationtypelabel"
+    },
+    {
+      "label": "postNotificationAction()",
+      "file_type": "code",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L161",
+      "_origin": "ast",
+      "community": 39,
+      "norm_label": "postnotificationaction()",
+      "id": "app_static_js_index_postnotificationaction"
+    },
+    {
+      "label": "updateNotificationBadge()",
+      "file_type": "code",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L171",
+      "_origin": "ast",
+      "community": 39,
+      "norm_label": "updatenotificationbadge()",
+      "id": "app_static_js_index_updatenotificationbadge"
+    },
+    {
+      "label": "renderNotificationList()",
+      "file_type": "code",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L182",
+      "_origin": "ast",
+      "community": 39,
+      "norm_label": "rendernotificationlist()",
+      "id": "app_static_js_index_rendernotificationlist"
+    },
+    {
+      "label": "loadNotifications()",
+      "file_type": "code",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L265",
+      "_origin": "ast",
+      "community": 39,
+      "norm_label": "loadnotifications()",
+      "id": "app_static_js_index_loadnotifications"
+    },
+    {
+      "label": "showNotificationPopup()",
+      "file_type": "code",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L278",
+      "_origin": "ast",
+      "community": 39,
+      "norm_label": "shownotificationpopup()",
+      "id": "app_static_js_index_shownotificationpopup"
+    },
+    {
+      "label": "loadPopupNotifications()",
+      "file_type": "code",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L322",
+      "_origin": "ast",
+      "community": 39,
+      "norm_label": "loadpopupnotifications()",
+      "id": "app_static_js_index_loadpopupnotifications"
+    },
+    {
       "label": "routes.py",
       "file_type": "code",
       "source_file": "app/support/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 19,
+      "community": 29,
       "norm_label": "routes.py",
       "id": "app_support_routes"
     },
@@ -4489,7 +4479,7 @@
       "source_file": "app/support/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 19,
+      "community": 29,
       "norm_label": "compatibility loader for support route modules.",
       "id": "app_support_routes_rationale_1"
     },
@@ -4809,7 +4799,7 @@
       "source_file": "app/accounting/services/dashboard_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 36,
+      "community": 6,
       "norm_label": "dashboard_service.py",
       "id": "app_accounting_services_dashboard_service"
     },
@@ -4839,7 +4829,7 @@
       "source_file": "app/accounting/services/dashboard_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 36,
+      "community": 6,
       "norm_label": "dashboard aggregation service.",
       "id": "app_accounting_services_dashboard_service_rationale_1"
     },
@@ -4849,7 +4839,7 @@
       "source_file": "app/payments/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 23,
+      "community": 122,
       "norm_label": "routes.py",
       "id": "app_payments_routes"
     },
@@ -4859,7 +4849,7 @@
       "source_file": "app/payments/routes.py",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 23,
+      "community": 122,
       "norm_label": "index()",
       "id": "app_payments_routes_index"
     },
@@ -4869,7 +4859,7 @@
       "source_file": "app/payments/routes.py",
       "source_location": "L37",
       "_origin": "ast",
-      "community": 23,
+      "community": 122,
       "norm_label": "create()",
       "id": "app_payments_routes_create"
     },
@@ -4879,7 +4869,7 @@
       "source_file": "app/payments/routes.py",
       "source_location": "L51",
       "_origin": "ast",
-      "community": 23,
+      "community": 122,
       "norm_label": "search_invoices()",
       "id": "app_payments_routes_search_invoices"
     },
@@ -4889,7 +4879,7 @@
       "source_file": "app/payments/routes.py",
       "source_location": "L62",
       "_origin": "ast",
-      "community": 23,
+      "community": 122,
       "norm_label": "store()",
       "id": "app_payments_routes_store"
     },
@@ -4899,7 +4889,7 @@
       "source_file": "app/payments/routes.py",
       "source_location": "L77",
       "_origin": "ast",
-      "community": 23,
+      "community": 122,
       "norm_label": "view()",
       "id": "app_payments_routes_view"
     },
@@ -4909,7 +4899,7 @@
       "source_file": "app/payments/routes.py",
       "source_location": "L87",
       "_origin": "ast",
-      "community": 23,
+      "community": 122,
       "norm_label": "edit()",
       "id": "app_payments_routes_edit"
     },
@@ -4919,7 +4909,7 @@
       "source_file": "app/payments/routes.py",
       "source_location": "L103",
       "_origin": "ast",
-      "community": 23,
+      "community": 122,
       "norm_label": "update()",
       "id": "app_payments_routes_update"
     },
@@ -4929,7 +4919,7 @@
       "source_file": "app/payments/routes.py",
       "source_location": "L117",
       "_origin": "ast",
-      "community": 23,
+      "community": 122,
       "norm_label": "delete()",
       "id": "app_payments_routes_delete"
     },
@@ -5209,7 +5199,7 @@
       "source_file": "app/approvals/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
+      "community": 113,
       "norm_label": "routes.py",
       "id": "app_approvals_routes"
     },
@@ -5219,7 +5209,7 @@
       "source_file": "app/approvals/routes.py",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 4,
+      "community": 113,
       "norm_label": "index()",
       "id": "app_approvals_routes_index"
     },
@@ -5229,7 +5219,7 @@
       "source_file": "app/approvals/routes.py",
       "source_location": "L20",
       "_origin": "ast",
-      "community": 4,
+      "community": 113,
       "norm_label": "approve()",
       "id": "app_approvals_routes_approve"
     },
@@ -5239,7 +5229,7 @@
       "source_file": "app/approvals/routes.py",
       "source_location": "L33",
       "_origin": "ast",
-      "community": 4,
+      "community": 113,
       "norm_label": "reject()",
       "id": "app_approvals_routes_reject"
     },
@@ -5319,7 +5309,7 @@
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 137,
+      "community": 6,
       "norm_label": "project_service.py",
       "id": "app_accounting_services_project_service"
     },
@@ -5499,7 +5489,7 @@
       "source_file": "app/accounting/services/project_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 137,
+      "community": 6,
       "norm_label": "project crud, tagging, and reporting service.",
       "id": "app_accounting_services_project_service_rationale_1"
     },
@@ -5839,7 +5829,7 @@
       "source_file": "app/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 33,
+      "community": 36,
       "norm_label": "__init__.py",
       "id": "app_init"
     },
@@ -5849,7 +5839,7 @@
       "source_file": "app/__init__.py",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 33,
+      "community": 36,
       "norm_label": "create_app()",
       "id": "app_init_create_app"
     },
@@ -5859,7 +5849,7 @@
       "source_file": "app/approvals/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
+      "community": 113,
       "norm_label": "__init__.py",
       "id": "app_approvals_init"
     },
@@ -5869,7 +5859,7 @@
       "source_file": "app/blueprints.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 33,
+      "community": 36,
       "norm_label": "blueprints.py",
       "id": "app_blueprints"
     },
@@ -5879,7 +5869,7 @@
       "source_file": "app/blueprints.py",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 33,
+      "community": 36,
       "norm_label": "register_blueprints()",
       "id": "app_blueprints_register_blueprints"
     },
@@ -5889,7 +5879,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 33,
+      "community": 36,
       "norm_label": "flask",
       "id": "app_blueprints_py_flask"
     },
@@ -6379,7 +6369,7 @@
       "source_file": "app/models/stock_movement.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 113,
+      "community": 40,
       "norm_label": "stock_movement.py",
       "id": "app_models_stock_movement"
     },
@@ -6389,7 +6379,7 @@
       "source_file": "app/models/stock_movement.py",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 113,
+      "community": 40,
       "norm_label": "stockmovement",
       "id": "app_models_stock_movement_stockmovement"
     },
@@ -6399,7 +6389,7 @@
       "source_file": "app/models/stock_movement.py",
       "source_location": "L31",
       "_origin": "ast",
-      "community": 113,
+      "community": 40,
       "norm_label": ".qty_change()",
       "id": "app_models_stock_movement_stockmovement_qty_change"
     },
@@ -6409,7 +6399,7 @@
       "source_file": "app/models/stock_movement.py",
       "source_location": "L43",
       "_origin": "ast",
-      "community": 113,
+      "community": 40,
       "norm_label": ".__repr__()",
       "id": "app_models_stock_movement_stockmovement_repr"
     },
@@ -6419,7 +6409,7 @@
       "source_file": "app/models/stock_movement.py",
       "source_location": "L32",
       "_origin": "ast",
-      "community": 113,
+      "community": 40,
       "norm_label": "return signed quantity change.         - incoming: always positive         - out",
       "id": "app_models_stock_movement_rationale_32"
     },
@@ -6959,7 +6949,7 @@
       "source_file": "app/support/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 19,
+      "community": 29,
       "norm_label": "__init__.py",
       "id": "app_support_init"
     },
@@ -7179,7 +7169,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 137,
+      "community": 18,
       "norm_label": "journal_service.py",
       "id": "app_accounting_services_journal_service"
     },
@@ -7309,7 +7299,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 137,
+      "community": 18,
       "norm_label": "journal entries, ledger, and trial balance service.",
       "id": "app_accounting_services_journal_service_rationale_1"
     },
@@ -7398,7 +7388,7 @@
       "file_type": "code",
       "source_file": "app/cli.py",
       "source_location": "L1",
-      "community": 33,
+      "community": 46,
       "norm_label": "cli.py",
       "id": "app_cli"
     },
@@ -7407,7 +7397,7 @@
       "file_type": "code",
       "source_file": "app/cli.py",
       "source_location": "L5",
-      "community": 33,
+      "community": 46,
       "norm_label": "register_cli()",
       "id": "app_cli_register_cli"
     },
@@ -7416,7 +7406,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/low_stock_notifications.py",
       "source_location": "L8",
-      "community": 33,
+      "community": 46,
       "norm_label": "_inventory_link()",
       "id": "app_inventory_services_low_stock_notifications_inventory_link"
     },
@@ -7425,7 +7415,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/low_stock_notifications.py",
       "source_location": "L14",
-      "community": 33,
+      "community": 46,
       "norm_label": "_active_company_users()",
       "id": "app_inventory_services_low_stock_notifications_active_company_users"
     },
@@ -7434,7 +7424,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/low_stock_notifications.py",
       "source_location": "L26",
-      "community": 33,
+      "community": 46,
       "norm_label": "_notification_exists()",
       "id": "app_inventory_services_low_stock_notifications_notification_exists"
     },
@@ -7443,7 +7433,7 @@
       "file_type": "code",
       "source_file": "app/inventory/services/low_stock_notifications.py",
       "source_location": "L35",
-      "community": 33,
+      "community": 46,
       "norm_label": "send_low_stock_notifications()",
       "id": "app_inventory_services_low_stock_notifications_send_low_stock_notifications"
     },
@@ -7452,7 +7442,7 @@
       "file_type": "code",
       "source_file": "low_stock_notifications.py",
       "source_location": "L1",
-      "community": 33,
+      "community": 46,
       "norm_label": "low_stock_notifications.py",
       "id": "low_stock_notifications"
     },
@@ -7461,7 +7451,7 @@
       "file_type": "code",
       "source_file": "low_stock_notifications.py",
       "source_location": "L17",
-      "community": 33,
+      "community": 46,
       "norm_label": "run_task()",
       "id": "low_stock_notifications_run_task"
     },
@@ -7659,7 +7649,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/_helpers.py",
       "source_location": "L35",
-      "community": 60,
+      "community": 3,
       "norm_label": "_save_attachments()",
       "id": "app_accounting_services_helpers_save_attachments"
     },
@@ -7668,7 +7658,7 @@
       "file_type": "code",
       "source_file": "app/accounting/services/_helpers.py",
       "source_location": "L35",
-      "community": 60,
+      "community": 3,
       "norm_label": "int",
       "id": "app_accounting_services_helpers_py_int"
     },
@@ -7722,7 +7712,7 @@
       "file_type": "rationale",
       "source_file": "app/accounting/services/_helpers.py",
       "source_location": "L37",
-      "community": 60,
+      "community": 3,
       "norm_label": "save multiple uploaded files and return a list of accountingattachment instances",
       "id": "app_accounting_services_helpers_rationale_37"
     },
@@ -8019,7 +8009,7 @@
       "file_type": "code",
       "source_file": "app/models/accounting_attachment.py",
       "source_location": "L1",
-      "community": 60,
+      "community": 3,
       "norm_label": "accounting_attachment.py",
       "id": "app_models_accounting_attachment"
     },
@@ -8028,7 +8018,7 @@
       "file_type": "code",
       "source_file": "app/models/accounting_attachment.py",
       "source_location": "L12",
-      "community": 60,
+      "community": 3,
       "norm_label": "accountingattachment",
       "id": "app_models_accounting_attachment_accountingattachment"
     },
@@ -8055,7 +8045,7 @@
       "file_type": "code",
       "source_file": "app/models/accounting_attachment.py",
       "source_location": "L46",
-      "community": 60,
+      "community": 3,
       "norm_label": ".is_image()",
       "id": "app_models_accounting_attachment_accountingattachment_is_image"
     },
@@ -8064,7 +8054,7 @@
       "file_type": "code",
       "source_file": "app/models/accounting_attachment.py",
       "source_location": "L46",
-      "community": 60,
+      "community": 3,
       "norm_label": "bool",
       "id": "app_models_accounting_attachment_py_bool"
     },
@@ -8091,7 +8081,7 @@
       "file_type": "rationale",
       "source_file": "app/models/accounting_attachment.py",
       "source_location": "L1",
-      "community": 60,
+      "community": 3,
       "norm_label": "polymorphic attachment table shared by all accounting entry types.  reference_ty",
       "id": "app_models_accounting_attachment_rationale_1"
     },
@@ -8226,7 +8216,7 @@
       "file_type": "code",
       "source_file": "config.py",
       "source_location": "L1",
-      "community": 33,
+      "community": 116,
       "norm_label": "config.py",
       "id": "config"
     },
@@ -8235,7 +8225,7 @@
       "file_type": "code",
       "source_file": "config.py",
       "source_location": "L4",
-      "community": 33,
+      "community": 116,
       "norm_label": "config",
       "id": "config_config"
     },
@@ -8244,7 +8234,7 @@
       "file_type": "code",
       "source_file": "config.py",
       "source_location": "L48",
-      "community": 33,
+      "community": 116,
       "norm_label": ".init_app()",
       "id": "config_config_init_app"
     },
@@ -8343,7 +8333,7 @@
       "file_type": "code",
       "source_file": "app/models/account.py",
       "source_location": "L1",
-      "community": 137,
+      "community": 17,
       "norm_label": "account.py",
       "id": "app_models_account"
     },
@@ -8631,7 +8621,7 @@
       "file_type": "code",
       "source_file": "expire_documents.py",
       "source_location": "L1",
-      "community": 33,
+      "community": 115,
       "norm_label": "expire_documents.py",
       "id": "expire_documents"
     },
@@ -8640,7 +8630,7 @@
       "file_type": "code",
       "source_file": "expire_documents.py",
       "source_location": "L18",
-      "community": 33,
+      "community": 115,
       "norm_label": "_invoice_link()",
       "id": "expire_documents_invoice_link"
     },
@@ -8649,7 +8639,7 @@
       "file_type": "code",
       "source_file": "expire_documents.py",
       "source_location": "L22",
-      "community": 33,
+      "community": 115,
       "norm_label": "_notification_exists()",
       "id": "expire_documents_notification_exists"
     },
@@ -8658,7 +8648,7 @@
       "file_type": "code",
       "source_file": "expire_documents.py",
       "source_location": "L31",
-      "community": 33,
+      "community": 115,
       "norm_label": "_create_expired_invoice_notification()",
       "id": "expire_documents_create_expired_invoice_notification"
     },
@@ -8667,7 +8657,7 @@
       "file_type": "code",
       "source_file": "expire_documents.py",
       "source_location": "L65",
-      "community": 33,
+      "community": 115,
       "norm_label": "run_task()",
       "id": "expire_documents_run_task"
     },
@@ -8676,7 +8666,7 @@
       "file_type": "code",
       "source_file": "app/models/notification.py",
       "source_location": "L1",
-      "community": 40,
+      "community": 9,
       "norm_label": "notification.py",
       "id": "app_models_notification"
     },
@@ -8685,7 +8675,7 @@
       "file_type": "code",
       "source_file": "app/models/notification.py",
       "source_location": "L5",
-      "community": 40,
+      "community": 9,
       "norm_label": "notification",
       "id": "app_models_notification_notification"
     },
@@ -8694,7 +8684,7 @@
       "file_type": "code",
       "source_file": "app/models/notification.py",
       "source_location": "L30",
-      "community": 40,
+      "community": 9,
       "norm_label": ".display_body()",
       "id": "app_models_notification_notification_display_body"
     },
@@ -8703,7 +8693,7 @@
       "file_type": "code",
       "source_file": "app/models/notification.py",
       "source_location": "L34",
-      "community": 40,
+      "community": 9,
       "norm_label": ".is_unread()",
       "id": "app_models_notification_notification_is_unread"
     },
@@ -8712,7 +8702,7 @@
       "file_type": "code",
       "source_file": "app/models/notification.py",
       "source_location": "L37",
-      "community": 40,
+      "community": 9,
       "norm_label": ".__repr__()",
       "id": "app_models_notification_notification_repr"
     },
@@ -8982,7 +8972,7 @@
       "file_type": "rationale",
       "source_file": "app/middleware/audit.py",
       "source_location": "L106",
-      "community": 19,
+      "community": 29,
       "norm_label": "registers global sqlalchemy listeners for all models inheriting from base.",
       "id": "app_middleware_audit_rationale_106"
     },
@@ -9108,7 +9098,7 @@
       "file_type": "code",
       "source_file": "app/models/company.py",
       "source_location": "L1",
-      "community": 131,
+      "community": 6,
       "norm_label": "company.py",
       "id": "app_models_company"
     },
@@ -9202,7 +9192,7 @@
       "file_type": "code",
       "source_file": "app.py",
       "source_location": "L1",
-      "community": 33,
+      "community": 115,
       "norm_label": "app.py",
       "id": "app"
     },
@@ -9463,7 +9453,7 @@
       "file_type": "code",
       "source_file": "app/contacts/services/contact_service.py",
       "source_location": "L1",
-      "community": 104,
+      "community": 12,
       "norm_label": "contact_service.py",
       "id": "app_contacts_services_contact_service"
     },
@@ -9472,7 +9462,7 @@
       "file_type": "code",
       "source_file": "app/contacts/services/contact_service.py",
       "source_location": "L11",
-      "community": 104,
+      "community": 12,
       "norm_label": ".get_paginated_contacts()",
       "id": "app_contacts_services_contact_service_contactservice_get_paginated_contacts"
     },
@@ -9490,7 +9480,7 @@
       "file_type": "code",
       "source_file": "app/contacts/services/contact_service.py",
       "source_location": "L67",
-      "community": 104,
+      "community": 12,
       "norm_label": ".get_contact_with_stats()",
       "id": "app_contacts_services_contact_service_contactservice_get_contact_with_stats"
     },
@@ -9499,7 +9489,7 @@
       "file_type": "code",
       "source_file": "app/contacts/services/contact_service.py",
       "source_location": "L105",
-      "community": 104,
+      "community": 12,
       "norm_label": ".update_contact()",
       "id": "app_contacts_services_contact_service_contactservice_update_contact"
     },
@@ -9508,7 +9498,7 @@
       "file_type": "code",
       "source_file": "app/contacts/services/contact_service.py",
       "source_location": "L136",
-      "community": 104,
+      "community": 12,
       "norm_label": ".delete_contact()",
       "id": "app_contacts_services_contact_service_contactservice_delete_contact"
     },
@@ -9517,7 +9507,7 @@
       "file_type": "code",
       "source_file": "app/contacts/services/contact_service.py",
       "source_location": "L151",
-      "community": 104,
+      "community": 12,
       "norm_label": ".search_contacts()",
       "id": "app_contacts_services_contact_service_contactservice_search_contacts"
     },
@@ -9544,7 +9534,7 @@
       "file_type": "code",
       "source_file": "app/hr/__init__.py",
       "source_location": "L1",
-      "community": 112,
+      "community": 12,
       "norm_label": "__init__.py",
       "id": "app_hr_init"
     },
@@ -9787,7 +9777,7 @@
       "file_type": "code",
       "source_file": "app/middleware/error_handler.py",
       "source_location": "L1",
-      "community": 19,
+      "community": 29,
       "norm_label": "error_handler.py",
       "id": "app_middleware_error_handler"
     },
@@ -9796,7 +9786,7 @@
       "file_type": "code",
       "source_file": "app/middleware/error_handler.py",
       "source_location": "L5",
-      "community": 19,
+      "community": 29,
       "norm_label": "init_error_handlers()",
       "id": "app_middleware_error_handler_init_error_handlers"
     },
@@ -9805,7 +9795,7 @@
       "file_type": "code",
       "source_file": "app/models/associations.py",
       "source_location": "L1",
-      "community": 32,
+      "community": 98,
       "norm_label": "associations.py",
       "id": "app_models_associations"
     },
@@ -9841,7 +9831,7 @@
       "file_type": "code",
       "source_file": "app/models/base.py",
       "source_location": "L1",
-      "community": 32,
+      "community": 98,
       "norm_label": "base.py",
       "id": "app_models_base"
     },
@@ -9859,7 +9849,7 @@
       "file_type": "code",
       "source_file": "app/models/base.py",
       "source_location": "L17",
-      "community": 32,
+      "community": 98,
       "norm_label": "_add_filtering_criteria()",
       "id": "app_models_base_add_filtering_criteria"
     },
@@ -9967,7 +9957,7 @@
       "file_type": "code",
       "source_file": "app/models/document_sequence.py",
       "source_location": "L1",
-      "community": 32,
+      "community": 98,
       "norm_label": "document_sequence.py",
       "id": "app_models_document_sequence"
     },
@@ -9976,7 +9966,7 @@
       "file_type": "code",
       "source_file": "app/models/document_sequence.py",
       "source_location": "L19",
-      "community": 32,
+      "community": 98,
       "norm_label": ".__repr__()",
       "id": "app_models_document_sequence_documentsequence_repr"
     },
@@ -9985,7 +9975,7 @@
       "file_type": "code",
       "source_file": "app/models/document_sequence.py",
       "source_location": "L19",
-      "community": 32,
+      "community": 98,
       "norm_label": "str",
       "id": "app_models_document_sequence_py_str"
     },
@@ -9994,7 +9984,7 @@
       "file_type": "code",
       "source_file": "app/models/document_template.py",
       "source_location": "L1",
-      "community": 32,
+      "community": 98,
       "norm_label": "document_template.py",
       "id": "app_models_document_template"
     },
@@ -10003,7 +9993,7 @@
       "file_type": "code",
       "source_file": "app/models/document_template.py",
       "source_location": "L26",
-      "community": 32,
+      "community": 98,
       "norm_label": ".__repr__()",
       "id": "app_models_document_template_documenttemplate_repr"
     },
@@ -10012,7 +10002,7 @@
       "file_type": "code",
       "source_file": "app/models/document_template.py",
       "source_location": "L26",
-      "community": 32,
+      "community": 98,
       "norm_label": "str",
       "id": "app_models_document_template_py_str"
     },
@@ -10120,7 +10110,7 @@
       "file_type": "code",
       "source_file": "app/models/expense.py",
       "source_location": "L1",
-      "community": 36,
+      "community": 17,
       "norm_label": "expense.py",
       "id": "app_models_expense"
     },
@@ -10309,7 +10299,7 @@
       "file_type": "code",
       "source_file": "app/models/permission.py",
       "source_location": "L1",
-      "community": 32,
+      "community": 98,
       "norm_label": "permission.py",
       "id": "app_models_permission"
     },
@@ -10318,7 +10308,7 @@
       "file_type": "code",
       "source_file": "app/models/permission.py",
       "source_location": "L13",
-      "community": 32,
+      "community": 98,
       "norm_label": ".__repr__()",
       "id": "app_models_permission_permission_repr"
     },
@@ -10327,7 +10317,7 @@
       "file_type": "code",
       "source_file": "app/models/permission.py",
       "source_location": "L13",
-      "community": 32,
+      "community": 98,
       "norm_label": "str",
       "id": "app_models_permission_py_str"
     },
@@ -10336,7 +10326,7 @@
       "file_type": "code",
       "source_file": "app/models/project.py",
       "source_location": "L1",
-      "community": 137,
+      "community": 6,
       "norm_label": "project.py",
       "id": "app_models_project"
     },
@@ -10372,7 +10362,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order.py",
       "source_location": "L1",
-      "community": 40,
+      "community": 32,
       "norm_label": "purchase_order.py",
       "id": "app_models_purchase_order"
     },
@@ -10381,7 +10371,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order.py",
       "source_location": "L24",
-      "community": 40,
+      "community": 32,
       "norm_label": ".__repr__()",
       "id": "app_models_purchase_order_purchaseorder_repr"
     },
@@ -10390,7 +10380,7 @@
       "file_type": "code",
       "source_file": "app/models/purchase_order.py",
       "source_location": "L24",
-      "community": 40,
+      "community": 32,
       "norm_label": "str",
       "id": "app_models_purchase_order_py_str"
     },
@@ -10462,7 +10452,7 @@
       "file_type": "code",
       "source_file": "app/models/role.py",
       "source_location": "L1",
-      "community": 27,
+      "community": 98,
       "norm_label": "role.py",
       "id": "app_models_role"
     },
@@ -10525,7 +10515,7 @@
       "file_type": "code",
       "source_file": "app/models/tag.py",
       "source_location": "L1",
-      "community": 32,
+      "community": 6,
       "norm_label": "tag.py",
       "id": "app_models_tag"
     },
@@ -10651,7 +10641,7 @@
       "file_type": "code",
       "source_file": "app/models/user.py",
       "source_location": "L1",
-      "community": 32,
+      "community": 98,
       "norm_label": "user.py",
       "id": "app_models_user"
     },
@@ -10912,7 +10902,7 @@
       "file_type": "code",
       "source_file": "app/orders/services/purchase_order_query_service.py",
       "source_location": "L5",
-      "community": 112,
+      "community": 12,
       "norm_label": "get_purchase_orders()",
       "id": "app_orders_services_purchase_order_query_service_get_purchase_orders"
     },
@@ -11047,7 +11037,7 @@
       "file_type": "code",
       "source_file": "app/utils.py",
       "source_location": "L1",
-      "community": 23,
+      "community": 122,
       "norm_label": "utils.py",
       "id": "app_utils"
     },
@@ -11056,7 +11046,7 @@
       "file_type": "code",
       "source_file": "app/utils.py",
       "source_location": "L5",
-      "community": 23,
+      "community": 122,
       "norm_label": "resolve_company()",
       "id": "app_utils_resolve_company"
     },
@@ -11074,7 +11064,7 @@
       "file_type": "rationale",
       "source_file": "app/utils.py",
       "source_location": "L6",
-      "community": 23,
+      "community": 122,
       "norm_label": "helper to resolve a company from a route parameter that could be an integer id o",
       "id": "app_utils_rationale_6"
     },
@@ -12754,7 +12744,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
+      "community": 29,
       "norm_label": "auditmiddleware.log_change",
       "id": "app_middleware_audit_log_change"
     },
@@ -12767,7 +12757,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 19,
+      "community": 29,
       "norm_label": "register_audit_listeners",
       "id": "app_middleware_audit_register_audit_listeners"
     },
@@ -12868,307 +12858,12 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L48",
-      "weight": 1.0,
-      "source": "app_static_js_index",
-      "target": "app_static_js_index_closepopupmenus",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L170",
-      "weight": 1.0,
-      "source": "app_static_js_index",
-      "target": "app_static_js_index_endpoint",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L125",
-      "weight": 1.0,
-      "source": "app_static_js_index",
-      "target": "app_static_js_index_enhancemobiletables",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L305",
-      "weight": 1.0,
-      "source": "app_static_js_index",
-      "target": "app_static_js_index_loadnotifications",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L362",
-      "weight": 1.0,
-      "source": "app_static_js_index",
-      "target": "app_static_js_index_loadpopupnotifications",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L175",
-      "weight": 1.0,
-      "source": "app_static_js_index",
-      "target": "app_static_js_index_notificationtypeclass",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L188",
-      "weight": 1.0,
-      "source": "app_static_js_index",
-      "target": "app_static_js_index_notificationtypelabel",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L201",
-      "weight": 1.0,
-      "source": "app_static_js_index",
-      "target": "app_static_js_index_postnotificationaction",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L222",
-      "weight": 1.0,
-      "source": "app_static_js_index",
-      "target": "app_static_js_index_rendernotificationlist",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L15",
-      "weight": 1.0,
-      "source": "app_static_js_index",
-      "target": "app_static_js_index_setmobilemenu",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L42",
-      "weight": 1.0,
-      "source": "app_static_js_index",
-      "target": "app_static_js_index_setpopupmenu",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L318",
-      "weight": 1.0,
-      "source": "app_static_js_index",
-      "target": "app_static_js_index_shownotificationpopup",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L211",
-      "weight": 1.0,
-      "source": "app_static_js_index",
-      "target": "app_static_js_index_updatenotificationbadge",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L49",
-      "weight": 1.0,
-      "source": "app_static_js_index_closepopupmenus",
-      "target": "app_static_js_index_setpopupmenu",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L307",
-      "weight": 1.0,
-      "source": "app_static_js_index_loadnotifications",
-      "target": "app_static_js_index_endpoint",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L364",
-      "weight": 1.0,
-      "source": "app_static_js_index_loadpopupnotifications",
-      "target": "app_static_js_index_endpoint",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L286",
-      "weight": 1.0,
-      "source": "app_static_js_index_rendernotificationlist",
-      "target": "app_static_js_index_endpoint",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L344",
-      "weight": 1.0,
-      "source": "app_static_js_index_shownotificationpopup",
-      "target": "app_static_js_index_endpoint",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L247",
-      "weight": 1.0,
-      "source": "app_static_js_index_rendernotificationlist",
-      "target": "app_static_js_index_notificationtypeclass",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L329",
-      "weight": 1.0,
-      "source": "app_static_js_index_shownotificationpopup",
-      "target": "app_static_js_index_notificationtypeclass",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L248",
-      "weight": 1.0,
-      "source": "app_static_js_index_rendernotificationlist",
-      "target": "app_static_js_index_notificationtypelabel",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L330",
-      "weight": 1.0,
-      "source": "app_static_js_index_shownotificationpopup",
-      "target": "app_static_js_index_notificationtypelabel",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L286",
-      "weight": 1.0,
-      "source": "app_static_js_index_rendernotificationlist",
-      "target": "app_static_js_index_postnotificationaction",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L344",
-      "weight": 1.0,
-      "source": "app_static_js_index_shownotificationpopup",
-      "target": "app_static_js_index_postnotificationaction",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L310",
-      "weight": 1.0,
-      "source": "app_static_js_index_loadnotifications",
-      "target": "app_static_js_index_updatenotificationbadge",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "indirect_call",
-      "context": "argument",
-      "confidence": "INFERRED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L286",
-      "weight": 1.0,
-      "source": "app_static_js_index_rendernotificationlist",
-      "target": "app_static_js_index_loadnotifications",
-      "confidence_score": 0.5
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L348",
-      "weight": 1.0,
-      "source": "app_static_js_index_shownotificationpopup",
-      "target": "app_static_js_index_loadnotifications",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/static/js/index.js",
-      "source_location": "L368",
-      "weight": 1.0,
-      "source": "app_static_js_index_loadpopupnotifications",
-      "target": "app_static_js_index_shownotificationpopup",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
       "source_file": "app/ARCHITECTURE.md",
       "source_location": "L1",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_architecture",
-      "target": "app_architecture_application_structure"
+      "target": "app_architecture_application_structure",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -13177,9 +12872,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L9",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_models_contact"
+      "target": "app_models_contact",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -13188,9 +12883,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L9",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_models_warehouse"
+      "target": "app_models_warehouse",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13198,9 +12893,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L253",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_pos_routes_cash_movement"
+      "target": "app_pos_routes_cash_movement",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13208,9 +12903,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L109",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_pos_routes_checkout"
+      "target": "app_pos_routes_checkout",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13218,9 +12913,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L219",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_pos_routes_close_register"
+      "target": "app_pos_routes_close_register",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13228,9 +12923,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L36",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_pos_routes_index"
+      "target": "app_pos_routes_index",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13238,9 +12933,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L177",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_pos_routes_open_register"
+      "target": "app_pos_routes_open_register",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -13249,9 +12944,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_pos_services_pos_service"
+      "target": "app_pos_services_pos_service",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13260,9 +12955,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_pos_services_pos_service_available_stock"
+      "target": "app_pos_services_pos_service_available_stock",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13271,9 +12966,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_pos_services_pos_service_build_invoice_form"
+      "target": "app_pos_services_pos_service_build_invoice_form",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13282,9 +12977,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_pos_services_pos_service_company_payload"
+      "target": "app_pos_services_pos_service_company_payload",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13293,9 +12988,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_pos_services_pos_service_company_route_id"
+      "target": "app_pos_services_pos_service_company_route_id",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13304,9 +12999,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_pos_services_pos_service_current_register_session"
+      "target": "app_pos_services_pos_service_current_register_session",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13315,9 +13010,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_pos_services_pos_service_customer_payload"
+      "target": "app_pos_services_pos_service_customer_payload",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13326,9 +13021,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_pos_services_pos_service_load_receipt"
+      "target": "app_pos_services_pos_service_load_receipt",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13337,9 +13032,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_pos_services_pos_service_money"
+      "target": "app_pos_services_pos_service_money",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13348,9 +13043,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_pos_services_pos_service_parse_cart_payload"
+      "target": "app_pos_services_pos_service_parse_cart_payload",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13359,9 +13054,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_pos_services_pos_service_product_payload"
+      "target": "app_pos_services_pos_service_product_payload",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13370,9 +13065,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_pos_services_pos_service_receipt_payload"
+      "target": "app_pos_services_pos_service_receipt_payload",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13381,9 +13076,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_pos_services_pos_service_register_payload"
+      "target": "app_pos_services_pos_service_register_payload",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13392,9 +13087,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_pos_services_pos_service_register_totals"
+      "target": "app_pos_services_pos_service_register_totals",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13403,9 +13098,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_pos_services_pos_service_required_decimal"
+      "target": "app_pos_services_pos_service_required_decimal",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13414,9 +13109,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_pos_services_pos_service_sequence_payload"
+      "target": "app_pos_services_pos_service_sequence_payload",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports",
@@ -13425,9 +13120,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L13",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_pos_services_pos_service_warehouse_for_company"
+      "target": "app_pos_services_pos_service_warehouse_for_company",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -13436,9 +13131,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L10",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "app_utils"
+      "target": "app_utils",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -13447,9 +13142,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L1",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "datetime"
+      "target": "datetime",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -13458,9 +13153,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L2",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "decimal"
+      "target": "decimal",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -13469,9 +13164,9 @@
       "source_file": "app/pos/routes.py",
       "source_location": "L4",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_routes",
-      "target": "flask"
+      "target": "flask",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -13821,9 +13516,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L8",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "app_models_contact"
+      "target": "app_models_contact",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -13832,9 +13527,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L8",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "app_models_document"
+      "target": "app_models_document",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -13843,9 +13538,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L8",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "app_models_payment"
+      "target": "app_models_payment",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -13854,9 +13549,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L8",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "app_models_warehouse"
+      "target": "app_models_warehouse",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13864,9 +13559,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L58",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "app_pos_services_pos_service_available_stock"
+      "target": "app_pos_services_pos_service_available_stock",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13874,9 +13569,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L314",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "app_pos_services_pos_service_build_invoice_form"
+      "target": "app_pos_services_pos_service_build_invoice_form",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13884,9 +13579,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L149",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "app_pos_services_pos_service_company_payload"
+      "target": "app_pos_services_pos_service_company_payload",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13894,9 +13589,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L43",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "app_pos_services_pos_service_company_route_id"
+      "target": "app_pos_services_pos_service_company_route_id",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13904,9 +13599,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L169",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "app_pos_services_pos_service_current_register_session"
+      "target": "app_pos_services_pos_service_current_register_session",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13914,9 +13609,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L159",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "app_pos_services_pos_service_customer_payload"
+      "target": "app_pos_services_pos_service_customer_payload",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13924,9 +13619,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L19",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "app_pos_services_pos_service_decimal"
+      "target": "app_pos_services_pos_service_decimal",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13934,9 +13629,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L105",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "app_pos_services_pos_service_document_sequence_for_receipt"
+      "target": "app_pos_services_pos_service_document_sequence_for_receipt",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13944,9 +13639,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L93",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "app_pos_services_pos_service_format_hn_number"
+      "target": "app_pos_services_pos_service_format_hn_number",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13954,9 +13649,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L291",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "app_pos_services_pos_service_load_receipt"
+      "target": "app_pos_services_pos_service_load_receipt",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13964,9 +13659,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L26",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "app_pos_services_pos_service_money"
+      "target": "app_pos_services_pos_service_money",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13974,9 +13669,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L302",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "app_pos_services_pos_service_parse_cart_payload"
+      "target": "app_pos_services_pos_service_parse_cart_payload",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13984,9 +13679,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L70",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "app_pos_services_pos_service_product_payload"
+      "target": "app_pos_services_pos_service_product_payload",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13994,9 +13689,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L246",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "app_pos_services_pos_service_receipt_payload"
+      "target": "app_pos_services_pos_service_receipt_payload",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14004,9 +13699,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L216",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "app_pos_services_pos_service_register_payload"
+      "target": "app_pos_services_pos_service_register_payload",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14014,9 +13709,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L177",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "app_pos_services_pos_service_register_totals"
+      "target": "app_pos_services_pos_service_register_totals",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14024,9 +13719,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L30",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "app_pos_services_pos_service_required_decimal"
+      "target": "app_pos_services_pos_service_required_decimal",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14034,9 +13729,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L127",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "app_pos_services_pos_service_sequence_payload"
+      "target": "app_pos_services_pos_service_sequence_payload",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14044,9 +13739,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L47",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "app_pos_services_pos_service_warehouse_for_company"
+      "target": "app_pos_services_pos_service_warehouse_for_company",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -14055,9 +13750,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L2",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "datetime"
+      "target": "datetime",
+      "confidence_score": 1.0
     },
     {
       "relation": "imports_from",
@@ -14066,9 +13761,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L3",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service",
-      "target": "decimal"
+      "target": "decimal",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -14077,9 +13772,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L26",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_money",
-      "target": "app_pos_services_pos_service_decimal"
+      "target": "app_pos_services_pos_service_decimal",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -14088,9 +13783,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L30",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_required_decimal",
-      "target": "app_pos_services_pos_service_decimal"
+      "target": "app_pos_services_pos_service_decimal",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14099,9 +13794,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L357",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_build_invoice_form",
-      "target": "app_pos_services_pos_service_money"
+      "target": "app_pos_services_pos_service_money",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14110,9 +13805,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L79",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_product_payload",
-      "target": "app_pos_services_pos_service_money"
+      "target": "app_pos_services_pos_service_money",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14121,9 +13816,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L259",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_receipt_payload",
-      "target": "app_pos_services_pos_service_money"
+      "target": "app_pos_services_pos_service_money",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14132,9 +13827,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L237",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_register_payload",
-      "target": "app_pos_services_pos_service_money"
+      "target": "app_pos_services_pos_service_money",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14143,9 +13838,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L192",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_register_totals",
-      "target": "app_pos_services_pos_service_money"
+      "target": "app_pos_services_pos_service_money",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14154,9 +13849,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L345",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_build_invoice_form",
-      "target": "app_pos_services_pos_service_required_decimal"
+      "target": "app_pos_services_pos_service_required_decimal",
+      "confidence_score": 1.0
     },
     {
       "relation": "rationale_for",
@@ -14164,9 +13859,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L31",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_rationale_31",
-      "target": "app_pos_services_pos_service_required_decimal"
+      "target": "app_pos_services_pos_service_required_decimal",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14175,9 +13870,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L320",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_build_invoice_form",
-      "target": "app_pos_services_pos_service_warehouse_for_company"
+      "target": "app_pos_services_pos_service_warehouse_for_company",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -14186,9 +13881,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L58",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_available_stock",
-      "target": "inventoryitem"
+      "target": "inventoryitem",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14197,9 +13892,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L352",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_build_invoice_form",
-      "target": "app_pos_services_pos_service_available_stock"
+      "target": "app_pos_services_pos_service_available_stock",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14208,9 +13903,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L71",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_product_payload",
-      "target": "app_pos_services_pos_service_available_stock"
+      "target": "app_pos_services_pos_service_available_stock",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -14219,9 +13914,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L70",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_product_payload",
-      "target": "inventoryitem"
+      "target": "inventoryitem",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14230,9 +13925,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L137",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_sequence_payload",
-      "target": "app_pos_services_pos_service_format_hn_number"
+      "target": "app_pos_services_pos_service_format_hn_number",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -14241,9 +13936,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L105",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_document_sequence_for_receipt",
-      "target": "document"
+      "target": "document",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14252,9 +13947,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L250",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_receipt_payload",
-      "target": "app_pos_services_pos_service_document_sequence_for_receipt"
+      "target": "app_pos_services_pos_service_document_sequence_for_receipt",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -14263,9 +13958,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L246",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_receipt_payload",
-      "target": "document"
+      "target": "document",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14274,9 +13969,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L286",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_receipt_payload",
-      "target": "app_pos_services_pos_service_sequence_payload"
+      "target": "app_pos_services_pos_service_sequence_payload",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -14285,9 +13980,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L127",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_sequence_payload",
-      "target": "documentsequence"
+      "target": "documentsequence",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -14296,9 +13991,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L159",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_customer_payload",
-      "target": "contact"
+      "target": "contact",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14307,9 +14002,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L231",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_register_payload",
-      "target": "app_pos_services_pos_service_register_totals"
+      "target": "app_pos_services_pos_service_register_totals",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -14318,9 +14013,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L177",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_register_totals",
-      "target": "posregistersession"
+      "target": "posregistersession",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -14329,9 +14024,9 @@
       "source_file": "app/pos/services/pos_service.py",
       "source_location": "L216",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_services_pos_service_register_payload",
-      "target": "posregistersession"
+      "target": "posregistersession",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14339,9 +14034,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L333",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_addproduct"
+      "target": "app_pos_static_js_pos_addproduct",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14349,9 +14044,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L181",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_calctotals"
+      "target": "app_pos_static_js_pos_calctotals",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14359,9 +14054,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L370",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_clearcart"
+      "target": "app_pos_static_js_pos_clearcart",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14369,9 +14064,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L581",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_closemodal"
+      "target": "app_pos_static_js_pos_closemodal",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14379,9 +14074,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L214",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_customerlabel"
+      "target": "app_pos_static_js_pos_customerlabel",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14389,9 +14084,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L137",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_escapehtml"
+      "target": "app_pos_static_js_pos_escapehtml",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14399,9 +14094,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L239",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_filterclients"
+      "target": "app_pos_static_js_pos_filterclients",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14409,9 +14104,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L385",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_filterproducts"
+      "target": "app_pos_static_js_pos_filterproducts",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14419,9 +14114,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L163",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_findexactproduct"
+      "target": "app_pos_static_js_pos_findexactproduct",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14429,9 +14124,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L38",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_format"
+      "target": "app_pos_static_js_pos_format",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14439,9 +14134,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L124",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_formatamount"
+      "target": "app_pos_static_js_pos_formatamount",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14449,9 +14144,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L128",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_formatplain"
+      "target": "app_pos_static_js_pos_formatplain",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14459,9 +14154,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L132",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_formatreceiptamount"
+      "target": "app_pos_static_js_pos_formatreceiptamount",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14469,9 +14164,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L79",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_getheldsales"
+      "target": "app_pos_static_js_pos_getheldsales",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14479,9 +14174,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L101",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_holdsale"
+      "target": "app_pos_static_js_pos_holdsale",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14489,9 +14184,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L468",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_livereceipt"
+      "target": "app_pos_static_js_pos_livereceipt",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14499,9 +14194,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L146",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_normalizesearch"
+      "target": "app_pos_static_js_pos_normalizesearch",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14509,9 +14204,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L546",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_opendrawer"
+      "target": "app_pos_static_js_pos_opendrawer",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14519,9 +14214,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L568",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_openmodal"
+      "target": "app_pos_static_js_pos_openmodal",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14529,9 +14224,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L493",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_preparecheckout"
+      "target": "app_pos_static_js_pos_preparecheckout",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14539,9 +14234,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L526",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_printreceipt"
+      "target": "app_pos_static_js_pos_printreceipt",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14549,9 +14244,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L150",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_productsearchterms"
+      "target": "app_pos_static_js_pos_productsearchterms",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14559,9 +14254,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L365",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_removeproduct"
+      "target": "app_pos_static_js_pos_removeproduct",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14569,9 +14264,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L291",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_rendercart"
+      "target": "app_pos_static_js_pos_rendercart",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14579,9 +14274,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L219",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_renderclientresults"
+      "target": "app_pos_static_js_pos_renderclientresults",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14589,9 +14284,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L88",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_renderheldsales"
+      "target": "app_pos_static_js_pos_renderheldsales",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14599,9 +14294,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L264",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_renderproducts"
+      "target": "app_pos_static_js_pos_renderproducts",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14609,9 +14304,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L410",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_renderreceipt"
+      "target": "app_pos_static_js_pos_renderreceipt",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14619,9 +14314,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L199",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_renderregistersummary"
+      "target": "app_pos_static_js_pos_renderregistersummary",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14629,9 +14324,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L112",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_restoreheldsale"
+      "target": "app_pos_static_js_pos_restoreheldsale",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14639,9 +14334,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L83",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_saveheldsales"
+      "target": "app_pos_static_js_pos_saveheldsales",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14649,9 +14344,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L253",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_selectclient"
+      "target": "app_pos_static_js_pos_selectclient",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14659,9 +14354,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L589",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_setmovementtype"
+      "target": "app_pos_static_js_pos_setmovementtype",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14669,9 +14364,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L401",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_setpaymentmethod"
+      "target": "app_pos_static_js_pos_setpaymentmethod",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14679,9 +14374,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L354",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_setquantity"
+      "target": "app_pos_static_js_pos_setquantity",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14689,9 +14384,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L554",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_showlocalflash"
+      "target": "app_pos_static_js_pos_showlocalflash",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14699,9 +14394,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L191",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_syncamountdefault"
+      "target": "app_pos_static_js_pos_syncamountdefault",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -14709,9 +14404,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L377",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos",
-      "target": "app_pos_static_js_pos_updatepaymentsummary"
+      "target": "app_pos_static_js_pos_updatepaymentsummary",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14720,9 +14415,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L125",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_formatamount",
-      "target": "app_pos_static_js_pos_format"
+      "target": "app_pos_static_js_pos_format",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14731,9 +14426,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L104",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_holdsale",
-      "target": "app_pos_static_js_pos_getheldsales"
+      "target": "app_pos_static_js_pos_getheldsales",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14742,9 +14437,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L89",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_renderheldsales",
-      "target": "app_pos_static_js_pos_getheldsales"
+      "target": "app_pos_static_js_pos_getheldsales",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14753,9 +14448,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L113",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_restoreheldsale",
-      "target": "app_pos_static_js_pos_getheldsales"
+      "target": "app_pos_static_js_pos_getheldsales",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14764,9 +14459,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L106",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_holdsale",
-      "target": "app_pos_static_js_pos_saveheldsales"
+      "target": "app_pos_static_js_pos_saveheldsales",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14775,9 +14470,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L118",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_restoreheldsale",
-      "target": "app_pos_static_js_pos_saveheldsales"
+      "target": "app_pos_static_js_pos_saveheldsales",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14786,9 +14481,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L85",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_saveheldsales",
-      "target": "app_pos_static_js_pos_renderheldsales"
+      "target": "app_pos_static_js_pos_renderheldsales",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14797,9 +14492,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L390",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_filterproducts",
-      "target": "app_pos_static_js_pos_renderheldsales"
+      "target": "app_pos_static_js_pos_renderheldsales",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14808,9 +14503,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L95",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_renderheldsales",
-      "target": "app_pos_static_js_pos_escapehtml"
+      "target": "app_pos_static_js_pos_escapehtml",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14819,9 +14514,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L96",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_renderheldsales",
-      "target": "app_pos_static_js_pos_formatamount"
+      "target": "app_pos_static_js_pos_formatamount",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14830,9 +14525,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L103",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_holdsale",
-      "target": "app_pos_static_js_pos_calctotals"
+      "target": "app_pos_static_js_pos_calctotals",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14841,9 +14536,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L107",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_holdsale",
-      "target": "app_pos_static_js_pos_clearcart"
+      "target": "app_pos_static_js_pos_clearcart",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14852,9 +14547,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L108",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_holdsale",
-      "target": "app_pos_static_js_pos_selectclient"
+      "target": "app_pos_static_js_pos_selectclient",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14863,9 +14558,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L102",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_holdsale",
-      "target": "app_pos_static_js_pos_showlocalflash"
+      "target": "app_pos_static_js_pos_showlocalflash",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14874,9 +14569,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L120",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_restoreheldsale",
-      "target": "app_pos_static_js_pos_closemodal"
+      "target": "app_pos_static_js_pos_closemodal",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14885,9 +14580,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L119",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_restoreheldsale",
-      "target": "app_pos_static_js_pos_rendercart"
+      "target": "app_pos_static_js_pos_rendercart",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14896,9 +14591,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L117",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_restoreheldsale",
-      "target": "app_pos_static_js_pos_selectclient"
+      "target": "app_pos_static_js_pos_selectclient",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14907,9 +14602,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L121",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_restoreheldsale",
-      "target": "app_pos_static_js_pos_showlocalflash"
+      "target": "app_pos_static_js_pos_showlocalflash",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14918,9 +14613,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L305",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_rendercart",
-      "target": "app_pos_static_js_pos_formatamount"
+      "target": "app_pos_static_js_pos_formatamount",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14929,9 +14624,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L282",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_renderproducts",
-      "target": "app_pos_static_js_pos_formatamount"
+      "target": "app_pos_static_js_pos_formatamount",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14940,9 +14635,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L202",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_renderregistersummary",
-      "target": "app_pos_static_js_pos_formatamount"
+      "target": "app_pos_static_js_pos_formatamount",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14951,9 +14646,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L381",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_updatepaymentsummary",
-      "target": "app_pos_static_js_pos_formatamount"
+      "target": "app_pos_static_js_pos_formatamount",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14962,9 +14657,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L134",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_formatreceiptamount",
-      "target": "app_pos_static_js_pos_formatplain"
+      "target": "app_pos_static_js_pos_formatplain",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14973,9 +14668,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L422",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_renderreceipt",
-      "target": "app_pos_static_js_pos_formatplain"
+      "target": "app_pos_static_js_pos_formatplain",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14984,9 +14679,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L427",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_renderreceipt",
-      "target": "app_pos_static_js_pos_formatreceiptamount"
+      "target": "app_pos_static_js_pos_formatreceiptamount",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -14995,9 +14690,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L304",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_rendercart",
-      "target": "app_pos_static_js_pos_escapehtml"
+      "target": "app_pos_static_js_pos_escapehtml",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15006,9 +14701,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L230",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_renderclientresults",
-      "target": "app_pos_static_js_pos_escapehtml"
+      "target": "app_pos_static_js_pos_escapehtml",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15017,9 +14712,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L280",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_renderproducts",
-      "target": "app_pos_static_js_pos_escapehtml"
+      "target": "app_pos_static_js_pos_escapehtml",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15028,9 +14723,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L425",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_renderreceipt",
-      "target": "app_pos_static_js_pos_escapehtml"
+      "target": "app_pos_static_js_pos_escapehtml",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15039,9 +14734,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L258",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_selectclient",
-      "target": "app_pos_static_js_pos_escapehtml"
+      "target": "app_pos_static_js_pos_escapehtml",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15050,9 +14745,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L387",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_filterproducts",
-      "target": "app_pos_static_js_pos_normalizesearch"
+      "target": "app_pos_static_js_pos_normalizesearch",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15061,9 +14756,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L164",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_findexactproduct",
-      "target": "app_pos_static_js_pos_normalizesearch"
+      "target": "app_pos_static_js_pos_normalizesearch",
+      "confidence_score": 1.0
     },
     {
       "relation": "indirect_call",
@@ -15072,9 +14767,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L160",
       "weight": 1.0,
-      "confidence_score": 0.5,
       "source": "app_pos_static_js_pos_productsearchterms",
-      "target": "app_pos_static_js_pos_normalizesearch"
+      "target": "app_pos_static_js_pos_normalizesearch",
+      "confidence_score": 0.5
     },
     {
       "relation": "calls",
@@ -15083,9 +14778,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L395",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_filterproducts",
-      "target": "app_pos_static_js_pos_productsearchterms"
+      "target": "app_pos_static_js_pos_productsearchterms",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15094,9 +14789,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L469",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_livereceipt",
-      "target": "app_pos_static_js_pos_calctotals"
+      "target": "app_pos_static_js_pos_calctotals",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15105,9 +14800,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L506",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_preparecheckout",
-      "target": "app_pos_static_js_pos_calctotals"
+      "target": "app_pos_static_js_pos_calctotals",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15116,9 +14811,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L323",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_rendercart",
-      "target": "app_pos_static_js_pos_calctotals"
+      "target": "app_pos_static_js_pos_calctotals",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15127,9 +14822,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L195",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_syncamountdefault",
-      "target": "app_pos_static_js_pos_calctotals"
+      "target": "app_pos_static_js_pos_calctotals",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15138,9 +14833,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L378",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_updatepaymentsummary",
-      "target": "app_pos_static_js_pos_calctotals"
+      "target": "app_pos_static_js_pos_calctotals",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15149,9 +14844,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L328",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_rendercart",
-      "target": "app_pos_static_js_pos_syncamountdefault"
+      "target": "app_pos_static_js_pos_syncamountdefault",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15160,9 +14855,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L258",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_selectclient",
-      "target": "app_pos_static_js_pos_customerlabel"
+      "target": "app_pos_static_js_pos_customerlabel",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15171,9 +14866,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L242",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_filterclients",
-      "target": "app_pos_static_js_pos_renderclientresults"
+      "target": "app_pos_static_js_pos_renderclientresults",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15182,9 +14877,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L261",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_selectclient",
-      "target": "app_pos_static_js_pos_renderreceipt"
+      "target": "app_pos_static_js_pos_renderreceipt",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15193,9 +14888,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L389",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_filterproducts",
-      "target": "app_pos_static_js_pos_renderproducts"
+      "target": "app_pos_static_js_pos_renderproducts",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15204,9 +14899,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L286",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_renderproducts",
-      "target": "app_pos_static_js_pos_addproduct"
+      "target": "app_pos_static_js_pos_addproduct",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15215,9 +14910,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L351",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_addproduct",
-      "target": "app_pos_static_js_pos_rendercart"
+      "target": "app_pos_static_js_pos_rendercart",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15226,9 +14921,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L374",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_clearcart",
-      "target": "app_pos_static_js_pos_rendercart"
+      "target": "app_pos_static_js_pos_rendercart",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15237,9 +14932,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L367",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_removeproduct",
-      "target": "app_pos_static_js_pos_rendercart"
+      "target": "app_pos_static_js_pos_rendercart",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15248,9 +14943,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L330",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_rendercart",
-      "target": "app_pos_static_js_pos_renderreceipt"
+      "target": "app_pos_static_js_pos_renderreceipt",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15259,9 +14954,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L315",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_rendercart",
-      "target": "app_pos_static_js_pos_setquantity"
+      "target": "app_pos_static_js_pos_setquantity",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15270,9 +14965,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L329",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_rendercart",
-      "target": "app_pos_static_js_pos_updatepaymentsummary"
+      "target": "app_pos_static_js_pos_updatepaymentsummary",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15281,9 +14976,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L337",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_addproduct",
-      "target": "app_pos_static_js_pos_showlocalflash"
+      "target": "app_pos_static_js_pos_showlocalflash",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15292,9 +14987,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L538",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_printreceipt",
-      "target": "app_pos_static_js_pos_renderreceipt"
+      "target": "app_pos_static_js_pos_renderreceipt",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15303,9 +14998,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L411",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_renderreceipt",
-      "target": "app_pos_static_js_pos_livereceipt"
+      "target": "app_pos_static_js_pos_livereceipt",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15314,9 +15009,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L496",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_preparecheckout",
-      "target": "app_pos_static_js_pos_showlocalflash"
+      "target": "app_pos_static_js_pos_showlocalflash",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15325,9 +15020,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L551",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_opendrawer",
-      "target": "app_pos_static_js_pos_printreceipt"
+      "target": "app_pos_static_js_pos_printreceipt",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -15336,9 +15031,9 @@
       "source_file": "app/pos/static/js/pos.js",
       "source_location": "L548",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_pos_static_js_pos_opendrawer",
-      "target": "app_pos_static_js_pos_showlocalflash"
+      "target": "app_pos_static_js_pos_showlocalflash",
+      "confidence_score": 1.0
     },
     {
       "relation": "re_exports",
@@ -25239,6 +24934,291 @@
       "confidence_score": 1.0,
       "source": "app_payments_services_payment_service_paymentservice",
       "target": "app_payments_services_payment_service_paymentservice_update_payment"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L40",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index",
+      "target": "app_static_js_index_closepopupmenus"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L130",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index",
+      "target": "app_static_js_index_endpoint"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L265",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index",
+      "target": "app_static_js_index_loadnotifications"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L322",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index",
+      "target": "app_static_js_index_loadpopupnotifications"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L135",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index",
+      "target": "app_static_js_index_notificationtypeclass"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L148",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index",
+      "target": "app_static_js_index_notificationtypelabel"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L161",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index",
+      "target": "app_static_js_index_postnotificationaction"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L182",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index",
+      "target": "app_static_js_index_rendernotificationlist"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index",
+      "target": "app_static_js_index_setmobilemenu"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L34",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index",
+      "target": "app_static_js_index_setpopupmenu"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L278",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index",
+      "target": "app_static_js_index_shownotificationpopup"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L171",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index",
+      "target": "app_static_js_index_updatenotificationbadge"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L41",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index_closepopupmenus",
+      "target": "app_static_js_index_setpopupmenu"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L267",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index_loadnotifications",
+      "target": "app_static_js_index_endpoint"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L324",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index_loadpopupnotifications",
+      "target": "app_static_js_index_endpoint"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L246",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index_rendernotificationlist",
+      "target": "app_static_js_index_endpoint"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L304",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index_shownotificationpopup",
+      "target": "app_static_js_index_endpoint"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L207",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index_rendernotificationlist",
+      "target": "app_static_js_index_notificationtypeclass"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L289",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index_shownotificationpopup",
+      "target": "app_static_js_index_notificationtypeclass"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L208",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index_rendernotificationlist",
+      "target": "app_static_js_index_notificationtypelabel"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L290",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index_shownotificationpopup",
+      "target": "app_static_js_index_notificationtypelabel"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L246",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index_rendernotificationlist",
+      "target": "app_static_js_index_postnotificationaction"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L304",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index_shownotificationpopup",
+      "target": "app_static_js_index_postnotificationaction"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L270",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index_loadnotifications",
+      "target": "app_static_js_index_updatenotificationbadge"
+    },
+    {
+      "relation": "indirect_call",
+      "context": "argument",
+      "confidence": "INFERRED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L246",
+      "weight": 1.0,
+      "confidence_score": 0.5,
+      "source": "app_static_js_index_rendernotificationlist",
+      "target": "app_static_js_index_loadnotifications"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L308",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index_shownotificationpopup",
+      "target": "app_static_js_index_loadnotifications"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/static/js/index.js",
+      "source_location": "L328",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_static_js_index_loadpopupnotifications",
+      "target": "app_static_js_index_shownotificationpopup"
     },
     {
       "relation": "imports_from",
@@ -39513,5 +39493,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "e469fb52605389fa64a68944bf8780c28b9e62f7"
+  "built_at_commit": "ba80158e3bda1734a6d8ab9c305db58e71a76d6b"
 }

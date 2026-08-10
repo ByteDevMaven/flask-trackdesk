@@ -450,8 +450,8 @@
     "semantic_hash": "bff28f54832832719b349ff639abd587"
   },
   "app/static/js/index.js": {
-    "mtime": 1786305808.5880892,
-    "ast_hash": "2b596b16e53838d1b331f9dbf8258e2e",
+    "mtime": 1785912309.6729457,
+    "ast_hash": "d7fc24b3f1f1c068abca1691346f495c",
     "semantic_hash": ""
   },
   "app/static/js/modals.js": {
@@ -825,18 +825,18 @@
     "semantic_hash": ""
   },
   "app/invoices/templates/invoices/form.html": {
-    "mtime": 1786317255.85573,
-    "ast_hash": "a8da719fc2ed152b5130dfcbf33b7d4f",
+    "mtime": 1786206266.9808762,
+    "ast_hash": "36ab23bbaface805bf94e6d8ef3d58c6",
     "semantic_hash": ""
   },
   "app/invoices/templates/invoices/index.html": {
-    "mtime": 1786317255.8534577,
-    "ast_hash": "e82693676425297561df9d4f34c82dd8",
+    "mtime": 1786206266.9818814,
+    "ast_hash": "51531fc9720d3fcccc1ac8ccf4a94f7f",
     "semantic_hash": ""
   },
   "app/invoices/templates/invoices/view.html": {
-    "mtime": 1786317255.8577316,
-    "ast_hash": "4e8da737123ebdf519e5ddfdc9a1d3f2",
+    "mtime": 1786065216.9740903,
+    "ast_hash": "71b10773335e0a720ff9b559eb89607e",
     "semantic_hash": ""
   },
   "app/orders/templates/orders/form.html": {
@@ -875,8 +875,8 @@
     "semantic_hash": "2baa6c504f7d59476b7e01e517ded6a7"
   },
   "app/templates/base.html": {
-    "mtime": 1786304962.8151064,
-    "ast_hash": "9526ab7edd76f7cbcb9aad5085d8933c",
+    "mtime": 1786065217.0342042,
+    "ast_hash": "3c88d782fef25899e8127ad16ea05af5",
     "semantic_hash": ""
   },
   "app/templates/blank.html": {
@@ -1330,8 +1330,8 @@
     "semantic_hash": ""
   },
   "app/invoices/templates/invoices/partials/payment_form.html": {
-    "mtime": 1786317255.8589895,
-    "ast_hash": "f98d4cae2bbee1e70e88f802637c8859",
+    "mtime": 1786065216.9632752,
+    "ast_hash": "f443c4fef603d6e6f529d06f0e9d0c33",
     "semantic_hash": ""
   },
   "app/inventory/services/category_service.py": {

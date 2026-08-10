@@ -1,16 +1,16 @@
-# Graph Report - flask-trackdesk  (2026-08-09)
+# Graph Report - flask-trackdesk  (2026-08-08)
 
 ## Corpus Check
-- 223 files · ~161,216 words
+- 223 files · ~160,438 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1334 nodes · 2527 edges · 139 communities (116 shown, 23 thin omitted)
+- 1333 nodes · 2526 edges · 141 communities (117 shown, 24 thin omitted)
 - Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 117 edges (avg confidence: 0.53)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `e469fb52`
+- Built from commit: `ba80158e`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -60,6 +60,7 @@
 - Community 43
 - Community 44
 - Community 45
+- __init__.py
 - Community 47
 - Community 48
 - Community 49
@@ -83,6 +84,7 @@
 - Community 93
 - Community 95
 - post_invoice_payment_income
+- Community 98
 - Community 99
 - Community 100
 - account.py
@@ -96,8 +98,11 @@
 - Community 113
 - Community 114
 - expire_documents.py
+- config.py
+- expire_documents.py
 - _compute_account_balance
 - Transaction
+- get_layout
 - Warehouse Form
 - Expense
 - Tag
@@ -131,8 +136,8 @@
   app/models/audit.py → app/models/base.py
 - `str` --uses--> `BaseModel`  [INFERRED]
   app/models/document_item.py → app/models/base.py
-- `bool` --uses--> `BaseModel`  [INFERRED]
-  app/models/employee.py → app/models/base.py
+- `str` --uses--> `BaseModel`  [INFERRED]
+  app/models/document_sequence.py → app/models/base.py
 
 ## Import Cycles
 - 1-file cycle: `app/invoices/views/__init__.py -> app/invoices/views/__init__.py`
@@ -149,31 +154,31 @@
 - 3-file cycle: `app/extensions.py -> app/models/user.py -> app/models/base.py -> app/extensions.py`
 - 4-file cycle: `app/extensions.py -> app/models/user.py -> app/models/associations.py -> app/models/base.py -> app/extensions.py`
 
-## Communities (139 total, 23 thin omitted)
+## Communities (141 total, 24 thin omitted)
 
 ### Community 0 - "Core Models"
-Cohesion: 0.15
+Cohesion: 0.11
 Nodes (32): str, cash_movement(), checkout(), close_register(), index(), open_register(), _available_stock(), _build_invoice_form() (+24 more)
 
 ### Community 2 - "Inventory & Orders Service"
-Cohesion: 0.09
-Nodes (35): ClientCoords, _draw_client_info(), _draw_header(), _draw_items(), _draw_totals(), _generate_html_pdf(), generate_invoice_pdf(), generate_invoice_pdf_from_request() (+27 more)
+Cohesion: 0.07
+Nodes (36): Compatibility loader for invoice route modules., ClientCoords, _draw_client_info(), _draw_header(), _draw_items(), _draw_totals(), _generate_html_pdf(), generate_invoice_pdf() (+28 more)
 
 ### Community 3 - "Invoices Service"
-Cohesion: 0.33
-Nodes (3): str, Lowercase file extension without leading dot (e.g. 'pdf', 'jpg')., Human-readable file size.
+Cohesion: 0.18
+Nodes (9): int, Save multiple uploaded files and return a list of AccountingAttachment instances, _save_attachments(), AccountingAttachment, bool, str, Polymorphic attachment table shared by all accounting entry types.  reference_ty, Lowercase file extension without leading dot (e.g. 'pdf', 'jpg'). (+1 more)
 
 ### Community 4 - "Accounting Module"
-Cohesion: 0.09
-Nodes (22): approve(), index(), reject(), create_invoice_or_quote(), _generate_document_number(), Return the latest CAI number when its invoice is converted to a quote., Recalculate the active sequence's current value based on the maximum document, _release_latest_invoice_number() (+14 more)
+Cohesion: 0.14
+Nodes (16): create_invoice_or_quote(), _generate_document_number(), Return the latest CAI number when its invoice is converted to a quote., Recalculate the active sequence's current value based on the maximum document, _release_latest_invoice_number(), sync_document_sequence(), add_invoice_payment(), _company_tax_rate() (+8 more)
 
 ### Community 5 - "Community 5"
 Cohesion: 0.08
 Nodes (7): ProjectService, Return full P&L breakdown for a project., CompanyService, Find a company by its URL slug and check access permissions., Company, Project, Tag
 
 ### Community 6 - "HR Module"
-Cohesion: 0.10
-Nodes (37): Compatibility loader for accounting route modules.  Routes are grouped by doma, chart_of_accounts(), create_account(), create_tag(), delete_account(), delete_tag(), edit_account(), ledger() (+29 more)
+Cohesion: 0.09
+Nodes (39): Compatibility loader for accounting route modules.  Routes are grouped by doma, Dashboard aggregation service., Project CRUD, tagging, and reporting service., chart_of_accounts(), create_account(), create_tag(), delete_account(), delete_tag() (+31 more)
 
 ### Community 7 - "PDF Generators"
 Cohesion: 0.13
@@ -184,8 +189,8 @@ Cohesion: 0.13
 Nodes (11): List all document sequences for a company, Form to create a new document sequence, Store a new document sequence, Form to edit an existing document sequence, Update an existing document sequence, sequence_create(), sequence_edit(), sequence_store() (+3 more)
 
 ### Community 9 - "Auth Module"
-Cohesion: 0.29
-Nodes (10): _can_send_notifications(), index(), mark_all_read(), popups(), _query_current_user_notifications(), recent(), send(), _serialize() (+2 more)
+Cohesion: 0.20
+Nodes (11): Notification, _can_send_notifications(), index(), mark_all_read(), popups(), _query_current_user_notifications(), recent(), send() (+3 more)
 
 ### Community 10 - "Users Service"
 Cohesion: 0.24
@@ -194,10 +199,6 @@ Nodes (10): ExpenseService, Account, int, str, Expense CRUD service (create, rea
 ### Community 11 - "Barcode JS"
 Cohesion: 0.14
 Nodes (14): Compatibility loader for HR route modules., _allowed_file(), _is_ajax(), _save_attachment(), create_employee(), delete_employee(), edit_employee(), create_leave() (+6 more)
-
-### Community 12 - "Payments Module"
-Cohesion: 0.22
-Nodes (18): _inventory_balance(), _is_receivable_account(), _open_invoice_receivable_balance(), _preferred_receivable_account(), Account, datetime, Return asset balances with AR replaced by open invoice balance., Return asset balances with Inventory replaced by calculated inventory value. (+10 more)
 
 ### Community 13 - "Companies Routes"
 Cohesion: 0.29
@@ -216,16 +217,16 @@ Cohesion: 0.29
 Nodes (5): Company Routes, AuditMiddleware, Manually log a change. Useful if automated listeners are not enough., AuditLog, str
 
 ### Community 17 - "Invoice Form JS"
-Cohesion: 0.24
-Nodes (17): _recent_active_expenses(), _active_expense_conditions(), _active_ledger_conditions(), Ledger rows count only when unlinked or tied to a non-voided transaction., Expense rows count only when unlinked or tied to a non-voided transaction., _expenses_by_account(), _ledger_manual_expenses_by_account(), _ledger_revenue_by_account() (+9 more)
+Cohesion: 0.13
+Nodes (35): _inventory_balance(), _is_receivable_account(), _open_invoice_receivable_balance(), _preferred_receivable_account(), Account, datetime, Return asset balances with AR replaced by open invoice balance., Return asset balances with Inventory replaced by calculated inventory value. (+27 more)
 
 ### Community 18 - "Migrations Core"
 Cohesion: 0.09
-Nodes (16): ApprovalRequest, AccountType, ApprovalStatus, ContactType, DocumentStatus, DocumentType, EmployeeClass, ExpenseStatus (+8 more)
+Nodes (17): Journal entries, ledger, and trial balance service., ApprovalRequest, AccountType, ApprovalStatus, ContactType, DocumentStatus, DocumentType, EmployeeClass (+9 more)
 
 ### Community 19 - "Drawer UI JS"
 Cohesion: 0.17
-Nodes (11): AuditMiddleware.log_change, Registers global SQLAlchemy listeners for all models inheriting from Base., register_audit_listeners, init_error_handlers(), init_rbac(), RBAC Middleware =============== Plugged into the app via ``init_rbac(app)`` in `, Register the RBAC ``before_request`` hook on *app*., Seed the database with default roles and their permissions.      Roles     ----- (+3 more)
+Nodes (13): Fetch an item by its SKU within a company., create(), delete(), edit(), _get_suppliers(), index(), update(), view() (+5 more)
 
 ### Community 20 - "Consolidate Schema Migration"
 Cohesion: 0.29
@@ -240,8 +241,8 @@ Cohesion: 0.29
 Nodes (4): float, str, Positive = debit effect, negative = credit effect., A single line in the accounting ledger.  Every entry MUST belong to a     Transa
 
 ### Community 23 - "Auto Migration"
-Cohesion: 0.09
-Nodes (4): Compatibility loader for inventory route modules., barcode(), Helper to resolve a company from a route parameter that could be an integer ID o, resolve_company()
+Cohesion: 0.13
+Nodes (3): Compatibility loader for inventory route modules., barcode(), Flask
 
 ### Community 24 - "Initial Migration"
 Cohesion: 0.19
@@ -256,12 +257,12 @@ Cohesion: 0.12
 Nodes (15): dependencies, tailwindcss, devDependencies, concurrently, scripts, build, dev, i18n:all (+7 more)
 
 ### Community 27 - "Auto Migration 2"
-Cohesion: 0.33
+Cohesion: 0.40
 Nodes (4): bool, str, Return True if this role carries *permission_name*., Role
 
 ### Community 29 - "Models Update Migration"
-Cohesion: 0.25
-Nodes (4): Returns IDs of companies the current user can see., Returns True if current_user can see/manage *user*., Returns the companies of target_user that current_user is allowed to see., UserService
+Cohesion: 0.11
+Nodes (14): AuditMiddleware.log_change, Registers global SQLAlchemy listeners for all models inheriting from Base., register_audit_listeners, init_error_handlers(), init_rbac(), RBAC Middleware =============== Plugged into the app via ``init_rbac(app)`` in `, Register the RBAC ``before_request`` hook on *app*., Seed the database with default roles and their permissions.      Roles     ----- (+6 more)
 
 ### Community 30 - "Audit Columns Migration"
 Cohesion: 0.12
@@ -272,12 +273,12 @@ Cohesion: 0.87
 Nodes (5): _column_exists(), downgrade(), _index_exists(), _table_exists(), upgrade()
 
 ### Community 32 - "Warehouses Migration"
-Cohesion: 0.11
-Nodes (12): BaseModel, str, str, Payment, str, str, Project, str (+4 more)
+Cohesion: 0.14
+Nodes (10): BaseModel, Payment, str, Project, str, str, str, str (+2 more)
 
 ### Community 33 - "Budget Migration"
-Cohesion: 0.07
-Nodes (27): Flask, register_blueprints(), register_cli(), Flask, register_context_processors(), Flask, register_request_hooks(), create_app() (+19 more)
+Cohesion: 0.21
+Nodes (7): _match_context(), Flask, Return a dict mapping company_id -> slug for all companies the user can access., register_routes(), _result(), _search_tokens(), _slug_map()
 
 ### Community 34 - "Accounting Migration"
 Cohesion: 0.18
@@ -288,8 +289,8 @@ Cohesion: 0.25
 Nodes (9): Account, datetime, float, int, AccountingService — complete double-entry bookkeeping service.  This module re-e, Main AccountingService facade.     Inherits all @staticmethod methods from the d, DashboardService, Income (revenue) CRUD service. (+1 more)
 
 ### Community 36 - "Community 36"
-Cohesion: 0.29
-Nodes (5): _create_balanced_transaction(), datetime, Create a Transaction + LedgerEntry rows atomically.     Raises ValueError if en, Dashboard aggregation service., TransactionType
+Cohesion: 0.27
+Nodes (7): Flask, register_blueprints(), Flask, register_request_hooks(), create_app(), init_action_handlers(), Register a function to handle an approval action.
 
 ### Community 37 - "Community 37"
 Cohesion: 0.33
@@ -300,12 +301,12 @@ Cohesion: 0.67
 Nodes (5): _backfill_invoice_payment_revenue(), _column_exists(), downgrade(), _has_index(), upgrade()
 
 ### Community 39 - "Flash UI JS"
-Cohesion: 0.31
+Cohesion: 0.35
 Nodes (11): closePopupMenus(), endpoint(), loadNotifications(), loadPopupNotifications(), notificationTypeClass(), notificationTypeLabel(), postNotificationAction(), renderNotificationList() (+3 more)
 
 ### Community 40 - "Index UI JS"
-Cohesion: 0.21
-Nodes (6): Notification, PosCashMovement, PosRegisterSession, str, str, BaseModel
+Cohesion: 0.22
+Nodes (6): PosCashMovement, PosRegisterSession, str, Return signed quantity change.         - incoming: always positive         - out, StockMovement, BaseModel
 
 ### Community 41 - "Setup Script"
 Cohesion: 0.25
@@ -322,6 +323,10 @@ Nodes (7): get_engine(), get_engine_url(), get_metadata(), Run migrations in 'of
 ### Community 45 - "Community 45"
 Cohesion: 0.09
 Nodes (21): Automated Tests, Database Models, Email Service Updates, Implementation Plan: Shared Company Email Threading, Manual Verification, [MODIFY] `app/models/enums.py`, [MODIFY] `app/models/__init__.py`, [MODIFY] `app/services/email_service.py` (+13 more)
+
+### Community 46 - "__init__.py"
+Cohesion: 0.43
+Nodes (6): register_cli(), _active_company_users(), _inventory_link(), _notification_exists(), send_low_stock_notifications(), run_task()
 
 ### Community 47 - "Community 47"
 Cohesion: 0.67
@@ -356,12 +361,12 @@ Cohesion: 0.83
 Nodes (3): _column_exists(), downgrade(), upgrade()
 
 ### Community 60 - "_parse_date"
-Cohesion: 0.16
-Nodes (18): _allowed_file(), _get_period_bounds(), _make_naive(), _parse_date(), bool, int, str, Internal date / file helpers shared across accounting services. (+10 more)
+Cohesion: 0.24
+Nodes (12): _allowed_file(), _get_period_bounds(), _make_naive(), _parse_date(), bool, str, Internal date / file helpers shared across accounting services., Strip timezone info so comparisons work with our stored naive datetimes. (+4 more)
 
 ### Community 63 - "Community 63"
-Cohesion: 0.08
-Nodes (25): InventoryService, _item_ids_from_search_tag(), Fetch an item by its SKU within a company., _validated_supplier_id(), api_adjust_stock(), api_bulk_delete(), api_create_item(), api_delete_item() (+17 more)
+Cohesion: 0.12
+Nodes (12): InventoryService, _item_ids_from_search_tag(), _validated_supplier_id(), api_adjust_stock(), api_bulk_delete(), api_create_item(), api_delete_item(), api_get_items() (+4 more)
 
 ### Community 87 - "Community 87"
 Cohesion: 0.19
@@ -379,6 +384,10 @@ Nodes (14): build_invoice_query(), export_invoice_report_xlsx(), get_invoice_lis
 Cohesion: 0.22
 Nodes (24): audit_logs(), coerce_value(), database_fields(), encode_primary_key(), field_value(), get_all_models(), get_database_table(), get_database_tables() (+16 more)
 
+### Community 98 - "Community 98"
+Cohesion: 0.18
+Nodes (3): str, str, str
+
 ### Community 100 - "Community 100"
 Cohesion: 0.22
 Nodes (6): Employee, bool, float, str, Prefer the linked user's name when available., Deduct *days* from pto_balance if balance is sufficient. Returns True on success
@@ -388,7 +397,7 @@ Cohesion: 0.40
 Nodes (4): Account, str, Accounts that normally carry a debit balance vs credit balance., Chart of Accounts entry.      IMPORTANT: Balance is NOT stored here — it is alwa
 
 ### Community 104 - "str"
-Cohesion: 0.19
+Cohesion: 0.36
 Nodes (5): Contact, bool, str, Validate phone format (basic: digits, +, -, spaces)., Validate email format.
 
 ### Community 108 - "Community 108"
@@ -404,12 +413,24 @@ Cohesion: 0.29
 Nodes (3): InventoryItem, BaseModel, Auto-generate a SKU from the item name and its DB id.                  Example:
 
 ### Community 112 - "purchase_order_service.py"
-Cohesion: 0.24
-Nodes (8): create_purchase_order(), delete_purchase_order(), export_purchase_orders_xlsx(), _purchase_cost_from_form(), Soft-delete a purchase order., Return (workbook, filename) tuple for all purchase orders matching criteria., Use the submitted purchase cost, falling back to the item's cost price., update_purchase_order()
+Cohesion: 0.38
+Nodes (6): create_purchase_order(), export_purchase_orders_xlsx(), _purchase_cost_from_form(), Return (workbook, filename) tuple for all purchase orders matching criteria., Use the submitted purchase cost, falling back to the item's cost price., update_purchase_order()
+
+### Community 113 - "Community 113"
+Cohesion: 0.20
+Nodes (6): approve(), index(), reject(), ActionRegistry, ApprovalService, Execute a registered action with the given payload.
 
 ### Community 114 - "Community 114"
 Cohesion: 0.23
 Nodes (5): edit(), index(), store(), update(), WarehouseService
+
+### Community 115 - "expire_documents.py"
+Cohesion: 0.53
+Nodes (4): _create_expired_invoice_notification(), _invoice_link(), _notification_exists(), run_task()
+
+### Community 116 - "config.py"
+Cohesion: 0.40
+Nodes (3): Flask, register_context_processors(), Config
 
 ### Community 119 - "_compute_account_balance"
 Cohesion: 0.23
@@ -424,7 +445,7 @@ Cohesion: 0.40
 Nodes (4): Expense, str, Resolve vendor name from supplier relation or vendor_name field., Represents a business expense (outflow of money).      Income / revenue is recor
 
 ### Community 131 - ".build_slug"
-Cohesion: 0.22
+Cohesion: 0.25
 Nodes (5): Company Model, str, Auto-generate a URL-safe slug from the company name., upgrade(), Company Timezone and Logo Migration
 
 ### Community 134 - "Flask"
@@ -432,28 +453,28 @@ Cohesion: 0.67
 Nodes (3): Schedule Deviation Detail, Leave Review Panel, Schedule Deviation Form
 
 ### Community 137 - "project.py"
-Cohesion: 0.12
-Nodes (5): Account CRUD and chart of accounts generation., Journal entries, ledger, and trial balance service., Project CRUD, tagging, and reporting service., Compatibility loader for invoice route modules., datetime
+Cohesion: 0.22
+Nodes (6): Account CRUD and chart of accounts generation., _create_balanced_transaction(), datetime, Create a Transaction + LedgerEntry rows atomically.     Raises ValueError if en, datetime, TransactionType
 
 ## Knowledge Gaps
 - **97 isolated node(s):** `Application structure`, `User Review Required`, `Open Questions`, `[NEW] `app/models/communication.py``, `[MODIFY] `app/models/enums.py`` (+92 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **23 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **24 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `BaseModel` connect `Warehouses Migration` to `Tag`, `.hours_worked`, `Core Models`, `.build_slug`, `AlchemyEncoder`, `project.py`, `Warehouses Service`, `Unify Contacts Migration`, `Auto Migration 2`, `Audit Columns Migration`, `Community 36`, `Community 37`, `Index UI JS`, `Community 43`, `Community 93`, `post_invoice_payment_income`, `Community 100`, `account.py`, `str`, `Transaction`, `Expense`?**
-  _High betweenness centrality (0.085) - this node is a cross-community bridge._
-- **Why does `ProjectService` connect `Community 5` to `project.py`?**
-  _High betweenness centrality (0.036) - this node is a cross-community bridge._
-- **Why does `Document` connect `Community 95` to `str`, `Budget Migration`, `project.py`, `Index UI JS`?**
-  _High betweenness centrality (0.018) - this node is a cross-community bridge._
+- **Why does `BaseModel` connect `Warehouses Migration` to `Tag`, `.hours_worked`, `Core Models`, `.build_slug`, `AlchemyEncoder`, `HR Module`, `project.py`, `Auth Module`, `Warehouses Service`, `Invoice Form JS`, `Unify Contacts Migration`, `Auto Migration 2`, `Audit Columns Migration`, `Community 37`, `Community 43`, `Community 93`, `post_invoice_payment_income`, `Community 98`, `Community 100`, `account.py`, `str`, `Transaction`, `Expense`?**
+  _High betweenness centrality (0.100) - this node is a cross-community bridge._
+- **Why does `ProjectService` connect `Community 5` to `HR Module`?**
+  _High betweenness centrality (0.028) - this node is a cross-community bridge._
+- **Why does `Document` connect `Community 95` to `Index UI JS`, `project.py`, `Payments Module`, `__init__.py`, `expire_documents.py`?**
+  _High betweenness centrality (0.021) - this node is a cross-community bridge._
 - **Are the 61 inferred relationships involving `BaseModel` (e.g. with `Leave Request Form` and `AlchemyEncoder`) actually correct?**
   _`BaseModel` has 61 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `Application structure`, `Parse user input without silently turning malformed values into zero.`, `Return the latest CAI number when its invoice is converted to a quote.` to the rest of the system?**
   _237 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `Core Models` be split into smaller, more focused modules?**
+  _Cohesion score 0.1111111111111111 - nodes in this community are weakly interconnected._
 - **Should `Inventory & Orders Service` be split into smaller, more focused modules?**
-  _Cohesion score 0.09292929292929293 - nodes in this community are weakly interconnected._
-- **Should `Accounting Module` be split into smaller, more focused modules?**
-  _Cohesion score 0.08536585365853659 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.06883116883116883 - nodes in this community are weakly interconnected._
