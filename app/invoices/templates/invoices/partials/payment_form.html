@@ -1,4 +1,4 @@
-<form method="POST" action="{{ url_for('invoices.add_payment', company_id=company_id, id=invoice.id) }}" enctype="multipart/form-data" data-drawer-form="true">
+<form class="invoice-payment-form" method="POST" action="{{ url_for('invoices.add_payment', company_id=company_id, id=invoice.id) }}" enctype="multipart/form-data" data-drawer-form="true">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
   
   <div class="px-6 py-4 space-y-4">
