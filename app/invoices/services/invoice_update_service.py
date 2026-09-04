@@ -165,6 +165,12 @@ def delete_invoice_or_quote(document):
     
     document.is_deleted = True
     document.deleted_at = datetime.now(UTC)
+    
+    # Append a suffix to the document number to prevent UNIQUE constraint violations
+    # with the (company_id, document_number) unique index.
+    if document.document_number and not document.document_number.endswith('_deleted'):
+        document.document_number = f"{document.document_number}_deleted_{int(document.deleted_at.timestamp())}"
+        
     db.session.commit()
     
     if document.type == DocumentType.invoice:
