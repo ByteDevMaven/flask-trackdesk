@@ -4,84 +4,14 @@
   "graph": {},
   "nodes": [
     {
-      "label": "invoice_update_service.py",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "app_invoices_services_invoice_update_service",
-      "community": 4,
-      "norm_label": "invoice_update_service.py"
-    },
-    {
-      "label": "_company_tax_rate()",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L6",
-      "_origin": "ast",
-      "id": "app_invoices_services_invoice_update_service_company_tax_rate",
-      "community": 4,
-      "norm_label": "_company_tax_rate()"
-    },
-    {
-      "label": "update_invoice_or_quote()",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L13",
-      "_origin": "ast",
-      "id": "app_invoices_services_invoice_update_service_update_invoice_or_quote",
-      "community": 4,
-      "norm_label": "update_invoice_or_quote()"
-    },
-    {
-      "label": "delete_invoice_or_quote()",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L157",
-      "_origin": "ast",
-      "id": "app_invoices_services_invoice_update_service_delete_invoice_or_quote",
-      "community": 4,
-      "norm_label": "delete_invoice_or_quote()"
-    },
-    {
-      "label": "add_invoice_payment()",
-      "file_type": "code",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L180",
-      "_origin": "ast",
-      "id": "app_invoices_services_invoice_update_service_add_invoice_payment",
-      "community": 4,
-      "norm_label": "add_invoice_payment()"
-    },
-    {
-      "label": "Soft delete an invoice or quote and its items.",
-      "file_type": "rationale",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L158",
-      "_origin": "ast",
-      "id": "app_invoices_services_invoice_update_service_rationale_158",
-      "community": 4,
-      "norm_label": "soft delete an invoice or quote and its items."
-    },
-    {
-      "label": "Add a payment to an invoice, post accounting income, and update its status.",
-      "file_type": "rationale",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L181",
-      "_origin": "ast",
-      "id": "app_invoices_services_invoice_update_service_rationale_181",
-      "community": 4,
-      "norm_label": "add a payment to an invoice, post accounting income, and update its status."
-    },
-    {
       "label": "index.js",
       "file_type": "code",
       "source_file": "app/static/js/index.js",
       "source_location": "L1",
       "_origin": "ast",
+      "id": "app_static_js_index",
       "community": 39,
-      "norm_label": "index.js",
-      "id": "app_static_js_index"
+      "norm_label": "index.js"
     },
     {
       "label": "setMobileMenu()",
@@ -89,9 +19,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L15",
       "_origin": "ast",
+      "id": "app_static_js_index_setmobilemenu",
       "community": 39,
-      "norm_label": "setmobilemenu()",
-      "id": "app_static_js_index_setmobilemenu"
+      "norm_label": "setmobilemenu()"
     },
     {
       "label": "setPopupMenu()",
@@ -99,9 +29,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L42",
       "_origin": "ast",
+      "id": "app_static_js_index_setpopupmenu",
       "community": 39,
-      "norm_label": "setpopupmenu()",
-      "id": "app_static_js_index_setpopupmenu"
+      "norm_label": "setpopupmenu()"
     },
     {
       "label": "closePopupMenus()",
@@ -109,9 +39,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L48",
       "_origin": "ast",
+      "id": "app_static_js_index_closepopupmenus",
       "community": 39,
-      "norm_label": "closepopupmenus()",
-      "id": "app_static_js_index_closepopupmenus"
+      "norm_label": "closepopupmenus()"
     },
     {
       "label": "enhanceMobileTables()",
@@ -119,9 +49,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L125",
       "_origin": "ast",
+      "id": "app_static_js_index_enhancemobiletables",
       "community": 39,
-      "norm_label": "enhancemobiletables()",
-      "id": "app_static_js_index_enhancemobiletables"
+      "norm_label": "enhancemobiletables()"
     },
     {
       "label": "endpoint()",
@@ -129,9 +59,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L170",
       "_origin": "ast",
+      "id": "app_static_js_index_endpoint",
       "community": 39,
-      "norm_label": "endpoint()",
-      "id": "app_static_js_index_endpoint"
+      "norm_label": "endpoint()"
     },
     {
       "label": "notificationTypeClass()",
@@ -139,9 +69,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L175",
       "_origin": "ast",
+      "id": "app_static_js_index_notificationtypeclass",
       "community": 39,
-      "norm_label": "notificationtypeclass()",
-      "id": "app_static_js_index_notificationtypeclass"
+      "norm_label": "notificationtypeclass()"
     },
     {
       "label": "notificationTypeLabel()",
@@ -149,9 +79,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L188",
       "_origin": "ast",
+      "id": "app_static_js_index_notificationtypelabel",
       "community": 39,
-      "norm_label": "notificationtypelabel()",
-      "id": "app_static_js_index_notificationtypelabel"
+      "norm_label": "notificationtypelabel()"
     },
     {
       "label": "postNotificationAction()",
@@ -159,9 +89,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L201",
       "_origin": "ast",
+      "id": "app_static_js_index_postnotificationaction",
       "community": 39,
-      "norm_label": "postnotificationaction()",
-      "id": "app_static_js_index_postnotificationaction"
+      "norm_label": "postnotificationaction()"
     },
     {
       "label": "updateNotificationBadge()",
@@ -169,9 +99,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L211",
       "_origin": "ast",
+      "id": "app_static_js_index_updatenotificationbadge",
       "community": 39,
-      "norm_label": "updatenotificationbadge()",
-      "id": "app_static_js_index_updatenotificationbadge"
+      "norm_label": "updatenotificationbadge()"
     },
     {
       "label": "renderNotificationList()",
@@ -179,9 +109,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L222",
       "_origin": "ast",
+      "id": "app_static_js_index_rendernotificationlist",
       "community": 39,
-      "norm_label": "rendernotificationlist()",
-      "id": "app_static_js_index_rendernotificationlist"
+      "norm_label": "rendernotificationlist()"
     },
     {
       "label": "loadNotifications()",
@@ -189,9 +119,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L305",
       "_origin": "ast",
+      "id": "app_static_js_index_loadnotifications",
       "community": 39,
-      "norm_label": "loadnotifications()",
-      "id": "app_static_js_index_loadnotifications"
+      "norm_label": "loadnotifications()"
     },
     {
       "label": "showNotificationPopup()",
@@ -199,9 +129,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L318",
       "_origin": "ast",
+      "id": "app_static_js_index_shownotificationpopup",
       "community": 39,
-      "norm_label": "shownotificationpopup()",
-      "id": "app_static_js_index_shownotificationpopup"
+      "norm_label": "shownotificationpopup()"
     },
     {
       "label": "loadPopupNotifications()",
@@ -209,9 +139,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L362",
       "_origin": "ast",
+      "id": "app_static_js_index_loadpopupnotifications",
       "community": 39,
-      "norm_label": "loadpopupnotifications()",
-      "id": "app_static_js_index_loadpopupnotifications"
+      "norm_label": "loadpopupnotifications()"
     },
     {
       "label": "ARCHITECTURE.md",
@@ -1024,6 +954,76 @@
       "id": "app_invoices_services_invoice_create_service_rationale_77"
     },
     {
+      "label": "invoice_update_service.py",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "invoice_update_service.py",
+      "id": "app_invoices_services_invoice_update_service"
+    },
+    {
+      "label": "_company_tax_rate()",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L6",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "_company_tax_rate()",
+      "id": "app_invoices_services_invoice_update_service_company_tax_rate"
+    },
+    {
+      "label": "update_invoice_or_quote()",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L13",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "update_invoice_or_quote()",
+      "id": "app_invoices_services_invoice_update_service_update_invoice_or_quote"
+    },
+    {
+      "label": "delete_invoice_or_quote()",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L157",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "delete_invoice_or_quote()",
+      "id": "app_invoices_services_invoice_update_service_delete_invoice_or_quote"
+    },
+    {
+      "label": "add_invoice_payment()",
+      "file_type": "code",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L174",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "add_invoice_payment()",
+      "id": "app_invoices_services_invoice_update_service_add_invoice_payment"
+    },
+    {
+      "label": "Soft delete an invoice or quote and its items.",
+      "file_type": "rationale",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L158",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "soft delete an invoice or quote and its items.",
+      "id": "app_invoices_services_invoice_update_service_rationale_158"
+    },
+    {
+      "label": "Add a payment to an invoice, post accounting income, and update its status.",
+      "file_type": "rationale",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L175",
+      "_origin": "ast",
+      "community": 4,
+      "norm_label": "add a payment to an invoice, post accounting income, and update its status.",
+      "id": "app_invoices_services_invoice_update_service_rationale_175"
+    },
+    {
       "label": "documents.py",
       "file_type": "code",
       "source_file": "app/invoices/views/documents.py",
@@ -1129,7 +1129,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 33,
+      "community": 4,
       "norm_label": "approval_service.py",
       "id": "app_services_approval_service"
     },
@@ -1139,7 +1139,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 33,
+      "community": 4,
       "norm_label": "actionregistry",
       "id": "app_services_approval_service_actionregistry"
     },
@@ -1159,7 +1159,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 33,
+      "community": 4,
       "norm_label": ".execute()",
       "id": "app_services_approval_service_actionregistry_execute"
     },
@@ -1169,7 +1169,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L34",
       "_origin": "ast",
-      "community": 33,
+      "community": 4,
       "norm_label": "approvalservice",
       "id": "app_services_approval_service_approvalservice"
     },
@@ -1179,7 +1179,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L36",
       "_origin": "ast",
-      "community": 33,
+      "community": 4,
       "norm_label": ".create_request()",
       "id": "app_services_approval_service_approvalservice_create_request"
     },
@@ -1189,7 +1189,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L49",
       "_origin": "ast",
-      "community": 33,
+      "community": 4,
       "norm_label": ".approve_request()",
       "id": "app_services_approval_service_approvalservice_approve_request"
     },
@@ -1199,7 +1199,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L67",
       "_origin": "ast",
-      "community": 33,
+      "community": 4,
       "norm_label": ".reject_request()",
       "id": "app_services_approval_service_approvalservice_reject_request"
     },
@@ -1209,7 +1209,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L82",
       "_origin": "ast",
-      "community": 33,
+      "community": 4,
       "norm_label": ".get_pending_requests()",
       "id": "app_services_approval_service_approvalservice_get_pending_requests"
     },
@@ -1219,7 +1219,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L89",
       "_origin": "ast",
-      "community": 33,
+      "community": 4,
       "norm_label": ".get_resolved_requests()",
       "id": "app_services_approval_service_approvalservice_get_resolved_requests"
     },
@@ -1249,7 +1249,7 @@
       "source_file": "app/services/approval_service.py",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 33,
+      "community": 4,
       "norm_label": "execute a registered action with the given payload.",
       "id": "app_services_approval_service_rationale_15"
     },
@@ -2369,7 +2369,7 @@
       "source_file": "app/accounting/services/_balance_predicates.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 137,
+      "community": 17,
       "norm_label": "_balance_predicates.py",
       "id": "app_accounting_services_balance_predicates"
     },
@@ -2379,7 +2379,7 @@
       "source_file": "app/accounting/services/_balance_predicates.py",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 12,
+      "community": 17,
       "norm_label": "_active_ledger_conditions()",
       "id": "app_accounting_services_balance_predicates_active_ledger_conditions"
     },
@@ -2399,7 +2399,7 @@
       "source_file": "app/accounting/services/_balance_predicates.py",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 12,
+      "community": 17,
       "norm_label": "ledger rows count only when unlinked or tied to a non-voided transaction.",
       "id": "app_accounting_services_balance_predicates_rationale_15"
     },
@@ -2539,7 +2539,7 @@
       "source_file": "app/accounting/services/_balance_transactions.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 137,
+      "community": 36,
       "norm_label": "_balance_transactions.py",
       "id": "app_accounting_services_balance_transactions"
     },
@@ -2549,7 +2549,7 @@
       "source_file": "app/accounting/services/_balance_transactions.py",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 137,
+      "community": 36,
       "norm_label": "_create_balanced_transaction()",
       "id": "app_accounting_services_balance_transactions_create_balanced_transaction"
     },
@@ -2559,7 +2559,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 137,
+      "community": 36,
       "norm_label": "datetime",
       "id": "app_accounting_services_balance_transactions_py_datetime"
     },
@@ -2569,7 +2569,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 137,
+      "community": 36,
       "norm_label": "transactiontype",
       "id": "transactiontype"
     },
@@ -2589,7 +2589,7 @@
       "source_file": "app/accounting/services/_balance_transactions.py",
       "source_location": "L24",
       "_origin": "ast",
-      "community": 137,
+      "community": 36,
       "norm_label": "create a transaction + ledgerentry rows atomically.     raises valueerror if en",
       "id": "app_accounting_services_balance_transactions_rationale_24"
     },
@@ -3599,7 +3599,7 @@
       "source_file": "app/invoices/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
+      "community": 137,
       "norm_label": "routes.py",
       "id": "app_invoices_routes"
     },
@@ -3609,7 +3609,7 @@
       "source_file": "app/invoices/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
+      "community": 137,
       "norm_label": "compatibility loader for invoice route modules.",
       "id": "app_invoices_routes_rationale_1"
     },
@@ -4029,7 +4029,7 @@
       "source_file": "app/invoices/views/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
+      "community": 137,
       "norm_label": "__init__.py",
       "id": "app_invoices_views_init"
     },
@@ -4069,7 +4069,7 @@
       "source_file": "app/invoices/views/templates.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
+      "community": 137,
       "norm_label": "templates.py",
       "id": "app_invoices_views_templates"
     },
@@ -4079,7 +4079,7 @@
       "source_file": "app/invoices/views/templates.py",
       "source_location": "L24",
       "_origin": "ast",
-      "community": 4,
+      "community": 137,
       "norm_label": "templates_index()",
       "id": "app_invoices_views_templates_templates_index"
     },
@@ -4089,7 +4089,7 @@
       "source_file": "app/invoices/views/templates.py",
       "source_location": "L35",
       "_origin": "ast",
-      "community": 4,
+      "community": 137,
       "norm_label": "templates_new()",
       "id": "app_invoices_views_templates_templates_new"
     },
@@ -4099,7 +4099,7 @@
       "source_file": "app/invoices/views/templates.py",
       "source_location": "L49",
       "_origin": "ast",
-      "community": 4,
+      "community": 137,
       "norm_label": "templates_store()",
       "id": "app_invoices_views_templates_templates_store"
     },
@@ -4109,7 +4109,7 @@
       "source_file": "app/invoices/views/templates.py",
       "source_location": "L64",
       "_origin": "ast",
-      "community": 4,
+      "community": 137,
       "norm_label": "templates_edit()",
       "id": "app_invoices_views_templates_templates_edit"
     },
@@ -4119,7 +4119,7 @@
       "source_file": "app/invoices/views/templates.py",
       "source_location": "L80",
       "_origin": "ast",
-      "community": 4,
+      "community": 137,
       "norm_label": "templates_update()",
       "id": "app_invoices_views_templates_templates_update"
     },
@@ -4129,7 +4129,7 @@
       "source_file": "app/invoices/views/templates.py",
       "source_location": "L94",
       "_origin": "ast",
-      "community": 4,
+      "community": 137,
       "norm_label": "templates_set_default()",
       "id": "app_invoices_views_templates_templates_set_default"
     },
@@ -4139,7 +4139,7 @@
       "source_file": "app/invoices/views/templates.py",
       "source_location": "L106",
       "_origin": "ast",
-      "community": 4,
+      "community": 137,
       "norm_label": "templates_delete()",
       "id": "app_invoices_views_templates_templates_delete"
     },
@@ -4149,7 +4149,7 @@
       "source_file": "app/invoices/views/templates.py",
       "source_location": "L118",
       "_origin": "ast",
-      "community": 4,
+      "community": 2,
       "norm_label": "templates_preview()",
       "id": "app_invoices_views_templates_templates_preview"
     },
@@ -4159,7 +4159,7 @@
       "source_file": "app/invoices/views/templates.py",
       "source_location": "L165",
       "_origin": "ast",
-      "community": 4,
+      "community": 2,
       "norm_label": "templates_live_preview()",
       "id": "app_invoices_views_templates_templates_live_preview"
     },
@@ -4169,7 +4169,7 @@
       "source_file": "app/invoices/views/templates.py",
       "source_location": "L119",
       "_origin": "ast",
-      "community": 4,
+      "community": 2,
       "norm_label": "stream a live pdf preview using the most recent invoice for this company.",
       "id": "app_invoices_views_templates_rationale_119"
     },
@@ -4179,7 +4179,7 @@
       "source_file": "app/invoices/views/templates.py",
       "source_location": "L166",
       "_origin": "ast",
-      "community": 4,
+      "community": 2,
       "norm_label": "generate a pdf on the fly using the submitted form data for a live preview.",
       "id": "app_invoices_views_templates_rationale_166"
     },
@@ -4309,7 +4309,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 24,
+      "community": 0,
       "norm_label": "decimal",
       "id": "decimal"
     },
@@ -4809,7 +4809,7 @@
       "source_file": "app/accounting/services/dashboard_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 137,
+      "community": 36,
       "norm_label": "dashboard_service.py",
       "id": "app_accounting_services_dashboard_service"
     },
@@ -4839,7 +4839,7 @@
       "source_file": "app/accounting/services/dashboard_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 137,
+      "community": 36,
       "norm_label": "dashboard aggregation service.",
       "id": "app_accounting_services_dashboard_service_rationale_1"
     },
@@ -5209,7 +5209,7 @@
       "source_file": "app/approvals/routes.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 33,
+      "community": 4,
       "norm_label": "routes.py",
       "id": "app_approvals_routes"
     },
@@ -5219,7 +5219,7 @@
       "source_file": "app/approvals/routes.py",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 33,
+      "community": 4,
       "norm_label": "index()",
       "id": "app_approvals_routes_index"
     },
@@ -5229,7 +5229,7 @@
       "source_file": "app/approvals/routes.py",
       "source_location": "L20",
       "_origin": "ast",
-      "community": 33,
+      "community": 4,
       "norm_label": "approve()",
       "id": "app_approvals_routes_approve"
     },
@@ -5239,7 +5239,7 @@
       "source_file": "app/approvals/routes.py",
       "source_location": "L33",
       "_origin": "ast",
-      "community": 33,
+      "community": 4,
       "norm_label": "reject()",
       "id": "app_approvals_routes_reject"
     },
@@ -5859,7 +5859,7 @@
       "source_file": "app/approvals/__init__.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 33,
+      "community": 4,
       "norm_label": "__init__.py",
       "id": "app_approvals_init"
     },
@@ -7179,7 +7179,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 18,
+      "community": 137,
       "norm_label": "journal_service.py",
       "id": "app_accounting_services_journal_service"
     },
@@ -7309,7 +7309,7 @@
       "source_file": "app/accounting/services/journal_service.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 18,
+      "community": 137,
       "norm_label": "journal entries, ledger, and trial balance service.",
       "id": "app_accounting_services_journal_service_rationale_1"
     },
@@ -10120,7 +10120,7 @@
       "file_type": "code",
       "source_file": "app/models/expense.py",
       "source_location": "L1",
-      "community": 137,
+      "community": 36,
       "norm_label": "expense.py",
       "id": "app_models_expense"
     },
@@ -12866,217 +12866,14 @@
   ],
   "links": [
     {
-      "relation": "re_exports",
-      "context": "export",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/__init__.py",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_init",
-      "target": "app_invoices_services_invoice_update_service"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L180",
-      "weight": 1.0,
-      "source": "app_invoices_services_invoice_update_service",
-      "target": "app_invoices_services_invoice_update_service_add_invoice_payment",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L6",
-      "weight": 1.0,
-      "source": "app_invoices_services_invoice_update_service",
-      "target": "app_invoices_services_invoice_update_service_company_tax_rate",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L157",
-      "weight": 1.0,
-      "source": "app_invoices_services_invoice_update_service",
-      "target": "app_invoices_services_invoice_update_service_delete_invoice_or_quote",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L13",
-      "weight": 1.0,
-      "source": "app_invoices_services_invoice_update_service",
-      "target": "app_invoices_services_invoice_update_service_update_invoice_or_quote",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L1",
-      "weight": 1.0,
-      "source": "app_invoices_services_invoice_update_service",
-      "target": "app_models_document",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "submodule_import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L182",
-      "weight": 1.0,
-      "source": "app_invoices_services_invoice_update_service",
-      "target": "app_models_payment",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L3",
-      "weight": 1.0,
-      "source": "app_invoices_services_invoice_update_service",
-      "target": "datetime",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L145",
-      "weight": 1.0,
-      "source": "app_invoices_services_invoice_update_service_update_invoice_or_quote",
-      "target": "app_invoices_services_invoice_update_service_company_tax_rate",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/__init__.py",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_init",
-      "target": "app_invoices_services_invoice_update_service_update_invoice_or_quote"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L15",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_documents",
-      "target": "app_invoices_services_invoice_update_service_update_invoice_or_quote"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L352",
-      "weight": 1.0,
-      "source": "app_invoices_views_documents_update",
-      "target": "app_invoices_services_invoice_update_service_update_invoice_or_quote"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/__init__.py",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_init",
-      "target": "app_invoices_services_invoice_update_service_delete_invoice_or_quote"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L158",
-      "weight": 1.0,
-      "source": "app_invoices_services_invoice_update_service_rationale_158",
-      "target": "app_invoices_services_invoice_update_service_delete_invoice_or_quote",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L402",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_views_documents",
-      "target": "app_invoices_services_invoice_update_service_delete_invoice_or_quote"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "app/invoices/views/documents.py",
-      "source_location": "L403",
-      "weight": 1.0,
-      "source": "app_invoices_views_documents_delete",
-      "target": "app_invoices_services_invoice_update_service_delete_invoice_or_quote"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/__init__.py",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "app_invoices_services_init",
-      "target": "app_invoices_services_invoice_update_service_add_invoice_payment"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "app/invoices/services/invoice_update_service.py",
-      "source_location": "L181",
-      "weight": 1.0,
-      "source": "app_invoices_services_invoice_update_service_rationale_181",
-      "target": "app_invoices_services_invoice_update_service_add_invoice_payment",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "app/invoices/views/payments.py",
-      "source_location": "L48",
-      "weight": 1.0,
-      "source": "app_invoices_views_payments_add_payment",
-      "target": "app_invoices_services_invoice_update_service_add_invoice_payment"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/static/js/index.js",
       "source_location": "L48",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index",
-      "target": "app_static_js_index_closepopupmenus"
+      "target": "app_static_js_index_closepopupmenus",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13084,9 +12881,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L170",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index",
-      "target": "app_static_js_index_endpoint"
+      "target": "app_static_js_index_endpoint",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13094,9 +12891,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L125",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index",
-      "target": "app_static_js_index_enhancemobiletables"
+      "target": "app_static_js_index_enhancemobiletables",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13104,9 +12901,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L305",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index",
-      "target": "app_static_js_index_loadnotifications"
+      "target": "app_static_js_index_loadnotifications",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13114,9 +12911,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L362",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index",
-      "target": "app_static_js_index_loadpopupnotifications"
+      "target": "app_static_js_index_loadpopupnotifications",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13124,9 +12921,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L175",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index",
-      "target": "app_static_js_index_notificationtypeclass"
+      "target": "app_static_js_index_notificationtypeclass",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13134,9 +12931,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L188",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index",
-      "target": "app_static_js_index_notificationtypelabel"
+      "target": "app_static_js_index_notificationtypelabel",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13144,9 +12941,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L201",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index",
-      "target": "app_static_js_index_postnotificationaction"
+      "target": "app_static_js_index_postnotificationaction",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13154,9 +12951,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L222",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index",
-      "target": "app_static_js_index_rendernotificationlist"
+      "target": "app_static_js_index_rendernotificationlist",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13164,9 +12961,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L15",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index",
-      "target": "app_static_js_index_setmobilemenu"
+      "target": "app_static_js_index_setmobilemenu",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13174,9 +12971,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L42",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index",
-      "target": "app_static_js_index_setpopupmenu"
+      "target": "app_static_js_index_setpopupmenu",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13184,9 +12981,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L318",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index",
-      "target": "app_static_js_index_shownotificationpopup"
+      "target": "app_static_js_index_shownotificationpopup",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -13194,9 +12991,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L211",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index",
-      "target": "app_static_js_index_updatenotificationbadge"
+      "target": "app_static_js_index_updatenotificationbadge",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -13205,9 +13002,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L49",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index_closepopupmenus",
-      "target": "app_static_js_index_setpopupmenu"
+      "target": "app_static_js_index_setpopupmenu",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -13216,9 +13013,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L307",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index_loadnotifications",
-      "target": "app_static_js_index_endpoint"
+      "target": "app_static_js_index_endpoint",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -13227,9 +13024,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L364",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index_loadpopupnotifications",
-      "target": "app_static_js_index_endpoint"
+      "target": "app_static_js_index_endpoint",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -13238,9 +13035,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L286",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index_rendernotificationlist",
-      "target": "app_static_js_index_endpoint"
+      "target": "app_static_js_index_endpoint",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -13249,9 +13046,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L344",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index_shownotificationpopup",
-      "target": "app_static_js_index_endpoint"
+      "target": "app_static_js_index_endpoint",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -13260,9 +13057,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L247",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index_rendernotificationlist",
-      "target": "app_static_js_index_notificationtypeclass"
+      "target": "app_static_js_index_notificationtypeclass",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -13271,9 +13068,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L329",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index_shownotificationpopup",
-      "target": "app_static_js_index_notificationtypeclass"
+      "target": "app_static_js_index_notificationtypeclass",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -13282,9 +13079,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L248",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index_rendernotificationlist",
-      "target": "app_static_js_index_notificationtypelabel"
+      "target": "app_static_js_index_notificationtypelabel",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -13293,9 +13090,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L330",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index_shownotificationpopup",
-      "target": "app_static_js_index_notificationtypelabel"
+      "target": "app_static_js_index_notificationtypelabel",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -13304,9 +13101,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L286",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index_rendernotificationlist",
-      "target": "app_static_js_index_postnotificationaction"
+      "target": "app_static_js_index_postnotificationaction",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -13315,9 +13112,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L344",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index_shownotificationpopup",
-      "target": "app_static_js_index_postnotificationaction"
+      "target": "app_static_js_index_postnotificationaction",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -13326,9 +13123,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L310",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index_loadnotifications",
-      "target": "app_static_js_index_updatenotificationbadge"
+      "target": "app_static_js_index_updatenotificationbadge",
+      "confidence_score": 1.0
     },
     {
       "relation": "indirect_call",
@@ -13337,9 +13134,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L286",
       "weight": 1.0,
-      "confidence_score": 0.5,
       "source": "app_static_js_index_rendernotificationlist",
-      "target": "app_static_js_index_loadnotifications"
+      "target": "app_static_js_index_loadnotifications",
+      "confidence_score": 0.5
     },
     {
       "relation": "calls",
@@ -13348,9 +13145,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L348",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index_shownotificationpopup",
-      "target": "app_static_js_index_loadnotifications"
+      "target": "app_static_js_index_loadnotifications",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -13359,9 +13156,9 @@
       "source_file": "app/static/js/index.js",
       "source_location": "L368",
       "weight": 1.0,
-      "confidence_score": 1.0,
       "source": "app_static_js_index_loadpopupnotifications",
-      "target": "app_static_js_index_shownotificationpopup"
+      "target": "app_static_js_index_shownotificationpopup",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -15577,6 +15374,50 @@
       "target": "app_invoices_services_invoice_create_service_sync_document_sequence"
     },
     {
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/__init__.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_init",
+      "target": "app_invoices_services_invoice_update_service"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/__init__.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_init",
+      "target": "app_invoices_services_invoice_update_service_add_invoice_payment"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/__init__.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_init",
+      "target": "app_invoices_services_invoice_update_service_delete_invoice_or_quote"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/__init__.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_init",
+      "target": "app_invoices_services_invoice_update_service_update_invoice_or_quote"
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "app/invoices/services/invoice_create_service.py",
@@ -15805,6 +15646,28 @@
       "relation": "imports",
       "context": "import",
       "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L159",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_invoice_update_service",
+      "target": "app_invoices_services_invoice_create_service_sync_document_sequence"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L171",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_invoice_update_service_delete_invoice_or_quote",
+      "target": "app_invoices_services_invoice_create_service_sync_document_sequence"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
       "source_file": "app/invoices/views/documents.py",
       "source_location": "L360",
       "weight": 1.0,
@@ -15866,6 +15729,165 @@
       "weight": 1.0,
       "source": "app_invoices_views_documents_store",
       "target": "app_invoices_services_invoice_create_service_create_invoice_or_quote"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L174",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_invoice_update_service",
+      "target": "app_invoices_services_invoice_update_service_add_invoice_payment"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_invoice_update_service",
+      "target": "app_invoices_services_invoice_update_service_company_tax_rate"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L157",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_invoice_update_service",
+      "target": "app_invoices_services_invoice_update_service_delete_invoice_or_quote"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_invoice_update_service",
+      "target": "app_invoices_services_invoice_update_service_update_invoice_or_quote"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_invoice_update_service",
+      "target": "app_models_document"
+    },
+    {
+      "relation": "imports_from",
+      "context": "submodule_import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L176",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_invoice_update_service",
+      "target": "app_models_payment"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_invoice_update_service",
+      "target": "datetime"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L145",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_invoice_update_service_update_invoice_or_quote",
+      "target": "app_invoices_services_invoice_update_service_company_tax_rate"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_views_documents",
+      "target": "app_invoices_services_invoice_update_service_update_invoice_or_quote"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L352",
+      "weight": 1.0,
+      "source": "app_invoices_views_documents_update",
+      "target": "app_invoices_services_invoice_update_service_update_invoice_or_quote"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L158",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_invoice_update_service_rationale_158",
+      "target": "app_invoices_services_invoice_update_service_delete_invoice_or_quote"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L402",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_views_documents",
+      "target": "app_invoices_services_invoice_update_service_delete_invoice_or_quote"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "app/invoices/views/documents.py",
+      "source_location": "L403",
+      "weight": 1.0,
+      "source": "app_invoices_views_documents_delete",
+      "target": "app_invoices_services_invoice_update_service_delete_invoice_or_quote"
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "app/invoices/services/invoice_update_service.py",
+      "source_location": "L175",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "app_invoices_services_invoice_update_service_rationale_175",
+      "target": "app_invoices_services_invoice_update_service_add_invoice_payment"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "app/invoices/views/payments.py",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "app_invoices_views_payments_add_payment",
+      "target": "app_invoices_services_invoice_update_service_add_invoice_payment"
     },
     {
       "relation": "imports_from",
@@ -39491,5 +39513,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "23e86df21f1830dd986ba5906b70a22e973f482a"
+  "built_at_commit": "e469fb52605389fa64a68944bf8780c28b9e62f7"
 }

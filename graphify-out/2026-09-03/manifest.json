@@ -200,8 +200,8 @@
     "semantic_hash": ""
   },
   "app/invoices/services/invoice_update_service.py": {
-    "mtime": 1788487701.3199024,
-    "ast_hash": "2b14c841ca9de4484e6f3f1948688903",
+    "mtime": 1786066103.5784068,
+    "ast_hash": "eb641bbc5f13f9aaf95ff662f63f7db5",
     "semantic_hash": ""
   },
   "app/invoices/static/js/invoice-form.js": {
